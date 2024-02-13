@@ -395,6 +395,7 @@ exports[`blog card component should renders correctly 1`] = `
           "featured_id": false,
           "getLockType": [Function],
           "guid": 1,
+          "has_reminded": undefined,
           "header_bg": "1",
           "header_top": "0",
           "impressions": 100,

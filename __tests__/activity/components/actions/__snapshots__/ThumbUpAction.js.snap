@@ -77,6 +77,7 @@ exports[`Thumb action component renders correctly 1`] = `
           "entity_guid": "",
           "getLockType": [Function],
           "guid": "activityguid0",
+          "has_reminded": undefined,
           "impressions": 0,
           "isOwner": [Function],
           "is_visible": false,

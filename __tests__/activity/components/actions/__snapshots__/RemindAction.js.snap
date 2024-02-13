@@ -2,6 +2,7 @@
 
 exports[`Thumb action component renders correctly 1`] = `
 <withSpacer(IconButtonNextComponent)
+  active={false}
   disabled={false}
   extra={null}
   fill={true}
