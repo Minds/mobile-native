@@ -5,7 +5,7 @@ import i18n from '~/common/services/i18n.service';
 import { observer } from 'mobx-react';
 import { useIsFeatureOn } from 'ExperimentsProvider';
 import { NewsfeedType } from './NewsfeedStore';
-import { NEWSFEED_FORYOU_ENABLED } from '~/config/Config';
+import { IS_TENANT, NEWSFEED_FORYOU_ENABLED } from '~/config/Config';
 
 function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
   const experimentOn = useIsFeatureOn('mob-4938-newsfeed-for-you');
@@ -15,8 +15,14 @@ function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
       const _tabs: { id: NewsfeedType; title: string }[] = [
         { id: 'latest', title: i18n.t('newsfeed.latestPosts') },
         { id: 'top', title: i18n.t('newsfeed.topPosts') },
-        { id: 'groups', title: i18n.t('newsfeed.groups') },
       ];
+
+      if (!IS_TENANT) {
+        _tabs.push({ id: 'groups', title: i18n.t('newsfeed.groups') });
+      } else if (newsfeed.feedType === 'groups') {
+        // check if a tenant app is already on the group tab and change it
+        newsfeed.changeFeedType('latest');
+      }
 
       if (experimentOn && NEWSFEED_FORYOU_ENABLED) {
         _tabs.unshift({

@@ -62,20 +62,21 @@ const SettingsScreen = observer(({ navigation }) => {
     },
   ];
 
-  if (user.plus && !IS_TENANT) {
-    firstSection.push({
-      title: i18n.t('settings.pro'),
-      screen: user.pro ? 'Pro' : 'UpgradeScreen',
-      params: {
-        pro: true,
-        onComplete: (success: any) => {
-          if (success) {
-            user?.togglePro();
-          }
-        },
-      },
-    });
-  }
+  // TODO: restore this when #5274 is clarified.
+  // if (user.plus && !IS_TENANT) {
+  //   firstSection.push({
+  //     title: i18n.t('settings.pro'),
+  //     screen: user.pro ? 'Pro' : 'UpgradeScreen',
+  //     params: {
+  //       pro: true,
+  //       onComplete: (success: any) => {
+  //         if (success) {
+  //           user?.togglePro();
+  //         }
+  //       },
+  //     },
+  //   });
+  // }
 
   firstSection.push({
     title: i18n.t('settings.security'),

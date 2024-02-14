@@ -35,7 +35,14 @@ type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
  * Activity model
  */
 export default class ActivityModel extends BaseModel {
-  // Observable properties
+  // Client only properties
+  @observable has_reminded?: boolean;
+  seen?: boolean;
+  rowKey?: string;
+  @observable mature_visibility: boolean = false; // Mature visibility flag
+  @observable is_visible: boolean = false; // Is visible in flat list
+
+  // properties
   @observable pinned: boolean = false;
   @observable time_created: string = '';
   @observable message: string = '';
@@ -58,8 +65,6 @@ export default class ActivityModel extends BaseModel {
   'comments:count': number;
   'thumbs:down:user_guids': Array<string>;
   'thumbs:up:user_guids': Array<string>;
-  seen?: boolean;
-  rowKey?: string;
   boosted_guid?: string;
   description?: string; // on image objects in some cases the message is on description field
   containerObj?: GroupModel;
@@ -88,7 +93,6 @@ export default class ActivityModel extends BaseModel {
     min: number;
     support_tier: SupportTiersType;
   } | null;
-  _preview?: boolean;
   attachments?: {
     attachment_guid: string;
     custom_data: any;
@@ -112,14 +116,23 @@ export default class ActivityModel extends BaseModel {
   canonical_url?: string;
 
   /**
-   * Mature visibility flag
+   * Set has_reminded
    */
-  @observable mature_visibility: boolean = false;
+  setHasReminded(hasReminded: boolean) {
+    this.has_reminded = hasReminded;
+  }
 
   /**
-   * Is visible in flat list
+   * Override assign method to set has reminded
    */
-  @observable is_visible: boolean = false;
+  assign(data: any): void {
+    super.assign(data);
+    // if it is a remind of the current user with the the reminded in true
+    if (this.guid === '1548019981331992580') console.log('ASSIGN', data);
+    if (this.remind_users && this.isOwner()) {
+      this.setHasReminded(true);
+    }
+  }
 
   /**
    *  List reference setter
@@ -516,6 +529,24 @@ export default class ActivityModel extends BaseModel {
     } catch (e) {
       this.pinned = !this.pinned;
       Alert.alert(i18n.t('errorPinnedPost'));
+    }
+  }
+
+  async hasReminded() {
+    if (this.has_reminded !== undefined) {
+      return this.has_reminded;
+    }
+    try {
+      const result = await api.get<{ has_reminded: boolean }>(
+        `api/v3/newsfeed/activity/has-reminded/${this.guid}`,
+      );
+      if (result && result.has_reminded !== undefined) {
+        this.has_reminded = result.has_reminded;
+        return this.has_reminded;
+      }
+      return false;
+    } catch (e) {
+      return false;
     }
   }
 
