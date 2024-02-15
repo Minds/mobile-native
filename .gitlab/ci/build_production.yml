@@ -46,7 +46,7 @@ eas_build_production_android:
     - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - cp .secure_files/google-services.json .
   script:
-    - npx eas-cli build --platform android --profile production --json --non-interactive --auto-submit
+    - npx eas-cli build --platform android --profile production --json --non-interactive --auto-submit --no-wait
   rules:
     - if: $BUILD_MODE == "PRODUCTION"
       when: always
@@ -66,7 +66,7 @@ eas_build_production_ios:
     - apk add --no-cache bash git
     - yarn install --cache-folder ../yarn
   script:
-    - npx eas-cli build --platform ios --profile production --json --non-interactive --auto-submit
+    - npx eas-cli build --platform ios --profile production --json --non-interactive --auto-submit --no-wait
   rules:
     - if: $BUILD_MODE == "PRODUCTION"
       when: always
