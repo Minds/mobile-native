@@ -532,6 +532,8 @@ exports[`blog card component should renders correctly 1`] = `
           "rating": 1,
           "reminds": 58,
           "route": "blog/view/836607056186159104",
+          "site_membership": false,
+          "site_membership_unlocked": false,
           "slug": "",
           "subtype": "blog",
           "thumbnail_src": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",

@@ -43,58 +43,5 @@ exports[`activity metrics component renders correctly 1`] = `
     20 views · 
     Mar 25, 2018
   </Text>
-  <View
-    style={
-      [
-        {
-          "borderColor": "#FFD048",
-        },
-        {
-          "backgroundColor": "#FFD048",
-        },
-        {
-          "borderRadius": 3,
-          "borderWidth": 1,
-          "marginRight": 5,
-          "marginVertical": 2,
-          "maxWidth": "45%",
-          "paddingHorizontal": 4,
-          "paddingTop": 2,
-        },
-        {
-          "backgroundColor": "transparent",
-        },
-      ]
-    }
-  >
-    <Text
-      numberOfLines={1}
-      style={
-        [
-          {
-            "color": "#F2F2F2",
-          },
-          {
-            "fontFamily": "Roboto_400Regular",
-          },
-          [
-            {
-              "color": "#000000",
-            },
-            {
-              "fontFamily": "Roboto_500",
-              "fontSize": 12,
-              "lineHeight": 14,
-            },
-            {
-              "color": "#F2F2F2",
-            },
-          ],
-        ]
-      }
-    >
-      Some long name
-    </Text>
-  </View>
 </View>
 `;

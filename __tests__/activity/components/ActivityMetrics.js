@@ -24,6 +24,6 @@ describe('activity metrics component', () => {
 
   it('should have Text', async () => {
     let root = screen.root;
-    expect(root.findAllByType('Text')).toHaveLength(2);
+    expect(root.findAllByType('Text')).toHaveLength(1);
   });
 });

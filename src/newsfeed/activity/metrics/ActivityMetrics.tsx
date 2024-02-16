@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
 
@@ -16,7 +15,7 @@ import SupermindLabel from '~/common/components/supermind/SupermindLabel';
 import { IS_TENANT } from '~/config/Config';
 import { LockNetworkTag } from './LockNetwordkTag';
 
-type PropsType = {
+type ActivityMetricsProps = {
   entity: ActivityModel;
   fullDate?: boolean;
   hideSupermindLabel?: boolean;
@@ -25,14 +24,8 @@ type PropsType = {
 /**
  * Activity metrics component
  */
-@observer
-export default class ActivityMetrics extends Component<PropsType> {
-  /**
-   * Render
-   */
-  render() {
-    const entity = this.props.entity;
-
+const ActivityMetrics = observer(
+  ({ entity, fullDate, hideSupermindLabel }: ActivityMetricsProps) => {
     const support_tier: SupportTiersType | null =
       entity.wire_threshold &&
       isObject(entity.wire_threshold) &&
@@ -43,8 +36,8 @@ export default class ActivityMetrics extends Component<PropsType> {
     const lockType = support_tier ? getLockType(support_tier) : null;
 
     const date = i18n.date(
-      parseInt(this.props.entity.time_created, 10) * 1000,
-      this.props.fullDate ? 'datetime' : 'friendly',
+      parseInt(entity.time_created, 10) * 1000,
+      fullDate ? 'datetime' : 'friendly',
     );
 
     return (
@@ -61,14 +54,15 @@ export default class ActivityMetrics extends Component<PropsType> {
         ) : (
           <>
             {lockType !== null && <LockTag type={lockType} />}
-            {Boolean(this.props.entity.supermind) &&
-              !this.props.hideSupermindLabel && <SupermindLabel />}
+            {Boolean(entity.supermind) && !hideSupermindLabel && (
+              <SupermindLabel />
+            )}
           </>
         )}
       </View>
     );
-  }
-}
+  },
+);
 
 const containerStyle = ThemedStyles.combine(
   'rowJustifySpaceBetween',
@@ -81,3 +75,5 @@ const textStyle = ThemedStyles.combine(
   'fontM',
   'paddingVertical',
 );
+
+export default ActivityMetrics;
