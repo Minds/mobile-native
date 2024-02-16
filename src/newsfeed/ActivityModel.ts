@@ -106,6 +106,14 @@ export default class ActivityModel extends BaseModel {
   blurb?: string;
   container_guid?: string;
   tags?: string[];
+  site_membership: boolean = false; // The post has a membership attached
+  site_membership_unlocked: boolean = false; // The post can be viewed with no restrictions. False will not show a cta.
+  paywall_thumbnail?: {
+    blurhash?: string;
+    height?: number;
+    width?: number;
+  };
+  link_title?: string;
 
   /**
    * Goals
@@ -706,6 +714,18 @@ export default class ActivityModel extends BaseModel {
       handle,
       source,
     };
+  }
+
+  /**
+   * Membership support
+   */
+
+  get hasSiteMembershipPaywall(): boolean {
+    return this.site_membership && !!this.paywall_thumbnail;
+  }
+
+  get hasSiteMembershipPaywallThumbnail(): boolean {
+    return this.hasSiteMembershipPaywall && !this.site_membership_unlocked;
   }
 }
 

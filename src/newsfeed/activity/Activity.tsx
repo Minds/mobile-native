@@ -120,6 +120,11 @@ export default class Activity extends Component<ActivityProps> {
    * Nav to activity full screen
    */
   navToActivity = () => {
+    if (this.props.entity.hasSiteMembershipPaywallThumbnail) {
+      showNotification('This post is locked. Please view on web to engage.');
+      return;
+    }
+
     if (!this.props.navigation || this.props.entity.remind_deleted) {
       return;
     }
@@ -433,7 +438,11 @@ export default class Activity extends Component<ActivityProps> {
           <>
             <Pressable
               onPress={this.navToActivity}
-              onLongPress={this.copyText}
+              onLongPress={
+                entity.hasSiteMembershipPaywallThumbnail
+                  ? undefined
+                  : this.copyText
+              }
               onLayout={this.onLayout}
               testID="ActivityView">
               {this.props.maxContentHeight ? (
