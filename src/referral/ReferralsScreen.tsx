@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
-import { MINDS_URI } from '../config/Config';
+import { APP_URI } from '../config/Config';
 import ThemedStyles from '../styles/ThemedStyles';
 import Input from './components/Input';
 import Networks from './components/Networks';
@@ -21,7 +21,7 @@ const ReferralsScreen = ({ navigation, route }: ReferralsScreenProps) => {
   const user = sessionService.getUser();
   const { title } = route.params ?? {};
 
-  const referralLink = `${MINDS_URI}register?referrer=${user.username}`;
+  const referralLink = `${APP_URI}register?referrer=${user.username}`;
 
   return (
     <Screen safe>

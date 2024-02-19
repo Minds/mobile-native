@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { MINDS_URI, MINDS_PRO } from '../../config/Config';
+import { APP_URI, MINDS_PRO } from '../../config/Config';
 import { Alert, Linking } from 'react-native';
 import deeplinksRouterService from './deeplinks-router.service';
 import { InAppBrowser } from 'react-native-inappbrowser-reborn';
@@ -99,20 +99,27 @@ export class OpenURLService {
   open(url: string) {
     const navigatingToPro = url === MINDS_PRO;
 
-    if (url.startsWith(MINDS_URI.replace('https://www.', ''))) {
-      url = `https://www.${url}`;
+    if (!url.startsWith('https://')) {
+      if (
+        APP_URI.startsWith('https://www.') &&
+        url.startsWith(APP_URI.replace('https://www.', ''))
+      ) {
+        url = `https://www.${url}`;
+      } else {
+        url = `https://${url}`;
+      }
     }
 
-    if (url.startsWith(`${MINDS_URI}p/`)) {
+    if (url.startsWith(`${APP_URI}p/`)) {
       return NavigationService.navigate('WebContent', { path: url });
     }
-    if (url.startsWith(`${MINDS_URI}pages/`)) {
-      const page = url.replace(`${MINDS_URI}pages/`, '');
+    if (url.startsWith(`${APP_URI}pages/`)) {
+      const page = url.replace(`${APP_URI}pages/`, '');
 
       return NavigationService.navigate('CustomPages', { page });
     }
 
-    if (url.startsWith(MINDS_URI) && !navigatingToPro) {
+    if (url.startsWith(APP_URI) && !navigatingToPro) {
       const routed = deeplinksRouterService.navigate(url);
       if (routed) return;
     }

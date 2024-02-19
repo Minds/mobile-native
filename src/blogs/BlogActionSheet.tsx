@@ -4,7 +4,7 @@ import { View, Alert } from 'react-native';
 
 import Icon from '@expo/vector-icons/MaterialIcons';
 
-import { MINDS_URI } from '../config/Config';
+import { APP_URI } from '../config/Config';
 import shareService from '../share/ShareService';
 import i18n from '../common/services/i18n.service';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -77,7 +77,7 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
     }
     // Copy URL
     options.push(
-      copyToClipboardOptions(MINDS_URI + 'newsfeed/' + this.props.entity.guid),
+      copyToClipboardOptions(APP_URI + 'newsfeed/' + this.props.entity.guid),
     );
 
     options.push({
@@ -88,7 +88,7 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
         this.hideActionSheet();
         shareService.share(
           this.cleanTitle(this.props.entity.title),
-          MINDS_URI + 'newsfeed/' + this.props.entity.guid,
+          APP_URI + 'newsfeed/' + this.props.entity.guid,
         );
       },
     });

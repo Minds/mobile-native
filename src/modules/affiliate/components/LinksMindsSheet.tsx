@@ -8,7 +8,7 @@ import {
 } from '~/common/components/bottom-sheet';
 import { B2, Row } from '~/common/ui';
 import sessionService from '~/common/services/session.service';
-import { MINDS_URI } from '~/config/Config';
+import { APP_URI } from '~/config/Config';
 import { showNotification } from 'AppMessages';
 import { IconButtonCircle } from './IconButtonCircle';
 
@@ -37,20 +37,20 @@ const copyLink = (link: string) => {
 };
 
 export const copyReferrer = () => {
-  copyLink(`${MINDS_URI}?referrer=${sessionService.getUser().username}`);
+  copyLink(`${APP_URI}?referrer=${sessionService.getUser().username}`);
 };
 const copyPlus = () => {
-  copyLink(`${MINDS_URI}plus?referrer=${sessionService.getUser().username}`);
+  copyLink(`${APP_URI}plus?referrer=${sessionService.getUser().username}`);
 };
 const copyBoost = () => {
   copyLink(
-    `${MINDS_URI}boost/boost-console?referrer=${
+    `${APP_URI}boost/boost-console?referrer=${
       sessionService.getUser().username
     }`,
   );
 };
 const copyPro = () => {
-  copyLink(`${MINDS_URI}pro?referrer=${sessionService.getUser().username}`);
+  copyLink(`${APP_URI}pro?referrer=${sessionService.getUser().username}`);
 };
 
 export default LinksMindsSheet;

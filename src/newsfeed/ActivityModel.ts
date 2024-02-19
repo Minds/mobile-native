@@ -14,7 +14,7 @@ import {
 import api from '../common/services/api.service';
 import { isApiError, isNetworkError } from '~/common/services/ApiErrors';
 
-import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, MINDS_URI } from '../config/Config';
+import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, APP_URI } from '../config/Config';
 import i18n from '../common/services/i18n.service';
 import logService from '../common/services/log.service';
 import type { ThumbSize, LockType } from '../types/Common';
@@ -274,7 +274,7 @@ export default class ActivityModel extends BaseModel {
       const guid = this.entity_guid === '' ? this.guid : this.entity_guid;
       const unlock = this.isOwner() ? '?unlock_paywall=1' : '';
       return {
-        uri: MINDS_URI + 'fs/v1/thumbnail/' + guid + unlock,
+        uri: APP_URI + 'fs/v1/thumbnail/' + guid + unlock,
         headers: api.buildHeaders(),
       };
     }
@@ -412,7 +412,7 @@ export default class ActivityModel extends BaseModel {
       if (
         this.entity_guid &&
         this.perma_url &&
-        this.perma_url?.startsWith(MINDS_URI)
+        this.perma_url?.startsWith(APP_URI)
       ) {
         NavigationService.push('BlogView', {
           guid: this.entity_guid,

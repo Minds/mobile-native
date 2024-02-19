@@ -3,7 +3,7 @@ import { InteractionManager } from 'react-native';
 import { showNotification } from '../../../../AppMessages';
 import useApiFetch, { useApiCall } from '../../../common/hooks/useApiFetch';
 import i18nService from '../../../common/services/i18n.service';
-import { MINDS_URI } from '../../../config/Config';
+import { APP_URI } from '../../../config/Config';
 
 interface StripeAccount {
   id: string;
@@ -52,7 +52,7 @@ export default function useStripeConnect() {
       const { redirect_url } = await getRedirectUrl();
       navigation.navigate('WebView', {
         url: redirect_url,
-        redirectUrl: MINDS_URI + 'wallet/cash/settings',
+        redirectUrl: APP_URI + 'wallet/cash/settings',
         onRedirect: () => {
           refreshAccount();
           InteractionManager.runAfterInteractions(() => {

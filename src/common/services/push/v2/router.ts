@@ -1,6 +1,6 @@
 import sessionService from './../../session.service';
 import AuthService from '../../../../auth/AuthService';
-import { MINDS_URI } from '../../../../config/Config';
+import { APP_URI } from '../../../../config/Config';
 import deeplinksRouterService from '../../deeplinks-router.service';
 import logService from '../../log.service';
 
@@ -11,11 +11,11 @@ export const router = {
   navigate: (data: any) => {
     try {
       let callback;
-      if (data?.uri && data.uri.startsWith(MINDS_URI)) {
+      if (data?.uri && data.uri.startsWith(APP_URI)) {
         callback = () => deeplinksRouterService.navigate(data.uri);
       } else {
         callback = () =>
-          deeplinksRouterService.navigate(`${MINDS_URI}notifications/`);
+          deeplinksRouterService.navigate(`${APP_URI}notifications/`);
       }
 
       if (
