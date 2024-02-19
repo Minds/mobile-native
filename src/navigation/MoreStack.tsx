@@ -62,6 +62,17 @@ export default function () {
           onPress: () => navigation.push('BoostSettingsScreen'),
         }
       : null,
+    {
+      title: 'DANGER ZONE',
+    },
+    {
+      title: i18n.t('settings.deactivate'),
+      onPress: () => navigation.push('DeactivateChannel'),
+    },
+    {
+      title: i18n.t('settings.otherOptions.c2'),
+      onPress: () => navigation.push('DeleteChannel'),
+    },
   ];
 
   const NotificationsScreenOptions = navigation => [
