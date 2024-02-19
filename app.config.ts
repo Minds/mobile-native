@@ -83,6 +83,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         microphonePermissionText: micMessage,
       },
     ],
+    './plugins/withAndroidMainApplicationAttributes.js',
   ],
   android: {
     package: Tenant.APP_ANDROID_PACKAGE,
