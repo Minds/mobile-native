@@ -159,7 +159,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
         />
       )}
 
-      {!IS_IOS && mode !== 'groups' && (
+      {!IS_IOS && mode !== 'groups' && !IS_TENANT && (
         <>
           <Row align="centerBetween">
             <B1 left="XL" top="M" font="bold">
