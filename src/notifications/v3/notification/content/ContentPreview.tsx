@@ -9,7 +9,12 @@ import Activity from '../../../../newsfeed/activity/Activity';
 import ActivityModel from '../../../../newsfeed/ActivityModel';
 import type NotificationModel from '../NotificationModel';
 import { NotificationType } from '../NotificationModel';
-import { bodyTextStyle, spacedCommentPreview, styles } from '../styles';
+import {
+  bodyTextStyle,
+  contentPreviewContainerBorder,
+  spacedCommentPreview,
+  styles,
+} from '../styles';
 import useNotificationRouter from '../useNotificationRouter';
 import GroupsListItem from '~/groups/GroupsListItem';
 
@@ -40,7 +45,7 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
       return null;
     case NotificationType.group_invite:
       return (
-        <View style={styles.contentPreviewContainer}>
+        <View style={contentPreviewContainerBorder}>
           <GroupsListItem group={notification.mappedEntity} />
         </View>
       );

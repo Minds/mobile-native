@@ -56,6 +56,13 @@ export const styles = StyleSheet.create({
   },
 });
 
+export const contentPreviewContainerBorder = ThemedStyles.combine(
+  'marginTop6x',
+  'borderRadius3x',
+  'bcolorPrimaryBorder',
+  'borderHair',
+);
+
 export const readIndicatorStyle = ThemedStyles.combine(
   styles.readIndicator,
   'bgLink',
