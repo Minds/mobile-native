@@ -11,6 +11,7 @@ import type NotificationModel from '../NotificationModel';
 import { NotificationType } from '../NotificationModel';
 import { bodyTextStyle, spacedCommentPreview, styles } from '../styles';
 import useNotificationRouter from '../useNotificationRouter';
+import GroupsListItem from '~/groups/GroupsListItem';
 
 type PropsType = {
   notification: NotificationModel;
@@ -37,6 +38,12 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
     case NotificationType.affiliate_earnings_deposited:
     case NotificationType.referrer_affiliate_earnings_deposited:
       return null;
+    case NotificationType.group_invite:
+      return (
+        <View style={styles.contentPreviewContainer}>
+          <GroupsListItem group={notification.mappedEntity} />
+        </View>
+      );
   }
 
   if (

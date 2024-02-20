@@ -19,6 +19,7 @@ const notificationIconsTypes: {
   group_queue_approve: { name: 'people', type: 'material' },
   wire_received: { name: 'attach-money', type: 'material' },
   group_queue_reject: { name: 'people', type: 'material' },
+  group_invite: { name: 'people', type: 'material' },
   boost_peer_request: { name: 'attach-money', type: 'material' },
   boost_peer_accepted: { name: 'attach-money', type: 'material' },
   boost_peer_rejected: { name: 'attach-money', type: 'material' },

@@ -5,15 +5,11 @@ import * as entities from 'entities';
 
 import MenuItem from '../common/components/menus/MenuItem';
 import abbrev from '../common/helpers/abbrev';
-import { FLAG_JOIN } from '../common/Permissions';
 import i18n from '../common/services/i18n.service';
-import { B2, Button, Icon, Row } from '../common/ui';
+import { B2, Icon, Row } from '../common/ui';
 import GroupModel from './GroupModel';
 import capitalize from '~/common/helpers/capitalize';
-
-const HITSLOP = {
-  hitSlop: 10,
-};
+import SubscribeButton from '~/modules/groups/components/SubscribeButton';
 
 type PropsType = {
   group: GroupModel;
@@ -22,39 +18,6 @@ type PropsType = {
   index?: number;
   noNavigate?: boolean;
 };
-
-type ButtonPropsType = {
-  group: GroupModel;
-  index?: number;
-  onPress?: () => void;
-};
-
-const JoinButton = observer(({ group, index, ...props }: ButtonPropsType) => {
-  const isMember = group['is:member'];
-
-  const onPress = useCallback(() => {
-    if (isMember) {
-      group.leave();
-    } else {
-      if (group.can(FLAG_JOIN, true)) {
-        group.join();
-        props.onPress?.();
-      }
-    }
-  }, [group, isMember, props]);
-
-  return (
-    <Button
-      mode="outline"
-      type={'action'}
-      size="tiny"
-      onPress={onPress}
-      pressableProps={HITSLOP}
-      testID={`suggestedGroup${index}`}>
-      {isMember ? 'Joined' : 'Join'}
-    </Button>
-  );
-});
 
 const GroupsListItem = observer((props: PropsType) => {
   const navigation = useNavigation();
@@ -83,10 +46,10 @@ const GroupsListItem = observer((props: PropsType) => {
       isRightIconButton
       icon={
         !props.hideButton && (
-          <JoinButton
-            index={props.index}
+          <SubscribeButton
             group={group}
             onPress={props.onPress}
+            testID={`suggestedGroup${props.index}`}
           />
         )
       }

@@ -4,6 +4,7 @@ import AbstractModel from '../../../common/AbstractModel';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
 import i18n from '../../../common/services/i18n.service';
 import sessionService from '../../../common/services/session.service';
+import GroupModel from '~/groups/GroupModel';
 
 export default class NotificationModel extends AbstractModel {
   created_timestamp!: number;
@@ -22,10 +23,19 @@ export default class NotificationModel extends AbstractModel {
   urn!: string;
   uuid!: string;
 
+  private _mappedEntity: any;
+
   childModels() {
     return {
       from: UserModel,
     };
+  }
+
+  get mappedEntity() {
+    if (!this._mappedEntity && this.entity?.type === 'group') {
+      this._mappedEntity = GroupModel.checkOrCreate(this.entity);
+    }
+    return this._mappedEntity;
   }
 
   // credit to Patrick Roberts https://stackoverflow.com/a/57065680
@@ -68,6 +78,7 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.gift_card_recipient_notified:
       case NotificationType.boost_rejected:
       case NotificationType.post_subscription:
+      case NotificationType.group_invite:
         return '';
     }
 
@@ -90,6 +101,8 @@ export default class NotificationModel extends AbstractModel {
       case NotificationType.gift_card_recipient_notified:
       case NotificationType.boost_rejected:
         return '';
+      case NotificationType.group_invite:
+        return this.entity?.name || 'group';
       case NotificationType.boost_peer_request:
       case NotificationType.boost_peer_accepted:
       case NotificationType.boost_peer_rejected:
@@ -164,6 +177,7 @@ export enum NotificationType {
   group_queue_add = 'group_queue_add',
   group_queue_approve = 'group_queue_approve',
   group_queue_reject = 'group_queue_reject',
+  group_invite = 'group_invite',
   wire_received = 'wire_received',
   boost_peer_request = 'boost_peer_request',
   boost_peer_accepted = 'boost_peer_accepted',
