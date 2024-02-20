@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import { Image, View, ViewStyle } from 'react-native';
+import { View, ViewStyle } from 'react-native';
+import { Image } from 'expo-image';
 
 import MText from '~/common/components/MText';
 import {
@@ -30,7 +31,6 @@ type PropsType = {
 export type WelcomeScreenRouteProp = RouteProp<AuthStackParamList, 'Welcome'>;
 
 function WelcomeScreen(props: PropsType) {
-  const theme = ThemedStyles.style;
   const onLoginPress = useCallback(() => {
     props.navigation.navigate('MultiUserLogin');
   }, [props.navigation]);
@@ -46,19 +46,23 @@ function WelcomeScreen(props: PropsType) {
 
   return (
     <Screen safe hasMaxWidth={false}>
-      <View style={theme.flexContainer}>
+      <View style={styles.container}>
         {IS_TENANT ? (
           <Image
-            resizeMode="contain"
+            contentFit="contain"
             source={
               WELCOME_LOGO === 'square'
                 ? assets.LOGO_SQUARED
                 : assets.LOGO_HORIZONTAL
             }
-            style={styles.image}
+            style={
+              WELCOME_LOGO === 'square' ? styles.imageSquare : styles.image
+            }
           />
         ) : (
-          <OnboardingCarousel />
+          <View>
+            <OnboardingCarousel />
+          </View>
         )}
         <View style={styles.buttonContainer}>
           <Button
@@ -106,21 +110,27 @@ export default withErrorBoundaryScreen(
 
 const styles = ThemedStyles.create({
   buttonContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
     padding: 32,
     alignItems: 'center',
   },
-  containerStyle: {
+  containerStyleButtons: {
     width: IS_IPAD ? '45%' : '100%',
   },
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  imageSquare: {
+    marginTop: '15%',
+    width: '80%',
+    paddingHorizontal: 130,
+    aspectRatio: 1,
+    alignSelf: 'center',
+  },
   image: {
-    height: '14%',
-    width: '50%',
-    position: 'absolute',
-    top: '10%',
+    aspectRatio: 1.5,
+    width: '65%',
+    marginTop: '25%',
     alignSelf: 'center',
   },
 });
@@ -135,5 +145,5 @@ type ButtonType = Partial<
 const buttonProps: ButtonType = {
   font: 'medium',
   bottom: 'XL',
-  containerStyle: styles.containerStyle,
+  containerStyle: styles.containerStyleButtons,
 };
