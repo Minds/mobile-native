@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { MINDS_URI, MINDS_PRO } from '../../config/Config';
 import { Alert, Linking } from 'react-native';
 import deeplinksRouterService from './deeplinks-router.service';
@@ -6,23 +5,23 @@ import { InAppBrowser } from 'react-native-inappbrowser-reborn';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { storages } from './storage/storages.service';
 import NavigationService from '~/navigation/NavigationService';
-import { CustomPageType } from '~/modules/custom-pages/types';
 
 const STORAGE_NAMESPACE = 'openLinksBrowser';
 
-type BrowserType = undefined | 0 | 1; // 0 not defined, 0 in app, 1 default browser
+type BrowserType = 0 | 1; // not defined, 0 in app, 1 default browser
 
 /**
  * Open url service
  */
 export class OpenURLService {
-  preferredBrowser: BrowserType = undefined;
+  preferredBrowser?: BrowserType = undefined;
 
   /**
    * Load settings from storage
    */
   init() {
-    this.preferredBrowser = storages.app.getInt(STORAGE_NAMESPACE) ?? undefined;
+    this.preferredBrowser =
+      (storages.app.getInt(STORAGE_NAMESPACE) as 0 | 1) ?? undefined;
   }
 
   /**
@@ -88,7 +87,11 @@ export class OpenURLService {
         });
       } else Linking.openURL(url);
     } catch (error) {
-      Alert.alert(error.message);
+      if (typeof error === 'string') {
+        Alert.alert(error);
+      } else if (error instanceof Error) {
+        Alert.alert(error.message);
+      }
     }
   }
 

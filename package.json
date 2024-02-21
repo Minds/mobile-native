@@ -166,6 +166,7 @@
     "react-native-svg": "13.9.0",
     "react-native-system-setting": "^1.7.6",
     "react-native-tab-view": "^3.5.1",
+    "react-native-url-polyfill": "^2.0.0",
     "react-native-vision-camera": "^2.16.1",
     "react-native-webview": "13.2.2",
     "rn-update-apk": "^4.5.0",
