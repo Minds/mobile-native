@@ -20,6 +20,7 @@
     "update-settings": "ts-node tasks/update-settings.js",
     "test": "jest --env=node --colors --verbose --maxWorkers=4",
     "locale": "ts-node tasks/poeditor.js",
+    "build:adaptive:icon": "node tasks/adaptive-icon.js",
     "eas-build-pre-install": "./pre-install",
     "postinstall": "jetify; patch-package;",
     "codegen": "graphql-codegen --config codegen.ts",
