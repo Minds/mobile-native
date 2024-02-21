@@ -15,6 +15,7 @@ import type { ComposeStoreType } from './useComposeStore';
 import BaseModel from '../common/BaseModel';
 import { ReplyType } from './SupermindComposeScreen';
 import delay from '~/common/helpers/delay';
+import { IS_TENANT } from '~/config/Config';
 
 interface ComposeTopBarProps {
   onPressBack: () => void;
@@ -122,9 +123,12 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
         fit
         onPress={handleModePress}
         shouldAnimateChanges={false}
-        icon={!store.isEdit && <Icon name="chevron-down" color="PrimaryText" />}
+        icon={
+          !store.isEdit &&
+          !IS_TENANT && <Icon name="chevron-down" color="PrimaryText" />
+        }
         reversedIcon
-        disabled={store.isEdit}>
+        disabled={store.isEdit || IS_TENANT}>
         {store.isEdit ? (
           <H3 font="regular">Edit Post</H3>
         ) : (
