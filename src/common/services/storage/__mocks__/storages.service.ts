@@ -20,6 +20,7 @@ const mockMMKVApi = () => {
     setArrayAsync: jest.fn(),
     getIntAsync: jest.fn(),
     setIntAsync: jest.fn(),
+    clearStore: jest.fn(),
   };
 };
 

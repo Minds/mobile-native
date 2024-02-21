@@ -5,7 +5,7 @@ import React, { useCallback, useMemo } from 'react';
 import { View, Keyboard } from 'react-native';
 import { IconButton } from '~ui/icons';
 import ThemedStyles from '../styles/ThemedStyles';
-import { IS_IPAD } from '~/config/Config';
+import { IS_IPAD, IS_TENANT } from '~/config/Config';
 
 function ComposeBottomBar(props) {
   const theme = ThemedStyles.style;
@@ -78,15 +78,18 @@ function ComposeBottomBar(props) {
       />
       {
         // don't allow superminding in the context of a supermind reply
-        !props.store.isSupermindReply && isCreateModalOn && !IS_IPAD && (
-          <IconButton
-            name="supermind"
-            style={iconStyle}
-            scale
-            color={props.store.supermindRequest ? 'Link' : 'Icon'}
-            onPress={props.onSupermind}
-          />
-        )
+        !props.store.isSupermindReply &&
+          isCreateModalOn &&
+          !IS_IPAD &&
+          !IS_TENANT && (
+            <IconButton
+              name="supermind"
+              style={iconStyle}
+              scale
+              color={props.store.supermindRequest ? 'Link' : 'Icon'}
+              onPress={props.onSupermind}
+            />
+          )
       }
 
       <View style={theme.flexContainer} />

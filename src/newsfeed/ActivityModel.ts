@@ -128,7 +128,6 @@ export default class ActivityModel extends BaseModel {
   assign(data: any): void {
     super.assign(data);
     // if it is a remind of the current user with the the reminded in true
-    if (this.guid === '1548019981331992580') console.log('ASSIGN', data);
     if (this.remind_users && this.isOwner()) {
       this.setHasReminded(true);
     }
@@ -564,8 +563,10 @@ export default class ActivityModel extends BaseModel {
 
   async deleteRemind() {
     try {
-      await api.delete(`api/v3/newsfeed/${this.urn}`);
-      this.removeFromList();
+      await api.delete(`api/v3/newsfeed/activity/remind/${this.guid}`);
+      if (this.remind_users?.length) {
+        this.removeFromList();
+      }
       ActivityModel.events.emit('deleteEntity', this);
     } catch (err) {
       logService.exception('[ActivityModel]', err);

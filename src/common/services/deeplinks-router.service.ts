@@ -12,7 +12,6 @@ import analyticsService from '~/common/services/analytics.service';
 import apiService from './api.service';
 import referrerService from './referrer.service';
 import PreviewUpdateService from 'preview/PreviewUpdateService';
-// import { forceCodepushCustomBundle } from '~/modules/codepush/codepushForce';
 
 /**
  * Deeplinks router
@@ -84,6 +83,9 @@ class DeeplinksRouter {
   navigate(url) {
     if (IS_TENANT_PREVIEW && url && PreviewUpdateService.isPreviewURL(url)) {
       const channel = PreviewUpdateService.getPreviewChannel(url);
+      if (!channel) {
+        return;
+      }
       PreviewUpdateService.updatePreview(channel);
       return;
     }
