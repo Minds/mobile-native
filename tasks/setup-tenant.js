@@ -3,6 +3,7 @@ const fetch = require('node-fetch');
 const fse = require('fs-extra');
 const fs = require('fs');
 const { generateToken } = require('./helpers/jwt');
+const { addAdaptiveIcon } = require('./adaptive-icon');
 
 const args = process.argv.slice(2);
 const preview = args[1] === '--preview';
@@ -49,6 +50,8 @@ async function setupTenant(id) {
     generateTenantJSON(data.appReadyMobileConfig);
     // download the assets
     await downloadAssets(data.appReadyMobileConfig.assets);
+    // add adaptive icon in the assets folder
+    await addAdaptiveIcon();
     if (preview) {
       // copy previewer patches
       copyPatches();

@@ -1,6 +1,6 @@
 const sharp = require('sharp');
 
-async function addPaddingToImage(
+export async function addAdaptiveIcon(
   imagePath = './assets/images/icon.png',
   outputPath = './assets/images/icon_adaptive.png',
   paddingRatio = 0.15,
@@ -41,10 +41,3 @@ async function addPaddingToImage(
     console.error('Error processing image:', error);
   }
 }
-
-// Get the image path from the command line arguments
-const inputImagePath = process.argv[2]; // The first real argument (after "node" and the script name)
-const outputImagePath = process.argv[3]; // The second real argument (after "node" and the script name)
-
-// Call the function with the provided image path
-addPaddingToImage(inputImagePath, outputImagePath).catch(console.error);
