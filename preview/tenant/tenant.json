@@ -2,7 +2,7 @@
   "APP_NAME": "Networks",
   "APP_SCHEME": "mindspreview",
   "APP_SLUG": "mindspreview",
-  "APP_HOST": "www.minds.com",
+  "APP_HOST": "previewer.minds.com",
   "IS_PREVIEW": false,
   "APP_IOS_BUNDLE": "com.minds.mobilepreview",
   "APP_SPLASH_RESIZE": "contain",
