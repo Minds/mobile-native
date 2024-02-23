@@ -11,18 +11,16 @@ type GroupMembershipButtonType =
   | 'invited'
   | null;
 
-/**
- * Group subscribe button
- */
-function SubscribeButton({
-  group,
-  onPress,
-  testID,
-}: {
+type SubscribeButtonProps = {
   group: GroupModel;
   onPress?: () => void;
   testID?: string;
-}) {
+};
+
+/**
+ * Group subscribe button
+ */
+function SubscribeButton({ group, onPress, testID }: SubscribeButtonProps) {
   let buttonType: GroupMembershipButtonType = null;
   const [loading, setLoading] = React.useState(false);
 
