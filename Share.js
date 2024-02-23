@@ -4,7 +4,7 @@ import deeplinkService from './src/common/services/deeplinks-router.service';
 import { Image } from 'expo-image';
 import assets from '@assets';
 
-const Share = ({ url }: { url: string }) => {
+const Share = ({ url }) => {
   if (url.startsWith('http')) {
     return deeplinkService.navigate(url);
   }
