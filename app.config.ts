@@ -53,6 +53,17 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     'expo-updates',
     './node_modules/react-native-notifications/app.plugin.js',
     [
+      'expo-share-extension',
+      {
+        excludedPackages: [
+          'expo-dev-client',
+          'expo-splash-screen',
+          'expo-updates',
+          'expo-font',
+        ],
+      },
+    ],
+    [
       'expo-build-properties',
       {
         android: {

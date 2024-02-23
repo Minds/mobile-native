@@ -24,6 +24,9 @@ config.transformer.getTransformOptions = async () => ({
   },
   preloadedModules: false,
   ramGroups: [],
+  resolver: {
+    sourceExts: [...config.resolver.sourceExts, 'Share.js'], // Add 'Share.js' as a recognized extension
+  },
 });
 
 module.exports = config;

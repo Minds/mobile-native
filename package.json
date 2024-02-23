@@ -2,6 +2,7 @@
   "name": "Minds",
   "version": "4.22.0",
   "private": true,
+  "main": "index.js",
   "scripts": {
     "android": "react-native run-android --active-arch-only",
     "ios": "react-native run-ios",
@@ -96,6 +97,7 @@
     "expo-media-library": "~15.4.1",
     "expo-screen-orientation": "~6.0.6",
     "expo-sensors": "~12.3.0",
+    "expo-share-extension": "^1.2.0",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
     "expo-store-review": "~6.4.0",

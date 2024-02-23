@@ -1,16 +1,13 @@
-import { Image } from 'expo-image';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { ShareMenuReactView } from 'react-native-share-menu';
+import deeplinkService from './src/common/services/deeplinks-router.service';
+import { Image } from 'expo-image';
 import assets from '@assets';
 
-const Share = () => {
-  useEffect(() => {
-    ShareMenuReactView.data().then(({ mimeType, data }) => {
-      ShareMenuReactView.continueInApp();
-    });
-  }, []);
-
+const Share = ({ url }: { url: string }) => {
+  if (url.startsWith('http')) {
+    return deeplinkService.navigate(url);
+  }
   return (
     <View style={styles.container}>
       <Image
@@ -34,7 +31,7 @@ const styles = StyleSheet.create({
   logo: {
     height: 85,
     width: 230,
-    marginTop: 10,
+    marginVertical: 10,
   },
 });
 
