@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Image, View } from 'react-native';
-
+import * as Progress from 'react-native-progress';
 import { observer } from 'mobx-react';
 
 import updateService from '~/common/services/update.service';
@@ -24,7 +24,14 @@ const UpdatingScreen = observer(() => {
           <MText style={styles.title}>
             {i18n.t('update.title', { version: updateService.version })}
           </MText>
-          <MText style={styles.downloading}>{i18n.t('downloading')}...</MText>
+          <Progress.Bar
+            progress={updateService.progress / 100}
+            width={null}
+            color={ThemedStyles.getColor('Link')}
+          />
+          <MText style={styles.downloading}>
+            {i18n.t('downloading')} {updateService.progress}%
+          </MText>
         </View>
       </View>
     </View>
