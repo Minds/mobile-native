@@ -24,6 +24,7 @@ import { useAnalytics } from '~/common/contexts/analytics.context';
 import NavigationService from '../../../navigation/NavigationService';
 import type NewsfeedStore from '../../NewsfeedStore';
 import PermissionsService from '~/common/services/permissions.service';
+import getNetworkError from '~/common/helpers/getNetworkError';
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -115,9 +116,9 @@ const pushRemindActionSheet = async ({
 
         showNotification(i18n.t('postReminded'), 'success');
       })
-      .catch(e => {
-        console.log(e);
-        showNotification(i18n.t('errorMessage'), 'warning');
+      .catch(error => {
+        const message = getNetworkError(error);
+        showNotification(message || i18n.t('errorMessage'), 'warning');
       });
   };
 
@@ -128,9 +129,9 @@ const pushRemindActionSheet = async ({
         entity.setHasReminded(false);
         showNotification(i18n.t('remindRemoved'), 'success');
       })
-      .catch(e => {
-        console.log(e);
-        showNotification(i18n.t('errorMessage'), 'warning');
+      .catch(error => {
+        const message = getNetworkError(error);
+        showNotification(message || i18n.t('errorMessage'), 'warning');
       });
   };
 

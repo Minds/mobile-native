@@ -600,6 +600,10 @@ export default function (props) {
      * Submit post
      */
     async submit() {
+      if (!PermissionsService.canCreatePost(true)) {
+        return;
+      }
+
       if (!this.entity && this.isEdit) {
         console.error("Entity isn't available");
         return;

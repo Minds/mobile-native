@@ -15,6 +15,7 @@ import MetadataService, {
   MetadataMedium,
 } from './services/metadata.service';
 import { storeRatingService } from 'modules/store-rating';
+import getNetworkError from './helpers/getNetworkError';
 
 /**
  * Base model
@@ -237,7 +238,10 @@ export default class BaseModel extends AbstractModel {
       }
       this['thumbs:' + direction + ':count'] =
         parseInt(this['thumbs:' + direction + ':count'], 10) - delta;
-      throw err;
+
+      const message = getNetworkError(err);
+      //
+      throw message ? new Error(message) : err;
     }
   }
 

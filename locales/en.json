@@ -48,6 +48,8 @@
       "edit_comment": "Your user role does not allow commenting",
       "edit_group": "You are not allowed to edit this group",
       "edit_post": "You are not allowed to edit this post",
+      "boost": "Your user role does not allow boosting",
+      "upload_video": "Your user role does not allow upload videos",
       "invite": "You are not allowed to invite",
       "join": "You are not allowed to join",
       "message": "You are not allowed to message this user",
