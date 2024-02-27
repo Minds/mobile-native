@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react';
 import React from 'react';
 import i18n from '~/common/services/i18n.service';
 import type GroupModel from '~/groups/GroupModel';
@@ -10,10 +11,16 @@ type GroupMembershipButtonType =
   | 'invited'
   | null;
 
+type SubscribeButtonProps = {
+  group: GroupModel;
+  onPress?: () => void;
+  testID?: string;
+};
+
 /**
  * Group subscribe button
  */
-export default function SubscribeButton({ group }: { group: GroupModel }) {
+function SubscribeButton({ group, onPress, testID }: SubscribeButtonProps) {
   let buttonType: GroupMembershipButtonType = null;
   const [loading, setLoading] = React.useState(false);
 
@@ -58,6 +65,7 @@ export default function SubscribeButton({ group }: { group: GroupModel }) {
         default:
           break;
       }
+      onPress?.();
     } catch (error) {
       console.error('Group subscription error', error);
     } finally {
@@ -82,7 +90,7 @@ export default function SubscribeButton({ group }: { group: GroupModel }) {
       disabled={loading}
       onPress={onSubscriptionPress}
       pressableProps={HITSLOP}
-      testID="groupSubscribeButton">
+      testID={testID}>
       {buttonText}
     </Button>
   );
@@ -105,6 +113,8 @@ export default function SubscribeButton({ group }: { group: GroupModel }) {
     </Row>
   );
 }
+
+export default observer(SubscribeButton);
 
 const HITSLOP = {
   hitSlop: 10,

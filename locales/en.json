@@ -697,6 +697,7 @@
       "group_queue_add": "Your post is awaiting approval from the group administrators",
       "group_queue_approve": "approved",
       "group_queue_reject": "rejected",
+      "group_invite": "invited you to join",
       "wire_received": "paid",
       "boost_peer_request": "sent you",
       "boost_peer_accepted": "accepted",
@@ -1995,5 +1996,6 @@
   "explore": "Explore",
   "restart": "Restart",
   "awaiting": "Awaiting",
+  "requested": "Requested",
   "viewOnExternal": "View on {{external}}"
 }
