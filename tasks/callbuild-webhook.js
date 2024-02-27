@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const { generateToken } = require('./helpers/jwt');
-
+const { APP_VERSION } = require('../app.constants');
 const webhookUrl = process.env.WEBHOOK_URL;
 const args = process.argv.slice(2);
 const status = args[0] === 'failed' ? 'failed' : 'success';
@@ -22,6 +22,7 @@ async function callBuildWebhook() {
         body: JSON.stringify({
           TENANT_ID: process.env.TENANT_ID,
           TOKEN: process.env.TOKEN,
+          VERSION: APP_VERSION,
           status,
         }),
       });
