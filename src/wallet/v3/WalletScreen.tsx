@@ -25,8 +25,7 @@ import TokenPrice from './TokenPrice';
 import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 import { ScreenHeader, Screen } from '~ui/screen';
-import { useIsIOSFeatureOn } from 'ExperimentsProvider';
-import { IS_IPAD } from '~/config/Config';
+import { IS_IOS, IS_IPAD } from '~/config/Config';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 import CreditsTab from '~/modules/gif-card/components/CreditsTab';
 import { useGetGiftBalance } from '~/modules/gif-card/components/GiftCardList';
@@ -55,9 +54,6 @@ const WalletScreen = observer((props: PropsType) => {
   const tokenTabStore = useLocalStore(createTokensTabStore, store);
   const usdTabStore = useLocalStore(createUsdTabStore);
   const balance = useGetGiftBalance(false);
-  const isIosMindsHidden = useIsIOSFeatureOn(
-    'mob-4637-ios-hide-minds-superminds',
-  );
 
   const showCreditTab = (balance ?? 0) > 0;
 
@@ -68,7 +64,7 @@ const WalletScreen = observer((props: PropsType) => {
     },
   ];
 
-  if (!isIosMindsHidden) {
+  if (!IS_IOS) {
     tabs.push({
       id: 'usd',
       title: i18n.t('wallet.cash'),

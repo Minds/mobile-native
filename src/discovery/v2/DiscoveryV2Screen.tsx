@@ -29,7 +29,6 @@ import ChannelListItem from '../../common/components/ChannelListItem';
 import UserModel from '../../channel/UserModel';
 import GroupsListItem from '../../groups/GroupsListItem';
 import GroupModel from '../../groups/GroupModel';
-import { useIsFeatureOn } from '../../../ExperimentsProvider';
 import Empty from '~/common/components/Empty';
 import Button from '~/common/components/Button';
 import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
@@ -50,9 +49,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     const listRef = React.useRef<React.ElementRef<FeedListStickyType>>(null);
     const channelsListRef = React.useRef<any>(null);
     const groupsListRef = React.useRef<any>(null);
-    const isDiscoveryConsolidationOn = useIsFeatureOn(
-      'mob-5038-discovery-consolidation',
-    );
     const tab = props.route.params?.tab;
 
     // inject items in the store the first time
@@ -79,26 +75,16 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
 
     const tabs = React.useMemo(
       () => {
-        if (isDiscoveryConsolidationOn) {
-          return [
-            { id: 'latest', title: i18n.t('discovery.latest') },
-            { id: 'top', title: i18n.t('discovery.topV2') },
-            { id: 'trending-tags', title: i18n.t('discovery.trendingV2') },
-            { id: 'channels', title: 'Channels' },
-            { id: 'groups', title: 'Groups' },
-          ].filter(Boolean) as { id: string; title: string }[];
-        } else {
-          return [
-            { id: 'top', title: i18n.t('discovery.top') },
-            { id: 'foryou', title: i18n.t('discovery.justForYou') },
-            { id: 'your-tags', title: i18n.t('discovery.yourTags') },
-            { id: 'trending-tags', title: i18n.t('discovery.trending') },
-            { id: 'supermind', title: i18n.t('supermind.supermind') },
-          ].filter(Boolean) as { id: string; title: string }[];
-        }
+        return [
+          { id: 'latest', title: i18n.t('discovery.latest') },
+          { id: 'top', title: i18n.t('discovery.topV2') },
+          { id: 'trending-tags', title: i18n.t('discovery.trendingV2') },
+          { id: 'channels', title: 'Channels' },
+          { id: 'groups', title: 'Groups' },
+        ].filter(Boolean) as { id: string; title: string }[];
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      [i18n.locale, isDiscoveryConsolidationOn],
+      [i18n.locale],
     );
 
     const emptyBoosts = React.useMemo(

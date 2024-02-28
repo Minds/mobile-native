@@ -9,7 +9,7 @@ import TopbarTabbar, {
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
 import i18n from '~/common/services/i18n.service';
 import { IconButton, Screen, ScreenHeader } from '~/common/ui';
-import { IS_IOS, IS_IPAD } from '~/config/Config';
+import { GOOGLE_PLAY_STORE, IS_IOS, IS_IPAD } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import {
   SupermindOnboardingOverlay,
@@ -36,7 +36,6 @@ import { FeedListV2 } from '~/common/components/FeedListV2';
 import useFeedStore from '~/common/hooks/useFeedStore';
 import PendingSupermindNotice from '~/common/components/in-feed-notices/notices/PendingSupermindNotice';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
-import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 type TabModeType = 'inbound' | 'outbound' | 'feed';
 type SupermindConsoleScreenRouteProp = RouteProp<
@@ -81,7 +80,7 @@ function SupermindConsoleScreen({
   const feedStore = useFeedStore();
   const scrollDirection = useSharedValue(0);
   const scrollY = useSharedValue(0);
-  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = GOOGLE_PLAY_STORE;
 
   // configure feed store
   feedStore

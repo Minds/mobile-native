@@ -14,7 +14,6 @@ import {
   IS_IPAD,
   IS_TENANT,
   MEMBERSHIP_TIERS_ENABLED,
-  TWITTER_ENABLED,
 } from '~/config/Config';
 import WalletStack from './WalletStack';
 
@@ -297,15 +296,6 @@ export default function () {
           }
           options={{ title: i18n.t('settings.otherOptions.b1') }}
           initialParams={{ useForSelection: false }}
-        />
-      )}
-      {TWITTER_ENABLED && (
-        <MoreStack.Screen
-          name="TwitterSync"
-          getComponent={() =>
-            require('~/settings/screens/twitter-sync/TwitterSyncScreen').default
-          }
-          options={{ title: i18n.t('settings.twitterSync.titleLong') }}
         />
       )}
       <MoreStack.Screen

@@ -19,9 +19,7 @@ import { useTranslation } from '../../locales';
 import { useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-// import { IS_IPAD } from '~/config/Config';
 import { BoostStoreType } from '../boost.store';
-import { useIsFeatureOn } from 'ExperimentsProvider';
 import MPressable from '~/common/components/MPressable';
 import ThemedStyles from '~/styles/ThemedStyles';
 import BoostComposerHeader from '../components/BoostComposerHeader';
@@ -37,10 +35,6 @@ function AudienceSelectorScreen({
   const { safe, backIcon } = route.params ?? ({} as Record<string, any>);
   const boostStore = useBoostStore();
 
-  // const routes = navigation.getState()?.routes;
-  // const showBackButton =
-  //   !IS_IPAD || routes[routes.length - 2]?.name === 'BoostGoal';
-
   if (!boostStore.config) {
     showNotification('Boost config not found', 'danger');
     navigation.goBack();
@@ -53,16 +47,6 @@ function AudienceSelectorScreen({
 
   return (
     <Screen safe onlyTopEdge={!safe}>
-      {/* <ScreenHeader
-        title={
-          boostStore.boostType === 'channel'
-            ? t('Boost Channel')
-            : t('Boost Post')
-        }
-        back={showBackButton}
-        backIcon={backIcon}
-        shadow
-      /> */}
       <BoostComposerHeader backIcon={backIcon} />
       <FitScrollView>
         <Column align="centerBoth" bottom="XL2" top="XL">
@@ -120,7 +104,7 @@ type PlacementSelector = {
 const PlacementSelector = observer(({ boostStore }: PlacementSelector) => {
   const { t } = useTranslation();
   const [open, setOpen] = React.useState(true);
-  const isExperimentON = useIsFeatureOn('mob-4952-boost-platform-targeting');
+  const isExperimentON = false;
 
   const enabled =
     boostStore.target_platform_ios ||

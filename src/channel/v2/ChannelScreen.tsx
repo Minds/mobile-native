@@ -40,7 +40,6 @@ import Empty from '~/common/components/Empty';
 import { B1, Column } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import withModalProvider from '~/navigation/withModalProvide';
-import { hasVariation } from '../../../ExperimentsProvider';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { pushInteractionsScreen } from '../../common/components/interactions/pushInteractionsBottomSheet';
 import PermissionsService from '~/common/services/permissions.service';
@@ -447,11 +446,7 @@ const ChannelScreen = observer((props: PropsType) => {
     </View>
   );
 
-  if (
-    !store.feedStore.injectItems &&
-    !store.channel.isOwner() &&
-    hasVariation('epic-303-boost-partners')
-  ) {
+  if (!store.feedStore.injectItems && !store.channel.isOwner()) {
     store.feedStore.setInjectedItems([
       new InjectItem(RECOMMENDATION_POSITION, 'channel', () => (
         <Column background="primary">

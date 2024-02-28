@@ -5,16 +5,13 @@ import SupermindLabel from '~/common/components/supermind/SupermindLabel';
 import i18n from '~/common/services/i18n.service';
 import { B2, Button, Column, Row, Spacer } from '~/common/ui';
 import Activity from '~/newsfeed/activity/Activity';
-import { hasVariation } from '../../ExperimentsProvider';
 import { borderBottomStyle } from './AddBankInformation';
 import SupermindRequestModel from './SupermindRequestModel';
-import { ensureTwitterConnected } from './SupermindTwitterConnectScreen';
 import { SupermindRequestReplyType, SupermindRequestStatus } from './types';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { observer } from 'mobx-react';
 import apiService from '~/common/services/api.service';
 import { confirm } from '~/common/components/Confirm';
-import { TWITTER_ENABLED } from '~/config/Config';
 
 type Props = {
   request: SupermindRequestModel;
@@ -23,20 +20,9 @@ type Props = {
 
 function SupermindRequest({ request, outbound }: Props) {
   const navigation = useNavigation();
-  const isTwitterEnabled =
-    request.twitter_required &&
-    hasVariation('engine-2503-twitter-feats') &&
-    TWITTER_ENABLED;
+  const isTwitterEnabled = false;
 
   const answer = React.useCallback(async () => {
-    if (isTwitterEnabled && hasVariation('mob-twitter-oauth-4715')) {
-      const connected = await ensureTwitterConnected(navigation);
-
-      if (!connected) {
-        return;
-      }
-    }
-
     if (request.reply_type === SupermindRequestReplyType.LIVE) {
       if (
         await confirm({
@@ -66,7 +52,7 @@ function SupermindRequest({ request, outbound }: Props) {
         },
       });
     }
-  }, [isTwitterEnabled, navigation, request]);
+  }, [navigation, request]);
 
   return (
     <Spacer top="XL">

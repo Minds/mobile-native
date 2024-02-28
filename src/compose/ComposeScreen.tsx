@@ -19,15 +19,11 @@ import {
 } from 'react-native-safe-area-context';
 
 import { StackScreenProps } from '@react-navigation/stack';
-import { confirm } from '~/common/components/Confirm';
 import sessionService from '~/common/services/session.service';
 import { Row } from '~/common/ui';
-import { IconButtonNext } from '~ui/icons';
-import { useIsFeatureOn } from '../../ExperimentsProvider';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
 import KeyboardSpacingView from '../common/components/keyboard/KeyboardSpacingView';
-import SupermindLabel from '../common/components/supermind/SupermindLabel';
 import i18n from '../common/services/i18n.service';
 import GroupModel from '../groups/GroupModel';
 import NavigationService from '../navigation/NavigationService';
@@ -43,14 +39,11 @@ import PosterBottomSheet from './PosterOptions/PosterBottomSheet';
 import RemindPreview from './RemindPreview';
 import TitleToggle from './TitleToggle';
 import TitleInput from './TitleInput';
-import TopBar from './TopBar';
 import type { ComposeCreateMode } from './createComposeStore';
 import useComposeStore, { ComposeContext } from './useComposeStore';
 import { ComposerStackParamList } from './ComposeStack';
 import ComposeAudienceSelector from './ComposeAudienceSelector';
-import { ReplyType } from './SupermindComposeScreen';
-import delay from '~/common/helpers/delay';
-import { IS_IOS, TENANT } from '~/config/Config';
+import { IS_IOS } from '~/config/Config';
 
 const { width } = Dimensions.get('window');
 
@@ -74,7 +67,7 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
   // ### states & variables
   const store = useComposeStore(props);
   const inputRef = useRef<any>(null);
-  const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
+  const isCreateModalOn = true;
   const theme = ThemedStyles.style;
   const scrollViewRef = useRef<ScrollView>(null);
 
@@ -89,51 +82,6 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
   const channel = sessionService.getUser();
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
-
-  // ### methods
-  const onPressPost = useCallback(async () => {
-    if (store.attachments.uploading) {
-      return;
-    }
-    const {
-      channel: targetChannel,
-      payment_options,
-      reply_type,
-    } = store.supermindRequest ?? {};
-
-    if (
-      targetChannel?.name &&
-      payment_options?.amount &&
-      !(await confirm({
-        title: i18n.t('supermind.confirmNoRefund.title'),
-        description: i18n.t('supermind.confirmNoRefund.offerDescription'),
-      }))
-    ) {
-      return;
-    }
-
-    if (reply_type === ReplyType.live) {
-      // we need a small delay to ensure the previous confirm screen is closed
-      await delay(500);
-      if (
-        !(await confirm({
-          title: i18n.t('supermind.liveReplyRequest.title'),
-          description: i18n.t('supermind.liveReplyRequest.description', {
-            TENANT,
-          }),
-        }))
-      ) {
-        return;
-      }
-    }
-
-    const isEdit = store.isEdit;
-    const entity = await store.submit();
-
-    if (entity) {
-      store.onPost(entity, isEdit);
-    }
-  }, [store]);
 
   const discard = useCallback(() => {
     store.clear();
@@ -212,47 +160,16 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
     }, [onPressBack]),
   );
 
-  const rightButton = store.isEdit ? (
-    i18n.t('save')
-  ) : (
-    <IconButtonNext
-      name="send"
-      size="medium"
-      scale
-      onPress={onPressPost}
-      disabled={!store.isValid}
-      color={store.isValid ? 'Link' : 'Icon'}
-      style={store.attachments.uploading ? theme.opacity25 : null}
-    />
-  );
-
   /**
    * if there was an attachment we need to show the title input,
    * or if the create mode was on we need to show the audience selector
    */
-  const isTopRowVisible =
-    store.attachments.hasAttachment || (isCreateModalOn && !store.isEdit);
+  const isTopRowVisible = store.attachments.hasAttachment || !store.isEdit;
 
   return (
     <ComposeContext.Provider value={store}>
       <SafeAreaView style={styles.container} edges={edges}>
-        {isCreateModalOn ? (
-          <ComposeTopBar store={store} onPressBack={onPressBack} />
-        ) : (
-          <TopBar
-            containerStyle={theme.paddingLeft}
-            rightText={rightButton}
-            leftComponent={
-              (store.supermindRequest || store.isSupermindReply) && (
-                <SupermindLabel />
-              )
-            }
-            onPressRight={onPressPost}
-            onPressBack={onPressBack}
-            store={store}
-          />
-        )}
-
+        <ComposeTopBar store={store} onPressBack={onPressBack} />
         <ScrollView
           ref={scrollViewRef}
           keyboardShouldPersistTaps={'always'}
