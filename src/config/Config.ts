@@ -82,13 +82,12 @@ export const IMAGE_MAX_SIZE = 2048;
 
 export const ANDROID_CHAT_APP = 'com.minds.chat';
 
-export const MINDS_URI = IS_TENANT ? Tenant.API_URL : 'https://www.minds.com/';
 export const STRAPI_URI = 'https://cms.minds.com';
 
-export const MINDS_API_URI =
-  DEV_MODE.isActive && CUSTOM_API_URL
-    ? CUSTOM_API_URL
-    : Tenant.API_URL || 'https://www.minds.com/';
+export const APP_SCHEME_URI = `${Tenant.APP_SCHEME}://`;
+export const APP_URI = Tenant.API_URL;
+export const APP_API_URI =
+  DEV_MODE.isActive && CUSTOM_API_URL ? CUSTOM_API_URL : Tenant.API_URL;
 
 const STRAPI_PROD = true;
 export const STRAPI_API_URI = STRAPI_PROD
@@ -99,7 +98,7 @@ export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;
 export const MINDS_GUID = '100000000000000519';
 
-export const MINDS_URI_SETTINGS = {
+export const APP_URI_SETTINGS = {
   //basicAuth: 'crypto:ohms',
 };
 

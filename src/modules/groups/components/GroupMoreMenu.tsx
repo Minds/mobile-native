@@ -9,7 +9,7 @@ import {
   BottomSheetMenuItem,
 } from '~/common/components/bottom-sheet';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
-import { MINDS_URI } from '~/config/Config';
+import { APP_URI } from '~/config/Config';
 import GroupModel from '~/groups/GroupModel';
 import NavigationService from '../../../navigation/NavigationService';
 import { GroupContextType, useGroupContext } from '../contexts/GroupContext';
@@ -42,7 +42,7 @@ const getOptions = ({
     onPress: () => void;
   }> = [];
 
-  const link = `${MINDS_URI}group/${group.guid}/feed`;
+  const link = `${APP_URI}group/${group.guid}/feed`;
 
   if (PermissionsService.canBoost()) {
     options.push({

@@ -8,7 +8,7 @@ import {
 } from '~/common/components/bottom-sheet';
 import { B2, Row } from '~/common/ui';
 import sessionService from '~/common/services/session.service';
-import { MINDS_URI } from '~/config/Config';
+import { APP_URI } from '~/config/Config';
 import { showNotification } from 'AppMessages';
 import { IconButtonCircle } from './IconButtonCircle';
 import { Linking } from 'react-native';
@@ -61,9 +61,7 @@ const InviteToMindsSheet = React.forwardRef<BottomSheetModalType>(
 );
 
 const getURL = () => {
-  return encodeURI(
-    `${MINDS_URI}?referrer=${sessionService.getUser().username}`,
-  );
+  return encodeURI(`${APP_URI}?referrer=${sessionService.getUser().username}`);
 };
 
 const inviteTweeter = () => {
