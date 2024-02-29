@@ -6,7 +6,9 @@ import { SupermindRequestParam } from './SupermindComposeScreen';
 import { confirm } from '../common/components/Confirm';
 import api from '../common/services/api.service';
 import { confirmSupermindReply } from './SupermindConfirmation';
+import PermissionsService from '~/common/services/permissions.service';
 
+jest.mock('../common/services/permissions.service');
 jest.mock('../navigation/NavigationService');
 jest.mock('../common/components/Confirm');
 jest.mock('./SupermindConfirmation');
@@ -52,6 +54,7 @@ describe('createComposeStore', () => {
       route: {},
     });
     store.onScreenFocused();
+    PermissionsService.canCreatePost.mockReturnValue(true);
   });
 
   afterEach(() => {
