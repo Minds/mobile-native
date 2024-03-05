@@ -16,6 +16,7 @@ import MetadataService, {
 } from './services/metadata.service';
 import { storeRatingService } from 'modules/store-rating';
 import getNetworkError from './helpers/getNetworkError';
+import { showNotification } from 'AppMessages';
 
 /**
  * Base model
@@ -224,6 +225,9 @@ export default class BaseModel extends AbstractModel {
         storeRatingService.track('downvote');
       }
     } catch (err) {
+      const message = getNetworkError(err);
+      showNotification(message || 'Error voting');
+
       if (!voted) {
         this['thumbs:' + direction + ':user_guids'] = guids.filter(function (
           item,
@@ -238,10 +242,6 @@ export default class BaseModel extends AbstractModel {
       }
       this['thumbs:' + direction + ':count'] =
         parseInt(this['thumbs:' + direction + ':count'], 10) - delta;
-
-      const message = getNetworkError(err);
-      //
-      throw message ? new Error(message) : err;
     }
   }
 
