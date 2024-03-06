@@ -51,6 +51,8 @@ export default class ActivityModel extends BaseModel {
   @observable edited: '0' | '1' = '0';
   @observable paywall: true | '1' | '' = '';
 
+  link_title: string = '';
+
   supermind?: {
     request_guid: string;
     is_reply: boolean;
