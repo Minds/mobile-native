@@ -4,7 +4,7 @@ import React, { useCallback, useMemo } from 'react';
 import { View, Keyboard } from 'react-native';
 import { IconButton } from '~ui/icons';
 import ThemedStyles from '../styles/ThemedStyles';
-import { IS_IOS, IS_IPAD, IS_TENANT } from '~/config/Config';
+import { IS_IPAD, IS_TENANT } from '~/config/Config';
 
 function ComposeBottomBar(props) {
   const theme = ThemedStyles.style;
@@ -52,18 +52,6 @@ function ComposeBottomBar(props) {
           onPress={onCameraPress}
         />
       )}
-      {!props.store.isGroup() &&
-        !props.store.isRemind &&
-        !props.store.supermindRequest &&
-        !props.store.isEdit &&
-        !IS_IOS && (
-          <IconButton
-            name="money"
-            style={iconStyle}
-            scale
-            onPress={props.onMoney}
-          />
-        )}
       <IconButton
         name="hashtag"
         style={iconStyle}
