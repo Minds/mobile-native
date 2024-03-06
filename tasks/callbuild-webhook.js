@@ -20,7 +20,7 @@ async function callBuildWebhook() {
           Token: generateToken({ TENANT_ID: process.env.TENANT_ID }),
         },
         body: JSON.stringify({
-          TENANT_ID: process.env.TENANT_ID,
+          TENANT_ID: parseInt(process.env.TENANT_ID, 10),
           TOKEN: process.env.TOKEN,
           VERSION: APP_VERSION,
           status,
