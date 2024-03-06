@@ -36,6 +36,7 @@ export const IS_TENANT = Tenant.APP_NAME !== 'Minds';
  */
 export const IS_TENANT_PREVIEW = Tenant.IS_PREVIEW && IS_TENANT;
 export const SUPERMIND_ENABLED = !IS_TENANT;
+export const BOOST_POST_ENABLED = !IS_TENANT;
 export const WALLET_ENABLED = !IS_TENANT;
 export const AFFILIATES_ENABLED = !IS_TENANT;
 export const MEMBERSHIP_TIERS_ENABLED = !IS_TENANT;

@@ -6,7 +6,7 @@ import SupermindLabel from '../common/components/supermind/SupermindLabel';
 import { B2, Row, Screen, ScreenHeader, Spacer } from '../common/ui';
 import ThemedStyles from '../styles/ThemedStyles';
 import type { ComposeCreateMode } from './createComposeStore';
-import { SUPERMIND_ENABLED } from '../config/Config';
+import { BOOST_POST_ENABLED, SUPERMIND_ENABLED } from '../config/Config';
 import i18nService from '../common/services/i18n.service';
 import { CaptureFabIcon } from '~/capture/CaptureFab';
 
@@ -42,14 +42,16 @@ export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
         borderless
         onPress={() => navigateToCompose('monetizedPost')}
       />
-      <MenuItem
-        title={texts.boost.title}
-        subtitle={texts.boost.subtitle}
-        iconColor={selected === 'boost' ? 'Link' : undefined}
-        leftIcon="boost"
-        borderless
-        onPress={() => navigateToCompose('boost')}
-      />
+      {BOOST_POST_ENABLED && (
+        <MenuItem
+          title={texts.boost.title}
+          subtitle={texts.boost.subtitle}
+          iconColor={selected === 'boost' ? 'Link' : undefined}
+          leftIcon="boost"
+          borderless
+          onPress={() => navigateToCompose('boost')}
+        />
+      )}
       {SUPERMIND_ENABLED && (
         <MenuItem
           title={texts.supermind.title}
