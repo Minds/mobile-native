@@ -26,6 +26,11 @@ async function callBuildWebhook() {
         }),
       });
       if (!response.ok) {
+        console.log('Failed to call webhook', {
+          status: response.status,
+          statusText: response.statusText,
+          body: await response.text(),
+        });
         throw new Error('Failed to call webhook');
       }
       if (status === 'failed') {
