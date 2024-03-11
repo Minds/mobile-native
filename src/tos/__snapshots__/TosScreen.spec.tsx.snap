@@ -101,6 +101,9 @@ exports[`Tos screen render and accept 1`] = `
                 "flexDirection": "row",
                 "justifyContent": "flex-start",
               },
+              {
+                "alignItems": "center",
+              },
             ]
           }
         />

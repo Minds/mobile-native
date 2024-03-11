@@ -461,7 +461,6 @@ const RootStack = observer(function () {
               getComponent={() =>
                 require('~/modules/chat').ChatConversationStack
               }
-              options={modalOptions}
             />
             <RootStackNav.Screen
               name="EarnModal"
