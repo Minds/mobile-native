@@ -24,7 +24,7 @@ export default function ChatScreen({ navigation }) {
         />
       )}
       <MessageList data={items} />
-      <ChatInput />
+      <ChatInput onSendMessage={t => console.log('new message', t)} />
     </Screen>
   );
 }
