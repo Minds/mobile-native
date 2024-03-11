@@ -15,7 +15,7 @@ import TopShadow from '../common/components/TopShadow';
 import PressableScale from '~/common/components/PressableScale';
 import NewsfeedStack from '~/navigation/NewsfeedStack';
 import MoreStack from '~/navigation/MoreStack';
-import { IS_IOS, IS_TENANT } from '~/config/Config';
+import { IS_IOS } from '~/config/Config';
 import Animated, {
   useAnimatedStyle,
   withSpring,
@@ -32,9 +32,9 @@ export type TabParamList = {
   User: {};
   Discovery: {};
   More: {};
+  ChatStack: {};
   Notifications: {};
   CaptureTab: {};
-  MindsPlus: {};
 };
 
 const { width } = Dimensions.get('screen');
@@ -167,16 +167,11 @@ const Tabs = observer(function () {
           getComponent={() => require('~/navigation/DiscoveryStack').default}
           options={discoveryOptions}
         />
-        {!IS_TENANT && (
-          <Tab.Screen
-            name="MindsPlus"
-            getComponent={() =>
-              require('~/discovery/v2/PlusDiscoveryScreen').default
-            }
-            options={{ tabBarTestID: 'Tabs:MindsPlus' }}
-            initialParams={{ backEnable: false }}
-          />
-        )}
+        <Tab.Screen
+          name="ChatStack"
+          getComponent={() => require('~/modules/chat').ChatsListStack}
+          options={discoveryOptions}
+        />
         <Tab.Screen
           name="Notifications"
           component={NotificationsStack}
@@ -234,6 +229,7 @@ const iconFromRoute: Record<string, IconMapNameType> = {
   More: 'menu',
   Newsfeed: 'home',
   User: 'user',
+  ChatStack: 'chat',
   Discovery: 'search',
   Performance: 'dev',
   MindsPlus: 'queue',
