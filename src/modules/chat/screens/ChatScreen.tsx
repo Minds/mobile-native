@@ -11,7 +11,7 @@ export default function ChatScreen({ navigation }) {
   const { data } = useChatQuery('1');
   const items = data?.messages || [];
   return (
-    <Screen>
+    <Screen safe>
       {data?.members && (
         <CheatHeader
           members={data?.members}
