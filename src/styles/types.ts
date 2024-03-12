@@ -40,7 +40,7 @@ type Numbers_99 = RemoveTrailingZero<Values<NestedValues<NumberHelper>>>;
 type ThemeSuffix = '_Light' | '_Dark';
 
 export type DynamicStyles = {
-  [key in Enumerate<30> as
+  [key in Enumerate<31> as
     | `border${key}x`
     | `borderRight${key}x`
     | `borderTop${key}x`

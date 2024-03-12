@@ -50,7 +50,6 @@ export const ScreenHeader = ({
       )}
       <Row align="centerBetween" space="L" {...more}>
         <View style={styles.row}>
-          {leftComponent ? leftComponent : null}
           {back && (
             <IconButton
               name={backIcon}
@@ -59,6 +58,7 @@ export const ScreenHeader = ({
               onPress={onBack || (() => navigation.goBack())}
             />
           )}
+          {leftComponent ? leftComponent : null}
           {Boolean(title) && !centerTitle && (
             <Typography type={titleType} font="bold" onPress={onTitlePress}>
               {title}
@@ -86,7 +86,7 @@ const styles = ThemedStyles.create({
     'borderBottom1x',
     { minHeight: 55, zIndex: 1 },
   ],
-  row: ['rowJustifyStart'],
+  row: ['rowJustifyStart', 'alignCenter'],
   shadow: [
     'bgPrimaryBackground',
     {

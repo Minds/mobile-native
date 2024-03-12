@@ -28,6 +28,9 @@ exports[`SupermindScreen should render correctly 1`] = `
                   "flexDirection": "row",
                   "justifyContent": "flex-start",
                 },
+                {
+                  "alignItems": "center",
+                },
               ]
             }
           >
