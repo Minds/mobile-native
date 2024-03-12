@@ -226,10 +226,9 @@ export default class Activity extends Component<ActivityProps> {
       return;
     }
     const entity = this.props.entity;
+    const title = entity.link_title || entity.title;
     Clipboard.setString(
-      entities.decodeHTML(
-        entity.title ? entity.title + '\n' + entity.text : entity.text,
-      ),
+      entities.decodeHTML(title ? title + '\n' + entity.text : entity.text),
     );
     showNotification(i18n.t('copied'), 'info');
   };
@@ -336,7 +335,7 @@ export default class Activity extends Component<ActivityProps> {
    */
   render() {
     const entity = ActivityModel.checkOrCreate(this.props.entity);
-    const hasText = !!entity.text || !!entity.title;
+    const hasText = !!entity.text || !!entity.title || !!entity.link_title;
     const hasMedia = entity.hasMedia();
     const hasRemind = !!entity.remind_object;
 

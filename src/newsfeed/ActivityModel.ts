@@ -115,7 +115,6 @@ export default class ActivityModel extends BaseModel {
     height?: number;
     width?: number;
   };
-  link_title?: string;
 
   /**
    * Goals
