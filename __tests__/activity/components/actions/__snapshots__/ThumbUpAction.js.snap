@@ -81,6 +81,7 @@ exports[`Thumb action component renders correctly 1`] = `
           "impressions": 0,
           "isOwner": [Function],
           "is_visible": false,
+          "link_title": "",
           "listenForMetricsDebounced": [Function],
           "mature": false,
           "mature_visibility": false,

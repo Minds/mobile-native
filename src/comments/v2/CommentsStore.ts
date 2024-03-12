@@ -27,6 +27,7 @@ import { storeRatingService } from 'modules/store-rating';
 import { EventContext } from '@snowplow/react-native-tracker';
 import analyticsService from '../../common/services/analytics.service';
 import PermissionsService from '~/common/services/permissions.service';
+import getNetworkError from '~/common/helpers/getNetworkError';
 
 const COMMENTS_PAGE_SIZE = 12;
 
@@ -403,6 +404,9 @@ export default class CommentsStore {
    * Post comment
    */
   post = async () => {
+    if (!PermissionsService.canComment(true)) {
+      return;
+    }
     if (this.attachment.uploading) {
       showNotification(i18n.t('uploading'), 'info', 3000);
       return;
@@ -456,8 +460,9 @@ export default class CommentsStore {
         }
       }
     } catch (err) {
+      const message = getNetworkError(err);
       logService.exception('[CommentsStore] post', err);
-      showNotification('Error sending comment');
+      showNotification(message || 'Error sending comment');
     } finally {
       this.saving = false;
     }
@@ -653,8 +658,9 @@ export default class CommentsStore {
     try {
       await attachment.attachMedia(media);
     } catch (err) {
+      const message = getNetworkError(err);
       logService.exception('[CommentsStore] onAttachedMedia', err);
-      showNotification('Oops caught upload error.');
+      showNotification(message || 'Oops caught upload error.');
     }
   };
 

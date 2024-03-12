@@ -7,7 +7,7 @@ import { withErrorBoundaryScreen } from '../components/ErrorBoundaryScreen';
 import Markdown from 'react-native-markdown-display';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useAuxPagesQuery } from '~/graphql/strapi';
-import { MINDS_URI } from '~/config/Config';
+import { APP_URI } from '~/config/Config';
 import CenteredLoading from '../components/CenteredLoading';
 
 type WebContentScreenRouteProp = RouteProp<RootStackParamList, 'WebContent'>;
@@ -16,10 +16,10 @@ type WebContentScreenProps = {
   route: WebContentScreenRouteProp;
 };
 
-const MINDS_URI_P = MINDS_URI + 'p/';
+const APP_URI_P = APP_URI + 'p/';
 
 function WebContentScreen({ route }: WebContentScreenProps) {
-  const path = route.params.path?.replace(MINDS_URI_P, '');
+  const path = route.params.path?.replace(APP_URI_P, '');
   const { data, isLoading } = useAuxPagesQuery({ path });
 
   const {

@@ -39,7 +39,7 @@ describe('Thumb action component', () => {
       navigate: jest.fn(),
     };
 
-    entity.toggleVote = jest.fn();
+    entity.toggleVote = jest.fn().mockResolvedValue(true);
 
     screen = shallow(
       <ThumbUpAction direction="up" entity={entity} navigation={navigation} />,

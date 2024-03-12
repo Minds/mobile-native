@@ -264,13 +264,19 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
               <OffsetList
                 ref={channelsListRef}
                 sticky
-                fetchEndpoint="api/v3/subscriptions/relational/subscriptions-of-subscriptions"
-                endpointData="users"
+                fetchEndpoint={
+                  IS_TENANT
+                    ? 'api/v3/multi-tenant/lists/user'
+                    : 'api/v3/subscriptions/relational/subscriptions-of-subscriptions'
+                }
+                endpointData={IS_TENANT ? 'data' : 'users'}
                 header={header}
                 offsetPagination
                 renderItem={({ item }) => (
                   <ChannelListItem
-                    channel={UserModel.checkOrCreate(item)}
+                    channel={UserModel.checkOrCreate(
+                      IS_TENANT ? item.entity : item,
+                    )}
                     borderless
                     navigation={navigation}
                   />
@@ -285,8 +291,12 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
               <OffsetList
                 ref={groupsListRef}
                 sticky
-                fetchEndpoint="api/v2/suggestions/group"
-                endpointData="suggestions"
+                fetchEndpoint={
+                  IS_TENANT
+                    ? 'api/v3/multi-tenant/lists/group'
+                    : 'api/v2/suggestions/group'
+                }
+                endpointData={IS_TENANT ? 'data' : 'suggestions'}
                 header={header}
                 offsetPagination
                 renderItem={({ item }) => (

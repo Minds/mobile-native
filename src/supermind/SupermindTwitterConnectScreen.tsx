@@ -8,7 +8,7 @@ import useApiFetch from '../common/hooks/useApiFetch';
 import apiService from '../common/services/api.service';
 import i18n from '../common/services/i18n.service';
 import { B2, Button, Column, H3, Screen, ScreenHeader } from '../common/ui';
-import { MINDS_URI } from '../config/Config';
+import { APP_URI } from '../config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 export interface SupermindTwitterConnectRouteParams {
@@ -35,7 +35,7 @@ function SupermindTwitterConnectScreen() {
       return new Promise(resolve =>
         navigation.navigate('WebView', {
           url: authorization_url,
-          redirectUrl: MINDS_URI + 'api/v3/twitter/oauth-callback',
+          redirectUrl: APP_URI + 'api/v3/twitter/oauth-callback',
           onRedirect: async (event: WebViewNavigation) => {
             resolve(true);
             await apiService.get(event.url);

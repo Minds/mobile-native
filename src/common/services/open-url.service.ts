@@ -1,28 +1,27 @@
-//@ts-nocheck
-import { MINDS_URI, MINDS_PRO } from '../../config/Config';
+import { APP_URI, MINDS_PRO } from '../../config/Config';
 import { Alert, Linking } from 'react-native';
 import deeplinksRouterService from './deeplinks-router.service';
 import { InAppBrowser } from 'react-native-inappbrowser-reborn';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { storages } from './storage/storages.service';
 import NavigationService from '~/navigation/NavigationService';
-import { CustomPageType } from '~/modules/custom-pages/types';
 
 const STORAGE_NAMESPACE = 'openLinksBrowser';
 
-type BrowserType = undefined | 0 | 1; // 0 not defined, 0 in app, 1 default browser
+type BrowserType = 0 | 1; // not defined, 0 in app, 1 default browser
 
 /**
  * Open url service
  */
 export class OpenURLService {
-  preferredBrowser: BrowserType = undefined;
+  preferredBrowser?: BrowserType = undefined;
 
   /**
    * Load settings from storage
    */
   init() {
-    this.preferredBrowser = storages.app.getInt(STORAGE_NAMESPACE) ?? undefined;
+    this.preferredBrowser =
+      (storages.app.getInt(STORAGE_NAMESPACE) as 0 | 1) ?? undefined;
   }
 
   /**
@@ -88,7 +87,11 @@ export class OpenURLService {
         });
       } else Linking.openURL(url);
     } catch (error) {
-      Alert.alert(error.message);
+      if (typeof error === 'string') {
+        Alert.alert(error);
+      } else if (error instanceof Error) {
+        Alert.alert(error.message);
+      }
     }
   }
 
@@ -99,20 +102,27 @@ export class OpenURLService {
   open(url: string) {
     const navigatingToPro = url === MINDS_PRO;
 
-    if (url.startsWith(MINDS_URI.replace('https://www.', ''))) {
-      url = `https://www.${url}`;
+    if (!url.startsWith('https://')) {
+      if (
+        APP_URI.startsWith('https://www.') &&
+        url.startsWith(APP_URI.replace('https://www.', ''))
+      ) {
+        url = `https://www.${url}`;
+      } else {
+        url = `https://${url}`;
+      }
     }
 
-    if (url.startsWith(`${MINDS_URI}p/`)) {
+    if (url.startsWith(`${APP_URI}p/`)) {
       return NavigationService.navigate('WebContent', { path: url });
     }
-    if (url.startsWith(`${MINDS_URI}pages/`)) {
-      const page = url.replace(`${MINDS_URI}pages/`, '');
+    if (url.startsWith(`${APP_URI}pages/`)) {
+      const page = url.replace(`${APP_URI}pages/`, '');
 
       return NavigationService.navigate('CustomPages', { page });
     }
 
-    if (url.startsWith(MINDS_URI) && !navigatingToPro) {
+    if (url.startsWith(APP_URI) && !navigatingToPro) {
       const routed = deeplinksRouterService.navigate(url);
       if (routed) return;
     }

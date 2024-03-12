@@ -1,4 +1,10 @@
-import { IS_TENANT_PREVIEW, MINDS_DEEPLINK } from '../../config/Config';
+import {
+  IS_TENANT_PREVIEW,
+  APP_API_URI,
+  MINDS_DEEPLINK,
+  APP_SCHEME_URI,
+  IS_TENANT,
+} from '../../config/Config';
 import navigationService from '../../navigation/NavigationService';
 import { Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
@@ -6,7 +12,6 @@ import analyticsService from '~/common/services/analytics.service';
 import apiService from './api.service';
 import referrerService from './referrer.service';
 import PreviewUpdateService from 'preview/PreviewUpdateService';
-// import { forceCodepushCustomBundle } from '~/modules/codepush/codepushForce';
 
 /**
  * Deeplinks router
@@ -78,6 +83,9 @@ class DeeplinksRouter {
   navigate(url) {
     if (IS_TENANT_PREVIEW && url && PreviewUpdateService.isPreviewURL(url)) {
       const channel = PreviewUpdateService.getPreviewChannel(url);
+      if (!channel) {
+        return;
+      }
       PreviewUpdateService.updatePreview(channel);
       return;
     }
@@ -115,10 +123,10 @@ class DeeplinksRouter {
     if (
       params &&
       params.webview === '1' &&
-      url.startsWith('https://www.minds.com/' || url.startsWith('mindsapp://'))
+      url.startsWith(APP_API_URI || url.startsWith(APP_SCHEME_URI))
     ) {
       navigationService.navigate('WebView', {
-        url: url.replace('mindsapp://', 'https://www.minds.com/'),
+        url: url.replace(APP_SCHEME_URI, APP_API_URI),
         headers: apiService.buildAuthorizationHeader(),
       });
       return true;
@@ -135,13 +143,19 @@ class DeeplinksRouter {
         const calcParams = this.nestedScreen(screens, route.params);
         navigationService[route.type](screen, calcParams);
       }
-    } else if (url !== 'https://www.minds.com') {
-      if (url.startsWith('mindsapp://')) {
+    } else if (url !== APP_API_URI) {
+      if (url.startsWith(APP_SCHEME_URI)) {
+        // how to avoid redirection loop
         Linking.openURL(
-          url.replace('mindsapp://', 'https://mobile.minds.com/'),
+          url.replace(
+            APP_SCHEME_URI,
+            IS_TENANT ? APP_API_URI : 'https://mobile.minds.com/',
+          ),
         );
       } else {
-        Linking.openURL(url.replace('https://www.', 'https://mobile.'));
+        IS_TENANT
+          ? Linking.openURL(url)
+          : Linking.openURL(url.replace('https://www.', 'https://mobile.'));
       }
       return true;
     }

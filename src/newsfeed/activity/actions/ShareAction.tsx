@@ -5,7 +5,7 @@ import SendIntentAndroid from 'react-native-send-intent';
 import { useAnalytics } from '~/common/contexts/analytics.context';
 import { IconButtonNext } from '~ui/icons';
 import logService from '../../../common/services/log.service';
-import { ANDROID_CHAT_APP, MINDS_URI } from '../../../config/Config';
+import { ANDROID_CHAT_APP, APP_URI } from '../../../config/Config';
 import ShareService from '../../../share/ShareService';
 import type ActivityModel from '../../ActivityModel';
 import { pushShareSheet } from '../ActivityActionSheet';
@@ -24,7 +24,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
   const requestParams =
     type === 'comment' ? `${entity_guid}?focusedCommentUrn=${urn}` : guid;
 
-  const sharedLink = `${MINDS_URI}newsfeed/${requestParams}`;
+  const sharedLink = `${APP_URI}newsfeed/${requestParams}`;
 
   const localStore = useLocalStore(() => ({
     onPress() {

@@ -19,7 +19,7 @@ import session from './session.service';
 import { isTokenExpired } from './TokenExpiredError';
 import {
   IS_IOS,
-  MINDS_API_URI,
+  APP_API_URI,
   MINDS_CANARY,
   MINDS_STAGING,
   NETWORK_TIMEOUT,
@@ -114,7 +114,7 @@ export class ApiService {
     this.axios =
       axiosInstance ||
       axios.create({
-        baseURL: MINDS_API_URI,
+        baseURL: APP_API_URI,
       });
 
     this.axios.interceptors.request.use(config => {
@@ -646,7 +646,7 @@ export class ApiService {
       if (progress) {
         xhr.upload.addEventListener('progress', progress);
       }
-      xhr.open('POST', MINDS_API_URI + this.buildUrl(url));
+      xhr.open('POST', APP_API_URI + this.buildUrl(url));
       xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');

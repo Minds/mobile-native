@@ -55,7 +55,13 @@ export default class GroupModel extends BaseModel {
     }
     try {
       await groupsService.join(this.guid);
-      GroupModel.events.emit('joinedGroup', this);
+      if (this.isPublic) {
+        GroupModel.events.emit('joinedGroup', this);
+      } else {
+        // we need to reftech the group to know the state, since we don't know if the user was invited
+        const group = await groupsService.loadEntity(this.guid);
+        this.update(group);
+      }
     } catch (error) {
       console.log('Error joining', error);
       runInAction(() => {
