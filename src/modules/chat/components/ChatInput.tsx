@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 import type { TextInput as TextInputType } from 'react-native';
-import {
-  Dimensions,
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from '@expo/vector-icons/Ionicons';
 import { Flow } from 'react-native-animated-spinkit';
 
@@ -108,10 +102,7 @@ export default ChatInput;
 
 const styles = StyleSheet.create({
   sendIcon: {
-    paddingBottom: Platform.select({
-      android: 7,
-      ios: 2,
-    }),
+    paddingBottom: 7,
   },
   input: {
     minHeight: 35,

@@ -3,6 +3,11 @@ import { FlashList } from '@shopify/flash-list';
 
 import Message from './Message';
 import { StyleSheet, useWindowDimensions } from 'react-native';
+import { IS_IOS } from '~/config/Config';
+
+const renderMessage = ({ item }) => {
+  return <Message message={item} />;
+};
 
 export default function MessageList({ data }) {
   const dimensions = useWindowDimensions();
@@ -13,16 +18,12 @@ export default function MessageList({ data }) {
       contentContainerStyle={styles.container}
       estimatedItemSize={90}
       inverted
-      estimatedListSize={dimensions}
+      estimatedListSize={!IS_IOS ? dimensions : undefined}
       renderItem={renderMessage}
       keyExtractor={keyExtractor}
     />
   );
 }
-
-const renderMessage = ({ item }) => {
-  return <Message message={item} />;
-};
 
 const keyExtractor = item => item.id;
 

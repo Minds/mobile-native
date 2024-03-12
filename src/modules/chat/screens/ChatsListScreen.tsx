@@ -3,7 +3,7 @@ import { Button, Screen, ScreenHeader } from '~/common/ui';
 
 export default function ChatsListScreen({ navigation }: any) {
   return (
-    <Screen>
+    <Screen safe>
       <ScreenHeader back={false} title="Chats" />
       <Button
         onPress={() => {

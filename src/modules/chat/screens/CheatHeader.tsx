@@ -14,13 +14,14 @@ export const CheatHeader = ({ members, extra }: Props) => {
   const avatars = firstThreeMembers.map((member, index) =>
     index === 0 ? (
       <Avatar
+        key={index}
         size="tiny"
         source={{
           uri: member.avatar,
         }}
       />
     ) : (
-      <View style={styles.avatars}>
+      <View style={styles.avatars} key={index}>
         <Avatar
           size="tiny"
           source={{
