@@ -8,9 +8,9 @@ import Member from '../components/Member';
 
 export default function ChatDetailsScreen({ route }) {
   const { members } = route.params ?? {};
-
+  const [expanded, setExpanded] = useState(false);
   const [mute, setMute] = useState(false);
-  const directMessage = (members?.length ?? 0) === 0;
+  const privateChat = (members?.length ?? 0) <= 2;
   const myChat = true;
   return (
     <Screen safe scroll>
@@ -24,16 +24,20 @@ export default function ChatDetailsScreen({ route }) {
       </Row>
       <Row align="centerBetween" vertical="XL" horizontal="XXXL">
         <H3>Chat Members ({members?.length})</H3>
-        <IconButton name="chevron-right" size={32} />
+        <IconButton
+          name={expanded ? 'chevron-down' : 'chevron-right'}
+          size={32}
+          onPress={() => setExpanded(prev => !prev)}
+        />
       </Row>
       <View style={styles.separator} />
-      <View style={styles.container}>
+      <View style={[styles.container, !expanded && { display: 'none' }]}>
         {members.map(member => (
           <Member key={member.guid} member={member} />
         ))}
       </View>
       <View style={styles.separator} />
-      {directMessage && (
+      {privateChat && (
         <>
           <Link style={styles.simpleLink} decoration={false} onPress={() => {}}>
             Report user
