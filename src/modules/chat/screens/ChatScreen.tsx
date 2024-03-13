@@ -17,7 +17,9 @@ export default function ChatScreen({ navigation }) {
           members={data?.members}
           extra={
             <TouchableOpacity
-              onPress={() => navigation.navigate('ChatDetails')}>
+              onPress={() =>
+                navigation.navigate('ChatDetails', { members: data?.members })
+              }>
               <Icon name="info-circle" size={20} />
             </TouchableOpacity>
           }
