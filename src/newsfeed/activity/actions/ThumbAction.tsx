@@ -6,7 +6,6 @@ import { IconMapNameType } from '~/common/ui/icons/map';
 import { UISizing } from '~styles/Tokens';
 import { Icon } from '~ui/icons';
 import { FLAG_VOTE } from '../../../common/Permissions';
-import remoteAction from '../../../common/RemoteAction';
 import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import { useAnalytics } from '~/common/contexts/analytics.context';
 import type ActivityModel from '../../ActivityModel';
@@ -48,10 +47,8 @@ const ThumbAction = ({
       onDownvote?.();
     }
 
-    remoteAction(() => {
-      return entity.toggleVote(direction).then(() => {
-        analytics.trackClick(`vote:${direction}`);
-      });
+    return entity.toggleVote(direction).then(() => {
+      analytics.trackClick(`vote:${direction}`);
     });
   };
 

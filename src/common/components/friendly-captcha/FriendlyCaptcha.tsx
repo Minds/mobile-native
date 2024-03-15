@@ -7,7 +7,7 @@ import React, {
   useRef,
 } from 'react';
 import openUrlService from '~/common/services/open-url.service';
-import { MINDS_API_URI } from '~/config/Config';
+import { APP_API_URI } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import html from './html';
 
@@ -19,7 +19,7 @@ interface FriendlyCaptchaProps {
 
 const webViewSource = {
   html,
-  baseUrl: MINDS_API_URI,
+  baseUrl: APP_API_URI,
 };
 
 const whiteListAll = ['*'];
@@ -77,7 +77,7 @@ function FriendlyCaptcha(
    * If the webview was navigating to an external url, open it using our openUrlService
    */
   const onNavigation = useCallback(request => {
-    if (!request.url.includes(MINDS_API_URI)) {
+    if (!request.url.includes(APP_API_URI)) {
       openUrlService.open(request.url);
       return false;
     }

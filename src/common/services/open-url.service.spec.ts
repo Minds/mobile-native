@@ -20,7 +20,7 @@ jest.mock('./deeplinks-router.service.ts', () => ({
 }));
 
 jest.mock('../../config/Config', () => ({
-  MINDS_URI: 'https://www.minds.com',
+  APP_URI: 'https://www.minds.com',
   MINDS_PRO: 'https://www.minds.com/pro',
 }));
 

@@ -8,7 +8,7 @@ import { ApiError } from '../../../src/common/services/ApiErrors';
 
 import session from '../../../src/common/services/session.service';
 import auth from '../../../src/auth/AuthService';
-import { MINDS_API_URI } from '../../../src/config/Config';
+import { APP_API_URI } from '../../../src/config/Config';
 import { UserError } from '../../../src/common/UserError';
 import { getStores } from '../../../AppStores';
 import NavigationService from '../../../src/navigation/NavigationService';

@@ -7,6 +7,7 @@ import { IMAGE_MAX_SIZE } from './../../config/Config';
 import { UserError } from '../UserError';
 import i18n from './i18n.service';
 import { Media } from '../stores/AttachmentStore';
+import PermissionsService from './permissions.service';
 
 type S3Response = {
   lease: {
@@ -49,6 +50,10 @@ class AttachmentService {
     };
 
     if (file.type.includes('video')) {
+      if (PermissionsService.canUploadVideo(true) === false) {
+        return;
+      }
+
       return this.uploadToS3(file, progress);
     } else {
       return api.upload('api/v1/media/', { file }, extra, progress);

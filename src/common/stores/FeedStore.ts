@@ -38,6 +38,11 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   @observable loaded = false;
 
   /**
+   * isEmpty, true if the results are empty without the injected items
+   */
+  @observable isEmpty = false;
+
+  /**
    * Load error
    */
   @observable errorLoading = false;
@@ -61,11 +66,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * Custom injected components
    */
   injectItems?: InjectItem[];
-
-  /**
-   * Custom injected components
-   */
-  emptyComponent?: InjectItem;
 
   /**
    * Viewed store
@@ -123,13 +123,6 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   }
 
   /**
-   * Sets the injected items for the feed
-   */
-  setEmptyComponent(emptyComponent: InjectItem) {
-    this.emptyComponent = emptyComponent;
-  }
-
-  /**
    * Add an entity to the viewed list and inform to the backend
    * @param {BaseModel} entity
    * @param {string} medium
@@ -170,17 +163,16 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    */
   @action
   addEntities(entities, replace = false) {
-    if (!entities.length) {
+    if (!entities.length && !this.entities.length) {
       const injected = this.injectItems?.find(i =>
         typeof i.indexes === 'function' ? i.indexes(0) : i.indexes === 0,
       );
       if (injected) {
         this.entities = [injected];
       }
-      if (this.emptyComponent) {
-        this.entities.push(this.emptyComponent);
-      }
+      this.isEmpty = true;
     } else if (replace) {
+      this.isEmpty = entities.length === 0;
       entities.forEach((entity, index) => {
         entity._list = this;
         entity.position = index + 1;
@@ -749,6 +741,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     this.refreshing = false;
     this.errorLoading = false;
     this.loaded = false;
+    this.isEmpty = false;
     this.loading = false;
     this.entities = [];
     this.feedsService.setOffset(0);

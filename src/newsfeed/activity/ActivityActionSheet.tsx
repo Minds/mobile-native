@@ -14,7 +14,7 @@ import {
   BLOCK_USER_ENABLED,
   BOOSTS_ENABLED,
   IS_IOS,
-  MINDS_URI,
+  APP_URI,
 } from '../../config/Config';
 import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
@@ -300,7 +300,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     }
     // Copy URL
     options.push(
-      copyToClipboardOptions(MINDS_URI + 'newsfeed/' + this.props.entity.guid),
+      copyToClipboardOptions(APP_URI + 'newsfeed/' + this.props.entity.guid),
     );
     // Share
     options.push({
@@ -411,7 +411,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       if (installed) {
         SendIntentAndroid.sendText({
           title: '',
-          text: MINDS_URI + 'newsfeed/' + this.props.entity.guid,
+          text: APP_URI + 'newsfeed/' + this.props.entity.guid,
           type: SendIntentAndroid.TEXT_PLAIN,
           package: ANDROID_CHAT_APP,
         });
@@ -441,12 +441,12 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   share = () => {
     shareService.share(
       this.props.entity.text,
-      MINDS_URI + 'newsfeed/' + this.props.entity.guid,
+      APP_URI + 'newsfeed/' + this.props.entity.guid,
     );
   };
 
   copyToClipboard = () => {
-    Clipboard.setString(MINDS_URI + 'newsfeed/' + this.props.entity.guid);
+    Clipboard.setString(APP_URI + 'newsfeed/' + this.props.entity.guid);
     showNotification(i18n.t('copied'));
   };
 

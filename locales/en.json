@@ -32,7 +32,7 @@
     "tapAllow": "Tap to allow",
     "grant": "Grant",
     "notAllowed": {
-      "interact": "You are not allowed to interact with this content",
+      "interact": "Your user role does not allow interactions on posts.",
       "appoint_admin": "You are not allowed to appoint an admin",
       "appoint_moderator": "You are not allowed to appoint a moderator",
       "approve_subscriber": "You are not allowed to approve a subscriber",
@@ -48,6 +48,8 @@
       "edit_comment": "Your user role does not allow commenting",
       "edit_group": "You are not allowed to edit this group",
       "edit_post": "You are not allowed to edit this post",
+      "boost": "Your user role does not allow boosting",
+      "upload_video": "Your user role does not allow upload videos",
       "invite": "You are not allowed to invite",
       "join": "You are not allowed to join",
       "message": "You are not allowed to message this user",
@@ -55,8 +57,7 @@
       "tag": "You are not allowed to tag this content",
       "remind": "Your user role does not allow you to remind or quote post",
       "wire": "You are not allowed to wire this user",
-      "view": "You are not allowed to view this content",
-      "vote": "Your user role does not allow interactions on posts"
+      "view": "You are not allowed to view this content"
     }
   },
   "supermind": {

@@ -17,14 +17,14 @@ export const DATA_SAVER_THUMB_RES = 96;
 
 export const ANDROID_CHAT_APP = 'com.minds.chat';
 
-export const MINDS_URI = 'https://www.minds.com/';
-export const MINDS_API_URI = 'https://www.minds.com/';
+export const APP_URI = 'https://www.minds.com/';
+export const APP_API_URI = 'https://www.minds.com/';
 
 export const CONECTIVITY_CHECK_URI = 'https://www.minds.com/';
 export const CONECTIVITY_CHECK_INTERVAL = 10000;
 export const MINDS_GUID = '100000000000000519';
 
-export const MINDS_URI_SETTINGS = {
+export const APP_URI_SETTINGS = {
   //basicAuth: 'crypto:ohms',
 };
 

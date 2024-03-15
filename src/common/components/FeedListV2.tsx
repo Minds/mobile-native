@@ -109,6 +109,15 @@ function FeedList<T extends BaseModel>(
     [feedStore, emptyMessage],
   );
 
+  // If the feedStore is empty and has injectItems, we need to add the empty message since the list will not render it
+  if (feedStore.isEmpty && feedStore.injectItems?.length) {
+    items.push(
+      new InjectItem(0, 'header', () => (
+        <Empty feedStore={feedStore} emptyMessage={emptyMessage} />
+      )),
+    );
+  }
+
   const isRefreshing =
     typeof refreshing === 'boolean' ? refreshing : feedStore.refreshing;
 

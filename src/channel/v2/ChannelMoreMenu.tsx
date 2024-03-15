@@ -11,7 +11,7 @@ import {
   BLOCK_USER_ENABLED,
   BOOSTS_ENABLED,
   CHAT_ENABLED,
-  MINDS_URI,
+  APP_URI,
 } from '../../config/Config';
 import { observer } from 'mobx-react';
 import {
@@ -77,7 +77,7 @@ const getOptions = (
     iconType: 'material',
     title: i18n.t('channel.share'),
     onPress: () => {
-      shareService.share(i18n.t('channel.share'), MINDS_URI + channel.username);
+      shareService.share(i18n.t('channel.share'), APP_URI + channel.username);
       ref.current.dismiss();
     },
   };
@@ -92,7 +92,7 @@ const getOptions = (
       iconType: 'material-community',
       title: i18n.t('channel.message'),
       onPress: () => {
-        // shareService.share(i18n.t('channel.share'), MINDS_URI + channel.username);
+        // shareService.share(i18n.t('channel.share'), APP_URI + channel.username);
         openChat();
         ref.current.dismiss();
       },
@@ -125,7 +125,7 @@ const getOptions = (
     },
   });
 
-  options.push(copyToClipboardOptions(MINDS_URI + channel.username));
+  options.push(copyToClipboardOptions(APP_URI + channel.username));
 
   if (!channel.isOwner()) {
     if (channel.isSubscribed()) {

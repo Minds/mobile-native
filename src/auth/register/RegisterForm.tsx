@@ -24,7 +24,7 @@ import { useNavigation } from '@react-navigation/core';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
-import { IS_IPAD, IS_TENANT, MINDS_URI, TENANT } from '~/config/Config';
+import { IS_IPAD, IS_TENANT, APP_URI, TENANT } from '~/config/Config';
 import openUrlService from '~/common/services/open-url.service';
 
 type PropsType = {
@@ -305,9 +305,9 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
                     onPress={() =>
                       IS_TENANT
                         ? openUrlService.open(
-                            `${MINDS_URI}pages/community-guidelines`,
+                            `${APP_URI}pages/community-guidelines`,
                           )
-                        : openUrlService.open(`${MINDS_URI}/p/content-policy`)
+                        : openUrlService.open(`${APP_URI}/p/content-policy`)
                     }>
                     {i18n.t('auth.content')}
                   </MText>{' '}
@@ -316,10 +316,8 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
                     style={theme.link}
                     onPress={() =>
                       IS_TENANT
-                        ? openUrlService.open(
-                            `${MINDS_URI}pages/privacy-policy`,
-                          )
-                        : openUrlService.open(`${MINDS_URI}p/privacy`)
+                        ? openUrlService.open(`${APP_URI}pages/privacy-policy`)
+                        : openUrlService.open(`${APP_URI}p/privacy`)
                     }>
                     {i18n.t('auth.privacyPolicy')}
                   </MText>
@@ -339,7 +337,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
                     onPress={() =>
                       IS_TENANT
                         ? openUrlService.open(
-                            `${MINDS_URI}pages/terms-of-service`,
+                            `${APP_URI}pages/terms-of-service`,
                           )
                         : openUrlService.open('https://www.minds.com/p/terms')
                     }>
