@@ -12,7 +12,6 @@ import { useBottomSheet } from '@gorhom/bottom-sheet';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { observer } from 'mobx-react';
 import MenuItem from '../../common/components/menus/MenuItem';
-import { useIsFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { PosterStackScreenProps } from './PosterStackNavigator';
 
 export function useNavCallback(screen, store, navigation) {
@@ -32,20 +31,11 @@ const PosterOptions: FC<PropsType> = props => {
   const license = store.attachments.license;
   const accessId = store.accessId;
   const bottomSheet = useBottomSheet();
-  const isCreateModalOn = useIsFeatureOn('mob-4596-create-modal');
-  const isIosMindsHidden = useIsIOSFeatureOn(
-    'mob-4637-ios-hide-minds-superminds',
-  );
 
   const onTagPress = useNavCallback('TagSelector', store, props.navigation);
   const onNsfwPress = useNavCallback('NsfwSelector', store, props.navigation);
   const onSchedulePress = useNavCallback(
     'ScheduleSelector',
-    store,
-    props.navigation,
-  );
-  const onMonetizePress = useNavCallback(
-    'MonetizeSelector',
     store,
     props.navigation,
   );
@@ -63,16 +53,6 @@ const PosterOptions: FC<PropsType> = props => {
 
   const showSchedule =
     (store.isEdit ? time_created > Date.now() : true) && !store.portraitMode;
-
-  const monetizeDesc = store.wire_threshold.support_tier?.urn
-    ? store.wire_threshold.support_tier?.name || 'Plus'
-    : '';
-
-  const showMonetize =
-    !store.portraitMode &&
-    !store.isRemind &&
-    !store.supermindRequest &&
-    !store.isEdit;
 
   return (
     <View style={styles.container}>
@@ -105,15 +85,6 @@ const PosterOptions: FC<PropsType> = props => {
           title={i18n.t('capture.schedule')}
           label={time_created ? moment(time_created).calendar() : i18n.t('now')}
           onPress={onSchedulePress}
-          noBorderTop
-        />
-      )}
-      {showMonetize && !isIosMindsHidden && !isCreateModalOn && (
-        <MenuItem
-          title={i18n.t('monetize.title')}
-          label={monetizeDesc}
-          onPress={onMonetizePress}
-          testID="monetizeButton"
           noBorderTop
         />
       )}

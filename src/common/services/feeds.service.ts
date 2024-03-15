@@ -14,7 +14,6 @@ import difference from 'lodash/difference';
 import { showNotification } from 'AppMessages';
 import { BoostedContentService } from '../../modules/boost/services/boosted-content.service';
 import sessionService from './session.service';
-import { hasVariation } from '../../../ExperimentsProvider';
 
 export const shouldInjectBoostAtIndex = (i: number) => i > 0 && i % 5 === 0;
 
@@ -147,10 +146,7 @@ export default class FeedsService {
     }
 
     for (let i = this.offset; i < this.offset + result.length; i++) {
-      if (
-        shouldInjectBoostAtIndex(i) ||
-        (!hasVariation('mob-5009-boost-rotator-in-feed') && i === 2)
-      ) {
+      if (shouldInjectBoostAtIndex(i)) {
         const boost = (this.boostedContent ?? boostedContentService).fetch();
         if (boost) {
           result.splice(i, 0, boost);
