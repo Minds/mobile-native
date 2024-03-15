@@ -243,6 +243,7 @@
     "react-native-bundle-visualizer": "https://github.com/IjzerenHein/react-native-bundle-visualizer.git#fix-remove-minify-false",
     "react-query-native-devtools": "^4.0.0",
     "react-test-renderer": "^18.2.0",
+    "sharp": "^0.33.2",
     "ts-node": "^10.8.0",
     "typescript": "^5.1.3"
   },
