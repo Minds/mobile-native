@@ -1,13 +1,24 @@
-import { ACCENT_COLOR_DARK, ACCENT_COLOR_LIGHT } from '~/config/Config';
+import {
+  ACCENT_COLOR_DARK,
+  ACCENT_COLOR_LIGHT,
+  BACKGROUND_PRIMARY_COLOR_DARK,
+  BACKGROUND_PRIMARY_COLOR_LIGHT,
+  BACKGROUND_PRIMARY_HIGHLIGHT_COLOR_DARK,
+  BACKGROUND_PRIMARY_HIGHLIGHT_COLOR_LIGHT,
+  BACKGROUND_SECONDARY_COLOR_DARK,
+  BACKGROUND_SECONDARY_COLOR_LIGHT,
+  BACKGROUND_TERTIARY_COLOR_DARK,
+  BACKGROUND_TERTIARY_COLOR_LIGHT,
+} from '~/config/Config';
 
 export type ColorsType = typeof LIGHT_THEME;
 export type ColorsNameType = keyof typeof LIGHT_THEME;
 
 export const LIGHT_THEME = {
-  PrimaryBackground: '#FFFFFF',
-  PrimaryBackgroundHighlight: '#F8FAFA',
-  SecondaryBackground: '#F6F7F7',
-  TertiaryBackground: '#E3E4E9',
+  PrimaryBackground: BACKGROUND_PRIMARY_COLOR_LIGHT,
+  PrimaryBackgroundHighlight: BACKGROUND_PRIMARY_HIGHLIGHT_COLOR_LIGHT,
+  SecondaryBackground: BACKGROUND_SECONDARY_COLOR_LIGHT,
+  TertiaryBackground: BACKGROUND_TERTIARY_COLOR_LIGHT,
   PrimaryText: '#43434D',
   SecondaryText: '#72727C',
   TertiaryText: '#9B9B9B',
@@ -43,10 +54,10 @@ export const LIGHT_THEME = {
 };
 
 export const DARK_THEME: ColorsType = {
-  PrimaryBackground: '#1C1D1F',
-  PrimaryBackgroundHighlight: '#1C1D1F',
-  SecondaryBackground: '#38393D',
-  TertiaryBackground: '#404E53',
+  PrimaryBackground: BACKGROUND_PRIMARY_COLOR_DARK,
+  PrimaryBackgroundHighlight: BACKGROUND_PRIMARY_HIGHLIGHT_COLOR_DARK,
+  SecondaryBackground: BACKGROUND_SECONDARY_COLOR_DARK,
+  TertiaryBackground: BACKGROUND_TERTIARY_COLOR_DARK,
   PrimaryText: '#F2F2F2',
   SecondaryText: '#b9bbc0',
   TertiaryText: '#a1a5ab',

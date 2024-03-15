@@ -111,7 +111,6 @@ export const featureList = [
   'mob-discovery-redirect',
   'mob-twitter-oauth-4715',
   'mob-4424-sockets',
-  'mob-4472-in-app-verification',
   'mob-4596-create-modal',
   'mob-4637-ios-hide-minds-superminds',
   'mob-4722-track-code-push',

@@ -60,13 +60,6 @@ export default function () {
         initialParams={{ noBottomInset: true }}
       />
       <NewsfeedStack.Screen
-        name="InAppVerification"
-        getComponent={() =>
-          require('modules/in-app-verification').InAppVerificationStack
-        }
-        options={hideHeader}
-      />
-      <NewsfeedStack.Screen
         name="BoostScreenV2"
         getComponent={() => require('modules/boost').BoostComposerStack}
         options={hideHeader}
