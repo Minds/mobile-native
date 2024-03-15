@@ -52,17 +52,6 @@ export default function () {
     });
   }
 
-  const account = [
-    {
-      title: i18n.t('settings.deactivate'),
-      onPress: useNavCallback('DeactivateChannel'),
-    },
-    {
-      title: i18n.t('settings.otherOptions.c2'),
-      onPress: useNavCallback('DeleteChannel'),
-    },
-  ];
-
   const data = [
     {
       title: i18n.t('settings.networkOptions.1'),
@@ -87,7 +76,6 @@ export default function () {
         i18n.t('settings.otherOptions.contentMigration'),
         contentMigration,
       )}
-      {generateSection(i18n.t('settings.otherOptions.c'), account)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}
     </Screen>
