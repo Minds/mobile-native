@@ -27,8 +27,6 @@ import RemoteBanner from '~/common/components/RemoteBanner';
 import InitialOnboardingButton from '~/onboarding/v2/InitialOnboardingButton';
 import PortraitContentBar from '~/portrait/components/PortraitContentBar';
 import NewsfeedTabs from '~/newsfeed/NewsfeedTabs';
-import { useIsFeatureOn } from 'ExperimentsProvider';
-import { InAppVerificationPrompt } from '~/modules/in-app-verification';
 import SeeLatestPostsButton from '../components/SeeLatestPostsButton';
 import type NewsfeedStore from '~/newsfeed/NewsfeedStore';
 import useModelEvent from '~/common/hooks/useModelEvent';
@@ -284,9 +282,6 @@ const Header = () => (
     <RemoteBanner />
     {!IS_TENANT && <InitialOnboardingButton />}
     {!IS_TENANT && <PortraitContentBar />}
-    {useIsFeatureOn('mob-4472-in-app-verification') ? (
-      <InAppVerificationPrompt />
-    ) : null}
     <NewsfeedTabs newsfeed={useLegacyStores().newsfeed} />
   </>
 );

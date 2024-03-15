@@ -19,11 +19,7 @@ import {
   Spacer,
 } from '~ui';
 import { Icon as IconV2 } from '@minds/ui';
-import {
-  hasVariation,
-  useIsGoogleFeatureOn,
-  useIsIOSFeatureOn,
-} from 'ExperimentsProvider';
+import { useIsGoogleFeatureOn, useIsIOSFeatureOn } from 'ExperimentsProvider';
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
 import { navigateToHelp } from '../settings/SettingsScreen';
 import {
@@ -162,15 +158,6 @@ const getOptionsList = (
         navigation.navigate('Settings');
       },
     },
-    hasVariation('mob-4472-in-app-verification')
-      ? {
-          name: 'Verify account',
-          icon: 'group',
-          onPress: async () => {
-            navigation.navigate('InAppVerification');
-          },
-        }
-      : null,
   ];
 
   return list;
