@@ -148,7 +148,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const navigation = useNavigation();
   const hasMedia = entity.hasMedia();
   const hasRemind = !!entity.remind_object;
-  const showText = !!entity.text || !!entity.title;
+  const showText = !!entity.text || !!entity.title || !!entity.link_title;
   const { current: cleanBottom } = useRef({
     paddingBottom: insets.bottom - 10,
     ...ThemedStyles.style.bgPrimaryBackground,
@@ -228,10 +228,9 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }, [entity]);
 
   const copyText = useCallback(() => {
+    const title = entity.link_title || entity.title;
     Clipboard.setString(
-      entities.decodeHTML(
-        entity.title ? entity.title + '\n' + entity.text : entity.text,
-      ),
+      entities.decodeHTML(title ? title + '\n' + entity.text : entity.text),
     );
     showNotification(i18n.t('copied'), 'info');
   }, [entity]);

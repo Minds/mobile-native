@@ -120,6 +120,11 @@ export default class Activity extends Component<ActivityProps> {
    * Nav to activity full screen
    */
   navToActivity = () => {
+    if (this.props.entity.hasSiteMembershipPaywallThumbnail) {
+      showNotification('This post is locked. Please view on web to engage.');
+      return;
+    }
+
     if (!this.props.navigation || this.props.entity.remind_deleted) {
       return;
     }
@@ -221,10 +226,9 @@ export default class Activity extends Component<ActivityProps> {
       return;
     }
     const entity = this.props.entity;
+    const title = entity.link_title || entity.title;
     Clipboard.setString(
-      entities.decodeHTML(
-        entity.title ? entity.title + '\n' + entity.text : entity.text,
-      ),
+      entities.decodeHTML(title ? title + '\n' + entity.text : entity.text),
     );
     showNotification(i18n.t('copied'), 'info');
   };
@@ -331,7 +335,7 @@ export default class Activity extends Component<ActivityProps> {
    */
   render() {
     const entity = ActivityModel.checkOrCreate(this.props.entity);
-    const hasText = !!entity.text || !!entity.title;
+    const hasText = !!entity.text || !!entity.title || !!entity.link_title;
     const hasMedia = entity.hasMedia();
     const hasRemind = !!entity.remind_object;
 
@@ -433,7 +437,11 @@ export default class Activity extends Component<ActivityProps> {
           <>
             <Pressable
               onPress={this.navToActivity}
-              onLongPress={this.copyText}
+              onLongPress={
+                entity.hasSiteMembershipPaywallThumbnail
+                  ? undefined
+                  : this.copyText
+              }
               onLayout={this.onLayout}
               testID="ActivityView">
               {this.props.maxContentHeight ? (
