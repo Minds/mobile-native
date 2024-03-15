@@ -1,6 +1,7 @@
 import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
+import tinycolor from 'tinycolor2';
 
 import { storages } from '~/common/services/storage/storages.service';
 import { DevMode } from './DevMode';
@@ -48,9 +49,37 @@ export const BOOSTS_ENABLED = !IS_TENANT;
 export const BLOCK_USER_ENABLED = true;
 export const CHAT_ENABLED = !IS_TENANT;
 
-export const ACCENT_COLOR_LIGHT = Tenant.ACCENT_COLOR_LIGHT;
-export const ACCENT_COLOR_DARK = Tenant.ACCENT_COLOR_DARK;
+// Theme
 export const TENANT_THEME = Tenant.THEME === 'light' ? 0 : 1;
+
+// Configurable colors
+export const ACCENT_COLOR_LIGHT = Tenant.ACCENT_COLOR_LIGHT;
+export const BACKGROUND_PRIMARY_COLOR_LIGHT =
+  Tenant.BACKGROUND_COLOR_LIGHT || '#FFFFFF';
+export const BACKGROUND_PRIMARY_HIGHLIGHT_COLOR_LIGHT =
+  Tenant.BACKGROUND_COLOR_LIGHT
+    ? tinycolor(Tenant.BACKGROUND_COLOR_LIGHT).darken(1.8).toHex8String()
+    : '#F8FAFA';
+export const BACKGROUND_SECONDARY_COLOR_LIGHT = Tenant.BACKGROUND_COLOR_LIGHT
+  ? tinycolor(Tenant.BACKGROUND_COLOR_LIGHT).darken(3).toHex8String()
+  : '#F6F7F7';
+export const BACKGROUND_TERTIARY_COLOR_LIGHT = Tenant.BACKGROUND_COLOR_LIGHT
+  ? tinycolor(Tenant.BACKGROUND_COLOR_LIGHT).darken(10).toHex8String()
+  : '#E3E4E9';
+11.4;
+export const ACCENT_COLOR_DARK = Tenant.ACCENT_COLOR_DARK;
+export const BACKGROUND_PRIMARY_COLOR_DARK =
+  Tenant.BACKGROUND_COLOR_DARK || '#1C1D1F';
+export const BACKGROUND_PRIMARY_HIGHLIGHT_COLOR_DARK =
+  Tenant.BACKGROUND_COLOR_DARK
+    ? tinycolor(Tenant.BACKGROUND_COLOR_DARK).lighten(1.8).toHex8String()
+    : '#1C1D1F';
+export const BACKGROUND_SECONDARY_COLOR_DARK = Tenant.BACKGROUND_COLOR_DARK
+  ? tinycolor(Tenant.BACKGROUND_COLOR_DARK).lighten(11.4).toHex8String()
+  : '#38393D';
+export const BACKGROUND_TERTIARY_COLOR_DARK = Tenant.BACKGROUND_COLOR_DARK
+  ? tinycolor(Tenant.BACKGROUND_COLOR_DARK).lighten(15).toHex8String()
+  : '#404E53';
 
 export const TENANT = Tenant.APP_NAME;
 export const TENANT_ID = Tenant.TENANT_ID;

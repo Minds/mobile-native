@@ -95,7 +95,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#1C1D1F",
+                  "backgroundColor": "#242424",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -363,7 +363,7 @@ exports[`Notification Affiliate earnings deposited 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#1C1D1F",
+                  "backgroundColor": "#242424",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -575,7 +575,7 @@ exports[`Notification An offer expires 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#1C1D1F",
+                  "backgroundColor": "#242424",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -844,7 +844,7 @@ exports[`Notification Boost accepted 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#1C1D1F",
+                  "backgroundColor": "#242424",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -987,7 +987,7 @@ exports[`Notification Boost accepted 1`] = `
             "borderColor": "#3f4b56",
           },
           {
-            "backgroundColor": "#1C1D1F",
+            "backgroundColor": undefined,
           },
         ]
       }
@@ -1139,7 +1139,7 @@ exports[`Notification Boost complete 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#1C1D1F",
+                  "backgroundColor": "#242424",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -1282,7 +1282,7 @@ exports[`Notification Boost complete 1`] = `
             "borderColor": "#3f4b56",
           },
           {
-            "backgroundColor": "#1C1D1F",
+            "backgroundColor": undefined,
           },
         ]
       }
@@ -1434,7 +1434,7 @@ exports[`Notification Boost rejected 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#1C1D1F",
+                  "backgroundColor": "#242424",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -1577,7 +1577,7 @@ exports[`Notification Boost rejected 1`] = `
             "borderColor": "#3f4b56",
           },
           {
-            "backgroundColor": "#1C1D1F",
+            "backgroundColor": undefined,
           },
         ]
       }
@@ -1729,7 +1729,7 @@ exports[`Notification Gift boost created 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#1C1D1F",
+                  "backgroundColor": "#242424",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2112,7 +2112,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#1C1D1F",
+                  "backgroundColor": "#242424",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2381,7 +2381,7 @@ exports[`Notification Receiver declines an offer 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#1C1D1F",
+                  "backgroundColor": "#242424",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2650,7 +2650,7 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#1C1D1F",
+                  "backgroundColor": "#242424",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2862,7 +2862,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#1C1D1F",
+                  "backgroundColor": "#242424",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
