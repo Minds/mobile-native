@@ -180,9 +180,9 @@ exports[`Activity screen component renders correctly  1`] = `
                 }
                 style={
                   {
-                    "borderRadius": 18,
-                    "height": 36,
-                    "width": 36,
+                    "borderRadius": 16,
+                    "height": 32,
+                    "width": 32,
                   }
                 }
               />
