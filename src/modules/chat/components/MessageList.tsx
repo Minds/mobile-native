@@ -1,31 +1,53 @@
-import React from 'react';
-import { FlashList } from '@shopify/flash-list';
+import React, { useCallback, useRef } from 'react';
 
 import Message from './Message';
-import { StyleSheet, useWindowDimensions } from 'react-native';
-import { IS_IOS } from '~/config/Config';
+import { FlatList, StyleSheet } from 'react-native';
+import { useChatRoomMessagesQuery } from '../hooks/useChatRoomMessagesQuery';
+import ChatInput from './ChatInput';
 
 const renderMessage = ({ item }) => {
   return <Message message={item} />;
 };
 
-export default function MessageList({ data }) {
-  const dimensions = useWindowDimensions();
+export default function MessageList({ roomGuid }) {
+  const { query, send, messages } = useChatRoomMessagesQuery(roomGuid);
+  const listRef = useRef<FlatList>(null);
+
+  const sendMessage = useCallback(
+    message => {
+      listRef.current?.scrollToOffset({ offset: 0, animated: false });
+      send(message);
+    },
+    [send],
+  );
 
   return (
-    <FlashList
-      data={data}
-      contentContainerStyle={styles.container}
-      estimatedItemSize={90}
-      inverted
-      estimatedListSize={!IS_IOS ? dimensions : undefined}
-      renderItem={renderMessage}
-      keyExtractor={keyExtractor}
-    />
+    <>
+      <FlatList
+        ref={listRef}
+        data={messages}
+        maintainVisibleContentPosition={maintainVisibleContentPosition}
+        contentContainerStyle={styles.container}
+        inverted
+        onEndReachedThreshold={1}
+        initialNumToRender={12}
+        onEndReached={() => {
+          query.fetchNextPage();
+        }}
+        renderItem={renderMessage}
+        keyExtractor={keyExtractor}
+      />
+      <ChatInput onSendMessage={sendMessage} />
+    </>
   );
 }
 
-const keyExtractor = item => item.id;
+const maintainVisibleContentPosition = {
+  autoscrollToTopThreshold: 50,
+  minIndexForVisible: 1,
+};
+
+const keyExtractor = item => item.node.id;
 
 const styles = StyleSheet.create({
   container: {

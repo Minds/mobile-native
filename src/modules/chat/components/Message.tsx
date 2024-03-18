@@ -5,29 +5,31 @@ import { Avatar, B1, B2 } from '~/common/ui';
 import { ChatMessage } from '../types';
 import i18n from '~/common/services/i18n.service';
 import sessionService from '~/common/services/session.service';
+import moment from 'moment';
 
 type Props = {
   message: ChatMessage;
 };
 
-export default function Message({ message }: Props) {
-  const date = new Date(parseInt(message.timeCreatedUnix, 10) * 1000);
-  return message.sender.guid !== sessionService.getUser().guid ? (
+function Message({ message }: Props) {
+  const sender = message.node.sender.node;
+  const date = moment(message.node.timeCreatedISO8601);
+  return sender.guid !== sessionService.getUser().guid ? (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
         <Avatar
           size="tiny"
           source={{
-            uri: 'https://cdn.minds.com/icon/773311697292107790/large/1597789367',
+            uri: message.node.sender.node.iconUrl,
           }}
         />
       </View>
       <View style={styles.bubbleContainer}>
         <B2 left="S" font="medium">
-          {message.sender.username}
+          {sender.name}
         </B2>
         <View style={styles.bubble}>
-          <B1>{message.plainText}</B1>
+          <B1>{message.node.plainText}</B1>
         </View>
         <B2 left="S" font="medium" color="secondary">
           {i18n.date(date, 'friendly')}
@@ -38,7 +40,7 @@ export default function Message({ message }: Props) {
     <View style={styles.containerRight}>
       <View style={styles.bubbleContainer}>
         <View style={styles.bubbleRight}>
-          <B1 color="black">{message.plainText}</B1>
+          <B1 color="black">{message.node.plainText}</B1>
         </View>
         <B2 font="medium" color="secondary" align="right" right="S">
           {i18n.date(date, 'friendly')}
@@ -47,6 +49,8 @@ export default function Message({ message }: Props) {
     </View>
   );
 }
+
+export default React.memo(Message);
 
 const styles = ThemedStyles.create({
   bubble: [

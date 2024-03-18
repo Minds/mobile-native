@@ -23,6 +23,7 @@ type Props = {
 /**
  * Floating Input component
  */
+// TODO: Optimize this component (Reduce re-renders)
 const ChatInput = ({ onSendMessage }: Props) => {
   const navigation = useNavigation();
   const theme = ThemedStyles.style;
@@ -34,6 +35,13 @@ const ChatInput = ({ onSendMessage }: Props) => {
   };
 
   const saving = false;
+
+  const send = () => {
+    const trimmedText = text.trim();
+    if (!trimmedText) return;
+    onSendMessage(trimmedText);
+    setText('');
+  };
 
   return (
     <KeyboardSpacingView
@@ -63,12 +71,12 @@ const ChatInput = ({ onSendMessage }: Props) => {
             editable={!saving}
             scrollEnabled={true}
             placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
-            placeholder="type your message..."
+            placeholder="type your message ..."
             underlineColorAndroid="transparent"
             onChangeText={setText}
+            onEndEditing={send}
             keyboardType={'default'}
             maxLength={CHAR_LIMIT}
-            onSelectionChange={e => console.log(e.nativeEvent.selection)}
             style={[
               theme.fullWidth,
               theme.colorPrimaryText,
@@ -82,7 +90,7 @@ const ChatInput = ({ onSendMessage }: Props) => {
           </TextInput>
           {!saving ? (
             <Touchable
-              onPress={() => onSendMessage(text)}
+              onPress={send}
               style={styles.sendIcon}
               testID="PostCommentButton">
               <Icon name="md-send" size={18} style={theme.colorSecondaryText} />

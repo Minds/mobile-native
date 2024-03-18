@@ -1,20 +1,17 @@
 import React from 'react';
 import { Icon, Screen } from '~/common/ui';
 import MessageList from '../components/MessageList';
-
-import ChatInput from '../components/ChatInput';
-import { CheatHeader } from './CheatHeader';
-import { useChatQuery } from '../hooks/useChatQuery';
+import ChatHeader from '../components/ChatHeader';
 import { TouchableOpacity } from 'react-native';
 
-export default function ChatScreen({ navigation }) {
-  const { data } = useChatQuery('1');
-  const items = data?.messages || [];
+export default function ChatScreen({ navigation, route }) {
+  const { roomGuid, members } = route.params || {};
+
   return (
     <Screen safe>
-      {data?.members && (
-        <CheatHeader
-          members={data?.members}
+      {members && (
+        <ChatHeader
+          members={members}
           extra={
             <TouchableOpacity
               onPress={() => navigation.navigate('ChatDetails')}>
@@ -23,8 +20,7 @@ export default function ChatScreen({ navigation }) {
           }
         />
       )}
-      <MessageList data={items} />
-      <ChatInput onSendMessage={t => console.log('new message', t)} />
+      <MessageList roomGuid={roomGuid} />
     </Screen>
   );
 }

@@ -1,17 +1,9 @@
-export type ChatMessage = {
-  id: string;
-  plainText: string;
-  sender: {
-    username: string;
-    guid: string;
-  };
-  timeCreatedISO8601: string;
-  timeCreatedUnix: string;
-};
+import { GetChatMessagesQuery, GetChatRoomsListQuery } from '~/graphql/api';
+
+export type ChatMessage = GetChatMessagesQuery['chatMessages']['edges'][0];
 
 // subset of UserModel
-export type ChatMember = {
-  guid: string;
-  username: string;
-  avatar: string;
-};
+export type ChatMember =
+  GetChatRoomsListQuery['chatRoomList']['edges'][0]['members']['edges'][0];
+
+export type ChatRoom = GetChatRoomsListQuery['chatRoomList']['edges'][0];

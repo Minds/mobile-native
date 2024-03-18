@@ -99,6 +99,7 @@ export type BooleanFilterInput = {
   lt?: InputMaybe<Scalars['Boolean']['input']>;
   lte?: InputMaybe<Scalars['Boolean']['input']>;
   ne?: InputMaybe<Scalars['Boolean']['input']>;
+  nei?: InputMaybe<Scalars['Boolean']['input']>;
   not?: InputMaybe<BooleanFilterInput>;
   notContains?: InputMaybe<Scalars['Boolean']['input']>;
   notContainsi?: InputMaybe<Scalars['Boolean']['input']>;
@@ -296,13 +297,6 @@ export type ComponentFooterLinkInput = {
 export type ComponentMarketingComponentsAsFeaturedIn = {
   __typename?: 'ComponentMarketingComponentsAsFeaturedIn';
   id: Scalars['ID']['output'];
-  image?: Maybe<UploadFileRelationResponseCollection>;
-};
-
-export type ComponentMarketingComponentsAsFeaturedInImageArgs = {
-  filters?: InputMaybe<UploadFileFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 export type ComponentMarketingComponentsAsFeaturedInFiltersInput = {
@@ -737,6 +731,7 @@ export type ComponentV2ProductActionButton = {
   solid?: Maybe<Scalars['Boolean']['output']>;
   stripeProductKey?: Maybe<Scalars['String']['output']>;
   text: Scalars['String']['output'];
+  trialUpgradeRequest?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type ComponentV2ProductActionButtonFiltersInput = {
@@ -754,6 +749,7 @@ export type ComponentV2ProductActionButtonFiltersInput = {
   solid?: InputMaybe<BooleanFilterInput>;
   stripeProductKey?: InputMaybe<StringFilterInput>;
   text?: InputMaybe<StringFilterInput>;
+  trialUpgradeRequest?: InputMaybe<BooleanFilterInput>;
 };
 
 export type ComponentV2ProductActionButtonInput = {
@@ -765,6 +761,7 @@ export type ComponentV2ProductActionButtonInput = {
   solid?: InputMaybe<Scalars['Boolean']['input']>;
   stripeProductKey?: InputMaybe<Scalars['String']['input']>;
   text?: InputMaybe<Scalars['String']['input']>;
+  trialUpgradeRequest?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type ComponentV2ProductBasicExplainer = {
@@ -791,6 +788,7 @@ export type ComponentV2ProductFeatureHighlight = {
   body: Scalars['String']['output'];
   button?: Maybe<ComponentV2ProductActionButton>;
   colorScheme: Enum_Componentv2Productfeaturehighlight_Colorscheme;
+  footnotes?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   image: UploadFileEntityResponse;
   title: Scalars['String']['output'];
@@ -876,8 +874,21 @@ export type ComponentV2ProductFeatureTableHeaderInput = {
 
 export type ComponentV2ProductHero = {
   __typename?: 'ComponentV2ProductHero';
+  buttons?: Maybe<Array<Maybe<ComponentCommonActionButton>>>;
   id: Scalars['ID']['output'];
   text: Scalars['String']['output'];
+};
+
+export type ComponentV2ProductHeroButtonsArgs = {
+  filters?: InputMaybe<ComponentCommonActionButtonFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentV2ProductImageCard = {
+  __typename?: 'ComponentV2ProductImageCard';
+  id: Scalars['ID']['output'];
+  image: UploadFileEntityResponse;
 };
 
 export type ComponentV2ProductPerk = {
@@ -912,6 +923,115 @@ export type ComponentV2ProductPricingCardsProductPlansArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
+export type ContentReleasesRelease = {
+  __typename?: 'ContentReleasesRelease';
+  actions?: Maybe<ContentReleasesReleaseActionRelationResponseCollection>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  name: Scalars['String']['output'];
+  releasedAt?: Maybe<Scalars['DateTime']['output']>;
+  scheduledAt?: Maybe<Scalars['DateTime']['output']>;
+  timezone?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type ContentReleasesReleaseActionsArgs = {
+  filters?: InputMaybe<ContentReleasesReleaseActionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ContentReleasesReleaseAction = {
+  __typename?: 'ContentReleasesReleaseAction';
+  contentType: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  entry?: Maybe<GenericMorph>;
+  locale?: Maybe<Scalars['String']['output']>;
+  release?: Maybe<ContentReleasesReleaseEntityResponse>;
+  type: Enum_Contentreleasesreleaseaction_Type;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type ContentReleasesReleaseActionEntity = {
+  __typename?: 'ContentReleasesReleaseActionEntity';
+  attributes?: Maybe<ContentReleasesReleaseAction>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ContentReleasesReleaseActionEntityResponse = {
+  __typename?: 'ContentReleasesReleaseActionEntityResponse';
+  data?: Maybe<ContentReleasesReleaseActionEntity>;
+};
+
+export type ContentReleasesReleaseActionEntityResponseCollection = {
+  __typename?: 'ContentReleasesReleaseActionEntityResponseCollection';
+  data: Array<ContentReleasesReleaseActionEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ContentReleasesReleaseActionFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ContentReleasesReleaseActionFiltersInput>>>;
+  contentType?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  locale?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ContentReleasesReleaseActionFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ContentReleasesReleaseActionFiltersInput>>>;
+  release?: InputMaybe<ContentReleasesReleaseFiltersInput>;
+  type?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ContentReleasesReleaseActionInput = {
+  contentType?: InputMaybe<Scalars['String']['input']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
+  release?: InputMaybe<Scalars['ID']['input']>;
+  type?: InputMaybe<Enum_Contentreleasesreleaseaction_Type>;
+};
+
+export type ContentReleasesReleaseActionRelationResponseCollection = {
+  __typename?: 'ContentReleasesReleaseActionRelationResponseCollection';
+  data: Array<ContentReleasesReleaseActionEntity>;
+};
+
+export type ContentReleasesReleaseEntity = {
+  __typename?: 'ContentReleasesReleaseEntity';
+  attributes?: Maybe<ContentReleasesRelease>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type ContentReleasesReleaseEntityResponse = {
+  __typename?: 'ContentReleasesReleaseEntityResponse';
+  data?: Maybe<ContentReleasesReleaseEntity>;
+};
+
+export type ContentReleasesReleaseEntityResponseCollection = {
+  __typename?: 'ContentReleasesReleaseEntityResponseCollection';
+  data: Array<ContentReleasesReleaseEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type ContentReleasesReleaseFiltersInput = {
+  actions?: InputMaybe<ContentReleasesReleaseActionFiltersInput>;
+  and?: InputMaybe<Array<InputMaybe<ContentReleasesReleaseFiltersInput>>>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<ContentReleasesReleaseFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<ContentReleasesReleaseFiltersInput>>>;
+  releasedAt?: InputMaybe<DateTimeFilterInput>;
+  scheduledAt?: InputMaybe<DateTimeFilterInput>;
+  timezone?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type ContentReleasesReleaseInput = {
+  actions?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  releasedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  scheduledAt?: InputMaybe<Scalars['DateTime']['input']>;
+  timezone?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type DateTimeFilterInput = {
   and?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   between?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
@@ -926,6 +1046,7 @@ export type DateTimeFilterInput = {
   lt?: InputMaybe<Scalars['DateTime']['input']>;
   lte?: InputMaybe<Scalars['DateTime']['input']>;
   ne?: InputMaybe<Scalars['DateTime']['input']>;
+  nei?: InputMaybe<Scalars['DateTime']['input']>;
   not?: InputMaybe<DateTimeFilterInput>;
   notContains?: InputMaybe<Scalars['DateTime']['input']>;
   notContainsi?: InputMaybe<Scalars['DateTime']['input']>;
@@ -942,6 +1063,10 @@ export enum Enum_Checkoutpage_Key {
 }
 
 export enum Enum_Componentcommonactionbutton_Action {
+  NetworksCommunityCheckout = 'networks_community_checkout',
+  NetworksEnterpriseCheckout = 'networks_enterprise_checkout',
+  NetworksStartTrial = 'networks_start_trial',
+  NetworksTeamCheckout = 'networks_team_checkout',
   OpenComposer = 'open_composer',
   OpenOnchainTransferModal = 'open_onchain_transfer_modal',
   OpenPlusUpgradeModal = 'open_plus_upgrade_modal',
@@ -962,6 +1087,7 @@ export enum Enum_Componentonboardingv5Onboardingstep_Steptype {
 export enum Enum_Componentv2Productactionbutton_Action {
   NetworksCommunityCheckout = 'networks_community_checkout',
   NetworksEnterpriseCheckout = 'networks_enterprise_checkout',
+  NetworksStartTrial = 'networks_start_trial',
   NetworksTeamCheckout = 'networks_team_checkout',
   OpenComposer = 'open_composer',
   OpenOnchainTransferModal = 'open_onchain_transfer_modal',
@@ -982,11 +1108,17 @@ export enum Enum_Componentv2Productfeaturehighlight_Colorscheme {
   Light = 'light',
 }
 
+export enum Enum_Contentreleasesreleaseaction_Type {
+  Publish = 'publish',
+  Unpublish = 'unpublish',
+}
+
 export enum Enum_Feattablecolumn_Tier {
   Free = 'free',
   Networks = 'networks',
   NetworksCommunity = 'networks_community',
   NetworksEnterprise = 'networks_enterprise',
+  NetworksOnPrem = 'networks_on_prem',
   NetworksTeam = 'networks_team',
   Plus = 'plus',
   Pro = 'pro',
@@ -1005,6 +1137,7 @@ export enum Enum_Productplan_Tier {
   Networks = 'networks',
   NetworksCommunity = 'networks_community',
   NetworksEnterprise = 'networks_enterprise',
+  NetworksOnPrem = 'networks_on_prem',
   NetworksTeam = 'networks_team',
   Plus = 'plus',
   Pro = 'pro',
@@ -1348,6 +1481,7 @@ export type FloatFilterInput = {
   lt?: InputMaybe<Scalars['Float']['input']>;
   lte?: InputMaybe<Scalars['Float']['input']>;
   ne?: InputMaybe<Scalars['Float']['input']>;
+  nei?: InputMaybe<Scalars['Float']['input']>;
   not?: InputMaybe<FloatFilterInput>;
   notContains?: InputMaybe<Scalars['Float']['input']>;
   notContainsi?: InputMaybe<Scalars['Float']['input']>;
@@ -1441,8 +1575,11 @@ export type GenericMorph =
   | ComponentV2ProductFeatureTable
   | ComponentV2ProductFeatureTableHeader
   | ComponentV2ProductHero
+  | ComponentV2ProductImageCard
   | ComponentV2ProductPerk
   | ComponentV2ProductPricingCards
+  | ContentReleasesRelease
+  | ContentReleasesReleaseAction
   | ExplainerScreenMobile
   | ExplainerScreenWeb
   | FeatTableColumn
@@ -1565,6 +1702,7 @@ export type IdFilterInput = {
   lt?: InputMaybe<Scalars['ID']['input']>;
   lte?: InputMaybe<Scalars['ID']['input']>;
   ne?: InputMaybe<Scalars['ID']['input']>;
+  nei?: InputMaybe<Scalars['ID']['input']>;
   not?: InputMaybe<IdFilterInput>;
   notContains?: InputMaybe<Scalars['ID']['input']>;
   notContainsi?: InputMaybe<Scalars['ID']['input']>;
@@ -1589,6 +1727,7 @@ export type IntFilterInput = {
   lt?: InputMaybe<Scalars['Int']['input']>;
   lte?: InputMaybe<Scalars['Int']['input']>;
   ne?: InputMaybe<Scalars['Int']['input']>;
+  nei?: InputMaybe<Scalars['Int']['input']>;
   not?: InputMaybe<IntFilterInput>;
   notContains?: InputMaybe<Scalars['Int']['input']>;
   notContainsi?: InputMaybe<Scalars['Int']['input']>;
@@ -1613,6 +1752,7 @@ export type JsonFilterInput = {
   lt?: InputMaybe<Scalars['JSON']['input']>;
   lte?: InputMaybe<Scalars['JSON']['input']>;
   ne?: InputMaybe<Scalars['JSON']['input']>;
+  nei?: InputMaybe<Scalars['JSON']['input']>;
   not?: InputMaybe<JsonFilterInput>;
   notContains?: InputMaybe<Scalars['JSON']['input']>;
   notContainsi?: InputMaybe<Scalars['JSON']['input']>;
@@ -1629,6 +1769,8 @@ export type Mutation = {
   changePassword?: Maybe<UsersPermissionsLoginPayload>;
   createAuxPage?: Maybe<AuxPageEntityResponse>;
   createCheckoutPage?: Maybe<CheckoutPageEntityResponse>;
+  createContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
+  createContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   createExplainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
   createExplainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
   createFeatTableColumn?: Maybe<FeatTableColumnEntityResponse>;
@@ -1652,6 +1794,8 @@ export type Mutation = {
   createValuePropCardLocalization?: Maybe<ValuePropCardEntityResponse>;
   deleteAuxPage?: Maybe<AuxPageEntityResponse>;
   deleteCheckoutPage?: Maybe<CheckoutPageEntityResponse>;
+  deleteContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
+  deleteContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   deleteExplainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
   deleteExplainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
   deleteFeatTableColumn?: Maybe<FeatTableColumnEntityResponse>;
@@ -1688,6 +1832,8 @@ export type Mutation = {
   resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   updateAuxPage?: Maybe<AuxPageEntityResponse>;
   updateCheckoutPage?: Maybe<CheckoutPageEntityResponse>;
+  updateContentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
+  updateContentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
   updateExplainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
   updateExplainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
   updateFeatTableColumn?: Maybe<FeatTableColumnEntityResponse>;
@@ -1727,6 +1873,14 @@ export type MutationCreateAuxPageArgs = {
 
 export type MutationCreateCheckoutPageArgs = {
   data: CheckoutPageInput;
+};
+
+export type MutationCreateContentReleasesReleaseArgs = {
+  data: ContentReleasesReleaseInput;
+};
+
+export type MutationCreateContentReleasesReleaseActionArgs = {
+  data: ContentReleasesReleaseActionInput;
 };
 
 export type MutationCreateExplainerScreenMobileArgs = {
@@ -1816,6 +1970,14 @@ export type MutationDeleteAuxPageArgs = {
 };
 
 export type MutationDeleteCheckoutPageArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteContentReleasesReleaseArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteContentReleasesReleaseActionArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -1929,6 +2091,16 @@ export type MutationUpdateAuxPageArgs = {
 
 export type MutationUpdateCheckoutPageArgs = {
   data: CheckoutPageInput;
+  id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateContentReleasesReleaseArgs = {
+  data: ContentReleasesReleaseInput;
+  id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateContentReleasesReleaseActionArgs = {
+  data: ContentReleasesReleaseActionInput;
   id: Scalars['ID']['input'];
 };
 
@@ -2367,6 +2539,10 @@ export type Query = {
   auxPages?: Maybe<AuxPageEntityResponseCollection>;
   checkoutPage?: Maybe<CheckoutPageEntityResponse>;
   checkoutPages?: Maybe<CheckoutPageEntityResponseCollection>;
+  contentReleasesRelease?: Maybe<ContentReleasesReleaseEntityResponse>;
+  contentReleasesReleaseAction?: Maybe<ContentReleasesReleaseActionEntityResponse>;
+  contentReleasesReleaseActions?: Maybe<ContentReleasesReleaseActionEntityResponseCollection>;
+  contentReleasesReleases?: Maybe<ContentReleasesReleaseEntityResponseCollection>;
   explainerScreenMobile?: Maybe<ExplainerScreenMobileEntityResponse>;
   explainerScreenWeb?: Maybe<ExplainerScreenWebEntityResponse>;
   explainerScreensMobile?: Maybe<ExplainerScreenMobileEntityResponseCollection>;
@@ -2429,6 +2605,26 @@ export type QueryCheckoutPagesArgs = {
   filters?: InputMaybe<CheckoutPageFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryContentReleasesReleaseArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryContentReleasesReleaseActionArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryContentReleasesReleaseActionsArgs = {
+  filters?: InputMaybe<ContentReleasesReleaseActionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryContentReleasesReleasesArgs = {
+  filters?: InputMaybe<ContentReleasesReleaseFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
@@ -2664,6 +2860,7 @@ export type StringFilterInput = {
   lt?: InputMaybe<Scalars['String']['input']>;
   lte?: InputMaybe<Scalars['String']['input']>;
   ne?: InputMaybe<Scalars['String']['input']>;
+  nei?: InputMaybe<Scalars['String']['input']>;
   not?: InputMaybe<StringFilterInput>;
   notContains?: InputMaybe<Scalars['String']['input']>;
   notContainsi?: InputMaybe<Scalars['String']['input']>;
@@ -3229,6 +3426,7 @@ export type V2ProductPageProductPageDynamicZone =
   | ComponentV2ProductFeatureShowcase
   | ComponentV2ProductFeatureTable
   | ComponentV2ProductHero
+  | ComponentV2ProductImageCard
   | ComponentV2ProductPricingCards
   | Error;
 
