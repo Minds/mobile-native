@@ -8,7 +8,6 @@ import { View, Platform, Dimensions } from 'react-native';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
-import DiscoveryIcon from '../discovery/v2/DiscoveryTabIcon';
 import { observer } from 'mobx-react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
@@ -22,7 +21,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
-import { hasVariation } from 'ExperimentsProvider';
 import withModalProvider from '~/navigation/withModalProvide';
 
 const isIOS = Platform.OS === 'ios';
@@ -238,12 +236,6 @@ const iconFromRoute: Record<string, IconMapNameType> = {
 const tabOptions = ({ route }): BottomTabNavigationOptions => ({
   headerShown: false,
   tabBarIcon: ({ focused }) => {
-    if (
-      route.name === 'Discovery' &&
-      hasVariation('mob-4812-discovery-badge')
-    ) {
-      return <DiscoveryIcon active={focused} />;
-    }
     if (route.name === 'Notifications') {
       return <NotificationIcon active={focused} />;
     }

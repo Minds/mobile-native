@@ -174,7 +174,7 @@
     "socket.io-client": "^4.5.1",
     "styled-components": "^5.3.3",
     "styled-system": "^5.1.5",
-    "tinycolor2": "^1.4.2",
+    "tinycolor2": "^1.6.0",
     "use-elapsed-time": "^3.0.4",
     "yarn": "^1.22.19"
   },
@@ -243,6 +243,7 @@
     "react-native-bundle-visualizer": "https://github.com/IjzerenHein/react-native-bundle-visualizer.git#fix-remove-minify-false",
     "react-query-native-devtools": "^4.0.0",
     "react-test-renderer": "^18.2.0",
+    "sharp": "^0.33.2",
     "ts-node": "^10.8.0",
     "typescript": "^5.1.3"
   },

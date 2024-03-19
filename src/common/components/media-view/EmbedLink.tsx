@@ -28,9 +28,10 @@ export default function EmbedLink({
   openLink,
 }: PropsType) {
   let title =
-    entity.title && entity.title.length > MAX_TITLE_SIZE
+    entity.link_title ||
+    (entity.title && entity.title.length > MAX_TITLE_SIZE
       ? entity.title.substring(0, MAX_TITLE_SIZE) + '...'
-      : entity.title;
+      : entity.title);
 
   const source = entity.getThumbSource('xlarge');
 

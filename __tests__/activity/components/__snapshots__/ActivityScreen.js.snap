@@ -11,7 +11,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "flex": 1,
       },
       {
-        "backgroundColor": "#1C1D1F",
+        "backgroundColor": undefined,
       },
       {
         "alignSelf": "center",
@@ -33,7 +33,7 @@ exports[`Activity screen component renders correctly  1`] = `
       style={
         [
           {
-            "backgroundColor": "#1C1D1F",
+            "backgroundColor": undefined,
           },
           {
             "paddingTop": -10,
@@ -530,8 +530,8 @@ exports[`Activity screen component renders correctly  1`] = `
     <ExpoLinearGradient
       colors={
         [
-          "#38393D00",
-          "#38393DFF",
+          "undefined00",
+          "undefinedFF",
         ]
       }
       style={
@@ -547,7 +547,7 @@ exports[`Activity screen component renders correctly  1`] = `
   <View
     style={
       {
-        "backgroundColor": "#1C1D1F",
+        "backgroundColor": undefined,
         "paddingBottom": -10,
       }
     }
@@ -560,7 +560,7 @@ exports[`Activity screen component renders correctly  1`] = `
             "justifyContent": "flex-start",
           },
           {
-            "backgroundColor": "#1C1D1F",
+            "backgroundColor": undefined,
           },
           {
             "paddingLeft": 8,

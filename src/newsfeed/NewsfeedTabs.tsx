@@ -3,13 +3,10 @@ import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
 import type NewsfeedStore from './NewsfeedStore';
 import i18n from '~/common/services/i18n.service';
 import { observer } from 'mobx-react';
-import { useIsFeatureOn } from 'ExperimentsProvider';
 import { NewsfeedType } from './NewsfeedStore';
 import { IS_TENANT, NEWSFEED_FORYOU_ENABLED } from '~/config/Config';
 
 function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
-  const experimentOn = useIsFeatureOn('mob-4938-newsfeed-for-you');
-
   const tabs = React.useMemo(
     () => {
       const _tabs: { id: NewsfeedType; title: string }[] = [
@@ -24,7 +21,7 @@ function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
         newsfeed.changeFeedType('latest');
       }
 
-      if (experimentOn && NEWSFEED_FORYOU_ENABLED) {
+      if (NEWSFEED_FORYOU_ENABLED) {
         _tabs.unshift({
           id: 'for-you',
           title: i18n.t('newsfeed.foryouPosts'),
@@ -34,7 +31,7 @@ function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
       return _tabs;
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [i18n.locale, experimentOn],
+    [i18n.locale],
   );
 
   return newsfeed.feedType ? (
