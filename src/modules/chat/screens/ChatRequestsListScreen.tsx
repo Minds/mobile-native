@@ -3,7 +3,7 @@ import { Screen, ScreenHeader } from '~/common/ui';
 
 export default function ChatRequestsListScreen() {
   return (
-    <Screen>
+    <Screen safe>
       <ScreenHeader back={true} title="Chat Requests" />
     </Screen>
   );

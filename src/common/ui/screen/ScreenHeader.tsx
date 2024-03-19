@@ -43,7 +43,13 @@ export const ScreenHeader = ({
       }>
       {Boolean(title) && centerTitle && (
         <View style={styles.titleCenteredContainer}>
-          <Typography type={titleType} font="bold" onPress={onTitlePress} flat>
+          <Typography
+            type={titleType}
+            style={styles.title}
+            font="bold"
+            onPress={onTitlePress}
+            numberOfLines={1}
+            flat>
             {title}
           </Typography>
         </View>
@@ -60,7 +66,12 @@ export const ScreenHeader = ({
           )}
           {leftComponent ? leftComponent : null}
           {Boolean(title) && !centerTitle && (
-            <Typography type={titleType} font="bold" onPress={onTitlePress}>
+            <Typography
+              type={titleType}
+              style={styles.title}
+              font="bold"
+              numberOfLines={1}
+              onPress={onTitlePress}>
               {title}
             </Typography>
           )}
@@ -86,7 +97,8 @@ const styles = ThemedStyles.create({
     'borderBottom1x',
     { minHeight: 55, zIndex: 1 },
   ],
-  row: ['rowJustifyStart', 'alignCenter'],
+  title: ['flexContainer'],
+  row: ['rowJustifyStart', 'alignCenter', 'flexContainer'],
   shadow: [
     'bgPrimaryBackground',
     {

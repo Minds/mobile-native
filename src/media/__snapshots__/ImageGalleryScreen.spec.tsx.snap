@@ -45,6 +45,9 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
               {
                 "alignItems": "center",
               },
+              {
+                "flex": 1,
+              },
             ]
           }
         >
