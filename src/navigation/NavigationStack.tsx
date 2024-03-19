@@ -575,6 +575,12 @@ const RootStack = observer(function () {
       )}
       <RootStackNav.Screen
         navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+        name="OidcLogin"
+        getComponent={() => require('~/auth/oidc/OidcScreen').default}
+        options={modalOptions}
+      />
+      <RootStackNav.Screen
+        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
         name="MultiUserLogin"
         getComponent={() => require('~/auth/multi-user/LoginScreen').default}
         options={modalOptions}

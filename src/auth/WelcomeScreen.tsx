@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { RouteProp } from '@react-navigation/native';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import { View, ViewStyle } from 'react-native';
 import { Image } from 'expo-image';
@@ -22,15 +22,22 @@ import { SpacingType } from '~/common/ui/helpers';
 import { UISpacingPropType } from '~/styles/Tokens';
 import { OnboardingCarousel } from '~/modules/onboarding/components/OnboardingCarousel';
 import assets from '@assets';
+import { useLoginWeb } from './oidc/Oidc';
 
 type PropsType = {
-  navigation: any;
+  navigation: NavigationProp<any>;
   route: WelcomeScreenRouteProp;
 };
 
 export type WelcomeScreenRouteProp = RouteProp<AuthStackParamList, 'Welcome'>;
 
 function WelcomeScreen(props: PropsType) {
+  const { name: oidcName, loginUrl: oidcLoginUrl } = useLoginWeb();
+
+  const onOidcPress = useCallback(() => {
+    props.navigation.navigate('OidcLogin', { loginUrl: oidcLoginUrl });
+  }, [props.navigation, oidcLoginUrl]);
+
   const onLoginPress = useCallback(() => {
     props.navigation.navigate('MultiUserLogin');
   }, [props.navigation]);
@@ -65,16 +72,29 @@ function WelcomeScreen(props: PropsType) {
           </View>
         )}
         <View style={styles.buttonContainer}>
-          <Button
-            type="action"
-            {...buttonProps}
-            testID="joinNowButton"
-            onPress={onRegisterPress}>
-            {i18n.t('auth.createChannel', { TENANT })}
-          </Button>
-          <Button darkContent {...buttonProps} onPress={onLoginPress}>
-            {i18n.t('auth.login')}
-          </Button>
+          {oidcName ? (
+            <>
+              <Button type="action" {...buttonProps} onPress={onOidcPress}>
+                {i18n.t('auth.loginWith', { name: oidcName })}
+              </Button>
+              <MText onPress={onLoginPress}>
+                Login with username / password
+              </MText>
+            </>
+          ) : (
+            <>
+              <Button
+                type="action"
+                {...buttonProps}
+                testID="joinNowButton"
+                onPress={onRegisterPress}>
+                {i18n.t('auth.createChannel', { TENANT })}
+              </Button>
+              <Button darkContent {...buttonProps} onPress={onLoginPress}>
+                {i18n.t('auth.login')}
+              </Button>
+            </>
+          )}
         </View>
       </View>
 

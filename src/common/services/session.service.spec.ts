@@ -1,9 +1,13 @@
 import { waitFor } from '@testing-library/react-native';
 import AuthService from '../../auth/AuthService';
 import { SessionService } from './session.service';
-import { SessionStorageService } from './storage/session.storage.service';
+import {
+  AuthType,
+  SessionStorageService,
+} from './storage/session.storage.service';
 import * as configConstants from '../../config/Config';
 import analyticsService from './analytics.service';
+import CookieManager from '@react-native-cookies/cookies';
 
 // Mock external services and modules
 jest.mock('../../../AppStores', () => ({
@@ -33,6 +37,7 @@ const mockedSession = {
       },
       pseudoId: 'pseudo_id_here',
       sessionExpired: false,
+      authType: AuthType.OAuth,
       refreshToken: {
         refresh_token: '12345',
         refresh_token_expires: Date.now(),
@@ -75,6 +80,10 @@ describe('SessionService init', () => {
   });
 
   it('should set a pseudo id for non tenant', () => {
+    sessionStorageMock.getAll.mockReturnValueOnce(mockedSession);
+    const mockedConstants = configConstants as { IS_TENANT: boolean };
+    mockedConstants.IS_TENANT = false;
+
     sessionService.init();
 
     expect(mockedAnalyticsService.setUserId).toHaveBeenCalledWith(
@@ -175,7 +184,7 @@ describe('SessionService session management', () => {
       pseudo_id: 'pseudoId',
     };
     AuthService.refreshToken = jest.fn().mockResolvedValue(tokens);
-    await sessionService.addSession(tokens);
+    await sessionService.addOAuthSession(tokens);
 
     await waitFor(async () => {
       expect(sessionService.sessions.length).toBe(1);
@@ -189,11 +198,13 @@ describe('SessionService session management', () => {
     // Setup with two sessions
     sessionService.sessions = [
       {
+        authType: AuthType.OAuth,
         accessToken: { access_token: 'token1' },
         refreshToken: { refresh_token: 'refresh1' },
         user: { guid: 'guid1' },
       },
       {
+        authType: AuthType.OAuth,
         accessToken: { access_token: 'token2' },
         refreshToken: { refresh_token: 'refresh2' },
         user: { guid: 'guid2' },
@@ -208,9 +219,11 @@ describe('SessionService session management', () => {
   });
 
   it('should logout and clear sessions if specified', () => {
+    CookieManager.clearAll = jest.fn().mockResolvedValue(null);
     // Prepopulate with a session
     sessionService.sessions = [
       {
+        authType: AuthType.OAuth,
         accessToken: { access_token: 'token1' },
         refreshToken: { refresh_token: 'refresh1' },
         user: { guid: 'guid1' },
@@ -258,5 +271,50 @@ describe('SessionService user and session information', () => {
   it('should get the current user', () => {
     const user = sessionService.getUser();
     expect(user).toBeDefined();
+  });
+});
+
+describe('SessionService with AuthType.Cookie', () => {
+  let sessionService;
+  let sessionStorageMock;
+
+  beforeEach(() => {
+    sessionStorageMock = new SessionStorageService();
+    sessionService = new SessionService(sessionStorageMock);
+  });
+
+  it('should build XSRF Token on init', async () => {
+    mockedSession.tokensData[0].authType = AuthType.Cookie;
+    sessionStorageMock.getAll.mockReturnValueOnce(mockedSession);
+
+    CookieManager.get = jest.fn().mockResolvedValue({
+      'XSRF-TOKEN': {
+        value: 'test-xsrf-token',
+      },
+    });
+
+    await sessionService.init();
+
+    expect(sessionService.xsrfToken).toBe('test-xsrf-token');
+    expect(sessionService.token).toBe('fake-token');
+  });
+
+  it('should replace ALL sessions when adding a cookie session', async () => {
+    sessionService.sessions = [
+      {
+        accessToken: { access_token: 'token1' },
+        user: { guid: 'guid1', username: 'user1' },
+      },
+      {
+        accessToken: { access_token: 'token2' },
+        user: { guid: 'guid2', username: 'user2' },
+      },
+    ];
+    expect(sessionService.sessions.length).toBe(2);
+
+    await sessionService.addCookieSession();
+
+    expect(sessionService.token).toBe('fake-token');
+    expect(sessionService.sessions.length).toBe(1);
   });
 });

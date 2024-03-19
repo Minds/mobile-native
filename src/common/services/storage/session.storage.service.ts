@@ -10,10 +10,23 @@ export type RefreshToken = {
   refresh_token_expires: number | null;
 };
 
-export type Session = {
+export enum AuthType {
+  OAuth,
+  Cookie,
+}
+
+export type BaseSession = {
   user: UserModel;
   pseudoId: string; // used for snowplow
   sessionExpired: boolean;
+};
+
+export type CookieSession = BaseSession & {
+  authType: AuthType.Cookie;
+};
+
+export type OAuthSession = BaseSession & {
+  authType: AuthType.OAuth;
   refreshToken: {
     refresh_token: string;
     refresh_token_expires: number | null;
@@ -23,6 +36,8 @@ export type Session = {
     access_token_expires: number | null;
   };
 };
+
+export type Session = CookieSession | OAuthSession;
 
 export type Sessions = Array<Session>;
 
@@ -83,6 +98,7 @@ export class SessionStorageService {
           refreshToken,
           accessToken,
           sessionExpired: false,
+          authType: AuthType.OAuth,
         },
       ],
     };

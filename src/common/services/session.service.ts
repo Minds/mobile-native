@@ -3,6 +3,9 @@ import {
   RefreshToken,
   SessionStorageService,
   Session,
+  AuthType,
+  OAuthSession,
+  CookieSession,
 } from './storage/session.storage.service';
 import AuthService from '../../auth/AuthService';
 import { getStores } from '../../../AppStores';
@@ -14,6 +17,8 @@ import { ApiService } from './api.service';
 import analyticsService from './analytics.service';
 import { TokenExpiredError } from './TokenExpiredError';
 import { IS_TENANT } from '../../config/Config';
+import CookieManager from '@react-native-cookies/cookies';
+import { APP_API_URI } from '~/config/Config';
 
 const atob = (text: string) => Buffer.from(text, 'base64');
 
@@ -28,6 +33,8 @@ export class SessionService {
   @observable activeIndex: number = 0;
   @observable sessionExpired: boolean = false;
   @observable switchingAccount: boolean = false;
+
+  @observable xsrfToken: string = '';
 
   apiServiceInstances: Array<ApiService> = [];
 
@@ -118,6 +125,7 @@ export class SessionService {
   async init() {
     try {
       const sessionData = this.sessionStorage.getAll();
+
       // if there is no session active we clean up and return;
       if (
         sessionData === null ||
@@ -133,20 +141,32 @@ export class SessionService {
       this.setActiveIndex(sessionData.activeIndex);
       this.setSessions(sessionData.tokensData);
 
-      const { accessToken, refreshToken, user, pseudoId } =
-        this.sessions[this.activeIndex];
+      const session = this.sessions[this.activeIndex];
+
+      const { user, pseudoId } = session;
 
       // set the analytics pseudo id (if not tenant)
       analyticsService.setUserId(IS_TENANT ? user.guid : pseudoId);
 
-      const { access_token, access_token_expires } = accessToken;
-      const { refresh_token, refresh_token_expires } = refreshToken;
+      let access_token: string;
 
-      this.refreshTokenExpires = refresh_token_expires;
-      this.accessTokenExpires = access_token_expires;
+      if (session.authType === AuthType.Cookie) {
+        access_token = 'fake-token';
+        this.setToken(access_token);
+        await this.buildXsrfToken();
+      } else {
+        const { accessToken, refreshToken } = session;
 
-      this.setRefreshToken(refresh_token);
-      this.setToken(access_token);
+        access_token = accessToken.access_token;
+
+        const { refresh_token, refresh_token_expires } = refreshToken;
+
+        this.refreshTokenExpires = refresh_token_expires;
+        this.accessTokenExpires = accessToken.access_token_expires;
+
+        this.setRefreshToken(refresh_token);
+        this.setToken(access_token);
+      }
 
       // ensure user loaded before activate the session
       await this.loadUser(user);
@@ -200,7 +220,7 @@ export class SessionService {
       const tokens = await AuthService.refreshToken();
       if ((this.sessions?.length ?? 0) > 0) {
         tokens.pseudo_id = this.sessions[this.activeIndex]?.pseudoId;
-        this.sessions[this.activeIndex] = this.buildSessionData(tokens);
+        this.sessions[this.activeIndex] = this.buildOAuthSessionData(tokens);
       }
       this.setRefreshToken(tokens.refresh_token);
       this.setToken(tokens.access_token);
@@ -231,7 +251,11 @@ export class SessionService {
    * Refresh the auth tokens for the given session index
    */
   async refreshAuthTokenFrom(index: number) {
-    const { refreshToken, accessToken } = this.sessions[index];
+    const session = this.sessions[index];
+
+    if (session.authType !== AuthType.OAuth) return;
+
+    const { refreshToken, accessToken } = session;
     if (this.tokenCanRefresh(refreshToken)) {
       logService.info('[SessionService] refreshing token from');
       const tokens = await AuthService.refreshToken(
@@ -239,7 +263,7 @@ export class SessionService {
         accessToken.access_token,
       );
       tokens.pseudo_id = this.sessions[index].pseudoId;
-      this.sessions[index] = this.buildSessionData(
+      this.sessions[index] = this.buildOAuthSessionData(
         tokens,
         this.sessions[index].user,
       );
@@ -369,15 +393,43 @@ export class SessionService {
   }
 
   /**
+   * Adds a session using cookie auth
+   * This will replace the list of sessions as, at this time,
+   * there can only  be one cookie session
+   */
+  async addCookieSession() {
+    // We use a fake access token
+    this.setToken('fake-token');
+
+    // Reload our user now we have a session cookie set
+    await this.loadUser();
+
+    await this.buildXsrfToken();
+
+    const sessionData = this.buildCookieSessionData(this.getUser());
+
+    const sessions = [sessionData];
+    this.setSessions(sessions);
+
+    // set the active index which will be logged
+    this.setActiveIndex(this.sessions.length - 1);
+    this.apiServiceInstances.push(new ApiService(this.activeIndex));
+
+    // save all data into session storage
+    this.persistSessionsArray();
+    this.persistActiveIndex();
+  }
+
+  /**
    * Add new tokens info from login to tokens data;
    * @param tokens
    */
-  async addSession(tokens) {
+  async addOAuthSession(tokens) {
     try {
       await this.setTokens(tokens);
 
       // get session data from tokens returned by login
-      const sessionData = this.buildSessionData(tokens);
+      const sessionData = this.buildOAuthSessionData(tokens);
 
       // set expire
       this.accessTokenExpires = sessionData.accessToken.access_token_expires;
@@ -408,21 +460,26 @@ export class SessionService {
    * Switch current active user
    */
   async switchUser(sessionIndex: number) {
+    const session = this.sessions[sessionIndex];
+
+    if (session.authType !== AuthType.OAuth)
+      throw 'Only OAuth supports user switching';
+
     this.setActiveIndex(sessionIndex);
-    const sessions = this.sessions[sessionIndex];
+
     await this.setTokens(
       {
-        access_token: sessions.accessToken.access_token,
-        refresh_token: sessions.refreshToken.refresh_token,
+        access_token: session.accessToken.access_token,
+        refresh_token: session.refreshToken.refresh_token,
       },
-      sessions.user,
+      session.user,
     );
     // set expire
-    this.accessTokenExpires = sessions.accessToken.access_token_expires;
-    this.refreshTokenExpires = sessions.refreshToken.refresh_token_expires;
+    this.accessTokenExpires = session.accessToken.access_token_expires;
+    this.refreshTokenExpires = session.refreshToken.refresh_token_expires;
 
     analyticsService.setUserId(
-      IS_TENANT ? sessions.user.guid : sessions.pseudoId,
+      IS_TENANT ? session.user.guid : session.pseudoId,
     );
 
     // persist index
@@ -436,21 +493,27 @@ export class SessionService {
   }
 
   /**
-   * Get the token for a given index on sessions
-   * @param index
-   * @returns the access token
+   * Build a session object for a cookie based session
+   * @param user
+   * @returns Session
    */
-  getTokenWithIndex(index: number) {
-    return this.sessions[index].accessToken.access_token;
+  buildCookieSessionData(user?: UserModel): CookieSession {
+    return {
+      user: user || getStores().user.me,
+      pseudoId: '',
+      sessionExpired: false,
+      authType: AuthType.Cookie,
+    };
   }
 
-  buildSessionData(tokens, user?: UserModel) {
+  buildOAuthSessionData(tokens, user?: UserModel): OAuthSession {
     const token_expire = this.getTokenExpiration(tokens.access_token);
     const token_refresh_expire = token_expire + 60 * 60 * 24 * 30;
     return {
       user: user || getStores().user.me,
       pseudoId: tokens.pseudo_id,
       sessionExpired: false,
+      authType: AuthType.OAuth,
       accessToken: {
         access_token: tokens.access_token,
         access_token_expires: token_expire,
@@ -460,6 +523,16 @@ export class SessionService {
         refresh_token_expires: token_refresh_expire,
       },
     };
+  }
+
+  /**
+   * We need to pull the XSRF token, if available, from the cookie
+   * store so that the API can fetch this synchronously
+   */
+  @action
+  async buildXsrfToken(): Promise<void> {
+    const cookies = await CookieManager.get(APP_API_URI);
+    this.xsrfToken = cookies['XSRF-TOKEN']?.value;
   }
 
   /**
@@ -496,7 +569,7 @@ export class SessionService {
     );
 
     if (index !== -1) {
-      const sessionData = this.buildSessionData(
+      const sessionData = this.buildOAuthSessionData(
         data,
         this.sessions[index].user,
       );
@@ -545,6 +618,7 @@ export class SessionService {
       this.popApiServiceInstance();
       this.persistActiveIndex();
       this.persistSessionsArray();
+      CookieManager.clearAll();
     }
   }
 
@@ -651,11 +725,15 @@ export class SessionService {
   }
 
   getAccessTokenFrom(index) {
-    return this.sessions[index].accessToken.access_token;
+    const session = this.sessions[index];
+    if (session.authType !== AuthType.OAuth) return '';
+    return session.accessToken.access_token;
   }
 
   getRefreshTokenFrom(index) {
-    return this.sessions[index].refreshToken.refresh_token;
+    const session = this.sessions[index];
+    if (session.authType !== AuthType.OAuth) return '';
+    return session.refreshToken.refresh_token;
   }
 }
 

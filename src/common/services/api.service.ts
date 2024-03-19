@@ -41,6 +41,7 @@ import {
   ApiError,
   FieldError,
 } from './ApiErrors';
+import sessionService from './session.service';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -85,7 +86,7 @@ export class ApiService {
     this.sessionIndex = sessionIndex;
 
     if (MINDS_CANARY) {
-      CookieManager.set('https://www.minds.com', {
+      CookieManager.set(APP_API_URI, {
         name: 'canary',
         value: '1',
         path: '/',
@@ -94,11 +95,11 @@ export class ApiService {
       });
     } else {
       if (IS_IOS) {
-        CookieManager.clearByName('https://www.minds.com', 'canary');
+        CookieManager.clearByName(APP_API_URI, 'canary');
       }
     }
     if (MINDS_STAGING) {
-      CookieManager.set('https://www.minds.com', {
+      CookieManager.set(APP_API_URI, {
         name: 'staging',
         value: '1',
         path: '/',
@@ -107,7 +108,7 @@ export class ApiService {
       });
     } else {
       if (IS_IOS) {
-        CookieManager.clearByName('https://www.minds.com', 'staging');
+        CookieManager.clearByName(APP_API_URI, 'staging');
       }
     }
 
@@ -403,6 +404,11 @@ export class ApiService {
       'App-Version': Version.VERSION,
       ...customHeaders,
     };
+
+    const xsrfCookie = sessionService.xsrfToken;
+    if (xsrfCookie) {
+      headers['X-XSRF-TOKEN'] = xsrfCookie;
+    }
 
     const referrer = referrerService.get();
     if (referrer) {
