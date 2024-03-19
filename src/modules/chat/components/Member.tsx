@@ -13,12 +13,12 @@ export default function Member({ member }: Props) {
         size="tiny"
         source={{
           uri:
-            member.avatar ??
+            member.node.iconUrl ??
             'https://cdn.minds.com/icon/773311697292107790/large/1597789367',
         }}
       />
       <B2 left="M" font="medium" top="S">
-        {member.username}
+        {member.node.name}
       </B2>
     </Row>
   );
