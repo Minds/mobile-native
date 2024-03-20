@@ -619,6 +619,7 @@ export class SessionService {
       this.persistActiveIndex();
       this.persistSessionsArray();
       CookieManager.clearAll();
+      CookieManager.clearAll(true); // iOS also needs to clear webkit
     }
   }
 
