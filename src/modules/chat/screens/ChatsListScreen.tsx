@@ -1,20 +1,22 @@
 import React from 'react';
 import { B1, Screen, ScreenHeader } from '~/common/ui';
 import ChatListItem from '../components/ChatListItem';
-import { FlashList } from '@shopify/flash-list';
 import NavigationService from '~/navigation/NavigationService';
 import { ChatRoom } from '../types';
-import CenteredLoading from '~/common/components/CenteredLoading';
 import { useChatRoomListQuery } from '../hooks/useChatRoomListQuery';
-import { RefreshControl } from 'react-native';
-import { IS_IOS } from '~/config/Config';
-import ThemedStyles from '~/styles/ThemedStyles';
+import ChatRequestCount from '../components/ChatRequestCount';
+import ChatRoomList from '../components/ChatRoomList';
+import ChatNewButton from '../components/ChatNewButton';
 
-export default function ChatsListScreen() {
+/**
+ * Chat rooms list screen
+ */
+export default function ChatsListScreen({ navigation }) {
   return (
     <Screen safe>
       <ScreenHeader back={false} title="Chats" />
       <ChatList />
+      <ChatNewButton onPress={() => navigation.push('ChatNew')} />
     </Screen>
   );
 }
@@ -23,21 +25,18 @@ function ChatList() {
   const { chats, isLoading, fetchNextPage, isRefetching, refetch } =
     useChatRoomListQuery();
   return (
-    <FlashList
+    <ChatRoomList
       renderItem={renderItem}
-      refreshControl={
-        <RefreshControl
-          refreshing={isRefetching}
-          onRefresh={refetch}
-          progressViewOffset={IS_IOS ? 0 : 80}
-          tintColor={ThemedStyles.getColor('Link')}
-          colors={[ThemedStyles.getColor('Link')]}
+      ListHeaderComponent={
+        <ChatRequestCount
+          count={10}
+          onPress={() => NavigationService.push('ChatRequestsList')}
         />
       }
+      isLoading={isLoading}
       refreshing={isRefetching}
       onRefresh={refetch}
-      estimatedItemSize={68}
-      ListEmptyComponent={isLoading ? <CenteredLoading /> : <Empty />}
+      Empty={Empty}
       onEndReached={fetchNextPage}
       data={chats}
     />

@@ -202,9 +202,9 @@ exports[`SupermindRequest should render inbound 1`] = `
               }
               style={
                 {
-                  "borderRadius": 16,
-                  "height": 32,
-                  "width": 32,
+                  "borderRadius": 18,
+                  "height": 36,
+                  "width": 36,
                 }
               }
             />
@@ -699,9 +699,9 @@ exports[`SupermindRequest should render outbound 1`] = `
               }
               style={
                 {
-                  "borderRadius": 16,
-                  "height": 32,
-                  "width": 32,
+                  "borderRadius": 18,
+                  "height": 36,
+                  "width": 36,
                 }
               }
             />

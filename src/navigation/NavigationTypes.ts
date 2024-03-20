@@ -139,6 +139,7 @@ export type RootStackParamList = {
   GroupsDiscovery: {};
   GroupView: {};
   ChatStack: { chatId: string };
+  ChatNew: undefined;
   Compose: ComposeScreenParams;
   SupermindConfirmation: SupermindConfirmationRouteParams;
   SupermindCompose: {

@@ -5,11 +5,12 @@ import { FlatList, StyleSheet } from 'react-native';
 import { useChatRoomMessagesQuery } from '../hooks/useChatRoomMessagesQuery';
 import ChatInput from './ChatInput';
 
-const renderMessage = ({ item }) => {
-  return <Message message={item} />;
+type Props = {
+  roomGuid: string;
+  isRequest?: boolean;
 };
 
-export default function MessageList({ roomGuid }) {
+export default function MessageList({ roomGuid, isRequest }: Props) {
   const { query, send, messages } = useChatRoomMessagesQuery(roomGuid);
   const listRef = useRef<FlatList>(null);
 
@@ -31,16 +32,19 @@ export default function MessageList({ roomGuid }) {
         inverted
         onEndReachedThreshold={1}
         initialNumToRender={12}
-        onEndReached={() => {
-          query.fetchNextPage();
-        }}
+        // @ts-ignore since we don't use the params we ignore the error, fixing it will require an unnecessary memoization
+        onEndReached={query.fetchNextPage}
         renderItem={renderMessage}
         keyExtractor={keyExtractor}
       />
-      <ChatInput onSendMessage={sendMessage} />
+      {!isRequest && <ChatInput onSendMessage={sendMessage} />}
     </>
   );
 }
+
+const renderMessage = ({ item }) => {
+  return <Message message={item} />;
+};
 
 const maintainVisibleContentPosition = {
   autoscrollToTopThreshold: 50,

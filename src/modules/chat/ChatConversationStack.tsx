@@ -6,9 +6,14 @@ import {
   StackScreenProps,
 } from '@react-navigation/stack';
 import { AppStackScreenProps } from '~/navigation/NavigationTypes';
+import { ChatMember } from './types';
 
 export type ChatStackParamList = {
-  Chat: { chatId: string };
+  Chat: {
+    roomGuid: string;
+    members: ChatMember[];
+    isRequest: true;
+  };
   ChatDetails: undefined;
   ChatMembers: undefined;
 };

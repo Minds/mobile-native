@@ -1,0 +1,31 @@
+mutation CreateChatRoom(
+  $roomType: ChatRoomTypeEnum
+  $otherMemberGuids: [String!]
+) {
+  createChatRoom(otherMemberGuids: $otherMemberGuids, roomType: $roomType) {
+    lastMessagePlainText
+    lastMessageCreatedTimestamp
+    cursor
+    totalMembers
+    node {
+      isChatRequest
+      id
+      guid
+      roomType
+      timeCreatedISO8601
+      timeCreatedUnix
+    }
+    members(first: 3) {
+      edges {
+        cursor
+        node {
+          id
+          guid
+          iconUrl
+          username
+          name
+        }
+      }
+    }
+  }
+}

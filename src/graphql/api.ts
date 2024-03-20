@@ -273,12 +273,14 @@ export type ChatMessagesConnection = ConnectionInterface & {
 export type ChatRoomEdge = EdgeInterface & {
   __typename?: 'ChatRoomEdge';
   cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   lastMessageCreatedTimestamp?: Maybe<Scalars['Int']['output']>;
   lastMessagePlainText?: Maybe<Scalars['String']['output']>;
   members: ChatRoomMembersConnection;
   messages: ChatMessagesConnection;
   node: ChatRoomNode;
   totalMembers: Scalars['Int']['output'];
+  unreadMessagesCount: Scalars['Int']['output'];
 };
 
 export type ChatRoomEdgeMembersArgs = {
@@ -323,6 +325,7 @@ export type ChatRoomNode = NodeInterface & {
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  isChatRequest: Scalars['Boolean']['output'];
   /** The type of room. i.e. one-to-one, multi-user, or group-owned */
   roomType: ChatRoomTypeEnum;
   /** The timestamp the room was created at */
@@ -916,6 +919,7 @@ export type Mutation = {
   createNewReport: Scalars['Boolean']['output'];
   createRssFeed: RssFeed;
   createTenant: Tenant;
+  deleteChatMessage: Scalars['Boolean']['output'];
   /** Delete an entity. */
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
@@ -928,6 +932,8 @@ export type Mutation = {
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
   provideVerdict: Scalars['Boolean']['output'];
+  /** Updates the read receipt of a room */
+  readReceipt: ChatRoomEdge;
   refreshRssFeed: RssFeed;
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   replyToRoomInviteRequest: Scalars['Boolean']['output'];
@@ -1022,6 +1028,11 @@ export type MutationCreateTenantArgs = {
   tenant?: InputMaybe<TenantInput>;
 };
 
+export type MutationDeleteChatMessageArgs = {
+  messageGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationDeleteEntityArgs = {
   subjectUrn: Scalars['String']['input'];
 };
@@ -1055,6 +1066,11 @@ export type MutationProvideVerdictArgs = {
   verdictInput: VerdictInput;
 };
 
+export type MutationReadReceiptArgs = {
+  messageGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationRefreshRssFeedArgs = {
   feedId: Scalars['String']['input'];
 };
@@ -1065,7 +1081,7 @@ export type MutationRemoveRssFeedArgs = {
 
 export type MutationReplyToRoomInviteRequestArgs = {
   chatRoomInviteRequestActionEnum: ChatRoomInviteRequestActionEnum;
-  roomGuid: Scalars['Int']['input'];
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationResendInviteArgs = {
@@ -1288,6 +1304,8 @@ export type Query = {
   chatRoomList: ChatRoomsConnection;
   /** Returns the members of a chat room */
   chatRoomMembers: ChatRoomMembersConnection;
+  /** Returns the total count of unread messages a user has */
+  chatUnreadMessagesCount: Scalars['Int']['output'];
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
   customPage: CustomPage;
@@ -1400,7 +1418,7 @@ export type QueryChatRoomArgs = {
 };
 
 export type QueryChatRoomInviteRequestsArgs = {
-  after?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -1595,7 +1613,7 @@ export type Report = NodeInterface & {
   createdTimestamp: Scalars['Int']['output'];
   cursor?: Maybe<Scalars['String']['output']>;
   /** Gets entity edge from entityUrn. */
-  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdge>;
+  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge>;
   entityGuid?: Maybe<Scalars['String']['output']>;
   entityUrn: Scalars['String']['output'];
   /** Gets ID for GraphQL. */
@@ -1849,8 +1867,9 @@ export enum TenantUserRoleEnum {
   User = 'USER',
 }
 
-export type UnionActivityEdgeUserEdgeGroupEdgeCommentEdge =
+export type UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge =
   | ActivityEdge
+  | ChatMessageEdge
   | CommentEdge
   | GroupEdge
   | UserEdge;
@@ -3543,6 +3562,48 @@ export type CreateChatMessageMutation = {
   };
 };
 
+export type CreateChatRoomMutationVariables = Exact<{
+  roomType?: InputMaybe<ChatRoomTypeEnum>;
+  otherMemberGuids?: InputMaybe<
+    Array<Scalars['String']['input']> | Scalars['String']['input']
+  >;
+}>;
+
+export type CreateChatRoomMutation = {
+  __typename?: 'Mutation';
+  createChatRoom: {
+    __typename?: 'ChatRoomEdge';
+    lastMessagePlainText?: string | null;
+    lastMessageCreatedTimestamp?: number | null;
+    cursor: string;
+    totalMembers: number;
+    node: {
+      __typename?: 'ChatRoomNode';
+      isChatRequest: boolean;
+      id: string;
+      guid: string;
+      roomType: ChatRoomTypeEnum;
+      timeCreatedISO8601: string;
+      timeCreatedUnix: string;
+    };
+    members: {
+      __typename?: 'ChatRoomMembersConnection';
+      edges: Array<{
+        __typename?: 'ChatRoomMemberEdge';
+        cursor: string;
+        node: {
+          __typename?: 'UserNode';
+          id: string;
+          guid: string;
+          iconUrl: string;
+          username: string;
+          name: string;
+        };
+      }>;
+    };
+  };
+};
+
 export type GetChatRoomsListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3648,6 +3709,90 @@ export type GetChatMessagesQuery = {
       endCursor?: string | null;
     };
   };
+};
+
+export type GetChatRoomInviteRequestsQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+export type GetChatRoomInviteRequestsQuery = {
+  __typename?: 'Query';
+  chatRoomInviteRequests: {
+    __typename?: 'ChatRoomsConnection';
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+    edges: Array<{
+      __typename?: 'ChatRoomEdge';
+      cursor: string;
+      lastMessagePlainText?: string | null;
+      lastMessageCreatedTimestamp?: number | null;
+      node: {
+        __typename?: 'ChatRoomNode';
+        id: string;
+        guid: string;
+        roomType: ChatRoomTypeEnum;
+        isChatRequest: boolean;
+        timeCreatedISO8601: string;
+        timeCreatedUnix: string;
+      };
+      members: {
+        __typename?: 'ChatRoomMembersConnection';
+        edges: Array<{
+          __typename?: 'ChatRoomMemberEdge';
+          cursor: string;
+          node: {
+            __typename?: 'UserNode';
+            id: string;
+            guid: string;
+            iconUrl: string;
+            username: string;
+            name: string;
+          };
+        }>;
+      };
+      messages: {
+        __typename?: 'ChatMessagesConnection';
+        edges: Array<{
+          __typename?: 'ChatMessageEdge';
+          cursor: string;
+          node: {
+            __typename?: 'ChatMessageNode';
+            id: string;
+            guid: string;
+            roomGuid: string;
+            plainText: string;
+            timeCreatedISO8601: string;
+            timeCreatedUnix: string;
+          };
+        }>;
+      };
+    }>;
+  };
+};
+
+export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetTotalRoomInviteRequestsQuery = {
+  __typename?: 'Query';
+  totalRoomInviteRequests: number;
+};
+
+export type ReplyToRoomInviteRequestMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  action: ChatRoomInviteRequestActionEnum;
+}>;
+
+export type ReplyToRoomInviteRequestMutation = {
+  __typename?: 'Mutation';
+  replyToRoomInviteRequest: boolean;
 };
 
 export type GetCustomPageQueryVariables = Exact<{
@@ -5980,6 +6125,67 @@ useCreateChatMessageMutation.fetcher = (
     variables,
     options,
   );
+export const CreateChatRoomDocument = `
+    mutation CreateChatRoom($roomType: ChatRoomTypeEnum, $otherMemberGuids: [String!]) {
+  createChatRoom(otherMemberGuids: $otherMemberGuids, roomType: $roomType) {
+    lastMessagePlainText
+    lastMessageCreatedTimestamp
+    cursor
+    totalMembers
+    node {
+      isChatRequest
+      id
+      guid
+      roomType
+      timeCreatedISO8601
+      timeCreatedUnix
+    }
+    members(first: 3) {
+      edges {
+        cursor
+        node {
+          id
+          guid
+          iconUrl
+          username
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+export const useCreateChatRoomMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    CreateChatRoomMutation,
+    TError,
+    CreateChatRoomMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    CreateChatRoomMutation,
+    TError,
+    CreateChatRoomMutationVariables,
+    TContext
+  >(
+    ['CreateChatRoom'],
+    (variables?: CreateChatRoomMutationVariables) =>
+      gqlFetcher<CreateChatRoomMutation, CreateChatRoomMutationVariables>(
+        CreateChatRoomDocument,
+        variables,
+      )(),
+    options,
+  );
+useCreateChatRoomMutation.fetcher = (
+  variables?: CreateChatRoomMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<CreateChatRoomMutation, CreateChatRoomMutationVariables>(
+    CreateChatRoomDocument,
+    variables,
+    options,
+  );
 export const GetChatRoomsListDocument = `
     query GetChatRoomsList($first: Int, $after: String) {
   chatRoomList(first: $first, after: $after) {
@@ -6154,6 +6360,208 @@ useGetChatMessagesQuery.fetcher = (
     variables,
     options,
   );
+export const GetChatRoomInviteRequestsDocument = `
+    query GetChatRoomInviteRequests($first: Int, $after: String) {
+  chatRoomInviteRequests(first: $first, after: $after) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      cursor
+      node {
+        id
+        guid
+        roomType
+        isChatRequest
+        timeCreatedISO8601
+        timeCreatedUnix
+      }
+      members(first: 3) {
+        edges {
+          cursor
+          node {
+            id
+            guid
+            iconUrl
+            username
+            name
+          }
+        }
+      }
+      messages(first: 1) {
+        edges {
+          cursor
+          node {
+            id
+            guid
+            roomGuid
+            plainText
+            timeCreatedISO8601
+            timeCreatedUnix
+          }
+        }
+      }
+      lastMessagePlainText
+      lastMessageCreatedTimestamp
+    }
+  }
+}
+    `;
+export const useGetChatRoomInviteRequestsQuery = <
+  TData = GetChatRoomInviteRequestsQuery,
+  TError = unknown,
+>(
+  variables?: GetChatRoomInviteRequestsQueryVariables,
+  options?: UseQueryOptions<GetChatRoomInviteRequestsQuery, TError, TData>,
+) =>
+  useQuery<GetChatRoomInviteRequestsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetChatRoomInviteRequests']
+      : ['GetChatRoomInviteRequests', variables],
+    gqlFetcher<
+      GetChatRoomInviteRequestsQuery,
+      GetChatRoomInviteRequestsQueryVariables
+    >(GetChatRoomInviteRequestsDocument, variables),
+    options,
+  );
+export const useInfiniteGetChatRoomInviteRequestsQuery = <
+  TData = GetChatRoomInviteRequestsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetChatRoomInviteRequestsQueryVariables,
+  variables?: GetChatRoomInviteRequestsQueryVariables,
+  options?: UseInfiniteQueryOptions<
+    GetChatRoomInviteRequestsQuery,
+    TError,
+    TData
+  >,
+) => {
+  return useInfiniteQuery<GetChatRoomInviteRequestsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetChatRoomInviteRequests.infinite']
+      : ['GetChatRoomInviteRequests.infinite', variables],
+    metaData =>
+      gqlFetcher<
+        GetChatRoomInviteRequestsQuery,
+        GetChatRoomInviteRequestsQueryVariables
+      >(GetChatRoomInviteRequestsDocument, {
+        ...variables,
+        ...(metaData.pageParam ?? {}),
+      })(),
+    options,
+  );
+};
+
+useGetChatRoomInviteRequestsQuery.fetcher = (
+  variables?: GetChatRoomInviteRequestsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    GetChatRoomInviteRequestsQuery,
+    GetChatRoomInviteRequestsQueryVariables
+  >(GetChatRoomInviteRequestsDocument, variables, options);
+export const GetTotalRoomInviteRequestsDocument = `
+    query GetTotalRoomInviteRequests {
+  totalRoomInviteRequests
+}
+    `;
+export const useGetTotalRoomInviteRequestsQuery = <
+  TData = GetTotalRoomInviteRequestsQuery,
+  TError = unknown,
+>(
+  variables?: GetTotalRoomInviteRequestsQueryVariables,
+  options?: UseQueryOptions<GetTotalRoomInviteRequestsQuery, TError, TData>,
+) =>
+  useQuery<GetTotalRoomInviteRequestsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetTotalRoomInviteRequests']
+      : ['GetTotalRoomInviteRequests', variables],
+    gqlFetcher<
+      GetTotalRoomInviteRequestsQuery,
+      GetTotalRoomInviteRequestsQueryVariables
+    >(GetTotalRoomInviteRequestsDocument, variables),
+    options,
+  );
+export const useInfiniteGetTotalRoomInviteRequestsQuery = <
+  TData = GetTotalRoomInviteRequestsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetTotalRoomInviteRequestsQueryVariables,
+  variables?: GetTotalRoomInviteRequestsQueryVariables,
+  options?: UseInfiniteQueryOptions<
+    GetTotalRoomInviteRequestsQuery,
+    TError,
+    TData
+  >,
+) => {
+  return useInfiniteQuery<GetTotalRoomInviteRequestsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetTotalRoomInviteRequests.infinite']
+      : ['GetTotalRoomInviteRequests.infinite', variables],
+    metaData =>
+      gqlFetcher<
+        GetTotalRoomInviteRequestsQuery,
+        GetTotalRoomInviteRequestsQueryVariables
+      >(GetTotalRoomInviteRequestsDocument, {
+        ...variables,
+        ...(metaData.pageParam ?? {}),
+      })(),
+    options,
+  );
+};
+
+useGetTotalRoomInviteRequestsQuery.fetcher = (
+  variables?: GetTotalRoomInviteRequestsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    GetTotalRoomInviteRequestsQuery,
+    GetTotalRoomInviteRequestsQueryVariables
+  >(GetTotalRoomInviteRequestsDocument, variables, options);
+export const ReplyToRoomInviteRequestDocument = `
+    mutation ReplyToRoomInviteRequest($roomGuid: String!, $action: ChatRoomInviteRequestActionEnum!) {
+  replyToRoomInviteRequest(
+    roomGuid: $roomGuid
+    chatRoomInviteRequestActionEnum: $action
+  )
+}
+    `;
+export const useReplyToRoomInviteRequestMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    ReplyToRoomInviteRequestMutation,
+    TError,
+    ReplyToRoomInviteRequestMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    ReplyToRoomInviteRequestMutation,
+    TError,
+    ReplyToRoomInviteRequestMutationVariables,
+    TContext
+  >(
+    ['ReplyToRoomInviteRequest'],
+    (variables?: ReplyToRoomInviteRequestMutationVariables) =>
+      gqlFetcher<
+        ReplyToRoomInviteRequestMutation,
+        ReplyToRoomInviteRequestMutationVariables
+      >(ReplyToRoomInviteRequestDocument, variables)(),
+    options,
+  );
+useReplyToRoomInviteRequestMutation.fetcher = (
+  variables: ReplyToRoomInviteRequestMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    ReplyToRoomInviteRequestMutation,
+    ReplyToRoomInviteRequestMutationVariables
+  >(ReplyToRoomInviteRequestDocument, variables, options);
 export const GetCustomPageDocument = `
     query GetCustomPage($pageType: String!) {
   customPage(pageType: $pageType) {

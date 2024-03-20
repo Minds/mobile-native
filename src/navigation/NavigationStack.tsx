@@ -463,6 +463,12 @@ const RootStack = observer(function () {
               }
             />
             <RootStackNav.Screen
+              name="ChatNew"
+              getComponent={() =>
+                require('~/modules/chat/screens/ChatNewScreen').default
+              }
+            />
+            <RootStackNav.Screen
               name="EarnModal"
               getComponent={() => require('~/earn/EarnModal').default}
               options={modalOptions}
