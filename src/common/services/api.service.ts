@@ -322,7 +322,7 @@ export class ApiService {
       if (
         (isTokenExpired(error) ||
           (error.response && error.response.status === 401)) &&
-        this.accessToken
+        (this.accessToken || sessionService.sessionToken)
       ) {
         if (this.sessionIndex !== null) {
           session.setSessionExpiredFor(true, this.sessionIndex);
