@@ -22,6 +22,8 @@ import { APP_API_URI } from '~/config/Config';
 
 const atob = (text: string) => Buffer.from(text, 'base64');
 
+export const MINDS_SESS_COOKIE_NAME = 'minds_sess';
+
 /**
  * Session service
  */
@@ -34,7 +36,7 @@ export class SessionService {
   @observable sessionExpired: boolean = false;
   @observable switchingAccount: boolean = false;
 
-  @observable xsrfToken: string = '';
+  @observable sessionToken: string | null = '';
 
   apiServiceInstances: Array<ApiService> = [];
 
@@ -151,9 +153,10 @@ export class SessionService {
       let access_token: string;
 
       if (session.authType === AuthType.Cookie) {
-        access_token = 'fake-token';
+        access_token = session.sessionToken;
         this.setToken(access_token);
-        await this.buildXsrfToken();
+
+        this.sessionToken = session.sessionToken;
       } else {
         const { accessToken, refreshToken } = session;
 
@@ -398,15 +401,21 @@ export class SessionService {
    * there can only  be one cookie session
    */
   async addCookieSession() {
+    const cookies = await CookieManager.get(APP_API_URI, true);
+    const sessCookie = cookies[MINDS_SESS_COOKIE_NAME];
+
     // We use a fake access token
-    this.setToken('fake-token');
+    this.setToken(sessCookie.value);
+
+    this.sessionToken = sessCookie.value;
 
     // Reload our user now we have a session cookie set
     await this.loadUser();
 
-    await this.buildXsrfToken();
-
-    const sessionData = this.buildCookieSessionData(this.getUser());
+    const sessionData = this.buildCookieSessionData(
+      sessCookie.value,
+      this.getUser(),
+    );
 
     const sessions = [sessionData];
     this.setSessions(sessions);
@@ -497,12 +506,16 @@ export class SessionService {
    * @param user
    * @returns Session
    */
-  buildCookieSessionData(user?: UserModel): CookieSession {
+  buildCookieSessionData(
+    sessionToken: string,
+    user?: UserModel,
+  ): CookieSession {
     return {
       user: user || getStores().user.me,
       pseudoId: '',
       sessionExpired: false,
       authType: AuthType.Cookie,
+      sessionToken,
     };
   }
 
@@ -523,16 +536,6 @@ export class SessionService {
         refresh_token_expires: token_refresh_expire,
       },
     };
-  }
-
-  /**
-   * We need to pull the XSRF token, if available, from the cookie
-   * store so that the API can fetch this synchronously
-   */
-  @action
-  async buildXsrfToken(): Promise<void> {
-    const cookies = await CookieManager.get(APP_API_URI);
-    this.xsrfToken = cookies['XSRF-TOKEN']?.value;
   }
 
   /**
@@ -606,6 +609,7 @@ export class SessionService {
   logout(clearStorage = true) {
     this.guid = null;
     this.setToken(null);
+    this.sessionToken = null;
     this.setRefreshToken(null);
     this.accessTokenExpires = null;
     this.refreshTokenExpires = null;

@@ -283,22 +283,6 @@ describe('SessionService with AuthType.Cookie', () => {
     sessionService = new SessionService(sessionStorageMock);
   });
 
-  it('should build XSRF Token on init', async () => {
-    mockedSession.tokensData[0].authType = AuthType.Cookie;
-    sessionStorageMock.getAll.mockReturnValueOnce(mockedSession);
-
-    CookieManager.get = jest.fn().mockResolvedValue({
-      'XSRF-TOKEN': {
-        value: 'test-xsrf-token',
-      },
-    });
-
-    await sessionService.init();
-
-    expect(sessionService.xsrfToken).toBe('test-xsrf-token');
-    expect(sessionService.token).toBe('fake-token');
-  });
-
   it('should replace ALL sessions when adding a cookie session', async () => {
     sessionService.sessions = [
       {
@@ -312,9 +296,19 @@ describe('SessionService with AuthType.Cookie', () => {
     ];
     expect(sessionService.sessions.length).toBe(2);
 
+    CookieManager.get = jest.fn().mockResolvedValue(
+      Promise.resolve({
+        minds_sess: {
+          name: 'minds_sess',
+          value: 'jwt-token',
+        },
+      }),
+    );
+
     await sessionService.addCookieSession();
 
-    expect(sessionService.token).toBe('fake-token');
+    expect(sessionService.token).toBe('jwt-token');
+    expect(sessionService.sessionToken).toBe('jwt-token');
     expect(sessionService.sessions.length).toBe(1);
   });
 });

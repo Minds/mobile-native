@@ -32,7 +32,12 @@ type PropsType = {
 export type WelcomeScreenRouteProp = RouteProp<AuthStackParamList, 'Welcome'>;
 
 function WelcomeScreen(props: PropsType) {
-  const { name: oidcName, loginUrl: oidcLoginUrl } = useLoginWeb();
+  const {
+    name: oidcName,
+    loginUrl: oidcLoginUrl,
+    isLoading: oidcLoading,
+    error: oidcError,
+  } = useLoginWeb();
 
   const onOidcPress = useCallback(() => {
     props.navigation.navigate('OidcLogin', { loginUrl: oidcLoginUrl });
@@ -72,7 +77,9 @@ function WelcomeScreen(props: PropsType) {
           </View>
         )}
         <View style={styles.buttonContainer}>
-          {oidcName ? (
+          {oidcError || oidcLoading ? (
+            <></>
+          ) : oidcName ? (
             <>
               <Button type="action" {...buttonProps} onPress={onOidcPress}>
                 {i18n.t('auth.loginWith', { name: oidcName })}

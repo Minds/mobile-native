@@ -23,6 +23,7 @@ export type BaseSession = {
 
 export type CookieSession = BaseSession & {
   authType: AuthType.Cookie;
+  sessionToken: string;
 };
 
 export type OAuthSession = BaseSession & {

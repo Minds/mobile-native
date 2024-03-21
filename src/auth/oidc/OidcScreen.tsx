@@ -4,8 +4,6 @@ import { ModalFullScreen } from '~/common/ui';
 import session from '../../common/services/session.service';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import mindsConfigService from '~/common/services/minds-config.service';
-import CookieManager from '@react-native-cookies/cookies';
-import { APP_API_URI } from '../../config/Config';
 
 type PropsType = {
   route: any;
@@ -22,11 +20,6 @@ const OidcScreen = ({ route }: PropsType) => {
 
   const onLoginComplete = async () => {
     setLoginUrl('');
-
-    // iOS, we need to resave our cookie
-    const cookies = await CookieManager.get(APP_API_URI, true);
-    const minds_sess = cookies['minds_sess'];
-    await CookieManager.set(APP_API_URI, minds_sess);
 
     await session.addCookieSession();
     await session.login();

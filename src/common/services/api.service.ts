@@ -405,9 +405,9 @@ export class ApiService {
       ...customHeaders,
     };
 
-    const xsrfCookie = sessionService.xsrfToken;
-    if (xsrfCookie) {
-      headers['X-XSRF-TOKEN'] = xsrfCookie;
+    const sessionToken = sessionService.sessionToken;
+    if (sessionService.sessionToken) {
+      headers['X-SESSION-TOKEN'] = sessionToken;
     }
 
     const referrer = referrerService.get();
@@ -415,7 +415,7 @@ export class ApiService {
       headers.minds_referrer = referrer;
     }
 
-    if (this.accessToken) {
+    if (this.accessToken && !sessionToken) {
       headers = {
         ...this.buildAuthorizationHeader(this.accessToken),
         ...headers,
