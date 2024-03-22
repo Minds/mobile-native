@@ -138,8 +138,6 @@ export type RootStackParamList = {
   GroupsList: {};
   GroupsDiscovery: {};
   GroupView: {};
-  ChatStack: { chatId: string };
-  ChatNew: undefined;
   Compose: ComposeScreenParams;
   SupermindConfirmation: SupermindConfirmationRouteParams;
   SupermindCompose: {
@@ -238,6 +236,8 @@ export type AppStackParamList = {
   Interactions: InteractionsScreenParams;
   BottomSheet: BottomSheetScreenParams;
   Report: {};
+  ChatStack: { chatId: string };
+  ChatNew: undefined;
   GifCardClaim: {
     code: string;
   };

@@ -1430,6 +1430,7 @@ export type QueryChatRoomListArgs = {
 export type QueryChatRoomMembersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['Int']['input']>;
+  excludeSelf?: InputMaybe<Scalars['Boolean']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   roomGuid?: InputMaybe<Scalars['String']['input']>;
@@ -3604,6 +3605,16 @@ export type CreateChatRoomMutation = {
   };
 };
 
+export type DeleteChatMessageMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  messageGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteChatMessageMutation = {
+  __typename?: 'Mutation';
+  deleteChatMessage: boolean;
+};
+
 export type GetChatRoomsListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -5380,6 +5391,19 @@ export type RefreshRssFeedMutation = {
   };
 };
 
+export type CreateNewReportMutationVariables = Exact<{
+  entityUrn: Scalars['String']['input'];
+  reason: ReportReasonEnum;
+  illegalSubReason?: InputMaybe<IllegalSubReasonEnum>;
+  nsfwSubReason?: InputMaybe<NsfwSubReasonEnum>;
+  securitySubReason?: InputMaybe<SecuritySubReasonEnum>;
+}>;
+
+export type CreateNewReportMutation = {
+  __typename?: 'Mutation';
+  createNewReport: boolean;
+};
+
 export const PageInfoFragmentDoc = `
     fragment PageInfo on PageInfo {
   hasPreviousPage
@@ -6183,6 +6207,45 @@ useCreateChatRoomMutation.fetcher = (
 ) =>
   gqlFetcher<CreateChatRoomMutation, CreateChatRoomMutationVariables>(
     CreateChatRoomDocument,
+    variables,
+    options,
+  );
+export const DeleteChatMessageDocument = `
+    mutation DeleteChatMessage($roomGuid: String!, $messageGuid: String!) {
+  deleteChatMessage(roomGuid: $roomGuid, messageGuid: $messageGuid)
+}
+    `;
+export const useDeleteChatMessageMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    DeleteChatMessageMutation,
+    TError,
+    DeleteChatMessageMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    DeleteChatMessageMutation,
+    TError,
+    DeleteChatMessageMutationVariables,
+    TContext
+  >(
+    ['DeleteChatMessage'],
+    (variables?: DeleteChatMessageMutationVariables) =>
+      gqlFetcher<DeleteChatMessageMutation, DeleteChatMessageMutationVariables>(
+        DeleteChatMessageDocument,
+        variables,
+      )(),
+    options,
+  );
+useDeleteChatMessageMutation.fetcher = (
+  variables: DeleteChatMessageMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<DeleteChatMessageMutation, DeleteChatMessageMutationVariables>(
+    DeleteChatMessageDocument,
     variables,
     options,
   );
@@ -7221,6 +7284,47 @@ useRefreshRssFeedMutation.fetcher = (
 ) =>
   gqlFetcher<RefreshRssFeedMutation, RefreshRssFeedMutationVariables>(
     RefreshRssFeedDocument,
+    variables,
+    options,
+  );
+export const CreateNewReportDocument = `
+    mutation CreateNewReport($entityUrn: String!, $reason: ReportReasonEnum!, $illegalSubReason: IllegalSubReasonEnum, $nsfwSubReason: NsfwSubReasonEnum, $securitySubReason: SecuritySubReasonEnum) {
+  createNewReport(
+    reportInput: {entityUrn: $entityUrn, reason: $reason, securitySubReason: $securitySubReason, illegalSubReason: $illegalSubReason, nsfwSubReason: $nsfwSubReason}
+  )
+}
+    `;
+export const useCreateNewReportMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    CreateNewReportMutation,
+    TError,
+    CreateNewReportMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    CreateNewReportMutation,
+    TError,
+    CreateNewReportMutationVariables,
+    TContext
+  >(
+    ['CreateNewReport'],
+    (variables?: CreateNewReportMutationVariables) =>
+      gqlFetcher<CreateNewReportMutation, CreateNewReportMutationVariables>(
+        CreateNewReportDocument,
+        variables,
+      )(),
+    options,
+  );
+useCreateNewReportMutation.fetcher = (
+  variables: CreateNewReportMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<CreateNewReportMutation, CreateNewReportMutationVariables>(
+    CreateNewReportDocument,
     variables,
     options,
   );

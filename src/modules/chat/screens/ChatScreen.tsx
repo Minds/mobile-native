@@ -36,12 +36,12 @@ export default function ChatScreen({ navigation, route }) {
         />
       )}
       <MessageList roomGuid={roomGuid} isRequest={isRequest} />
-      {isRequest && <ActionSheet name="someone" roomGuid={roomGuid} />}
+      {isRequest && <RequestActionSheet name="someone" roomGuid={roomGuid} />}
     </Screen>
   );
 }
 
-const ActionSheet = ({
+const RequestActionSheet = ({
   name,
   roomGuid,
 }: {

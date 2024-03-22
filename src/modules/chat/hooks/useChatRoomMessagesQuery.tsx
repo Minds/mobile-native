@@ -1,15 +1,23 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { produce } from 'immer';
 import {
   GetChatMessagesQuery,
   useCreateChatMessageMutation,
+  useDeleteChatMessageMutation,
   useInfiniteGetChatMessagesQuery,
 } from '~/graphql/api';
-import { UseInfiniteQueryResult, useQueryClient } from '@tanstack/react-query';
+import {
+  InfiniteData,
+  UseInfiniteQueryResult,
+  useQueryClient,
+} from '@tanstack/react-query';
 import sessionService from '~/common/services/session.service';
 import moment from 'moment';
 import { ChatMessage } from '../types';
 import delay from '~/common/helpers/delay';
+import logService from '~/common/services/log.service';
+import { showNotification } from 'AppMessages';
 
 const PAGE_SIZE = 12;
 
@@ -115,7 +123,6 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
       return { newMessage };
     },
     onError: (err, newTodo, context) => {
-      console.log('onError', err, newTodo, context);
       // we remove the optimistic message
       if (pendingMessages.current.length > 0 && context) {
         pendingMessages.current = pendingMessages.current.filter(
@@ -135,20 +142,60 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
     },
   });
 
-  const messages = useMemo(
-    () =>
-      pendingMessages.current.concat(
-        query.data?.pages.flatMap(page => {
-          const edges = page.chatMessages.edges as ChatMessage[] & {
-            _reversed?: boolean;
-          };
-          if (!edges._reversed) {
-            edges.reverse();
-            edges._reversed = true;
+  const deleteMessageMutation = useDeleteChatMessageMutation({
+    onError: error => {
+      showNotification(
+        error instanceof Error ? error.message : 'Error deleting message',
+      );
+
+      logService.exception('[useDeleteChatMessageMutation]', error);
+    },
+    onSuccess: (data, context) => {
+      showNotification('Message deleted');
+      // we remove the message from the list
+      queryClient.setQueryData<InfiniteData<GetChatMessagesQuery>>(
+        key,
+        oldData => {
+          if (oldData && data.deleteChatMessage) {
+            // keep an eye on performance, we might need to use a different approach
+            // generating an entirely new list when deleting a new message may be expensive for large chats
+            return produce(oldData, draft => {
+              draft.pages.forEach(page => {
+                const indexOf = page.chatMessages.edges.findIndex(
+                  message => message.node.guid === context.messageGuid,
+                );
+                if (indexOf !== -1) {
+                  page.chatMessages.edges.splice(indexOf, 1);
+                }
+                return page;
+              });
+            });
           }
-          return edges;
-        }) || [],
-      ),
+          return oldData;
+        },
+      );
+    },
+  });
+
+  /**
+   * Messages list
+   */
+  const messages = useMemo(
+    () => {
+      return pendingMessages.current.concat(
+        query.data?.pages.flatMap(
+          (page: GetChatMessagesQuery & { _reversed?: boolean }) => {
+            const edges = page.chatMessages.edges as ChatMessage[];
+
+            if (!page._reversed) {
+              edges.reverse();
+              page._reversed = true;
+            }
+            return edges;
+          },
+        ) || [],
+      );
+    },
     // do not remove render from deps! It is used to force  re-render when new messages are added
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [query.data, render],
@@ -162,6 +209,9 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
     query,
     messages,
     createMessageMutation,
+    deleteMessage: (messageGuid: string) => {
+      deleteMessageMutation.mutate({ messageGuid, roomGuid });
+    },
     loadNewMessages,
     send: useCallback(
       plainText => {

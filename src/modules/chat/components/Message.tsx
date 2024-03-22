@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { Avatar, B1, B2 } from '~/common/ui';
@@ -6,14 +6,30 @@ import { ChatMessage } from '../types';
 import i18n from '~/common/services/i18n.service';
 import sessionService from '~/common/services/session.service';
 import moment from 'moment';
+import {
+  ChatRoomMessagesContextType,
+  useChatRoomMessageContext,
+} from '../contexts/ChatRoomMessageContext';
 
 type Props = {
   message: ChatMessage;
+  onLongPress: (
+    message: ChatMessage,
+    context: ChatRoomMessagesContextType,
+  ) => void | Promise<void>;
 };
 
-function Message({ message }: Props) {
+function Message({ message, onLongPress }: Props) {
   const sender = message.node.sender.node;
   const date = moment(message.node.timeCreatedISO8601);
+  const context = useChatRoomMessageContext();
+
+  const longPress = onLongPress
+    ? () => {
+        onLongPress(message, context);
+      }
+    : undefined;
+
   return sender.guid !== sessionService.getUser().guid ? (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
@@ -24,7 +40,7 @@ function Message({ message }: Props) {
           }}
         />
       </View>
-      <View style={styles.bubbleContainer}>
+      <TouchableOpacity style={styles.bubbleContainer} onLongPress={longPress}>
         <B2 left="S" font="medium">
           {sender.name}
         </B2>
@@ -34,18 +50,21 @@ function Message({ message }: Props) {
         <B2 left="S" font="medium" color="secondary">
           {i18n.date(date, 'friendly')}
         </B2>
-      </View>
+      </TouchableOpacity>
     </View>
   ) : (
     <View style={styles.containerRight}>
-      <View style={styles.bubbleContainer}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={styles.bubbleContainer}
+        onLongPress={longPress}>
         <View style={styles.bubbleRight}>
           <B1 color="black">{message.node.plainText}</B1>
         </View>
         <B2 font="medium" color="secondary" align="right" right="S">
           {i18n.date(date, 'friendly')}
         </B2>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 }
