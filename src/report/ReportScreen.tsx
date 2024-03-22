@@ -82,8 +82,10 @@ const ReportScreen = ({ route, navigation }: PropsType) => {
                                   ? callMutation({
                                       mutation: reportMutation,
                                       entity,
-                                      reason,
-                                      subreason: undefined,
+                                      reason: reason || reasonItem,
+                                      subreason: reason
+                                        ? reasonItem
+                                        : undefined,
                                     })
                                   : submit({
                                       entity,
@@ -147,10 +149,10 @@ const ReportScreen = ({ route, navigation }: PropsType) => {
                         })
                       : submit({
                           entity,
-                          reason: reason,
+                          reason,
                           note,
                         }),
-                  reason: reason,
+                  reason,
                   requireNote,
                   note,
                   navigation,
