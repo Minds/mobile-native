@@ -653,7 +653,12 @@ export class ApiService {
         xhr.upload.addEventListener('progress', progress);
       }
       xhr.open('POST', APP_API_URI + this.buildUrl(url));
-      xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
+
+      if (sessionService.sessionToken) {
+        xhr.setRequestHeader('X-SESSION-TOKEN', sessionService.sessionToken);
+      } else {
+        xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
+      }
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.setRequestHeader('App-Version', Version.VERSION);
