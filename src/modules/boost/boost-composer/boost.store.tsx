@@ -6,7 +6,6 @@ import mindsConfigService from '~/common/services/minds-config.service';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { showNotification } from '../../../../AppMessages';
-import { hasVariation } from 'ExperimentsProvider';
 import { InsightEstimateResponse } from '../hooks/useBoostInsights';
 import {
   DEFAULT_DAILY_CASH_BUDGET,
@@ -27,10 +26,7 @@ export const createBoostStore = ({
   entity,
   wallet,
 }: BoostStoreParams) => ({
-  goalsEnabled:
-    boostType === 'post' &&
-    entity?.isOwner() &&
-    hasVariation('minds-3952-boost-goals'),
+  goalsEnabled: boostType === 'post' && entity?.isOwner(),
   config: mindsConfigService.getSettings().boost as IBoostConfig,
   entity,
   insights: null as null | InsightEstimateResponse,
@@ -136,12 +132,6 @@ export const createBoostStore = ({
         payload.goal_button_url = this.linkUrl;
         payload.goal_button_text = this.link;
       }
-    }
-
-    if (hasVariation('mob-4952-boost-platform-targeting')) {
-      payload.target_platform_web = this.target_platform_web;
-      payload.target_platform_android = this.target_platform_android;
-      payload.target_platform_ios = this.target_platform_ios;
     }
 
     return apiService.post('api/v3/boosts', payload).catch(e => {

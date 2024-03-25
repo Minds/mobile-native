@@ -9,7 +9,7 @@ exports[`renders correctly 1`] = `
         "justifyContent": "flex-start",
       },
       {
-        "borderBottomWidth": 0.5,
+        "borderBottomWidth": 1,
       },
       {
         "borderColor": "#53565A",

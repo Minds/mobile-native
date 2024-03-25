@@ -13,7 +13,7 @@ import Switch from '~/common/components/controls/Switch';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { Button } from '~/common/ui/buttons';
 import { confirm } from '~/common/components/Confirm';
-import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
+import { GOOGLE_PLAY_STORE } from '~/config/Config';
 
 type PropsType = {
   route: any;
@@ -98,7 +98,7 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
   ];
 
   const localStore = useLocalStore(createTierStore);
-  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = GOOGLE_PLAY_STORE;
 
   //check no boolean
   if (tier && tier !== true) {

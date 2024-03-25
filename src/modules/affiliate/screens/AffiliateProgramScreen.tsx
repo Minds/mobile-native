@@ -19,17 +19,15 @@ import { View, ViewStyle } from 'react-native';
 import LinksMindsSheet from '../components/LinksMindsSheet';
 import InviteToMindsSheet from '../components/InviteToMindsSheet';
 import TotalEarnings from '../components/TotalEarnings';
-import { IS_FROM_STORE, IS_IPAD } from '~/config/Config';
+import { GOOGLE_PLAY_STORE, IS_FROM_STORE, IS_IPAD } from '~/config/Config';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 import FitScrollView from '~/common/components/FitScrollView';
-import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 export default function AffiliateProgramScreen({ navigation }) {
   const { t } = useTranslation();
   const linkBottomSheetRef = React.useRef<BottomSheetModal>(null);
   const inviteBottomSheetRef = React.useRef<BottomSheetModal>(null);
-  const hideTokens =
-    useIsGoogleFeatureOn('mob-5221-google-hide-tokens') && IS_FROM_STORE;
+  const hideTokens = GOOGLE_PLAY_STORE;
 
   return (
     <Screen safe onlyTopEdge>

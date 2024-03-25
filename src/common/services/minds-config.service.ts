@@ -6,7 +6,7 @@ import { storages } from './storage/storages.service';
 /**
  * Minds Service
  */
-class MindsConfigService {
+export class MindsConfigService {
   @observable
   settings: any = null;
   private currentPromise: Promise<any> | null = null;
@@ -29,7 +29,6 @@ class MindsConfigService {
   private async _updateWithRetry(retries: number) {
     try {
       const settings = await api.get<any>('api/v1/minds/config');
-      this.currentPromise = null;
       if (settings.permissions) {
         settings.permissions = settings.permissions.reduce((acc, cur) => {
           acc[cur] = true;
@@ -37,8 +36,8 @@ class MindsConfigService {
         }, {});
       }
       storages.user?.setMap('mindsSettings', settings);
-
       this.settings = settings;
+      this.currentPromise = null;
     } catch (error) {
       if (retries === 0) {
         this.currentPromise = null;
@@ -47,6 +46,7 @@ class MindsConfigService {
       console.log('Error fetching minds config', error, 'Retrying...');
       // Wait for 1 second before retrying
       await delay(retries > 10 ? 800 : 2000);
+      this.currentPromise = null;
       return this.update(retries - 1);
     }
   }

@@ -11,12 +11,12 @@ import { HiddenTap } from './screens/DevToolsScreen';
 import {
   AFFILIATES_ENABLED,
   DEV_MODE,
+  GOOGLE_PLAY_STORE,
   IS_IOS,
   IS_IPAD,
   IS_TENANT,
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 import openUrlService from '~/common/services/open-url.service';
 
 /**
@@ -38,8 +38,7 @@ type Item = MenuItemProps & { screen?: string; params?: any };
 
 const SettingsScreen = observer(({ navigation }) => {
   const theme = ThemedStyles.style;
-
-  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = GOOGLE_PLAY_STORE;
 
   const user = sessionService.getUser();
 

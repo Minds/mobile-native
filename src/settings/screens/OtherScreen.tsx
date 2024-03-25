@@ -4,12 +4,10 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
 import NavigationService from '../../navigation/NavigationService';
-import { useIsFeatureOn } from 'ExperimentsProvider';
 import {
   BLOCK_USER_ENABLED,
   IS_TENANT,
   MEMBERSHIP_TIERS_ENABLED,
-  TWITTER_ENABLED,
 } from '~/config/Config';
 import sessionService from '~/common/services/session.service';
 import { Screen } from '~/common/ui';
@@ -21,7 +19,6 @@ function useNavCallback(screen) {
 }
 
 export default function () {
-  const isTwitterFFEnabled = useIsFeatureOn('engine-2503-twitter-feats');
   const contentAdmin = [
     {
       title: i18n.t('settings.blockedChannels'),
@@ -38,30 +35,12 @@ export default function () {
 
   const contentMigration: Array<any> = [];
 
-  if (isTwitterFFEnabled && TWITTER_ENABLED) {
-    contentMigration.push({
-      title: i18n.t('settings.twitterSync.title'),
-      onPress: useNavCallback('TwitterSync'),
-    });
-  }
-
   if (IS_TENANT || sessionService.getUser().plus) {
     contentMigration.push({
       title: i18n.t('settings.rssSync'),
       onPress: useNavCallback('RssScreen'),
     });
   }
-
-  const account = [
-    {
-      title: i18n.t('settings.deactivate'),
-      onPress: useNavCallback('DeactivateChannel'),
-    },
-    {
-      title: i18n.t('settings.otherOptions.c2'),
-      onPress: useNavCallback('DeleteChannel'),
-    },
-  ];
 
   const data = [
     {
@@ -87,7 +66,6 @@ export default function () {
         i18n.t('settings.otherOptions.contentMigration'),
         contentMigration,
       )}
-      {generateSection(i18n.t('settings.otherOptions.c'), account)}
       {generateSection(i18n.t('settings.otherOptions.f'), data)}
       {generateSection(i18n.t('settings.otherOptions.d'), info)}
     </Screen>

@@ -104,29 +104,6 @@ export const useIsAndroidFeatureOn = (feature: FeatureID) =>
 export const useIsGoogleFeatureOn = (feature: FeatureID) =>
   useGrowthbookFeature(feature).on && GOOGLE_PLAY_STORE;
 
-export const featureList = [
-  'engine-2503-twitter-feats',
-  'epic-303-boost-partners',
-  'minds-3639-plus-notice',
-  'mob-discovery-redirect',
-  'mob-twitter-oauth-4715',
-  'mob-4424-sockets',
-  'mob-4472-in-app-verification',
-  'mob-4596-create-modal',
-  'mob-4637-ios-hide-minds-superminds',
-  'mob-4722-track-code-push',
-  'mob-4812-discovery-badge',
-  'minds-3921-mandatory-onboarding-tags',
-  'mob-4903-referrer-banner',
-  'mob-4903-wefounder-banner',
-  'minds-3952-boost-goals',
-  'mob-4938-newsfeed-for-you',
-  'mob-4952-boost-platform-targeting',
-  'mob-5038-discovery-consolidation',
-  'mob-5075-hide-post-on-downvote',
-  'mob-5075-explicit-vote-buttons',
-  'mob-5009-boost-rotator-in-feed',
-  'mob-5221-google-hide-tokens',
-] as const;
+export const featureList = [] as const;
 
 export type FeatureID = typeof featureList[number];

@@ -55,17 +55,15 @@ const EmailNotificationsSettings = ({}: PropsType) => {
               <MText style={titleStyle}>
                 {i18n.t(`notificationSettings.${campaignType.tag}`)}
               </MText>
-              {notifications.mailsNotificationsSettings?.map(
-                (setting: EmailNotificationsSettingModel) => {
-                  if (setting.campaign !== campaignType.name) {
-                    return null;
-                  }
+              {notifications.mailsNotificationsSettings
+                ?.filter(setting => setting.campaign === campaignType.name)
+                .map((setting: EmailNotificationsSettingModel) => {
                   const isSelector = topicsWithSelector.includes(
                     setting._topic,
                   );
                   return (
                     <React.Fragment key={setting.guid}>
-                      {!isSelector && (
+                      {!isSelector ? (
                         <MenuItemToggle
                           title={setting.topic}
                           value={setting.value !== '' && setting.value !== '0'}
@@ -75,8 +73,7 @@ const EmailNotificationsSettings = ({}: PropsType) => {
                             )
                           }
                         />
-                      )}
-                      {isSelector && (
+                      ) : (
                         <NotificationSelector
                           setting={setting}
                           frecuencyOptions={frecuencyOptions}
@@ -84,8 +81,7 @@ const EmailNotificationsSettings = ({}: PropsType) => {
                       )}
                     </React.Fragment>
                   );
-                },
-              )}
+                })}
             </React.Fragment>
           );
         })}
