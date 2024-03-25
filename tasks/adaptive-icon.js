@@ -1,6 +1,6 @@
 const sharp = require('sharp');
 
-export async function addAdaptiveIcon(
+async function addAdaptiveIcon(
   imagePath = './assets/images/icon.png',
   outputPath = './assets/images/icon_adaptive.png',
   paddingRatio = 0.15,
@@ -41,3 +41,5 @@ export async function addAdaptiveIcon(
     console.error('Error processing image:', error);
   }
 }
+
+module.exports = { addAdaptiveIcon };
