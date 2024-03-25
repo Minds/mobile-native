@@ -41,7 +41,7 @@ function HashTagsScreen({ navigation }) {
           type="action"
           size="large"
           disabled={hashtag.selectedCount < 3}
-          onPress={AuthService.setCompletedOnboard}>
+          onPress={() => AuthService.setCompletedOnboard()}>
           Continue
         </Button>
       </ScreenSection>
