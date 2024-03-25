@@ -13,7 +13,7 @@ import {
   WELCOME_LOGO,
 } from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';
-import { Button, ButtonPropsType, Screen } from '~ui';
+import { B1, Button, ButtonPropsType, Screen } from '~ui';
 import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -37,7 +37,10 @@ function WelcomeScreen(props: PropsType) {
     loginUrl: oidcLoginUrl,
     isLoading: oidcLoading,
     error: oidcError,
+    refetch,
   } = useLoginWeb();
+
+  console.log('errr', oidcError);
 
   const onOidcPress = useCallback(() => {
     props.navigation.navigate('OidcLogin', { loginUrl: oidcLoginUrl });
@@ -77,58 +80,60 @@ function WelcomeScreen(props: PropsType) {
           </View>
         )}
         <View style={styles.buttonContainer}>
-          {oidcError || oidcLoading ? (
-            <></>
-          ) : oidcName ? (
+          {!oidcLoading && !oidcError ? (
             <>
-              <Button type="action" {...buttonProps} onPress={onOidcPress}>
-                {i18n.t('auth.loginWith', { name: oidcName })}
-              </Button>
-              <MText onPress={onLoginPress}>
-                Login with username / password
-              </MText>
+              {oidcName ? (
+                <>
+                  <Button type="action" {...buttonProps} onPress={onOidcPress}>
+                    {i18n.t('auth.loginWith', { name: oidcName })}
+                  </Button>
+                  <MText onPress={onLoginPress}>
+                    Login with username / password
+                  </MText>
+                </>
+              ) : (
+                <>
+                  <Button
+                    type="action"
+                    {...buttonProps}
+                    testID="joinNowButton"
+                    onPress={onRegisterPress}>
+                    {i18n.t('auth.createChannel', { TENANT })}
+                  </Button>
+                  <Button darkContent {...buttonProps} onPress={onLoginPress}>
+                    {i18n.t('auth.login')}
+                  </Button>
+                </>
+              )}
             </>
-          ) : (
+          ) : null}
+
+          {oidcError && (
             <>
-              <Button
-                type="action"
-                {...buttonProps}
-                testID="joinNowButton"
-                onPress={onRegisterPress}>
-                {i18n.t('auth.createChannel', { TENANT })}
-              </Button>
-              <Button darkContent {...buttonProps} onPress={onLoginPress}>
-                {i18n.t('auth.login')}
-              </Button>
+              <B1 align="center">{i18n.t('errorMessage')}</B1>
+              <B1
+                color="link"
+                onPress={() => refetch()}
+                align="center"
+                bottom="XL">
+                Retry
+              </B1>
             </>
           )}
         </View>
       </View>
 
       {DEV_MODE.isActive && (
-        <MText style={devtoolsStyle} onPress={openDevtools}>
+        <MText style={styles.devtoolsStyle} onPress={openDevtools}>
           Dev Options
         </MText>
       )}
-      <HiddenTap style={devToggleStyle}>
+      <HiddenTap style={styles.devToggleStyle}>
         <View />
       </HiddenTap>
     </Screen>
   );
 }
-
-const devtoolsStyle = ThemedStyles.combine(
-  'positionAbsoluteTopRight',
-  'marginTop9x',
-  'padding5x',
-);
-
-const devToggleStyle = ThemedStyles.combine(
-  'positionAbsoluteTopLeft',
-  'width30',
-  'marginTop9x',
-  'padding5x',
-);
 
 export default withErrorBoundaryScreen(
   observer(WelcomeScreen),
@@ -160,6 +165,14 @@ const styles = ThemedStyles.create({
     marginTop: '25%',
     alignSelf: 'center',
   },
+  devToggleStyle: [
+    'positionAbsoluteTopLeft',
+    'width30',
+    'marginTop9x',
+    'padding5x',
+  ],
+  devtoolsStyle: ['positionAbsoluteTopRight', 'marginTop9x', 'padding5x'],
+  error: ['centered', 'paddingBottom10x'],
 });
 
 type ButtonType = Partial<
