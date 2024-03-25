@@ -58,10 +58,6 @@ export class SessionStorageService {
     try {
       const sessionData = storages.session.getMap<SessionsData>(KEY);
       const activeIndex = storages.session.getInt(INDEX_KEY) || 0;
-
-      if (sessionData === null || sessionData === undefined) {
-        return this.checkAndMigrate();
-      }
       //  the active index was moved outside the session data
       if (sessionData) {
         sessionData.activeIndex = activeIndex;
@@ -70,48 +66,6 @@ export class SessionStorageService {
     } catch (err) {
       return null;
     }
-  }
-
-  checkAndMigrate() {
-    const data = storages.session.getMultipleItems<any>(
-      ['access_token', 'refresh_token', 'user'],
-      'object',
-    );
-
-    if (!data) {
-      return null;
-    }
-
-    const accessToken = data[0][1],
-      refreshToken = data[1][1],
-      user = data[2][1];
-
-    if (!accessToken || !refreshToken || !user) {
-      return null;
-    }
-
-    const sessionsData: SessionsData = {
-      activeIndex: 0,
-      tokensData: [
-        {
-          user,
-          pseudoId: '',
-          refreshToken,
-          accessToken,
-          sessionExpired: false,
-          authType: AuthType.OAuth,
-        },
-      ],
-    };
-
-    this.save(sessionsData);
-
-    // we remove the legacy session data once migrated
-    storages.session.removeItem('access_token');
-    storages.session.removeItem('refresh_token');
-    storages.session.removeItem('user');
-
-    return sessionsData;
   }
 
   /**
