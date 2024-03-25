@@ -6,9 +6,10 @@ import { REASONS } from '../common/services/list-options.service';
  * Report Service
  */
 class ReportService {
-  report(entity_guid, reason_code, sub_reason_code, note) {
+  report(entity_guid, entity_urn, reason_code, sub_reason_code, note) {
     return api.post('api/v2/moderation/report', {
       entity_guid,
+      entity_urn,
       reason_code,
       sub_reason_code,
       note,

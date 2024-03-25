@@ -74,7 +74,6 @@ const ChatInput = ({ onSendMessage }: Props) => {
             placeholder="type your message ..."
             underlineColorAndroid="transparent"
             onChangeText={setText}
-            onEndEditing={send}
             keyboardType={'default'}
             maxLength={CHAR_LIMIT}
             style={[

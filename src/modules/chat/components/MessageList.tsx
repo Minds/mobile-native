@@ -2,16 +2,20 @@ import React, { useCallback, useRef } from 'react';
 
 import Message from './Message';
 import { FlatList, StyleSheet } from 'react-native';
-import { useChatRoomMessagesQuery } from '../hooks/useChatRoomMessagesQuery';
 import ChatInput from './ChatInput';
+import { showMessageMenu } from './MessageMenu';
+import {
+  useChatRoomMessageContext,
+  ChatRoomMessagesProvider,
+} from '../contexts/ChatRoomMessageContext';
 
 type Props = {
   roomGuid: string;
   isRequest?: boolean;
 };
 
-export default function MessageList({ roomGuid, isRequest }: Props) {
-  const { query, send, messages } = useChatRoomMessagesQuery(roomGuid);
+function MessageFlatList({ isRequest }: Props) {
+  const { query, send, messages } = useChatRoomMessageContext();
   const listRef = useRef<FlatList>(null);
 
   const sendMessage = useCallback(
@@ -32,6 +36,7 @@ export default function MessageList({ roomGuid, isRequest }: Props) {
         inverted
         onEndReachedThreshold={1}
         initialNumToRender={12}
+        windowSize={5}
         // @ts-ignore since we don't use the params we ignore the error, fixing it will require an unnecessary memoization
         onEndReached={query.fetchNextPage}
         renderItem={renderMessage}
@@ -43,15 +48,28 @@ export default function MessageList({ roomGuid, isRequest }: Props) {
 }
 
 const renderMessage = ({ item }) => {
-  return <Message message={item} />;
+  return <Message message={item} onLongPress={showMessageMenu} />;
 };
+
+/**
+ * Message list component
+ */
+const MessageList = (props: Props) => {
+  return (
+    <ChatRoomMessagesProvider roomGuid={props.roomGuid}>
+      <MessageFlatList {...props} />
+    </ChatRoomMessagesProvider>
+  );
+};
+
+export default MessageList;
 
 const maintainVisibleContentPosition = {
   autoscrollToTopThreshold: 50,
   minIndexForVisible: 1,
 };
 
-const keyExtractor = item => item.node.id;
+const keyExtractor = item => item.node.guid;
 
 const styles = StyleSheet.create({
   container: {
