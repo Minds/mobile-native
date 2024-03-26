@@ -52,6 +52,8 @@ export default class ActivityModel extends BaseModel {
 
   link_title: string = '';
 
+  isHighlighted?: boolean;
+
   supermind?: {
     request_guid: string;
     is_reply: boolean;
