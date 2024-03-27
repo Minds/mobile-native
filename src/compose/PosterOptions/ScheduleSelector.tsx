@@ -67,9 +67,7 @@ export default observer(function () {
         title={i18n.t('capture.customTime')}
         onPress={localStore.showPicker}
         label={
-          store.time_created
-            ? current.format('ddd MMM Do YYYY h.mma')
-            : undefined
+          store.time_created ? moment(store.time_created).calendar() : undefined
         }
         selected={Boolean(store.time_created)}
       />
