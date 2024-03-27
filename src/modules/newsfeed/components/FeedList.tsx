@@ -173,6 +173,8 @@ const getItemType = item => {
 const keyExtractor = (item, index: any) => {
   const key = item.boosted
     ? `${item.urn}:${index}`
+    : item.isHighlighted
+    ? `${item.urn}:highlight`
     : item.urn || `${item.id}:${index}`;
   return key;
 };
