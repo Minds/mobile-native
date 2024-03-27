@@ -14,7 +14,9 @@ export type ChatStackParamList = {
     members: ChatMember[];
     isRequest: true;
   };
-  ChatDetails: undefined;
+  ChatDetails: {
+    roomGuid: string;
+  };
   ChatMembers: undefined;
 };
 

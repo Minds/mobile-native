@@ -306,7 +306,6 @@ export type ChatRoomMemberEdge = EdgeInterface & {
   __typename?: 'ChatRoomMemberEdge';
   cursor: Scalars['String']['output'];
   node: UserNode;
-  /** The role a member has in the room */
   role: ChatRoomRoleEnum;
   /** The timestamp the message was sent at */
   timeJoinedISO8601: Scalars['String']['output'];
@@ -322,10 +321,12 @@ export type ChatRoomMembersConnection = ConnectionInterface & {
 
 export type ChatRoomNode = NodeInterface & {
   __typename?: 'ChatRoomNode';
+  areChatRoomNotificationsMuted?: Maybe<Scalars['Boolean']['output']>;
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   isChatRequest: Scalars['Boolean']['output'];
+  isUserRoomOwner?: Maybe<Scalars['Boolean']['output']>;
   /** The type of room. i.e. one-to-one, multi-user, or group-owned */
   roomType: ChatRoomTypeEnum;
   /** The timestamp the room was created at */
@@ -920,6 +921,8 @@ export type Mutation = {
   createRssFeed: RssFeed;
   createTenant: Tenant;
   deleteChatMessage: Scalars['Boolean']['output'];
+  deleteChatRoom: Scalars['Boolean']['output'];
+  deleteChatRoomAndBlockUser: Scalars['Boolean']['output'];
   /** Delete an entity. */
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
@@ -927,6 +930,7 @@ export type Mutation = {
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   invite?: Maybe<Scalars['Void']['output']>;
+  leaveChatRoom: Scalars['Boolean']['output'];
   mobileConfig: MobileConfig;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
@@ -935,6 +939,7 @@ export type Mutation = {
   /** Updates the read receipt of a room */
   readReceipt: ChatRoomEdge;
   refreshRssFeed: RssFeed;
+  removeMemberFromChatRoom: Scalars['Boolean']['output'];
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
   replyToRoomInviteRequest: Scalars['Boolean']['output'];
   resendInvite?: Maybe<Scalars['Void']['output']>;
@@ -1033,6 +1038,14 @@ export type MutationDeleteChatMessageArgs = {
   roomGuid: Scalars['String']['input'];
 };
 
+export type MutationDeleteChatRoomArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
+export type MutationDeleteChatRoomAndBlockUserArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationDeleteEntityArgs = {
   subjectUrn: Scalars['String']['input'];
 };
@@ -1050,6 +1063,10 @@ export type MutationInviteArgs = {
   emails: Scalars['String']['input'];
   groups?: InputMaybe<Array<Scalars['String']['input']>>;
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
+};
+
+export type MutationLeaveChatRoomArgs = {
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationMobileConfigArgs = {
@@ -1073,6 +1090,11 @@ export type MutationReadReceiptArgs = {
 
 export type MutationRefreshRssFeedArgs = {
   feedId: Scalars['String']['input'];
+};
+
+export type MutationRemoveMemberFromChatRoomArgs = {
+  memberGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationRemoveRssFeedArgs = {
@@ -3615,6 +3637,24 @@ export type DeleteChatMessageMutation = {
   deleteChatMessage: boolean;
 };
 
+export type DeleteChatRoomAndBlockUserMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteChatRoomAndBlockUserMutation = {
+  __typename?: 'Mutation';
+  deleteChatRoomAndBlockUser: boolean;
+};
+
+export type DeleteChatRoomMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteChatRoomMutation = {
+  __typename?: 'Mutation';
+  deleteChatRoom: boolean;
+};
+
 export type GetChatRoomsListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3722,6 +3762,52 @@ export type GetChatMessagesQuery = {
   };
 };
 
+export type GetChatRoomQueryVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  firstMembers: Scalars['Int']['input'];
+  afterMembers: Scalars['Int']['input'];
+}>;
+
+export type GetChatRoomQuery = {
+  __typename?: 'Query';
+  chatRoom: {
+    __typename?: 'ChatRoomEdge';
+    cursor: string;
+    totalMembers: number;
+    node: {
+      __typename?: 'ChatRoomNode';
+      guid: string;
+      roomType: ChatRoomTypeEnum;
+      id: string;
+      isChatRequest: boolean;
+      isUserRoomOwner?: boolean | null;
+      areChatRoomNotificationsMuted?: boolean | null;
+    };
+    members: {
+      __typename?: 'ChatRoomMembersConnection';
+      edges: Array<{
+        __typename?: 'ChatRoomMemberEdge';
+        cursor: string;
+        role: ChatRoomRoleEnum;
+        node: {
+          __typename?: 'UserNode';
+          name: string;
+          username: string;
+          id: string;
+          guid: string;
+        };
+      }>;
+      pageInfo: {
+        __typename?: 'PageInfo';
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+        startCursor?: string | null;
+        endCursor?: string | null;
+      };
+    };
+  };
+};
+
 export type GetChatRoomInviteRequestsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3794,6 +3880,25 @@ export type GetTotalRoomInviteRequestsQueryVariables = Exact<{
 export type GetTotalRoomInviteRequestsQuery = {
   __typename?: 'Query';
   totalRoomInviteRequests: number;
+};
+
+export type LeaveChatRoomMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+}>;
+
+export type LeaveChatRoomMutation = {
+  __typename?: 'Mutation';
+  leaveChatRoom: boolean;
+};
+
+export type RemoveMemberFromChatRoomMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  memberGuid: Scalars['String']['input'];
+}>;
+
+export type RemoveMemberFromChatRoomMutation = {
+  __typename?: 'Mutation';
+  removeMemberFromChatRoom: boolean;
 };
 
 export type ReplyToRoomInviteRequestMutationVariables = Exact<{
@@ -6249,6 +6354,80 @@ useDeleteChatMessageMutation.fetcher = (
     variables,
     options,
   );
+export const DeleteChatRoomAndBlockUserDocument = `
+    mutation DeleteChatRoomAndBlockUser($roomGuid: String!) {
+  deleteChatRoomAndBlockUser(roomGuid: $roomGuid)
+}
+    `;
+export const useDeleteChatRoomAndBlockUserMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    DeleteChatRoomAndBlockUserMutation,
+    TError,
+    DeleteChatRoomAndBlockUserMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    DeleteChatRoomAndBlockUserMutation,
+    TError,
+    DeleteChatRoomAndBlockUserMutationVariables,
+    TContext
+  >(
+    ['DeleteChatRoomAndBlockUser'],
+    (variables?: DeleteChatRoomAndBlockUserMutationVariables) =>
+      gqlFetcher<
+        DeleteChatRoomAndBlockUserMutation,
+        DeleteChatRoomAndBlockUserMutationVariables
+      >(DeleteChatRoomAndBlockUserDocument, variables)(),
+    options,
+  );
+useDeleteChatRoomAndBlockUserMutation.fetcher = (
+  variables: DeleteChatRoomAndBlockUserMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    DeleteChatRoomAndBlockUserMutation,
+    DeleteChatRoomAndBlockUserMutationVariables
+  >(DeleteChatRoomAndBlockUserDocument, variables, options);
+export const DeleteChatRoomDocument = `
+    mutation DeleteChatRoom($roomGuid: String!) {
+  deleteChatRoom(roomGuid: $roomGuid)
+}
+    `;
+export const useDeleteChatRoomMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    DeleteChatRoomMutation,
+    TError,
+    DeleteChatRoomMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    DeleteChatRoomMutation,
+    TError,
+    DeleteChatRoomMutationVariables,
+    TContext
+  >(
+    ['DeleteChatRoom'],
+    (variables?: DeleteChatRoomMutationVariables) =>
+      gqlFetcher<DeleteChatRoomMutation, DeleteChatRoomMutationVariables>(
+        DeleteChatRoomDocument,
+        variables,
+      )(),
+    options,
+  );
+useDeleteChatRoomMutation.fetcher = (
+  variables: DeleteChatRoomMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<DeleteChatRoomMutation, DeleteChatRoomMutationVariables>(
+    DeleteChatRoomDocument,
+    variables,
+    options,
+  );
 export const GetChatRoomsListDocument = `
     query GetChatRoomsList($first: Int, $after: String) {
   chatRoomList(first: $first, after: $after) {
@@ -6423,6 +6602,80 @@ useGetChatMessagesQuery.fetcher = (
     variables,
     options,
   );
+export const GetChatRoomDocument = `
+    query GetChatRoom($roomGuid: String!, $firstMembers: Int!, $afterMembers: Int!) {
+  chatRoom(roomGuid: $roomGuid) {
+    cursor
+    totalMembers
+    node {
+      guid
+      roomType
+      id
+      isChatRequest
+      isUserRoomOwner
+      areChatRoomNotificationsMuted
+    }
+    members(first: $firstMembers, after: $afterMembers) {
+      edges {
+        cursor
+        role
+        node {
+          name
+          username
+          id
+          guid
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+    }
+  }
+}
+    `;
+export const useGetChatRoomQuery = <TData = GetChatRoomQuery, TError = unknown>(
+  variables: GetChatRoomQueryVariables,
+  options?: UseQueryOptions<GetChatRoomQuery, TError, TData>,
+) =>
+  useQuery<GetChatRoomQuery, TError, TData>(
+    ['GetChatRoom', variables],
+    gqlFetcher<GetChatRoomQuery, GetChatRoomQueryVariables>(
+      GetChatRoomDocument,
+      variables,
+    ),
+    options,
+  );
+export const useInfiniteGetChatRoomQuery = <
+  TData = GetChatRoomQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetChatRoomQueryVariables,
+  variables: GetChatRoomQueryVariables,
+  options?: UseInfiniteQueryOptions<GetChatRoomQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetChatRoomQuery, TError, TData>(
+    ['GetChatRoom.infinite', variables],
+    metaData =>
+      gqlFetcher<GetChatRoomQuery, GetChatRoomQueryVariables>(
+        GetChatRoomDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useGetChatRoomQuery.fetcher = (
+  variables: GetChatRoomQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetChatRoomQuery, GetChatRoomQueryVariables>(
+    GetChatRoomDocument,
+    variables,
+    options,
+  );
 export const GetChatRoomInviteRequestsDocument = `
     query GetChatRoomInviteRequests($first: Int, $after: String) {
   chatRoomInviteRequests(first: $first, after: $after) {
@@ -6584,6 +6837,80 @@ useGetTotalRoomInviteRequestsQuery.fetcher = (
     GetTotalRoomInviteRequestsQuery,
     GetTotalRoomInviteRequestsQueryVariables
   >(GetTotalRoomInviteRequestsDocument, variables, options);
+export const LeaveChatRoomDocument = `
+    mutation LeaveChatRoom($roomGuid: String!) {
+  leaveChatRoom(roomGuid: $roomGuid)
+}
+    `;
+export const useLeaveChatRoomMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    LeaveChatRoomMutation,
+    TError,
+    LeaveChatRoomMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    LeaveChatRoomMutation,
+    TError,
+    LeaveChatRoomMutationVariables,
+    TContext
+  >(
+    ['LeaveChatRoom'],
+    (variables?: LeaveChatRoomMutationVariables) =>
+      gqlFetcher<LeaveChatRoomMutation, LeaveChatRoomMutationVariables>(
+        LeaveChatRoomDocument,
+        variables,
+      )(),
+    options,
+  );
+useLeaveChatRoomMutation.fetcher = (
+  variables: LeaveChatRoomMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<LeaveChatRoomMutation, LeaveChatRoomMutationVariables>(
+    LeaveChatRoomDocument,
+    variables,
+    options,
+  );
+export const RemoveMemberFromChatRoomDocument = `
+    mutation RemoveMemberFromChatRoom($roomGuid: String!, $memberGuid: String!) {
+  removeMemberFromChatRoom(roomGuid: $roomGuid, memberGuid: $memberGuid)
+}
+    `;
+export const useRemoveMemberFromChatRoomMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    RemoveMemberFromChatRoomMutation,
+    TError,
+    RemoveMemberFromChatRoomMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    RemoveMemberFromChatRoomMutation,
+    TError,
+    RemoveMemberFromChatRoomMutationVariables,
+    TContext
+  >(
+    ['RemoveMemberFromChatRoom'],
+    (variables?: RemoveMemberFromChatRoomMutationVariables) =>
+      gqlFetcher<
+        RemoveMemberFromChatRoomMutation,
+        RemoveMemberFromChatRoomMutationVariables
+      >(RemoveMemberFromChatRoomDocument, variables)(),
+    options,
+  );
+useRemoveMemberFromChatRoomMutation.fetcher = (
+  variables: RemoveMemberFromChatRoomMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    RemoveMemberFromChatRoomMutation,
+    RemoveMemberFromChatRoomMutationVariables
+  >(RemoveMemberFromChatRoomDocument, variables, options);
 export const ReplyToRoomInviteRequestDocument = `
     mutation ReplyToRoomInviteRequest($roomGuid: String!, $action: ChatRoomInviteRequestActionEnum!) {
   replyToRoomInviteRequest(

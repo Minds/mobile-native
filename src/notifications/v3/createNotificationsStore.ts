@@ -78,9 +78,9 @@ const createNotificationsStore = () => ({
     }
   },
   startPollCount() {
-    this.pollInterval = setInterval(() => {
-      this.loadUnreadCount();
-    }, 30000);
+    // this.pollInterval = setInterval(() => {
+    //   this.loadUnreadCount();
+    // }, 30000);
   },
   stopPollCount() {
     if (this.pollInterval) {
