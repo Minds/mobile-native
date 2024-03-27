@@ -16,7 +16,7 @@ export default observer(function UpdateBanner() {
     <Banner
       actionText={'Update'}
       text={i18nService.t('banners.update.title', {})}
-      onPress={onReload}
+      onAction={onReload}
     />
   );
 });
