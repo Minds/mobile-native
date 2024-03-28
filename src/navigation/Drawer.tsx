@@ -18,11 +18,10 @@ import {
   PressableLine,
   Spacer,
 } from '~ui';
-import { Icon as IconV2 } from '@minds/ui';
-import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
+import { IconMapNameType } from '~/common/ui/icons/map';
 import { navigateToHelp } from '../settings/SettingsScreen';
-import { GOOGLE_PLAY_STORE, IS_IOS, IS_TENANT } from '~/config/Config';
-import ThemedStyles from '~/styles/ThemedStyles';
+import { IS_TENANT } from '~/config/Config';
+import { getScreens } from '~/tabs/dynamic-tabs';
 
 const getOptionsSmallList = navigation => {
   return !IS_TENANT
@@ -47,109 +46,6 @@ const getOptionsSmallList = navigation => {
     : null;
 };
 
-type Flags = Record<'hasPro' | 'hasPlus', boolean>;
-
-type MenuItem = {
-  name: string;
-  icon: IconNameType | JSX.Element;
-  onPress: () => void;
-  testID?: string;
-} | null;
-const getOptionsList = (navigation, { hasPro, hasPlus }: Flags) => {
-  const channel = sessionService.getUser();
-  const list: MenuItem[] = [
-    {
-      name: i18n.t('settings.profile'),
-      icon: 'profile',
-      testID: 'Drawer:channel',
-      onPress: () => {
-        navigation.push('Channel', { entity: channel });
-      },
-    },
-    !IS_IOS && !IS_TENANT
-      ? {
-          name: i18n.t('wire.lock.plus'),
-          icon: 'queue',
-          onPress: () => {
-            navigation.navigate('PlusDiscoveryScreen');
-          },
-        }
-      : null,
-    !IS_TENANT
-      ? {
-          name: i18n.t('settings.boostConsole'),
-          icon: 'boost',
-          onPress: () => {
-            navigation.push('BoostConsole');
-          },
-        }
-      : null,
-    !IS_TENANT
-      ? {
-          name: 'Supermind',
-          icon: 'supermind',
-          onPress: () => {
-            navigation.navigate('SupermindConsole');
-          },
-        }
-      : null,
-    !IS_TENANT && !GOOGLE_PLAY_STORE
-      ? {
-          name: i18n.t('moreScreen.wallet'),
-          icon: 'bank',
-          testID: 'Drawer:wallet',
-          onPress: () => {
-            navigation.navigate('Wallet');
-          },
-        }
-      : null,
-    !IS_TENANT
-      ? {
-          name: 'Affiliate',
-          icon: 'affiliate',
-          onPress: () => {
-            navigation.navigate('AffiliateProgram');
-          },
-        }
-      : null,
-    {
-      name: i18n.t('discovery.groups'),
-      icon: 'group',
-      onPress: () => {
-        navigation.navigate('GroupsList');
-      },
-    },
-    !IS_TENANT && !(hasPro && hasPlus)
-      ? {
-          name: i18n.t('moreScreen.upgrade'),
-          icon: (
-            <IconV2
-              name="verified"
-              color={ThemedStyles.getColor('PrimaryText')}
-            />
-          ),
-          testID: 'Drawer:upgrade',
-          onPress: () => {
-            navigation.navigate('UpgradeScreen', {
-              onComplete: () => null,
-              pro: hasPro,
-            });
-          },
-        }
-      : null,
-    {
-      name: i18n.t('moreScreen.settings'),
-      icon: 'settings',
-      testID: 'Drawer:settings',
-      onPress: () => {
-        navigation.navigate('Settings');
-      },
-    },
-  ];
-
-  return list;
-};
-
 /**
  * Drawer menu
  * @param props
@@ -166,10 +62,13 @@ export default function Drawer(props) {
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
-  const optionsList = getOptionsList(props.navigation, {
-    hasPlus: channel.pro,
-    hasPro: channel.plus,
-  });
+  const optionsList = getScreens()
+    .slice(3)
+    .map(screen => ({
+      ...screen,
+      onPress: () =>
+        props.navigation.navigate(screen.route, { ...screen.initialParams }),
+    }));
   const optionsSmallList = getOptionsSmallList(props.navigation);
   return (
     <Screen safe>

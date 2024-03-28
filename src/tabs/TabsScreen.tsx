@@ -136,7 +136,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
 };
 
 export const screens: any = [
-  ...getScreens().slice(0, 4),
+  ...getScreens().slice(0, 3),
   {
     name: 'More',
     component: MoreStack,
