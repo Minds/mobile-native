@@ -9,23 +9,15 @@ import { View, Platform, TouchableOpacity } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
-import DiscoveryIcon from '../discovery/v2/DiscoveryTabIcon';
 import { observer } from 'mobx-react';
 import preventDoubleTap from '~/common/components/PreventDoubleTap';
-import NewsfeedStack from '~/navigation/NewsfeedStack';
-import DiscoveryStack from '~/navigation/DiscoveryStack';
-import NotificationsStack from '../navigation/NotificationsStack';
-import { IconMapNameType } from '~/common/ui/icons/map';
 import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
 import { storages } from '../common/services/storage/storages.service';
 import { triggerHaptic } from '../common/services/haptic.service';
 import { Icon as NIcon } from 'react-native-elements';
 import { H4 } from '~/common/ui';
 import { useDimensions } from '@react-native-community/hooks';
-import MoreStack from '~/navigation/MoreStack';
-import sessionService from '~/common/services/session.service';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { IS_TENANT } from '~/config/Config';
+import { getScreens, getIconName } from './dynamic-tabs';
 
 const DoubleTapSafeButton = preventDoubleTap(TouchableOpacity);
 
@@ -44,14 +36,7 @@ export type DrawerParamList = {
   Settings: {};
   GroupView: {};
 };
-
-export type GroupStackParamList = {
-  Groups: {};
-  GroupView: {};
-};
-
 const Drawer = createDrawerNavigator<DrawerParamList>();
-const GroupStackNav = createNativeStackNavigator<GroupStackParamList>();
 
 /**
  * Main tabs
@@ -60,7 +45,7 @@ const GroupStackNav = createNativeStackNavigator<GroupStackParamList>();
 const Tabs = observer(function () {
   const theme = ThemedStyles.style;
   const { width, height } = useDimensions().window;
-  const channel = sessionService.getUser();
+  // const channel = sessionService.getUser();
   const isPortrait = height > width;
 
   return (
@@ -78,58 +63,9 @@ const Tabs = observer(function () {
           />
         )}
         screenOptions={props => drawerOptions({ ...props, isPortrait })}>
-        <Drawer.Screen
-          name="Newsfeed"
-          component={NewsfeedStack}
-          options={{ lazy: false }}
-        />
-        <Drawer.Screen
-          name="Explore"
-          component={DiscoveryStack}
-          options={{ lazy: false }}
-        />
-        <Drawer.Screen name="Notifications" component={NotificationsStack} />
-        <Drawer.Screen
-          name="Profile"
-          getComponent={() => require('~/channel/v2/ChannelScreen').default}
-          initialParams={{ entity: channel }}
-        />
-        {!IS_TENANT && (
-          <>
-            <Drawer.Screen
-              name="Boosts"
-              getComponent={() => require('modules/boost').BoostConsoleScreen}
-            />
-            <Drawer.Screen //*** disabled for iOS ***
-              name="MindsPlus"
-              getComponent={() =>
-                require('~/discovery/v2/PlusDiscoveryScreen').default
-              }
-            />
-            <Drawer.Screen
-              name="Supermind"
-              getComponent={() =>
-                require('~/supermind/SupermindConsoleScreen').default
-              }
-            />
-            <Drawer.Screen
-              name="Wallet"
-              getComponent={() => require('~/wallet/v3/WalletScreen').default}
-            />
-            <Drawer.Screen
-              name="AffiliateProgram"
-              getComponent={() =>
-                require('modules/affiliate/screens/AffiliateProgramScreen')
-                  .default
-              }
-              options={{
-                drawerLabel: 'Affiliate Program',
-              }}
-            />
-          </>
-        )}
-        <Drawer.Screen name="Groups" component={GroupStack} />
-        <Drawer.Screen name="Settings" component={MoreStack} />
+        {getScreens().map(screen => (
+          <Drawer.Screen {...screen} />
+        ))}
       </Drawer.Navigator>
     </View>
   );
@@ -153,11 +89,6 @@ const drawerOptions = ({ route, isPortrait }): DrawerContentProps => {
       fontSize: 16,
     },
     drawerIcon: ({ focused }) => {
-      if (route.name === 'Explore') {
-        return (
-          <DiscoveryIcon size="large" active={focused} style={styles.icon} />
-        );
-      }
       if (route.name === 'Notifications') {
         return (
           <NotificationIcon size="large" active={focused} style={styles.icon} />
@@ -167,7 +98,7 @@ const drawerOptions = ({ route, isPortrait }): DrawerContentProps => {
         <Icon
           size="large"
           active={focused}
-          name={iconFromRoute[route.name]}
+          name={getIconName(route.name)}
           activeColor="PrimaryText"
           style={styles.icon}
         />
@@ -229,21 +160,6 @@ const ComposeButton = () => (
   </View>
 );
 
-const GroupStack = () => (
-  <GroupStackNav.Navigator screenOptions={{ headerShown: false }}>
-    <GroupStackNav.Screen
-      name="Groups"
-      getComponent={() => require('~/groups/GroupsListScreen').default}
-    />
-    <GroupStackNav.Screen
-      name="GroupView"
-      getComponent={() =>
-        require('~/modules/groups/screens/GroupScreen').GroupScreen
-      }
-    />
-  </GroupStackNav.Navigator>
-);
-
 export const styles = ThemedStyles.create({
   editIcon: [
     'bgIconActive',
@@ -263,20 +179,20 @@ export const styles = ThemedStyles.create({
   },
 });
 
-const iconFromRoute: Record<string, IconMapNameType> = {
-  More: 'menu',
-  Newsfeed: 'home',
-  User: 'user',
-  Discovery: 'search',
-  Profile: 'profile',
-  Boosts: 'boost',
-  Supermind: 'supermind',
-  Wallet: 'bank',
-  Analytics: 'analytics',
-  AffiliateProgram: 'affiliate',
-  MindsPlus: 'queue',
-  Groups: 'group',
-  Settings: 'cog',
-};
+// const iconFromRoute: Record<string, IconMapNameType> = {
+//   Newsfeed: 'home',
+//   Discovery: 'search',
+//   MindsPlus: 'queue',
+//   Profile: 'profile',
+//   Boosts: 'boost',
+//   Wallet: 'bank',
+//   Analytics: 'analytics',
+//   Supermind: 'supermind',
+//   AffiliateProgram: 'affiliate',
+//   User: 'user',
+//   Groups: 'group',
+//   Settings: 'cog',
+//   More: 'menu',
+// };
 
 export default Tabs;

@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Newsfeed",
+    "label": "Newsfeed",
+    "order": 1,
+    "icon": "home"
+  },
+  {
+    "name": "Explore",
+    "label": "Explore",
+    "order": 2,
+    "icon": "search"
+  },
+  {
+    "name": "MindsPlus",
+    "label": "MindsPlus",
+    "order": 3,
+    "icon": "queue"
+  },
+  {
+    "name": "Notifications",
+    "label": "Notifications",
+    "order": 4,
+    "icon": "bell"
+  },
+  {
+    "name": "Profile",
+    "label": "Profile",
+    "order": 5,
+    "icon": "profile"
+  },
+  {
+    "name": "Boosts",
+    "label": "Boosts",
+    "order": 6,
+    "icon": "boost"
+  },
+  {
+    "name": "Supermind",
+    "label": "Supermind",
+    "order": 7,
+    "icon": "supermind"
+  },
+  {
+    "name": "Wallet",
+    "label": "Wallet",
+    "order": 8,
+    "icon": "bank"
+  },
+  {
+    "name": "AffiliateProgram",
+    "label": "Affiliate Program",
+    "order": 9,
+    "icon": "affiliate"
+  },
+  {
+    "name": "Groups",
+    "label": "Groups",
+    "order": 10,
+    "icon": "group"
+  },
+  {
+    "name": "Settings",
+    "label": "Settings",
+    "order": 11,
+    "icon": "cog"
+  }
+]

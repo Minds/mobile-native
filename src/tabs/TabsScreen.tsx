@@ -12,27 +12,23 @@ import { observer } from 'mobx-react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
 import PressableScale from '~/common/components/PressableScale';
-import NewsfeedStack from '~/navigation/NewsfeedStack';
 import MoreStack from '~/navigation/MoreStack';
 import { IS_IOS, IS_TENANT } from '~/config/Config';
 import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
-import NotificationsStack from '../navigation/NotificationsStack';
-import { IconMapNameType } from '~/common/ui/icons/map';
 import withModalProvider from '~/navigation/withModalProvide';
-
-const isIOS = Platform.OS === 'ios';
+import { getIconName, getScreens } from './dynamic-tabs';
 
 export type TabParamList = {
   Newsfeed: {};
-  User: {};
   Discovery: {};
-  More: {};
-  Notifications: {};
-  CaptureTab: {};
   MindsPlus: {};
+  Notifications: {};
+  More: {};
+  CaptureTab: {};
+  User: {};
 };
 
 const { width } = Dimensions.get('screen');
@@ -89,7 +85,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
 
   return (
     <View style={containerStyle}>
-      {!isIOS && <TopShadow setting={shadowOpt} />}
+      {!IS_IOS && <TopShadow setting={shadowOpt} />}
 
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
@@ -139,6 +135,16 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   );
 };
 
+export const screens: any = [
+  ...getScreens().slice(0, 4),
+  {
+    name: 'More',
+    component: MoreStack,
+    icon: 'menu',
+    options: { tabBarTestID: 'Tabs:More' },
+  },
+];
+
 /**
  * Main tabs
  * @param {Object} props
@@ -148,39 +154,16 @@ const Tabs = observer(function () {
 
   return (
     <View style={theme.flexContainer}>
-      {/* <Topbar navigation={navigation} /> */}
       <Tab.Navigator
         detachInactiveScreens={Platform.OS === 'android'}
         initialRouteName="Newsfeed"
         tabBar={tabBar}
         screenOptions={tabOptions}>
-        <Tab.Screen
-          name="Newsfeed"
-          component={NewsfeedStack}
-          options={{ tabBarTestID: 'Tabs:Newsfeed' }}
-        />
-        {/* <Tab.Screen name="Performance" component={PerformanceScreen} /> */}
-        <Tab.Screen
-          name="Discovery"
-          getComponent={() => require('~/navigation/DiscoveryStack').default}
-          options={discoveryOptions}
-        />
-        {!IS_TENANT && (
-          <Tab.Screen
-            name="MindsPlus"
-            getComponent={() =>
-              require('~/discovery/v2/PlusDiscoveryScreen').default
-            }
-            options={{ tabBarTestID: 'Tabs:MindsPlus' }}
-            initialParams={{ backEnable: false }}
-          />
-        )}
-        <Tab.Screen
-          name="Notifications"
-          component={NotificationsStack}
-          options={notificationOptions}
-        />
-        <Tab.Screen name="More" component={MoreStack} options={moreOptions} />
+        {screens
+          .filter(screen => !(screen.hideIfTenant && IS_TENANT))
+          .map(screen => {
+            return <Tab.Screen {...screen} />;
+          })}
       </Tab.Navigator>
     </View>
   );
@@ -219,23 +202,8 @@ const styles = ThemedStyles.create({
   ],
 });
 
-const notificationOptions = {
-  tabBarTestID: 'Notifications tab button',
-  lazy: true,
-};
-const moreOptions = { tabBarTestID: 'Tabs:More' };
-const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
 const focusedState = { selected: true };
 const tabBar = props => <TabBar disableTabIndicator {...props} />;
-
-const iconFromRoute: Record<string, IconMapNameType> = {
-  More: 'menu',
-  Newsfeed: 'home',
-  User: 'user',
-  Discovery: 'search',
-  Performance: 'dev',
-  MindsPlus: 'queue',
-};
 
 const tabOptions = ({ route }): BottomTabNavigationOptions => ({
   headerShown: false,
@@ -248,7 +216,7 @@ const tabOptions = ({ route }): BottomTabNavigationOptions => ({
       <Icon
         size="large"
         active={focused}
-        name={iconFromRoute[route.name]}
+        name={getIconName(route.name)}
         activeColor="PrimaryText"
       />
     );

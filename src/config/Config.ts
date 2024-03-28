@@ -42,11 +42,12 @@ export const WALLET_ENABLED = !IS_TENANT;
 export const AFFILIATES_ENABLED = !IS_TENANT;
 export const MEMBERSHIP_TIERS_ENABLED = !IS_TENANT;
 export const NEWSFEED_FORYOU_ENABLED = !IS_TENANT;
+export const BOOSTS_ENABLED = !IS_TENANT;
+export const CHAT_ENABLED = !IS_TENANT;
+
 export const WIRE_ENABLED = !IS_TENANT && !IS_IOS;
 export const PRO_PLUS_SUBSCRIPTION_ENABLED = !IS_IOS && !IS_TENANT;
-export const BOOSTS_ENABLED = !IS_TENANT;
 export const BLOCK_USER_ENABLED = true;
-export const CHAT_ENABLED = !IS_TENANT;
 
 // Theme
 export const TENANT_THEME = Tenant.THEME === 'light' ? 0 : 1;

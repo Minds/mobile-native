@@ -21,15 +21,7 @@ import {
 import { Icon as IconV2 } from '@minds/ui';
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
 import { navigateToHelp } from '../settings/SettingsScreen';
-import {
-  AFFILIATES_ENABLED,
-  BOOSTS_ENABLED,
-  GOOGLE_PLAY_STORE,
-  IS_IOS,
-  IS_TENANT,
-  SUPERMIND_ENABLED,
-  WALLET_ENABLED,
-} from '~/config/Config';
+import { GOOGLE_PLAY_STORE, IS_IOS, IS_TENANT } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 const getOptionsSmallList = navigation => {
@@ -83,7 +75,7 @@ const getOptionsList = (navigation, { hasPro, hasPlus }: Flags) => {
           },
         }
       : null,
-    BOOSTS_ENABLED
+    !IS_TENANT
       ? {
           name: i18n.t('settings.boostConsole'),
           icon: 'boost',
@@ -92,7 +84,7 @@ const getOptionsList = (navigation, { hasPro, hasPlus }: Flags) => {
           },
         }
       : null,
-    SUPERMIND_ENABLED
+    !IS_TENANT
       ? {
           name: 'Supermind',
           icon: 'supermind',
@@ -101,7 +93,7 @@ const getOptionsList = (navigation, { hasPro, hasPlus }: Flags) => {
           },
         }
       : null,
-    WALLET_ENABLED && !GOOGLE_PLAY_STORE
+    !IS_TENANT && !GOOGLE_PLAY_STORE
       ? {
           name: i18n.t('moreScreen.wallet'),
           icon: 'bank',
@@ -111,7 +103,7 @@ const getOptionsList = (navigation, { hasPro, hasPlus }: Flags) => {
           },
         }
       : null,
-    AFFILIATES_ENABLED
+    !IS_TENANT
       ? {
           name: 'Affiliate',
           icon: 'affiliate',
