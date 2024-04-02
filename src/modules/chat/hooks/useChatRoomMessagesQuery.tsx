@@ -86,7 +86,7 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
         node: {
           id: uuidv4(),
           guid: '',
-          plainText: '-> ' + params.plainText,
+          plainText: params.plainText,
           timeCreatedISO8601: now.toISOString(),
           timeCreatedUnix: now.unix().toString(),
           sender: {

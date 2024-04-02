@@ -53,7 +53,10 @@ function Message({ message, onLongPress }: Props) {
       </TouchableOpacity>
     </View>
   ) : (
-    <View style={styles.containerRight}>
+    <View
+      style={
+        message.node.guid ? styles.containerRight : styles.containerRightSending
+      }>
       <TouchableOpacity
         activeOpacity={0.7}
         style={styles.bubbleContainer}
@@ -95,4 +98,5 @@ const styles = ThemedStyles.create({
   ],
   container: ['fullWidth', 'rowJustifyStart', 'alignEnd'],
   containerRight: ['fullWidth', 'rowJustifyEnd'],
+  containerRightSending: ['fullWidth', 'rowJustifyEnd', 'opacity75'],
 });

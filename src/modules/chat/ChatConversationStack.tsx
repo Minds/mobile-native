@@ -7,6 +7,7 @@ import {
 } from '@react-navigation/stack';
 import { AppStackScreenProps } from '~/navigation/NavigationTypes';
 import { ChatMember } from './types';
+import { GetChatRoomQuery } from '~/graphql/api';
 
 export type ChatStackParamList = {
   Chat: {
@@ -14,8 +15,13 @@ export type ChatStackParamList = {
     members: ChatMember[];
     isRequest: true;
   };
-  ChatDetails: undefined;
-  ChatMembers: undefined;
+  ChatDetails: {
+    roomGuid: string;
+  };
+  ChatMembers: {
+    chatRoom: GetChatRoomQuery['chatRoom'];
+    roomGuid: string;
+  };
 };
 
 export type ChatStackScreenProps<S extends keyof ChatStackParamList> =

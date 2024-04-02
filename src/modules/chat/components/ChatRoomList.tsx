@@ -42,7 +42,10 @@ export default function ChatRoomList({
       estimatedItemSize={68}
       ListEmptyComponent={isLoading ? <CenteredLoading /> : <Empty />}
       onEndReached={onEndReached}
+      keyExtractor={keyExtractor}
       data={data}
     />
   );
 }
+
+const keyExtractor = item => item.node.id;

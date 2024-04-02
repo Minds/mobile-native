@@ -7,7 +7,7 @@ exports[`TwitterSyncScreen renders correctly 1`] = `
       "defaultOptions": {
         "queries": {
           "cacheTime": 0,
-          "refetchOnMount": false,
+          "refetchOnMount": true,
           "refetchOnReconnect": false,
           "refetchOnWindowFocus": false,
           "retry": false,
