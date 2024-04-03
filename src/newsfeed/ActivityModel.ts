@@ -215,6 +215,7 @@ export default class ActivityModel extends BaseModel {
   }
 
   hasThumbnails(): boolean {
+    if (this.thumbnail_src) return true;
     return Array.isArray(this.thumbnails) && this.thumbnails.length === 0
       ? false
       : this.thumbnails
@@ -720,13 +721,12 @@ export default class ActivityModel extends BaseModel {
   /**
    * Membership support
    */
-
-  get hasSiteMembershipPaywall(): boolean {
-    return this.site_membership && !!this.paywall_thumbnail;
-  }
-
   get hasSiteMembershipPaywallThumbnail(): boolean {
-    return this.hasSiteMembershipPaywall && !this.site_membership_unlocked;
+    return (
+      this.site_membership &&
+      !!this.paywall_thumbnail &&
+      !this.site_membership_unlocked
+    );
   }
 }
 
