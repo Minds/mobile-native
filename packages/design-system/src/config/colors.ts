@@ -8,7 +8,7 @@ export const color = {
   'grey-600': '#6f7278',
   'grey-700': '#53565a',
   'grey-800': '#38393d',
-  'grey-900': '#1c1d1f',
+  'grey-900': '#010100',
 
   //yellows
   'yellow-50': '#fffaed',
