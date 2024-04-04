@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Image as RNImage, View } from 'react-native';
+import { Image as RNImage, StyleSheet, View } from 'react-native';
 import { Image } from 'expo-image';
-import { H3 } from '~/common/ui';
-import { IS_IPAD, STRAPI_URI } from '~/config/Config';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import { H1, H3 } from '~/common/ui';
+import { IS_IOS, IS_IPAD, STRAPI_URI } from '~/config/Config';
 import Carousel from 'react-native-reanimated-carousel';
 import Pagination from '~/newsfeed/boost-rotator/components/pagination/Pagination';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -22,21 +24,22 @@ export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
   const [index, setIndex] = useState(0);
   const { width, height } = useDimensions().screen;
   const isPortrait = width < height;
+  const insets = useSafeAreaInsets();
 
   return (
     <>
       <RNImage
         resizeMode="contain"
         source={assets.LOGO_SQUARED}
-        style={styles.image}
+        style={styles.logo}
       />
       <Carousel
         autoPlay
         autoPlayInterval={2500}
         pagingEnabled
         onSnapToItem={setIndex}
+        height={height - ((IS_IOS ? 300 : 350) + insets.top + insets.bottom)}
         width={width}
-        height={IS_IPAD ? 820 : 475}
         data={data?.length ? data : defaultData}
         renderItem={renderItem(isPortrait)}
         style={ThemedStyles.style.marginBottom1x}
@@ -56,20 +59,21 @@ const renderItem =
   ({ item, index }) => {
     const { url } = item?.data?.attributes ?? {};
     const imageSize = {
-      height: IS_IPAD && isPortrait ? 690 : 338,
-      width: IS_IPAD && isPortrait ? 318 : 156,
+      flex: 1,
+      flexGrow: 1,
+      aspectRatio: 0.45,
       borderWidth: 2,
       borderRadius: IS_IPAD && isPortrait ? 35 : 17,
       borderColor: '#565658',
     };
+    const Text = IS_IPAD ? H1 : H3;
+
     const image = url ? { uri: `${STRAPI_URI}${url}` } : item.image;
     return (
-      <View
-        key={`${index}`}
-        style={[ThemedStyles.style.alignCenter, { paddingHorizontal: 60 }]}>
-        <H3 align="center" bottom="XXXL2">
+      <View key={`${index}`} style={styles.item}>
+        <Text align="center" bottom="XL2" horizontal="XXL">
           {item.title}
-        </H3>
+        </Text>
         <Image source={image} style={imageSize} />
       </View>
     );
@@ -99,11 +103,17 @@ const defaultData = [
   },
 ];
 
-const styles = ThemedStyles.create({
-  image: {
+const styles = StyleSheet.create({
+  logo: {
     height: 36,
     width: 30,
     marginVertical: 30,
     alignSelf: 'center',
+  },
+  item: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 30,
   },
 });
