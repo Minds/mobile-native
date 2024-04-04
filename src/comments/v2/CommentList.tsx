@@ -190,9 +190,9 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
 };
 
 const styles = ThemedStyles.create({
-  list: ['flexContainer', 'bgPrimaryBackground'],
-  listContainer: ['bgPrimaryBackground', 'paddingBottom3x'],
-  container: ['flexContainer', 'bgPrimaryBackground'],
+  list: ['flexContainer', 'bgPrimaryBackgroundHighlight'],
+  listContainer: ['bgPrimaryBackgroundHighlight', 'paddingBottom3x'],
+  container: ['flexContainer', 'bgPrimaryBackgroundHighlight'],
   touchableStyles: [
     'rowJustifyStart',
     'borderTopHair',
@@ -206,7 +206,7 @@ const styles = ThemedStyles.create({
   replay: ['fontL', 'colorSecondaryText'],
   headerCommentContainer: [
     'bcolorPrimaryBorder',
-    'bgSecondaryBackground',
+    'bgPrimaryBackgroundHighlight',
     {
       borderTopWidth: StyleSheet.hairlineWidth,
       overflow: 'scroll',
