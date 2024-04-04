@@ -35,23 +35,33 @@ const url = process.env.GRAPHQL_URL || 'https://www.minds.com/api/graphql';
 
 /**
  * Generate tenant config
+ *
+ * 0 for minds preview
+ * > 0 for tenant id
  */
 async function setupTenant(id) {
+  const isMinds = id.trim() === '0';
   try {
-    const data = await request(
-      url,
-      query,
-      { tenantId: parseInt(id, 10) },
-      {
-        Token: generateToken({ TENANT_ID: process.env.TENANT_ID }),
-      },
-    );
+    const data = isMinds
+      ? require('../tenant.json')
+      : (
+          await request(
+            url,
+            query,
+            { tenantId: parseInt(id, 10) },
+            {
+              Token: generateToken({ TENANT_ID: process.env.TENANT_ID }),
+            },
+          )
+        ).appReadyMobileConfig;
     // generate tenant json
-    generateTenantJSON(data.appReadyMobileConfig);
-    // download the assets
-    await downloadAssets(data.appReadyMobileConfig.assets);
-    // add adaptive icon in the assets folder
-    await addAdaptiveIcon();
+    generateTenantJSON(data);
+    if (!isMinds) {
+      // download the assets
+      await downloadAssets(data.assets);
+      // add adaptive icon in the assets folder
+      await addAdaptiveIcon();
+    }
     if (preview) {
       // copy previewer patches
       copyPatches();
@@ -70,7 +80,7 @@ function generateTenantJSON(data) {
     data.EAS_PROJECT_ID = previewerTenant.EAS_PROJECT_ID;
     data.APP_IOS_BUNDLE = previewerTenant.APP_IOS_BUNDLE;
     data.APP_ANDROID_PACKAGE = previewerTenant.APP_ANDROID_PACKAGE;
-    data.APP_ANDROID_PACKAGE = previewerTenant.APP_ANDROID_PACKAGE;
+    data.APP_IOS_BUNDLE = previewerTenant.APP_IOS_BUNDLE;
   }
 
   const tenant = {
