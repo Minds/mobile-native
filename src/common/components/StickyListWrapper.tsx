@@ -8,17 +8,22 @@ import Animated, {
 } from 'react-native-reanimated';
 import { ScrollContext, ScrollDirection } from '../contexts/scroll.context';
 import { StyleSheet, View } from 'react-native';
+import { FeedListProps } from '~/modules/newsfeed/components/FeedList';
+import type BaseModel from '../BaseModel';
 
-type StickyListProps = {
+type StickyListProps<T extends BaseModel> = {
   header?: React.ReactElement;
   bottomComponent?: React.ReactNode;
   renderList: (props: any) => React.ReactNode;
-};
+} & Partial<FeedListProps<T>>;
 
 /**
  * A list with reanimated sticky header
  */
-function StickyListWrapper(props: StickyListProps, ref: any) {
+function StickyListWrapper<T extends BaseModel>(
+  props: StickyListProps<T>,
+  ref: any,
+) {
   const translationY = useSharedValue(0);
   const scrollY = useSharedValue(0);
   const dragging = useSharedValue(false);

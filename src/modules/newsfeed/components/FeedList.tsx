@@ -27,7 +27,7 @@ export type FeedListProps<T extends BaseModel> = {
   onRefresh?: () => void;
   loadMore?: () => void;
   onItemViewed?: (item: T, number) => void;
-  renderInFeedItems?: (item) => JSX.Element;
+  renderInFeedItems?: (item) => JSX.Element | null;
   displayBoosts?: 'none' | 'distinct';
   emphasizeGroup?: boolean;
   placeholder?: PlaceholderType;

@@ -35,6 +35,7 @@ import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import CaptureFab from '~/capture/CaptureFab';
 import { EmptyMessage } from './EmptyMessage';
 import { copyReferrer } from '~/modules/affiliate/components/LinksMindsSheet';
+import TrendingList from './trending/TrendingList';
 
 type Props = DiscoveryStackScreenProps<'Discovery'>;
 
@@ -200,14 +201,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
         case 'top':
           return (
             <DiscoveryTabContent key="top">
-              <FeedListSticky
-                ref={listRef}
-                header={header}
-                feedStore={store.topFeed}
-                emptyMessage={emptyMessageComponent(() =>
-                  navigation.navigate('Compose'),
-                )}
-              />
+              <TrendingList header={header} />
             </DiscoveryTabContent>
           );
         case 'foryou':
