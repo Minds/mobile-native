@@ -2,9 +2,10 @@ import { observable, action } from 'mobx';
 import apiService from '~/common/services/api.service';
 import FeedStore from '~/common/stores/FeedStore';
 import { storages } from '~/common/services/storage/storages.service';
+import { IS_TENANT } from '~/config/Config';
 
 export default class DiscoveryV2Store {
-  @observable activeTabId: TDiscoveryV2Tabs = 'latest';
+  @observable activeTabId: TDiscoveryV2Tabs = IS_TENANT ? 'latest' : 'top';
   @observable trends: TDiscoveryTrendsTrend[] = [];
   @observable tags: TDiscoveryTagsTag[] = [];
   @observable trendingTags: TDiscoveryTagsTag[] = [];
@@ -21,7 +22,6 @@ export default class DiscoveryV2Store {
   @observable badgeVisible = true;
   trendingFeed: FeedStore;
   allFeed: FeedStore;
-  topFeed: FeedStore;
   latestFeed: FeedStore;
   supermindsFeed: FeedStore;
   lastDiscoveryTimestamp = 0;
@@ -51,13 +51,6 @@ export default class DiscoveryV2Store {
       .setEndpoint('api/v3/discovery/search?q=&f=latest&t=all')
       .fetchRemoteOrLocal();
 
-    this.topFeed = new FeedStore(true);
-    this.topFeed
-      .setEndpoint('api/v3/newsfeed/feed/clustered-recommendations')
-      .setParams({ unseen: true })
-      .setInjectBoost(false)
-      .setLimit(15);
-
     if (plus) {
       this.activeTabId = 'foryou';
     }
@@ -83,7 +76,6 @@ export default class DiscoveryV2Store {
           this.latestFeed.fetchRemoteOrLocal();
           break;
         case 'top':
-          this.topFeed.fetchRemoteOrLocal();
           break;
         case 'trending-tags':
           this.trendingFeed.fetchRemoteOrLocal();
@@ -209,8 +201,6 @@ export default class DiscoveryV2Store {
     switch (this.activeTabId) {
       case 'latest':
         return this.latestFeed.refresh();
-      case 'top':
-        return this.topFeed.refresh();
       case 'foryou':
         this.refreshTrends();
         return this.allFeed.refresh();
@@ -225,12 +215,11 @@ export default class DiscoveryV2Store {
   @action
   reset() {
     this.allFeed.reset();
-    this.topFeed.reset();
     this.trendingFeed.reset();
     this.trends = [];
     this.tags = [];
     this.trendingTags = [];
-    this.activeTabId = this.plus ? 'foryou' : 'latest';
+    this.activeTabId = this.plus ? 'foryou' : IS_TENANT ? 'latest' : 'top';
     this.refreshing = false;
     this.loading = false;
     this.showBadge();

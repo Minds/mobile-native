@@ -16,7 +16,6 @@ import { InjectItem } from '../../common/components/FeedList';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import DiscoveryTabContent from './DiscoveryTabContent';
 import Topbar from '~/topbar/Topbar';
-import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import FeedListSticky, {
   FeedListStickyType,
 } from '~/common/components/FeedListSticky';
@@ -64,12 +63,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
           />
         )),
       ]);
-
-      store.topFeed.setInjectedItems([
-        new InjectItem(2, 'reco', () => (
-          <ChannelRecommendation location="discovery-feed" />
-        )),
-      ]);
     }
 
     const navigation = props.navigation;
@@ -77,7 +70,9 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     const tabs = React.useMemo(
       () => {
         return [
-          { id: 'latest', title: i18n.t('discovery.latest') },
+          IS_TENANT
+            ? { id: 'latest', title: i18n.t('discovery.latest') }
+            : null,
           { id: 'top', title: i18n.t('discovery.topV2') },
           { id: 'trending-tags', title: i18n.t('discovery.trendingV2') },
           { id: 'channels', title: 'Channels' },
@@ -165,7 +160,6 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     }, [store, navigation]);
 
     useEffect(() => {
-      store.topFeed.fetchLocalOrRemote();
       if (tab) {
         store.setTabId(tab);
         switch (tab) {

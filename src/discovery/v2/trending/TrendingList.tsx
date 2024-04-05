@@ -2,6 +2,8 @@ import React, { useCallback, useMemo } from 'react';
 import Animated from 'react-native-reanimated';
 
 import StickyListWrapper from '~/common/components/StickyListWrapper';
+import { getNotice } from '~/common/components/in-feed-notices/notices';
+import { B1 } from '~/common/ui';
 import {
   SearchFilterEnum,
   SearchMediaTypeEnum,
@@ -13,6 +15,7 @@ import {
   FeedListFooter,
 } from '~/modules/newsfeed/components/FeedList';
 import NewsfeedPlaceholder from '~/modules/newsfeed/components/NewsfeedPlaceholder';
+import Recommendation from '~/modules/newsfeed/components/Recommendation';
 import { mapModels } from '~/modules/newsfeed/hooks/useInfiniteNewsfeed';
 import { useMetadataService } from '~/services/hooks/useMetadataService';
 
@@ -91,8 +94,32 @@ function useInfiniteTrendingQuery() {
   return { ...query, entities };
 }
 
-const renderInFeedItems = () => {
-  return null;
+const renderInFeedItems = row => {
+  switch (row.item.__typename) {
+    case 'FeedNoticeNode':
+      return getNotice(row.item.key);
+    case 'PublisherRecsConnection':
+      return (
+        <Recommendation
+          type="channel"
+          location="feed"
+          entities={row.item.edges}
+        />
+      );
+
+    default:
+      if (__DEV__) {
+        console.log('Missing item renderer', row.item.__typename, row);
+        return (
+          <B1>
+            Item renderer missing
+            {JSON.stringify(row.item.__typename)}
+          </B1>
+        );
+      } else {
+        return null;
+      }
+  }
 };
 
 const renderList = p => <AnimatedFeedList emphasizeGroup {...p} />;
