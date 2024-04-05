@@ -91,8 +91,7 @@ function useInfiniteTrendingQuery() {
   return { ...query, entities };
 }
 
-const renderInFeedItems = ({ item }) => {
-  console.log('renderInFeedItems', JSON.stringify(item));
+const renderInFeedItems = () => {
   return null;
 };
 
