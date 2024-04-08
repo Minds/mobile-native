@@ -1,4 +1,3 @@
-import { useIsFeatureOn } from 'ExperimentsProvider';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -22,8 +21,6 @@ import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen
 export default withErrorBoundaryScreen(
   observer(function SelectHashtagsScreen({ navigation, route }) {
     const theme = ThemedStyles.style;
-
-    const redirectExperiment = useIsFeatureOn('mob-discovery-redirect');
 
     const { hashtag } = useLegacyStores();
 
@@ -50,14 +47,8 @@ export default withErrorBoundaryScreen(
 
         // refresh in-feed notices when leaving the screen
         inFeedNoticesService.load();
-
-        if (route.params?.initial && redirectExperiment) {
-          navigation.navigate('Tabs', {
-            screen: 'Discovery',
-          });
-        }
       };
-    }, [hashtag, navigation, redirectExperiment, route]);
+    }, [hashtag, navigation, route]);
 
     const onPress = () => {
       if (hashtag.suggested.filter(s => s.selected).length >= 3) {

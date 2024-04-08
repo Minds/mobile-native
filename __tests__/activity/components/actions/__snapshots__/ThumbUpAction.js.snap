@@ -142,6 +142,8 @@ exports[`Thumb action component renders correctly 1`] = `
           "quotes": 0,
           "reminds": 0,
           "rowKey": "something0",
+          "site_membership": false,
+          "site_membership_unlocked": false,
           "subtype": "",
           "thumbnail_src": false,
           "thumbs:down:count": undefined,

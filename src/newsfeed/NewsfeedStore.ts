@@ -1,8 +1,6 @@
 import { action, computed, observable } from 'mobx';
 import { storages } from '~/common/services/storage/storages.service';
-import { hasVariation } from 'ExperimentsProvider';
 import EventEmitter from 'eventemitter3';
-import { NEWSFEED_FORYOU_ENABLED } from '~/config/Config';
 import MetadataService from '~/common/services/metadata.service';
 
 const FEED_TYPE_KEY = 'newsfeed:feedType';
@@ -26,17 +24,6 @@ class NewsfeedStore {
         let storedFeedType = storages.user?.getString(
           FEED_TYPE_KEY,
         ) as NewsfeedType;
-
-        // in case we have stored the foryou tab and it's not in the experiment, we default to latest
-        if (
-          !(
-            hasVariation('mob-4938-newsfeed-for-you') || NEWSFEED_FORYOU_ENABLED
-          ) &&
-          storedFeedType === 'for-you'
-        ) {
-          storages.user?.setString(FEED_TYPE_KEY, 'latest');
-          storedFeedType = 'latest';
-        }
 
         this._feedType = storedFeedType || 'latest';
       } catch (e) {

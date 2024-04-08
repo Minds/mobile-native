@@ -23,13 +23,13 @@ import {
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { AppStackScreenProps } from '~/navigation/NavigationTypes';
 import { showNotification } from 'AppMessages';
-import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
+import { GOOGLE_PLAY_STORE } from '~/config/Config';
 
 type Props = AppStackScreenProps<'GifCardClaim'>;
 
 export function GifCardClaimScreen({ navigation, route }: Props) {
   const { t } = useTranslation();
-  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = GOOGLE_PLAY_STORE;
 
   const code = route.params?.code;
 

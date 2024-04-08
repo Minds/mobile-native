@@ -3,9 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useCallback } from 'react';
 import i18nService from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
-import { InAppVerificationPrompt } from 'modules/in-app-verification';
 import InFeedNotice from './BaseNotice';
-import { hasVariation } from 'ExperimentsProvider';
 import { NoticeProps } from '.';
 
 /**
@@ -23,9 +21,7 @@ function VerifyUniquenessNotice({ name }: NoticeProps) {
     return null;
   }
 
-  return hasVariation('mob-4472-in-app-verification') ? (
-    <InAppVerificationPrompt />
-  ) : (
+  return (
     <InFeedNotice
       name={name}
       title={i18nService.t('inFeedNotices.uniquenessTitle')}

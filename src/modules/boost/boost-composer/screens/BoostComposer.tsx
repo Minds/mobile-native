@@ -20,10 +20,9 @@ import { BoostStackScreenProps } from '../navigator';
 import useBoostInsights from '../../hooks/useBoostInsights';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import BoostComposerHeader from '../components/BoostComposerHeader';
-import { IS_FROM_STORE } from '~/config/Config';
+import { GOOGLE_PLAY_STORE, IS_FROM_STORE } from '~/config/Config';
 import { BoostCashCards } from '../components/BoostCashCards';
 import { useGifts } from '~/common/hooks/useGifts';
-import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
@@ -45,7 +44,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
     setPaymentType,
     isAmountValid,
   } = boostStore;
-  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = GOOGLE_PLAY_STORE;
 
   const tabs = [
     {

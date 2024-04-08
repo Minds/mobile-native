@@ -63,9 +63,11 @@ const mapModels = (edge: any, inFeedNoticesDelivered, highlightsDimissed) => {
       case 'FeedHighlightsConnection':
         if (!highlightsDimissed && edge.node.edges.length) {
           // we put the highlights inline with the rest of the feed
-          edge.node = edge.node.edges.map(hEdge =>
-            ActivityModel.create(JSON.parse(hEdge.node.legacy)),
-          );
+          edge.node = edge.node.edges.map(hEdge => {
+            const hNode = ActivityModel.create(JSON.parse(hEdge.node.legacy));
+            hNode.isHighlighted = true;
+            return hNode;
+          });
           edge.node.unshift({ __typename: 'FeedHighlightsTitle' });
           edge.node.push({ __typename: 'FeedHighlightsFooter' });
         }
@@ -99,7 +101,7 @@ export function useInfiniteNewsfeed(algorithm: NewsfeedType) {
   // only on the first run
   if (local.cachedData === null) {
     // storages.userCache?.removeItem('NewsfeedCache');
-    local.cachedData = storages.userCache?.getMap('NewsfeedCache');
+    local.cachedData = storages.userCache?.getMap(`NewsfeedCache-${algorithm}`);
   }
 
   const query = useInfiniteFetchNewsfeedQuery(
@@ -171,7 +173,7 @@ export function useInfiniteNewsfeed(algorithm: NewsfeedType) {
     query,
     refresh: useCallback(() => {
       inFeedNoticesDelivered.current = emptyArray;
-      storages.userCache?.removeItem('NewsfeedCache');
+      storages.userCache?.removeItem(`NewsfeedCache-${algorithm}`);
       local.cachedData = undefined;
       local.lastFetchAt = Date.now();
       query.remove();
@@ -211,7 +213,7 @@ const useInfiniteFetchNewsfeedQuery = <
 
       // save to cache when fetching the first page
       if (!metaData.pageParam && data?.newsfeed?.edges?.length) {
-        storages.userCache?.setMap('NewsfeedCache', {
+        storages.userCache?.setMap(`NewsfeedCache-${variables['algorithm']}`, {
           pages: [data],
           pageParams: [undefined],
         });

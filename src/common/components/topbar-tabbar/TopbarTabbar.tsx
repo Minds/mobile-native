@@ -43,7 +43,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
     <View
       style={[
         theme.rowJustifyStart,
-        theme.borderBottomHair,
+        theme.borderBottom,
         theme.bcolorPrimaryBorder,
         props.containerStyle,
       ]}>
