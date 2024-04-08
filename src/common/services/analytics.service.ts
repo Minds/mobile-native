@@ -114,7 +114,8 @@ export class AnalyticsService {
    * Sets up the feature flags from the configs
    */
   initFeatureFlags(): void {
-    const featureFlags = mindsConfigService.getSettings().posthog.feature_flags;
+    const featureFlags =
+      mindsConfigService.getSettings().posthog?.feature_flags || {};
     this.posthog.overrideFeatureFlag(featureFlags);
   }
 
