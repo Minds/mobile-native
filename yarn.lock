@@ -2607,18 +2607,6 @@
   resolved "https://registry.yarnpkg.com/@graphql-typed-document-node/core/-/core-3.2.0.tgz#5f3d96ec6b2354ad6d8a28bf216a1d97b5426861"
   integrity sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ==
 
-"@growthbook/growthbook-react@^0.8.0":
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@growthbook/growthbook-react/-/growthbook-react-0.8.1.tgz#4943aaf916b1ae34826f96664085343ae2885f59"
-  integrity sha512-9O6e6fCI7ZghST/4syg85NF39hAZN/7kUIKwOiI9l0O/M1Hst+efVal4u1WlPCKYCOsnTLHL3PKEdlXO+Na5PQ==
-  dependencies:
-    "@growthbook/growthbook" "^0.17.0"
-
-"@growthbook/growthbook@^0.17.0":
-  version "0.17.1"
-  resolved "https://registry.yarnpkg.com/@growthbook/growthbook/-/growthbook-0.17.1.tgz#fcbf155f6835fb0eb4f402b4727438a084914215"
-  integrity sha512-tFzSFgiO7sBzS8aSMGYP0bty2xABQctLpoejxjzsme+RgTGp1dBMWczMsBl63j1zwH6MkhY0bHqWpEJTiderTA==
-
 "@hapi/hoek@^9.0.0":
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/@hapi/hoek/-/hoek-9.3.0.tgz#8368869dcb735be2e7f5cb7647de78e167a251fb"
