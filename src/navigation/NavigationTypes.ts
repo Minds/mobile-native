@@ -203,6 +203,7 @@ export type RootStackParamList = {
   BottomSheet: BottomSheetScreenParams;
   ImageGallery: {};
   RecoveryCodeUsedScreen: {};
+  OidcLogin: { loginUrl: string };
   MultiUserLogin: {};
   MultiUserRegister: {};
   RelogScreen: {

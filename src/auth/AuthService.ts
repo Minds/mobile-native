@@ -9,6 +9,7 @@ import i18n from '../common/services/i18n.service';
 import { showNotification } from 'AppMessages';
 import { action, observable } from 'mobx';
 import mindsConfigService from '~/common/services/minds-config.service';
+import { AuthType } from '~/common/services/storage/session.storage.service';
 
 export type TFA = 'sms' | 'totp';
 
@@ -122,7 +123,7 @@ class AuthService {
     await api.clearCookies();
     await delay(100);
 
-    await session.addSession(data);
+    await session.addOAuthSession(data);
     await session.login();
     await mindsConfigService.update();
 
@@ -299,6 +300,13 @@ class AuthService {
       console.log('[AuthService] tryToRelog: session expired');
       this.logoutSession();
     };
+
+    const currentSession = session.getSessionForIndex(session.activeIndex);
+
+    if (currentSession.authType === AuthType.Cookie) {
+      await onCancel();
+      return;
+    }
 
     NavigationService.navigate('RelogScreen', {
       onLogin,
