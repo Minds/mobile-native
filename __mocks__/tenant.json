@@ -1,0 +1,21 @@
+{
+  "APP_NAME": "Minds",
+  "APP_SCHEME": "mindsapp",
+  "APP_SLUG": "minds",
+  "APP_HOST": "www.minds.com",
+  "APP_IOS_BUNDLE": "com.minds.mobile",
+  "APP_SPLASH_RESIZE": "contain",
+  "APP_ANDROID_PACKAGE": "com.minds.mobile",
+  "IS_PREVIEW": false,
+  "ACCENT_COLOR_LIGHT": "#1B85D6",
+  "ACCENT_COLOR_DARK": "#FFD048",
+  "BACKGROUND_COLOR_LIGHT": "",
+  "BACKGROUND_COLOR_DARK": "",
+  "WELCOME_LOGO": "horizontal",
+  "ADAPTIVE_ICON": "./assets/images/icon_adaptive.png",
+  "ADAPTIVE_COLOR": "#ffffff",
+  "THEME": "dark",
+  "TENANT_ID": null,
+  "API_URL": "https://www.minds.com/",
+  "EAS_PROJECT_ID": "7a92bc49-6d7e-468f-af13-0a9aff39fc0e"
+}
