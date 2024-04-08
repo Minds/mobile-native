@@ -3942,22 +3942,6 @@
   dependencies:
     "@sinonjs/commons" "^2.0.0"
 
-"@snowplow/react-native-tracker@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@snowplow/react-native-tracker/-/react-native-tracker-1.4.0.tgz#fce95b368689cbc0507505c4e83f9a5990fde021"
-  integrity sha512-4v6MKIFU8lGw2mYId4uXM3ydSJKD/f/L9MaimKm8pK6BAqQMhoO0Jr9xF9lN/e6qB8WCsD7Qt6P3Lp31TFMEnQ==
-  dependencies:
-    "@snowplow/tracker-core" "3.8.0"
-    uuid "^3.4.0"
-
-"@snowplow/tracker-core@3.8.0":
-  version "3.8.0"
-  resolved "https://registry.yarnpkg.com/@snowplow/tracker-core/-/tracker-core-3.8.0.tgz#bedcd84cdede8df4b8275f6031d57342e0d87769"
-  integrity sha512-fBQhHetV5c5s+Ea5bqaWrAcwG7C7Fdo0ztHKxvoVECwxMocWuTuiau0oM+dzkcjNyMoCa7bvX8BUNySvwwSrZA==
-  dependencies:
-    tslib "^2.3.1"
-    uuid "^3.4.0"
-
 "@socket.io/component-emitter@~3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@socket.io/component-emitter/-/component-emitter-3.1.0.tgz#96116f2a912e0c02817345b3c10751069920d553"

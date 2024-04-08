@@ -1182,6 +1182,7 @@
     "pro": "Pro",
     "userData": {
       "optOut": "Opt-out of observational analtytics",
+      "deleteData": "Delete my observational data",
       "deletedSuccess": "Your data is queued for deletion. This may take up to 7 days.",
       "deletedError": "We did not find any data for your user to delete."
     }

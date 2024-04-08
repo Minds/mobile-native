@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { CheckBox } from 'react-native-elements';
@@ -10,17 +10,17 @@ import analyticsService from '~/common/services/analytics.service';
 import settingsService from '../SettingsService';
 import { showNotification } from 'AppMessages';
 import { View } from 'react-native';
-import { Button } from '@minds/ui';
+import { Button } from '~/common/ui/buttons';
 import { useDeletePostHogPersonMutation } from '~/graphql/api';
 
 const UserDataScreen = observer(() => {
   const theme = ThemedStyles.style;
 
-  const { mutateAsync: deleteDataFn } = useDeletePostHogPersonMutation();
+  const deleteDataMutation = useDeletePostHogPersonMutation();
 
-  const isOptOut = () => mindsConfigService.settings?.posthog?.opt_out;
+  const isOptOut = () => mindsConfigService.getSettings()?.posthog?.opt_out;
 
-  const toggleOptOut = useCallback(() => {
+  const toggleOptOut = () => {
     analyticsService.setOptOut(!isOptOut());
 
     try {
@@ -32,11 +32,11 @@ const UserDataScreen = observer(() => {
       showNotification(i18n.t('errorMessage'));
       console.error(err);
     }
-  }, []);
+  };
 
   const deleteData = async () => {
     try {
-      await deleteDataFn({});
+      await deleteDataMutation.mutateAsync({});
       showNotification(i18n.t('settings.userData.deletedSuccess'), 'success');
     } catch (err) {
       showNotification(i18n.t('settings.userData.deletedError'), 'warning');
@@ -146,7 +146,11 @@ const UserDataScreen = observer(() => {
           theme.paddingTop4x,
           theme.paddingBottom8x,
         ]}>
-        <Button top="XXL" onPress={deleteData} type="warning">
+        <Button
+          top="XXL"
+          onPress={deleteData}
+          type="warning"
+          testID="delete-data-btn">
           {i18n.t('settings.deleteChannelButton')}
         </Button>
       </View>
