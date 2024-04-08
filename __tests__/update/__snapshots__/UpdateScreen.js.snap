@@ -8,7 +8,7 @@ exports[`Update Screen Component renders correctly 1`] = `
         "flex": 1,
       },
       {
-        "backgroundColor": "#38393D",
+        "backgroundColor": "#3b3b00ff",
       },
       {
         "alignItems": "center",
@@ -35,7 +35,7 @@ exports[`Update Screen Component renders correctly 1`] = `
           "borderRadius": 14,
         },
         {
-          "backgroundColor": "#1C1D1F",
+          "backgroundColor": "#010100",
         },
       ]
     }

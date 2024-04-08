@@ -42,7 +42,7 @@ exports[`StripeCardSelector should render correctly 1`] = `
           "alignItems": "center",
         },
         {
-          "backgroundColor": "#38393D",
+          "backgroundColor": "#3b3b00ff",
         },
         {
           "paddingVertical": 16,
@@ -65,7 +65,7 @@ exports[`StripeCardSelector should render correctly 1`] = `
         undefined,
       ],
       {
-        "backgroundColor": "#38393D",
+        "backgroundColor": "#3b3b00ff",
       },
     ]
   }

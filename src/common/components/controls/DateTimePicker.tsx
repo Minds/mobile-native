@@ -2,17 +2,13 @@ import { observer, useLocalStore } from 'mobx-react';
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { View } from 'react-native';
 import i18n from '../../services/i18n.service';
-import ThemedStyles, { useStyle } from '~/styles/ThemedStyles';
+import ThemedStyles from '~/styles/ThemedStyles';
 import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 import ModernDatePicker from 'react-native-modern-datepicker';
 import { Calendar } from 'react-native-calendars';
 import MText from '~/common/components/MText';
-import { useDimensions } from '@react-native-community/hooks';
-import Animated, {
-  useAnimatedStyle,
-  withTiming,
-} from 'react-native-reanimated';
+import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import moment from 'moment';
 import useModernTheme from './useModernTheme';
 import Delayed from '../Delayed';
@@ -28,7 +24,6 @@ const DateTimePicker = observer(
   forwardRef((props: PropsType, ref) => {
     const bottomSheetRef = React.useRef<BottomSheetModalType>(null);
     const timePickerRef = React.useRef<any>(null);
-    const width = useDimensions().window.width;
     const theme = useModernTheme();
 
     const localStore = useLocalStore(
@@ -87,40 +82,6 @@ const DateTimePicker = observer(
       }
     }, [localStore, props.date]);
 
-    const timePickerAnimatedStyle = useAnimatedStyle(() => ({
-      transform: [
-        {
-          scale: withTiming(localStore.pickerState === 'time' ? 1 : 0, {
-            duration: 300,
-          }),
-        },
-      ],
-    }));
-    const calendarAnimatedStyle = useAnimatedStyle(() => ({
-      transform: [
-        {
-          scale: withTiming(localStore.pickerState === 'time' ? 0 : 1, {
-            duration: 300,
-          }),
-        },
-      ],
-    }));
-    const bottomSheetButtonAnimatedStyle = useAnimatedStyle(() => ({
-      transform: [
-        {
-          translateY: withTiming(localStore.pickerState === 'time' ? 0 : 500, {
-            duration: 300,
-          }),
-        },
-      ],
-    }));
-    const viewStyle = useStyle({
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      width,
-    });
-
     const maxDate = props.maximumDate
       ? moment(props.maximumDate).format('YYYY-MM-DD')
       : undefined;
@@ -131,43 +92,51 @@ const DateTimePicker = observer(
     return (
       <BottomSheetModal ref={bottomSheetRef} enableDismissOnClose>
         <View style={styles.container}>
-          <Animated.View style={[calendarAnimatedStyle, viewStyle]}>
-            <Calendar
-              current={localStore.textDate}
-              maxDate={maxDate}
-              minDate={minDate}
-              markedDates={{
-                [localStore.textDate]: {
-                  selected: true,
-                },
-              }}
-              onDayPress={localStore.setDate}
-              theme={theme}
-            />
-          </Animated.View>
-
-          <Animated.View style={[timePickerAnimatedStyle, viewStyle]}>
-            <Delayed delay={0}>
-              <ModernDatePicker
-                ref={timePickerRef}
-                mode="time"
+          {localStore.pickerState === 'date' ? (
+            <Animated.View
+              entering={FadeInRight}
+              exiting={FadeOutLeft}
+              style={ThemedStyles.style.flexContainer}>
+              <Calendar
                 current={localStore.textDate}
-                confirmButtonVisible={false}
-                options={theme}
-                minuteInterval={5}
+                maxDate={maxDate}
+                minDate={minDate}
+                markedDates={{
+                  [localStore.textDate]: {
+                    selected: true,
+                  },
+                }}
+                onDayPress={localStore.setDate}
+                theme={theme}
               />
-            </Delayed>
+            </Animated.View>
+          ) : (
+            <Animated.View
+              entering={FadeInRight}
+              exiting={FadeOutLeft}
+              style={ThemedStyles.style.flexContainer}>
+              <Delayed delay={0}>
+                <ModernDatePicker
+                  ref={timePickerRef}
+                  mode="time"
+                  current={localStore.textDate}
+                  confirmButtonVisible={false}
+                  options={theme}
+                  minuteInterval={5}
+                />
+              </Delayed>
 
-            <MText style={styles.timePickerTitle}>
-              {moment(localStore.selectedDate).format('MMMM Do')}
-            </MText>
-            <MText style={backButtonStyle} onPress={localStore.onBack}>
-              Back
-            </MText>
-          </Animated.View>
+              <MText style={styles.timePickerTitle}>
+                {moment(localStore.selectedDate).format('MMMM Do')}
+              </MText>
+              <MText style={backButtonStyle} onPress={localStore.onBack}>
+                Back
+              </MText>
+            </Animated.View>
+          )}
         </View>
 
-        <Animated.View style={bottomSheetButtonAnimatedStyle}>
+        <Animated.View entering={FadeInRight} exiting={FadeOutLeft}>
           <BottomSheetButton
             text={i18n.t('done')}
             onPress={localStore.onConfirm}
