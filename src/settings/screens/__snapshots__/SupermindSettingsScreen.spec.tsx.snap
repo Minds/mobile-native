@@ -814,7 +814,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               "paddingTop": 8,
             },
             {
-              "backgroundColor": "#1C1D1F",
+              "backgroundColor": "#0f0f00ff",
             },
             {
               "borderTopWidth": 1,
@@ -986,7 +986,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               "paddingTop": 8,
             },
             {
-              "backgroundColor": "#1C1D1F",
+              "backgroundColor": "#0f0f00ff",
             },
             {
               "borderTopWidth": 1,
@@ -1174,7 +1174,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                 "justifyContent": "center",
               },
               {
-                "backgroundColor": "#1C1D1F",
+                "backgroundColor": "#010100",
                 "borderColor": "#FFD048",
                 "borderRadius": 21,
                 "borderWidth": 1,

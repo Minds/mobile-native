@@ -153,7 +153,7 @@ exports[`SupermindRequest should render inbound 1`] = `
           },
         ],
         {
-          "backgroundColor": "#1C1D1F",
+          "backgroundColor": "#010100",
         },
       ]
     }
@@ -650,7 +650,7 @@ exports[`SupermindRequest should render outbound 1`] = `
           },
         ],
         {
-          "backgroundColor": "#1C1D1F",
+          "backgroundColor": "#010100",
         },
       ]
     }

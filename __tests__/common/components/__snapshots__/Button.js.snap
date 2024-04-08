@@ -15,7 +15,7 @@ exports[`renders correctly 1`] = `
         "justifyContent": "center",
       },
       {
-        "backgroundColor": "#1C1D1F",
+        "backgroundColor": "#010100",
         "borderColor": "#53565A",
         "borderRadius": 21,
         "borderWidth": 1,
