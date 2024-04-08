@@ -15,13 +15,13 @@ import { NoticeProps } from '.';
 function PlusUpgradeNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
   const user = useCurrentUser()!;
-  const { value: activeExperiment } = useFeature('minds-3639-plus-notice');
+  const activeExperiment = useFeature('minds-3639-plus-notice');
   let description = i18n.t('inFeedNotices.plusUpgrade.description');
 
-  if ([1, 2, 3, 4].includes(activeExperiment)) {
+  if (['1', '2', '3', '4'].includes(activeExperiment.toString())) {
     description = i18n.t(
       `inFeedNotices.plusUpgrade.descriptionVariations.${
-        activeExperiment as 1 | 2 | 3 | 4
+        activeExperiment as '1' | '2' | '3' | '4'
       }`,
     );
   }

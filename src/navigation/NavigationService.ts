@@ -68,10 +68,15 @@ function onStateChange() {
   if (!navigationRef) {
     return;
   }
-  const currentRouteName = navigationRef.getCurrentRoute()?.name;
+
+  const currentRoute = navigationRef.getCurrentRoute();
+  const currentRouteName = currentRoute?.name;
+  const currentRouteParams = currentRoute?.params;
+
+  console.log('route', currentRoute);
 
   // record analytics event for screen view
-  analyticsService.onNavigatorStateChange(currentRouteName);
+  analyticsService.onNavigatorStateChange(currentRouteName, currentRouteParams);
 }
 
 export default {

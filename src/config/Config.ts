@@ -256,3 +256,9 @@ export const STORE_LINK = Platform.select({
 export const isStoryBookOn = storages.app.getBool('storybook');
 
 export const BOOSTS_DELAY = 604800;
+
+/**
+ * PostHog setup
+ */
+export const POSTHOG_API_KEY = Tenant.POSTHOG_API_KEY;
+export const POSTHOG_HOST = 'https://p.minds.com';

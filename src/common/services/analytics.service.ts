@@ -1,20 +1,19 @@
-import {
-  createTracker,
-  EventContext,
-  ReactNativeTracker,
-} from '@snowplow/react-native-tracker';
-import { v4 as uuidv4 } from 'uuid';
-import DeviceInfo from 'react-native-device-info';
-import { Dimensions, Platform } from 'react-native';
-import CookieManager from '@react-native-cookies/cookies';
+import PostHog from 'posthog-react-native';
 
-import i18nService from './i18n.service';
-import { Version } from '../../config/Version';
 import { storages } from './storage/storages.service';
-import { IS_IOS, IS_TENANT, TENANT_ID } from '~/config/Config';
+import {
+  IS_REVIEW,
+  IS_TENANT,
+  POSTHOG_API_KEY,
+  POSTHOG_HOST,
+  TENANT_ID,
+} from '~/config/Config';
 import BaseModel from '../BaseModel';
 import { Metadata } from './metadata.service';
 import { DismissIdentifier } from '../stores/DismissalStore';
+import mindsConfigService from './minds-config.service';
+import { observe } from 'mobx';
+import sessionService from './session.service';
 
 const IGNORE_SCREENS = ['Comments'];
 
@@ -31,100 +30,65 @@ export type ContextualizableEntity = {
   };
 };
 
+export type EventContext = {
+  schema: string;
+  data: { [key: string]: any };
+};
+
 /**
  * Analytics service
  */
 export class AnalyticsService {
-  tracker?: ReactNativeTracker;
+  posthog: PostHog;
+
   previousRouteName = '';
   contexts: EventContext[] = [];
   networkUserId: string | null | undefined;
   userId: string | null | undefined;
 
-  constructor() {
-    let appId = 'minds';
+  configDisposer = observe(mindsConfigService, 'settings', change => {
+    const postHogConfigs = change.newValue?.posthog;
 
-    if (IS_TENANT) {
-      appId = 'minds-tenant-' + TENANT_ID;
-    }
-
-    this.tracker = createTracker(
-      'ma',
-      {
-        // required
-        endpoint: 'sp.minds.com',
-
-        // optional
-        method: 'post',
-      },
-      {
-        trackerConfig: {
-          appId: appId,
-          platformContext: true,
-          applicationContext: false,
-          lifecycleAutotracking: false,
-          screenContext: true,
-          sessionContext: true,
-          installAutotracking: false,
-          base64Encoding: true,
-          deepLinkContext: true,
-          logLevel: 'debug',
-        },
-        sessionConfig: {
-          foregroundTimeout: 600,
-          backgroundTimeout: 300,
-        },
-      },
-    );
-
-    const screen = Dimensions.get('screen');
-    const window = Dimensions.get('window');
-
-    const useragent = `Minds/${Version.VERSION} (${DeviceInfo.getModel()}; ${
-      Platform.OS === 'ios' ? 'iOS' : 'Android'
-    } ${DeviceInfo.getSystemVersion()}) Version/${Version.VERSION}`;
-
-    // set a cookie
-    if (!IS_IOS) {
-      // we set the network explicitly here, as setting it on the subject data doesn't work
-      this.networkUserId = storages.app.getString('snowplow_network_id');
-      if (!this.networkUserId) {
-        this.networkUserId = uuidv4() as string;
-        storages.app.setString(
-          'snowplow_network_id',
-          this.networkUserId as string,
-        );
-        console.log(
-          '[Snowplow] Generated network user id: ',
-          this.networkUserId,
-        );
+    if (postHogConfigs) {
+      const isOptOut = postHogConfigs.opt_out;
+      if (isOptOut) {
+        this.posthog.optOut();
       } else {
-        console.log('[Snowplow] network user id: ', this.networkUserId);
+        if (this.posthog.optedOut) {
+          this.posthog.optIn();
+        }
       }
-      this.tracker.setNetworkUserId(this.networkUserId);
-      this.setNetworkCookie();
+    }
+  });
+
+  constructor() {
+    this.posthog = new PostHog(POSTHOG_API_KEY, {
+      host: POSTHOG_HOST,
+      preloadFeatureFlags: false, // We provide these from our backend
+      captureNativeAppLifecycleEvents: true, // ? Not sure how relevant these are
+      persistence: 'file',
+      sendFeatureFlagEvent: false, // Storage not working? We will do ourselves
+    });
+
+    // Globally register property
+    if (IS_TENANT) {
+      this.posthog.register({
+        tenant_id: TENANT_ID,
+      });
     }
 
-    this.tracker.setSubjectData({
-      screenResolution: [screen.width, screen.height],
-      language: i18nService.locale,
-      useragent,
-      screenViewport: [window.width, window.height],
+    // On logout we should reset posthog
+    sessionService?.onLogout(() => {
+      this.posthog.reset();
     });
   }
 
   /**
-   * Sets the networkId cookie
+   * Set if a user has disabled analytics or not
    */
-  setNetworkCookie() {
-    if (this.networkUserId) {
-      CookieManager.set('https://www.minds.com', {
-        name: 'minds_sp',
-        value: this.networkUserId,
-        path: '/',
-        secure: true,
-      });
-    }
+  public setOptOut(optOut: boolean): void {
+    const posthostConfig = mindsConfigService.getSettings().posthog;
+    posthostConfig.opt_out = optOut;
   }
 
   /**
@@ -134,13 +98,9 @@ export class AnalyticsService {
     if (!userId) {
       return;
     }
-    this.tracker?.setUserId(userId);
+
+    this.posthog.identify(userId);
     this.userId = userId;
-    CookieManager.set('https://www.minds.com', {
-      name: 'minds_pseudoid',
-      value: this.userId,
-      path: '/',
-    });
   }
 
   /**
@@ -151,55 +111,93 @@ export class AnalyticsService {
   }
 
   /**
+   * Sets up the feature flags from the configs
+   */
+  initFeatureFlags(): void {
+    const featureFlags = mindsConfigService.getSettings().posthog.feature_flags;
+    this.posthog.overrideFeatureFlag(featureFlags);
+  }
+
+  /**
+   * Returns a feature flag from posthog
+   */
+  getFeatureFlag(key: string): string | boolean {
+    const response = this.posthog.getFeatureFlag(key) || false;
+
+    // Record the event
+    this.addExperiment(key, response);
+
+    return response;
+  }
+
+  /**
    * Add an experiment
    */
-  addExperiment(experimentId: string, variationId: number): void {
-    this.tracker?.trackSelfDescribingEvent(
-      {
-        schema: 'iglu:com.minds/growthbook_experiment/jsonschema/1-0-0',
-        data: {
-          experiment_id: experimentId,
-          variation_id: variationId,
-        },
-      },
-      this.contexts,
-    );
+  addExperiment(key: string, response: string | boolean): void {
+    const CACHE_KEY = `experiment:${key}`;
+    const date = storages.user?.getInt(CACHE_KEY);
+    if (date && date > Date.now() - 86400000) {
+      return; // Do not emit event
+    } else {
+      storages.user?.setInt(CACHE_KEY, Date.now());
+    }
+    if (!IS_REVIEW) {
+      this.posthog.capture('$feature_flag_called', {
+        $feature_flag: key,
+        $feature_flag_response: response,
+      });
+    }
   }
 
   /**
    * Navigation state change handler
    */
-  onNavigatorStateChange = currentRouteName => {
+  onNavigatorStateChange = (currentRouteName, currentRouteParams) => {
     if (
       currentRouteName &&
       this.previousRouteName !== currentRouteName &&
       !IGNORE_SCREENS.includes(currentRouteName)
     ) {
-      this.trackScreenViewEvent(currentRouteName);
+      this.trackScreenViewEvent(currentRouteName, currentRouteParams);
     }
 
     // Save the current route name for later comparison
     this.previousRouteName = currentRouteName;
+
+    // Regiser this property to be sent with all events
+    this.posthog.register({
+      $screen_name: currentRouteName,
+    });
   };
 
   /**
    * Track screen view
    * @param screenName
    */
-  trackScreenViewEvent(screenName: string) {
-    return this.tracker?.trackScreenViewEvent(
-      { name: screenName },
-      this.contexts,
-    );
+  trackScreenViewEvent(screenName: string, screenParams: Object): void {
+    const allowedScreenParams = {};
+
+    if (screenParams) {
+      for (const [key, value] of Object.entries(screenParams)) {
+        if (typeof value === 'string' || typeof value === 'number') {
+          allowedScreenParams[key] = value;
+        }
+      }
+    }
+
+    this.posthog.screen(screenName, {
+      previous_screen: this.previousRouteName,
+      screen_params: allowedScreenParams,
+    });
   }
 
   /**
    * Tracks a deep link received event
    * @param url
    */
-  trackDeepLinkReceivedEvent(url: string) {
-    return this.tracker?.trackDeepLinkReceivedEvent({
-      url,
+  trackDeepLinkReceivedEvent(url: string): void {
+    this.posthog.capture('deeplink', {
+      deeplink_url: url,
     });
   }
 
@@ -209,52 +207,7 @@ export class AnalyticsService {
    * @param clientMeta
    */
   trackEntityView(entity: BaseModel, clientMeta: Metadata) {
-    this.tracker?.trackSelfDescribingEvent(
-      {
-        schema: 'iglu:com.minds/view/jsonschema/1-0-0',
-        data: {
-          ...(clientMeta as Record<keyof Metadata, unknown>),
-          entity_guid: entity.guid,
-          // @ts-ignore
-          entity_type: entity.type,
-          entity_owner_guid: entity.ownerObj?.guid || entity.owner_guid,
-        },
-      },
-      [
-        {
-          schema: 'iglu:com.minds/entity_context/jsonschema/1-0-0',
-          data: {
-            entity_guid: entity.guid,
-            entity_owner_guid: entity.ownerObj?.guid || entity.owner_guid,
-            // @ts-ignore
-            entity_type: entity.type,
-            entity_subtype:
-              !(
-                entity.instanceOf('GroupModel') ||
-                entity.instanceOf('UserModel')
-              ) && (entity as any).subtype
-                ? (entity as any).subtype!
-                : '',
-            entity_container_guid:
-              !(
-                entity.instanceOf('GroupModel') ||
-                entity.instanceOf('UserModel')
-              ) && (entity as any).containerObj!
-                ? (entity as any).containerObj!.guid
-                : '',
-          },
-        },
-        ...this.contexts,
-      ],
-    );
-  }
-
-  /**
-   * Track a page view
-   * @param pageUrl
-   */
-  trackPageViewEvent(pageUrl: string) {
-    this.tracker?.trackPageViewEvent({ pageUrl }, this.contexts);
+    // Temporarily disabled
   }
 
   /**
@@ -321,16 +274,21 @@ export class AnalyticsService {
     eventRef: string,
     contexts: EventContext[] = [],
   ): void {
-    this.tracker?.trackSelfDescribingEvent(
-      {
-        schema: 'iglu:com.minds/generic_event/jsonschema/1-0-0',
-        data: {
-          event_type: eventType,
-          event_ref: eventRef,
-        },
-      },
-      [...(this.contexts ?? []), ...contexts],
-    );
+    const properties = {};
+
+    for (let context of contexts) {
+      if (context.schema === 'iglu:com.minds/entity_context/jsonschema/1-0-0') {
+        properties['entity_guid'] = context.data.entity_guid;
+        properties['entity_type'] = context.data.entity_type;
+        properties['entity_subtype'] = context.data.entity_subtype;
+        properties['entity_owner_guid'] = context.data.entity_owner_guid;
+      }
+    }
+
+    this.posthog.capture('dataref_' + eventType, {
+      ref: eventRef,
+      ...properties,
+    });
   }
 }
 

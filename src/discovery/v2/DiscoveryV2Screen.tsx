@@ -50,9 +50,8 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     const listRef = React.useRef<React.ElementRef<FeedListStickyType>>(null);
     const channelsListRef = React.useRef<any>(null);
     const groupsListRef = React.useRef<any>(null);
-    const isDiscoveryConsolidationOn = useIsFeatureOn(
-      'mob-5038-discovery-consolidation',
-    );
+    const isDiscoveryConsolidationOn =
+      useIsFeatureOn('mob-5038-discovery-consolidation') === 'test';
     const tab = props.route.params?.tab;
 
     // inject items in the store the first time

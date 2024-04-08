@@ -9,6 +9,7 @@ import { pushBottomSheet } from '../common/components/bottom-sheet';
 jest.mock('../navigation/NavigationService');
 jest.mock('../common/components/bottom-sheet');
 const mockOnItemPress = jest.fn();
+jest.mock('../common/services/analytics.service');
 
 describe('ComposeCreateScreen', () => {
   it('renders correctly', () => {

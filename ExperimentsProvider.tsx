@@ -1,31 +1,5 @@
-import React from 'react';
-import {
-  GrowthBook,
-  GrowthBookProvider,
-  useFeature as useGrowthbookFeature,
-} from '@growthbook/growthbook-react';
-import DeviceInfo from 'react-native-device-info';
-
 import analyticsService from '~/common/services/analytics.service';
-import mindsConfigService from '~/common/services/minds-config.service';
-import sessionService from '~/common/services/session.service';
-import { storages } from '~/common/services/storage/storages.service';
-import { GOOGLE_PLAY_STORE, IS_IOS, IS_REVIEW } from '~/config/Config';
-
-export const growthbook = new GrowthBook({
-  trackingCallback: (experiment, result) => {
-    const CACHE_KEY = `experiment:${experiment.key}`;
-    const date = storages.user?.getInt(CACHE_KEY);
-    if (date && date > Date.now() - 86400000) {
-      return; // Do not emit event
-    } else {
-      storages.user?.setInt(CACHE_KEY, Date.now());
-    }
-    if (!IS_REVIEW) {
-      analyticsService.addExperiment(experiment.key, result.variationId);
-    }
-  },
-});
+import { GOOGLE_PLAY_STORE, IS_IOS } from '~/config/Config';
 
 /**
  * Return whether a feature has a given variation state.
@@ -35,74 +9,38 @@ export const growthbook = new GrowthBook({
  */
 export function hasVariation(
   featureKey: FeatureID | FeatureID[],
-  variation: string = 'on',
+  variation: boolean | string = true,
 ) {
   return Array.isArray(featureKey)
-    ? featureKey.every(key => growthbook.feature(key)[variation])
-    : growthbook.feature(featureKey)[variation];
-}
-
-export function IfHasVariation({
-  featureKey,
-  children,
-}: React.PropsWithChildren<{
-  featureKey: FeatureID;
-}>) {
-  const on = useIsFeatureOn(featureKey);
-
-  if (!on) {
-    return null;
-  }
-
-  return <>{children}</>;
+    ? featureKey.every(
+        key => analyticsService.getFeatureFlag(key) === variation,
+      )
+    : analyticsService.getFeatureFlag(featureKey) === variation;
 }
 
 /**
  * Update growthbook's attributes and features
  */
-export function updateGrowthBookAttributes() {
-  const user = sessionService.getUser();
-  const config = mindsConfigService.getSettings();
-  const userId = sessionService.token ? user?.guid : DeviceInfo.getUniqueId();
-  if (config?.growthbook) {
-    growthbook.setFeatures(config.growthbook?.features);
-    growthbook.setAttributes({
-      ...config.growthbook?.attributes,
-      ...growthbook.getAttributes(),
-      loggedIn: Boolean(sessionService.token),
-      id: userId,
-      appVersion: DeviceInfo.getVersion(),
-      buildNumber: DeviceInfo.getBuildNumber(),
-      platform: IS_IOS ? 'ios' : 'android',
-      user: {
-        id: userId,
-      },
-    });
-  }
+export function updateFeatureFlags() {
+  analyticsService.initFeatureFlags();
 }
 
 export function useIsFeatureOn(feature: FeatureID) {
-  return useGrowthbookFeature(feature).on;
+  return analyticsService.getFeatureFlag(feature);
 }
 
 export function useFeature(feature: FeatureID) {
-  return useGrowthbookFeature(feature);
-}
-
-export default function ExperimentsProvider({ children }) {
-  return (
-    <GrowthBookProvider growthbook={growthbook}>{children}</GrowthBookProvider>
-  );
+  return analyticsService.getFeatureFlag(feature);
 }
 
 export const useIsIOSFeatureOn = (feature: FeatureID) =>
-  useGrowthbookFeature(feature).on && IS_IOS;
+  useIsFeatureOn(feature) && IS_IOS;
 
 export const useIsAndroidFeatureOn = (feature: FeatureID) =>
-  useGrowthbookFeature(feature).on && !IS_IOS;
+  useIsFeatureOn(feature) && !IS_IOS;
 
 export const useIsGoogleFeatureOn = (feature: FeatureID) =>
-  useGrowthbookFeature(feature).on && GOOGLE_PLAY_STORE;
+  useIsFeatureOn(feature) && GOOGLE_PLAY_STORE;
 
 export const featureList = [
   'engine-2503-twitter-feats',

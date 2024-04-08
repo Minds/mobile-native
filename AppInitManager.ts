@@ -21,7 +21,7 @@ import translationService from './src/common/services/translation.service';
 import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
-import { updateGrowthBookAttributes } from 'ExperimentsProvider';
+import { updateFeatureFlags } from 'ExperimentsProvider';
 import checkTOS from '~/tos/checkTOS';
 import { storeRatingService } from 'modules/store-rating';
 import portraitBoostedContentService from './src/portrait/services/portraitBoostedContentService';
@@ -69,7 +69,7 @@ export class AppInitManager {
 
       if (!token) {
         // update settings and init growthbook
-        this.updateMindsConfigAndInitGrowthbook();
+        this.updateMindsConfigAndInitFeatureFlags();
         logService.info('[App] there is no active session');
         SplashScreen.hideAsync();
       } else {
@@ -98,13 +98,13 @@ export class AppInitManager {
     }
   }
 
-  updateMindsConfigAndInitGrowthbook() {
+  updateMindsConfigAndInitFeatureFlags() {
     // init with current cached data
-    updateGrowthBookAttributes();
+    updateFeatureFlags();
 
     const afterUpdate = () => {
       // if it changed we initialize growth book again
-      updateGrowthBookAttributes();
+      updateFeatureFlags();
 
       // Check Terms of service
       checkTOS();
@@ -122,7 +122,7 @@ export class AppInitManager {
     pushService.setBadgeCount(0);
     pushService.clearNotifications();
     translationService.purgeLanguagesCache();
-    updateGrowthBookAttributes();
+    updateFeatureFlags();
     boostedContentService.clear();
     portraitBoostedContentService.clear();
     queryClient.clear();
@@ -135,7 +135,7 @@ export class AppInitManager {
     const user = sessionService.getUser();
 
     // update settings for this user and init growthbook
-    this.updateMindsConfigAndInitGrowthbook();
+    this.updateMindsConfigAndInitFeatureFlags();
 
     // load boosted content
     if (!IS_TENANT) {
@@ -218,6 +218,8 @@ export class AppInitManager {
    */
   onNavigatorReady = async () => {
     this.navReady = true;
+    // Emit first state change
+    NavigationService.onStateChange();
     // if the user is already logged in, handle initial navigation
     if (sessionService.userLoggedIn) {
       this.initialNavigationHandling();

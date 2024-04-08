@@ -182,10 +182,10 @@ const getOptionsList = (
  */
 export default function Drawer(props) {
   const channel = sessionService.getUser();
-  const isIosMindsHidden = useIsIOSFeatureOn(
-    'mob-4637-ios-hide-minds-superminds',
-  );
-  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+  const isIosMindsHidden =
+    useIsIOSFeatureOn('mob-4637-ios-hide-minds-superminds') === true;
+  const hideTokens =
+    useIsGoogleFeatureOn('mob-5221-google-hide-tokens') === true;
 
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });

@@ -62,6 +62,10 @@ export default function () {
           onPress: () => navigation.push('BoostSettingsScreen'),
         }
       : null,
+    {
+      title: i18n.t('settings.accountOptions.10'),
+      onPress: () => navigation.push('UserDataScreen'),
+    },
   ];
 
   const NotificationsScreenOptions = navigation => [
@@ -352,6 +356,13 @@ export default function () {
           require('~/settings/screens/VideoSoundSettingsScreen').default
         }
         options={{ title: i18n.t('settings.accountOptions.9') }}
+      />
+      <MoreStack.Screen
+        name="UserDataScreen"
+        getComponent={() =>
+          require('~/settings/screens/UserDataScreen').default
+        }
+        options={{ title: i18n.t('settings.accountOptions.10') }}
       />
       <MoreStack.Screen
         name="SupermindSettingsScreen"

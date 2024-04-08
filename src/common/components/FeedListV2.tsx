@@ -64,8 +64,10 @@ function FeedList<T extends BaseModel>(
   const { height } = useDimensions().window;
 
   const navigation = useNavigation();
-  const explicitVoteFeature = useIsFeatureOn('mob-5075-explicit-vote-buttons');
-  const hidePostFeature = useIsFeatureOn('mob-5075-hide-post-on-downvote');
+  const explicitVoteFeature =
+    useIsFeatureOn('mob-5075-explicit-vote-buttons') === true;
+  const hidePostFeature =
+    useIsFeatureOn('mob-5075-hide-post-on-downvote') === true;
 
   const items: Array<any> = !hideContent ? feedStore.entities.slice() : [];
 

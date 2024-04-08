@@ -31,7 +31,6 @@ import { UserError } from '../UserError';
 import i18n from './i18n.service';
 import NavigationService from '../../navigation/NavigationService';
 import CookieManager from '@react-native-cookies/cookies';
-import analyticsService from './analytics.service';
 import AuthService from '~/auth/AuthService';
 import referrerService from './referrer.service';
 import {
@@ -384,8 +383,6 @@ export class ApiService {
   clearCookies() {
     return new Promise(success => {
       NativeModules.Networking.clearCookies(d => {
-        // we need to set the network id cookie for android
-        analyticsService.setNetworkCookie();
         success(d);
       });
     });

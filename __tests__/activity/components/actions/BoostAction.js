@@ -8,6 +8,8 @@ import renderer from 'react-test-renderer';
 import BoostAction from '../../../../src/newsfeed/activity/actions/BoostAction';
 import IconButtonNext from '../../../../src/common/ui/icons';
 
+jest.mock('~/common/services/analytics.service');
+
 // prevent double tap in touchable
 
 describe('Boost action component', () => {

@@ -1038,7 +1038,8 @@
       "6": "Messenger",
       "7": "Autoplay Videos",
       "8": "Boosted Content",
-      "9": "Background video playback"
+      "9": "Background video playback",
+      "10": "User Data & Analytics"
     },
     "networkOptions": {
       "1": "Data Saver"
@@ -1178,7 +1179,12 @@
       }
     },
     "profile": "Profile",
-    "pro": "Pro"
+    "pro": "Pro",
+    "userData": {
+      "optOut": "Opt-out of observational analtytics",
+      "deletedSuccess": "Your data is queued for deletion. This may take up to 7 days.",
+      "deletedError": "We did not find any data for your user to delete."
+    }
   },
   "comingSoon": {
     "try": "Try the canary app at",
