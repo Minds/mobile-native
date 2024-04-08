@@ -151,7 +151,7 @@ const UserDataScreen = observer(() => {
           onPress={deleteData}
           type="warning"
           testID="delete-data-btn">
-          {i18n.t('settings.deleteChannelButton')}
+          {i18n.t('settings.userData.deleteData')}
         </Button>
       </View>
     </Screen>

@@ -438,7 +438,7 @@ exports[`UserDataScreen should load data and render correctly 1`] = `
                     ]
                   }
                 >
-                  Delete my account
+                  Delete my observational data
                 </Text>
               </View>
             </View>
