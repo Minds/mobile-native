@@ -1,11 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
-import { useFeature } from 'ExperimentsProvider';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback } from 'react';
 import useCurrentUser from '~/common/hooks/useCurrentUser';
 import i18n from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
-// import openUrlService from '~/common/services/open-url.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
 
@@ -15,16 +13,10 @@ import { NoticeProps } from '.';
 function PlusUpgradeNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
   const user = useCurrentUser()!;
-  const activeExperiment = useFeature('minds-3639-plus-notice');
-  let description = i18n.t('inFeedNotices.plusUpgrade.description');
 
-  if (['1', '2', '3', '4'].includes(activeExperiment.toString())) {
-    description = i18n.t(
-      `inFeedNotices.plusUpgrade.descriptionVariations.${
-        activeExperiment as '1' | '2' | '3' | '4'
-      }`,
-    );
-  }
+  const description = i18n.t(
+    'inFeedNotices.plusUpgrade.descriptionVariations.3',
+  );
 
   const onPress = useCallback(() => {
     navigation.navigate('UpgradeScreen', {
@@ -49,10 +41,6 @@ function PlusUpgradeNotice({ name }: NoticeProps) {
       btnText={i18n.t('inFeedNotices.plusUpgrade.action')}
       iconName="queue"
       onPress={onPress}
-      // btnSecondaryText={i18n.t('inFeedNotices.plusUpgrade.secondaryAction')}
-      // onSecondaryPress={() =>
-      //   openUrlService.openLinkInInAppBrowser('https://minds.com/plus')
-      // }
     />
   );
 }

@@ -1,6 +1,5 @@
 import { Platform } from 'react-native';
 import moment from 'moment';
-import { hasVariation } from 'ExperimentsProvider';
 
 import UserModel from '../UserModel';
 import channelsService from '~/common/services/channels.service';
@@ -204,10 +203,7 @@ const createChannelStore = () => {
       if (!this.loaded) {
         this.loaded = true;
         this.feedStore.getScheduledCount(this.channel.guid);
-        if (
-          !this.channel.isOwner() &&
-          hasVariation('epic-303-boost-partners')
-        ) {
+        if (!this.channel.isOwner()) {
           this.feedStore.setInjectBoost(true);
           const channelBoostedContent = new BoostedContentService(
             channel?.guid,
@@ -245,7 +241,9 @@ const createChannelStore = () => {
             )
           : await channelsService.get(defaultChannel.guid, defaultChannel);
       if (channel) {
-        if (this.checkBanned(channel)) return false;
+        if (this.checkBanned(channel)) {
+          return false;
+        }
         this.setChannel(channel);
         if (!channel.blocked) {
           this.loadFeed();
@@ -268,7 +266,9 @@ const createChannelStore = () => {
         NavigationService.goBack();
         showNotification(i18n.t('nsfw.notSafeChannel'));
       }
-      if (this.checkBanned(channel)) return false;
+      if (this.checkBanned(channel)) {
+        return false;
+      }
       this.setChannel(channel);
       this.loadFeed();
       this.tiers =

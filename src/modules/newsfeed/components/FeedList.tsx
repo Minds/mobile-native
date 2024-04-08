@@ -16,7 +16,6 @@ import ErrorBoundary from '../../../common/components/ErrorBoundary';
 import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
 import { useDimensions } from '@react-native-community/hooks';
-import { useIsFeatureOn } from '../../../../ExperimentsProvider';
 
 type PlaceholderType =
   | React.ComponentType<any>
@@ -56,10 +55,6 @@ function FeedListCmp<T extends BaseModel>(
 
   const { height } = useDimensions().window;
   const navigation = useNavigation();
-  const explicitVoteFeature =
-    useIsFeatureOn('mob-5075-explicit-vote-buttons') === true;
-  const hidePostFeature =
-    useIsFeatureOn('mob-5075-hide-post-on-downvote') === true;
 
   const renderItem = useCallback(
     (row: { index: number; item: any; target: string }) => {
@@ -72,8 +67,8 @@ function FeedListCmp<T extends BaseModel>(
               displayBoosts={displayBoosts}
               emphasizeGroup={emphasizeGroup}
               autoHeight={false}
-              explicitVoteButtons={explicitVoteFeature && row.index % 3 === 0}
-              hidePostOnDownvote={hidePostFeature}
+              explicitVoteButtons={false}
+              hidePostOnDownvote={false}
             />
           ) : row.item.__typename && renderInFeedItems ? (
             renderInFeedItems(row)
@@ -81,14 +76,7 @@ function FeedListCmp<T extends BaseModel>(
         </ErrorBoundary>
       );
     },
-    [
-      navigation,
-      displayBoosts,
-      emphasizeGroup,
-      explicitVoteFeature,
-      hidePostFeature,
-      renderInFeedItems,
-    ],
+    [navigation, displayBoosts, emphasizeGroup, renderInFeedItems],
   );
 
   const refreshControl = useMemo(
@@ -185,6 +173,8 @@ const getItemType = item => {
 const keyExtractor = (item, index: any) => {
   const key = item.boosted
     ? `${item.urn}:${index}`
+    : item.isHighlighted
+    ? `${item.urn}:highlight`
     : item.urn || `${item.id}:${index}`;
   return key;
 };

@@ -2,12 +2,16 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
 import ThemedStyles from '../../styles/ThemedStyles';
+import MenuSubtitle from './menus/MenuSubtitle';
 
 const keyExtractor = (_, index) => `_${index}`;
 
-const renderItem = item => (
-  <MenuItem noBorderTop={item.index > 0} {...item.item} />
-);
+const renderItem = ({ item, index }) =>
+  item.onPress ? (
+    <MenuItem noBorderTop={index > 0} {...item} />
+  ) : (
+    <MenuSubtitle>{item.title}</MenuSubtitle>
+  );
 
 export default function ({ navigation, route }) {
   const { options } = route.params ?? {};

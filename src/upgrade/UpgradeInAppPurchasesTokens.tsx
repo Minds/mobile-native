@@ -27,8 +27,7 @@ import sessionService from '~/common/services/session.service';
 import apiService from '~/common/services/api.service';
 import { useStores } from '~/common/hooks/use-stores';
 import { WalletStoreType } from '~/wallet/v2/createWalletStore';
-import { IS_IOS } from '~/config/Config';
-import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
+import { GOOGLE_PLAY_STORE, IS_IOS } from '~/config/Config';
 import CenteredLoading from '~/common/components/CenteredLoading';
 
 type UpgradeInPurchasesProps = {
@@ -68,7 +67,7 @@ const UpgradeInAppPurchasesTokens = ({
   );
 
   const insufficientFunds = walletStore.balance < cheapestTokenPrice;
-  const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+  const hideTokens = GOOGLE_PLAY_STORE;
 
   /**
    * Get IAP subscriptions

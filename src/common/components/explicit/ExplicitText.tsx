@@ -61,9 +61,11 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     const theme = ThemedStyles.style;
     const entity = this.props.entity;
 
+    const tempTitle = entity.link_title || entity.title;
+
     let title: string =
-      entity.title && !entity.perma_url
-        ? entities.decodeHTML(entity.title).trim()
+      tempTitle && !entity.perma_url
+        ? entities.decodeHTML(tempTitle).trim()
         : '';
     let message = entity.text ? entities.decodeHTML(entity.text).trim() : '';
 

@@ -35,7 +35,6 @@ export default function MediaViewImage({
   autoHeight,
   ignoreDataSaver,
   mode = 'contain',
-  onImageDoublePress,
   onImagePress,
   onImageLongPress,
 }: PropsType) {
@@ -130,9 +129,12 @@ export default function MediaViewImage({
 
     return <View style={errorContainerStyle}>{text}</View>;
   }
-  const blur = entity?.custom_data?.[0]?.blurhash || entity?.blurhash;
-  const placeholder = blur
-    ? { blurhash: blur, width: 9, height: 9 }
+  const blurhash = entity?.custom_data?.[0]?.blurhash || entity?.blurhash;
+
+  const placeholder = entity.hasSiteMembershipPaywallThumbnail
+    ? entity.paywall_thumbnail
+    : blurhash
+    ? { blurhash, width: 9, height: 9 }
     : thumbnail;
 
   // Wrapped in a pressable to avoid the press event after zooming on android (Pinchable bug)

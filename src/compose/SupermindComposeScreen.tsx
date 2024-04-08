@@ -23,7 +23,6 @@ import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from './SupermindOnboarding';
-import { hasVariation } from 'ExperimentsProvider';
 import { PosterStackScreenProps } from './PosterOptions/PosterStackNavigator';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
@@ -137,11 +136,6 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
         : `${minValue}`,
     },
   );
-
-  const isTwitterEnabled = hasVariation([
-    'engine-2503-twitter-feats',
-    'mob-twitter-oauth-4715',
-  ]);
 
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('consumer');
 
@@ -348,17 +342,6 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
           valueExtractor={v => v.label}
           keyExtractor={v => v.value}
         />
-        {isTwitterEnabled && (
-          <MenuItemOption
-            containerItemStyle={styles.twitterMenuItem}
-            onPress={() => setState({ requireTwitter: !requireTwitter })}
-            selected={requireTwitter}
-            disabled={replyType === ReplyType.live}
-            title={i18nService.t('supermind.requireTwitter')}
-            mode="checkbox"
-            multiLine
-          />
-        )}
         <MenuItemOption
           onPress={() => setState({ termsAgreed: !termsAgreed })}
           title={
@@ -395,7 +378,3 @@ export default withErrorBoundaryScreen(
   observer(SupermindComposeScreen),
   'SupermindComposeScreen',
 );
-
-const styles = ThemedStyles.create({
-  twitterMenuItem: ['bgPrimaryBackground', { borderBottomWidth: 0 }],
-});

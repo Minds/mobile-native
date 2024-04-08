@@ -19,16 +19,13 @@ import {
   Spacer,
 } from '~ui';
 import { Icon as IconV2 } from '@minds/ui';
-import {
-  hasVariation,
-  useIsGoogleFeatureOn,
-  useIsIOSFeatureOn,
-} from 'ExperimentsProvider';
 import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
 import { navigateToHelp } from '../settings/SettingsScreen';
 import {
   AFFILIATES_ENABLED,
   BOOSTS_ENABLED,
+  GOOGLE_PLAY_STORE,
+  IS_IOS,
   IS_TENANT,
   SUPERMIND_ENABLED,
   WALLET_ENABLED,
@@ -58,10 +55,7 @@ const getOptionsSmallList = navigation => {
     : null;
 };
 
-type Flags = Record<
-  'isIosMindsHidden' | 'hideTokens' | 'hasPro' | 'hasPlus',
-  boolean
->;
+type Flags = Record<'hasPro' | 'hasPlus', boolean>;
 
 type MenuItem = {
   name: string;
@@ -69,10 +63,7 @@ type MenuItem = {
   onPress: () => void;
   testID?: string;
 } | null;
-const getOptionsList = (
-  navigation,
-  { isIosMindsHidden, hideTokens, hasPro, hasPlus }: Flags,
-) => {
+const getOptionsList = (navigation, { hasPro, hasPlus }: Flags) => {
   const channel = sessionService.getUser();
   const list: MenuItem[] = [
     {
@@ -83,7 +74,7 @@ const getOptionsList = (
         navigation.push('Channel', { entity: channel });
       },
     },
-    !isIosMindsHidden && !IS_TENANT
+    !IS_IOS && !IS_TENANT
       ? {
           name: i18n.t('wire.lock.plus'),
           icon: 'queue',
@@ -110,7 +101,7 @@ const getOptionsList = (
           },
         }
       : null,
-    WALLET_ENABLED && !hideTokens
+    WALLET_ENABLED && !GOOGLE_PLAY_STORE
       ? {
           name: i18n.t('moreScreen.wallet'),
           icon: 'bank',
@@ -162,15 +153,6 @@ const getOptionsList = (
         navigation.navigate('Settings');
       },
     },
-    hasVariation('mob-4472-in-app-verification')
-      ? {
-          name: 'Verify account',
-          icon: 'group',
-          onPress: async () => {
-            navigation.navigate('InAppVerification');
-          },
-        }
-      : null,
   ];
 
   return list;
@@ -182,10 +164,6 @@ const getOptionsList = (
  */
 export default function Drawer(props) {
   const channel = sessionService.getUser();
-  const isIosMindsHidden =
-    useIsIOSFeatureOn('mob-4637-ios-hide-minds-superminds') === true;
-  const hideTokens =
-    useIsGoogleFeatureOn('mob-5221-google-hide-tokens') === true;
 
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });
@@ -197,8 +175,6 @@ export default function Drawer(props) {
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
   const optionsList = getOptionsList(props.navigation, {
-    isIosMindsHidden,
-    hideTokens,
     hasPlus: channel.pro,
     hasPro: channel.plus,
   });

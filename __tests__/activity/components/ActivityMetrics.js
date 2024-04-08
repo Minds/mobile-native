@@ -1,6 +1,5 @@
 import 'react-native';
 import React from 'react';
-import { shallow } from 'enzyme';
 
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 
@@ -11,7 +10,7 @@ jest.mock('../../../src/auth/UserStore');
 jest.mock('~/common/services/analytics.service');
 
 describe('activity metrics component', () => {
-  let screen, user;
+  let screen;
   beforeEach(() => {
     let activityResponse = activitiesServiceFaker().load(1);
     let activity = activityResponse.activities[0];

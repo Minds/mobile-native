@@ -24,7 +24,6 @@ import useOnboardingProgress, {
   OnboardingGroupState,
 } from './useOnboardingProgress';
 
-import { hasVariation } from 'ExperimentsProvider';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 
 type StepDefinition = {
@@ -135,13 +134,9 @@ export default withErrorBoundaryScreen(
         title: i18n.t('onboarding.verifyUniqueness'),
         screen: 'VerifyUniqueness',
         onPress: () => {
-          if (hasVariation('mob-4472-in-app-verification')) {
-            navigation.navigate('InAppVerification');
-          } else {
-            navigation.navigate('VerifyUniqueness', {
-              mode: 'text',
-            });
-          }
+          navigation.navigate('VerifyUniqueness', {
+            mode: 'text',
+          });
         },
       },
       SuggestedChannelsStep: {

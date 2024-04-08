@@ -12,10 +12,10 @@ import {
   ONCHAIN_ENABLED,
   LIQUIDITY_ENABLED,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
+  GOOGLE_PLAY_STORE,
 } from '../config/Config';
 import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { useIsGoogleFeatureOn } from 'ExperimentsProvider';
 
 type IconName = React.ComponentProps<typeof Icon>['name'];
 
@@ -101,7 +101,7 @@ export default withErrorBoundaryScreen(
   observer(function ({ navigation }) {
     const theme = ThemedStyles.style;
     const localStore = useLocalStore(createLocalStore);
-    const hideTokens = useIsGoogleFeatureOn('mob-5221-google-hide-tokens');
+    const hideTokens = GOOGLE_PLAY_STORE;
 
     useEffect(() => {
       const settings = mindsConfigService.getSettings();
