@@ -19,7 +19,7 @@ exports[`Activity component renders correctly 1`] = `
         "borderColor": "#3f4b56",
       },
       {
-        "backgroundColor": "#1C1D1F",
+        "backgroundColor": "#010100",
       },
     ]
   }

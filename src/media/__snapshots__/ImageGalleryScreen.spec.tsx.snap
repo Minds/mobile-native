@@ -160,7 +160,7 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
       renderItem={[Function]}
       style={
         {
-          "backgroundColor": "#1C1D1F",
+          "backgroundColor": "#010100",
         }
       }
     />
@@ -176,7 +176,7 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
       }
       style={
         {
-          "backgroundColor": "#1C1D1F",
+          "backgroundColor": "#010100",
         }
       }
       transition={

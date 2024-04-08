@@ -84,7 +84,7 @@ exports[`SupermindFeedFilter should render 1`] = `
         [
           [
             {
-              "backgroundColor": "#1C1D1F",
+              "backgroundColor": "#0f0f00ff",
             },
           ],
           {

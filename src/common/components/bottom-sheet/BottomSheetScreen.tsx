@@ -164,7 +164,7 @@ export const pushBottomSheet = (params: BottomSheetScreenParams) => {
 };
 
 const styles = ThemedStyles.create({
-  container: ['flexContainer', 'bgPrimaryBackground'],
-  navbarContainer: ['padding2x', 'alignCenter', 'bgPrimaryBackground'],
+  container: ['flexContainer', 'bgPrimaryBackgroundHighlight'],
+  navbarContainer: ['padding2x', 'alignCenter', 'bgPrimaryBackgroundHighlight'],
   titleStyle: ['fontXL', 'marginLeft2x', 'marginBottom', 'bold'],
 });
