@@ -111,7 +111,7 @@ describe('api service POST', () => {
  */
 describe('api service GET', () => {
   beforeAll(() => {
-    session.addSession({
+    session.addOAuthSession({
       access_token: 'sometoken',
       refresh_token: 'sometoken',
     });
@@ -192,7 +192,7 @@ describe('api service GET', () => {
  */
 describe('api service DELETE', () => {
   beforeAll(() => {
-    session.addSession({
+    session.addOAuthSession({
       access_token: 'sometoken',
       refresh_token: 'sometoken',
     });
@@ -274,7 +274,7 @@ describe('api service DELETE', () => {
  */
 describe('api service PUT', () => {
   beforeAll(() => {
-    session.addSession({
+    session.addOAuthSession({
       access_token: 'sometoken',
       refresh_token: 'sometoken',
     });
@@ -356,7 +356,7 @@ describe('api service PUT', () => {
  */
 describe('api service auth refresh', () => {
   beforeAll(() => {
-    return session.addSession({
+    return session.addOAuthSession({
       access_token: 'sometoken',
       refresh_token: 'sometoken',
     });

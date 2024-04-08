@@ -11,6 +11,7 @@ import sessionService from '../../common/services/session.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import LoggedUsersList from './logged-users/LoggedUsersList';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { AuthType } from '~/common/services/storage/session.storage.service';
 
 type PropsType = {};
 
@@ -32,6 +33,10 @@ const MultiUserScreen = ({}: PropsType) => {
     [navigation],
   );
 
+  const isCookieAuth =
+    sessionService.getSessionForIndex(sessionService.activeIndex)?.authType ===
+    AuthType.Cookie;
+
   return (
     <ModalFullScreen
       back
@@ -39,17 +44,21 @@ const MultiUserScreen = ({}: PropsType) => {
       loading={sessionService.switchingAccount}>
       <FitScrollView>
         <LoggedUsersList />
-        <View style={theme.marginTop10x}>
-          <MenuItem
-            containerItemStyle={theme.bgPrimaryBackgroundHighlight}
-            {...options.create}
-          />
-          <MenuItem
-            containerItemStyle={menuStyle}
-            testID="multiUserLogin"
-            {...options.login}
-          />
-        </View>
+        {isCookieAuth ? (
+          <></>
+        ) : (
+          <View style={theme.marginTop10x}>
+            <MenuItem
+              containerItemStyle={theme.bgPrimaryBackgroundHighlight}
+              {...options.create}
+            />
+            <MenuItem
+              containerItemStyle={menuStyle}
+              testID="multiUserLogin"
+              {...options.login}
+            />
+          </View>
+        )}
       </FitScrollView>
     </ModalFullScreen>
   );

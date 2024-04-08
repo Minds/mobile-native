@@ -10,10 +10,24 @@ export type RefreshToken = {
   refresh_token_expires: number | null;
 };
 
-export type Session = {
+export enum AuthType {
+  OAuth,
+  Cookie,
+}
+
+export type BaseSession = {
   user: UserModel;
   pseudoId: string; // used for snowplow
   sessionExpired: boolean;
+};
+
+export type CookieSession = BaseSession & {
+  authType: AuthType.Cookie;
+  sessionToken: string;
+};
+
+export type OAuthSession = BaseSession & {
+  authType: AuthType.OAuth;
   refreshToken: {
     refresh_token: string;
     refresh_token_expires: number | null;
@@ -23,6 +37,8 @@ export type Session = {
     access_token_expires: number | null;
   };
 };
+
+export type Session = CookieSession | OAuthSession;
 
 export type Sessions = Array<Session>;
 
@@ -42,10 +58,6 @@ export class SessionStorageService {
     try {
       const sessionData = storages.session.getMap<SessionsData>(KEY);
       const activeIndex = storages.session.getInt(INDEX_KEY) || 0;
-
-      if (sessionData === null || sessionData === undefined) {
-        return this.checkAndMigrate();
-      }
       //  the active index was moved outside the session data
       if (sessionData) {
         sessionData.activeIndex = activeIndex;
@@ -54,47 +66,6 @@ export class SessionStorageService {
     } catch (err) {
       return null;
     }
-  }
-
-  checkAndMigrate() {
-    const data = storages.session.getMultipleItems<any>(
-      ['access_token', 'refresh_token', 'user'],
-      'object',
-    );
-
-    if (!data) {
-      return null;
-    }
-
-    const accessToken = data[0][1],
-      refreshToken = data[1][1],
-      user = data[2][1];
-
-    if (!accessToken || !refreshToken || !user) {
-      return null;
-    }
-
-    const sessionsData: SessionsData = {
-      activeIndex: 0,
-      tokensData: [
-        {
-          user,
-          pseudoId: '',
-          refreshToken,
-          accessToken,
-          sessionExpired: false,
-        },
-      ],
-    };
-
-    this.save(sessionsData);
-
-    // we remove the legacy session data once migrated
-    storages.session.removeItem('access_token');
-    storages.session.removeItem('refresh_token');
-    storages.session.removeItem('user');
-
-    return sessionsData;
   }
 
   /**
