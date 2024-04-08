@@ -3,7 +3,11 @@ import React from 'react';
 import { View, TouchableOpacity, Dimensions, Pressable } from 'react-native';
 import Pinchable from 'react-native-pinchable';
 
-import { DATA_SAVER_THUMB_RES, IS_IPAD } from '../../../config/Config';
+import {
+  APP_API_URI,
+  DATA_SAVER_THUMB_RES,
+  IS_IPAD,
+} from '../../../config/Config';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import domain from '../../helpers/domain';
@@ -41,7 +45,15 @@ export default function MediaViewImage({
   const [imageLoadFailed, setImageLoadFailed] = useRecycledState(false, entity);
   const [size, setSize] = useRecycledState({ height: 0, width: 0 }, entity);
   const source = React.useMemo(
-    () => entity.getThumbSource('xlarge'),
+    () => {
+      return entity.hasSiteMembershipPaywallThumbnail
+        ? `${APP_API_URI}api/v3/payments/site-memberships/paywalled-entities/thumbnail/${entity.guid}`
+        : entity.site_membership && entity.custom_data?.[0]?.blurhash
+        ? entity.custom_data?.[0]?.blurhash
+        : entity.thumbnail_src
+        ? entity.thumbnail_src
+        : entity.getThumbSource('xlarge');
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       entity,
@@ -69,6 +81,13 @@ export default function MediaViewImage({
   const MIN_ASPECT_RATIO_AUTO_WIDTH = width / (height * 4); // four times screen height
 
   if (
+    entity.hasSiteMembershipPaywallThumbnail &&
+    entity.paywall_thumbnail?.height &&
+    entity.paywall_thumbnail?.width
+  ) {
+    aspectRatio =
+      entity.paywall_thumbnail.width / entity.paywall_thumbnail.height;
+  } else if (
     entity.custom_data &&
     entity.custom_data[0] &&
     entity.custom_data[0].height &&
@@ -131,11 +150,7 @@ export default function MediaViewImage({
   }
   const blurhash = entity?.custom_data?.[0]?.blurhash || entity?.blurhash;
 
-  const placeholder = entity.hasSiteMembershipPaywallThumbnail
-    ? entity.paywall_thumbnail
-    : blurhash
-    ? { blurhash, width: 9, height: 9 }
-    : thumbnail;
+  const placeholder = blurhash ? { blurhash, width: 9, height: 9 } : thumbnail;
 
   // Wrapped in a pressable to avoid the press event after zooming on android (Pinchable bug)
   return (

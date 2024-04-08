@@ -10,6 +10,7 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import api from '../../services/api.service';
 import { Column, Row, Spacer } from '../../ui';
 import SmartImage, { SmartImageProps } from '../SmartImage';
+import { IS_TENANT } from '~/config/Config';
 
 const FIXED_HEIGHT = 220;
 const BORDER_RADIUS = 3;
@@ -41,6 +42,21 @@ export default function MediaViewMultiImage({
   let images: ImageProps[] = useMemo(
     () =>
       entity.custom_data.map((image, index) => {
+        if (IS_TENANT) {
+          const source = entity.site_membership
+            ? image.blurhash
+            : {
+                uri: image.src,
+                headers: api.buildHeaders(),
+              };
+          return {
+            source,
+            onPress: () => onImagePress(index),
+            onLongPress: () => onImageLongPress(source),
+            ignoreDataSaver,
+            blurhash: entity.site_membership ? undefined : image.blurhash,
+          };
+        }
         const source = {
           uri: image.src,
           headers: api.buildHeaders(),

@@ -4,7 +4,7 @@ import ActivityModel from '~/newsfeed/ActivityModel';
 import ThemedStyles from '~/styles/ThemedStyles';
 
 export const LockNetworkTag = ({ entity }: { entity: ActivityModel }) => {
-  if (!entity.hasSiteMembershipPaywall) {
+  if (!entity.site_membership) {
     return null;
   }
 

@@ -61,7 +61,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
     const theme = ThemedStyles.style;
     const entity = this.props.entity;
 
-    const tempTitle = entity.link_title || entity.title;
+    const tempTitle = entity.title || entity.link_title;
 
     let title: string =
       tempTitle && !entity.perma_url
