@@ -1,13 +1,17 @@
 import * as React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
-import ChatUserItem from './ChatUserItem';
+import { ChatUserItem } from './ChatUserItem';
+import UserModel from '~/channel/UserModel';
 
 describe('ChatUserItem', () => {
-  const mockUser = {
+  const mockUser = UserModel.create({
     name: 'Test User',
     username: 'testuser',
-    getAvatarSource: jest.fn(),
-  };
+  });
+  mockUser.getAvatarSource = jest.fn();
+  (mockUser.getAvatarSource as jest.Mock).mockReturnValue({
+    uri: 'avatar.jpg',
+  });
 
   it('should render correctly', () => {
     const { getByTestId, getByText } = render(
@@ -23,8 +27,6 @@ describe('ChatUserItem', () => {
   });
 
   it('should display the correct avatar when not selected', () => {
-    mockUser.getAvatarSource.mockReturnValue('avatar.jpg');
-
     const { getByTestId } = render(
       <ChatUserItem user={mockUser} onPress={jest.fn()} selected={false} />,
     );

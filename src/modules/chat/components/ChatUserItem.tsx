@@ -15,7 +15,7 @@ type Props = {
   extra?: React.ReactNode;
 };
 
-function ChatUserItem({ user, onPress, selected, extra }: Props) {
+export function ChatUserItem({ user, onPress, selected, extra }: Props) {
   const userData =
     user instanceof UserModel
       ? {
