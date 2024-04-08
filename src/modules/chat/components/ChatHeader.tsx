@@ -3,6 +3,7 @@ import { Avatar, Row, ScreenHeader } from '~/common/ui';
 import { View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { ChatMember } from '../types';
+import { useChatRoomContext } from '../contexts/ChatRoomContext';
 
 type Props = {
   members: ChatMember[];
@@ -10,7 +11,11 @@ type Props = {
 };
 
 function ChatHeader({ members, extra }: Props) {
-  const firstThreeMembers = members.slice(0, 3);
+  const query = useChatRoomContext();
+
+  const firstThreeMembers = query.data?.chatRoom.members
+    ? query.data?.chatRoom.members.edges.slice(0, 3)
+    : members.slice(0, 3);
 
   const avatars = firstThreeMembers.map((member, index) =>
     index === 0 ? (

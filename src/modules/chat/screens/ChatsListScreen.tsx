@@ -7,6 +7,7 @@ import { useChatRoomListQuery } from '../hooks/useChatRoomListQuery';
 import ChatRequestCount from '../components/ChatRequestCount';
 import ChatRoomList from '../components/ChatRoomList';
 import ChatNewButton from '../components/ChatNewButton';
+import { useRefreshOnFocus } from '~/services/hooks/useRefreshOnFocus';
 
 /**
  * Chat rooms list screen
@@ -22,8 +23,11 @@ export default function ChatsListScreen({ navigation }) {
 }
 
 function ChatList() {
-  const { chats, isLoading, fetchNextPage, isRefetching, refetch } =
-    useChatRoomListQuery();
+  const { chats, isLoading, fetchNextPage, refetch } = useChatRoomListQuery();
+
+  // refetch on screen focus
+  useRefreshOnFocus(refetch);
+
   return (
     <ChatRoomList
       renderItem={renderItem}
@@ -34,7 +38,7 @@ function ChatList() {
         />
       }
       isLoading={isLoading}
-      refreshing={isRefetching}
+      refreshing={false}
       onRefresh={refetch}
       Empty={Empty}
       onEndReached={fetchNextPage}

@@ -3,17 +3,34 @@ import { Avatar, B2, B3, IconCircled, Row } from '~/common/ui';
 import MPressable from '~/common/components/MPressable';
 import { StyleSheet, View } from 'react-native';
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';
-import type UserModel from '~/channel/UserModel';
+import UserModel from '~/channel/UserModel';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { ChatMember } from '../types';
 
 type Props = {
-  user: UserModel;
+  user: UserModel | ChatMember;
   selected?: boolean;
   privateChat?: boolean;
   onPress: () => void;
+  extra?: React.ReactNode;
 };
 
-function ChatUserItem({ user, onPress, selected }: Props) {
+export function ChatUserItem({ user, onPress, selected, extra }: Props) {
+  const userData =
+    user instanceof UserModel
+      ? {
+          name: user.name,
+          username: user.username,
+          iconUrl: user.getAvatarSource().uri,
+          id: user.guid,
+        }
+      : {
+          name: user.node.name,
+          username: user.node.username,
+          iconUrl: user.node.iconUrl,
+          id: user.node.guid,
+        };
+
   return (
     <MPressable onPress={onPress} testID="chatUserItem">
       <Row horizontal="XL" vertical="M" align="centerStart">
@@ -26,22 +43,19 @@ function ChatUserItem({ user, onPress, selected }: Props) {
             backgroundColor={ThemedStyles.getColor('IconActive')}
           />
         ) : (
-          <Avatar
-            size="small"
-            source={user.getAvatarSource()}
-            testID="UserAvatar"
-          />
+          <Avatar size="small" source={userData.iconUrl} testID="UserAvatar" />
         )}
         <View style={styles.column}>
-          <B2 font="medium">{user.name}</B2>
+          <B2 font="medium">{userData.name}</B2>
           <B3
             color="secondary"
             top="S"
             numberOfLines={1}
             style={styles.message}>
-            @{user.username}
+            @{userData.username}
           </B3>
         </View>
+        {extra}
       </Row>
     </MPressable>
   );

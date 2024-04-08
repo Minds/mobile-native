@@ -17,7 +17,8 @@ function ChatListItem({ chat, onPress }: Props) {
   return (
     <MPressable onPress={onPress} testID="chatListItem">
       <Row horizontal="XL" vertical="M" align="centerStart">
-        {chat.node.roomType === 'ONE_TO_ONE' ? (
+        {chat.node.roomType === 'ONE_TO_ONE' ||
+        chat.members.edges.length === 1 ? (
           <Avatar
             size="small"
             source={{
