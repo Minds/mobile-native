@@ -4,6 +4,7 @@ import hashCode from '../helpers/hash-code';
 import NavigationService from '../../navigation/NavigationService';
 
 export type MetadataSource =
+  | 'feed/discovery/search'
   | 'feed/subscribed'
   | 'feed/channel'
   | 'feed/highlights'

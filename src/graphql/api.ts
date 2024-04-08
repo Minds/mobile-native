@@ -242,6 +242,116 @@ export type BoostsConnection = ConnectionInterface & {
   pageInfo: PageInfo;
 };
 
+export type ChatMessageEdge = EdgeInterface & {
+  __typename?: 'ChatMessageEdge';
+  cursor: Scalars['String']['output'];
+  node: ChatMessageNode;
+};
+
+export type ChatMessageNode = NodeInterface & {
+  __typename?: 'ChatMessageNode';
+  /** The unique guid of the message */
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  /** The plaintext (non-encrypted) message */
+  plainText: Scalars['String']['output'];
+  /** The guid of the room the message belongs to */
+  roomGuid: Scalars['String']['output'];
+  sender: UserEdge;
+  /** The timestamp the message was sent at */
+  timeCreatedISO8601: Scalars['String']['output'];
+  /** The timestamp the message was sent at */
+  timeCreatedUnix: Scalars['String']['output'];
+};
+
+export type ChatMessagesConnection = ConnectionInterface & {
+  __typename?: 'ChatMessagesConnection';
+  edges: Array<ChatMessageEdge>;
+  pageInfo: PageInfo;
+};
+
+export type ChatRoomEdge = EdgeInterface & {
+  __typename?: 'ChatRoomEdge';
+  cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  lastMessageCreatedTimestamp?: Maybe<Scalars['Int']['output']>;
+  lastMessagePlainText?: Maybe<Scalars['String']['output']>;
+  members: ChatRoomMembersConnection;
+  messages: ChatMessagesConnection;
+  node: ChatRoomNode;
+  totalMembers: Scalars['Int']['output'];
+  unreadMessagesCount: Scalars['Int']['output'];
+};
+
+export type ChatRoomEdgeMembersArgs = {
+  after?: InputMaybe<Scalars['Int']['input']>;
+  before?: InputMaybe<Scalars['Int']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type ChatRoomEdgeMessagesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export enum ChatRoomInviteRequestActionEnum {
+  Accept = 'ACCEPT',
+  Reject = 'REJECT',
+  RejectAndBlock = 'REJECT_AND_BLOCK',
+}
+
+export type ChatRoomMemberEdge = EdgeInterface & {
+  __typename?: 'ChatRoomMemberEdge';
+  cursor: Scalars['String']['output'];
+  node: UserNode;
+  role: ChatRoomRoleEnum;
+  /** The timestamp the message was sent at */
+  timeJoinedISO8601: Scalars['String']['output'];
+  /** The timestamp the message was sent at */
+  timeJoinedUnix: Scalars['String']['output'];
+};
+
+export type ChatRoomMembersConnection = ConnectionInterface & {
+  __typename?: 'ChatRoomMembersConnection';
+  edges: Array<ChatRoomMemberEdge>;
+  pageInfo: PageInfo;
+};
+
+export type ChatRoomNode = NodeInterface & {
+  __typename?: 'ChatRoomNode';
+  areChatRoomNotificationsMuted?: Maybe<Scalars['Boolean']['output']>;
+  /** The unique guid of the room */
+  guid: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  isChatRequest: Scalars['Boolean']['output'];
+  isUserRoomOwner?: Maybe<Scalars['Boolean']['output']>;
+  /** The type of room. i.e. one-to-one, multi-user, or group-owned */
+  roomType: ChatRoomTypeEnum;
+  /** The timestamp the room was created at */
+  timeCreatedISO8601: Scalars['String']['output'];
+  /** The timestamp the roomt was created at */
+  timeCreatedUnix: Scalars['String']['output'];
+};
+
+export enum ChatRoomRoleEnum {
+  Member = 'MEMBER',
+  Owner = 'OWNER',
+}
+
+export enum ChatRoomTypeEnum {
+  GroupOwned = 'GROUP_OWNED',
+  MultiUser = 'MULTI_USER',
+  OneToOne = 'ONE_TO_ONE',
+}
+
+export type ChatRoomsConnection = ConnectionInterface & {
+  __typename?: 'ChatRoomsConnection';
+  edges: Array<ChatRoomEdge>;
+  pageInfo: PageInfo;
+};
+
 export type CheckoutPage = {
   __typename?: 'CheckoutPage';
   addOns: Array<AddOn>;
@@ -333,6 +443,7 @@ export enum CustomHostnameStatusEnum {
 export type CustomPage = NodeInterface & {
   __typename?: 'CustomPage';
   content?: Maybe<Scalars['String']['output']>;
+  defaultContent?: Maybe<Scalars['String']['output']>;
   externalLink?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   pageType: CustomPageTypesEnum;
@@ -797,6 +908,10 @@ export type Mutation = {
   claimGiftCard: GiftCardNode;
   /** Mark an onboarding step for a user as completed. */
   completeOnboardingStep: OnboardingStepProgressState;
+  /** Creates a new message in a chat room */
+  createChatMessage: ChatMessageEdge;
+  /** Creates a new chat room */
+  createChatRoom: ChatRoomEdge;
   /** Creates a comment on a remote url */
   createEmbeddedComment: CommentEdge;
   createGiftCard: GiftCardNode;
@@ -806,6 +921,9 @@ export type Mutation = {
   createNewReport: Scalars['Boolean']['output'];
   createRssFeed: RssFeed;
   createTenant: Tenant;
+  deleteChatMessage: Scalars['Boolean']['output'];
+  deleteChatRoom: Scalars['Boolean']['output'];
+  deleteChatRoomAndBlockUser: Scalars['Boolean']['output'];
   /** Delete an entity. */
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
@@ -813,13 +931,18 @@ export type Mutation = {
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   invite?: Maybe<Scalars['Void']['output']>;
+  leaveChatRoom: Scalars['Boolean']['output'];
   mobileConfig: MobileConfig;
   /** Sets multi-tenant config for the calling tenant. */
   multiTenantConfig: Scalars['Boolean']['output'];
   /** Provide a verdict for a report. */
   provideVerdict: Scalars['Boolean']['output'];
+  /** Updates the read receipt of a room */
+  readReceipt: ChatRoomEdge;
   refreshRssFeed: RssFeed;
+  removeMemberFromChatRoom: Scalars['Boolean']['output'];
   removeRssFeed?: Maybe<Scalars['Void']['output']>;
+  replyToRoomInviteRequest: Scalars['Boolean']['output'];
   resendInvite?: Maybe<Scalars['Void']['output']>;
   setCustomPage: Scalars['Boolean']['output'];
   /** Creates a comment on a remote url */
@@ -866,6 +989,16 @@ export type MutationCompleteOnboardingStepArgs = {
   stepType: Scalars['String']['input'];
 };
 
+export type MutationCreateChatMessageArgs = {
+  plainText: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
+};
+
+export type MutationCreateChatRoomArgs = {
+  otherMemberGuids?: Array<Scalars['String']['input']>;
+  roomType?: InputMaybe<ChatRoomTypeEnum>;
+};
+
 export type MutationCreateEmbeddedCommentArgs = {
   body: Scalars['String']['input'];
   ownerGuid: Scalars['String']['input'];
@@ -901,6 +1034,19 @@ export type MutationCreateTenantArgs = {
   tenant?: InputMaybe<TenantInput>;
 };
 
+export type MutationDeleteChatMessageArgs = {
+  messageGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
+};
+
+export type MutationDeleteChatRoomArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
+export type MutationDeleteChatRoomAndBlockUserArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationDeleteEntityArgs = {
   subjectUrn: Scalars['String']['input'];
 };
@@ -920,6 +1066,10 @@ export type MutationInviteArgs = {
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
+export type MutationLeaveChatRoomArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationMobileConfigArgs = {
   mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
   mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
@@ -934,12 +1084,27 @@ export type MutationProvideVerdictArgs = {
   verdictInput: VerdictInput;
 };
 
+export type MutationReadReceiptArgs = {
+  messageGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationRefreshRssFeedArgs = {
   feedId: Scalars['String']['input'];
 };
 
+export type MutationRemoveMemberFromChatRoomArgs = {
+  memberGuid: Scalars['String']['input'];
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationRemoveRssFeedArgs = {
   feedId: Scalars['String']['input'];
+};
+
+export type MutationReplyToRoomInviteRequestArgs = {
+  chatRoomInviteRequestActionEnum: ChatRoomInviteRequestActionEnum;
+  roomGuid: Scalars['String']['input'];
 };
 
 export type MutationResendInviteArgs = {
@@ -1153,6 +1318,17 @@ export type Query = {
   assignedRoles: Array<Role>;
   /** Gets Boosts. */
   boosts: BoostsConnection;
+  /** Returns a list of messages for a given chat room */
+  chatMessages: ChatMessagesConnection;
+  /** Returns a chat room */
+  chatRoom: ChatRoomEdge;
+  chatRoomInviteRequests: ChatRoomsConnection;
+  /** Returns a list of chat rooms available to a user */
+  chatRoomList: ChatRoomsConnection;
+  /** Returns the members of a chat room */
+  chatRoomMembers: ChatRoomMembersConnection;
+  /** Returns the total count of unread messages a user has */
+  chatUnreadMessagesCount: Scalars['Int']['output'];
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
   customPage: CustomPage;
@@ -1223,6 +1399,7 @@ export type Query = {
   tenantAssets: AssetConnection;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
+  totalRoomInviteRequests: Scalars['Int']['output'];
   userAssets: AssetConnection;
   userQuotaUsage: QuotaDetails;
   /** Returns users and their roles */
@@ -1250,6 +1427,36 @@ export type QueryBoostsArgs = {
   source?: InputMaybe<Scalars['String']['input']>;
   targetAudience?: InputMaybe<Scalars['Int']['input']>;
   targetLocation?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryChatMessagesArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  roomGuid: Scalars['String']['input'];
+};
+
+export type QueryChatRoomArgs = {
+  roomGuid: Scalars['String']['input'];
+};
+
+export type QueryChatRoomInviteRequestsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryChatRoomListArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type QueryChatRoomMembersArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['Int']['input']>;
+  excludeSelf?: InputMaybe<Scalars['Boolean']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  roomGuid?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QueryCheckoutLinkArgs = {
@@ -1430,7 +1637,7 @@ export type Report = NodeInterface & {
   createdTimestamp: Scalars['Int']['output'];
   cursor?: Maybe<Scalars['String']['output']>;
   /** Gets entity edge from entityUrn. */
-  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdge>;
+  entityEdge?: Maybe<UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge>;
   entityGuid?: Maybe<Scalars['String']['output']>;
   entityUrn: Scalars['String']['output'];
   /** Gets ID for GraphQL. */
@@ -1684,8 +1891,9 @@ export enum TenantUserRoleEnum {
   User = 'USER',
 }
 
-export type UnionActivityEdgeUserEdgeGroupEdgeCommentEdge =
+export type UnionActivityEdgeUserEdgeGroupEdgeCommentEdgeChatMessageEdge =
   | ActivityEdge
+  | ChatMessageEdge
   | CommentEdge
   | GroupEdge
   | UserEdge;
@@ -1901,106 +2109,101 @@ export type FetchSearchQuery = {
       | {
           __typename?: 'ActivityEdge';
           cursor: string;
-          node: { __typename?: 'ActivityNode'; legacy: string; id: string };
+          node: { __typename: 'ActivityNode'; legacy: string; id: string };
         }
       | {
           __typename?: 'AnalyticsTableRowEdge';
           cursor: string;
           node:
-            | { __typename?: 'ActivityNode'; legacy: string; id: string }
-            | { __typename?: 'AnalyticsTableRowActivityNode'; id: string }
-            | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
-            | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
+            | { __typename: 'ActivityNode'; legacy: string; id: string }
+            | { __typename: 'AnalyticsTableRowActivityNode'; id: string }
+            | { __typename: 'AnalyticsTableRowGroupNode'; id: string }
+            | { __typename: 'AnalyticsTableRowUserNode'; id: string }
             | {
-                __typename?: 'BoostNode';
+                __typename: 'BoostNode';
                 goalButtonUrl?: string | null;
                 goalButtonText?: number | null;
                 legacy: string;
                 id: string;
               }
-            | { __typename?: 'CommentNode'; id: string }
-            | { __typename?: 'CustomPage'; id: string }
-            | { __typename?: 'FeaturedEntity'; id: string }
-            | { __typename?: 'FeaturedEntityConnection'; id: string }
-            | { __typename?: 'FeaturedGroup'; id: string }
-            | { __typename?: 'FeaturedUser'; id: string }
-            | { __typename?: 'FeedExploreTagNode'; id: string }
-            | { __typename?: 'FeedHeaderNode'; id: string }
-            | { __typename?: 'FeedHighlightsConnection'; id: string }
+            | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRoomNode'; id: string }
+            | { __typename: 'CommentNode'; id: string }
+            | { __typename: 'CustomPage'; id: string }
+            | { __typename: 'FeaturedEntity'; id: string }
+            | { __typename: 'FeaturedEntityConnection'; id: string }
+            | { __typename: 'FeaturedGroup'; id: string }
+            | { __typename: 'FeaturedUser'; id: string }
+            | { __typename: 'FeedExploreTagNode'; id: string }
+            | { __typename: 'FeedHeaderNode'; id: string }
+            | { __typename: 'FeedHighlightsConnection'; id: string }
             | {
-                __typename?: 'FeedNoticeNode';
+                __typename: 'FeedNoticeNode';
                 location: string;
                 key: string;
                 id: string;
               }
-            | { __typename?: 'GiftCardNode'; id: string }
-            | { __typename?: 'GiftCardTransaction'; id: string }
-            | { __typename?: 'GroupNode'; legacy: string; id: string }
-            | { __typename?: 'Invite'; id: string }
-            | { __typename?: 'InviteConnection'; id: string }
-            | { __typename?: 'NodeImpl'; id: string }
+            | { __typename: 'GiftCardNode'; id: string }
+            | { __typename: 'GiftCardTransaction'; id: string }
+            | { __typename: 'GroupNode'; legacy: string; id: string }
+            | { __typename: 'Invite'; id: string }
+            | { __typename: 'InviteConnection'; id: string }
+            | { __typename: 'NodeImpl'; id: string }
             | {
-                __typename?: 'PublisherRecsConnection';
+                __typename: 'PublisherRecsConnection';
                 id: string;
                 edges: Array<
                   | {
                       __typename?: 'ActivityEdge';
-                      publisherNode: {
-                        __typename?: 'ActivityNode';
-                        id: string;
-                      };
+                      publisherNode: { __typename: 'ActivityNode'; id: string };
                     }
                   | {
                       __typename?: 'AnalyticsTableRowEdge';
                       publisherNode:
-                        | { __typename?: 'ActivityNode'; id: string }
+                        | { __typename: 'ActivityNode'; id: string }
                         | {
-                            __typename?: 'AnalyticsTableRowActivityNode';
+                            __typename: 'AnalyticsTableRowActivityNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowGroupNode';
+                            __typename: 'AnalyticsTableRowGroupNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowUserNode';
+                            __typename: 'AnalyticsTableRowUserNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'BoostNode';
+                            __typename: 'BoostNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'CustomPage'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
                         | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
+                            __typename: 'GroupNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'Invite'; id: string }
-                        | { __typename?: 'InviteConnection'; id: string }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
+                        | { __typename: 'Invite'; id: string }
+                        | { __typename: 'InviteConnection'; id: string }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
                         | {
-                            __typename?: 'UserNode';
+                            __typename: 'UserNode';
                             legacy: string;
                             id: string;
                           };
@@ -2008,122 +2211,129 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'BoostEdge';
                       publisherNode: {
-                        __typename?: 'BoostNode';
+                        __typename: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: { __typename: 'ChatRoomNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename: 'UserNode';
                         legacy: string;
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'CommentEdge';
-                      publisherNode: { __typename?: 'CommentNode'; id: string };
+                      publisherNode: { __typename: 'CommentNode'; id: string };
                     }
                   | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
-                        | { __typename?: 'ActivityNode'; id: string }
+                        | { __typename: 'ActivityNode'; id: string }
                         | {
-                            __typename?: 'AnalyticsTableRowActivityNode';
+                            __typename: 'AnalyticsTableRowActivityNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowGroupNode';
+                            __typename: 'AnalyticsTableRowGroupNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowUserNode';
+                            __typename: 'AnalyticsTableRowUserNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'BoostNode';
+                            __typename: 'BoostNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'CustomPage'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
                         | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
+                            __typename: 'GroupNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'Invite'; id: string }
-                        | { __typename?: 'InviteConnection'; id: string }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
-                        | {
-                            __typename?: 'UserNode';
-                            legacy: string;
-                            id: string;
-                          }
+                        | { __typename: 'Invite'; id: string }
+                        | { __typename: 'InviteConnection'; id: string }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
+                        | { __typename: 'UserNode'; legacy: string; id: string }
                         | null;
                     }
                   | {
                       __typename?: 'FeaturedEntityEdge';
                       publisherNode:
-                        | { __typename?: 'ActivityNode'; id: string }
+                        | { __typename: 'ActivityNode'; id: string }
                         | {
-                            __typename?: 'AnalyticsTableRowActivityNode';
+                            __typename: 'AnalyticsTableRowActivityNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowGroupNode';
+                            __typename: 'AnalyticsTableRowGroupNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowUserNode';
+                            __typename: 'AnalyticsTableRowUserNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'BoostNode';
+                            __typename: 'BoostNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'CustomPage'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
                         | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
+                            __typename: 'GroupNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'Invite'; id: string }
-                        | { __typename?: 'InviteConnection'; id: string }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
+                        | { __typename: 'Invite'; id: string }
+                        | { __typename: 'InviteConnection'; id: string }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
                         | {
-                            __typename?: 'UserNode';
+                            __typename: 'UserNode';
                             legacy: string;
                             id: string;
                           };
@@ -2131,49 +2341,46 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'FeedExploreTagEdge';
                       publisherNode: {
-                        __typename?: 'FeedExploreTagNode';
+                        __typename: 'FeedExploreTagNode';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'FeedHeaderEdge';
                       publisherNode: {
-                        __typename?: 'FeedHeaderNode';
+                        __typename: 'FeedHeaderNode';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'FeedHighlightsEdge';
                       publisherNode: {
-                        __typename?: 'FeedHighlightsConnection';
+                        __typename: 'FeedHighlightsConnection';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'FeedNoticeEdge';
                       publisherNode: {
-                        __typename?: 'FeedNoticeNode';
+                        __typename: 'FeedNoticeNode';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'GiftCardEdge';
-                      publisherNode: {
-                        __typename?: 'GiftCardNode';
-                        id: string;
-                      };
+                      publisherNode: { __typename: 'GiftCardNode'; id: string };
                     }
                   | {
                       __typename?: 'GiftCardTransactionEdge';
                       publisherNode: {
-                        __typename?: 'GiftCardTransaction';
+                        __typename: 'GiftCardTransaction';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'GroupEdge';
                       publisherNode: {
-                        __typename?: 'GroupNode';
+                        __typename: 'GroupNode';
                         legacy: string;
                         id: string;
                       };
@@ -2181,28 +2388,28 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'InviteEdge';
                       publisherNode?: {
-                        __typename?: 'Invite';
+                        __typename: 'Invite';
                         id: string;
                       } | null;
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
                       publisherNode: {
-                        __typename?: 'PublisherRecsConnection';
+                        __typename: 'PublisherRecsConnection';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'ReportEdge';
                       publisherNode?: {
-                        __typename?: 'Report';
+                        __typename: 'Report';
                         id: string;
                       } | null;
                     }
                   | {
                       __typename?: 'UserEdge';
                       publisherNode: {
-                        __typename?: 'UserNode';
+                        __typename: 'UserNode';
                         legacy: string;
                         id: string;
                       };
@@ -2210,7 +2417,7 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'UserRoleEdge';
                       publisherNode: {
-                        __typename?: 'UserNode';
+                        __typename: 'UserNode';
                         legacy: string;
                         id: string;
                       };
@@ -2224,14 +2431,14 @@ export type FetchSearchQuery = {
                   endCursor?: string | null;
                 };
               }
-            | { __typename?: 'Report'; id: string }
-            | { __typename?: 'UserNode'; legacy: string; id: string };
+            | { __typename: 'Report'; id: string }
+            | { __typename: 'UserNode'; legacy: string; id: string };
         }
       | {
           __typename?: 'BoostEdge';
           cursor: string;
           node: {
-            __typename?: 'BoostNode';
+            __typename: 'BoostNode';
             goalButtonUrl?: string | null;
             goalButtonText?: number | null;
             legacy: string;
@@ -2239,108 +2446,118 @@ export type FetchSearchQuery = {
           };
         }
       | {
+          __typename?: 'ChatMessageEdge';
+          cursor: string;
+          node: { __typename: 'ChatMessageNode'; id: string };
+        }
+      | {
+          __typename?: 'ChatRoomEdge';
+          cursor: string;
+          node: { __typename: 'ChatRoomNode'; id: string };
+        }
+      | {
+          __typename?: 'ChatRoomMemberEdge';
+          cursor: string;
+          node: { __typename: 'UserNode'; legacy: string; id: string };
+        }
+      | {
           __typename?: 'CommentEdge';
           cursor: string;
-          node: { __typename?: 'CommentNode'; id: string };
+          node: { __typename: 'CommentNode'; id: string };
         }
       | {
           __typename?: 'EdgeImpl';
           cursor: string;
           node?:
-            | { __typename?: 'ActivityNode'; legacy: string; id: string }
-            | { __typename?: 'AnalyticsTableRowActivityNode'; id: string }
-            | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
-            | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
+            | { __typename: 'ActivityNode'; legacy: string; id: string }
+            | { __typename: 'AnalyticsTableRowActivityNode'; id: string }
+            | { __typename: 'AnalyticsTableRowGroupNode'; id: string }
+            | { __typename: 'AnalyticsTableRowUserNode'; id: string }
             | {
-                __typename?: 'BoostNode';
+                __typename: 'BoostNode';
                 goalButtonUrl?: string | null;
                 goalButtonText?: number | null;
                 legacy: string;
                 id: string;
               }
-            | { __typename?: 'CommentNode'; id: string }
-            | { __typename?: 'CustomPage'; id: string }
-            | { __typename?: 'FeaturedEntity'; id: string }
-            | { __typename?: 'FeaturedEntityConnection'; id: string }
-            | { __typename?: 'FeaturedGroup'; id: string }
-            | { __typename?: 'FeaturedUser'; id: string }
-            | { __typename?: 'FeedExploreTagNode'; id: string }
-            | { __typename?: 'FeedHeaderNode'; id: string }
-            | { __typename?: 'FeedHighlightsConnection'; id: string }
+            | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRoomNode'; id: string }
+            | { __typename: 'CommentNode'; id: string }
+            | { __typename: 'CustomPage'; id: string }
+            | { __typename: 'FeaturedEntity'; id: string }
+            | { __typename: 'FeaturedEntityConnection'; id: string }
+            | { __typename: 'FeaturedGroup'; id: string }
+            | { __typename: 'FeaturedUser'; id: string }
+            | { __typename: 'FeedExploreTagNode'; id: string }
+            | { __typename: 'FeedHeaderNode'; id: string }
+            | { __typename: 'FeedHighlightsConnection'; id: string }
             | {
-                __typename?: 'FeedNoticeNode';
+                __typename: 'FeedNoticeNode';
                 location: string;
                 key: string;
                 id: string;
               }
-            | { __typename?: 'GiftCardNode'; id: string }
-            | { __typename?: 'GiftCardTransaction'; id: string }
-            | { __typename?: 'GroupNode'; legacy: string; id: string }
-            | { __typename?: 'Invite'; id: string }
-            | { __typename?: 'InviteConnection'; id: string }
-            | { __typename?: 'NodeImpl'; id: string }
+            | { __typename: 'GiftCardNode'; id: string }
+            | { __typename: 'GiftCardTransaction'; id: string }
+            | { __typename: 'GroupNode'; legacy: string; id: string }
+            | { __typename: 'Invite'; id: string }
+            | { __typename: 'InviteConnection'; id: string }
+            | { __typename: 'NodeImpl'; id: string }
             | {
-                __typename?: 'PublisherRecsConnection';
+                __typename: 'PublisherRecsConnection';
                 id: string;
                 edges: Array<
                   | {
                       __typename?: 'ActivityEdge';
-                      publisherNode: {
-                        __typename?: 'ActivityNode';
-                        id: string;
-                      };
+                      publisherNode: { __typename: 'ActivityNode'; id: string };
                     }
                   | {
                       __typename?: 'AnalyticsTableRowEdge';
                       publisherNode:
-                        | { __typename?: 'ActivityNode'; id: string }
+                        | { __typename: 'ActivityNode'; id: string }
                         | {
-                            __typename?: 'AnalyticsTableRowActivityNode';
+                            __typename: 'AnalyticsTableRowActivityNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowGroupNode';
+                            __typename: 'AnalyticsTableRowGroupNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowUserNode';
+                            __typename: 'AnalyticsTableRowUserNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'BoostNode';
+                            __typename: 'BoostNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'CustomPage'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
                         | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
+                            __typename: 'GroupNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'Invite'; id: string }
-                        | { __typename?: 'InviteConnection'; id: string }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
+                        | { __typename: 'Invite'; id: string }
+                        | { __typename: 'InviteConnection'; id: string }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
                         | {
-                            __typename?: 'UserNode';
+                            __typename: 'UserNode';
                             legacy: string;
                             id: string;
                           };
@@ -2348,122 +2565,129 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'BoostEdge';
                       publisherNode: {
-                        __typename?: 'BoostNode';
+                        __typename: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: { __typename: 'ChatRoomNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename: 'UserNode';
                         legacy: string;
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'CommentEdge';
-                      publisherNode: { __typename?: 'CommentNode'; id: string };
+                      publisherNode: { __typename: 'CommentNode'; id: string };
                     }
                   | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
-                        | { __typename?: 'ActivityNode'; id: string }
+                        | { __typename: 'ActivityNode'; id: string }
                         | {
-                            __typename?: 'AnalyticsTableRowActivityNode';
+                            __typename: 'AnalyticsTableRowActivityNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowGroupNode';
+                            __typename: 'AnalyticsTableRowGroupNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowUserNode';
+                            __typename: 'AnalyticsTableRowUserNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'BoostNode';
+                            __typename: 'BoostNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'CustomPage'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
                         | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
+                            __typename: 'GroupNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'Invite'; id: string }
-                        | { __typename?: 'InviteConnection'; id: string }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
-                        | {
-                            __typename?: 'UserNode';
-                            legacy: string;
-                            id: string;
-                          }
+                        | { __typename: 'Invite'; id: string }
+                        | { __typename: 'InviteConnection'; id: string }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
+                        | { __typename: 'UserNode'; legacy: string; id: string }
                         | null;
                     }
                   | {
                       __typename?: 'FeaturedEntityEdge';
                       publisherNode:
-                        | { __typename?: 'ActivityNode'; id: string }
+                        | { __typename: 'ActivityNode'; id: string }
                         | {
-                            __typename?: 'AnalyticsTableRowActivityNode';
+                            __typename: 'AnalyticsTableRowActivityNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowGroupNode';
+                            __typename: 'AnalyticsTableRowGroupNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowUserNode';
+                            __typename: 'AnalyticsTableRowUserNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'BoostNode';
+                            __typename: 'BoostNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'CustomPage'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
                         | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
+                            __typename: 'GroupNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'Invite'; id: string }
-                        | { __typename?: 'InviteConnection'; id: string }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
+                        | { __typename: 'Invite'; id: string }
+                        | { __typename: 'InviteConnection'; id: string }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
                         | {
-                            __typename?: 'UserNode';
+                            __typename: 'UserNode';
                             legacy: string;
                             id: string;
                           };
@@ -2471,49 +2695,46 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'FeedExploreTagEdge';
                       publisherNode: {
-                        __typename?: 'FeedExploreTagNode';
+                        __typename: 'FeedExploreTagNode';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'FeedHeaderEdge';
                       publisherNode: {
-                        __typename?: 'FeedHeaderNode';
+                        __typename: 'FeedHeaderNode';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'FeedHighlightsEdge';
                       publisherNode: {
-                        __typename?: 'FeedHighlightsConnection';
+                        __typename: 'FeedHighlightsConnection';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'FeedNoticeEdge';
                       publisherNode: {
-                        __typename?: 'FeedNoticeNode';
+                        __typename: 'FeedNoticeNode';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'GiftCardEdge';
-                      publisherNode: {
-                        __typename?: 'GiftCardNode';
-                        id: string;
-                      };
+                      publisherNode: { __typename: 'GiftCardNode'; id: string };
                     }
                   | {
                       __typename?: 'GiftCardTransactionEdge';
                       publisherNode: {
-                        __typename?: 'GiftCardTransaction';
+                        __typename: 'GiftCardTransaction';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'GroupEdge';
                       publisherNode: {
-                        __typename?: 'GroupNode';
+                        __typename: 'GroupNode';
                         legacy: string;
                         id: string;
                       };
@@ -2521,28 +2742,28 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'InviteEdge';
                       publisherNode?: {
-                        __typename?: 'Invite';
+                        __typename: 'Invite';
                         id: string;
                       } | null;
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
                       publisherNode: {
-                        __typename?: 'PublisherRecsConnection';
+                        __typename: 'PublisherRecsConnection';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'ReportEdge';
                       publisherNode?: {
-                        __typename?: 'Report';
+                        __typename: 'Report';
                         id: string;
                       } | null;
                     }
                   | {
                       __typename?: 'UserEdge';
                       publisherNode: {
-                        __typename?: 'UserNode';
+                        __typename: 'UserNode';
                         legacy: string;
                         id: string;
                       };
@@ -2550,7 +2771,7 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'UserRoleEdge';
                       publisherNode: {
-                        __typename?: 'UserNode';
+                        __typename: 'UserNode';
                         legacy: string;
                         id: string;
                       };
@@ -2564,108 +2785,103 @@ export type FetchSearchQuery = {
                   endCursor?: string | null;
                 };
               }
-            | { __typename?: 'Report'; id: string }
-            | { __typename?: 'UserNode'; legacy: string; id: string }
+            | { __typename: 'Report'; id: string }
+            | { __typename: 'UserNode'; legacy: string; id: string }
             | null;
         }
       | {
           __typename?: 'FeaturedEntityEdge';
           cursor: string;
           node:
-            | { __typename?: 'ActivityNode'; legacy: string; id: string }
-            | { __typename?: 'AnalyticsTableRowActivityNode'; id: string }
-            | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
-            | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
+            | { __typename: 'ActivityNode'; legacy: string; id: string }
+            | { __typename: 'AnalyticsTableRowActivityNode'; id: string }
+            | { __typename: 'AnalyticsTableRowGroupNode'; id: string }
+            | { __typename: 'AnalyticsTableRowUserNode'; id: string }
             | {
-                __typename?: 'BoostNode';
+                __typename: 'BoostNode';
                 goalButtonUrl?: string | null;
                 goalButtonText?: number | null;
                 legacy: string;
                 id: string;
               }
-            | { __typename?: 'CommentNode'; id: string }
-            | { __typename?: 'CustomPage'; id: string }
-            | { __typename?: 'FeaturedEntity'; id: string }
-            | { __typename?: 'FeaturedEntityConnection'; id: string }
-            | { __typename?: 'FeaturedGroup'; id: string }
-            | { __typename?: 'FeaturedUser'; id: string }
-            | { __typename?: 'FeedExploreTagNode'; id: string }
-            | { __typename?: 'FeedHeaderNode'; id: string }
-            | { __typename?: 'FeedHighlightsConnection'; id: string }
+            | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRoomNode'; id: string }
+            | { __typename: 'CommentNode'; id: string }
+            | { __typename: 'CustomPage'; id: string }
+            | { __typename: 'FeaturedEntity'; id: string }
+            | { __typename: 'FeaturedEntityConnection'; id: string }
+            | { __typename: 'FeaturedGroup'; id: string }
+            | { __typename: 'FeaturedUser'; id: string }
+            | { __typename: 'FeedExploreTagNode'; id: string }
+            | { __typename: 'FeedHeaderNode'; id: string }
+            | { __typename: 'FeedHighlightsConnection'; id: string }
             | {
-                __typename?: 'FeedNoticeNode';
+                __typename: 'FeedNoticeNode';
                 location: string;
                 key: string;
                 id: string;
               }
-            | { __typename?: 'GiftCardNode'; id: string }
-            | { __typename?: 'GiftCardTransaction'; id: string }
-            | { __typename?: 'GroupNode'; legacy: string; id: string }
-            | { __typename?: 'Invite'; id: string }
-            | { __typename?: 'InviteConnection'; id: string }
-            | { __typename?: 'NodeImpl'; id: string }
+            | { __typename: 'GiftCardNode'; id: string }
+            | { __typename: 'GiftCardTransaction'; id: string }
+            | { __typename: 'GroupNode'; legacy: string; id: string }
+            | { __typename: 'Invite'; id: string }
+            | { __typename: 'InviteConnection'; id: string }
+            | { __typename: 'NodeImpl'; id: string }
             | {
-                __typename?: 'PublisherRecsConnection';
+                __typename: 'PublisherRecsConnection';
                 id: string;
                 edges: Array<
                   | {
                       __typename?: 'ActivityEdge';
-                      publisherNode: {
-                        __typename?: 'ActivityNode';
-                        id: string;
-                      };
+                      publisherNode: { __typename: 'ActivityNode'; id: string };
                     }
                   | {
                       __typename?: 'AnalyticsTableRowEdge';
                       publisherNode:
-                        | { __typename?: 'ActivityNode'; id: string }
+                        | { __typename: 'ActivityNode'; id: string }
                         | {
-                            __typename?: 'AnalyticsTableRowActivityNode';
+                            __typename: 'AnalyticsTableRowActivityNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowGroupNode';
+                            __typename: 'AnalyticsTableRowGroupNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowUserNode';
+                            __typename: 'AnalyticsTableRowUserNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'BoostNode';
+                            __typename: 'BoostNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'CustomPage'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
                         | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
+                            __typename: 'GroupNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'Invite'; id: string }
-                        | { __typename?: 'InviteConnection'; id: string }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
+                        | { __typename: 'Invite'; id: string }
+                        | { __typename: 'InviteConnection'; id: string }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
                         | {
-                            __typename?: 'UserNode';
+                            __typename: 'UserNode';
                             legacy: string;
                             id: string;
                           };
@@ -2673,122 +2889,129 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'BoostEdge';
                       publisherNode: {
-                        __typename?: 'BoostNode';
+                        __typename: 'BoostNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: { __typename: 'ChatRoomNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename: 'UserNode';
                         legacy: string;
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'CommentEdge';
-                      publisherNode: { __typename?: 'CommentNode'; id: string };
+                      publisherNode: { __typename: 'CommentNode'; id: string };
                     }
                   | {
                       __typename?: 'EdgeImpl';
                       publisherNode?:
-                        | { __typename?: 'ActivityNode'; id: string }
+                        | { __typename: 'ActivityNode'; id: string }
                         | {
-                            __typename?: 'AnalyticsTableRowActivityNode';
+                            __typename: 'AnalyticsTableRowActivityNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowGroupNode';
+                            __typename: 'AnalyticsTableRowGroupNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowUserNode';
+                            __typename: 'AnalyticsTableRowUserNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'BoostNode';
+                            __typename: 'BoostNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'CustomPage'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
                         | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
+                            __typename: 'GroupNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'Invite'; id: string }
-                        | { __typename?: 'InviteConnection'; id: string }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
-                        | {
-                            __typename?: 'UserNode';
-                            legacy: string;
-                            id: string;
-                          }
+                        | { __typename: 'Invite'; id: string }
+                        | { __typename: 'InviteConnection'; id: string }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
+                        | { __typename: 'UserNode'; legacy: string; id: string }
                         | null;
                     }
                   | {
                       __typename?: 'FeaturedEntityEdge';
                       publisherNode:
-                        | { __typename?: 'ActivityNode'; id: string }
+                        | { __typename: 'ActivityNode'; id: string }
                         | {
-                            __typename?: 'AnalyticsTableRowActivityNode';
+                            __typename: 'AnalyticsTableRowActivityNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowGroupNode';
+                            __typename: 'AnalyticsTableRowGroupNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'AnalyticsTableRowUserNode';
+                            __typename: 'AnalyticsTableRowUserNode';
                             id: string;
                           }
                         | {
-                            __typename?: 'BoostNode';
+                            __typename: 'BoostNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'CommentNode'; id: string }
-                        | { __typename?: 'CustomPage'; id: string }
-                        | { __typename?: 'FeaturedEntity'; id: string }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
+                        | { __typename: 'CommentNode'; id: string }
+                        | { __typename: 'CustomPage'; id: string }
+                        | { __typename: 'FeaturedEntity'; id: string }
+                        | { __typename: 'FeaturedEntityConnection'; id: string }
+                        | { __typename: 'FeaturedGroup'; id: string }
+                        | { __typename: 'FeaturedUser'; id: string }
+                        | { __typename: 'FeedExploreTagNode'; id: string }
+                        | { __typename: 'FeedHeaderNode'; id: string }
+                        | { __typename: 'FeedHighlightsConnection'; id: string }
+                        | { __typename: 'FeedNoticeNode'; id: string }
+                        | { __typename: 'GiftCardNode'; id: string }
+                        | { __typename: 'GiftCardTransaction'; id: string }
                         | {
-                            __typename?: 'FeaturedEntityConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeaturedGroup'; id: string }
-                        | { __typename?: 'FeaturedUser'; id: string }
-                        | { __typename?: 'FeedExploreTagNode'; id: string }
-                        | { __typename?: 'FeedHeaderNode'; id: string }
-                        | {
-                            __typename?: 'FeedHighlightsConnection';
-                            id: string;
-                          }
-                        | { __typename?: 'FeedNoticeNode'; id: string }
-                        | { __typename?: 'GiftCardNode'; id: string }
-                        | { __typename?: 'GiftCardTransaction'; id: string }
-                        | {
-                            __typename?: 'GroupNode';
+                            __typename: 'GroupNode';
                             legacy: string;
                             id: string;
                           }
-                        | { __typename?: 'Invite'; id: string }
-                        | { __typename?: 'InviteConnection'; id: string }
-                        | { __typename?: 'NodeImpl'; id: string }
-                        | { __typename?: 'PublisherRecsConnection'; id: string }
-                        | { __typename?: 'Report'; id: string }
+                        | { __typename: 'Invite'; id: string }
+                        | { __typename: 'InviteConnection'; id: string }
+                        | { __typename: 'NodeImpl'; id: string }
+                        | { __typename: 'PublisherRecsConnection'; id: string }
+                        | { __typename: 'Report'; id: string }
                         | {
-                            __typename?: 'UserNode';
+                            __typename: 'UserNode';
                             legacy: string;
                             id: string;
                           };
@@ -2796,49 +3019,46 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'FeedExploreTagEdge';
                       publisherNode: {
-                        __typename?: 'FeedExploreTagNode';
+                        __typename: 'FeedExploreTagNode';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'FeedHeaderEdge';
                       publisherNode: {
-                        __typename?: 'FeedHeaderNode';
+                        __typename: 'FeedHeaderNode';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'FeedHighlightsEdge';
                       publisherNode: {
-                        __typename?: 'FeedHighlightsConnection';
+                        __typename: 'FeedHighlightsConnection';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'FeedNoticeEdge';
                       publisherNode: {
-                        __typename?: 'FeedNoticeNode';
+                        __typename: 'FeedNoticeNode';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'GiftCardEdge';
-                      publisherNode: {
-                        __typename?: 'GiftCardNode';
-                        id: string;
-                      };
+                      publisherNode: { __typename: 'GiftCardNode'; id: string };
                     }
                   | {
                       __typename?: 'GiftCardTransactionEdge';
                       publisherNode: {
-                        __typename?: 'GiftCardTransaction';
+                        __typename: 'GiftCardTransaction';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'GroupEdge';
                       publisherNode: {
-                        __typename?: 'GroupNode';
+                        __typename: 'GroupNode';
                         legacy: string;
                         id: string;
                       };
@@ -2846,28 +3066,28 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'InviteEdge';
                       publisherNode?: {
-                        __typename?: 'Invite';
+                        __typename: 'Invite';
                         id: string;
                       } | null;
                     }
                   | {
                       __typename?: 'PublisherRecsEdge';
                       publisherNode: {
-                        __typename?: 'PublisherRecsConnection';
+                        __typename: 'PublisherRecsConnection';
                         id: string;
                       };
                     }
                   | {
                       __typename?: 'ReportEdge';
                       publisherNode?: {
-                        __typename?: 'Report';
+                        __typename: 'Report';
                         id: string;
                       } | null;
                     }
                   | {
                       __typename?: 'UserEdge';
                       publisherNode: {
-                        __typename?: 'UserNode';
+                        __typename: 'UserNode';
                         legacy: string;
                         id: string;
                       };
@@ -2875,7 +3095,7 @@ export type FetchSearchQuery = {
                   | {
                       __typename?: 'UserRoleEdge';
                       publisherNode: {
-                        __typename?: 'UserNode';
+                        __typename: 'UserNode';
                         legacy: string;
                         id: string;
                       };
@@ -2889,29 +3109,29 @@ export type FetchSearchQuery = {
                   endCursor?: string | null;
                 };
               }
-            | { __typename?: 'Report'; id: string }
-            | { __typename?: 'UserNode'; legacy: string; id: string };
+            | { __typename: 'Report'; id: string }
+            | { __typename: 'UserNode'; legacy: string; id: string };
         }
       | {
           __typename?: 'FeedExploreTagEdge';
           cursor: string;
-          node: { __typename?: 'FeedExploreTagNode'; id: string };
+          node: { __typename: 'FeedExploreTagNode'; id: string };
         }
       | {
           __typename?: 'FeedHeaderEdge';
           cursor: string;
-          node: { __typename?: 'FeedHeaderNode'; id: string };
+          node: { __typename: 'FeedHeaderNode'; id: string };
         }
       | {
           __typename?: 'FeedHighlightsEdge';
           cursor: string;
-          node: { __typename?: 'FeedHighlightsConnection'; id: string };
+          node: { __typename: 'FeedHighlightsConnection'; id: string };
         }
       | {
           __typename?: 'FeedNoticeEdge';
           cursor: string;
           node: {
-            __typename?: 'FeedNoticeNode';
+            __typename: 'FeedNoticeNode';
             location: string;
             key: string;
             id: string;
@@ -2920,200 +3140,222 @@ export type FetchSearchQuery = {
       | {
           __typename?: 'GiftCardEdge';
           cursor: string;
-          node: { __typename?: 'GiftCardNode'; id: string };
+          node: { __typename: 'GiftCardNode'; id: string };
         }
       | {
           __typename?: 'GiftCardTransactionEdge';
           cursor: string;
-          node: { __typename?: 'GiftCardTransaction'; id: string };
+          node: { __typename: 'GiftCardTransaction'; id: string };
         }
       | {
           __typename?: 'GroupEdge';
           cursor: string;
-          node: { __typename?: 'GroupNode'; legacy: string; id: string };
+          node: { __typename: 'GroupNode'; legacy: string; id: string };
         }
       | {
           __typename?: 'InviteEdge';
           cursor: string;
-          node?: { __typename?: 'Invite'; id: string } | null;
+          node?: { __typename: 'Invite'; id: string } | null;
         }
       | {
           __typename?: 'PublisherRecsEdge';
           cursor: string;
           node: {
-            __typename?: 'PublisherRecsConnection';
+            __typename: 'PublisherRecsConnection';
             id: string;
             edges: Array<
               | {
                   __typename?: 'ActivityEdge';
-                  publisherNode: { __typename?: 'ActivityNode'; id: string };
+                  publisherNode: { __typename: 'ActivityNode'; id: string };
                 }
               | {
                   __typename?: 'AnalyticsTableRowEdge';
                   publisherNode:
-                    | { __typename?: 'ActivityNode'; id: string }
+                    | { __typename: 'ActivityNode'; id: string }
                     | {
-                        __typename?: 'AnalyticsTableRowActivityNode';
+                        __typename: 'AnalyticsTableRowActivityNode';
                         id: string;
                       }
-                    | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
-                    | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
-                    | { __typename?: 'BoostNode'; legacy: string; id: string }
-                    | { __typename?: 'CommentNode'; id: string }
-                    | { __typename?: 'CustomPage'; id: string }
-                    | { __typename?: 'FeaturedEntity'; id: string }
-                    | { __typename?: 'FeaturedEntityConnection'; id: string }
-                    | { __typename?: 'FeaturedGroup'; id: string }
-                    | { __typename?: 'FeaturedUser'; id: string }
-                    | { __typename?: 'FeedExploreTagNode'; id: string }
-                    | { __typename?: 'FeedHeaderNode'; id: string }
-                    | { __typename?: 'FeedHighlightsConnection'; id: string }
-                    | { __typename?: 'FeedNoticeNode'; id: string }
-                    | { __typename?: 'GiftCardNode'; id: string }
-                    | { __typename?: 'GiftCardTransaction'; id: string }
-                    | { __typename?: 'GroupNode'; legacy: string; id: string }
-                    | { __typename?: 'Invite'; id: string }
-                    | { __typename?: 'InviteConnection'; id: string }
-                    | { __typename?: 'NodeImpl'; id: string }
-                    | { __typename?: 'PublisherRecsConnection'; id: string }
-                    | { __typename?: 'Report'; id: string }
-                    | { __typename?: 'UserNode'; legacy: string; id: string };
+                    | { __typename: 'AnalyticsTableRowGroupNode'; id: string }
+                    | { __typename: 'AnalyticsTableRowUserNode'; id: string }
+                    | { __typename: 'BoostNode'; legacy: string; id: string }
+                    | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRoomNode'; id: string }
+                    | { __typename: 'CommentNode'; id: string }
+                    | { __typename: 'CustomPage'; id: string }
+                    | { __typename: 'FeaturedEntity'; id: string }
+                    | { __typename: 'FeaturedEntityConnection'; id: string }
+                    | { __typename: 'FeaturedGroup'; id: string }
+                    | { __typename: 'FeaturedUser'; id: string }
+                    | { __typename: 'FeedExploreTagNode'; id: string }
+                    | { __typename: 'FeedHeaderNode'; id: string }
+                    | { __typename: 'FeedHighlightsConnection'; id: string }
+                    | { __typename: 'FeedNoticeNode'; id: string }
+                    | { __typename: 'GiftCardNode'; id: string }
+                    | { __typename: 'GiftCardTransaction'; id: string }
+                    | { __typename: 'GroupNode'; legacy: string; id: string }
+                    | { __typename: 'Invite'; id: string }
+                    | { __typename: 'InviteConnection'; id: string }
+                    | { __typename: 'NodeImpl'; id: string }
+                    | { __typename: 'PublisherRecsConnection'; id: string }
+                    | { __typename: 'Report'; id: string }
+                    | { __typename: 'UserNode'; legacy: string; id: string };
                 }
               | {
                   __typename?: 'BoostEdge';
                   publisherNode: {
-                    __typename?: 'BoostNode';
+                    __typename: 'BoostNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+              | {
+                  __typename?: 'ChatMessageEdge';
+                  publisherNode: { __typename: 'ChatMessageNode'; id: string };
+                }
+              | {
+                  __typename?: 'ChatRoomEdge';
+                  publisherNode: { __typename: 'ChatRoomNode'; id: string };
+                }
+              | {
+                  __typename?: 'ChatRoomMemberEdge';
+                  publisherNode: {
+                    __typename: 'UserNode';
                     legacy: string;
                     id: string;
                   };
                 }
               | {
                   __typename?: 'CommentEdge';
-                  publisherNode: { __typename?: 'CommentNode'; id: string };
+                  publisherNode: { __typename: 'CommentNode'; id: string };
                 }
               | {
                   __typename?: 'EdgeImpl';
                   publisherNode?:
-                    | { __typename?: 'ActivityNode'; id: string }
+                    | { __typename: 'ActivityNode'; id: string }
                     | {
-                        __typename?: 'AnalyticsTableRowActivityNode';
+                        __typename: 'AnalyticsTableRowActivityNode';
                         id: string;
                       }
-                    | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
-                    | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
-                    | { __typename?: 'BoostNode'; legacy: string; id: string }
-                    | { __typename?: 'CommentNode'; id: string }
-                    | { __typename?: 'CustomPage'; id: string }
-                    | { __typename?: 'FeaturedEntity'; id: string }
-                    | { __typename?: 'FeaturedEntityConnection'; id: string }
-                    | { __typename?: 'FeaturedGroup'; id: string }
-                    | { __typename?: 'FeaturedUser'; id: string }
-                    | { __typename?: 'FeedExploreTagNode'; id: string }
-                    | { __typename?: 'FeedHeaderNode'; id: string }
-                    | { __typename?: 'FeedHighlightsConnection'; id: string }
-                    | { __typename?: 'FeedNoticeNode'; id: string }
-                    | { __typename?: 'GiftCardNode'; id: string }
-                    | { __typename?: 'GiftCardTransaction'; id: string }
-                    | { __typename?: 'GroupNode'; legacy: string; id: string }
-                    | { __typename?: 'Invite'; id: string }
-                    | { __typename?: 'InviteConnection'; id: string }
-                    | { __typename?: 'NodeImpl'; id: string }
-                    | { __typename?: 'PublisherRecsConnection'; id: string }
-                    | { __typename?: 'Report'; id: string }
-                    | { __typename?: 'UserNode'; legacy: string; id: string }
+                    | { __typename: 'AnalyticsTableRowGroupNode'; id: string }
+                    | { __typename: 'AnalyticsTableRowUserNode'; id: string }
+                    | { __typename: 'BoostNode'; legacy: string; id: string }
+                    | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRoomNode'; id: string }
+                    | { __typename: 'CommentNode'; id: string }
+                    | { __typename: 'CustomPage'; id: string }
+                    | { __typename: 'FeaturedEntity'; id: string }
+                    | { __typename: 'FeaturedEntityConnection'; id: string }
+                    | { __typename: 'FeaturedGroup'; id: string }
+                    | { __typename: 'FeaturedUser'; id: string }
+                    | { __typename: 'FeedExploreTagNode'; id: string }
+                    | { __typename: 'FeedHeaderNode'; id: string }
+                    | { __typename: 'FeedHighlightsConnection'; id: string }
+                    | { __typename: 'FeedNoticeNode'; id: string }
+                    | { __typename: 'GiftCardNode'; id: string }
+                    | { __typename: 'GiftCardTransaction'; id: string }
+                    | { __typename: 'GroupNode'; legacy: string; id: string }
+                    | { __typename: 'Invite'; id: string }
+                    | { __typename: 'InviteConnection'; id: string }
+                    | { __typename: 'NodeImpl'; id: string }
+                    | { __typename: 'PublisherRecsConnection'; id: string }
+                    | { __typename: 'Report'; id: string }
+                    | { __typename: 'UserNode'; legacy: string; id: string }
                     | null;
                 }
               | {
                   __typename?: 'FeaturedEntityEdge';
                   publisherNode:
-                    | { __typename?: 'ActivityNode'; id: string }
+                    | { __typename: 'ActivityNode'; id: string }
                     | {
-                        __typename?: 'AnalyticsTableRowActivityNode';
+                        __typename: 'AnalyticsTableRowActivityNode';
                         id: string;
                       }
-                    | { __typename?: 'AnalyticsTableRowGroupNode'; id: string }
-                    | { __typename?: 'AnalyticsTableRowUserNode'; id: string }
-                    | { __typename?: 'BoostNode'; legacy: string; id: string }
-                    | { __typename?: 'CommentNode'; id: string }
-                    | { __typename?: 'CustomPage'; id: string }
-                    | { __typename?: 'FeaturedEntity'; id: string }
-                    | { __typename?: 'FeaturedEntityConnection'; id: string }
-                    | { __typename?: 'FeaturedGroup'; id: string }
-                    | { __typename?: 'FeaturedUser'; id: string }
-                    | { __typename?: 'FeedExploreTagNode'; id: string }
-                    | { __typename?: 'FeedHeaderNode'; id: string }
-                    | { __typename?: 'FeedHighlightsConnection'; id: string }
-                    | { __typename?: 'FeedNoticeNode'; id: string }
-                    | { __typename?: 'GiftCardNode'; id: string }
-                    | { __typename?: 'GiftCardTransaction'; id: string }
-                    | { __typename?: 'GroupNode'; legacy: string; id: string }
-                    | { __typename?: 'Invite'; id: string }
-                    | { __typename?: 'InviteConnection'; id: string }
-                    | { __typename?: 'NodeImpl'; id: string }
-                    | { __typename?: 'PublisherRecsConnection'; id: string }
-                    | { __typename?: 'Report'; id: string }
-                    | { __typename?: 'UserNode'; legacy: string; id: string };
+                    | { __typename: 'AnalyticsTableRowGroupNode'; id: string }
+                    | { __typename: 'AnalyticsTableRowUserNode'; id: string }
+                    | { __typename: 'BoostNode'; legacy: string; id: string }
+                    | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRoomNode'; id: string }
+                    | { __typename: 'CommentNode'; id: string }
+                    | { __typename: 'CustomPage'; id: string }
+                    | { __typename: 'FeaturedEntity'; id: string }
+                    | { __typename: 'FeaturedEntityConnection'; id: string }
+                    | { __typename: 'FeaturedGroup'; id: string }
+                    | { __typename: 'FeaturedUser'; id: string }
+                    | { __typename: 'FeedExploreTagNode'; id: string }
+                    | { __typename: 'FeedHeaderNode'; id: string }
+                    | { __typename: 'FeedHighlightsConnection'; id: string }
+                    | { __typename: 'FeedNoticeNode'; id: string }
+                    | { __typename: 'GiftCardNode'; id: string }
+                    | { __typename: 'GiftCardTransaction'; id: string }
+                    | { __typename: 'GroupNode'; legacy: string; id: string }
+                    | { __typename: 'Invite'; id: string }
+                    | { __typename: 'InviteConnection'; id: string }
+                    | { __typename: 'NodeImpl'; id: string }
+                    | { __typename: 'PublisherRecsConnection'; id: string }
+                    | { __typename: 'Report'; id: string }
+                    | { __typename: 'UserNode'; legacy: string; id: string };
                 }
               | {
                   __typename?: 'FeedExploreTagEdge';
                   publisherNode: {
-                    __typename?: 'FeedExploreTagNode';
+                    __typename: 'FeedExploreTagNode';
                     id: string;
                   };
                 }
               | {
                   __typename?: 'FeedHeaderEdge';
-                  publisherNode: { __typename?: 'FeedHeaderNode'; id: string };
+                  publisherNode: { __typename: 'FeedHeaderNode'; id: string };
                 }
               | {
                   __typename?: 'FeedHighlightsEdge';
                   publisherNode: {
-                    __typename?: 'FeedHighlightsConnection';
+                    __typename: 'FeedHighlightsConnection';
                     id: string;
                   };
                 }
               | {
                   __typename?: 'FeedNoticeEdge';
-                  publisherNode: { __typename?: 'FeedNoticeNode'; id: string };
+                  publisherNode: { __typename: 'FeedNoticeNode'; id: string };
                 }
               | {
                   __typename?: 'GiftCardEdge';
-                  publisherNode: { __typename?: 'GiftCardNode'; id: string };
+                  publisherNode: { __typename: 'GiftCardNode'; id: string };
                 }
               | {
                   __typename?: 'GiftCardTransactionEdge';
                   publisherNode: {
-                    __typename?: 'GiftCardTransaction';
+                    __typename: 'GiftCardTransaction';
                     id: string;
                   };
                 }
               | {
                   __typename?: 'GroupEdge';
                   publisherNode: {
-                    __typename?: 'GroupNode';
+                    __typename: 'GroupNode';
                     legacy: string;
                     id: string;
                   };
                 }
               | {
                   __typename?: 'InviteEdge';
-                  publisherNode?: { __typename?: 'Invite'; id: string } | null;
+                  publisherNode?: { __typename: 'Invite'; id: string } | null;
                 }
               | {
                   __typename?: 'PublisherRecsEdge';
                   publisherNode: {
-                    __typename?: 'PublisherRecsConnection';
+                    __typename: 'PublisherRecsConnection';
                     id: string;
                   };
                 }
               | {
                   __typename?: 'ReportEdge';
-                  publisherNode?: { __typename?: 'Report'; id: string } | null;
+                  publisherNode?: { __typename: 'Report'; id: string } | null;
                 }
               | {
                   __typename?: 'UserEdge';
                   publisherNode: {
-                    __typename?: 'UserNode';
+                    __typename: 'UserNode';
                     legacy: string;
                     id: string;
                   };
@@ -3121,7 +3363,7 @@ export type FetchSearchQuery = {
               | {
                   __typename?: 'UserRoleEdge';
                   publisherNode: {
-                    __typename?: 'UserNode';
+                    __typename: 'UserNode';
                     legacy: string;
                     id: string;
                   };
@@ -3139,17 +3381,17 @@ export type FetchSearchQuery = {
       | {
           __typename?: 'ReportEdge';
           cursor: string;
-          node?: { __typename?: 'Report'; id: string } | null;
+          node?: { __typename: 'Report'; id: string } | null;
         }
       | {
           __typename?: 'UserEdge';
           cursor: string;
-          node: { __typename?: 'UserNode'; legacy: string; id: string };
+          node: { __typename: 'UserNode'; legacy: string; id: string };
         }
       | {
           __typename?: 'UserRoleEdge';
           cursor: string;
-          node: { __typename?: 'UserNode'; legacy: string; id: string };
+          node: { __typename: 'UserNode'; legacy: string; id: string };
         }
     >;
     pageInfo: {
@@ -3394,6 +3636,8 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRoomNode'; id: string }
             | { __typename: 'CommentNode'; id: string }
             | { __typename: 'CustomPage'; id: string }
             | { __typename: 'FeaturedEntity'; id: string }
@@ -3464,6 +3708,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
@@ -3501,6 +3747,25 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: { __typename: 'ChatRoomNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
                       __typename?: 'CommentEdge';
                       publisherNode: { __typename: 'CommentNode'; id: string };
                     }
@@ -3525,6 +3790,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
@@ -3571,6 +3838,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
@@ -3707,6 +3976,21 @@ export type FetchNewsfeedQuery = {
           };
         }
       | {
+          __typename?: 'ChatMessageEdge';
+          cursor: string;
+          node: { __typename: 'ChatMessageNode'; id: string };
+        }
+      | {
+          __typename?: 'ChatRoomEdge';
+          cursor: string;
+          node: { __typename: 'ChatRoomNode'; id: string };
+        }
+      | {
+          __typename?: 'ChatRoomMemberEdge';
+          cursor: string;
+          node: { __typename: 'UserNode'; id: string };
+        }
+      | {
           __typename?: 'CommentEdge';
           cursor: string;
           node: { __typename: 'CommentNode'; id: string };
@@ -3726,6 +4010,8 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRoomNode'; id: string }
             | { __typename: 'CommentNode'; id: string }
             | { __typename: 'CustomPage'; id: string }
             | { __typename: 'FeaturedEntity'; id: string }
@@ -3796,6 +4082,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
@@ -3833,6 +4121,25 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: { __typename: 'ChatRoomNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
                       __typename?: 'CommentEdge';
                       publisherNode: { __typename: 'CommentNode'; id: string };
                     }
@@ -3857,6 +4164,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
@@ -3903,6 +4212,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
@@ -4043,6 +4354,8 @@ export type FetchNewsfeedQuery = {
                 legacy: string;
                 id: string;
               }
+            | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRoomNode'; id: string }
             | { __typename: 'CommentNode'; id: string }
             | { __typename: 'CustomPage'; id: string }
             | { __typename: 'FeaturedEntity'; id: string }
@@ -4113,6 +4426,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
@@ -4150,6 +4465,25 @@ export type FetchNewsfeedQuery = {
                       };
                     }
                   | {
+                      __typename?: 'ChatMessageEdge';
+                      publisherNode: {
+                        __typename: 'ChatMessageNode';
+                        id: string;
+                      };
+                    }
+                  | {
+                      __typename?: 'ChatRoomEdge';
+                      publisherNode: { __typename: 'ChatRoomNode'; id: string };
+                    }
+                  | {
+                      __typename?: 'ChatRoomMemberEdge';
+                      publisherNode: {
+                        __typename: 'UserNode';
+                        legacy: string;
+                        id: string;
+                      };
+                    }
+                  | {
                       __typename?: 'CommentEdge';
                       publisherNode: { __typename: 'CommentNode'; id: string };
                     }
@@ -4174,6 +4508,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
@@ -4220,6 +4556,8 @@ export type FetchNewsfeedQuery = {
                             legacy: string;
                             id: string;
                           }
+                        | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
                         | { __typename: 'FeaturedEntity'; id: string }
@@ -4427,6 +4765,8 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
+                    | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRoomNode'; id: string }
                     | { __typename: 'CommentNode'; id: string }
                     | { __typename: 'CustomPage'; id: string }
                     | { __typename: 'FeaturedEntity'; id: string }
@@ -4456,6 +4796,22 @@ export type FetchNewsfeedQuery = {
                   };
                 }
               | {
+                  __typename?: 'ChatMessageEdge';
+                  publisherNode: { __typename: 'ChatMessageNode'; id: string };
+                }
+              | {
+                  __typename?: 'ChatRoomEdge';
+                  publisherNode: { __typename: 'ChatRoomNode'; id: string };
+                }
+              | {
+                  __typename?: 'ChatRoomMemberEdge';
+                  publisherNode: {
+                    __typename: 'UserNode';
+                    legacy: string;
+                    id: string;
+                  };
+                }
+              | {
                   __typename?: 'CommentEdge';
                   publisherNode: { __typename: 'CommentNode'; id: string };
                 }
@@ -4470,6 +4826,8 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
+                    | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRoomNode'; id: string }
                     | { __typename: 'CommentNode'; id: string }
                     | { __typename: 'CustomPage'; id: string }
                     | { __typename: 'FeaturedEntity'; id: string }
@@ -4502,6 +4860,8 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'AnalyticsTableRowGroupNode'; id: string }
                     | { __typename: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
+                    | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRoomNode'; id: string }
                     | { __typename: 'CommentNode'; id: string }
                     | { __typename: 'CustomPage'; id: string }
                     | { __typename: 'FeaturedEntity'; id: string }
@@ -5168,6 +5528,7 @@ export const FetchSearchDocument = `
     edges {
       cursor
       node {
+        __typename
         id
         ... on ActivityNode {
           legacy
@@ -5191,6 +5552,7 @@ export const FetchSearchDocument = `
           edges {
             publisherNode: node {
               id
+              __typename
               ... on UserNode {
                 legacy
               }

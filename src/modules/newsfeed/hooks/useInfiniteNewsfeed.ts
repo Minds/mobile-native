@@ -19,7 +19,11 @@ import { gqlFetcher } from '~/common/services/api.service';
 import { NewsfeedType } from '~/newsfeed/NewsfeedStore';
 import useDismissible from '~/services/hooks/useDismissable';
 
-const mapModels = (edge: any, inFeedNoticesDelivered, highlightsDimissed) => {
+export const mapModels = (
+  edge: any,
+  inFeedNoticesDelivered?,
+  highlightsDimissed?,
+) => {
   if (edge.node.__mapped) {
     return edge.node;
   }
@@ -76,7 +80,7 @@ const mapModels = (edge: any, inFeedNoticesDelivered, highlightsDimissed) => {
         break;
       case 'FeedNoticeNode':
         // add to the list of delivered notices
-        inFeedNoticesDelivered.current.push(edge.node.key);
+        inFeedNoticesDelivered?.current.push(edge.node.key);
         edge.node.__mapped = true;
         break;
     }
