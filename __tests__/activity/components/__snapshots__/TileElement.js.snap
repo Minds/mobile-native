@@ -10,7 +10,7 @@ exports[`Owner component renders correctly 1`] = `
         "width": 30,
       },
       {
-        "backgroundColor": "#38393D",
+        "backgroundColor": "#3b3b00ff",
       },
       {
         "borderWidth": 0.5,

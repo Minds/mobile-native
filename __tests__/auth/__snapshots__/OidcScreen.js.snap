@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ImageGalleryScreen should render correctly 1`] = `
+exports[`OidcScreen component should renders correctly 1`] = `
 <View>
   <View
     animate={
       {
         "transform": [
           {
-            "translateY": -100,
+            "translateY": 0,
           },
         ],
       }
@@ -20,9 +20,18 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
   >
     <View
       style={
-        {
-          "zIndex": 1,
-        }
+        [
+          {
+            "borderColor": "#53565A",
+          },
+          {
+            "borderBottomWidth": 1,
+          },
+          {
+            "minHeight": 55,
+            "zIndex": 1,
+          },
+        ]
       }
     >
       <View
@@ -137,54 +146,6 @@ exports[`ImageGalleryScreen should render correctly 1`] = `
         "flex": 1,
       }
     }
-  >
-    <View
-      containerDimensions={
-        {
-          "height": 1134,
-          "width": 750,
-        }
-      }
-      data={
-        [
-          {
-            "src": "http://fake.com0",
-          },
-          {
-            "src": "http://fake.com1",
-          },
-        ]
-      }
-      onScaleChange={[Function]}
-      onSwipeToClose={[Function]}
-      renderItem={[Function]}
-      style={
-        {
-          "backgroundColor": "#010100",
-        }
-      }
-    />
-    <View
-      animate={
-        {
-          "transform": [
-            {
-              "translateY": 100,
-            },
-          ],
-        }
-      }
-      style={
-        {
-          "backgroundColor": "#010100",
-        }
-      }
-      transition={
-        {
-          "mass": 0.3,
-        }
-      }
-    />
-  </View>
+  />
 </View>
 `;

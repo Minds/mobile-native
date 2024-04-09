@@ -1,7 +1,9 @@
 import api, { isNetworkError } from '../../src/common/services/api.service';
 import authService from '../../src/auth/AuthService';
 import delay from '../../src/common/helpers/delay';
-import { SessionService } from '../../src/common/services/session.service';
+import sessionService, {
+  SessionService,
+} from '../../src/common/services/session.service';
 import { SessionStorageService } from '../../src/common/services/storage/session.storage.service';
 
 jest.mock('../../src/common/services/api.service');
@@ -69,6 +71,7 @@ describe('auth service logout', () => {
 
   it('logout calls api/v1/logout api and returns', async () => {
     api.post.mockResolvedValue(true);
+    sessionService.logout = jest.fn().mockResolvedValue(true);
 
     const res = await authService.logout();
 

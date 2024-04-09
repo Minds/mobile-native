@@ -40,6 +40,7 @@ import {
   ApiError,
   FieldError,
 } from './ApiErrors';
+import sessionService from './session.service';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -84,7 +85,7 @@ export class ApiService {
     this.sessionIndex = sessionIndex;
 
     if (MINDS_CANARY) {
-      CookieManager.set('https://www.minds.com', {
+      CookieManager.set(APP_API_URI, {
         name: 'canary',
         value: '1',
         path: '/',
@@ -93,11 +94,11 @@ export class ApiService {
       });
     } else {
       if (IS_IOS) {
-        CookieManager.clearByName('https://www.minds.com', 'canary');
+        CookieManager.clearByName(APP_API_URI, 'canary');
       }
     }
     if (MINDS_STAGING) {
-      CookieManager.set('https://www.minds.com', {
+      CookieManager.set(APP_API_URI, {
         name: 'staging',
         value: '1',
         path: '/',
@@ -106,7 +107,7 @@ export class ApiService {
       });
     } else {
       if (IS_IOS) {
-        CookieManager.clearByName('https://www.minds.com', 'staging');
+        CookieManager.clearByName(APP_API_URI, 'staging');
       }
     }
 
@@ -320,7 +321,7 @@ export class ApiService {
       if (
         (isTokenExpired(error) ||
           (error.response && error.response.status === 401)) &&
-        this.accessToken
+        (this.accessToken || sessionService.sessionToken)
       ) {
         if (this.sessionIndex !== null) {
           session.setSessionExpiredFor(true, this.sessionIndex);
@@ -401,12 +402,17 @@ export class ApiService {
       ...customHeaders,
     };
 
+    const sessionToken = sessionService.sessionToken;
+    if (sessionService.sessionToken) {
+      headers['X-SESSION-TOKEN'] = sessionToken;
+    }
+
     const referrer = referrerService.get();
     if (referrer) {
       headers.minds_referrer = referrer;
     }
 
-    if (this.accessToken) {
+    if (this.accessToken && !sessionToken) {
       headers = {
         ...this.buildAuthorizationHeader(this.accessToken),
         ...headers,
@@ -644,7 +650,12 @@ export class ApiService {
         xhr.upload.addEventListener('progress', progress);
       }
       xhr.open('POST', APP_API_URI + this.buildUrl(url));
-      xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
+
+      if (sessionService.sessionToken) {
+        xhr.setRequestHeader('X-SESSION-TOKEN', sessionService.sessionToken);
+      } else {
+        xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
+      }
       xhr.setRequestHeader('Accept', 'application/json');
       xhr.setRequestHeader('Content-Type', 'multipart/form-data;');
       xhr.setRequestHeader('App-Version', Version.VERSION);

@@ -39,20 +39,22 @@ const styles = ThemedStyles.create({
     'paddingVertical3x',
     'bgPrimaryBackgroundHighlight',
   ],
-  get containerWithChildren() {
-    return [
-      ...this.container,
-      'borderBottomHair',
-      'bcolorPrimaryBorder',
-      'bgPrimaryBackground',
-    ];
-  },
+  containerWithChildren: [
+    {
+      borderTopLeftRadius: 18,
+      borderTopRightRadius: 18,
+    },
+    'paddingVertical3x',
+    'borderBottomHair',
+    'bcolorPrimaryBorder',
+    'bgPrimaryBackgroundHighlight',
+  ],
   handleBar: [
     {
       width: '20%',
       height: 5,
       borderRadius: 10,
     },
-    'bgTertiaryBackground',
+    'bgPrimaryBackgroundHighlight',
   ],
 });

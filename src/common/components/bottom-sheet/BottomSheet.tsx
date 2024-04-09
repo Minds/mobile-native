@@ -72,7 +72,7 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
 });
 
 const styles = ThemedStyles.create({
-  container: ['bgPrimaryBackground'],
+  container: ['bgPrimaryBackgroundHighlight'],
   handleIndicator: ['bgSecondaryText'],
 });
 
