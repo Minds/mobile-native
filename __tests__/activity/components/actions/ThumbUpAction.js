@@ -7,6 +7,11 @@ import ActivityModel from '../../../../src/newsfeed/ActivityModel';
 import ThumbUpAction from '../../../../src/newsfeed/activity/actions/ThumbAction';
 
 jest.mock('../../../../src/auth/UserStore');
+jest.mock('~/common/services/analytics.service', () => {
+  return {
+    trackClick: jest.fn(),
+  };
+});
 
 describe('Thumb action component', () => {
   let screen, entity;

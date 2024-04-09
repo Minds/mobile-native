@@ -52,14 +52,18 @@ export default class MediaView extends Component<PropsType> {
     let type = this.props.entity.custom_type || this.props.entity.subtype;
     if (
       !type &&
-      this.props.entity.hasThumbnails() &&
+      (this.props.entity.hasThumbnails() ||
+        this.props.entity.hasSiteMembershipPaywallThumbnail) &&
       this.props.entity.type !== 'comment'
     ) {
       type = 'image';
     }
     switch (type) {
       case 'batch':
-        if (this.props.entity.custom_data?.length > 1) {
+        if (
+          this.props.entity.custom_data?.length > 1 &&
+          !this.props.entity.hasSiteMembershipPaywallThumbnail
+        ) {
           return (
             <MediaViewMultiImage
               entity={this.props.entity}

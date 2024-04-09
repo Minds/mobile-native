@@ -1,6 +1,8 @@
-import { EventContext } from '@snowplow/react-native-tracker';
 import React, { PropsWithChildren, createContext, useContext } from 'react';
-import analyticsService, { ClickRef } from '../services/analytics.service';
+import analyticsService, {
+  ClickRef,
+  EventContext,
+} from '../services/analytics.service';
 
 const Context = createContext<EventContext[]>([]);
 

@@ -1,0 +1,451 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserDataScreen should load data and render correctly 1`] = `
+<View
+  style={
+    [
+      [
+        {
+          "flex": 1,
+        },
+        {
+          "backgroundColor": "#010100",
+        },
+      ],
+      [
+        {
+          "alignSelf": "center",
+          "maxWidth": 750,
+          "width": "100%",
+        },
+      ],
+    ]
+  }
+>
+  <RCTScrollView
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    scrollEnabled={false}
+    showsVerticalScrollIndicator={false}
+    style={
+      {
+        "flex": 1,
+      }
+    }
+  >
+    <View>
+      <Text
+        style={
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto_400Regular",
+            },
+            [
+              {
+                "paddingHorizontal": 16,
+              },
+              {
+                "paddingTop": 16,
+              },
+              {
+                "color": "#b9bbc0",
+              },
+            ],
+          ]
+        }
+      >
+        Your user data consists of two primary categories of data:
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto_400Regular",
+            },
+            [
+              {
+                "paddingHorizontal": 16,
+              },
+              {
+                "paddingTop": 16,
+              },
+              {
+                "color": "#b9bbc0",
+              },
+            ],
+          ]
+        }
+      >
+        (1) A record of your public contributions to the network, including your public profile, posts, media uploads, and votes. These are stored indefinitely (or until you remove them) so that they are available to you and other public users of the app.
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto_400Regular",
+            },
+            [
+              {
+                "paddingHorizontal": 16,
+              },
+              {
+                "paddingTop": 16,
+              },
+              {
+                "color": "#b9bbc0",
+              },
+            ],
+          ]
+        }
+      >
+        (2) Observational analytics, including which pages and posts you've seen, which buttons you've clicked on, and contextual information like which browser you're using, and where you came from. Observational analytics are used internally and allow us to reduce spam, diagnose problems with the app, and understand how to improve the service. They also allow us to enhance your experience, e.g. by recommending only posts that you haven't already seen before.
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto_400Regular",
+            },
+            [
+              {
+                "paddingHorizontal": 16,
+              },
+              {
+                "paddingTop": 16,
+              },
+              {
+                "color": "#b9bbc0",
+              },
+            ],
+          ]
+        }
+      >
+        Observational analytics are not shared with outside companies for tracking purposes. Moreover, we offer you the transparency to download your personal analytics (coming soon) to see what's collected, and optionally opt-out of collection if you prefer.
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto_400Regular",
+            },
+            [
+              {
+                "paddingHorizontal": 16,
+              },
+              {
+                "paddingTop": 16,
+              },
+              {
+                "color": "#b9bbc0",
+              },
+            ],
+          ]
+        }
+      >
+        <Text
+          style={
+            [
+              {
+                "color": "#F2F2F2",
+              },
+              {
+                "fontFamily": "Roboto_400Regular",
+              },
+              [
+                {
+                  "paddingHorizontal": 16,
+                },
+                {
+                  "paddingTop": 16,
+                },
+                {
+                  "color": "#fd8b7c",
+                },
+              ],
+            ]
+          }
+        >
+          Note: 
+        </Text>
+        By opting out of observational analytics, you may see recommendations for posts you've already seen. And because observational analytics allow us to detect spam engagements, opting out means that your app engagements will not contribute to trending rankings and engagement rewards.
+      </Text>
+      <View
+        accessibilityRole="checkbox"
+        accessibilityState={
+          {
+            "checked": false,
+          }
+        }
+        checkedIcon="check-square-o"
+        onPress={[Function]}
+        size={24}
+        style={
+          {
+            "backgroundColor": "transparent",
+            "borderColor": "#ededed",
+            "borderRadius": 3,
+            "borderWidth": 0,
+            "margin": 5,
+            "marginLeft": 16,
+            "marginRight": 10,
+            "padding": 10,
+            "paddingLeft": 0,
+          }
+        }
+        testID="checkbox"
+        uncheckedColor="#bfbfbf"
+        uncheckedIcon="square-o"
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+            }
+          }
+        >
+          FontAwesome
+          <Text
+            style={
+              {
+                "color": "#F2F2F2",
+                "fontWeight": "bold",
+                "marginLeft": 10,
+                "marginRight": 10,
+              }
+            }
+            testID="checkboxTitle"
+          >
+            Opt-out of observational analtytics
+          </Text>
+        </View>
+      </View>
+      <Text
+        style={
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto_400Regular",
+            },
+            [
+              {
+                "fontSize": 18,
+              },
+              {
+                "paddingHorizontal": 16,
+              },
+              {
+                "paddingTop": 16,
+              },
+              {
+                "color": "#b9bbc0",
+              },
+            ],
+          ]
+        }
+      >
+        User data transparency
+      </Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#F2F2F2",
+            },
+            {
+              "fontFamily": "Roboto_400Regular",
+            },
+            [
+              {
+                "paddingHorizontal": 16,
+              },
+              {
+                "paddingTop": 16,
+              },
+              {
+                "paddingBottom": 16,
+              },
+              {
+                "color": "#b9bbc0",
+              },
+            ],
+          ]
+        }
+      >
+        It's important to us that you're in control of your user data. If you wish to delete the observational data, you may do so below.
+      </Text>
+      <View
+        style={
+          [
+            {
+              "paddingHorizontal": 16,
+            },
+            {
+              "paddingTop": 16,
+            },
+            {
+              "paddingBottom": 32,
+            },
+          ]
+        }
+      >
+        <View
+          style={
+            {
+              "alignSelf": "stretch",
+              "marginTop": 24,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "alignSelf": "stretch",
+              }
+            }
+            testID="delete-data-btn"
+          >
+            <View
+              style={
+                [
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "transparent",
+                    "borderRadius": 100,
+                    "flexDirection": "column",
+                    "justifyContent": "center",
+                    "overflow": "hidden",
+                  },
+                  undefined,
+                  {
+                    "minHeight": 42,
+                    "paddingHorizontal": 24,
+                    "paddingVertical": 2,
+                  },
+                  undefined,
+                  undefined,
+                  undefined,
+                  false,
+                ]
+              }
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#fd8b7c",
+                    "borderColor": "transparent",
+                    "borderRadius": 100,
+                    "borderWidth": 1,
+                    "bottom": 0,
+                    "justifyContent": "center",
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+              />
+              <View
+                collapsable={false}
+                style={
+                  {
+                    "backgroundColor": "rgba(0, 0, 0, 0.1)",
+                    "bottom": 0,
+                    "left": 0,
+                    "opacity": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  }
+                }
+              />
+              <View
+                collapsable={false}
+                style={
+                  {
+                    "transform": [
+                      {
+                        "scale": 1,
+                      },
+                    ],
+                  }
+                }
+              >
+                <Text
+                  numberOfLines={1}
+                  style={
+                    [
+                      {
+                        "color": "#FFFFFF",
+                      },
+                      {
+                        "fontFamily": "Roboto_500Medium",
+                      },
+                      {
+                        "fontSize": 18,
+                        "lineHeight": 24,
+                      },
+                      {
+                        "textAlign": "left",
+                      },
+                    ]
+                  }
+                >
+                  Delete my observational data
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;

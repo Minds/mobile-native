@@ -56,6 +56,8 @@ jest.mock('@react-native-community/netinfo', () => ({
   addEventListener: jest.fn(),
 }));
 
+jest.mock('./tenant.json');
+
 jest.mock('./AppStores');
 jest.mock('./AppMessageProvider');
 

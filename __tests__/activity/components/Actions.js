@@ -27,6 +27,7 @@ jest.mock(
   '../../../src/newsfeed/activity/actions/RemindAction',
   () => 'RemindAction',
 );
+jest.mock('~/common/services/analytics.service');
 
 xdescribe('Activity component', () => {
   let user, comments, entity, screen, activity;

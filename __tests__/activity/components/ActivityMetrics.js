@@ -7,6 +7,7 @@ import renderer from 'react-test-renderer';
 import ActivityMetrics from '../../../src/newsfeed/activity/metrics/ActivityMetrics';
 
 jest.mock('../../../src/auth/UserStore');
+jest.mock('~/common/services/analytics.service');
 
 describe('activity metrics component', () => {
   let screen;

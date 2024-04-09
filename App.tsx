@@ -40,7 +40,6 @@ import i18n from './src/common/services/i18n.service';
 // import receiveShareService from './src/common/services/receive-share.service';
 import appInitManager from './AppInitManager';
 import AppMessageProvider from 'AppMessageProvider';
-import ExperimentsProvider from 'ExperimentsProvider';
 import * as SplashScreen from 'expo-splash-screen';
 import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
@@ -173,48 +172,44 @@ class App extends Component<Props> {
     return (
       <FontsLoader>
         <GestureHandlerRootView style={appContainerStyle}>
-          <ExperimentsProvider>
-            <SafeAreaProvider>
-              <UIProvider
-                defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
-                {sessionService.ready && (
-                  <StoresProvider>
-                    <QueryProvider>
-                      <Provider key="app" {...stores}>
-                        <NavigationContainer
-                          ref={navigationRef}
-                          theme={ThemedStyles.navTheme}
-                          onReady={appInitManager.onNavigatorReady}
-                          onStateChange={NavigationService.onStateChange}>
-                          <AppMessageProvider
-                            key={`message_${ThemedStyles.theme}`}>
-                            <FriendlyCaptchaProvider
-                              ref={setFriendlyCaptchaReference}>
-                              <PortalProvider>
-                                <BottomSheetModalProvider>
-                                  <ErrorBoundary
-                                    message="An error occurred"
-                                    containerStyle={
-                                      ThemedStyles.style.centered
-                                    }>
-                                    <ConfigProvider>
-                                      <NavigationStack
-                                        key={ThemedStyles.theme + i18n.locale}
-                                      />
-                                    </ConfigProvider>
-                                  </ErrorBoundary>
-                                </BottomSheetModalProvider>
-                              </PortalProvider>
-                            </FriendlyCaptchaProvider>
-                          </AppMessageProvider>
-                        </NavigationContainer>
-                      </Provider>
-                    </QueryProvider>
-                  </StoresProvider>
-                )}
-              </UIProvider>
-            </SafeAreaProvider>
-          </ExperimentsProvider>
+          <SafeAreaProvider>
+            <UIProvider
+              defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
+              {sessionService.ready && (
+                <StoresProvider>
+                  <QueryProvider>
+                    <Provider key="app" {...stores}>
+                      <NavigationContainer
+                        ref={navigationRef}
+                        theme={ThemedStyles.navTheme}
+                        onReady={appInitManager.onNavigatorReady}
+                        onStateChange={NavigationService.onStateChange}>
+                        <AppMessageProvider
+                          key={`message_${ThemedStyles.theme}`}>
+                          <FriendlyCaptchaProvider
+                            ref={setFriendlyCaptchaReference}>
+                            <PortalProvider>
+                              <BottomSheetModalProvider>
+                                <ErrorBoundary
+                                  message="An error occurred"
+                                  containerStyle={ThemedStyles.style.centered}>
+                                  <ConfigProvider>
+                                    <NavigationStack
+                                      key={ThemedStyles.theme + i18n.locale}
+                                    />
+                                  </ConfigProvider>
+                                </ErrorBoundary>
+                              </BottomSheetModalProvider>
+                            </PortalProvider>
+                          </FriendlyCaptchaProvider>
+                        </AppMessageProvider>
+                      </NavigationContainer>
+                    </Provider>
+                  </QueryProvider>
+                </StoresProvider>
+              )}
+            </UIProvider>
+          </SafeAreaProvider>
         </GestureHandlerRootView>
       </FontsLoader>
     );

@@ -10,6 +10,8 @@ import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker'
 import { shallow } from 'enzyme';
 import sessionService from '../../../src/common/services/session.service';
 
+jest.mock('~/common/services/analytics.service');
+
 describe('BottomContent component', () => {
   let model, navigation, screen;
   beforeEach(() => {

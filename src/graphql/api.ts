@@ -928,6 +928,7 @@ export type Mutation = {
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
+  deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
   invite?: Maybe<Scalars['Void']['output']>;
@@ -1270,6 +1271,11 @@ export type PlanSummary = {
   oneTimeFeeCents?: Maybe<Scalars['Int']['output']>;
 };
 
+export type PostHogPerson = {
+  __typename?: 'PostHogPerson';
+  id: Scalars['String']['output'];
+};
+
 export type PostSubscription = {
   __typename?: 'PostSubscription';
   entityGuid: Scalars['String']['output'];
@@ -1379,6 +1385,7 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  postHogPerson: PostHogPerson;
   postSubscription: PostSubscription;
   /** Gets reports. */
   reports: ReportsConnection;
@@ -5465,6 +5472,15 @@ export type CreateNewReportMutation = {
   createNewReport: boolean;
 };
 
+export type DeletePostHogPersonMutationVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type DeletePostHogPersonMutation = {
+  __typename?: 'Mutation';
+  deletePostHogPerson: boolean;
+};
+
 export const PageInfoFragmentDoc = `
     fragment PageInfo on PageInfo {
   hasPreviousPage
@@ -7739,6 +7755,45 @@ useCreateNewReportMutation.fetcher = (
 ) =>
   gqlFetcher<CreateNewReportMutation, CreateNewReportMutationVariables>(
     CreateNewReportDocument,
+    variables,
+    options,
+  );
+export const DeletePostHogPersonDocument = `
+    mutation DeletePostHogPerson {
+  deletePostHogPerson
+}
+    `;
+export const useDeletePostHogPersonMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    DeletePostHogPersonMutation,
+    TError,
+    DeletePostHogPersonMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    DeletePostHogPersonMutation,
+    TError,
+    DeletePostHogPersonMutationVariables,
+    TContext
+  >(
+    ['DeletePostHogPerson'],
+    (variables?: DeletePostHogPersonMutationVariables) =>
+      gqlFetcher<
+        DeletePostHogPersonMutation,
+        DeletePostHogPersonMutationVariables
+      >(DeletePostHogPersonDocument, variables)(),
+    options,
+  );
+useDeletePostHogPersonMutation.fetcher = (
+  variables?: DeletePostHogPersonMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<DeletePostHogPersonMutation, DeletePostHogPersonMutationVariables>(
+    DeletePostHogPersonDocument,
     variables,
     options,
   );

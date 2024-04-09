@@ -284,6 +284,14 @@ const createMindsVideoStore = ({
      * Play the current video and activate the player
      */
     async play(sound?: boolean) {
+      // check site membership
+      if (
+        this.entity?.site_membership &&
+        !this.entity.site_membership_unlocked
+      ) {
+        return;
+      }
+
       // check pay walled content
       if (this.entity && this.entity.paywall) {
         await this.entity.unlockOrPay();
@@ -361,7 +369,9 @@ const createMindsVideoStore = ({
     async preload() {
       if (
         !this.video && // ignore if a video is defined (passed as a prop)
-        !this.entity?.paywall &&
+        (!this.entity?.site_membership ||
+          this.entity?.site_membership_unlocked) &&
+        !this.entity?.paywall && // ignore if the entity is paywalled
         !SettingsStore.dataSaverEnabled
       ) {
         await this.init();
