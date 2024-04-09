@@ -10,7 +10,7 @@
   "ACCENT_COLOR_LIGHT": "#1B85D6",
   "ACCENT_COLOR_DARK": "#FFD048",
   "BACKGROUND_COLOR_LIGHT": "#FFFFFF",
-  "BACKGROUND_COLOR_DARK": "#010100",
+  "BACKGROUND_COLOR_DARK": "#010101",
   "WELCOME_LOGO": "horizontal",
   "ADAPTIVE_ICON": "./assets/images/icon_adaptive.png",
   "ADAPTIVE_COLOR": "#ffffff",
