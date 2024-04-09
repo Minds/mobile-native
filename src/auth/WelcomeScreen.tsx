@@ -40,8 +40,6 @@ function WelcomeScreen(props: PropsType) {
     refetch,
   } = useLoginWeb();
 
-  console.log('errr', oidcError);
-
   const onOidcPress = useCallback(() => {
     props.navigation.navigate('OidcLogin', { loginUrl: oidcLoginUrl });
   }, [props.navigation, oidcLoginUrl]);

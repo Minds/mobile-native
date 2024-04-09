@@ -73,8 +73,6 @@ function onStateChange() {
   const currentRouteName = currentRoute?.name;
   const currentRouteParams = currentRoute?.params;
 
-  console.log('route', currentRoute);
-
   // record analytics event for screen view
   analyticsService.onNavigatorStateChange(currentRouteName, currentRouteParams);
 }
