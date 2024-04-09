@@ -9,7 +9,7 @@ exports[`UserDataScreen should load data and render correctly 1`] = `
           "flex": 1,
         },
         {
-          "backgroundColor": "#1C1D1F",
+          "backgroundColor": "#010100",
         },
       ],
       [
