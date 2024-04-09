@@ -2,6 +2,7 @@ import mindsConfigService from '~/common/services/minds-config.service';
 import createCardSelectorStore from './createCardSelectorStore';
 
 jest.mock('~/common/services/minds-config.service');
+jest.mock('~/common/services/analytics.service');
 
 describe('createCardSelectorStore', () => {
   let store;

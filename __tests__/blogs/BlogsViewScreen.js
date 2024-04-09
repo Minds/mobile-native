@@ -37,6 +37,8 @@ jest.mock(
   () => require('react-native-safe-area-context/jest/mock').default,
 );
 
+jest.mock('../../src/common/services/analytics.service');
+
 /**
  * Tests
  */

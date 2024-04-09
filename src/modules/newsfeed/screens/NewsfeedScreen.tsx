@@ -279,7 +279,7 @@ const Header = () => (
   <>
     <CheckLanguage />
     <UpdateBanner />
-    <RemoteBanner />
+    {!IS_TENANT && <RemoteBanner />}
     {!IS_TENANT && <InitialOnboardingButton />}
     {!IS_TENANT && <PortraitContentBar />}
     <NewsfeedTabs newsfeed={useLegacyStores().newsfeed} />

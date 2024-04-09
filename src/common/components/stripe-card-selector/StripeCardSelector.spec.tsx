@@ -5,6 +5,7 @@ import mindsConfigService from '~/common/services/minds-config.service';
 
 jest.mock('../InputSelectorV2', () => () => null);
 jest.mock('~/common/services/minds-config.service');
+jest.mock('~/common/services/analytics.service');
 
 describe('StripeCardSelector', () => {
   test('should render correctly', () => {

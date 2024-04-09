@@ -41,6 +41,8 @@ jest.mock('../common/services/minds-config.service', () => ({
   },
 }));
 
+jest.mock('../common/services/analytics.service');
+
 const mockedNavigation = {
   setParams: jest.fn(),
 };

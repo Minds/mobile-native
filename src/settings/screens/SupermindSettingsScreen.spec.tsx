@@ -13,6 +13,7 @@ jest.mock('~/common/hooks/use-stores');
 jest.mock('~/common/services/permissions.service');
 jest.mock('~/common/services/minds-config.service');
 jest.mock('~/common/services/api.service');
+jest.mock('~/common/services/analytics.service');
 
 const mockedApi = apiService as jest.Mocked<typeof apiService>;
 
