@@ -2,9 +2,12 @@ import { ExpoConfig, ConfigContext } from 'expo/config';
 import Tenant from './tenant.json';
 import { APP_VERSION } from './app.constants';
 
+// We only use a custom build number for Android OSS builds (The rest use auto-incremented build numbers)
 const appBuildNumber = process.env.MINDS_APP_BUILD
   ? { versionCode: parseInt(process.env.MINDS_APP_BUILD, 10) }
   : {};
+
+const IS_OSS = (appBuildNumber.versionCode || 0) > 1050000001;
 
 type ResizeType = 'cover' | 'contain';
 
@@ -31,6 +34,19 @@ const extraUpdate: any = is_previewer_app
       fallbackToCacheTimeout: 0,
     }
   : {};
+
+const permissions = [
+  'android.permission.READ_EXTERNAL_STORAGE',
+  'android.permission.WRITE_EXTERNAL_STORAGE',
+  'android.permission.ACCESS_MEDIA_LOCATION',
+  'android.permission.CAMERA',
+  'android.permission.RECORD_AUDIO',
+  'android.permission.POST_NOTIFICATIONS',
+];
+
+if (IS_OSS) {
+  permissions.push('android.permission.REQUEST_INSTALL_PACKAGES');
+}
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -107,14 +123,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       resizeMode: Tenant.APP_SPLASH_RESIZE as ResizeType,
       backgroundColor: is_dark ? '#1C1D1F' : '#F6F7F7',
     },
-    permissions: [
-      'android.permission.READ_EXTERNAL_STORAGE',
-      'android.permission.WRITE_EXTERNAL_STORAGE',
-      'android.permission.ACCESS_MEDIA_LOCATION',
-      'android.permission.CAMERA',
-      'android.permission.RECORD_AUDIO',
-      'android.permission.POST_NOTIFICATIONS',
-    ],
+    permissions,
     googleServicesFile: './google-services.json',
   },
   ios: {
