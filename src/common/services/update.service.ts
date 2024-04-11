@@ -51,7 +51,7 @@ class UpdateService {
 
           const doUpdate = () => {
             // goto update screen
-            navigationService.navigate('Update');
+            navigationService.navigate('Update', { href: last.href });
             this.version = last.version;
             this.updateApk(last.href);
           };
