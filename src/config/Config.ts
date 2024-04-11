@@ -230,10 +230,13 @@ export const MINDS_DEEPLINK = [
   ['boost/console/newsfeed/history', 'BoostConsole', 'navigate'],
 ];
 
-// IF TRUE COMMENT THE SMS PERMISSIONS IN ANDROID MANIFEST TOO!!!
+const buildNumber = parseInt(`${DeviceInfo.getBuildNumber()}`, 10);
+
 export const GOOGLE_PLAY_STORE =
-  parseInt(`${DeviceInfo.getBuildNumber()}`, 10) < 1050000000 &&
-  Platform.OS === 'android';
+  buildNumber < 1050000000 && Platform.OS === 'android';
+
+export const IS_ANDROID_OSS =
+  buildNumber >= 1050000000 && Platform.OS === 'android';
 
 export const IS_FROM_STORE = GOOGLE_PLAY_STORE || Platform.OS === 'ios';
 

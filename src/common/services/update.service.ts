@@ -51,9 +51,9 @@ class UpdateService {
 
           const doUpdate = () => {
             // goto update screen
-            navigationService.navigate('Update');
+            navigationService.navigate('Update', { href: last.href });
             this.version = last.version;
-            this.updateApk(last.href);
+            // this.updateApk(last.href);
           };
 
           if (!requireConfirmation) {
@@ -65,15 +65,15 @@ class UpdateService {
             i18n.t('wantToUpdate'),
             [
               { text: i18n.t('no'), style: 'cancel' },
-              {
-                text: i18n.t('rememberTomorrow'),
-                onPress: () => {
-                  storages.app.setString(
-                    '@mindsUpdateDate',
-                    moment().format('YYYY-MM-DD'),
-                  );
-                },
-              },
+              // {
+              //   text: i18n.t('rememberTomorrow'),
+              //   onPress: () => {
+              //     storages.app.setString(
+              //       '@mindsUpdateDate',
+              //       moment().format('YYYY-MM-DD'),
+              //     );
+              //   },
+              // },
               {
                 text: i18n.t('yes'),
                 onPress: doUpdate,
