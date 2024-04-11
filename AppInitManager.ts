@@ -7,7 +7,7 @@ import pushService from './src/common/services/push.service';
 // import receiveShare from './src/common/services/receive-share.service';
 
 import {
-  IS_FROM_STORE,
+  IS_ANDROID_OSS,
   IS_TENANT,
   IS_TENANT_PREVIEW,
 } from './src/config/Config';
@@ -151,7 +151,7 @@ export class AppInitManager {
     pushService.registerToken();
 
     // OSS check update
-    if (!IS_FROM_STORE) {
+    if (IS_ANDROID_OSS) {
       setTimeout(async () => {
         const user = sessionService.getUser();
         updateService.checkUpdate(!user.canary);
