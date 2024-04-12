@@ -1,15 +1,18 @@
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { produce } from 'immer';
 import {
+  GetChatMessagesDocument,
   GetChatMessagesQuery,
+  GetChatMessagesQueryVariables,
   useCreateChatMessageMutation,
   useDeleteChatMessageMutation,
-  useInfiniteGetChatMessagesQuery,
 } from '~/graphql/api';
 import {
   InfiniteData,
+  UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
+  useInfiniteQuery,
   useQueryClient,
 } from '@tanstack/react-query';
 import sessionService from '~/common/services/session.service';
@@ -18,6 +21,8 @@ import { ChatMessage } from '../types';
 import delay from '~/common/helpers/delay';
 import logService from '~/common/services/log.service';
 import { showNotification } from 'AppMessages';
+import { useChatSocketService } from '../service/chat-socket-service';
+import { gqlFetcher } from '~/common/services/api.service';
 
 const PAGE_SIZE = 12;
 
@@ -38,7 +43,13 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
   /**
    * Bidirectional infinite scroll query
    */
-  const query = useInfiniteGetChatMessagesQuery(
+  const {
+    fetchPreviousPage,
+    fetchNextPage,
+    refetch,
+    isFetchingPreviousPage,
+    data,
+  } = useInfiniteGetChatMessagesQuery(
     'roomGuid',
     {
       roomGuid,
@@ -72,20 +83,25 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
     },
   );
 
+  const loadNewMessages = () => {
+    loadAllNewMessages({ fetchPreviousPage, queryClient, key });
+  };
+
   /**
    * Create chat message mutation
    */
   const createMessageMutation = useCreateChatMessageMutation({
-    onMutate: async params => {
+    onMutate: params => {
       const me = sessionService.getUser();
       const now = moment();
+      const uuid = uuidv4();
 
       // new optimistic message
       const newMessage: ChatMessage = {
         cursor: '',
         node: {
-          id: uuidv4(),
-          guid: '',
+          id: uuid,
+          guid: uuid,
           plainText: params.plainText,
           timeCreatedISO8601: now.toISOString(),
           timeCreatedUnix: now.unix().toString(),
@@ -104,19 +120,6 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
 
       pendingMessages.current = [newMessage, ...pendingMessages.current];
 
-      // cancel any previous query
-      await queryClient.cancelQueries({
-        queryKey: key,
-      });
-
-      // set hasNextPage to true so we can fetch
-      queryClient.setQueryData<any>(key, oldData => {
-        if (oldData) {
-          oldData.pages[0].chatMessages.pageInfo.hasNextPage = true;
-        }
-        return oldData;
-      });
-
       // we force the render to update the list with the prepended pending messages
       forceRender();
 
@@ -130,9 +133,24 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
         );
       }
     },
-    onSettled: (data, err, _, context) => {
+    onSettled: async (data, err, _, context) => {
+      if (err) {
+        logService.exception('[useChatRoomMessagesQuery]', err);
+        return;
+      }
+      // cancel any previous query
+      await queryClient.cancelQueries({
+        queryKey: key,
+      });
+      // set hasNextPage to true so we can fetch
+      queryClient.setQueryData<any>(key, oldData => {
+        if (oldData) {
+          oldData.pages[0].chatMessages.pageInfo.hasNextPage = true;
+        }
+        return oldData;
+      });
       // we remove the optimistic message
-      query.fetchPreviousPage().finally(() => {
+      fetchPreviousPage().finally(() => {
         if (pendingMessages.current.length > 0 && context) {
           pendingMessages.current = pendingMessages.current.filter(
             message => message.node.id !== context.newMessage.node.id,
@@ -183,7 +201,7 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
   const messages = useMemo(
     () => {
       return pendingMessages.current.concat(
-        query.data?.pages.flatMap(
+        data?.pages.flatMap(
           (page: GetChatMessagesQuery & { _reversed?: boolean }) => {
             const edges = page.chatMessages.edges as ChatMessage[];
 
@@ -198,15 +216,31 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
     },
     // do not remove render from deps! It is used to force  re-render when new messages are added
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [query.data, render],
+    [data, render],
   );
 
-  const loadNewMessages = useCallback(() => {
-    loadAllNewMessages(query, queryClient, key);
-  }, [query, queryClient]);
+  const chatSocketService = useChatSocketService();
+
+  // rooms should be listened globally, for testing purposes I'm listening to a single room
+  useEffect(() => {
+    chatSocketService.listenToRoomGuids([roomGuid]);
+    chatSocketService.onMessage(roomGuid, data => {
+      if (
+        data.type === 'NEW_MESSAGE' &&
+        data.metadata.senderGuid !== sessionService.guid
+      ) {
+        loadAllNewMessages({ fetchPreviousPage, queryClient, key });
+      } else {
+        console.log('loadAllNewMessages is fetching previous page');
+      }
+    });
+  }, [roomGuid, chatSocketService, fetchPreviousPage, queryClient]);
 
   return {
-    query,
+    fetchPreviousPage,
+    fetchNextPage,
+    refetch,
+    isFetchingPreviousPage,
     messages,
     createMessageMutation,
     deleteMessage: (messageGuid: string) => {
@@ -222,15 +256,27 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
   };
 }
 
-async function loadAllNewMessages(
-  query: UseInfiniteQueryResult<GetChatMessagesQuery, unknown>,
-  queryClient: ReturnType<typeof useQueryClient>,
+/**
+ * Loads all the new messages pages available
+ */
+async function loadAllNewMessages({
+  fetchPreviousPage,
+  queryClient,
   key,
-) {
+}: {
+  fetchPreviousPage: UseInfiniteQueryResult<
+    GetChatMessagesQuery,
+    unknown
+  >['fetchPreviousPage'];
+  queryClient: ReturnType<typeof useQueryClient>;
+  key;
+}) {
   let endReached = false;
   let attempts = 10;
+  const data =
+    queryClient.getQueryData<InfiniteData<GetChatMessagesQuery>>(key);
   // set hasNextPage to true so we can fetch
-  queryClient.setQueryData<any>(key, oldData => {
+  queryClient.setQueryData<InfiniteData<GetChatMessagesQuery>>(key, oldData => {
     if (oldData) {
       oldData.pages[0].chatMessages.pageInfo.hasNextPage = true;
     }
@@ -243,12 +289,17 @@ async function loadAllNewMessages(
       await queryClient.cancelQueries({
         queryKey: key,
       });
-      const { data } = await query.fetchPreviousPage();
-      if (!data?.pages[0].chatMessages.pageInfo.hasNextPage) {
+      const oldPageCount = data?.pages.length;
+      const { data: newData } = await fetchPreviousPage();
+      if (
+        !newData?.pages[0].chatMessages.pageInfo.hasNextPage ||
+        !newData?.pages[0].chatMessages.edges.length ||
+        oldPageCount === newData?.pages.length
+      ) {
         endReached = true;
 
         // if we receive an empty page, we remove it and mark the hasNextPage as false
-        if (data?.pages[0].chatMessages.edges.length === 0) {
+        if (newData?.pages[0].chatMessages.edges.length === 0) {
           queryClient.setQueryData<any>(key, oldData => {
             if (oldData) {
               oldData.pages.shift();
@@ -260,8 +311,41 @@ async function loadAllNewMessages(
         }
       }
     } catch (error) {
+      console.log('error fetching new messages', error);
       attempts--;
       await delay(1000);
     }
   } while (!endReached || attempts === 0);
+
+  // if all attempts failed, mark hasNextPage as false
+  if (attempts === 0 && !endReached) {
+    queryClient.setQueryData<any>(key, oldData => {
+      if (oldData) {
+        oldData.pages[0].chatMessages.pageInfo.hasNextPage = false;
+      }
+      return oldData;
+    });
+  }
 }
+
+// Custom hook that allows to cancel the query using signal (codegen doesn't support it)
+export const useInfiniteGetChatMessagesQuery = <
+  TData = GetChatMessagesQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetChatMessagesQueryVariables,
+  variables: GetChatMessagesQueryVariables,
+  options?: UseInfiniteQueryOptions<GetChatMessagesQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetChatMessagesQuery, TError, TData>(
+    ['GetChatMessages.infinite', variables],
+    metaData =>
+      gqlFetcher<GetChatMessagesQuery, GetChatMessagesQueryVariables>(
+        GetChatMessagesDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+        undefined,
+        metaData.signal,
+      )(),
+    options,
+  );
+};
