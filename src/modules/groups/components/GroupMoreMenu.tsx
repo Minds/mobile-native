@@ -9,7 +9,7 @@ import {
   BottomSheetMenuItem,
 } from '~/common/components/bottom-sheet';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
-import { APP_URI } from '~/config/Config';
+import { APP_URI, BOOSTS_ENABLED } from '~/config/Config';
 import GroupModel from '~/groups/GroupModel';
 import NavigationService from '../../../navigation/NavigationService';
 import { GroupContextType, useGroupContext } from '../contexts/GroupContext';
@@ -44,7 +44,7 @@ const getOptions = ({
 
   const link = `${APP_URI}group/${group.guid}/feed`;
 
-  if (PermissionsService.canBoost()) {
+  if (PermissionsService.canBoost() && BOOSTS_ENABLED) {
     options.push({
       iconName: 'trending-up',
       iconType: 'material',
@@ -82,7 +82,7 @@ const getOptions = ({
     },
   });
 
-  if (group['is:owner']) {
+  if (group['is:owner'] && BOOSTS_ENABLED) {
     options.push({
       iconName: group.show_boosts ? 'remove' : 'done',
       iconType: 'material',

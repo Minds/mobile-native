@@ -3,7 +3,8 @@ const fetch = require('node-fetch');
 const fse = require('fs-extra');
 const fs = require('fs');
 const { generateToken } = require('./helpers/jwt');
-const { addAdaptiveIcon } = require('./adaptive-icon');
+// disable until we fix it
+// const { addAdaptiveIcon } = require('./adaptive-icon');
 
 const args = process.argv.slice(2);
 const preview = args[1] === '--preview';
@@ -55,12 +56,17 @@ async function setupTenant(id) {
           )
         ).appReadyMobileConfig;
     // generate tenant json
+
+    if (!isMinds) {
+      data.POSTHOG_API_KEY = 'phc_Vm1E7gX6he2WNulsVc4G6sh5IAiYSLku1McMKM0oADP';
+    }
+
     generateTenantJSON(data);
     if (!isMinds) {
       // download the assets
       await downloadAssets(data.assets);
       // add adaptive icon in the assets folder
-      await addAdaptiveIcon();
+      // await addAdaptiveIcon();
     }
     if (preview) {
       // copy previewer patches
@@ -103,6 +109,7 @@ function generateTenantJSON(data) {
     TENANT_ID: data.TENANT_ID,
     API_URL: data.API_URL,
     EAS_PROJECT_ID: data.EAS_PROJECT_ID,
+    POSTHOG_API_KEY: data.POSTHOG_API_KEY,
   };
 
   console.log('Tenant', tenant);
