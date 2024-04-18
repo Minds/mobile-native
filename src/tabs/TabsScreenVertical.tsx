@@ -203,7 +203,7 @@ function DrawerContent(props) {
     <DrawerContentScrollView {...props}>
       <DoubleTapSafeButton
         onPress={handleComposePress}
-        onLongPress={handleComposeLongPress}
+        onLongPress={IS_TENANT ? undefined : handleComposeLongPress}
         style={styles.composeButton}
         delayLongPress={200}>
         <ComposeButton />

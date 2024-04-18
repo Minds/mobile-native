@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Linking, TouchableOpacity, View } from 'react-native';
+import { Linking, View } from 'react-native';
 import ThemedStyles from '../styles/ThemedStyles';
 import i18nService from '../common/services/i18n.service';
 import { useAppState } from '@react-native-community/hooks';
 import { Camera, CameraPermissionStatus } from 'react-native-vision-camera';
 import { IS_IOS, TENANT } from '../config/Config';
 import MText from '../common/components/MText';
+import NavigationService from '~/navigation/NavigationService';
+import { Button } from '~/common/ui';
 
 type PropsType = {
   children: React.ReactNode;
@@ -56,17 +58,27 @@ export default function PermissionsCheck(props: PropsType) {
 
   if (status[1] === 'not-determined' || (status[1] === 'denied' && !IS_IOS)) {
     return (
-      <TouchableOpacity
-        activeOpacity={0.7}
-        style={[theme.flexContainer, theme.centered, theme.padding8x]}
-        onPress={tap}>
+      <View style={[theme.flexContainer, theme.centered, theme.padding8x]}>
         <MText style={[theme.fontXL, theme.textCenter, theme.colorWhite]}>
           {i18nService.t('capture.allowMinds', { TENANT })}
         </MText>
-        <MText style={[theme.fontL, theme.paddingTop2x, theme.colorLink]}>
-          {i18nService.t('permissions.tapAllow')}
-        </MText>
-      </TouchableOpacity>
+        <Button
+          size="small"
+          align="center"
+          onPress={tap}
+          type="action"
+          top="XL">
+          {i18nService.t('continue')}
+        </Button>
+
+        {!IS_IOS && (
+          <MText
+            style={[theme.fontL, theme.paddingTop8x, theme.colorSecondaryText]}
+            onPress={() => NavigationService.goBack()}>
+            {i18nService.t('back')}
+          </MText>
+        )}
+      </View>
     );
   }
 
@@ -78,10 +90,18 @@ export default function PermissionsCheck(props: PropsType) {
           onPress={() => Linking.openSettings()}>
           {i18nService.t('capture.blockedMinds')}
         </MText>
+        <Button
+          size="small"
+          align="center"
+          onPress={() => Linking.openSettings()}
+          type="action"
+          top="XL">
+          {i18nService.t('moreScreen.settings')}
+        </Button>
         <MText
-          style={[theme.fontL, theme.paddingTop2x, theme.colorLink]}
-          onPress={() => Linking.openSettings()}>
-          {i18nService.t('permissions.tapAllow')}
+          style={[theme.fontL, theme.paddingTop10x, theme.colorSecondaryText]}
+          onPress={() => NavigationService.goBack()}>
+          {i18nService.t('back')}
         </MText>
       </View>
     );

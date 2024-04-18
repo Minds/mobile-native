@@ -350,16 +350,15 @@ export default withErrorBoundaryScreen(
           </View>
 
           {bottomBar}
+          <FloatingBackButton
+            size="huge"
+            icon="close"
+            onPress={mediaToConfirm ? retake : props.navigation.goBack}
+            light
+            shadow
+            style={theme.padding3x}
+          />
         </PermissionsCheck>
-
-        <FloatingBackButton
-          size="huge"
-          icon="close"
-          onPress={mediaToConfirm ? retake : props.navigation.goBack}
-          light
-          shadow
-          style={theme.padding3x}
-        />
       </View>
     );
   }),

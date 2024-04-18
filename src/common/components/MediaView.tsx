@@ -52,7 +52,7 @@ export default class MediaView extends Component<PropsType> {
     let type = this.props.entity.custom_type || this.props.entity.subtype;
     if (
       !type &&
-      (this.props.entity.hasThumbnails() ||
+      ((this.props.entity.hasThumbnails() && !this.props.entity.perma_url) ||
         this.props.entity.hasSiteMembershipPaywallThumbnail) &&
       this.props.entity.type !== 'comment'
     ) {
