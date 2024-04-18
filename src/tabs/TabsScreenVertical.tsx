@@ -17,8 +17,6 @@ import DiscoveryStack from '~/navigation/DiscoveryStack';
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
 import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
-import { storages } from '../common/services/storage/storages.service';
-import { triggerHaptic } from '../common/services/haptic.service';
 import { Icon as NIcon } from 'react-native-elements';
 import { H4 } from '~/common/ui';
 import { useDimensions } from '@react-native-community/hooks';
@@ -178,32 +176,23 @@ const drawerOptions = ({ route, isPortrait }): DrawerContentProps => {
 
 function DrawerContent(props) {
   const { navigation, isPortrait } = props;
-  const handleComposePress = () => {
-    if (storages.user?.getBool('compose:create')) {
-      return navigation.push('Compose');
-    }
-    pushComposeCreate();
-  };
-
   const pushComposeCreate = () =>
     pushComposeCreateScreen({
       onItemPress: async key => {
         navigation.goBack();
-        storages.user?.setBool('compose:create', true);
         navigation.navigate('Compose', { createMode: key });
       },
     });
 
-  const handleComposeLongPress = () => {
-    triggerHaptic();
-    pushComposeCreate();
+  const handleComposePress = () => {
+    navigation.push('Compose');
   };
 
   return (
     <DrawerContentScrollView {...props}>
       <DoubleTapSafeButton
-        onPress={handleComposePress}
-        onLongPress={IS_TENANT ? undefined : handleComposeLongPress}
+        onLongPress={IS_TENANT ? undefined : handleComposePress}
+        onPress={IS_TENANT ? handleComposePress : pushComposeCreate}
         style={styles.composeButton}
         delayLongPress={200}>
         <ComposeButton />
