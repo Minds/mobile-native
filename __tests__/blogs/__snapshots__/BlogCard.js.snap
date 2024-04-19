@@ -410,6 +410,7 @@ exports[`blog card component should renders correctly 1`] = `
           "mature_visibility": false,
           "message": "",
           "monetized": false,
+          "onMetricsUpdate": [Function],
           "ownerObj": {
             "__list": null,
             "_collapsed": false,

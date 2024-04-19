@@ -1,7 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react-native';
 import ChatHeader from './ChatHeader';
-import { ChatRoomRoleEnum, ChatRoomTypeEnum } from '~/graphql/api';
+import {
+  ChatRoomNotificationStatusEnum,
+  ChatRoomRoleEnum,
+  ChatRoomTypeEnum,
+} from '~/graphql/api';
 import { ChatRoomProvider } from '../contexts/ChatRoomContext';
 import { useChatRoomInfoQuery } from '../hooks/useChatRoomInfoQuery';
 
@@ -17,13 +21,16 @@ describe('ChatHeader', () => {
         chatRoom: {
           cursor: '',
           totalMembers: 3,
+          unreadMessagesCount: 0,
+          lastMessagePlainText: null,
+          lastMessageCreatedTimestamp: null,
           node: {
             guid: 'testGuid',
             id: 'testId',
             roomType: ChatRoomTypeEnum.OneToOne,
             isChatRequest: false,
             isUserRoomOwner: false,
-            areChatRoomNotificationsMuted: false,
+            chatRoomNotificationStatus: ChatRoomNotificationStatusEnum.All,
           },
           members: {
             edges: [

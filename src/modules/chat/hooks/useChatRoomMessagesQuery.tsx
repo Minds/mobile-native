@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { produce } from 'immer';
 import {
@@ -21,24 +21,30 @@ import { ChatMessage } from '../types';
 import delay from '~/common/helpers/delay';
 import logService from '~/common/services/log.service';
 import { showNotification } from 'AppMessages';
-import { useChatSocketService } from '../service/chat-socket-service';
 import { gqlFetcher } from '~/common/services/api.service';
+import { useChatRoomNewMessageEvent } from './useChatRoomNewMessageEvent';
 
 const PAGE_SIZE = 12;
 
 export function useChatRoomMessagesQuery(roomGuid: string) {
   const queryClient = useQueryClient();
+  const loadingMessagesPromise = useRef<Promise<any> | null>(null);
+  const shouldLoadAgain = useRef<boolean>(false);
   const pendingMessages = useRef<ChatMessage[]>([]);
   const [render, forceRender] = React.useReducer(bool => !bool, false);
 
   // query key
-  const key = [
-    'GetChatMessages.infinite',
-    {
-      roomGuid,
-      pageSize: PAGE_SIZE,
-    },
-  ];
+  // TODO: use useInfiniteGetChatMessagesQuery.getKey
+  const key = useMemo(
+    () => [
+      'GetChatMessages.infinite',
+      {
+        roomGuid,
+        pageSize: PAGE_SIZE,
+      },
+    ],
+    [roomGuid],
+  );
 
   /**
    * Bidirectional infinite scroll query
@@ -83,9 +89,28 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
     },
   );
 
-  const loadNewMessages = () => {
-    loadAllNewMessages({ fetchPreviousPage, queryClient, key });
-  };
+  /**
+   * Load new messages
+   * only one is allowed at a time
+   */
+  const loadNewMessages = useCallback(async () => {
+    if (loadingMessagesPromise.current) {
+      shouldLoadAgain.current = true;
+      return loadingMessagesPromise.current;
+    }
+    loadingMessagesPromise.current = loadAllNewMessages({
+      fetchPreviousPage,
+      queryClient,
+      key,
+    });
+    const result = await loadingMessagesPromise.current;
+    loadingMessagesPromise.current = null;
+    if (shouldLoadAgain.current) {
+      shouldLoadAgain.current = false;
+      loadNewMessages();
+    }
+    return result;
+  }, [fetchPreviousPage, queryClient, key]);
 
   /**
    * Create chat message mutation
@@ -125,7 +150,8 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
 
       return { newMessage };
     },
-    onError: (err, newTodo, context) => {
+    onError: (err, _, context) => {
+      logService.exception('[useChatRoomMessagesQuery]', err);
       // we remove the optimistic message
       if (pendingMessages.current.length > 0 && context) {
         pendingMessages.current = pendingMessages.current.filter(
@@ -138,25 +164,12 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
         logService.exception('[useChatRoomMessagesQuery]', err);
         return;
       }
-      // cancel any previous query
-      await queryClient.cancelQueries({
-        queryKey: key,
-      });
-      // set hasNextPage to true so we can fetch
-      queryClient.setQueryData<any>(key, oldData => {
-        if (oldData) {
-          oldData.pages[0].chatMessages.pageInfo.hasNextPage = true;
-        }
-        return oldData;
-      });
-      // we remove the optimistic message
-      fetchPreviousPage().finally(() => {
-        if (pendingMessages.current.length > 0 && context) {
-          pendingMessages.current = pendingMessages.current.filter(
-            message => message.node.id !== context.newMessage.node.id,
-          );
-        }
-      });
+      await loadNewMessages();
+      if (pendingMessages.current.length > 0 && context) {
+        pendingMessages.current = pendingMessages.current.filter(
+          message => message.node.id !== context.newMessage.node.id,
+        );
+      }
     },
   });
 
@@ -219,22 +232,8 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
     [data, render],
   );
 
-  const chatSocketService = useChatSocketService();
-
-  // rooms should be listened globally, for testing purposes I'm listening to a single room
-  useEffect(() => {
-    chatSocketService.listenToRoomGuids([roomGuid]);
-    chatSocketService.onMessage(roomGuid, data => {
-      if (
-        data.type === 'NEW_MESSAGE' &&
-        data.metadata.senderGuid !== sessionService.guid
-      ) {
-        loadAllNewMessages({ fetchPreviousPage, queryClient, key });
-      } else {
-        console.log('loadAllNewMessages is fetching previous page');
-      }
-    });
-  }, [roomGuid, chatSocketService, fetchPreviousPage, queryClient]);
+  // listen to new messages event
+  useChatRoomNewMessageEvent(roomGuid, loadNewMessages, true);
 
   return {
     fetchPreviousPage,
@@ -243,6 +242,7 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
     isFetchingPreviousPage,
     messages,
     createMessageMutation,
+    roomGuid,
     deleteMessage: (messageGuid: string) => {
       deleteMessageMutation.mutate({ messageGuid, roomGuid });
     },
@@ -286,9 +286,9 @@ async function loadAllNewMessages({
   // iterate until we reach the end or we run out of attempts
   do {
     try {
-      await queryClient.cancelQueries({
-        queryKey: key,
-      });
+      // await queryClient.cancelQueries({
+      //   queryKey: key,
+      // });
       const oldPageCount = data?.pages.length;
       const { data: newData } = await fetchPreviousPage();
       if (

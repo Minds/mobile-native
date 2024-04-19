@@ -643,7 +643,7 @@ export default class ActivityModel extends BaseModel {
     return `entity:metrics:${this.entity_guid || this.guid}`;
   }
 
-  private onMetricsUpdate(event: string) {
+  private onMetricsUpdate = (event: string) => {
     logService.log('[ActivityModel] metrics update', event);
 
     try {
@@ -661,7 +661,7 @@ export default class ActivityModel extends BaseModel {
       logService.error(e, event);
       return;
     }
-  }
+  };
 
   /**
    * listens to metrics updates with 1000ms debounce time
@@ -673,9 +673,7 @@ export default class ActivityModel extends BaseModel {
    */
   private listenForMetrics(): void {
     socketService.join(this.metricsRoom);
-    socketService.subscribe(this.metricsRoom, event =>
-      this.onMetricsUpdate(event),
-    );
+    socketService.subscribe(this.metricsRoom, this.onMetricsUpdate);
   }
 
   /**
@@ -684,9 +682,7 @@ export default class ActivityModel extends BaseModel {
   private unlistenFromMetrics(): void {
     this.listenForMetricsDebounced.cancel();
     socketService.leave(this.metricsRoom);
-    socketService.unsubscribe(this.metricsRoom, event =>
-      this.onMetricsUpdate(event),
-    );
+    socketService.unsubscribe(this.metricsRoom, this.onMetricsUpdate);
   }
 
   /**

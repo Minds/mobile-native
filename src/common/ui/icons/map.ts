@@ -188,8 +188,8 @@ const ICON_MAP = {
     name: 'person',
   },
   chat: {
-    font: 'MaterialCommunityIcons',
-    name: 'message-outline',
+    font: 'MaterialIcons',
+    name: 'message',
     ratio: 0.92,
     top: 2,
   },

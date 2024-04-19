@@ -25,6 +25,7 @@ export const ChatRoomMessagesProvider = ({
 
 export const useChatRoomMessageContext = () => {
   const context = React.useContext(ChatRoomMessagesContext);
+
   if (!context) {
     throw new Error(
       'useChatRoomMessageContext must be used within a ChatRoomMessagesProvider',

@@ -7,6 +7,7 @@ import sessionService from '~/common/services/session.service';
 import UserModel from '~/channel/UserModel';
 
 jest.mock('../hooks/useChatRoomMessagesQuery');
+jest.mock('../hooks/useSetReadReceipt');
 jest.mock('~/common/services/session.service');
 
 const mockedSessionService = sessionService as jest.Mocked<

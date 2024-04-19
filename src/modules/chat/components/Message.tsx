@@ -55,7 +55,7 @@ function Message({ message, onLongPress }: Props) {
   ) : (
     <View
       style={
-        message.node.guid ? styles.containerRight : styles.containerRightSending
+        message.cursor ? styles.containerRight : styles.containerRightSending
       }>
       <TouchableOpacity
         activeOpacity={0.7}

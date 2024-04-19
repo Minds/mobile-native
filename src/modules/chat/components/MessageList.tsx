@@ -8,6 +8,7 @@ import {
   useChatRoomMessageContext,
   ChatRoomMessagesProvider,
 } from '../contexts/ChatRoomMessageContext';
+import { useSetReadReceipt } from '../hooks/useSetReadReceipt';
 
 type Props = {
   roomGuid: string;
@@ -15,8 +16,19 @@ type Props = {
 };
 
 function MessageFlatList({ isRequest }: Props) {
-  const { query, send, messages } = useChatRoomMessageContext();
+  const { fetchNextPage, send, messages, roomGuid } =
+    useChatRoomMessageContext();
   const listRef = useRef<FlatList>(null);
+  const setReceipt = useSetReadReceipt();
+
+  const onViewableItemsChanged = useCallback(
+    ({ _, viewableItems }: any) => {
+      if (viewableItems[0]) {
+        setReceipt(roomGuid, viewableItems[0].item.node.guid);
+      }
+    },
+    [roomGuid, setReceipt],
+  );
 
   const sendMessage = useCallback(
     message => {
@@ -31,14 +43,16 @@ function MessageFlatList({ isRequest }: Props) {
       <FlatList
         ref={listRef}
         data={messages}
+        onViewableItemsChanged={onViewableItemsChanged}
         maintainVisibleContentPosition={maintainVisibleContentPosition}
         contentContainerStyle={styles.container}
         inverted
         onEndReachedThreshold={1}
+        viewabilityConfig={viewabilityConfig}
         initialNumToRender={12}
         windowSize={5}
         // @ts-ignore since we don't use the params we ignore the error, fixing it will require an unnecessary memoization
-        onEndReached={query.fetchNextPage}
+        onEndReached={fetchNextPage}
         renderItem={renderMessage}
         keyExtractor={keyExtractor}
       />
@@ -70,6 +84,11 @@ const maintainVisibleContentPosition = {
 };
 
 const keyExtractor = item => item.node.guid;
+
+const viewabilityConfig = {
+  itemVisiblePercentThreshold: 50,
+  minimumViewTime: 1500,
+};
 
 const styles = StyleSheet.create({
   container: {

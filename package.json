@@ -175,7 +175,7 @@
     "react-native-webview": "13.2.2",
     "rn-update-apk": "^4.5.0",
     "showtime-tab-view": "^0.1.2",
-    "socket.io-client": "^4.5.1",
+    "socket.io-client": "^4.7.5",
     "styled-components": "^5.3.3",
     "styled-system": "^5.1.5",
     "tinycolor2": "^1.6.0",
