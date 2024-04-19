@@ -3867,7 +3867,6 @@ export type InitChatQueryVariables = Exact<{ [key: string]: never }>;
 export type InitChatQuery = {
   __typename?: 'Query';
   chatUnreadMessagesCount: number;
-  chatRoomGuids: Array<string>;
 };
 
 export type LeaveChatRoomMutationVariables = Exact<{
@@ -7140,7 +7139,6 @@ useGetTotalRoomInviteRequestsQuery.fetcher = (
 export const InitChatDocument = `
     query InitChat {
   chatUnreadMessagesCount
-  chatRoomGuids
 }
     `;
 export const useInitChatQuery = <TData = InitChatQuery, TError = unknown>(

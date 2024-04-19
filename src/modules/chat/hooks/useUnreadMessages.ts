@@ -22,13 +22,15 @@ export function useRefetchUnreadMessages() {
 export function useIncrementUnreadMessages() {
   const queryClient = useQueryClient();
   return useCallback(
-    (count: number) =>
+    (count: number) => {
       queryClient.setQueryData<InitChatQuery>(['InitChat'], oldData => {
         if (oldData) {
-          oldData.chatUnreadMessagesCount += count;
-          return oldData;
+          return {
+            chatUnreadMessagesCount: oldData.chatUnreadMessagesCount + count,
+          };
         }
-      }),
+      });
+    },
     [queryClient],
   );
 }
