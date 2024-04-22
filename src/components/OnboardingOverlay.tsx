@@ -75,6 +75,8 @@ export const useExplainer = (key: string) => {
   const { data: { dismissalByKey: dismissed } = {} } = useGetDismissalQuery({
     key,
   });
+
+  console.log('useExplainer', dismissed);
   const { data } = useGetExplainerScreenQuery({
     key,
   });
@@ -94,7 +96,7 @@ export const useExplainer = (key: string) => {
 
   return {
     explainer: data?.explainerScreensWeb?.data?.[0]?.attributes,
-    dismissed,
+    dismissed: dismissed !== null,
     onDismiss,
   };
 };
