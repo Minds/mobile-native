@@ -510,9 +510,11 @@ export class ApiService {
     url: string,
     body: any = {},
     headers: any = {},
+    signal?: AbortSignal,
   ): Promise<T & ApiResponse> {
     const response = await this.axios.post(this.buildUrl(url), body, {
       headers,
+      signal,
     });
 
     return response.data;
@@ -716,6 +718,7 @@ export const gqlFetcher = <TData, TVariables>(
   query: string,
   variables?: TVariables,
   options?: RequestInit['headers'],
+  signal?: AbortSignal,
 ): (() => Promise<TData>) => {
   return async () => {
     const response = await apiService.post<{ data: TData }>(
@@ -731,6 +734,7 @@ export const gqlFetcher = <TData, TVariables>(
             },
           }
         : undefined,
+      signal,
     );
 
     if (response.errors) {

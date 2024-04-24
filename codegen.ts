@@ -69,6 +69,7 @@ const config: CodegenConfig = {
           isReactHook: false,
         },
         addInfiniteQuery: true,
+        exposeQueryKeys: true,
         exposeFetcher: true,
       },
     },

@@ -1,11 +1,13 @@
 import React from 'react';
+import { View } from 'react-native';
+import moment from 'moment';
+
 import { Avatar, B2, B3, Row } from '~/common/ui';
 import MPressable from '~/common/components/MPressable';
-import { StyleSheet, View } from 'react-native';
 import i18nService from '~/common/services/i18n.service';
-import moment from 'moment';
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';
 import { ChatRoom } from '../types';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 type Props = {
   chat: ChatRoom;
@@ -14,6 +16,12 @@ type Props = {
 };
 
 function ChatListItem({ chat, onPress }: Props) {
+  const timestamp =
+    1000 *
+    (chat.lastMessageCreatedTimestamp
+      ? chat.lastMessageCreatedTimestamp
+      : parseInt(chat.node.timeCreatedUnix, 10));
+
   return (
     <MPressable onPress={onPress} testID="chatListItem">
       <Row horizontal="XL" vertical="M" align="centerStart">
@@ -50,28 +58,37 @@ function ChatListItem({ chat, onPress }: Props) {
           <View style={styles.nameContainer}>
             <B2 font="medium">{chat.members.edges[0].node.username}</B2>
             <B2 color="secondary">
-              {i18nService.date(
-                moment(chat.node.timeCreatedISO8601),
-                'friendly',
-              )}
+              {i18nService.date(moment(timestamp), 'friendly')}
             </B2>
           </View>
-          <B3
-            color="secondary"
-            top="S"
-            numberOfLines={1}
-            style={styles.message}>
-            {chat.messages?.edges?.[0]?.node.plainText}
-          </B3>
+          <View style={styles.nameContainer}>
+            <B3
+              color="secondary"
+              top="S"
+              numberOfLines={1}
+              style={styles.message}>
+              {chat.lastMessagePlainText}
+            </B3>
+            {chat.unreadMessagesCount > 0 && <View style={styles.unread} />}
+          </View>
         </View>
       </Row>
     </MPressable>
   );
 }
 
-export default withErrorBoundary(ChatListItem, 'ChatListItem');
+export default withErrorBoundary(React.memo(ChatListItem), 'ChatListItem');
 
-const styles = StyleSheet.create({
+const styles = ThemedStyles.create({
+  unread: [
+    {
+      width: 8,
+      height: 8,
+      marginTop: 10,
+      borderRadius: 100,
+    },
+    'bgLink',
+  ],
   message: {
     flex: 1,
   },

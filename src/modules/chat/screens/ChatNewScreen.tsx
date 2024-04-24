@@ -1,8 +1,6 @@
 import { View } from 'react-native';
 import React, { useReducer, useState } from 'react';
-import { StackActions } from '@react-navigation/native';
 import { useQuery } from '@tanstack/react-query';
-import { useNavigation } from '@react-navigation/native';
 
 import TextInput from '~/common/components/TextInput';
 import { B1, Button, Screen, ScreenHeader } from '~/common/ui';
@@ -15,10 +13,7 @@ import ChatUserItem from '../components/ChatUserItem';
 import UserModel from '~/channel/UserModel';
 import ChatUserChip from '../components/ChatUserChip';
 import sessionService from '~/common/services/session.service';
-import { useCreateChatRoomMutation } from '~/graphql/api';
-import logService from '~/common/services/log.service';
-import { showNotification } from 'AppMessages';
-import i18nService from '~/common/services/i18n.service';
+import { useCreateChatRoom } from '../hooks/useCreateChatRoom';
 
 /**
  * Chat room creation screen
@@ -132,29 +127,10 @@ const UserSearchAndSelect = () => {
 };
 
 const CreateButton = ({ selectedUsers }) => {
-  const navigation = useNavigation();
-  const mutation = useCreateChatRoomMutation({
-    onSuccess: data => {
-      navigation.dispatch(
-        StackActions.replace('ChatStack', {
-          screen: 'Chat',
-          params: {
-            roomGuid: data.createChatRoom.node.guid,
-            members: data.createChatRoom.members.edges,
-          },
-        }),
-      );
-    },
-    onError: error => {
-      logService.exception('Error creating chat room', error);
-      showNotification(i18nService.t('errorMessage'));
-    },
-  });
+  const { createChatRoom, isLoading } = useCreateChatRoom(true);
 
   const onPress = () => {
-    mutation.mutate({
-      otherMemberGuids: selectedUsers.map(u => u.guid),
-    });
+    createChatRoom(selectedUsers.map(u => u.guid));
   };
 
   return (
@@ -162,9 +138,9 @@ const CreateButton = ({ selectedUsers }) => {
       type="action"
       mode="solid"
       align="stretch"
-      loading={mutation.isLoading}
+      loading={isLoading}
       onPress={onPress}
-      disabled={selectedUsers.length === 0 || mutation.isLoading}>
+      disabled={selectedUsers.length === 0 || isLoading}>
       Create chat
     </Button>
   );

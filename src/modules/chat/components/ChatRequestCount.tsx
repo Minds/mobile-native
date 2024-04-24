@@ -11,7 +11,7 @@ type Props = {
 
 function ChatRequestCount({ onPress }: Props) {
   const { data } = useGetTotalRoomInviteRequestsQuery(undefined, {
-    refetchInterval: 5000,
+    refetchInterval: 30000,
   });
   data?.totalRoomInviteRequests;
   return data?.totalRoomInviteRequests ? (

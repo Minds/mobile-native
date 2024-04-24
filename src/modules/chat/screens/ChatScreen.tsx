@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Icon, Screen } from '~/common/ui';
 import MessageList from '../components/MessageList';
 import ChatHeader from '../components/ChatHeader';
@@ -17,6 +17,8 @@ import { showNotification } from 'AppMessages';
 import i18nService from '~/common/services/i18n.service';
 import logService from '~/common/services/log.service';
 import { ChatRoomProvider } from '../contexts/ChatRoomContext';
+import { useRefreshRoomsIds } from '../hooks/useRefreshRoomsIds';
+import { useRefetchUnreadMessages } from '../hooks/useUnreadMessages';
 
 /**
  * Chat conversation screen
@@ -24,6 +26,17 @@ import { ChatRoomProvider } from '../contexts/ChatRoomContext';
 export default function ChatScreen({ navigation, route }) {
   const { roomGuid, members, isRequest } = route.params || {};
   const [accepted, setAccepted] = React.useState(false);
+  const refetchUnreadMessages = useRefetchUnreadMessages();
+  // refresh rooms ids
+  useRefreshRoomsIds(roomGuid);
+
+  // refresh global unread messages count when leaving the screen
+  useEffect(() => {
+    return () => {
+      refetchUnreadMessages();
+    };
+  }, [refetchUnreadMessages]);
+
   const showRequest = isRequest && !accepted;
   return (
     <Screen safe>

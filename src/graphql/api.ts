@@ -189,9 +189,14 @@ export type AppReadyMobileConfig = {
   ACCENT_COLOR_DARK: Scalars['String']['output'];
   ACCENT_COLOR_LIGHT: Scalars['String']['output'];
   API_URL: Scalars['String']['output'];
+  APP_ANDROID_PACKAGE?: Maybe<Scalars['String']['output']>;
   APP_HOST: Scalars['String']['output'];
+  APP_IOS_BUNDLE?: Maybe<Scalars['String']['output']>;
   APP_NAME: Scalars['String']['output'];
+  APP_SCHEME?: Maybe<Scalars['String']['output']>;
+  APP_SLUG?: Maybe<Scalars['String']['output']>;
   APP_SPLASH_RESIZE: Scalars['String']['output'];
+  EAS_PROJECT_ID?: Maybe<Scalars['String']['output']>;
   TENANT_ID: Scalars['Int']['output'];
   THEME: Scalars['String']['output'];
   WELCOME_LOGO: Scalars['String']['output'];
@@ -245,6 +250,7 @@ export type BoostsConnection = ConnectionInterface & {
 export type ChatMessageEdge = EdgeInterface & {
   __typename?: 'ChatMessageEdge';
   cursor: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
   node: ChatMessageNode;
 };
 
@@ -321,7 +327,7 @@ export type ChatRoomMembersConnection = ConnectionInterface & {
 
 export type ChatRoomNode = NodeInterface & {
   __typename?: 'ChatRoomNode';
-  areChatRoomNotificationsMuted?: Maybe<Scalars['Boolean']['output']>;
+  chatRoomNotificationStatus?: Maybe<ChatRoomNotificationStatusEnum>;
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
@@ -334,6 +340,12 @@ export type ChatRoomNode = NodeInterface & {
   /** The timestamp the roomt was created at */
   timeCreatedUnix: Scalars['String']['output'];
 };
+
+export enum ChatRoomNotificationStatusEnum {
+  All = 'ALL',
+  Mentions = 'MENTIONS',
+  Muted = 'MUTED',
+}
 
 export enum ChatRoomRoleEnum {
   Member = 'MEMBER',
@@ -959,10 +971,12 @@ export type Mutation = {
   siteMembership: SiteMembership;
   /** Stores featured entity. */
   storeFeaturedEntity: FeaturedEntityInterface;
-  tenantTrial: Tenant;
+  /** Create a trial tenant network. */
+  tenantTrial: TenantLoginRedirectDetails;
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+  updateNotificationSettings: Scalars['Boolean']['output'];
   updatePostSubscription: PostSubscription;
   updateSiteMembership: SiteMembership;
 };
@@ -1168,6 +1182,11 @@ export type MutationUpdateAccountArgs = {
   resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type MutationUpdateNotificationSettingsArgs = {
+  notificationStatus: ChatRoomNotificationStatusEnum;
+  roomGuid: Scalars['String']['input'];
+};
+
 export type MutationUpdatePostSubscriptionArgs = {
   entityGuid: Scalars['String']['input'];
   frequency: PostSubscriptionFrequencyEnum;
@@ -1328,6 +1347,7 @@ export type Query = {
   chatMessages: ChatMessagesConnection;
   /** Returns a chat room */
   chatRoom: ChatRoomEdge;
+  chatRoomGuids: Array<Scalars['String']['output']>;
   chatRoomInviteRequests: ChatRoomsConnection;
   /** Returns a list of chat rooms available to a user */
   chatRoomList: ChatRoomsConnection;
@@ -1871,6 +1891,13 @@ export type TenantInput = {
   config?: InputMaybe<MultiTenantConfigInput>;
   domain?: InputMaybe<Scalars['String']['input']>;
   ownerGuid?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type TenantLoginRedirectDetails = {
+  __typename?: 'TenantLoginRedirectDetails';
+  jwtToken?: Maybe<Scalars['String']['output']>;
+  loginUrl?: Maybe<Scalars['String']['output']>;
+  tenant: Tenant;
 };
 
 export enum TenantPlanEnum {
@@ -3601,6 +3628,9 @@ export type GetChatRoomsListQuery = {
     edges: Array<{
       __typename?: 'ChatRoomEdge';
       cursor: string;
+      unreadMessagesCount: number;
+      lastMessagePlainText?: string | null;
+      lastMessageCreatedTimestamp?: number | null;
       node: {
         __typename?: 'ChatRoomNode';
         id: string;
@@ -3621,22 +3651,6 @@ export type GetChatRoomsListQuery = {
             iconUrl: string;
             username: string;
             name: string;
-          };
-        }>;
-      };
-      messages: {
-        __typename?: 'ChatMessagesConnection';
-        edges: Array<{
-          __typename?: 'ChatMessageEdge';
-          cursor: string;
-          node: {
-            __typename?: 'ChatMessageNode';
-            id: string;
-            guid: string;
-            roomGuid: string;
-            plainText: string;
-            timeCreatedISO8601: string;
-            timeCreatedUnix: string;
           };
         }>;
       };
@@ -3736,6 +3750,9 @@ export type GetChatRoomQuery = {
     __typename?: 'ChatRoomEdge';
     cursor: string;
     totalMembers: number;
+    unreadMessagesCount: number;
+    lastMessagePlainText?: string | null;
+    lastMessageCreatedTimestamp?: number | null;
     node: {
       __typename?: 'ChatRoomNode';
       guid: string;
@@ -3743,7 +3760,7 @@ export type GetChatRoomQuery = {
       id: string;
       isChatRequest: boolean;
       isUserRoomOwner?: boolean | null;
-      areChatRoomNotificationsMuted?: boolean | null;
+      chatRoomNotificationStatus?: ChatRoomNotificationStatusEnum | null;
     };
     members: {
       __typename?: 'ChatRoomMembersConnection';
@@ -3845,6 +3862,13 @@ export type GetTotalRoomInviteRequestsQuery = {
   totalRoomInviteRequests: number;
 };
 
+export type InitChatQueryVariables = Exact<{ [key: string]: never }>;
+
+export type InitChatQuery = {
+  __typename?: 'Query';
+  chatUnreadMessagesCount: number;
+};
+
 export type LeaveChatRoomMutationVariables = Exact<{
   roomGuid: Scalars['String']['input'];
 }>;
@@ -3872,6 +3896,20 @@ export type ReplyToRoomInviteRequestMutationVariables = Exact<{
 export type ReplyToRoomInviteRequestMutation = {
   __typename?: 'Mutation';
   replyToRoomInviteRequest: boolean;
+};
+
+export type SetReadReceiptMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  messageGuid: Scalars['String']['input'];
+}>;
+
+export type SetReadReceiptMutation = {
+  __typename?: 'Mutation';
+  readReceipt: {
+    __typename?: 'ChatRoomEdge';
+    id: string;
+    unreadMessagesCount: number;
+  };
 };
 
 export type GetCustomPageQueryVariables = Exact<{
@@ -5515,6 +5553,13 @@ export const useFetchOidcProvidersQuery = <
     ),
     options,
   );
+
+useFetchOidcProvidersQuery.getKey = (
+  variables?: FetchOidcProvidersQueryVariables,
+) =>
+  variables === undefined
+    ? ['FetchOidcProviders']
+    : ['FetchOidcProviders', variables];
 export const useInfiniteFetchOidcProvidersQuery = <
   TData = FetchOidcProvidersQuery,
   TError = unknown,
@@ -5536,6 +5581,12 @@ export const useInfiniteFetchOidcProvidersQuery = <
   );
 };
 
+useInfiniteFetchOidcProvidersQuery.getKey = (
+  variables?: FetchOidcProvidersQueryVariables,
+) =>
+  variables === undefined
+    ? ['FetchOidcProviders.infinite']
+    : ['FetchOidcProviders.infinite', variables];
 useFetchOidcProvidersQuery.fetcher = (
   variables?: FetchOidcProvidersQueryVariables,
   options?: RequestInit['headers'],
@@ -5569,6 +5620,10 @@ export const useGetPostSubscriptionQuery = <
     ),
     options,
   );
+
+useGetPostSubscriptionQuery.getKey = (
+  variables: GetPostSubscriptionQueryVariables,
+) => ['GetPostSubscription', variables];
 export const useInfiniteGetPostSubscriptionQuery = <
   TData = GetPostSubscriptionQuery,
   TError = unknown,
@@ -5588,6 +5643,9 @@ export const useInfiniteGetPostSubscriptionQuery = <
   );
 };
 
+useInfiniteGetPostSubscriptionQuery.getKey = (
+  variables: GetPostSubscriptionQueryVariables,
+) => ['GetPostSubscription.infinite', variables];
 useGetPostSubscriptionQuery.fetcher = (
   variables: GetPostSubscriptionQueryVariables,
   options?: RequestInit['headers'],
@@ -5663,6 +5721,9 @@ export const useGetDismissalsQuery = <
     ),
     options,
   );
+
+useGetDismissalsQuery.getKey = (variables?: GetDismissalsQueryVariables) =>
+  variables === undefined ? ['GetDismissals'] : ['GetDismissals', variables];
 export const useInfiniteGetDismissalsQuery = <
   TData = GetDismissalsQuery,
   TError = unknown,
@@ -5684,6 +5745,12 @@ export const useInfiniteGetDismissalsQuery = <
   );
 };
 
+useInfiniteGetDismissalsQuery.getKey = (
+  variables?: GetDismissalsQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetDismissals.infinite']
+    : ['GetDismissals.infinite', variables];
 useGetDismissalsQuery.fetcher = (
   variables?: GetDismissalsQueryVariables,
   options?: RequestInit['headers'],
@@ -5717,6 +5784,11 @@ export const useGetDismissalQuery = <
     ),
     options,
   );
+
+useGetDismissalQuery.getKey = (variables: GetDismissalQueryVariables) => [
+  'GetDismissal',
+  variables,
+];
 export const useInfiniteGetDismissalQuery = <
   TData = GetDismissalQuery,
   TError = unknown,
@@ -5736,6 +5808,9 @@ export const useInfiniteGetDismissalQuery = <
   );
 };
 
+useInfiniteGetDismissalQuery.getKey = (
+  variables: GetDismissalQueryVariables,
+) => ['GetDismissal.infinite', variables];
 useGetDismissalQuery.fetcher = (
   variables: GetDismissalQueryVariables,
   options?: RequestInit['headers'],
@@ -5806,6 +5881,13 @@ export const useGetOnboardingStateQuery = <
     ),
     options,
   );
+
+useGetOnboardingStateQuery.getKey = (
+  variables?: GetOnboardingStateQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetOnboardingState']
+    : ['GetOnboardingState', variables];
 export const useInfiniteGetOnboardingStateQuery = <
   TData = GetOnboardingStateQuery,
   TError = unknown,
@@ -5827,6 +5909,12 @@ export const useInfiniteGetOnboardingStateQuery = <
   );
 };
 
+useInfiniteGetOnboardingStateQuery.getKey = (
+  variables?: GetOnboardingStateQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetOnboardingState.infinite']
+    : ['GetOnboardingState.infinite', variables];
 useGetOnboardingStateQuery.fetcher = (
   variables?: GetOnboardingStateQueryVariables,
   options?: RequestInit['headers'],
@@ -5863,6 +5951,13 @@ export const useGetOnboardingStepProgressQuery = <
     >(GetOnboardingStepProgressDocument, variables),
     options,
   );
+
+useGetOnboardingStepProgressQuery.getKey = (
+  variables?: GetOnboardingStepProgressQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetOnboardingStepProgress']
+    : ['GetOnboardingStepProgress', variables];
 export const useInfiniteGetOnboardingStepProgressQuery = <
   TData = GetOnboardingStepProgressQuery,
   TError = unknown,
@@ -5891,6 +5986,12 @@ export const useInfiniteGetOnboardingStepProgressQuery = <
   );
 };
 
+useInfiniteGetOnboardingStepProgressQuery.getKey = (
+  variables?: GetOnboardingStepProgressQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetOnboardingStepProgress.infinite']
+    : ['GetOnboardingStepProgress.infinite', variables];
 useGetOnboardingStepProgressQuery.fetcher = (
   variables?: GetOnboardingStepProgressQueryVariables,
   options?: RequestInit['headers'],
@@ -6015,6 +6116,11 @@ export const useFetchSearchQuery = <TData = FetchSearchQuery, TError = unknown>(
     ),
     options,
   );
+
+useFetchSearchQuery.getKey = (variables: FetchSearchQueryVariables) => [
+  'FetchSearch',
+  variables,
+];
 export const useInfiniteFetchSearchQuery = <
   TData = FetchSearchQuery,
   TError = unknown,
@@ -6034,6 +6140,10 @@ export const useInfiniteFetchSearchQuery = <
   );
 };
 
+useInfiniteFetchSearchQuery.getKey = (variables: FetchSearchQueryVariables) => [
+  'FetchSearch.infinite',
+  variables,
+];
 useFetchSearchQuery.fetcher = (
   variables: FetchSearchQueryVariables,
   options?: RequestInit['headers'],
@@ -6071,6 +6181,11 @@ export const useCountSearchQuery = <TData = CountSearchQuery, TError = unknown>(
     ),
     options,
   );
+
+useCountSearchQuery.getKey = (variables: CountSearchQueryVariables) => [
+  'CountSearch',
+  variables,
+];
 export const useInfiniteCountSearchQuery = <
   TData = CountSearchQuery,
   TError = unknown,
@@ -6090,6 +6205,10 @@ export const useInfiniteCountSearchQuery = <
   );
 };
 
+useInfiniteCountSearchQuery.getKey = (variables: CountSearchQueryVariables) => [
+  'CountSearch.infinite',
+  variables,
+];
 useCountSearchQuery.fetcher = (
   variables: CountSearchQueryVariables,
   options?: RequestInit['headers'],
@@ -6125,6 +6244,13 @@ export const useFetchPaymentMethodsQuery = <
     ),
     options,
   );
+
+useFetchPaymentMethodsQuery.getKey = (
+  variables?: FetchPaymentMethodsQueryVariables,
+) =>
+  variables === undefined
+    ? ['FetchPaymentMethods']
+    : ['FetchPaymentMethods', variables];
 export const useInfiniteFetchPaymentMethodsQuery = <
   TData = FetchPaymentMethodsQuery,
   TError = unknown,
@@ -6146,6 +6272,12 @@ export const useInfiniteFetchPaymentMethodsQuery = <
   );
 };
 
+useInfiniteFetchPaymentMethodsQuery.getKey = (
+  variables?: FetchPaymentMethodsQueryVariables,
+) =>
+  variables === undefined
+    ? ['FetchPaymentMethods.infinite']
+    : ['FetchPaymentMethods.infinite', variables];
 useFetchPaymentMethodsQuery.fetcher = (
   variables?: FetchPaymentMethodsQueryVariables,
   options?: RequestInit['headers'],
@@ -6195,6 +6327,11 @@ export const useGetBoostFeedQuery = <
     ),
     options,
   );
+
+useGetBoostFeedQuery.getKey = (variables: GetBoostFeedQueryVariables) => [
+  'GetBoostFeed',
+  variables,
+];
 export const useInfiniteGetBoostFeedQuery = <
   TData = GetBoostFeedQuery,
   TError = unknown,
@@ -6214,6 +6351,9 @@ export const useInfiniteGetBoostFeedQuery = <
   );
 };
 
+useInfiniteGetBoostFeedQuery.getKey = (
+  variables: GetBoostFeedQueryVariables,
+) => ['GetBoostFeed.infinite', variables];
 useGetBoostFeedQuery.fetcher = (
   variables: GetBoostFeedQueryVariables,
   options?: RequestInit['headers'],
@@ -6488,19 +6628,9 @@ export const GetChatRoomsListDocument = `
           }
         }
       }
-      messages(first: 1) {
-        edges {
-          cursor
-          node {
-            id
-            guid
-            roomGuid
-            plainText
-            timeCreatedISO8601
-            timeCreatedUnix
-          }
-        }
-      }
+      unreadMessagesCount
+      lastMessagePlainText
+      lastMessageCreatedTimestamp
     }
   }
 }
@@ -6522,6 +6652,13 @@ export const useGetChatRoomsListQuery = <
     ),
     options,
   );
+
+useGetChatRoomsListQuery.getKey = (
+  variables?: GetChatRoomsListQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetChatRoomsList']
+    : ['GetChatRoomsList', variables];
 export const useInfiniteGetChatRoomsListQuery = <
   TData = GetChatRoomsListQuery,
   TError = unknown,
@@ -6543,6 +6680,12 @@ export const useInfiniteGetChatRoomsListQuery = <
   );
 };
 
+useInfiniteGetChatRoomsListQuery.getKey = (
+  variables?: GetChatRoomsListQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetChatRoomsList.infinite']
+    : ['GetChatRoomsList.infinite', variables];
 useGetChatRoomsListQuery.fetcher = (
   variables?: GetChatRoomsListQueryVariables,
   options?: RequestInit['headers'],
@@ -6604,6 +6747,11 @@ export const useGetChatMessagesQuery = <
     ),
     options,
   );
+
+useGetChatMessagesQuery.getKey = (variables: GetChatMessagesQueryVariables) => [
+  'GetChatMessages',
+  variables,
+];
 export const useInfiniteGetChatMessagesQuery = <
   TData = GetChatMessagesQuery,
   TError = unknown,
@@ -6623,6 +6771,9 @@ export const useInfiniteGetChatMessagesQuery = <
   );
 };
 
+useInfiniteGetChatMessagesQuery.getKey = (
+  variables: GetChatMessagesQueryVariables,
+) => ['GetChatMessages.infinite', variables];
 useGetChatMessagesQuery.fetcher = (
   variables: GetChatMessagesQueryVariables,
   options?: RequestInit['headers'],
@@ -6676,6 +6827,10 @@ export const useGetChatRoomMembersQuery = <
     ),
     options,
   );
+
+useGetChatRoomMembersQuery.getKey = (
+  variables: GetChatRoomMembersQueryVariables,
+) => ['GetChatRoomMembers', variables];
 export const useInfiniteGetChatRoomMembersQuery = <
   TData = GetChatRoomMembersQuery,
   TError = unknown,
@@ -6695,6 +6850,9 @@ export const useInfiniteGetChatRoomMembersQuery = <
   );
 };
 
+useInfiniteGetChatRoomMembersQuery.getKey = (
+  variables: GetChatRoomMembersQueryVariables,
+) => ['GetChatRoomMembers.infinite', variables];
 useGetChatRoomMembersQuery.fetcher = (
   variables: GetChatRoomMembersQueryVariables,
   options?: RequestInit['headers'],
@@ -6709,13 +6867,16 @@ export const GetChatRoomDocument = `
   chatRoom(roomGuid: $roomGuid) {
     cursor
     totalMembers
+    unreadMessagesCount
+    lastMessagePlainText
+    lastMessageCreatedTimestamp
     node {
       guid
       roomType
       id
       isChatRequest
       isUserRoomOwner
-      areChatRoomNotificationsMuted
+      chatRoomNotificationStatus
     }
     members(first: $firstMembers, after: $afterMembers) {
       edges {
@@ -6751,6 +6912,11 @@ export const useGetChatRoomQuery = <TData = GetChatRoomQuery, TError = unknown>(
     ),
     options,
   );
+
+useGetChatRoomQuery.getKey = (variables: GetChatRoomQueryVariables) => [
+  'GetChatRoom',
+  variables,
+];
 export const useInfiniteGetChatRoomQuery = <
   TData = GetChatRoomQuery,
   TError = unknown,
@@ -6770,6 +6936,10 @@ export const useInfiniteGetChatRoomQuery = <
   );
 };
 
+useInfiniteGetChatRoomQuery.getKey = (variables: GetChatRoomQueryVariables) => [
+  'GetChatRoom.infinite',
+  variables,
+];
 useGetChatRoomQuery.fetcher = (
   variables: GetChatRoomQueryVariables,
   options?: RequestInit['headers'],
@@ -6846,6 +7016,13 @@ export const useGetChatRoomInviteRequestsQuery = <
     >(GetChatRoomInviteRequestsDocument, variables),
     options,
   );
+
+useGetChatRoomInviteRequestsQuery.getKey = (
+  variables?: GetChatRoomInviteRequestsQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetChatRoomInviteRequests']
+    : ['GetChatRoomInviteRequests', variables];
 export const useInfiniteGetChatRoomInviteRequestsQuery = <
   TData = GetChatRoomInviteRequestsQuery,
   TError = unknown,
@@ -6874,6 +7051,12 @@ export const useInfiniteGetChatRoomInviteRequestsQuery = <
   );
 };
 
+useInfiniteGetChatRoomInviteRequestsQuery.getKey = (
+  variables?: GetChatRoomInviteRequestsQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetChatRoomInviteRequests.infinite']
+    : ['GetChatRoomInviteRequests.infinite', variables];
 useGetChatRoomInviteRequestsQuery.fetcher = (
   variables?: GetChatRoomInviteRequestsQueryVariables,
   options?: RequestInit['headers'],
@@ -6904,6 +7087,13 @@ export const useGetTotalRoomInviteRequestsQuery = <
     >(GetTotalRoomInviteRequestsDocument, variables),
     options,
   );
+
+useGetTotalRoomInviteRequestsQuery.getKey = (
+  variables?: GetTotalRoomInviteRequestsQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetTotalRoomInviteRequests']
+    : ['GetTotalRoomInviteRequests', variables];
 export const useInfiniteGetTotalRoomInviteRequestsQuery = <
   TData = GetTotalRoomInviteRequestsQuery,
   TError = unknown,
@@ -6932,6 +7122,12 @@ export const useInfiniteGetTotalRoomInviteRequestsQuery = <
   );
 };
 
+useInfiniteGetTotalRoomInviteRequestsQuery.getKey = (
+  variables?: GetTotalRoomInviteRequestsQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetTotalRoomInviteRequests.infinite']
+    : ['GetTotalRoomInviteRequests.infinite', variables];
 useGetTotalRoomInviteRequestsQuery.fetcher = (
   variables?: GetTotalRoomInviteRequestsQueryVariables,
   options?: RequestInit['headers'],
@@ -6940,6 +7136,60 @@ useGetTotalRoomInviteRequestsQuery.fetcher = (
     GetTotalRoomInviteRequestsQuery,
     GetTotalRoomInviteRequestsQueryVariables
   >(GetTotalRoomInviteRequestsDocument, variables, options);
+export const InitChatDocument = `
+    query InitChat {
+  chatUnreadMessagesCount
+}
+    `;
+export const useInitChatQuery = <TData = InitChatQuery, TError = unknown>(
+  variables?: InitChatQueryVariables,
+  options?: UseQueryOptions<InitChatQuery, TError, TData>,
+) =>
+  useQuery<InitChatQuery, TError, TData>(
+    variables === undefined ? ['InitChat'] : ['InitChat', variables],
+    gqlFetcher<InitChatQuery, InitChatQueryVariables>(
+      InitChatDocument,
+      variables,
+    ),
+    options,
+  );
+
+useInitChatQuery.getKey = (variables?: InitChatQueryVariables) =>
+  variables === undefined ? ['InitChat'] : ['InitChat', variables];
+export const useInfiniteInitChatQuery = <
+  TData = InitChatQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof InitChatQueryVariables,
+  variables?: InitChatQueryVariables,
+  options?: UseInfiniteQueryOptions<InitChatQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<InitChatQuery, TError, TData>(
+    variables === undefined
+      ? ['InitChat.infinite']
+      : ['InitChat.infinite', variables],
+    metaData =>
+      gqlFetcher<InitChatQuery, InitChatQueryVariables>(InitChatDocument, {
+        ...variables,
+        ...(metaData.pageParam ?? {}),
+      })(),
+    options,
+  );
+};
+
+useInfiniteInitChatQuery.getKey = (variables?: InitChatQueryVariables) =>
+  variables === undefined
+    ? ['InitChat.infinite']
+    : ['InitChat.infinite', variables];
+useInitChatQuery.fetcher = (
+  variables?: InitChatQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<InitChatQuery, InitChatQueryVariables>(
+    InitChatDocument,
+    variables,
+    options,
+  );
 export const LeaveChatRoomDocument = `
     mutation LeaveChatRoom($roomGuid: String!) {
   leaveChatRoom(roomGuid: $roomGuid)
@@ -7055,6 +7305,45 @@ useReplyToRoomInviteRequestMutation.fetcher = (
     ReplyToRoomInviteRequestMutation,
     ReplyToRoomInviteRequestMutationVariables
   >(ReplyToRoomInviteRequestDocument, variables, options);
+export const SetReadReceiptDocument = `
+    mutation SetReadReceipt($roomGuid: String!, $messageGuid: String!) {
+  readReceipt(roomGuid: $roomGuid, messageGuid: $messageGuid) {
+    id
+    unreadMessagesCount
+  }
+}
+    `;
+export const useSetReadReceiptMutation = <TError = unknown, TContext = unknown>(
+  options?: UseMutationOptions<
+    SetReadReceiptMutation,
+    TError,
+    SetReadReceiptMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    SetReadReceiptMutation,
+    TError,
+    SetReadReceiptMutationVariables,
+    TContext
+  >(
+    ['SetReadReceipt'],
+    (variables?: SetReadReceiptMutationVariables) =>
+      gqlFetcher<SetReadReceiptMutation, SetReadReceiptMutationVariables>(
+        SetReadReceiptDocument,
+        variables,
+      )(),
+    options,
+  );
+useSetReadReceiptMutation.fetcher = (
+  variables: SetReadReceiptMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<SetReadReceiptMutation, SetReadReceiptMutationVariables>(
+    SetReadReceiptDocument,
+    variables,
+    options,
+  );
 export const GetCustomPageDocument = `
     query GetCustomPage($pageType: String!) {
   customPage(pageType: $pageType) {
@@ -7079,6 +7368,11 @@ export const useGetCustomPageQuery = <
     ),
     options,
   );
+
+useGetCustomPageQuery.getKey = (variables: GetCustomPageQueryVariables) => [
+  'GetCustomPage',
+  variables,
+];
 export const useInfiniteGetCustomPageQuery = <
   TData = GetCustomPageQuery,
   TError = unknown,
@@ -7098,6 +7392,9 @@ export const useInfiniteGetCustomPageQuery = <
   );
 };
 
+useInfiniteGetCustomPageQuery.getKey = (
+  variables: GetCustomPageQueryVariables,
+) => ['GetCustomPage.infinite', variables];
 useGetCustomPageQuery.fetcher = (
   variables: GetCustomPageQueryVariables,
   options?: RequestInit['headers'],
@@ -7181,6 +7478,13 @@ export const useGetGiftCardBalancesQuery = <
     ),
     options,
   );
+
+useGetGiftCardBalancesQuery.getKey = (
+  variables?: GetGiftCardBalancesQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetGiftCardBalances']
+    : ['GetGiftCardBalances', variables];
 export const useInfiniteGetGiftCardBalancesQuery = <
   TData = GetGiftCardBalancesQuery,
   TError = unknown,
@@ -7202,6 +7506,12 @@ export const useInfiniteGetGiftCardBalancesQuery = <
   );
 };
 
+useInfiniteGetGiftCardBalancesQuery.getKey = (
+  variables?: GetGiftCardBalancesQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetGiftCardBalances.infinite']
+    : ['GetGiftCardBalances.infinite', variables];
 useGetGiftCardBalancesQuery.fetcher = (
   variables?: GetGiftCardBalancesQueryVariables,
   options?: RequestInit['headers'],
@@ -7238,6 +7548,10 @@ export const useGetGiftCardByCodeQuery = <
     ),
     options,
   );
+
+useGetGiftCardByCodeQuery.getKey = (
+  variables: GetGiftCardByCodeQueryVariables,
+) => ['GetGiftCardByCode', variables];
 export const useInfiniteGetGiftCardByCodeQuery = <
   TData = GetGiftCardByCodeQuery,
   TError = unknown,
@@ -7257,6 +7571,9 @@ export const useInfiniteGetGiftCardByCodeQuery = <
   );
 };
 
+useInfiniteGetGiftCardByCodeQuery.getKey = (
+  variables: GetGiftCardByCodeQueryVariables,
+) => ['GetGiftCardByCode.infinite', variables];
 useGetGiftCardByCodeQuery.fetcher = (
   variables: GetGiftCardByCodeQueryVariables,
   options?: RequestInit['headers'],
@@ -7309,6 +7626,10 @@ export const useGetGiftCardTransactionsLedgerQuery = <
     >(GetGiftCardTransactionsLedgerDocument, variables),
     options,
   );
+
+useGetGiftCardTransactionsLedgerQuery.getKey = (
+  variables: GetGiftCardTransactionsLedgerQueryVariables,
+) => ['GetGiftCardTransactionsLedger', variables];
 export const useInfiniteGetGiftCardTransactionsLedgerQuery = <
   TData = GetGiftCardTransactionsLedgerQuery,
   TError = unknown,
@@ -7335,6 +7656,9 @@ export const useInfiniteGetGiftCardTransactionsLedgerQuery = <
   );
 };
 
+useInfiniteGetGiftCardTransactionsLedgerQuery.getKey = (
+  variables: GetGiftCardTransactionsLedgerQueryVariables,
+) => ['GetGiftCardTransactionsLedger.infinite', variables];
 useGetGiftCardTransactionsLedgerQuery.fetcher = (
   variables: GetGiftCardTransactionsLedgerQueryVariables,
   options?: RequestInit['headers'],
@@ -7384,6 +7708,9 @@ export const useGetGiftCardsQuery = <
     ),
     options,
   );
+
+useGetGiftCardsQuery.getKey = (variables?: GetGiftCardsQueryVariables) =>
+  variables === undefined ? ['GetGiftCards'] : ['GetGiftCards', variables];
 export const useInfiniteGetGiftCardsQuery = <
   TData = GetGiftCardsQuery,
   TError = unknown,
@@ -7405,6 +7732,12 @@ export const useInfiniteGetGiftCardsQuery = <
   );
 };
 
+useInfiniteGetGiftCardsQuery.getKey = (
+  variables?: GetGiftCardsQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetGiftCards.infinite']
+    : ['GetGiftCards.infinite', variables];
 useGetGiftCardsQuery.fetcher = (
   variables?: GetGiftCardsQueryVariables,
   options?: RequestInit['headers'],
@@ -7507,6 +7840,11 @@ export const useFetchNewsfeedQuery = <
     ),
     options,
   );
+
+useFetchNewsfeedQuery.getKey = (variables: FetchNewsfeedQueryVariables) => [
+  'FetchNewsfeed',
+  variables,
+];
 export const useInfiniteFetchNewsfeedQuery = <
   TData = FetchNewsfeedQuery,
   TError = unknown,
@@ -7526,6 +7864,9 @@ export const useInfiniteFetchNewsfeedQuery = <
   );
 };
 
+useInfiniteFetchNewsfeedQuery.getKey = (
+  variables: FetchNewsfeedQueryVariables,
+) => ['FetchNewsfeed.infinite', variables];
 useFetchNewsfeedQuery.fetcher = (
   variables: FetchNewsfeedQueryVariables,
   options?: RequestInit['headers'],
@@ -7642,6 +7983,9 @@ export const useGetRssFeedsQuery = <TData = GetRssFeedsQuery, TError = unknown>(
     ),
     options,
   );
+
+useGetRssFeedsQuery.getKey = (variables?: GetRssFeedsQueryVariables) =>
+  variables === undefined ? ['GetRssFeeds'] : ['GetRssFeeds', variables];
 export const useInfiniteGetRssFeedsQuery = <
   TData = GetRssFeedsQuery,
   TError = unknown,
@@ -7663,6 +8007,10 @@ export const useInfiniteGetRssFeedsQuery = <
   );
 };
 
+useInfiniteGetRssFeedsQuery.getKey = (variables?: GetRssFeedsQueryVariables) =>
+  variables === undefined
+    ? ['GetRssFeeds.infinite']
+    : ['GetRssFeeds.infinite', variables];
 useGetRssFeedsQuery.fetcher = (
   variables?: GetRssFeedsQueryVariables,
   options?: RequestInit['headers'],

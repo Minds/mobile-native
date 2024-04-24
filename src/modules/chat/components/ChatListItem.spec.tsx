@@ -4,9 +4,10 @@ import ChatListItem from './ChatListItem';
 
 describe('ChatListItem', () => {
   const mockChat = {
+    lastMessageCreatedTimestamp: 1713556235,
+    lastMessagePlainText: 'Test message',
     node: {
       roomType: 'ONE_TO_ONE',
-      timeCreatedISO8601: new Date().toISOString(),
     },
     members: {
       edges: [
@@ -14,15 +15,6 @@ describe('ChatListItem', () => {
           node: {
             iconUrl: 'https://example.com/avatar.jpg',
             username: 'testuser',
-          },
-        },
-      ],
-    },
-    messages: {
-      edges: [
-        {
-          node: {
-            plainText: 'Test message',
           },
         },
       ],

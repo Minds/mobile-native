@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { B1, Screen, ScreenHeader } from '~/common/ui';
 import ChatListItem from '../components/ChatListItem';
 import NavigationService from '~/navigation/NavigationService';
@@ -8,6 +8,8 @@ import ChatRequestCount from '../components/ChatRequestCount';
 import ChatRoomList from '../components/ChatRoomList';
 import ChatNewButton from '../components/ChatNewButton';
 import { useRefreshOnFocus } from '~/services/hooks/useRefreshOnFocus';
+import socketService from '~/common/services/socket.service';
+import { useRefetchUnreadMessages } from '../hooks/useUnreadMessages';
 
 /**
  * Chat rooms list screen
@@ -25,6 +27,18 @@ export default function ChatsListScreen({ navigation }) {
 function ChatList() {
   const { chats, isLoading, fetchNextPage, refetch } = useChatRoomListQuery();
 
+  const refetchUnreadMessages = useRefetchUnreadMessages();
+
+  const refresh = useCallback(() => {
+    refetch();
+
+    // refresh sockets room list subscriptions
+    socketService.chat?.refreshRoomList();
+
+    // refresh global unread messages count
+    refetchUnreadMessages();
+  }, [refetch, refetchUnreadMessages]);
+
   // refetch on screen focus
   useRefreshOnFocus(refetch);
 
@@ -33,13 +47,12 @@ function ChatList() {
       renderItem={renderItem}
       ListHeaderComponent={
         <ChatRequestCount
-          count={10}
           onPress={() => NavigationService.push('ChatRequestsList')}
         />
       }
       isLoading={isLoading}
       refreshing={false}
-      onRefresh={refetch}
+      onRefresh={refresh}
       Empty={Empty}
       onEndReached={fetchNextPage}
       data={chats}

@@ -25,10 +25,13 @@ import SupermindButton from '../../common/components/supermind/SupermindButton';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { SUPERMIND_ENABLED, WIRE_ENABLED } from '~/config/Config';
 import PostSubscription from './buttons/PostSubscription';
+import { useCreateChatRoom } from '~/modules/chat/hooks/useCreateChatRoom';
+import { useFeature } from 'ExperimentsProvider';
 
 export type ButtonsType =
   | 'edit'
   | 'more'
+  | 'chat'
   | 'wire'
   | 'subscribe'
   | 'message'
@@ -62,6 +65,8 @@ const check = {
     !store.channel!.isOwner() &&
     store.channel!.can(FLAG_WIRE),
   more: () => true,
+  chat: (store: ChannelStoreType) =>
+    !store.channel!.isOwner() && store.channel!.isSubscribed(),
   message: (store: ChannelStoreType) =>
     !store.channel!.isOwner() &&
     store.channel!.isSubscribed() &&
@@ -86,6 +91,7 @@ const check = {
  */
 const ChannelButtons = withErrorBoundary(
   observer((props: PropsWithChildren<ChannelButtonsPropsType>) => {
+    const chatFF = useFeature('epic-358-chat-mob');
     const menuRef = useRef<any>();
     const navigation =
       useNavigation<NativeStackNavigationProp<AppStackParamList>>();
@@ -143,6 +149,14 @@ const ChannelButtons = withErrorBoundary(
             style={ThemedStyles.style.marginLeft2x}
           />
         )}
+        {shouldShow('chat') && Boolean(chatFF) && (
+          <ChatButton
+            raisedIcons={props.raisedIcons}
+            iconColor={props.iconColor}
+            iconReverseColor={props.iconReverseColor}
+            guid={props.store.channel.guid}
+          />
+        )}
         {shouldShow('more') && (
           <SmallCircleButton
             raised={props.raisedIcons}
@@ -168,6 +182,24 @@ const ChannelButtons = withErrorBoundary(
     );
   }),
 );
+
+const ChatButton = ({ raisedIcons, iconColor, iconReverseColor, guid }) => {
+  const { createChatRoom, isLoading } = useCreateChatRoom();
+  return (
+    <SmallCircleButton
+      raised={raisedIcons}
+      name="chat"
+      type="ion"
+      onPress={() => {
+        createChatRoom([guid]);
+      }}
+      disabled={isLoading}
+      color={iconColor}
+      reverseColor={iconReverseColor}
+      iconStyle={iconStyle}
+    />
+  );
+};
 
 const iconStyle = { fontSize: 25 };
 
