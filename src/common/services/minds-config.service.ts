@@ -35,6 +35,9 @@ export class MindsConfigService {
           return acc;
         }, {});
       }
+      // nsfw enabled by default
+      settings.nsfw_enabled = settings.nsfw_enabled ?? true;
+
       storages.user?.setMap('mindsSettings', settings);
       this.settings = settings;
       this.currentPromise = null;

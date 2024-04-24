@@ -1,9 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { Pressable, PressableProps } from 'react-native';
+import { Platform, Pressable, PressableProps } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import FloatingInput from '~/common/components/FloatingInput';
 import Toggle from '~/common/components/Toggle';
+import api from '~/common/services/api.service';
 import { storages } from '~/common/services/storage/storages.service';
 import { B1, B2, Button, Column, H3, Row, ScreenSection } from '~/common/ui';
 import {
@@ -44,6 +45,35 @@ const DevToolsScreen = () => {
     storages.app.getBool('storybook') || false,
   );
 
+  const requestPushNote = () => {
+    const token = pushService.getToken();
+    const platform = Platform.OS;
+    const payload = {
+      token,
+      platform,
+      title: 'title',
+      body: 'body',
+      uri: 'https://www.minds.com/',
+      icon_url:
+        'https://cdn.minds.com/fs/v1/thumbnail/1605257830766481421/xlarge/',
+      media_url:
+        'https://cdn.minds.com/fs/v1/thumbnail/1605257830766481421/xlarge/',
+    };
+    api
+      .post('api/v3/notifications/push/manual-send', payload)
+      .then(response => {
+        console.log(response);
+        showNotification('Sent request for push notification');
+      })
+      .catch(err => {
+        console.log(JSON.stringify(err, null, 2));
+        showNotification(
+          'Failed to send request for push notification',
+          'danger',
+        );
+      });
+  };
+
   return (
     <ModalContainer
       title={'Developer Options'}
@@ -80,7 +110,7 @@ const DevToolsScreen = () => {
           <Row align="centerBetween" vertical="L">
             <Column>
               <B1>API URL</B1>
-              {Boolean(apiURL) ? (
+              {apiURL ? (
                 <B2 color="link">{apiURL}</B2>
               ) : (
                 <B2 color="tertiary">Default</B2>
@@ -121,6 +151,7 @@ const DevToolsScreen = () => {
             <B1>Push Notifications</B1>
             <Button
               size="small"
+              disabled={!pushService.getToken()}
               onPress={() => {
                 Clipboard.setString(pushService.getToken());
                 showNotification('Token copied to the clipboard');
@@ -129,8 +160,17 @@ const DevToolsScreen = () => {
               Copy Token
             </Button>
           </Row>
+          <Row align="centerBetween" vertical="L">
+            <B1>Send Test Push Notifications</B1>
+            <Button
+              disabled={!pushService.getToken()}
+              size="small"
+              onPress={requestPushNote}
+              type="action">
+              Send Note
+            </Button>
+          </Row>
         </ScreenSection>
-        {/* <CodePushDebugger /> */}
         <GrowthbookDev />
       </ScrollView>
     </ModalContainer>

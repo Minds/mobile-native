@@ -13,6 +13,7 @@ import { useComposeContext } from '~/compose/useComposeStore';
 import { observer } from 'mobx-react';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { PosterStackScreenProps } from './PosterStackNavigator';
+import mindsConfigService from '~/common/services/minds-config.service';
 
 export function useNavCallback(screen, store, navigation) {
   return useCallback(() => {
@@ -31,6 +32,7 @@ const PosterOptions: FC<PropsType> = props => {
   const license = store.attachments.license;
   const accessId = store.accessId;
   const bottomSheet = useBottomSheet();
+  const nsfwEnabled = mindsConfigService.getSettings()?.nsfw_enabled ?? true;
 
   const onTagPress = useNavCallback('TagSelector', store, props.navigation);
   const onNsfwPress = useNavCallback('NsfwSelector', store, props.navigation);
@@ -73,13 +75,17 @@ const PosterOptions: FC<PropsType> = props => {
           .join(', ')}
         onPress={onTagPress}
       />
-      <MenuItem
-        title={i18n.t('nsfw.button')}
-        label={nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')}
-        onPress={onNsfwPress}
-        testID="nsfwButton"
-        noBorderTop
-      />
+      {nsfwEnabled && (
+        <MenuItem
+          title={i18n.t('nsfw.button')}
+          label={
+            nsfw.length !== 0 ? i18n.t('nsfw.notSafe') : i18n.t('nsfw.safe')
+          }
+          onPress={onNsfwPress}
+          testID="nsfwButton"
+          noBorderTop
+        />
+      )}
       {showSchedule && (
         <MenuItem
           title={i18n.t('capture.schedule')}
