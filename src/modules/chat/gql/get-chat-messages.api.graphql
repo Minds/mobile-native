@@ -26,6 +26,13 @@ query GetChatMessages(
             username
           }
         }
+        richEmbed {
+          id
+          url
+          canonicalUrl
+          title
+          thumbnailSrc
+        }
         timeCreatedISO8601
         timeCreatedUnix
       }

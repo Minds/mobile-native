@@ -259,8 +259,12 @@ export type ChatMessageNode = NodeInterface & {
   /** The unique guid of the message */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
+  /** The type of message. */
+  messageType: ChatMessageTypeEnum;
   /** The plaintext (non-encrypted) message */
   plainText: Scalars['String']['output'];
+  /** Rich embed node belonging to the message. */
+  richEmbed?: Maybe<ChatRichEmbedNode>;
   /** The guid of the room the message belongs to */
   roomGuid: Scalars['String']['output'];
   sender: UserEdge;
@@ -270,10 +274,44 @@ export type ChatMessageNode = NodeInterface & {
   timeCreatedUnix: Scalars['String']['output'];
 };
 
+export enum ChatMessageTypeEnum {
+  Audio = 'AUDIO',
+  Image = 'IMAGE',
+  RichEmbed = 'RICH_EMBED',
+  Text = 'TEXT',
+  Video = 'VIDEO',
+}
+
 export type ChatMessagesConnection = ConnectionInterface & {
   __typename?: 'ChatMessagesConnection';
   edges: Array<ChatMessageEdge>;
   pageInfo: PageInfo;
+};
+
+export type ChatRichEmbedNode = NodeInterface & {
+  __typename?: 'ChatRichEmbedNode';
+  /** The author of the rich embed. */
+  author?: Maybe<Scalars['String']['output']>;
+  /** The canonical URL of the rich embed. */
+  canonicalUrl: Scalars['String']['output'];
+  /** The created timestamp of the rich embed in ISO 8601 format. */
+  createdTimestampISO8601?: Maybe<Scalars['String']['output']>;
+  /** The created timestamp of the rich embed in Unix format. */
+  createdTimestampUnix?: Maybe<Scalars['String']['output']>;
+  /** The description of the rich embed. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** The unique ID of the rich embed for GraphQL. */
+  id: Scalars['ID']['output'];
+  /** The thumbnail src of the rich embed. */
+  thumbnailSrc?: Maybe<Scalars['String']['output']>;
+  /** The title of the rich embed. */
+  title?: Maybe<Scalars['String']['output']>;
+  /** The updated timestamp of the rich embed in ISO 8601 format. */
+  updatedTimestampISO8601?: Maybe<Scalars['String']['output']>;
+  /** The updated timestamp of the rich embed in Unix format. */
+  updatedTimestampUnix?: Maybe<Scalars['String']['output']>;
+  /** The URL of the rich embed. */
+  url: Scalars['String']['output'];
 };
 
 export type ChatRoomEdge = EdgeInterface & {
@@ -572,6 +610,7 @@ export type FeaturedGroup = FeaturedEntityInterface &
     __typename?: 'FeaturedGroup';
     autoPostSubscription: Scalars['Boolean']['output'];
     autoSubscribe: Scalars['Boolean']['output'];
+    briefDescription?: Maybe<Scalars['String']['output']>;
     entityGuid: Scalars['String']['output'];
     id: Scalars['ID']['output'];
     /** Gets count of members. */
@@ -875,6 +914,8 @@ export type MultiTenantConfig = {
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
+  customHomePageDescription?: Maybe<Scalars['String']['output']>;
+  customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
@@ -883,16 +924,20 @@ export type MultiTenantConfig = {
   siteEmail?: Maybe<Scalars['String']['output']>;
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
+  walledGardenEnabled?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
+  customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
+  customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
+  walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type MultiTenantDomain = {
@@ -936,6 +981,8 @@ export type Mutation = {
   deleteChatMessage: Scalars['Boolean']['output'];
   deleteChatRoom: Scalars['Boolean']['output'];
   deleteChatRoomAndBlockUser: Scalars['Boolean']['output'];
+  /** Deletes a navigation item */
+  deleteCustomNavigationItem: Scalars['Boolean']['output'];
   /** Delete an entity. */
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
@@ -976,9 +1023,13 @@ export type Mutation = {
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+  /** Updates the order of the navigation items */
+  updateCustomNavigationItemsOrder: Array<NavigationItem>;
   updateNotificationSettings: Scalars['Boolean']['output'];
   updatePostSubscription: PostSubscription;
   updateSiteMembership: SiteMembership;
+  /** Add or update a navigation item */
+  upsertCustomNavigationItem: NavigationItem;
 };
 
 export type MutationArchiveSiteMembershipArgs = {
@@ -1060,6 +1111,10 @@ export type MutationDeleteChatRoomArgs = {
 
 export type MutationDeleteChatRoomAndBlockUserArgs = {
   roomGuid: Scalars['String']['input'];
+};
+
+export type MutationDeleteCustomNavigationItemArgs = {
+  id: Scalars['String']['input'];
 };
 
 export type MutationDeleteEntityArgs = {
@@ -1182,6 +1237,10 @@ export type MutationUpdateAccountArgs = {
   resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type MutationUpdateCustomNavigationItemsOrderArgs = {
+  orderedIds: Array<Scalars['String']['input']>;
+};
+
 export type MutationUpdateNotificationSettingsArgs = {
   notificationStatus: ChatRoomNotificationStatusEnum;
   roomGuid: Scalars['String']['input'];
@@ -1195,6 +1254,40 @@ export type MutationUpdatePostSubscriptionArgs = {
 export type MutationUpdateSiteMembershipArgs = {
   siteMembershipInput: SiteMembershipUpdateInput;
 };
+
+export type MutationUpsertCustomNavigationItemArgs = {
+  action?: InputMaybe<NavigationItemActionEnum>;
+  iconId: Scalars['String']['input'];
+  id: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  order?: InputMaybe<Scalars['Int']['input']>;
+  path?: InputMaybe<Scalars['String']['input']>;
+  type: NavigationItemTypeEnum;
+  url?: InputMaybe<Scalars['String']['input']>;
+  visible: Scalars['Boolean']['input'];
+};
+
+export type NavigationItem = {
+  __typename?: 'NavigationItem';
+  action?: Maybe<NavigationItemActionEnum>;
+  iconId: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  order: Scalars['Int']['output'];
+  path?: Maybe<Scalars['String']['output']>;
+  type: NavigationItemTypeEnum;
+  url?: Maybe<Scalars['String']['output']>;
+  visible: Scalars['Boolean']['output'];
+};
+
+export enum NavigationItemActionEnum {
+  ShowSidebarMore = 'SHOW_SIDEBAR_MORE',
+}
+
+export enum NavigationItemTypeEnum {
+  Core = 'CORE',
+  CustomLink = 'CUSTOM_LINK',
+}
 
 export type NewsfeedConnection = ConnectionInterface & {
   __typename?: 'NewsfeedConnection';
@@ -1357,6 +1450,8 @@ export type Query = {
   chatUnreadMessagesCount: Scalars['Int']['output'];
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
+  /** Returns the navigation items that are configured for a site */
+  customNavigationItems: Array<NavigationItem>;
   customPage: CustomPage;
   /** Get dismissal by key. */
   dismissalByKey?: Maybe<Dismissal>;
@@ -2161,6 +2256,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRichEmbedNode'; id: string }
             | { __typename: 'ChatRoomNode'; id: string }
             | { __typename: 'CommentNode'; id: string }
             | { __typename: 'CustomPage'; id: string }
@@ -2213,6 +2309,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -2295,6 +2392,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -2343,6 +2441,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -2515,6 +2614,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRichEmbedNode'; id: string }
             | { __typename: 'ChatRoomNode'; id: string }
             | { __typename: 'CommentNode'; id: string }
             | { __typename: 'CustomPage'; id: string }
@@ -2567,6 +2667,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -2649,6 +2750,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -2697,6 +2799,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -2839,6 +2942,7 @@ export type FetchSearchQuery = {
                 id: string;
               }
             | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRichEmbedNode'; id: string }
             | { __typename: 'ChatRoomNode'; id: string }
             | { __typename: 'CommentNode'; id: string }
             | { __typename: 'CustomPage'; id: string }
@@ -2891,6 +2995,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -2973,6 +3078,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -3021,6 +3127,7 @@ export type FetchSearchQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -3214,6 +3321,7 @@ export type FetchSearchQuery = {
                     | { __typename: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRichEmbedNode'; id: string }
                     | { __typename: 'ChatRoomNode'; id: string }
                     | { __typename: 'CommentNode'; id: string }
                     | { __typename: 'CustomPage'; id: string }
@@ -3275,6 +3383,7 @@ export type FetchSearchQuery = {
                     | { __typename: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRichEmbedNode'; id: string }
                     | { __typename: 'ChatRoomNode'; id: string }
                     | { __typename: 'CommentNode'; id: string }
                     | { __typename: 'CustomPage'; id: string }
@@ -3309,6 +3418,7 @@ export type FetchSearchQuery = {
                     | { __typename: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRichEmbedNode'; id: string }
                     | { __typename: 'ChatRoomNode'; id: string }
                     | { __typename: 'CommentNode'; id: string }
                     | { __typename: 'CustomPage'; id: string }
@@ -3521,6 +3631,14 @@ export type CreateChatMessageMutation = {
       plainText: string;
       timeCreatedISO8601: string;
       timeCreatedUnix: string;
+      richEmbed?: {
+        __typename?: 'ChatRichEmbedNode';
+        id: string;
+        url: string;
+        canonicalUrl: string;
+        title?: string | null;
+        thumbnailSrc?: string | null;
+      } | null;
       sender: {
         __typename?: 'UserEdge';
         id: string;
@@ -3540,43 +3658,24 @@ export type CreateChatMessageMutation = {
 };
 
 export type CreateChatRoomMutationVariables = Exact<{
+  otherMemberGuids:
+    | Array<Scalars['String']['input']>
+    | Scalars['String']['input'];
   roomType?: InputMaybe<ChatRoomTypeEnum>;
-  otherMemberGuids?: InputMaybe<
-    Array<Scalars['String']['input']> | Scalars['String']['input']
-  >;
 }>;
 
 export type CreateChatRoomMutation = {
   __typename?: 'Mutation';
   createChatRoom: {
     __typename?: 'ChatRoomEdge';
-    lastMessagePlainText?: string | null;
-    lastMessageCreatedTimestamp?: number | null;
     cursor: string;
-    totalMembers: number;
     node: {
       __typename?: 'ChatRoomNode';
-      isChatRequest: boolean;
       id: string;
       guid: string;
       roomType: ChatRoomTypeEnum;
       timeCreatedISO8601: string;
       timeCreatedUnix: string;
-    };
-    members: {
-      __typename?: 'ChatRoomMembersConnection';
-      edges: Array<{
-        __typename?: 'ChatRoomMemberEdge';
-        cursor: string;
-        node: {
-          __typename?: 'UserNode';
-          id: string;
-          guid: string;
-          iconUrl: string;
-          username: string;
-          name: string;
-        };
-      }>;
     };
   };
 };
@@ -3691,6 +3790,14 @@ export type GetChatMessagesQuery = {
             username: string;
           };
         };
+        richEmbed?: {
+          __typename?: 'ChatRichEmbedNode';
+          id: string;
+          url: string;
+          canonicalUrl: string;
+          title?: string | null;
+          thumbnailSrc?: string | null;
+        } | null;
       };
     }>;
     pageInfo: {
@@ -4080,6 +4187,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRichEmbedNode'; id: string }
             | { __typename: 'ChatRoomNode'; id: string }
             | { __typename: 'CommentNode'; id: string }
             | { __typename: 'CustomPage'; id: string }
@@ -4152,6 +4260,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -4234,6 +4343,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -4282,6 +4392,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -4454,6 +4565,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRichEmbedNode'; id: string }
             | { __typename: 'ChatRoomNode'; id: string }
             | { __typename: 'CommentNode'; id: string }
             | { __typename: 'CustomPage'; id: string }
@@ -4526,6 +4638,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -4608,6 +4721,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -4656,6 +4770,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -4798,6 +4913,7 @@ export type FetchNewsfeedQuery = {
                 id: string;
               }
             | { __typename: 'ChatMessageNode'; id: string }
+            | { __typename: 'ChatRichEmbedNode'; id: string }
             | { __typename: 'ChatRoomNode'; id: string }
             | { __typename: 'CommentNode'; id: string }
             | { __typename: 'CustomPage'; id: string }
@@ -4870,6 +4986,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -4952,6 +5069,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -5000,6 +5118,7 @@ export type FetchNewsfeedQuery = {
                             id: string;
                           }
                         | { __typename: 'ChatMessageNode'; id: string }
+                        | { __typename: 'ChatRichEmbedNode'; id: string }
                         | { __typename: 'ChatRoomNode'; id: string }
                         | { __typename: 'CommentNode'; id: string }
                         | { __typename: 'CustomPage'; id: string }
@@ -5209,6 +5328,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRichEmbedNode'; id: string }
                     | { __typename: 'ChatRoomNode'; id: string }
                     | { __typename: 'CommentNode'; id: string }
                     | { __typename: 'CustomPage'; id: string }
@@ -5270,6 +5390,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRichEmbedNode'; id: string }
                     | { __typename: 'ChatRoomNode'; id: string }
                     | { __typename: 'CommentNode'; id: string }
                     | { __typename: 'CustomPage'; id: string }
@@ -5304,6 +5425,7 @@ export type FetchNewsfeedQuery = {
                     | { __typename: 'AnalyticsTableRowUserNode'; id: string }
                     | { __typename: 'BoostNode'; legacy: string; id: string }
                     | { __typename: 'ChatMessageNode'; id: string }
+                    | { __typename: 'ChatRichEmbedNode'; id: string }
                     | { __typename: 'ChatRoomNode'; id: string }
                     | { __typename: 'CommentNode'; id: string }
                     | { __typename: 'CustomPage'; id: string }
@@ -6374,6 +6496,13 @@ export const CreateChatMessageDocument = `
       plainText
       timeCreatedISO8601
       timeCreatedUnix
+      richEmbed {
+        id
+        url
+        canonicalUrl
+        title
+        thumbnailSrc
+      }
       sender {
         id
         type
@@ -6425,31 +6554,15 @@ useCreateChatMessageMutation.fetcher = (
     options,
   );
 export const CreateChatRoomDocument = `
-    mutation CreateChatRoom($roomType: ChatRoomTypeEnum, $otherMemberGuids: [String!]) {
+    mutation CreateChatRoom($otherMemberGuids: [String!]!, $roomType: ChatRoomTypeEnum) {
   createChatRoom(otherMemberGuids: $otherMemberGuids, roomType: $roomType) {
-    lastMessagePlainText
-    lastMessageCreatedTimestamp
     cursor
-    totalMembers
     node {
-      isChatRequest
       id
       guid
       roomType
       timeCreatedISO8601
       timeCreatedUnix
-    }
-    members(first: 3) {
-      edges {
-        cursor
-        node {
-          id
-          guid
-          iconUrl
-          username
-          name
-        }
-      }
     }
   }
 }
@@ -6477,7 +6590,7 @@ export const useCreateChatRoomMutation = <TError = unknown, TContext = unknown>(
     options,
   );
 useCreateChatRoomMutation.fetcher = (
-  variables?: CreateChatRoomMutationVariables,
+  variables: CreateChatRoomMutationVariables,
   options?: RequestInit['headers'],
 ) =>
   gqlFetcher<CreateChatRoomMutation, CreateChatRoomMutationVariables>(
@@ -6718,6 +6831,13 @@ export const GetChatMessagesDocument = `
             name
             username
           }
+        }
+        richEmbed {
+          id
+          url
+          canonicalUrl
+          title
+          thumbnailSrc
         }
         timeCreatedISO8601
         timeCreatedUnix

@@ -8,6 +8,13 @@ mutation CreateChatMessage($plainText: String!, $roomGuid: String!) {
       plainText
       timeCreatedISO8601
       timeCreatedUnix
+      richEmbed {
+        id
+        url
+        canonicalUrl
+        title
+        thumbnailSrc
+      }
       sender {
         id
         type

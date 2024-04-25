@@ -6,8 +6,11 @@ const regex = /^typo_(.+)_(.+)_(.+)_(.+)_(.+)/g;
 
 const colorMap = {
   primary: 'colorPrimaryText',
+  primaryDark: 'colorPrimaryText_Dark',
   secondary: 'colorSecondaryText',
+  secondaryDark: 'colorSecondaryText_Dark',
   tertiary: 'colorTertiaryText',
+  tertiaryDark: 'colorTertiaryText_Dark',
   link: 'colorLink',
   white: 'colorWhite',
   green: 'colorGreen',
