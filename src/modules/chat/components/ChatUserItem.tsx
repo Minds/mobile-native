@@ -46,7 +46,7 @@ export function ChatUserItem({ user, onPress, selected, extra }: Props) {
           <Avatar size="small" source={userData.iconUrl} testID="UserAvatar" />
         )}
         <View style={styles.column}>
-          <B2 font="medium">{userData.name}</B2>
+          <B2 font="medium">{userData.name || userData.username}</B2>
           <B3
             color="secondary"
             top="S"

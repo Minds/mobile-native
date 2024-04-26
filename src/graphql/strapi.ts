@@ -3754,8 +3754,7 @@ export const GetExplainerScreensDocument = `
           icon
           title
           description
-
-  }
+        }
         continueButton {
           text
           dataRef

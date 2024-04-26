@@ -13,9 +13,15 @@ type Props = {
 function ChatHeader({ members, extra }: Props) {
   const query = useChatRoomContext();
 
+  if (!query.data?.chatRoom.members) {
+    return null;
+  }
+
   const firstThreeMembers = query.data?.chatRoom.members
     ? query.data?.chatRoom.members.edges.slice(0, 3)
-    : members.slice(0, 3);
+    : members
+    ? members.slice(0, 3)
+    : [];
 
   const avatars = firstThreeMembers.map((member, index) =>
     index === 0 ? (
@@ -41,8 +47,12 @@ function ChatHeader({ members, extra }: Props) {
   );
 
   const title =
-    firstThreeMembers.map(member => member.node.name).join(', ') +
-    (members.length > 3 ? ` and ${members.length - 3} others` : '');
+    firstThreeMembers
+      .map(member => member.node.name || member.node.username)
+      .join(', ') +
+    (query.data?.chatRoom.totalMembers > 3
+      ? ` and ${query.data?.chatRoom.totalMembers - 3} others`
+      : '');
 
   return (
     <ScreenHeader

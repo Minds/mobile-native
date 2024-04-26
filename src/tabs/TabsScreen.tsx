@@ -32,7 +32,7 @@ export type TabParamList = {
   User: {};
   Discovery: {};
   More: {};
-  ChatStack: {};
+  ChatListStack: {};
   MindsPlus: {};
   Notifications: {};
   CaptureTab: {};
@@ -176,7 +176,7 @@ const Tabs = observer(function () {
         />
         {chatFF ? (
           <Tab.Screen
-            name="ChatStack"
+            name="ChatListStack"
             getComponent={() => require('~/modules/chat').ChatsListStack}
             options={discoveryOptions}
           />
@@ -261,7 +261,7 @@ const iconFromRoute: Record<string, IconMapNameType> = {
   More: 'menu',
   Newsfeed: 'home',
   User: 'user',
-  ChatStack: 'chat-solid',
+  ChatListStack: 'chat-solid',
   Discovery: 'search',
   Performance: 'dev',
   MindsPlus: 'queue',

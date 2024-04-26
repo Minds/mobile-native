@@ -201,6 +201,8 @@ const redirectPages = [
  */
 export const MINDS_DEEPLINK = [
   ...redirectPages,
+  ['chat/rooms', 'ChatListStack/ChatsList', 'navigate'],
+  ['chat/rooms/:roomGuid', 'App/ChatStack/Chat'],
   ['forgot-password;:username;:code', 'ResetPassword'],
   ['groups/profile/:guid/feed', 'GroupView'],
   ['groups/profile/:guid', 'GroupView'],

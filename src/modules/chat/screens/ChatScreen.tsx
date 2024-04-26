@@ -62,21 +62,18 @@ export default function ChatScreen({ navigation, route }) {
 const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
   return (
     <>
-      {members && (
-        <ChatHeader
-          members={members}
-          extra={
-            !isRequest ? (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate('ChatDetails', { roomGuid })
-                }>
-                <Icon name="info-circle" size={20} />
-              </TouchableOpacity>
-            ) : null
-          }
-        />
-      )}
+      <ChatHeader
+        members={members}
+        extra={
+          !isRequest ? (
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ChatDetails', { roomGuid })}>
+              <Icon name="info-circle" size={20} />
+            </TouchableOpacity>
+          ) : null
+        }
+      />
+
       <MessageList roomGuid={roomGuid} isRequest={isRequest} />
     </>
   );

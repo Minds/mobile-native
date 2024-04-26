@@ -73,10 +73,6 @@ export class SocketService {
     this.socket.on('error', e => {
       logService.info('[ws]::error', e);
     });
-
-    this.socket.onAny((eventName, ...args) => {
-      console.log('[ws]::onAny', eventName, args);
-    });
   }
 
   reconnect() {

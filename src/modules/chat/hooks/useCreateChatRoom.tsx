@@ -15,7 +15,6 @@ export function useCreateChatRoom(replace = false) {
             screen: 'Chat',
             params: {
               roomGuid: data.createChatRoom.node.guid,
-              members: data.createChatRoom.members.edges,
             },
           }),
         );
@@ -24,7 +23,6 @@ export function useCreateChatRoom(replace = false) {
           screen: 'Chat',
           params: {
             roomGuid: data.createChatRoom.node.guid,
-            members: data.createChatRoom.members.edges,
           },
         });
       }
