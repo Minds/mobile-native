@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
-import { B1, Screen, ScreenHeader } from '~/common/ui';
+import { View } from 'react-native';
+
+import { B2, B3, Button, H3, Screen, ScreenHeader, Spacer } from '~/common/ui';
 import ChatListItem from '../components/ChatListItem';
 import NavigationService from '~/navigation/NavigationService';
 import { ChatRoom } from '../types';
@@ -10,6 +12,7 @@ import ChatNewButton from '../components/ChatNewButton';
 import { useRefreshOnFocus } from '~/services/hooks/useRefreshOnFocus';
 import socketService from '~/common/services/socket.service';
 import { useRefetchUnreadMessages } from '../hooks/useUnreadMessages';
+import { useStyle } from '~/styles/ThemedStyles';
 
 /**
  * Chat rooms list screen
@@ -17,12 +20,26 @@ import { useRefetchUnreadMessages } from '../hooks/useUnreadMessages';
 export default function ChatsListScreen({ navigation }) {
   return (
     <Screen safe>
-      <ScreenHeader back={false} title="Chats" />
+      <ScreenHeader back={false} title="Chat" extra={<Alpha />} />
       <ChatList />
       <ChatNewButton onPress={() => navigation.push('ChatNew')} />
     </Screen>
   );
 }
+
+const Alpha = () => (
+  <View
+    style={useStyle(
+      'paddingVertical',
+      'paddingHorizontal2x',
+      'borderRadius13x',
+      'bgLink',
+    )}>
+    <B3 color="black" font="medium">
+      Alpha
+    </B3>
+  </View>
+);
 
 function ChatList() {
   const { chats, isLoading, fetchNextPage, refetch } = useChatRoomListQuery();
@@ -60,7 +77,21 @@ function ChatList() {
   );
 }
 
-const Empty = () => <B1>No chats</B1>;
+const Empty = () => (
+  <Spacer horizontal="XL" top="L">
+    <H3>Say hello to chats!</H3>
+    <B2 vertical="M">
+      Start a direct conversation with a friend, stranger, or group of people on
+      Minds.
+    </B2>
+    <Button
+      onPress={() => NavigationService.push('ChatNew')}
+      align="start"
+      type="action">
+      New chat
+    </Button>
+  </Spacer>
+);
 
 /**
  * Renders the list items

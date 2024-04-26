@@ -15,7 +15,7 @@ export default function ChatUserChip({ user, onPress }: Props) {
     <PressableScale onPress={onPress}>
       <View style={chipStyle}>
         <B3 right="XS" font="bold">
-          {user.name}
+          {user.name || user.username}
         </B3>
         <Icon name="close" size={15} />
       </View>

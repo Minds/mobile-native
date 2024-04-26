@@ -14,6 +14,7 @@ import {
 } from '../contexts/ChatRoomMessageContext';
 import domain from '~/common/helpers/domain';
 import openUrlService from '~/common/services/open-url.service';
+import NavigationService from '~/navigation/NavigationService';
 
 type Props = {
   message: ChatMessage;
@@ -41,6 +42,9 @@ function Message({ message, onLongPress }: Props) {
       <View style={styles.avatarContainer}>
         <Avatar
           size="tiny"
+          onPress={() => {
+            NavigationService.push('Channel', { guid: sender.guid });
+          }}
           source={{
             uri: message.node.sender.node.iconUrl,
           }}
@@ -51,7 +55,7 @@ function Message({ message, onLongPress }: Props) {
           {sender.name}
         </B2>
         {message.node.richEmbed ? (
-          <RichEmbed message={message} />
+          <RichEmbed message={message} onLongPress={longPress} />
         ) : (
           <View style={styles.bubble}>
             <B1>{message.node.plainText}</B1>
@@ -72,7 +76,7 @@ function Message({ message, onLongPress }: Props) {
         style={styles.bubbleContainer}
         onLongPress={longPress}>
         {message.node.richEmbed ? (
-          <RichEmbed message={message} />
+          <RichEmbed message={message} onLongPress={longPress} />
         ) : (
           <View style={styles.bubbleRight}>
             <B1 color="primaryDark">{message.node.plainText}</B1>
@@ -86,11 +90,18 @@ function Message({ message, onLongPress }: Props) {
   );
 }
 
-const RichEmbed = ({ message }: { message: ChatMessage }) => {
+const RichEmbed = ({
+  message,
+  onLongPress,
+}: {
+  message: ChatMessage;
+  onLongPress?: () => void;
+}) => {
   const isMe = message.node.sender.node.guid === sessionService.getUser().guid;
   return (
     <TouchableOpacity
       activeOpacity={0.7}
+      onLongPress={onLongPress}
       onPress={() => {
         const url =
           message.node.richEmbed?.url || message.node.richEmbed?.canonicalUrl;
