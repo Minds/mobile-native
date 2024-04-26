@@ -130,6 +130,7 @@ export const ANDROID_CHAT_APP = 'com.minds.chat';
 export const STRAPI_URI = 'https://cms.minds.com';
 
 export const APP_SCHEME_URI = `${Tenant.APP_SCHEME}://`;
+export const APP_HOST = Tenant.APP_HOST;
 export const APP_URI = Tenant.API_URL;
 export const APP_API_URI =
   DEV_MODE.isActive && CUSTOM_API_URL ? CUSTOM_API_URL : Tenant.API_URL;
@@ -148,8 +149,6 @@ export const APP_URI_SETTINGS = {
 };
 
 export const MINDS_MAX_VIDEO_LENGTH = 5; // in minutes
-
-export const SOCKET_URI = 'wss://ha-socket-alb-io-us-east-1.minds.com';
 
 export const MINDS_CDN_URI = IS_TENANT
   ? Tenant.API_URL
@@ -202,6 +201,8 @@ const redirectPages = [
  */
 export const MINDS_DEEPLINK = [
   ...redirectPages,
+  ['chat/rooms', 'ChatListStack/ChatsList', 'navigate'],
+  ['chat/rooms/:roomGuid', 'App/ChatStack/Chat'],
   ['forgot-password;:username;:code', 'ResetPassword'],
   ['groups/profile/:guid/feed', 'GroupView'],
   ['groups/profile/:guid', 'GroupView'],

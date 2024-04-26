@@ -94,6 +94,18 @@ const AppStack = observer(() => {
           }}
         />
         <AppStackNav.Screen
+          name="ChatStack"
+          getComponent={() => require('~/modules/chat').ChatConversationStack}
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
+          name="ChatNew"
+          getComponent={() =>
+            require('~/modules/chat/screens/ChatNewScreen').default
+          }
+          options={hideHeader}
+        />
+        <AppStackNav.Screen
           name="Update"
           getComponent={() => require('~/update/UpdateScreen').default}
           options={hideHeader}

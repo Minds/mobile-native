@@ -88,7 +88,8 @@ export const FONT_FAMILY = {
 export const AVATAR_SIZE_DEFAULT = 'medium';
 
 export const AVATAR_SIZE = {
-  micro: UNIT.XXXL,
+  nano: UNIT.L,
+  micro: UNIT.L2,
   tiny: UNIT.L2 + UNIT.XS,
   small: UNIT.XL2,
   medium: UNIT.XXL2 + UNIT.XS,

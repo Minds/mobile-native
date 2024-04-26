@@ -1,24 +1,25 @@
-import SocketIOClient, { Socket } from 'socket.io-client';
-import { SOCKET_URI } from '../../config/Config';
+import { Socket, io } from 'socket.io-client';
 import logService from './log.service';
 import sessionService from './session.service';
+import { GlobalChatSocketService } from '~/modules/chat/service/chat-socket-service';
+import { APP_HOST } from '~/config/Config';
 
 /**
  * Socket Service
  */
 export class SocketService {
-  LIVE_ROOM_NAME = 'live';
-
   socket?: Socket;
-  registered = false;
-  rooms: string[] = [];
+
+  chat?: GlobalChatSocketService;
+
+  private rooms: string[] = [];
 
   init() {
     sessionService.onSession(token => {
       if (token) {
         this.setUp();
       } else if (this.socket) {
-        this.deregister();
+        this.disconnect();
       }
     });
   }
@@ -26,16 +27,22 @@ export class SocketService {
   setUp() {
     this.socket?.close();
 
-    logService.info('connecting to ', SOCKET_URI);
-    this.socket = SocketIOClient(SOCKET_URI, {
+    logService.info('[ws]::connecting to ', APP_HOST);
+    this.socket = io('wss://' + APP_HOST, {
+      path: '/api/sockets/socket.io',
       reconnection: true,
       timeout: 30000,
       autoConnect: false,
-      transports: ['websocket'], // important with RN
+      transports: ['websocket'], // important with RNs
+      auth: {
+        accessToken: sessionService.token,
+      },
     });
 
+    this.chat = new GlobalChatSocketService(this);
+
     this.rooms = [];
-    this.registered = false;
+
     this.setUpDefaultListeners();
 
     this.reconnect();
@@ -44,63 +51,34 @@ export class SocketService {
   }
 
   setUpDefaultListeners() {
-    if (!this.socket?.on) {
+    if (!this.socket) {
       return;
     }
 
+    console.log('[ws]::setting up listeners');
+
     // connect
-    this.socket?.on('connect', () => {
-      logService.info(`[ws]::connected to ${SOCKET_URI}`);
-      this.registerWithAccessToken();
-      this.join(`${this.LIVE_ROOM_NAME}:${sessionService.guid}`);
+    this.socket.on('connect', () => {
+      logService.info(`[ws]::connected to ${APP_HOST}`);
+      // Re-join previously join room on a reconnect
+      this.rooms.forEach(room => this.socket?.emit('join', room));
     });
 
     // disconnect
-    this.socket?.on('disconnect', () => {
-      logService.info(`[ws]::disconnected from ${SOCKET_URI}`);
-      this.registered = false;
-    });
-
-    // registered
-    this.socket?.on('registered', () => {
-      logService.info(`[ws]::registeration completed`);
-      this.registered = true;
-      this.socket?.emit('join', this.rooms);
+    this.socket.on('disconnect', () => {
+      logService.info(`[ws]::disconnected from ${APP_HOST}`);
     });
 
     // error
-    this.socket?.on('error', e => {
+    this.socket.on('error', e => {
       logService.info('[ws]::error', e);
-    });
-
-    // rooms
-    this.socket?.on('rooms', rooms => {
-      if (!this.registered) {
-        return;
-      }
-
-      logService.info(`[ws]::rcvd rooms status`, rooms);
-      this.rooms = rooms;
-    });
-
-    // joined
-    this.socket?.on('joined', (room, rooms) => {
-      logService.info(`[ws]::joined`, room, rooms);
-      this.rooms = rooms;
-    });
-
-    // left
-    this.socket?.on('left', (room, rooms) => {
-      logService.info(`[ws]::left`, room, rooms);
-      this.rooms = rooms;
     });
   }
 
   reconnect() {
     logService.info('[ws]::reconnect');
-    this.registered = false;
 
-    this.socket?.disconnect();
+    // this.socket?.disconnect();
     this.socket?.connect();
 
     return this;
@@ -108,10 +86,7 @@ export class SocketService {
 
   disconnect() {
     logService.info('[ws]::disconnect');
-    this.registered = false;
-
     this.socket?.disconnect();
-
     return this;
   }
 
@@ -126,8 +101,18 @@ export class SocketService {
     return this;
   }
 
-  unsubscribe(name, callback) {
+  unsubscribe(name, callback?) {
     this.socket?.off(name, callback);
+    return this;
+  }
+
+  subscribeAny(callback) {
+    this.socket?.onAny(callback);
+    return this;
+  }
+
+  unsubscribeAny(callback?) {
+    this.socket?.offAny(callback);
     return this;
   }
 
@@ -136,10 +121,14 @@ export class SocketService {
       return this;
     }
 
-    if (!this.registered || !this.socket?.connected) {
-      this.rooms.push(room);
+    // Even if the socket isn't connected, it will join the room on socket.on('connect')
+    this.rooms.push(room);
+
+    if (!this.socket?.connected) {
       return this;
     }
+
+    logService.info('[ws]:joining room', room);
 
     return this.emit('join', room);
   }
@@ -149,16 +138,10 @@ export class SocketService {
       return this;
     }
 
+    const i = this.rooms.indexOf(room);
+    this.rooms.splice(i, 1);
+
     return this.emit('leave', room);
-  }
-
-  registerWithAccessToken() {
-    this.emit('register', sessionService.guid, sessionService.token);
-  }
-
-  deregister() {
-    this.disconnect();
-    this.rooms = [];
   }
 }
 

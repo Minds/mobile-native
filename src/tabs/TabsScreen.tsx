@@ -22,6 +22,8 @@ import Animated, {
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
 import withModalProvider from '~/navigation/withModalProvide';
+import { useFeature } from 'ExperimentsProvider';
+import { useUnreadMessages } from '~/modules/chat/hooks/useUnreadMessages';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -30,9 +32,10 @@ export type TabParamList = {
   User: {};
   Discovery: {};
   More: {};
+  ChatListStack: {};
+  MindsPlus: {};
   Notifications: {};
   CaptureTab: {};
-  MindsPlus: {};
 };
 
 const { width } = Dimensions.get('screen');
@@ -58,6 +61,7 @@ export type TabScreenProps<S extends keyof TabParamList> = BottomTabScreenProps<
 const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const { bottom } = useSafeAreaInsets();
+
   const barAnimatedStyle = useAnimatedStyle(() => ({
     width: tabWidth,
     transform: [
@@ -82,6 +86,8 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
     ],
     [bottom],
   );
+
+  const unreadMessages = useUnreadMessages();
 
   if (focusedOptions.tabBarVisible === false) {
     return null;
@@ -128,6 +134,9 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
             onLongPress={onLongPress}
             style={styles.buttonContainer}>
             {icon}
+            {route.name === 'ChatStack' && unreadMessages.count > 0 && (
+              <View style={styles.unread} />
+            )}
           </Component>
         );
       })}
@@ -145,7 +154,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
  */
 const Tabs = observer(function () {
   const theme = ThemedStyles.style;
-
+  const chatFF = useFeature('epic-358-chat-mob');
   return (
     <View style={theme.flexContainer}>
       {/* <Topbar navigation={navigation} /> */}
@@ -165,16 +174,25 @@ const Tabs = observer(function () {
           getComponent={() => require('~/navigation/DiscoveryStack').default}
           options={discoveryOptions}
         />
-        {!IS_TENANT && (
+        {chatFF ? (
           <Tab.Screen
-            name="MindsPlus"
-            getComponent={() =>
-              require('~/discovery/v2/PlusDiscoveryScreen').default
-            }
-            options={{ tabBarTestID: 'Tabs:MindsPlus' }}
-            initialParams={{ backEnable: false }}
+            name="ChatListStack"
+            getComponent={() => require('~/modules/chat').ChatsListStack}
+            options={discoveryOptions}
           />
+        ) : (
+          !IS_TENANT && (
+            <Tab.Screen
+              name="MindsPlus"
+              getComponent={() =>
+                require('~/discovery/v2/PlusDiscoveryScreen').default
+              }
+              options={{ tabBarTestID: 'Tabs:MindsPlus' }}
+              initialParams={{ backEnable: false }}
+            />
+          )
         )}
+
         <Tab.Screen
           name="Notifications"
           component={NotificationsStack}
@@ -187,6 +205,17 @@ const Tabs = observer(function () {
 });
 
 const styles = ThemedStyles.create({
+  unread: [
+    {
+      width: 8,
+      height: 8,
+      position: 'absolute',
+      top: -5,
+      right: -5,
+      borderRadius: 100,
+    },
+    'bgLink',
+  ],
   compose: {
     width: 46,
     height: 44,
@@ -232,6 +261,7 @@ const iconFromRoute: Record<string, IconMapNameType> = {
   More: 'menu',
   Newsfeed: 'home',
   User: 'user',
+  ChatListStack: 'chat-solid',
   Discovery: 'search',
   Performance: 'dev',
   MindsPlus: 'queue',

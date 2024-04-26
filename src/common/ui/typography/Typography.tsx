@@ -32,6 +32,9 @@ export type TypographyPropsType = {
   color?:
     | 'primary'
     | 'secondary'
+    | 'primaryDark'
+    | 'secondaryDark'
+    | 'tertiaryDark'
     | 'link'
     | 'white'
     | 'black'

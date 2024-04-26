@@ -3,7 +3,6 @@
     "dbaeumer.vscode-eslint",
     "dsznajder.es7-react-js-snippets",
     "editorconfig.editorconfig",
-    "msjsdiag.vscode-react-native",
-    "visualstudioexptteam.vscodeintellicode",
-  ],
+    "msjsdiag.vscode-react-native"
+  ]
 }

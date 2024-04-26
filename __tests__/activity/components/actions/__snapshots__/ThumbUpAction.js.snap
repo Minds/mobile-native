@@ -86,6 +86,7 @@ exports[`Thumb action component renders correctly 1`] = `
           "mature": false,
           "mature_visibility": false,
           "message": "Message",
+          "onMetricsUpdate": [Function],
           "ownerObj": {
             "__list": null,
             "_collapsed": false,

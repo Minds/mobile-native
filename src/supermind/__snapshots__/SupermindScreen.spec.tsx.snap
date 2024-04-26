@@ -28,6 +28,12 @@ exports[`SupermindScreen should render correctly 1`] = `
                   "flexDirection": "row",
                   "justifyContent": "flex-start",
                 },
+                {
+                  "alignItems": "center",
+                },
+                {
+                  "flex": 1,
+                },
               ]
             }
           >
@@ -113,21 +119,29 @@ exports[`SupermindScreen should render correctly 1`] = `
               </View>
             </View>
             <Text
+              numberOfLines={1}
               style={
                 [
-                  {
-                    "color": "#F2F2F2",
-                  },
-                  {
-                    "fontFamily": "Roboto_700Bold",
-                  },
-                  {
-                    "fontSize": 24,
-                    "lineHeight": 32,
-                  },
-                  {
-                    "textAlign": "left",
-                  },
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_700Bold",
+                    },
+                    {
+                      "fontSize": 24,
+                      "lineHeight": 32,
+                    },
+                    {
+                      "textAlign": "left",
+                    },
+                  ],
+                  [
+                    {
+                      "flex": 1,
+                    },
+                  ],
                 ]
               }
             >

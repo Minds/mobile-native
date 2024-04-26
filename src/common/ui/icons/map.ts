@@ -90,6 +90,11 @@ const ICON_MAP = {
     name: 'more-vert',
     ratio: 0.92,
   },
+  'more-horiz': {
+    font: 'MaterialIcons',
+    name: 'more-horiz',
+    ratio: 0.92,
+  },
   tags: {
     font: 'MaterialIcons',
     name: 'local-offer',
@@ -183,8 +188,8 @@ const ICON_MAP = {
     name: 'person',
   },
   chat: {
-    font: 'MaterialCommunityIcons',
-    name: 'message-outline',
+    font: 'MaterialIcons',
+    name: 'message',
     ratio: 0.92,
     top: 2,
   },

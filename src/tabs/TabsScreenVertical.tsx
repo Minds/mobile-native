@@ -30,6 +30,7 @@ const DoubleTapSafeButton = preventDoubleTap(TouchableOpacity);
 export type DrawerParamList = {
   Newsfeed: {};
   Explore: {};
+  ChatStack: {};
   MindsPlus: {};
   Notifications: {};
   Profile: {};
@@ -85,6 +86,11 @@ const Tabs = observer(function () {
           name="Explore"
           component={DiscoveryStack}
           options={{ lazy: false }}
+        />
+        <Drawer.Screen
+          name="ChatStack"
+          getComponent={() => require('~/modules/chat').ChatsListStack}
+          options={{ lazy: true }}
         />
         <Drawer.Screen name="Notifications" component={NotificationsStack} />
         <Drawer.Screen
@@ -255,6 +261,7 @@ export const styles = ThemedStyles.create({
 const iconFromRoute: Record<string, IconMapNameType> = {
   More: 'menu',
   Newsfeed: 'home',
+  ChatStack: 'chat',
   User: 'user',
   Discovery: 'search',
   Profile: 'profile',

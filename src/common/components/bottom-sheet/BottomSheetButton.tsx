@@ -5,6 +5,7 @@ import { Button } from '~ui';
 interface PropsType {
   text: string;
   action?: boolean;
+  warning?: boolean;
   onPress?: () => void;
   testID?: string;
   loading?: boolean;
@@ -17,6 +18,7 @@ export default function BottomSheetButton({
   text,
   onPress,
   action,
+  warning,
   loading,
   testID,
   solid,
@@ -29,8 +31,8 @@ export default function BottomSheetButton({
       onPress={onPress}
       testID={testID}
       loading={loading}
-      mode={action ? (solid ? 'solid' : 'outline') : 'solid'}
-      type={action ? 'action' : undefined}
+      mode={action || warning ? (solid ? 'solid' : 'outline') : 'solid'}
+      type={action ? 'action' : warning ? 'warning' : undefined}
       containerStyle={containerStyle}>
       {text}
     </Button>

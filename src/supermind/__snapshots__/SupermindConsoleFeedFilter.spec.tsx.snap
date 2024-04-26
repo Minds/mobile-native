@@ -172,7 +172,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                       "paddingVertical": 12,
                     },
                     {
-                      "paddingHorizontal": 16,
+                      "paddingHorizontal": 20,
                     },
                   ],
                   undefined,
@@ -299,7 +299,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                       "paddingVertical": 12,
                     },
                     {
-                      "paddingHorizontal": 16,
+                      "paddingHorizontal": 20,
                     },
                   ],
                   undefined,
@@ -426,7 +426,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                       "paddingVertical": 12,
                     },
                     {
-                      "paddingHorizontal": 16,
+                      "paddingHorizontal": 20,
                     },
                   ],
                   undefined,
@@ -553,7 +553,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                       "paddingVertical": 12,
                     },
                     {
-                      "paddingHorizontal": 16,
+                      "paddingHorizontal": 20,
                     },
                   ],
                   undefined,
@@ -680,7 +680,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                       "paddingVertical": 12,
                     },
                     {
-                      "paddingHorizontal": 16,
+                      "paddingHorizontal": 20,
                     },
                   ],
                   undefined,
@@ -807,7 +807,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                       "paddingVertical": 12,
                     },
                     {
-                      "paddingHorizontal": 16,
+                      "paddingHorizontal": 20,
                     },
                   ],
                   undefined,
@@ -934,7 +934,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                       "paddingVertical": 12,
                     },
                     {
-                      "paddingHorizontal": 16,
+                      "paddingHorizontal": 20,
                     },
                   ],
                   undefined,
@@ -1061,7 +1061,7 @@ exports[`SupermindFeedFilter should render 1`] = `
                       "paddingVertical": 12,
                     },
                     {
-                      "paddingHorizontal": 16,
+                      "paddingHorizontal": 20,
                     },
                   ],
                   undefined,

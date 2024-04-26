@@ -62,8 +62,9 @@ export const Avatar = withSpacer(
     }
 
     const avatar = (
-      <View testID={testID} style={border && styles[border]}>
+      <View style={border && styles[border]}>
         <Image
+          testID={testID}
           source={isObservable(source) ? toJS(source) : source}
           recyclingKey={recyclingKey}
           style={styles[size]}
@@ -110,6 +111,11 @@ const styles = ThemedStyles.create({
     position: 'absolute',
     bottom: -ICON_SIZES.micro / 2,
     right: -ICON_SIZES.micro / 2,
+  },
+  nano: {
+    width: AVATAR_SIZE.nano,
+    height: AVATAR_SIZE.nano,
+    borderRadius: AVATAR_SIZE.nano / 2,
   },
   micro: {
     width: AVATAR_SIZE.micro,

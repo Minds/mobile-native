@@ -23,10 +23,10 @@ class SearchBarService {
    * Call suggested endpoint
    * @param {String} search
    */
-  async getSuggestedSearch(search: string) {
+  async getSuggestedSearch(search: string, limit = 10) {
     const res: any = await apiService.get('api/v2/search/suggest', {
       q: search,
-      limit: 10,
+      limit,
     });
     return UserModel.createMany(res.entities);
   }

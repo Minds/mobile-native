@@ -15,6 +15,7 @@ import SendIntentAndroid from 'react-native-send-intent';
 import { ANDROID_CHAT_APP, CHAT_ENABLED } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';
 import assets from '@assets';
+import { useFeature } from 'ExperimentsProvider';
 
 type PropsType = {
   navigation: any;
@@ -33,7 +34,8 @@ export const Topbar = observer((props: PropsType) => {
   const insets = useSafeAreaInsets();
   const scrollContext = useScrollContext();
   const bgColor = ThemedStyles.getColor('PrimaryBackground');
-  const isChatIconHidden = useChatIconState();
+  const isInterChatEnabled = useFeature('epic-358-chat-mob');
+  const isChatIconHidden = useChatIconState(Boolean(isInterChatEnabled));
 
   const animatedStyle = useAnimatedStyle(() => {
     return scrollContext &&
@@ -75,7 +77,9 @@ export const Topbar = observer((props: PropsType) => {
 
   return (
     <Animated.View style={[styles.shadow, animatedStyle]}>
-      {CHAT_ENABLED && <TabChatPreModal ref={chatModal} />}
+      {CHAT_ENABLED && !isInterChatEnabled && (
+        <TabChatPreModal ref={chatModal} />
+      )}
       <View style={container}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
@@ -188,11 +192,14 @@ export const styles = StyleSheet.create({
   },
 });
 
-const useChatIconState = () => {
-  const [isChatIconHidden, setChatIconHidden] = useState(!CHAT_ENABLED);
+// To be removed with epic-358-chat-mob
+const useChatIconState = (isInterChatEnabled: boolean) => {
+  const [isChatIconHidden, setChatIconHidden] = useState(
+    !CHAT_ENABLED || isInterChatEnabled,
+  );
 
   useEffect(() => {
-    if (Platform.OS === 'android' && CHAT_ENABLED) {
+    if (Platform.OS === 'android' && CHAT_ENABLED && !isInterChatEnabled) {
       SendIntentAndroid.isAppInstalled(ANDROID_CHAT_APP).then(installed => {
         setChatIconHidden(!installed);
       });

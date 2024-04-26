@@ -68,7 +68,7 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
         //@ts-ignore
         ref.current.present();
       }
-    }, [autoShow, ref]);
+    }, [autoShow]);
 
     const renderHandle = useCallback(() => <Handle />, []);
 

@@ -238,6 +238,8 @@ export type AppStackParamList = {
   Interactions: InteractionsScreenParams;
   BottomSheet: BottomSheetScreenParams;
   Report: {};
+  ChatStack: { chatId: string };
+  ChatNew: undefined;
   GifCardClaim: {
     code: string;
   };

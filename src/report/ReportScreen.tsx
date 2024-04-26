@@ -10,7 +10,18 @@ import ThemedStyles from '../styles/ThemedStyles';
 import reportService from './ReportService';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import MenuItem from '../common/components/menus/MenuItem';
-import type ActivityModel from '~/newsfeed/ActivityModel';
+import ActivityModel from '~/newsfeed/ActivityModel';
+import { ChatMessage } from '~/modules/chat/types';
+import {
+  CreateNewReportMutationVariables,
+  IllegalSubReasonEnum,
+  NsfwSubReasonEnum,
+  ReportReasonEnum,
+  SecuritySubReasonEnum,
+  useCreateNewReportMutation,
+} from '~/graphql/api';
+import { IS_TENANT } from '~/config/Config';
+import logService from '~/common/services/log.service';
 
 type PropsType = {
   route: any;
@@ -30,6 +41,8 @@ const ReportScreen = ({ route, navigation }: PropsType) => {
   const [reasonsList, setReasons] = useState(reason?.reasons || []);
 
   const [note, setNote] = useState('');
+
+  const reportMutation = useCreateNewReportMutation();
 
   useLayoutEffect(() => {
     if (title) {
@@ -64,7 +77,22 @@ const ReportScreen = ({ route, navigation }: PropsType) => {
                               entity,
                             })
                           : confirmAndSubmit({
-                              entity,
+                              callback: async () =>
+                                IS_TENANT
+                                  ? callMutation({
+                                      mutation: reportMutation,
+                                      entity,
+                                      reason: reason || reasonItem,
+                                      subreason: reason
+                                        ? reasonItem
+                                        : undefined,
+                                    })
+                                  : submit({
+                                      entity,
+                                      reason: reason || reasonItem,
+                                      subreason: reason ? reasonItem : null,
+                                      note,
+                                    }),
                               reason: reason || reasonItem,
                               requireNote,
                               note,
@@ -111,8 +139,20 @@ const ReportScreen = ({ route, navigation }: PropsType) => {
               align="center"
               onPress={() => {
                 confirmAndSubmit({
-                  entity,
-                  reason: reason,
+                  callback: async () =>
+                    IS_TENANT
+                      ? callMutation({
+                          mutation: reportMutation,
+                          entity,
+                          reason,
+                          subreason: undefined,
+                        })
+                      : submit({
+                          entity,
+                          reason,
+                          note,
+                        }),
+                  reason,
                   requireNote,
                   note,
                   navigation,
@@ -157,14 +197,14 @@ function getReasons() {
 }
 
 function confirmAndSubmit({
-  entity,
+  callback,
   reason,
   requireNote,
   note,
   subreason,
   navigation,
 }: {
-  entity: ActivityModel;
+  callback: () => void | Promise<void>;
   reason: Reason;
   requireNote: boolean;
   subreason?: Reason;
@@ -187,8 +227,9 @@ function confirmAndSubmit({
       },
       {
         text: i18n.t('yes'),
-        onPress: () => {
-          submit({ entity, reason, subreason, note });
+        onPress: async () => {
+          await callback();
+
           if (subreason) {
             navigation.pop(2);
           } else {
@@ -210,7 +251,7 @@ async function submit({
   subreason,
   note,
 }: {
-  entity: ActivityModel;
+  entity: ActivityModel | ChatMessage;
   reason: Reason;
   subreason?: Reason;
   note: string;
@@ -220,8 +261,20 @@ async function submit({
   }
 
   try {
+    const guid =
+      entity instanceof ActivityModel ? entity.guid : entity.node.guid;
+    const urn = entity instanceof ActivityModel ? entity.urn : entity.node.id;
+
+    console.log(
+      'calling Report',
+      guid,
+      reason.value,
+      subreason?.value || null,
+      note,
+    );
     await reportService.report(
-      entity.guid,
+      guid,
+      urn,
       reason.value,
       subreason?.value || null,
       note,
@@ -229,7 +282,179 @@ async function submit({
 
     showNotification(i18n.t('reports.weHaveGotYourReport'));
   } catch (e) {
+    logService.exception('[ReportScreen]', e);
     Alert.alert(i18n.t('error'), i18n.t('reports.errorSubmitting'));
+  }
+}
+
+/**
+ * Submit the report
+ */
+async function callMutation({
+  mutation,
+  entity,
+  reason,
+  subreason,
+}: {
+  mutation: ReturnType<typeof useCreateNewReportMutation>;
+  entity: ActivityModel | ChatMessage;
+  reason: Reason;
+  subreason?: Reason;
+}) {
+  if (!reason) {
+    return;
+  }
+
+  try {
+    const entityUrn =
+      entity instanceof ActivityModel ? entity.urn : entity.node.id;
+
+    const reasons = mapLegacyReasonToEnums(
+      reason.value,
+      subreason?.value || null,
+    );
+
+    const data: CreateNewReportMutationVariables = {
+      entityUrn,
+      ...reasons,
+    };
+
+    await mutation.mutate(data);
+
+    showNotification(i18n.t('reports.weHaveGotYourReport'));
+  } catch (e) {
+    Alert.alert(i18n.t('error'), i18n.t('reports.errorSubmitting'));
+  }
+}
+
+function mapLegacyReasonToEnums(
+  reasonCode: number,
+  subReasonCode: number | null = null,
+) {
+  let reasonString: string = `${reasonCode}`;
+  if (subReasonCode) {
+    reasonString += `.${subReasonCode}`;
+  }
+
+  switch (reasonString) {
+    case '1':
+      return {
+        reason: ReportReasonEnum.Illegal,
+      };
+    case '1.1':
+      return {
+        reason: ReportReasonEnum.Illegal,
+        illegalSubReason: IllegalSubReasonEnum.Terrorism,
+      };
+    case '1.2':
+      return {
+        reason: ReportReasonEnum.Illegal,
+        illegalSubReason: IllegalSubReasonEnum.MinorsSexualization,
+      };
+    case '1.3':
+      return {
+        reason: ReportReasonEnum.Illegal,
+        illegalSubReason: IllegalSubReasonEnum.Extortion,
+      };
+    case '1.4':
+      return {
+        reason: ReportReasonEnum.Illegal,
+        illegalSubReason: IllegalSubReasonEnum.Fraud,
+      };
+    case '1.5':
+      return {
+        reason: ReportReasonEnum.Illegal,
+        illegalSubReason: IllegalSubReasonEnum.RevengePorn,
+      };
+    case '1.6':
+      return {
+        reason: ReportReasonEnum.Illegal,
+        illegalSubReason: IllegalSubReasonEnum.Trafficking,
+      };
+    case '1.7':
+      return {
+        reason: ReportReasonEnum.Illegal,
+        illegalSubReason: IllegalSubReasonEnum.AnimalAbuse,
+      };
+    case '2':
+      return {
+        reason: ReportReasonEnum.Nsfw,
+      };
+    case '2.1':
+      return {
+        reason: ReportReasonEnum.Nsfw,
+        nsfwSubReason: NsfwSubReasonEnum.Nudity,
+      };
+    case '2.2':
+      return {
+        reason: ReportReasonEnum.Nsfw,
+        nsfwSubReason: NsfwSubReasonEnum.Pornography,
+      };
+    case '2.3':
+      return {
+        reason: ReportReasonEnum.Nsfw,
+        nsfwSubReason: NsfwSubReasonEnum.Profanity,
+      };
+    case '2.4':
+      return {
+        reason: ReportReasonEnum.Nsfw,
+        nsfwSubReason: NsfwSubReasonEnum.ViolenceGore,
+      };
+    case '2.5':
+      return {
+        reason: ReportReasonEnum.Nsfw,
+        nsfwSubReason: NsfwSubReasonEnum.RaceReligionGender,
+      };
+    case '3':
+      return {
+        reason: ReportReasonEnum.IncitementToViolence,
+      };
+    case '4':
+      return {
+        reason: ReportReasonEnum.Harassment,
+      };
+    case '5':
+      return {
+        reason: ReportReasonEnum.PersonalConfidentialInformation,
+      };
+    case '7':
+      return {
+        reason: ReportReasonEnum.Impersonation,
+      };
+    case '8':
+      return {
+        reason: ReportReasonEnum.Spam,
+      };
+    case '10':
+      return {
+        reason: ReportReasonEnum.IntellectualPropertyViolation,
+      };
+    case '13':
+      return {
+        reason: ReportReasonEnum.Malware,
+      };
+    case '16':
+      return {
+        reason: ReportReasonEnum.InauthenticEngagement,
+      };
+    case '17':
+      return {
+        reason: ReportReasonEnum.Security,
+      };
+    case '17.1':
+      return {
+        reason: ReportReasonEnum.Security,
+        securitySubReason: SecuritySubReasonEnum.HackedAccount,
+      };
+    case '18':
+      return {
+        reason: ReportReasonEnum.ViolatesPremiumContentPolicy,
+      };
+    case '11':
+    default:
+      return {
+        reason: ReportReasonEnum.AnotherReason,
+      };
   }
 }
 

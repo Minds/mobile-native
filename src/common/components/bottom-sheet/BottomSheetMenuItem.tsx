@@ -75,7 +75,7 @@ const styles = ThemedStyles.create({
     'alignCenter',
     'rowJustifyStart',
     'paddingVertical3x',
-    'paddingHorizontal4x',
+    'paddingHorizontal5x',
   ],
   menuText: ['fontL', 'fontMedium'],
 });
