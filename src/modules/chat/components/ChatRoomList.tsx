@@ -39,6 +39,7 @@ export default function ChatRoomList({
           colors={[ThemedStyles.getColor('Link')]}
         />
       }
+      onEndReachedThreshold={0.5}
       estimatedItemSize={68}
       ListEmptyComponent={isLoading ? <CenteredLoading /> : <Empty />}
       onEndReached={onEndReached}
