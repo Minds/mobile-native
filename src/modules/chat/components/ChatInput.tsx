@@ -90,6 +90,7 @@ const ChatInput = ({ onSendMessage }: Props) => {
           {!saving ? (
             <Touchable
               onPress={send}
+              hitSlop={hitSlop}
               style={styles.sendIcon}
               testID="PostCommentButton">
               <Icon name="md-send" size={18} style={theme.colorSecondaryText} />
@@ -103,6 +104,13 @@ const ChatInput = ({ onSendMessage }: Props) => {
       </View>
     </KeyboardSpacingView>
   );
+};
+
+const hitSlop = {
+  top: 10,
+  right: 10,
+  bottom: 10,
+  left: 10,
 };
 
 export default ChatInput;
