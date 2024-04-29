@@ -19,6 +19,8 @@ import logService from '~/common/services/log.service';
 import { ChatRoomProvider } from '../contexts/ChatRoomContext';
 import { useRefreshRoomsIds } from '../hooks/useRefreshRoomsIds';
 import { useRefetchUnreadMessages } from '../hooks/useUnreadMessages';
+import { useChatroomViewAnalytic } from '../hooks/useChatroomViewAnalytic';
+import analyticsService from '~/common/services/analytics.service';
 
 /**
  * Chat conversation screen
@@ -60,6 +62,8 @@ export default function ChatScreen({ navigation, route }) {
 }
 
 const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
+  // track chat room view
+  useChatroomViewAnalytic();
   return (
     <>
       <ChatHeader
@@ -67,7 +71,12 @@ const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
         extra={
           !isRequest ? (
             <TouchableOpacity
-              onPress={() => navigation.navigate('ChatDetails', { roomGuid })}>
+              onPress={() => {
+                analyticsService.trackClick(
+                  'data-minds-chat-room-settings-button',
+                );
+                navigation.navigate('ChatDetails', { roomGuid });
+              }}>
               <Icon name="info-circle" size={20} />
             </TouchableOpacity>
           ) : null
@@ -100,6 +109,7 @@ const RequestActionSheet = ({
 
   //
   const accept = async () => {
+    analyticsService.trackClick('data-minds-chat-request-accept-button');
     await replyMutation.mutate({
       roomGuid,
       action: ChatRoomInviteRequestActionEnum.Accept,
@@ -110,6 +120,7 @@ const RequestActionSheet = ({
   };
 
   const block = async () => {
+    analyticsService.trackClick('data-minds-chat-request-block-user-button');
     await replyMutation.mutate({
       roomGuid,
       action: ChatRoomInviteRequestActionEnum.RejectAndBlock,
@@ -118,6 +129,7 @@ const RequestActionSheet = ({
   };
 
   const reject = async () => {
+    analyticsService.trackClick('data-minds-chat-request-reject-button');
     await replyMutation.mutate({
       roomGuid,
       action: ChatRoomInviteRequestActionEnum.Reject,

@@ -18,6 +18,7 @@ import { showNotification } from 'AppMessages';
 import MPressable from '~/common/components/MPressable';
 import { useRefreshOnFocus } from '~/services/hooks/useRefreshOnFocus';
 import ErrorLoading from '~/common/components/ErrorLoading';
+import analyticsService from '~/common/services/analytics.service';
 
 type Props = ChatStackScreenProps<'ChatDetails'>;
 
@@ -62,6 +63,7 @@ export default function ChatDetailsScreen({ route, navigation }: Props) {
   const [mute, setMute] = useState(false);
 
   const deleteChat = async () => {
+    analyticsService.trackClick('data-minds-chat-info-delete-button');
     const result = await confirm({
       title: 'Delete chat',
       description: 'Are you sure you want to delete this chat?',

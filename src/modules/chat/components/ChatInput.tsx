@@ -11,6 +11,7 @@ import { CHAR_LIMIT } from '~/config/Config';
 import TextInput from '~/common/components/TextInput';
 import Tags from '~/common/components/Tags';
 import { useNavigation } from '@react-navigation/native';
+import analyticsService from '~/common/services/analytics.service';
 
 const { height } = Dimensions.get('window');
 
@@ -37,6 +38,7 @@ const ChatInput = ({ onSendMessage }: Props) => {
   const saving = false;
 
   const send = () => {
+    analyticsService.trackClick('data-minds-chat-send-message-button');
     const trimmedText = text.trim();
     if (!trimmedText) return;
     onSendMessage(trimmedText);
@@ -75,6 +77,9 @@ const ChatInput = ({ onSendMessage }: Props) => {
             underlineColorAndroid="transparent"
             onChangeText={setText}
             keyboardType={'default'}
+            onFocus={() => {
+              analyticsService.trackClick('data-minds-chat-message-input');
+            }}
             maxLength={CHAR_LIMIT}
             style={[
               theme.fullWidth,
