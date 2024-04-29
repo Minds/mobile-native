@@ -22,6 +22,13 @@ function ChatListItem({ chat, onPress }: Props) {
       ? chat.lastMessageCreatedTimestamp
       : parseInt(chat.node.timeCreatedUnix, 10));
 
+  const title =
+    chat.node.roomType === 'ONE_TO_ONE'
+      ? chat.members.edges[0].node.name || chat.members.edges[0].node.username
+      : chat.members.edges
+          .map(member => member.node.name || member.node.username)
+          .join(', ');
+
   return (
     <MPressable onPress={onPress} testID="chatListItem">
       <Row horizontal="XL" vertical="M" align="centerStart">
@@ -56,7 +63,9 @@ function ChatListItem({ chat, onPress }: Props) {
         )}
         <View style={styles.column}>
           <View style={styles.nameContainer}>
-            <B2 font="medium">{chat.members.edges[0].node.username}</B2>
+            <B2 font="medium" numberOfLines={1} style={styles.name}>
+              {title}
+            </B2>
             <B2 color="secondary">
               {i18nService.date(moment(timestamp), 'friendly')}
             </B2>
@@ -89,6 +98,10 @@ const styles = ThemedStyles.create({
     },
     'bgLink',
   ],
+  name: {
+    flex: 1,
+    paddingRight: 10,
+  },
   message: {
     flex: 1,
   },
@@ -98,6 +111,8 @@ const styles = ThemedStyles.create({
     flexDirection: 'column',
   },
   nameContainer: {
+    overflow: 'hidden',
+    flexWrap: 'nowrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
