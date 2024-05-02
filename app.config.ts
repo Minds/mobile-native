@@ -154,7 +154,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     splash: {
       image: './assets/images/splash.png',
       resizeMode: Tenant.APP_SPLASH_RESIZE as ResizeType,
-      backgroundColor: is_dark ? '#1C1D1F' : '#F6F7F7',
+      backgroundColor: is_dark
+        ? Tenant.BACKGROUND_COLOR_DARK
+        : Tenant.BACKGROUND_COLOR_LIGHT,
     },
   },
   notification: {
