@@ -5,6 +5,9 @@
   },
   "build": {
     "production": {
+      "ios": {
+        "image": "macos-ventura-13.6-xcode-15.2"
+      },
       "channel": "production",
       "node": "18.18.0",
       "autoIncrement": true,
