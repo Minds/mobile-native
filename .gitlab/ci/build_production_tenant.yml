@@ -1,0 +1,42 @@
+# Build and submit the android play store app for a tenant
+eas_build_production_android_tenant:
+  stage: build
+  image: cimg/aws:2023.12
+  tags: [minds-ci]
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ../yarn
+  before_script:
+    - yarn install --cache-folder ../yarn
+    - yarn add sharp --ignore-engines
+    - wget -q -O - "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+    - cp .secure_files/google-services.json .
+  script:
+    - echo "Building tenant $TENANT_ID..."
+    - node tasks/setup-tenant.js $TENANT_ID
+    - npx eas-cli build --platform android --profile production --json --non-interactive --auto-submit --no-wait
+  rules:
+    - if: $BUILD_MODE == "PRODUCTION_TENANT"
+      when: always
+
+# Build and submit the ios play store app
+eas_build_production_ios:
+  stage: build
+  image: node:alpine
+  tags: [minds-ci]
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ../yarn
+  before_script:
+    - apk add --no-cache bash git
+    - yarn install --cache-folder ../yarn
+    - yarn add sharp --ignore-engines
+  script:
+    - echo "Building tenant $TENANT_ID..."
+    - node tasks/setup-tenant.js $TENANT_ID
+    - npx eas-cli build --platform ios --profile production --json --non-interactive --auto-submit --no-wait
+  rules:
+    - if: $BUILD_MODE == "PRODUCTION_TENANT"
+      when: always

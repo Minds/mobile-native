@@ -3,7 +3,7 @@ const sharp = require('sharp');
 async function addAdaptiveIcon(
   imagePath = './assets/images/icon.png',
   outputPath = './assets/images/icon_adaptive.png',
-  paddingRatio = 0.15,
+  paddingRatio = 0.25,
 ) {
   try {
     // Load the image
@@ -22,7 +22,9 @@ async function addAdaptiveIcon(
       .toBuffer();
 
     // Convert the pixel data to rgba format for the background color
-    const backgroundColor = `rgb(${topLeftPixel[0]}, ${topLeftPixel[1]}, ${topLeftPixel[2]})`;
+    const backgroundColor = `rgba(${topLeftPixel[0]}, ${topLeftPixel[1]}, ${
+      topLeftPixel[2]
+    }, ${topLeftPixel[3] ?? 255})`;
 
     // Resize the image with padding
     const imageBuff = await sharp(imagePath)
@@ -42,4 +44,16 @@ async function addAdaptiveIcon(
   }
 }
 
-module.exports = { addAdaptiveIcon };
+// generates 96x96 white only icon using ./assets/images/icon.png
+async function generateNotificationIcon(
+  imagePath = './assets/images/icon.png',
+  outputPath = './assets/images/icon_mono.png',
+) {
+  await sharp(imagePath)
+    .resize(96, 96)
+    .greyscale() // Convert to grayscale
+    // .threshold(240, { grayscale: true }) // Set threshold for white
+    .toFile(outputPath);
+}
+
+module.exports = { addAdaptiveIcon, generateNotificationIcon };
