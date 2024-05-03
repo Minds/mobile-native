@@ -99,6 +99,9 @@ function generateTenantJSON(data) {
     data.APP_IOS_BUNDLE = previewerTenant.APP_IOS_BUNDLE;
   }
 
+  const light_background = data.BACKGROUND_COLOR_LIGHT || '#FFFFFF';
+  const dark_background = data.BACKGROUND_COLOR_DARK || '#010101';
+
   const tenant = {
     APP_NAME: data.APP_NAME,
     APP_SCHEME: data.APP_SCHEME,
@@ -110,11 +113,11 @@ function generateTenantJSON(data) {
     IS_PREVIEW: preview,
     ACCENT_COLOR_LIGHT: data.ACCENT_COLOR_LIGHT,
     ACCENT_COLOR_DARK: data.ACCENT_COLOR_DARK,
-    BACKGROUND_COLOR_LIGHT: data.BACKGROUND_COLOR_LIGHT || '#FFFFFF',
-    BACKGROUND_COLOR_DARK: data.BACKGROUND_COLOR_DARK || '#010101',
+    BACKGROUND_COLOR_LIGHT: light_background,
+    BACKGROUND_COLOR_DARK: dark_background,
     WELCOME_LOGO: data.WELCOME_LOGO,
     ADAPTIVE_ICON: './assets/images/icon_adaptive.png',
-    ADAPTIVE_COLOR: '',
+    ADAPTIVE_COLOR: data.THEME === 'light' ? light_background : dark_background,
     THEME: data.THEME || 'light', // the backend returns empty when no theme is selected (we default light)
     TENANT_ID: data.TENANT_ID,
     API_URL: data.API_URL,
