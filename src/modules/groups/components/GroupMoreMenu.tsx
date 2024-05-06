@@ -14,6 +14,8 @@ import GroupModel from '~/groups/GroupModel';
 import NavigationService from '../../../navigation/NavigationService';
 import { GroupContextType, useGroupContext } from '../contexts/GroupContext';
 import PermissionsService from '~/common/services/permissions.service';
+import { useDeleteGroupChatRoom } from '~/modules/chat/hooks/useDeleteGroupChatRoom';
+import { confirm } from '~/common/components/Confirm';
 
 type PropsType = {
   group: GroupModel;
@@ -111,6 +113,27 @@ const getOptions = ({
 const GroupMoreMenu = forwardRef((props: PropsType, ref: any) => {
   const groupContext = useGroupContext();
   const options = getOptions({ ...props, ref, groupContext });
+  const deleteMutaton = useDeleteGroupChatRoom(props.group);
+
+  // remove chat option only for owner
+  if (props.group.isOwner() && !props.group.conversationDisabled) {
+    options.push({
+      iconName: 'message',
+      iconType: 'material-community',
+      title: 'Delete chat room',
+      onPress: () => {
+        confirm({
+          title: 'Delete chat room',
+          description: 'Are you sure you want to delete this chat room?',
+          actionText: 'Delete',
+        }).then(() => {
+          deleteMutaton.deleteChatRoom();
+          ref.current.dismiss();
+        });
+        ref.current.dismiss();
+      },
+    });
+  }
 
   const close = React.useCallback(() => {
     ref.current?.dismiss();

@@ -94,6 +94,8 @@ export default function ChatDetailsScreen({ route, navigation }: Props) {
   const privateChat =
     data?.chatRoom.node.roomType === ChatRoomTypeEnum.OneToOne;
   const isUserRoomOwner = Boolean(data?.chatRoom.node.isUserRoomOwner);
+  const isGroupChat =
+    data?.chatRoom.node.roomType === ChatRoomTypeEnum.GroupOwned;
   return (
     <Screen safe scroll>
       <ScreenHeader border back={true} title="Chat details" />
@@ -144,7 +146,7 @@ export default function ChatDetailsScreen({ route, navigation }: Props) {
               </Link>
             </TouchableOpacity>
           )}
-          {(isUserRoomOwner || privateChat) && (
+          {((isUserRoomOwner && !isGroupChat) || privateChat) && (
             <TouchableOpacity onPress={deleteChat}>
               <Link style={styles.dangerLink} decoration={false}>
                 Delete chat

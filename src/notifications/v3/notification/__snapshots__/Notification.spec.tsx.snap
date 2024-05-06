@@ -90,7 +90,16 @@ exports[`Notification 24 hours before an offer expires 1`] = `
             }
           }
         >
-          <View>
+          <View
+            hitSlop={
+              {
+                "bottom": 10,
+                "left": 15,
+                "right": 15,
+                "top": 10,
+              }
+            }
+          >
             <View
               style={
                 {
@@ -358,7 +367,16 @@ exports[`Notification Affiliate earnings deposited 1`] = `
             }
           }
         >
-          <View>
+          <View
+            hitSlop={
+              {
+                "bottom": 10,
+                "left": 15,
+                "right": 15,
+                "top": 10,
+              }
+            }
+          >
             <View
               style={
                 {
@@ -570,7 +588,16 @@ exports[`Notification An offer expires 1`] = `
             }
           }
         >
-          <View>
+          <View
+            hitSlop={
+              {
+                "bottom": 10,
+                "left": 15,
+                "right": 15,
+                "top": 10,
+              }
+            }
+          >
             <View
               style={
                 {
@@ -839,7 +866,16 @@ exports[`Notification Boost accepted 1`] = `
             }
           }
         >
-          <View>
+          <View
+            hitSlop={
+              {
+                "bottom": 10,
+                "left": 15,
+                "right": 15,
+                "top": 10,
+              }
+            }
+          >
             <View
               style={
                 {
@@ -1134,7 +1170,16 @@ exports[`Notification Boost complete 1`] = `
             }
           }
         >
-          <View>
+          <View
+            hitSlop={
+              {
+                "bottom": 10,
+                "left": 15,
+                "right": 15,
+                "top": 10,
+              }
+            }
+          >
             <View
               style={
                 {
@@ -1429,7 +1474,16 @@ exports[`Notification Boost rejected 1`] = `
             }
           }
         >
-          <View>
+          <View
+            hitSlop={
+              {
+                "bottom": 10,
+                "left": 15,
+                "right": 15,
+                "top": 10,
+              }
+            }
+          >
             <View
               style={
                 {
@@ -1724,7 +1778,16 @@ exports[`Notification Gift boost created 1`] = `
             }
           }
         >
-          <View>
+          <View
+            hitSlop={
+              {
+                "bottom": 10,
+                "left": 15,
+                "right": 15,
+                "top": 10,
+              }
+            }
+          >
             <View
               style={
                 {
@@ -2107,7 +2170,16 @@ exports[`Notification Receiver accepts an offer 1`] = `
             }
           }
         >
-          <View>
+          <View
+            hitSlop={
+              {
+                "bottom": 10,
+                "left": 15,
+                "right": 15,
+                "top": 10,
+              }
+            }
+          >
             <View
               style={
                 {
@@ -2376,7 +2448,16 @@ exports[`Notification Receiver declines an offer 1`] = `
             }
           }
         >
-          <View>
+          <View
+            hitSlop={
+              {
+                "bottom": 10,
+                "left": 15,
+                "right": 15,
+                "top": 10,
+              }
+            }
+          >
             <View
               style={
                 {
@@ -2645,7 +2726,16 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
             }
           }
         >
-          <View>
+          <View
+            hitSlop={
+              {
+                "bottom": 10,
+                "left": 15,
+                "right": 15,
+                "top": 10,
+              }
+            }
+          >
             <View
               style={
                 {
@@ -2857,7 +2947,16 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
             }
           }
         >
-          <View>
+          <View
+            hitSlop={
+              {
+                "bottom": 10,
+                "left": 15,
+                "right": 15,
+                "top": 10,
+              }
+            }
+          >
             <View
               style={
                 {

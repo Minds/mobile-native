@@ -38,12 +38,8 @@ export default class GroupModel extends BaseModel {
   }
 
   @action
-  async toggleConversationDisabled() {
-    await groupsService.toggleConversationDisabled(
-      this.guid,
-      !this.conversationDisabled,
-    );
-    this.conversationDisabled = !this.conversationDisabled;
+  setConversationDisabled(value: boolean) {
+    this.conversationDisabled = value;
   }
 
   @action

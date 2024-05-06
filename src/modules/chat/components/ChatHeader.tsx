@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import { StyleSheet } from 'react-native';
 import { ChatMember } from '../types';
 import { useChatRoomContext } from '../contexts/ChatRoomContext';
+import { APP_URI } from '~/config/Config';
 
 type Props = {
   members: ChatMember[];
@@ -17,42 +18,48 @@ function ChatHeader({ members, extra }: Props) {
     return null;
   }
 
+  const isGroupChat = query.data?.chatRoom.node.roomType === 'GROUP_OWNED';
+
   const firstThreeMembers = query.data?.chatRoom.members
     ? query.data?.chatRoom.members.edges.slice(0, 3)
     : members
     ? members.slice(0, 3)
     : [];
 
-  const avatars = firstThreeMembers.map((member, index) =>
-    index === 0 ? (
-      <Avatar
-        testID="Avatar"
-        key={index}
-        size="tiny"
-        source={{
-          uri: member.node.iconUrl,
-        }}
-      />
-    ) : (
-      <View style={styles.avatars} key={index}>
+  const avatars = isGroupChat ? (
+    <Avatar
+      testID="Avatar"
+      size="tiny"
+      source={{
+        uri: `${APP_URI}fs/v1/avatars/${query.data?.chatRoom.node.groupGuid}/large`,
+      }}
+    />
+  ) : (
+    firstThreeMembers.map((member, index) =>
+      index === 0 ? (
         <Avatar
           testID="Avatar"
+          key={index}
           size="tiny"
           source={{
             uri: member.node.iconUrl,
           }}
         />
-      </View>
-    ),
+      ) : (
+        <View style={styles.avatars} key={index}>
+          <Avatar
+            testID="Avatar"
+            size="tiny"
+            source={{
+              uri: member.node.iconUrl,
+            }}
+          />
+        </View>
+      ),
+    )
   );
 
-  const title =
-    firstThreeMembers
-      .map(member => member.node.name || member.node.username)
-      .join(', ') +
-    (query.data?.chatRoom.totalMembers > 3
-      ? ` and ${query.data?.chatRoom.totalMembers - 3} others`
-      : '');
+  const title = query.data?.chatRoom.node.name;
 
   return (
     <ScreenHeader
