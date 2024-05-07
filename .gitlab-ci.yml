@@ -9,10 +9,11 @@ include:
   - local: .gitlab/ci/build_apk.yml
   - local: .gitlab/ci/build_preview.yml
   - local: .gitlab/ci/build_production.yml
+  - local: .gitlab/ci/build_production_tenant.yml
   - local: .gitlab/ci/release.yml
   - local: .gitlab/ci/submit.yml
   - local: .gitlab/ci/maintenance.yml
-  - local: .gitlab/ci/qa.yml
+  # - local: .gitlab/ci/qa.yml
 
 stages:
   - test

@@ -3,8 +3,6 @@ const fetch = require('node-fetch');
 const fse = require('fs-extra');
 const fs = require('fs');
 const { generateToken } = require('./helpers/jwt');
-// disable until we fix it
-// const { addAdaptiveIcon } = require('./adaptive-icon');
 
 const args = process.argv.slice(2);
 const preview = args[1] === '--preview';
@@ -22,6 +20,11 @@ query GetMobileConfig($tenantId: Int!) {
     WELCOME_LOGO
     THEME
     API_URL
+    APP_SLUG
+    APP_SCHEME
+    EAS_PROJECT_ID
+    APP_IOS_BUNDLE
+    APP_ANDROID_PACKAGE
     assets {
       key
       value
@@ -65,8 +68,15 @@ async function setupTenant(id) {
     if (!isMinds) {
       // download the assets
       await downloadAssets(data.assets);
-      // add adaptive icon in the assets folder
-      // await addAdaptiveIcon();
+      if (!preview) {
+        const {
+          addAdaptiveIcon,
+          generateNotificationIcon,
+        } = require('./adaptive-icon');
+        // add adaptive icon & notification icon in the assets folder
+        await addAdaptiveIcon();
+        await generateNotificationIcon();
+      }
     }
     if (preview) {
       // copy previewer patches
@@ -89,6 +99,9 @@ function generateTenantJSON(data) {
     data.APP_IOS_BUNDLE = previewerTenant.APP_IOS_BUNDLE;
   }
 
+  const light_background = data.BACKGROUND_COLOR_LIGHT || '#FFFFFF';
+  const dark_background = data.BACKGROUND_COLOR_DARK || '#010101';
+
   const tenant = {
     APP_NAME: data.APP_NAME,
     APP_SCHEME: data.APP_SCHEME,
@@ -100,11 +113,11 @@ function generateTenantJSON(data) {
     IS_PREVIEW: preview,
     ACCENT_COLOR_LIGHT: data.ACCENT_COLOR_LIGHT,
     ACCENT_COLOR_DARK: data.ACCENT_COLOR_DARK,
-    BACKGROUND_COLOR_LIGHT: '#FFFFFF',
-    BACKGROUND_COLOR_DARK: '#010101',
+    BACKGROUND_COLOR_LIGHT: light_background,
+    BACKGROUND_COLOR_DARK: dark_background,
     WELCOME_LOGO: data.WELCOME_LOGO,
-    ADAPTIVE_ICON: '',
-    ADAPTIVE_COLOR: '',
+    ADAPTIVE_ICON: './assets/images/icon_adaptive.png',
+    ADAPTIVE_COLOR: data.THEME === 'light' ? light_background : dark_background,
     THEME: data.THEME || 'light', // the backend returns empty when no theme is selected (we default light)
     TENANT_ID: data.TENANT_ID,
     API_URL: data.API_URL,
