@@ -13,6 +13,7 @@ import { useRefreshOnFocus } from '~/services/hooks/useRefreshOnFocus';
 import socketService from '~/common/services/socket.service';
 import { useRefetchUnreadMessages } from '../hooks/useUnreadMessages';
 import { useStyle } from '~/styles/ThemedStyles';
+import analyticsService from '~/common/services/analytics.service';
 
 /**
  * Chat rooms list screen
@@ -22,7 +23,14 @@ export default function ChatsListScreen({ navigation }) {
     <Screen safe>
       <ScreenHeader back={false} title="Chat" extra={<Alpha />} />
       <ChatList />
-      <ChatNewButton onPress={() => navigation.push('ChatNew')} />
+      <ChatNewButton
+        onPress={() => {
+          analyticsService.trackClick(
+            'data-minds-chat-room-list-new-chat-button',
+          );
+          navigation.push('ChatNew');
+        }}
+      />
     </Screen>
   );
 }
@@ -64,7 +72,12 @@ function ChatList() {
       renderItem={renderItem}
       ListHeaderComponent={
         <ChatRequestCount
-          onPress={() => NavigationService.push('ChatRequestsList')}
+          onPress={() => {
+            analyticsService.trackClick(
+              'data-minds-chat-pending-requests-button',
+            );
+            NavigationService.push('ChatRequestsList');
+          }}
         />
       }
       isLoading={isLoading}
@@ -85,7 +98,12 @@ const Empty = () => (
       Minds.
     </B2>
     <Button
-      onPress={() => NavigationService.push('ChatNew')}
+      onPress={() => {
+        analyticsService.trackClick(
+          'data-minds-chat-no-chats-empty-list-button',
+        );
+        NavigationService.push('ChatNew');
+      }}
       align="start"
       type="action">
       New chat
@@ -100,6 +118,7 @@ const renderItem = ({ item }: { item: ChatRoom }) => (
   <ChatListItem
     chat={item}
     onPress={() => {
+      analyticsService.trackClick('data-minds-chat-room-list-item');
       NavigationService.push('ChatStack', {
         screen: 'Chat',
         params: {

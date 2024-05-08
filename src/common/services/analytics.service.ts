@@ -77,10 +77,22 @@ export class AnalyticsService {
       });
     }
 
+    // if (__DEV__) {
+    //   this.posthog.debug();
+    // }
+
     // On logout we should reset posthog
     sessionService?.onLogout(() => {
       this.posthog.reset();
     });
+  }
+
+  setGlobalProperty(key: string, value: string | number | boolean): void {
+    this.posthog.register({ [key]: value });
+  }
+
+  unsetGlobalProperty(key: string): void {
+    this.posthog.unregister(key);
   }
 
   /**
@@ -307,4 +319,18 @@ export type ClickRef =
   | 'remind'
   | 'banner:afiliate:action'
   | 'discovery:plus:upgrade'
+  | 'data-minds-chat-no-chats-empty-list-button'
+  | 'data-minds-chat-message-input'
+  | 'data-minds-chat-send-message-button'
+  | 'data-minds-chat-message'
+  | 'data-minds-chat-room-settings-button'
+  | 'data-minds-chat-info-delete-button'
+  | 'data-minds-chat-room-embed-url-text'
+  | 'data-minds-chat-room-message-rich-embed'
+  | 'data-minds-chat-request-reject-button'
+  | 'data-minds-chat-request-accept-button'
+  | 'data-minds-chat-room-list-item'
+  | 'data-minds-chat-pending-requests-button'
+  | 'data-minds-chat-room-list-new-chat-button'
+  | 'data-minds-chat-request-block-user-button'
   | `${DismissIdentifier}:dismiss`;

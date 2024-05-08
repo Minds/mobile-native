@@ -15,6 +15,7 @@ import {
 import domain from '~/common/helpers/domain';
 import openUrlService from '~/common/services/open-url.service';
 import NavigationService from '~/navigation/NavigationService';
+import analyticsService from '~/common/services/analytics.service';
 
 type Props = {
   message: ChatMessage;
@@ -103,6 +104,7 @@ const RichEmbed = ({
       activeOpacity={0.7}
       onLongPress={onLongPress}
       onPress={() => {
+        analyticsService.trackClick('data-minds-chat-room-message-rich-embed');
         const url =
           message.node.richEmbed?.url || message.node.richEmbed?.canonicalUrl;
         url && openUrlService.open(url);
