@@ -82,8 +82,6 @@ export default function ChatDetailsScreen({ route, navigation }: Props) {
     data?.chatRoom.node.chatRoomNotificationStatus ===
     ChatRoomNotificationStatusEnum.Muted;
 
-  console.log('rendering', muted);
-
   const deleteChat = async () => {
     analyticsService.trackClick('data-minds-chat-info-delete-button');
     const result = await confirm({
