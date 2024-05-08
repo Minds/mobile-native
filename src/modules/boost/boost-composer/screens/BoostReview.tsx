@@ -110,7 +110,8 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
   const isTokenPayment = paymentType !== 'cash';
   const isCashFromStore = paymentType === 'cash' && IS_FROM_STORE;
   const isCashFromStripe = paymentType === 'cash' && !IS_FROM_STORE;
-  const canUseCredit = hasCredit && selectedCardId === GIFTSCARD;
+  const canUseCredit =
+    hasCredit && (selectedCardId === GIFTSCARD || selectedMethod === 'gifts');
 
   const handleCreate = async () => {
     // Tokens, OSS or Gifts
