@@ -8,6 +8,7 @@ import i18nService from '~/common/services/i18n.service';
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';
 import { ChatRoom } from '../types';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { APP_URI } from '~/config/Config';
 
 type Props = {
   chat: ChatRoom;
@@ -16,28 +17,25 @@ type Props = {
 };
 
 function ChatListItem({ chat, onPress }: Props) {
+  const isGroupChat = chat.node.roomType === 'GROUP_OWNED';
   const timestamp =
     1000 *
     (chat.lastMessageCreatedTimestamp
       ? chat.lastMessageCreatedTimestamp
       : parseInt(chat.node.timeCreatedUnix, 10));
 
-  const title =
-    chat.node.roomType === 'ONE_TO_ONE'
-      ? chat.members.edges[0].node.name || chat.members.edges[0].node.username
-      : chat.members.edges
-          .map(member => member.node.name || member.node.username)
-          .join(', ');
-
   return (
     <MPressable onPress={onPress} testID="chatListItem">
       <Row horizontal="XL" vertical="M" align="centerStart">
         {chat.node.roomType === 'ONE_TO_ONE' ||
+        isGroupChat ||
         chat.members.edges.length === 1 ? (
           <Avatar
             size="small"
             source={{
-              uri: chat.members.edges[0].node.iconUrl,
+              uri: isGroupChat
+                ? `${APP_URI}fs/v1/avatars/${chat.node.groupGuid}/large`
+                : chat.members.edges[0].node.iconUrl,
             }}
           />
         ) : (
@@ -64,7 +62,7 @@ function ChatListItem({ chat, onPress }: Props) {
         <View style={styles.column}>
           <View style={styles.nameContainer}>
             <B2 font="medium" numberOfLines={1} style={styles.name}>
-              {title}
+              {chat.node.name}
             </B2>
             <B2 color="secondary">
               {i18nService.date(moment(timestamp), 'friendly')}

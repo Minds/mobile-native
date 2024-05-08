@@ -15,6 +15,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { GroupMembersStoreType } from '../hooks/useGroupMembersStore';
 import { GroupFeedStoreType } from '../hooks/useGroupFeedStore';
 import GroupMoreMenu from './GroupMoreMenu';
+import GroupChatButton from '~/modules/chat/components/GroupChatButton';
 
 type Props = {
   animationHeaderHeight: SharedValue<number>;
@@ -89,6 +90,9 @@ export default function AnimatedTopHeader({
         <Animated.View style={titleStyle}>
           <H4 numberOfLines={1}>{group.name}</H4>
         </Animated.View>
+
+        <GroupChatButton group={group} />
+
         <SmallCircleButton
           name="more-horiz"
           type="material"

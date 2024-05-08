@@ -8,6 +8,7 @@ describe('ChatListItem', () => {
     lastMessagePlainText: 'Test message',
     node: {
       roomType: 'ONE_TO_ONE',
+      name: 'testuser',
     },
     members: {
       edges: [

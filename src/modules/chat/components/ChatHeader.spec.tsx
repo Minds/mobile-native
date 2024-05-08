@@ -27,6 +27,7 @@ describe('ChatHeader', () => {
           node: {
             guid: 'testGuid',
             id: 'testId',
+            name: 'Test Room',
             roomType: ChatRoomTypeEnum.OneToOne,
             isChatRequest: false,
             isUserRoomOwner: false,
@@ -119,14 +120,14 @@ describe('ChatHeader', () => {
     },
   ];
 
-  it('renders the title with the first three members', () => {
+  it('renders the title', () => {
     render(
       <ChatRoomProvider roomGuid="test-room">
         <ChatHeader members={members} extra={null} />
       </ChatRoomProvider>,
     );
 
-    const title = screen.getByText('John, Martin, Ben');
+    const title = screen.getByText('Test Room');
     expect(title).toBeTruthy();
   });
 

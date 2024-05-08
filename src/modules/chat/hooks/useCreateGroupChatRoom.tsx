@@ -3,18 +3,20 @@ import { showNotification } from 'AppMessages';
 import { useCallback } from 'react';
 import i18nService from '~/common/services/i18n.service';
 import logService from '~/common/services/log.service';
-import { useCreateChatRoomMutation } from '~/graphql/api';
+import { useCreateGroupChatRoomMutation } from '~/graphql/api';
+import type GroupModel from '~/groups/GroupModel';
 
-export function useCreateChatRoom(replace = false) {
+export function useCreateGroupChatRoom(group: GroupModel, replace = false) {
   const navigation = useNavigation<any>();
-  const mutation = useCreateChatRoomMutation({
+  const mutation = useCreateGroupChatRoomMutation({
     onSuccess: data => {
+      group.setConversationDisabled(false);
       if (replace) {
         navigation.dispatch(
           StackActions.replace('ChatStack', {
             screen: 'Chat',
             params: {
-              roomGuid: data.createChatRoom.node.guid,
+              roomGuid: data.createGroupChatRoom.node.guid,
             },
           }),
         );
@@ -22,7 +24,7 @@ export function useCreateChatRoom(replace = false) {
         navigation.push('ChatStack', {
           screen: 'Chat',
           params: {
-            roomGuid: data.createChatRoom.node.guid,
+            roomGuid: data.createGroupChatRoom.node.guid,
           },
         });
       }
@@ -33,15 +35,11 @@ export function useCreateChatRoom(replace = false) {
     },
   });
 
-  const createChatRoom = useCallback(
-    (guids: string[], groupGuid?: string) => {
-      mutation.mutate({
-        otherMemberGuids: guids,
-        groupGuid,
-      });
-    },
-    [mutation],
-  );
+  const createChatRoom = useCallback(() => {
+    mutation.mutate({
+      groupGuid: group.guid,
+    });
+  }, [group.guid, mutation]);
 
   return {
     createChatRoom,

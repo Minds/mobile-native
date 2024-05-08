@@ -1,13 +1,19 @@
 mutation CreateChatRoom(
   $otherMemberGuids: [String!]!
   $roomType: ChatRoomTypeEnum
+  $groupGuid: String
 ) {
-  createChatRoom(otherMemberGuids: $otherMemberGuids, roomType: $roomType) {
+  createChatRoom(
+    otherMemberGuids: $otherMemberGuids
+    roomType: $roomType
+    groupGuid: $groupGuid
+  ) {
     cursor
     node {
       id
       guid
       roomType
+      groupGuid
       timeCreatedISO8601
       timeCreatedUnix
     }

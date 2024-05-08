@@ -13,6 +13,8 @@ query GetChatRoom(
       guid
       roomType
       id
+      name
+      groupGuid
       isChatRequest
       isUserRoomOwner
       chatRoomNotificationStatus

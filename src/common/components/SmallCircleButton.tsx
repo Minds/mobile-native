@@ -29,6 +29,7 @@ const SmallCircleButton = ({ raised = true, testID, ...props }: PropsType) => {
       }}
       raised={raised}
       reverse
+      hitSlop={hitSlop}
       name={props.name}
       type={props.type || 'material-community'}
       color={props.color || ThemedStyles.getColor('PrimaryBackground')}
@@ -40,5 +41,6 @@ const SmallCircleButton = ({ raised = true, testID, ...props }: PropsType) => {
     />
   );
 };
+const hitSlop = { top: 10, bottom: 10, left: 15, right: 15 };
 
 export default SmallCircleButton;

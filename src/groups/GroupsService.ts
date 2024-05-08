@@ -239,11 +239,6 @@ class GroupsService {
     );
   }
 
-  toggleConversationDisabled(group_guid, state) {
-    return api.post(`api/v1/groups/group/${group_guid}`, {
-      conversationDisabled: state,
-    });
-  }
   toggleShowBoosts(group_guid: string, state: 1 | 0) {
     return api.post(`api/v1/groups/group/${group_guid}`, {
       show_boosts: state,

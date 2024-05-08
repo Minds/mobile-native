@@ -366,11 +366,14 @@ export type ChatRoomMembersConnection = ConnectionInterface & {
 export type ChatRoomNode = NodeInterface & {
   __typename?: 'ChatRoomNode';
   chatRoomNotificationStatus?: Maybe<ChatRoomNotificationStatusEnum>;
+  /** Gets group GUID for a chat room node. */
+  groupGuid?: Maybe<Scalars['String']['output']>;
   /** The unique guid of the room */
   guid: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   isChatRequest: Scalars['Boolean']['output'];
   isUserRoomOwner?: Maybe<Scalars['Boolean']['output']>;
+  name: Scalars['String']['output'];
   /** The type of room. i.e. one-to-one, multi-user, or group-owned */
   roomType: ChatRoomTypeEnum;
   /** The timestamp the room was created at */
@@ -972,6 +975,8 @@ export type Mutation = {
   /** Creates a comment on a remote url */
   createEmbeddedComment: CommentEdge;
   createGiftCard: GiftCardNode;
+  /** Creates a new group chat room. */
+  createGroupChatRoom: ChatRoomEdge;
   createMultiTenantDomain: MultiTenantDomain;
   createNetworkRootUser: TenantUser;
   /** Create a new report. */
@@ -987,6 +992,8 @@ export type Mutation = {
   deleteEntity: Scalars['Boolean']['output'];
   /** Deletes featured entity. */
   deleteFeaturedEntity: Scalars['Boolean']['output'];
+  /** Deletes group chat rooms. */
+  deleteGroupChatRooms: Scalars['Boolean']['output'];
   deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
@@ -1061,6 +1068,7 @@ export type MutationCreateChatMessageArgs = {
 };
 
 export type MutationCreateChatRoomArgs = {
+  groupGuid?: InputMaybe<Scalars['String']['input']>;
   otherMemberGuids?: Array<Scalars['String']['input']>;
   roomType?: InputMaybe<ChatRoomTypeEnum>;
 };
@@ -1078,6 +1086,10 @@ export type MutationCreateGiftCardArgs = {
   productIdEnum: Scalars['Int']['input'];
   stripePaymentMethodId: Scalars['String']['input'];
   targetInput: GiftCardTargetInput;
+};
+
+export type MutationCreateGroupChatRoomArgs = {
+  groupGuid: Scalars['String']['input'];
 };
 
 export type MutationCreateMultiTenantDomainArgs = {
@@ -1123,6 +1135,10 @@ export type MutationDeleteEntityArgs = {
 
 export type MutationDeleteFeaturedEntityArgs = {
   entityGuid: Scalars['String']['input'];
+};
+
+export type MutationDeleteGroupChatRoomsArgs = {
+  groupGuid: Scalars['String']['input'];
 };
 
 export type MutationDismissArgs = {
@@ -3662,6 +3678,7 @@ export type CreateChatRoomMutationVariables = Exact<{
     | Array<Scalars['String']['input']>
     | Scalars['String']['input'];
   roomType?: InputMaybe<ChatRoomTypeEnum>;
+  groupGuid?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 export type CreateChatRoomMutation = {
@@ -3674,6 +3691,28 @@ export type CreateChatRoomMutation = {
       id: string;
       guid: string;
       roomType: ChatRoomTypeEnum;
+      groupGuid?: string | null;
+      timeCreatedISO8601: string;
+      timeCreatedUnix: string;
+    };
+  };
+};
+
+export type CreateGroupChatRoomMutationVariables = Exact<{
+  groupGuid: Scalars['String']['input'];
+}>;
+
+export type CreateGroupChatRoomMutation = {
+  __typename?: 'Mutation';
+  createGroupChatRoom: {
+    __typename?: 'ChatRoomEdge';
+    cursor: string;
+    node: {
+      __typename?: 'ChatRoomNode';
+      id: string;
+      guid: string;
+      roomType: ChatRoomTypeEnum;
+      groupGuid?: string | null;
       timeCreatedISO8601: string;
       timeCreatedUnix: string;
     };
@@ -3708,6 +3747,15 @@ export type DeleteChatRoomMutation = {
   deleteChatRoom: boolean;
 };
 
+export type DeleteGroupChatRoomsMutationVariables = Exact<{
+  groupGuid: Scalars['String']['input'];
+}>;
+
+export type DeleteGroupChatRoomsMutation = {
+  __typename?: 'Mutation';
+  deleteGroupChatRooms: boolean;
+};
+
 export type GetChatRoomsListQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -3734,7 +3782,9 @@ export type GetChatRoomsListQuery = {
         __typename?: 'ChatRoomNode';
         id: string;
         guid: string;
+        name: string;
         roomType: ChatRoomTypeEnum;
+        groupGuid?: string | null;
         timeCreatedISO8601: string;
         timeCreatedUnix: string;
       };
@@ -3865,6 +3915,8 @@ export type GetChatRoomQuery = {
       guid: string;
       roomType: ChatRoomTypeEnum;
       id: string;
+      name: string;
+      groupGuid?: string | null;
       isChatRequest: boolean;
       isUserRoomOwner?: boolean | null;
       chatRoomNotificationStatus?: ChatRoomNotificationStatusEnum | null;
@@ -6554,13 +6606,18 @@ useCreateChatMessageMutation.fetcher = (
     options,
   );
 export const CreateChatRoomDocument = `
-    mutation CreateChatRoom($otherMemberGuids: [String!]!, $roomType: ChatRoomTypeEnum) {
-  createChatRoom(otherMemberGuids: $otherMemberGuids, roomType: $roomType) {
+    mutation CreateChatRoom($otherMemberGuids: [String!]!, $roomType: ChatRoomTypeEnum, $groupGuid: String) {
+  createChatRoom(
+    otherMemberGuids: $otherMemberGuids
+    roomType: $roomType
+    groupGuid: $groupGuid
+  ) {
     cursor
     node {
       id
       guid
       roomType
+      groupGuid
       timeCreatedISO8601
       timeCreatedUnix
     }
@@ -6595,6 +6652,55 @@ useCreateChatRoomMutation.fetcher = (
 ) =>
   gqlFetcher<CreateChatRoomMutation, CreateChatRoomMutationVariables>(
     CreateChatRoomDocument,
+    variables,
+    options,
+  );
+export const CreateGroupChatRoomDocument = `
+    mutation CreateGroupChatRoom($groupGuid: String!) {
+  createGroupChatRoom(groupGuid: $groupGuid) {
+    cursor
+    node {
+      id
+      guid
+      roomType
+      groupGuid
+      timeCreatedISO8601
+      timeCreatedUnix
+    }
+  }
+}
+    `;
+export const useCreateGroupChatRoomMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    CreateGroupChatRoomMutation,
+    TError,
+    CreateGroupChatRoomMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    CreateGroupChatRoomMutation,
+    TError,
+    CreateGroupChatRoomMutationVariables,
+    TContext
+  >(
+    ['CreateGroupChatRoom'],
+    (variables?: CreateGroupChatRoomMutationVariables) =>
+      gqlFetcher<
+        CreateGroupChatRoomMutation,
+        CreateGroupChatRoomMutationVariables
+      >(CreateGroupChatRoomDocument, variables)(),
+    options,
+  );
+useCreateGroupChatRoomMutation.fetcher = (
+  variables: CreateGroupChatRoomMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<CreateGroupChatRoomMutation, CreateGroupChatRoomMutationVariables>(
+    CreateGroupChatRoomDocument,
     variables,
     options,
   );
@@ -6711,6 +6817,44 @@ useDeleteChatRoomMutation.fetcher = (
     variables,
     options,
   );
+export const DeleteGroupChatRoomsDocument = `
+    mutation DeleteGroupChatRooms($groupGuid: String!) {
+  deleteGroupChatRooms(groupGuid: $groupGuid)
+}
+    `;
+export const useDeleteGroupChatRoomsMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    DeleteGroupChatRoomsMutation,
+    TError,
+    DeleteGroupChatRoomsMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    DeleteGroupChatRoomsMutation,
+    TError,
+    DeleteGroupChatRoomsMutationVariables,
+    TContext
+  >(
+    ['DeleteGroupChatRooms'],
+    (variables?: DeleteGroupChatRoomsMutationVariables) =>
+      gqlFetcher<
+        DeleteGroupChatRoomsMutation,
+        DeleteGroupChatRoomsMutationVariables
+      >(DeleteGroupChatRoomsDocument, variables)(),
+    options,
+  );
+useDeleteGroupChatRoomsMutation.fetcher = (
+  variables: DeleteGroupChatRoomsMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    DeleteGroupChatRoomsMutation,
+    DeleteGroupChatRoomsMutationVariables
+  >(DeleteGroupChatRoomsDocument, variables, options);
 export const GetChatRoomsListDocument = `
     query GetChatRoomsList($first: Int, $after: String) {
   chatRoomList(first: $first, after: $after) {
@@ -6725,7 +6869,9 @@ export const GetChatRoomsListDocument = `
       node {
         id
         guid
+        name
         roomType
+        groupGuid
         timeCreatedISO8601
         timeCreatedUnix
       }
@@ -6994,6 +7140,8 @@ export const GetChatRoomDocument = `
       guid
       roomType
       id
+      name
+      groupGuid
       isChatRequest
       isUserRoomOwner
       chatRoomNotificationStatus
