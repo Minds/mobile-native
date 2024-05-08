@@ -21,4 +21,4 @@ const Toggle = ({ onValueChange, value, style }: PropsType) => {
   );
 };
 
-export default Toggle;
+export default React.memo(Toggle);
