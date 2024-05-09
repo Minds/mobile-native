@@ -24,6 +24,7 @@ import { IconMapNameType } from '~/common/ui/icons/map';
 import withModalProvider from '~/navigation/withModalProvide';
 import { useFeature } from 'ExperimentsProvider';
 import { useUnreadMessages } from '~/modules/chat/hooks/useUnreadMessages';
+import { useIncrementUnreadOnNewMessage } from '~/modules/chat/hooks/useIncrementUnreadOnNewMessage';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -61,6 +62,9 @@ export type TabScreenProps<S extends keyof TabParamList> = BottomTabScreenProps<
 const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
   const focusedOptions = descriptors[state.routes[state.index].key].options;
   const { bottom } = useSafeAreaInsets();
+
+  // increment unread messages count on new message
+  useIncrementUnreadOnNewMessage();
 
   const barAnimatedStyle = useAnimatedStyle(() => ({
     width: tabWidth,
@@ -134,7 +138,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
             onLongPress={onLongPress}
             style={styles.buttonContainer}>
             {icon}
-            {route.name === 'ChatStack' && unreadMessages.count > 0 && (
+            {route.name === 'ChatListStack' && unreadMessages.count > 0 && (
               <View style={styles.unread} />
             )}
           </Component>

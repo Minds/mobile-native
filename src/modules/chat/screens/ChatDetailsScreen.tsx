@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
+
 import Link from '~/common/components/Link';
 import Toggle from '~/common/components/Toggle';
 import { B1, H3, IconButton, Row, Screen, ScreenHeader } from '~/common/ui';
@@ -7,6 +8,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { useChatRoomInfoQuery } from '../hooks/useChatRoomInfoQuery';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import {
+  ChatRoomNotificationStatusEnum,
   ChatRoomTypeEnum,
   useDeleteChatRoomAndBlockUserMutation,
   useDeleteChatRoomMutation,
@@ -19,6 +21,7 @@ import MPressable from '~/common/components/MPressable';
 import { useRefreshOnFocus } from '~/services/hooks/useRefreshOnFocus';
 import ErrorLoading from '~/common/components/ErrorLoading';
 import analyticsService from '~/common/services/analytics.service';
+import { useChatNotificationMutation } from '../hooks/useChatNotificationMutation';
 
 type Props = ChatStackScreenProps<'ChatDetails'>;
 
@@ -30,7 +33,22 @@ export default function ChatDetailsScreen({ route, navigation }: Props) {
   if (!roomGuid) {
     throw new Error('roomGuid is required');
   }
+
   const { data, isLoading, error, refetch } = useChatRoomInfoQuery(roomGuid);
+
+  const { mutate } = useChatNotificationMutation();
+
+  const setNotificationMuted = useCallback(
+    (value: boolean) => {
+      mutate({
+        roomGuid,
+        notificationStatus: value
+          ? ChatRoomNotificationStatusEnum.Muted
+          : ChatRoomNotificationStatusEnum.All,
+      });
+    },
+    [mutate, roomGuid],
+  );
 
   // refetch on screen focus
   useRefreshOnFocus(refetch);
@@ -60,7 +78,9 @@ export default function ChatDetailsScreen({ route, navigation }: Props) {
     },
   });
 
-  const [mute, setMute] = useState(false);
+  const muted =
+    data?.chatRoom.node.chatRoomNotificationStatus ===
+    ChatRoomNotificationStatusEnum.Muted;
 
   const deleteChat = async () => {
     analyticsService.trackClick('data-minds-chat-info-delete-button');
@@ -118,7 +138,7 @@ export default function ChatDetailsScreen({ route, navigation }: Props) {
           </H3>
           <Row align="centerBetween" vertical="XL" horizontal="XXXL">
             <B1>Mute notifications for this chat</B1>
-            <Toggle value={mute} onValueChange={setMute} />
+            <Toggle value={muted} onValueChange={setNotificationMuted} />
           </Row>
           <MPressable
             onPress={() => {

@@ -4071,6 +4071,16 @@ export type SetReadReceiptMutation = {
   };
 };
 
+export type UpdateChatRoomNotificationSettingsMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  notificationStatus: ChatRoomNotificationStatusEnum;
+}>;
+
+export type UpdateChatRoomNotificationSettingsMutation = {
+  __typename?: 'Mutation';
+  updateNotificationSettings: boolean;
+};
+
 export type GetCustomPageQueryVariables = Exact<{
   pageType: Scalars['String']['input'];
 }>;
@@ -7612,6 +7622,47 @@ useSetReadReceiptMutation.fetcher = (
     variables,
     options,
   );
+export const UpdateChatRoomNotificationSettingsDocument = `
+    mutation UpdateChatRoomNotificationSettings($roomGuid: String!, $notificationStatus: ChatRoomNotificationStatusEnum!) {
+  updateNotificationSettings(
+    roomGuid: $roomGuid
+    notificationStatus: $notificationStatus
+  )
+}
+    `;
+export const useUpdateChatRoomNotificationSettingsMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    UpdateChatRoomNotificationSettingsMutation,
+    TError,
+    UpdateChatRoomNotificationSettingsMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    UpdateChatRoomNotificationSettingsMutation,
+    TError,
+    UpdateChatRoomNotificationSettingsMutationVariables,
+    TContext
+  >(
+    ['UpdateChatRoomNotificationSettings'],
+    (variables?: UpdateChatRoomNotificationSettingsMutationVariables) =>
+      gqlFetcher<
+        UpdateChatRoomNotificationSettingsMutation,
+        UpdateChatRoomNotificationSettingsMutationVariables
+      >(UpdateChatRoomNotificationSettingsDocument, variables)(),
+    options,
+  );
+useUpdateChatRoomNotificationSettingsMutation.fetcher = (
+  variables: UpdateChatRoomNotificationSettingsMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    UpdateChatRoomNotificationSettingsMutation,
+    UpdateChatRoomNotificationSettingsMutationVariables
+  >(UpdateChatRoomNotificationSettingsDocument, variables, options);
 export const GetCustomPageDocument = `
     query GetCustomPage($pageType: String!) {
   customPage(pageType: $pageType) {

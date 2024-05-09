@@ -7,11 +7,9 @@ import { useMemo } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import logService from '~/common/services/log.service';
 import { produce } from 'immer';
-import { useIncrementUnreadMessages } from './useUnreadMessages';
 
 export function useChatRoomListQuery() {
   const queryClient = useQueryClient();
-  const incrementUnreadMessages = useIncrementUnreadMessages();
   const { data, isLoading, fetchNextPage, refetch, isRefetching } =
     useInfiniteGetChatRoomsListQuery(
       'first',
@@ -42,8 +40,6 @@ export function useChatRoomListQuery() {
     if (!data || event.type !== 'NEW_MESSAGE') return;
     let pageIndex = -1;
     let itemIndex = -1;
-
-    incrementUnreadMessages(1);
 
     data.pages.forEach((page, index) => {
       const roomIndex = page.chatRoomList.edges.findIndex(
