@@ -2,9 +2,11 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import GroupChatButton from './GroupChatButton';
 import { useCreateGroupChatRoom } from '../hooks/useCreateGroupChatRoom';
+import { useCreateGroupChatRoomLegacy } from '../hooks/useCreateGroupChatRoomLegacy';
 import GroupModel from '~/groups/GroupModel';
 
 jest.mock('../hooks/useCreateGroupChatRoom');
+jest.mock('../hooks/useCreateGroupChatRoomLegacy');
 
 describe('GroupChatButton', () => {
   const mockCreateChatRoom = jest.fn();
@@ -13,6 +15,10 @@ describe('GroupChatButton', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     (useCreateGroupChatRoom as jest.Mock).mockReturnValue({
+      createChatRoom: mockCreateChatRoom,
+      isLoading: false,
+    });
+    (useCreateGroupChatRoomLegacy as jest.Mock).mockReturnValue({
       createChatRoom: mockCreateChatRoom,
       isLoading: false,
     });
@@ -41,7 +47,7 @@ describe('GroupChatButton', () => {
   });
 
   it('disables the button when isLoading is true', () => {
-    (useCreateGroupChatRoom as jest.Mock).mockReturnValue({
+    (useCreateGroupChatRoomLegacy as jest.Mock).mockReturnValue({
       createChatRoom: mockCreateChatRoom,
       isLoading: true,
     });
