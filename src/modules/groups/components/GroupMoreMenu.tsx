@@ -16,6 +16,7 @@ import { GroupContextType, useGroupContext } from '../contexts/GroupContext';
 import PermissionsService from '~/common/services/permissions.service';
 import { useDeleteGroupChatRoom } from '~/modules/chat/hooks/useDeleteGroupChatRoom';
 import { confirm } from '~/common/components/Confirm';
+import { useIsFeatureOn } from 'ExperimentsProvider';
 
 type PropsType = {
   group: GroupModel;
@@ -115,8 +116,14 @@ const GroupMoreMenu = forwardRef((props: PropsType, ref: any) => {
   const options = getOptions({ ...props, ref, groupContext });
   const deleteMutaton = useDeleteGroupChatRoom(props.group);
 
+  const featureEnabled = useIsFeatureOn('mobile-create-group-chat-new');
+
   // remove chat option only for owner
-  if (props.group.isOwner() && !props.group.conversationDisabled) {
+  if (
+    featureEnabled &&
+    props.group.isOwner() &&
+    !props.group.conversationDisabled
+  ) {
     options.push({
       iconName: 'message',
       iconType: 'material-community',

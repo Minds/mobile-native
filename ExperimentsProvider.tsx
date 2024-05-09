@@ -42,6 +42,9 @@ export const useIsAndroidFeatureOn = (feature: FeatureID) =>
 export const useIsGoogleFeatureOn = (feature: FeatureID) =>
   useIsFeatureOn(feature) && GOOGLE_PLAY_STORE;
 
-export const featureList = ['epic-358-chat-mob'] as const;
+export const featureList = [
+  'epic-358-chat-mob',
+  'mobile-create-group-chat-new',
+] as const;
 
 export type FeatureID = typeof featureList[number];
