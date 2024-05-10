@@ -34,6 +34,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
+  DateTime: { input: any; output: any };
   Void: { input: any; output: any };
 };
 
@@ -183,6 +184,11 @@ export type AnalyticsTableRowUserNode = AnalyticsTableRowNodeInterface &
     totalSubscribers: Scalars['Int']['output'];
     user: UserNode;
   };
+
+export enum ApiScopeEnum {
+  All = 'ALL',
+  SiteMembershipWrite = 'SITE_MEMBERSHIP_WRITE',
+}
 
 export type AppReadyMobileConfig = {
   __typename?: 'AppReadyMobileConfig';
@@ -981,6 +987,7 @@ export type Mutation = {
   createNetworkRootUser: TenantUser;
   /** Create a new report. */
   createNewReport: Scalars['Boolean']['output'];
+  createPersonalApiKey: PersonalApiKey;
   createRssFeed: RssFeed;
   createTenant: Tenant;
   deleteChatMessage: Scalars['Boolean']['output'];
@@ -994,6 +1001,7 @@ export type Mutation = {
   deleteFeaturedEntity: Scalars['Boolean']['output'];
   /** Deletes group chat rooms. */
   deleteGroupChatRooms: Scalars['Boolean']['output'];
+  deletePersonalApiKey: Scalars['Boolean']['output'];
   deletePostHogPerson: Scalars['Boolean']['output'];
   /** Dismiss a notice by its key. */
   dismiss: Dismissal;
@@ -1104,6 +1112,12 @@ export type MutationCreateNewReportArgs = {
   reportInput: ReportInput;
 };
 
+export type MutationCreatePersonalApiKeyArgs = {
+  expireInDays?: InputMaybe<Scalars['Int']['input']>;
+  name: Scalars['String']['input'];
+  scopes: Array<ApiScopeEnum>;
+};
+
 export type MutationCreateRssFeedArgs = {
   rssFeed: RssFeedInput;
 };
@@ -1139,6 +1153,10 @@ export type MutationDeleteFeaturedEntityArgs = {
 
 export type MutationDeleteGroupChatRoomsArgs = {
   groupGuid: Scalars['String']['input'];
+};
+
+export type MutationDeletePersonalApiKeyArgs = {
+  id: Scalars['String']['input'];
 };
 
 export type MutationDismissArgs = {
@@ -1371,14 +1389,27 @@ export enum PermissionsEnum {
   CanAssignPermissions = 'CAN_ASSIGN_PERMISSIONS',
   CanBoost = 'CAN_BOOST',
   CanComment = 'CAN_COMMENT',
+  CanCreateChatRoom = 'CAN_CREATE_CHAT_ROOM',
   CanCreateGroup = 'CAN_CREATE_GROUP',
   CanCreatePaywall = 'CAN_CREATE_PAYWALL',
   CanCreatePost = 'CAN_CREATE_POST',
   CanInteract = 'CAN_INTERACT',
   CanModerateContent = 'CAN_MODERATE_CONTENT',
+  CanUploadChatMedia = 'CAN_UPLOAD_CHAT_MEDIA',
   CanUploadVideo = 'CAN_UPLOAD_VIDEO',
   CanUseRssSync = 'CAN_USE_RSS_SYNC',
 }
+
+export type PersonalApiKey = {
+  __typename?: 'PersonalApiKey';
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  scopes: Array<ApiScopeEnum>;
+  /** The 'secret' key that a user will use to authenticate with. Only returned once. */
+  secret: Scalars['String']['output'];
+  timeCreated: Scalars['DateTime']['output'];
+  timeExpires?: Maybe<Scalars['DateTime']['output']>;
+};
 
 export type Plan = {
   __typename?: 'Plan';
@@ -1504,6 +1535,7 @@ export type Query = {
   giftCardsBalances: Array<GiftCardBalanceByProductId>;
   invite: Invite;
   invites: InviteConnection;
+  listPersonalApiKeys: Array<PersonalApiKey>;
   mobileConfig: MobileConfig;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
@@ -1516,6 +1548,7 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  personalApiKey?: Maybe<PersonalApiKey>;
   postHogPerson: PostHogPerson;
   postSubscription: PostSubscription;
   /** Gets reports. */
@@ -1690,6 +1723,10 @@ export type QueryNewsfeedArgs = {
 
 export type QueryPaymentMethodsArgs = {
   productId?: InputMaybe<GiftCardProductIdEnum>;
+};
+
+export type QueryPersonalApiKeyArgs = {
+  id: Scalars['String']['input'];
 };
 
 export type QueryPostSubscriptionArgs = {
@@ -1959,9 +1996,10 @@ export enum SiteMembershipPricingModelEnum {
 export type SiteMembershipSubscription = {
   __typename?: 'SiteMembershipSubscription';
   autoRenew: Scalars['Boolean']['output'];
+  isManual: Scalars['Boolean']['output'];
   membershipGuid: Scalars['String']['output'];
   membershipSubscriptionId: Scalars['Int']['output'];
-  validFromTimestamp: Scalars['Int']['output'];
+  validFromTimestamp?: Maybe<Scalars['Int']['output']>;
   validToTimestamp?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -3972,6 +4010,7 @@ export type GetChatRoomInviteRequestsQuery = {
         __typename?: 'ChatRoomNode';
         id: string;
         guid: string;
+        name: string;
         roomType: ChatRoomTypeEnum;
         isChatRequest: boolean;
         timeCreatedISO8601: string;
@@ -7241,6 +7280,7 @@ export const GetChatRoomInviteRequestsDocument = `
       node {
         id
         guid
+        name
         roomType
         isChatRequest
         timeCreatedISO8601

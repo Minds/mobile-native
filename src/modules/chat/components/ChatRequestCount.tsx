@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   column: {
-    paddingLeft: 20,
+    paddingLeft: 15,
     flex: 1,
     flexDirection: 'column',
   },
