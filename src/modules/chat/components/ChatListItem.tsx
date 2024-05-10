@@ -69,13 +69,11 @@ function ChatListItem({ chat, onPress }: Props) {
             </B2>
           </View>
           <View style={styles.nameContainer}>
-            <B3
-              color="secondary"
-              top="S"
-              numberOfLines={1}
-              style={styles.message}>
-              {chat.lastMessagePlainText}
-            </B3>
+            <View style={styles.message}>
+              <B3 color="secondary" top="S" numberOfLines={1}>
+                {chat.lastMessagePlainText}
+              </B3>
+            </View>
             {chat.unreadMessagesCount > 0 && <View style={styles.unread} />}
           </View>
         </View>
@@ -109,13 +107,12 @@ const styles = ThemedStyles.create({
     flexDirection: 'column',
   },
   nameContainer: {
-    overflow: 'hidden',
     flexWrap: 'nowrap',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   multiavatarContainer: {
-    width: 45,
+    width: 40,
   },
   avatar1: {
     zIndex: 1000,
