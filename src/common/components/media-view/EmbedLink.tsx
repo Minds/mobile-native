@@ -20,6 +20,8 @@ type PropsType = {
 const IMG_SIZE = 75;
 const MAX_TITLE_SIZE = 200;
 
+const LIVEPEER_PLAYER_URL = 'https://minds-player.vercel.app?v=';
+
 export default function EmbedLink({
   entity,
   small,
@@ -35,13 +37,8 @@ export default function EmbedLink({
 
   const source = entity.getThumbSource('xlarge');
 
-  if (
-    entity.perma_url?.startsWith('https://minds-player.withlivepeer.com?v=')
-  ) {
-    const videoId = entity.perma_url?.replace(
-      'https://minds-player.withlivepeer.com?v=',
-      '',
-    );
+  if (entity.perma_url?.startsWith(LIVEPEER_PLAYER_URL)) {
+    const videoId = entity.perma_url?.replace(LIVEPEER_PLAYER_URL, '');
     return (
       <FeedStreamPlayer
         id={videoId}
