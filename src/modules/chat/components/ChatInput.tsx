@@ -73,7 +73,7 @@ const ChatInput = ({ onSendMessage }: Props) => {
             editable={!saving}
             scrollEnabled={true}
             placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
-            placeholder="type your message ..."
+            placeholder="Message"
             underlineColorAndroid="transparent"
             onChangeText={setText}
             keyboardType={'default'}
