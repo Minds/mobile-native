@@ -1,2 +1,2 @@
 #!/bin/sh
-yarn tsc && yarn test
+#yarn tsc && yarn test

@@ -14682,8 +14682,8 @@ react-native-navigation-bar-color@^2.0.1:
   integrity sha512-ZmpLWRocyme1au11e5ZuecMS/UCi57nlzgnioi03Q6ERMbeUOqqbWgNBaNB7SsCeqBV6fZPjo3+A64zEIpzw4w==
 
 "react-native-notifications@https://github.com/Minds/react-native-notifications":
-  version "5.0.3"
-  resolved "https://github.com/Minds/react-native-notifications#b7b0c2cda8918c758be31ba23894e80b67525482"
+  version "5.0.4"
+  resolved "https://github.com/Minds/react-native-notifications#10c57717fb5fe54c0cffbebf20794cc8728b62c9"
   dependencies:
     core-js "^1.0.0"
     uuid "^2.0.3"
