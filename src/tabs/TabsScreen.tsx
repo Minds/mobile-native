@@ -259,7 +259,7 @@ const notificationOptions = {
 const moreOptions = { tabBarTestID: 'Tabs:More' };
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
 const focusedState = { selected: true };
-const tabBar = props => <TabBar disableTabIndicator {...props} />;
+const tabBar = props => <TabBar {...props} />;
 
 const iconFromRoute: Record<string, IconMapNameType> = {
   More: 'menu',

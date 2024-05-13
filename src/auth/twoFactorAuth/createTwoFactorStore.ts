@@ -1,5 +1,6 @@
-import Clipboard from '@react-native-clipboard/clipboard';
 import { Linking } from 'react-native';
+import * as Clipboard from 'expo-clipboard';
+
 import SettingsService from '~/settings/SettingsService';
 import { showNotification } from '../../../AppMessages';
 import apiService from '../../common/services/api.service';
@@ -61,7 +62,7 @@ const createTwoFactorStore = () => ({
     return this.appAuthEnabled || this.smsAuthEnabled;
   },
   copySecret() {
-    Clipboard.setString(this.secret);
+    Clipboard.setStringAsync(this.secret);
     showNotification('Secret copied to clipboard', 'success');
     Linking.openURL(
       `otpauth://totp/Minds.com?secret=${this.secret}&issuer=${
@@ -70,7 +71,7 @@ const createTwoFactorStore = () => ({
     );
   },
   copyRecoveryCode() {
-    Clipboard.setString(this.recoveryCode);
+    Clipboard.setStringAsync(this.recoveryCode);
     showNotification('Recovery code copied to clipboard', 'success');
   },
   async fetchSecret() {

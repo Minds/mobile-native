@@ -1,0 +1,15 @@
+diff --git a/node_modules/react-native-image-filter-kit/android/build.gradle b/node_modules/react-native-image-filter-kit/android/build.gradle
+index 6546ccf..18e64f9 100755
+--- a/node_modules/react-native-image-filter-kit/android/build.gradle
++++ b/node_modules/react-native-image-filter-kit/android/build.gradle
+@@ -12,6 +12,10 @@ android {
+     compileSdkVersion _compileSdkVersion
+     buildToolsVersion _buildToolsVersion
+ 
++    buildFeatures {
++        renderScript true
++    }
++
+     compileOptions {
+         sourceCompatibility JavaVersion.VERSION_1_8
+         targetCompatibility JavaVersion.VERSION_1_8

@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import { showNotification } from '../../../AppMessages';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { Button } from '../ui/buttons';
 import { B2, H1, H4 } from '../ui';
@@ -45,7 +45,7 @@ export default class ErrorBoundaryScreen extends Component<
   }
 
   copy = () => {
-    Clipboard.setString(
+    Clipboard.setStringAsync(
       (this.error?.message || this.error) +
         `\nSTACK:\nScreen: ${this.props.screenName}\n` +
         this.info.componentStack,

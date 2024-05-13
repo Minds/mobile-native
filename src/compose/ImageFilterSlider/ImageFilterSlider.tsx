@@ -1,8 +1,7 @@
 import { MotiView } from 'moti';
 import React from 'react';
-import { Dimensions, Image, View } from 'react-native';
-import debounce from 'lodash/debounce';
-import { FlatList } from 'react-native-gesture-handler';
+import { Dimensions, Image, View, FlatList } from 'react-native';
+
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -205,30 +204,22 @@ export default function ImageFilterSlider({
   );
 
   const changeIndex = React.useCallback(
-    // workaround for bug in android where the onMomentumScrollEnd event is fired many times
-    debounce(
-      index => {
-        if (index * ITEM_WIDTH + ITEM_WIDTH * 0.5 > width / 2) {
-          const offset = index * ITEM_WIDTH + ITEM_WIDTH * 0.5 - width / 2;
-          galleryRef.current?.scrollToOffset({
-            offset,
-            animated: true,
-          });
-        } else {
-          galleryRef.current?.scrollToOffset({
-            offset: 0,
-            animated: true,
-          });
-        }
-        index > 0 ? onFilterChange(FILTERS[index].title) : onFilterChange(null);
-        setIndex(index);
-      },
-      100,
-      {
-        leading: false,
-        trailing: true,
-      },
-    ),
+    index => {
+      if (index * ITEM_WIDTH + ITEM_WIDTH * 0.5 > width / 2) {
+        const offset = index * ITEM_WIDTH + ITEM_WIDTH * 0.5 - width / 2;
+        galleryRef.current?.scrollToOffset({
+          offset,
+          animated: true,
+        });
+      } else {
+        galleryRef.current?.scrollToOffset({
+          offset: 0,
+          animated: true,
+        });
+      }
+      index > 0 ? onFilterChange(FILTERS[index].title) : onFilterChange(null);
+      setIndex(index);
+    },
     [onFilterChange],
   );
 

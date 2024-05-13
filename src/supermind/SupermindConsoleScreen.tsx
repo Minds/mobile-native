@@ -79,6 +79,7 @@ function SupermindConsoleScreen({
   const [onboarding, dismissOnboarding] = useSupermindOnboarding('producer');
   const feedStore = useFeedStore();
   const scrollDirection = useSharedValue(0);
+  const translationYLatest = useSharedValue(-60);
   const scrollY = useSharedValue(0);
   const hideTokens = GOOGLE_PLAY_STORE;
 
@@ -231,7 +232,7 @@ function SupermindConsoleScreen({
       <ScrollContext.Provider
         value={{
           scrollDirection,
-          translationY: { value: -60 },
+          translationY: translationYLatest,
           headerHeight: 0,
           scrollY,
         }}>

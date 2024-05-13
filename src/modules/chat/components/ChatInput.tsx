@@ -98,7 +98,7 @@ const ChatInput = ({ onSendMessage }: Props) => {
               hitSlop={hitSlop}
               style={styles.sendIcon}
               testID="PostCommentButton">
-              <Icon name="md-send" size={18} style={theme.colorSecondaryText} />
+              <Icon name="send" size={18} style={theme.colorSecondaryText} />
             </Touchable>
           ) : (
             <View style={[theme.alignSelfCenter, theme.justifyEnd]}>

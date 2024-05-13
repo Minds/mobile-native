@@ -1,7 +1,8 @@
 import React from 'react';
 import get from 'lodash/get';
 import memoize from 'lodash/memoize';
-import * as RNLocalize from 'react-native-localize';
+import { getLocales } from 'expo-localization';
+
 import i18n from 'i18n-js';
 import { I18nManager, NativeModules, Platform } from 'react-native';
 import moment from 'moment-timezone';
@@ -152,7 +153,7 @@ class I18nService {
     // fallback if no available language fits
     const fallback = { languageTag: 'en' };
     let { languageTag } =
-      RNLocalize.findBestAvailableLanguage(SupportedLanguages) || fallback;
+      findBestAvailableLanguage(SupportedLanguages) || fallback;
     return languageTag;
   }
 
@@ -393,6 +394,18 @@ class I18nService {
           NativeModules.SettingsManager.settings.AppleLanguages?.[0]
         : NativeModules.I18nManager.localeIdentifier
     ).replace(/_/g, '-');
+  }
+}
+
+export function findBestAvailableLanguage(languageTags) {
+  const locales = getLocales();
+  for (const languageTag of languageTags) {
+    const available = locales.find(
+      locale => locale.languageTag === languageTag,
+    );
+    if (available) {
+      return available;
+    }
   }
 }
 

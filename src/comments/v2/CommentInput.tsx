@@ -230,7 +230,7 @@ const CommentInput = observer((onShow, onDismiss) => {
                   style={theme.paddingRight2x}
                   testID="PostCommentButton">
                   <Icon
-                    name="md-send"
+                    name="send"
                     size={18}
                     style={theme.colorSecondaryText}
                   />

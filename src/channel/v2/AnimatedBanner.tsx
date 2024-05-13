@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import ThemedStyles from '../../styles/ThemedStyles';
 import settingsStore from '../../settings/SettingsStore';
-import { View } from 'react-native';
+import { View, ViewStyle } from 'react-native';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { IS_IPAD } from '~/config/Config';
 
@@ -31,7 +31,7 @@ const AnimatedBanner: FC<AnimatedBannerProps> = ({
   const _onBannerDownload = useCallback(() => setShowBanner(true), []);
   const Background: any = showBanner ? SmartImage : View;
 
-  const animatedStyles = useAnimatedStyle(() => ({
+  const animatedStyles = useAnimatedStyle<ViewStyle>(() => ({
     transform: [
       {
         scale: interpolate(

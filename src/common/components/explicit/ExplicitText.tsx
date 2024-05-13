@@ -211,6 +211,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         shadowOffset: {
           height: -1,
+          width: 0,
         },
       },
       android: {

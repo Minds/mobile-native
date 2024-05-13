@@ -7,7 +7,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import { ScrollView } from 'react-native-gesture-handler';
 import * as entities from 'entities';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import MediaView from '../../../common/components/MediaView';
@@ -229,7 +229,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
 
   const copyText = useCallback(() => {
     const title = entity.link_title || entity.title;
-    Clipboard.setString(
+    Clipboard.setStringAsync(
       entities.decodeHTML(title ? title + '\n' + entity.text : entity.text),
     );
     showNotification(i18n.t('copied'), 'info');

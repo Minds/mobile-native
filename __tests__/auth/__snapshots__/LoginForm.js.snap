@@ -404,7 +404,7 @@ exports[`LoginForm component should renders correctly 1`] = `
           </View>
         </View>
         <IonIcon
-          name="md-eye-off"
+          name="eye-off"
           onPress={[Function]}
           size={25}
           style={

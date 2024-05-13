@@ -18,11 +18,11 @@ import deeplinkService from './src/common/services/deeplinks-router.service';
 import { boostedContentService } from 'modules/boost';
 import NavigationService from './src/navigation/NavigationService';
 import translationService from './src/common/services/translation.service';
-import Clipboard from '@react-native-clipboard/clipboard';
 import mindsConfigService from './src/common/services/minds-config.service';
 import openUrlService from '~/common/services/open-url.service';
 import { updateFeatureFlags } from 'ExperimentsProvider';
 import checkTOS from '~/tos/checkTOS';
+import * as Clipboard from 'expo-clipboard';
 import { storeRatingService } from 'modules/store-rating';
 import portraitBoostedContentService from './src/portrait/services/portraitBoostedContentService';
 import socketService from '~/common/services/socket.service';
@@ -78,6 +78,7 @@ export class AppInitManager {
     } catch (err) {
       logService.exception('[App] Error initializing the app', err);
       if (err instanceof Error) {
+        console.error('INIT ERROR', err.stack);
         Alert.alert(
           'Error',
           'There was an error initializing the app.\n Do you want to copy the stack trace.',
@@ -86,7 +87,7 @@ export class AppInitManager {
               text: 'Yes',
               onPress: () => {
                 if (err instanceof Error) {
-                  Clipboard.setString(err.stack || '');
+                  Clipboard.setStringAsync(err.stack || '');
                 }
               },
             },

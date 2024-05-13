@@ -1,8 +1,10 @@
 import i18n from 'i18next';
 import { LanguageDetectorModule } from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import * as RNLocalize from 'react-native-localize';
-import { SupportedLanguages } from '~/common/services/i18n.service';
+import {
+  SupportedLanguages,
+  findBestAvailableLanguage,
+} from '~/common/services/i18n.service';
 import { storages } from '~/common/services/storage/storages.service';
 
 const languageDetector: LanguageDetectorModule = {
@@ -13,9 +15,9 @@ const languageDetector: LanguageDetectorModule = {
       return language;
     }
 
-    let { languageTag } = RNLocalize.findBestAvailableLanguage(
-      SupportedLanguages,
-    ) || { languageTag: 'en' };
+    let { languageTag } = findBestAvailableLanguage(SupportedLanguages) || {
+      languageTag: 'en',
+    };
 
     return languageTag;
   },

@@ -2,6 +2,7 @@ import { observable, action, runInAction } from 'mobx';
 import Cancelable from 'promise-cancelable';
 import { Alert, Platform } from 'react-native';
 import RNConvertPhAsset from 'react-native-convert-ph-asset';
+import { Orientation } from 'react-native-vision-camera';
 
 import attachmentService from '../services/attachment.service';
 import logService from '../services/log.service';
@@ -20,7 +21,7 @@ export type Media = {
   filename?: string;
   width: number;
   height: number;
-  pictureOrientation?: number;
+  orientation?: Orientation;
 };
 
 /**
