@@ -28,6 +28,10 @@ export default function PreviewApp() {
   );
 }
 
+const openTrial = () => {
+  Linking.openURL('https://mobile.minds.com/about/networks');
+};
+
 const Preview = () => {
   const [scan, setScan] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
@@ -74,26 +78,31 @@ const Preview = () => {
           <Image
             source={require('../assets/images/splash.png')}
             resizeMode="contain"
-            style={{ height: '60%', width: '100%' }}
+            style={{ height: '30%', width: '100%' }}
           />
           <View
             style={{
-              paddingTop: 20,
               paddingBottom: 50,
               paddingHorizontal: 10,
-              justifyContent: 'space-between',
+              gap: 40,
+              justifyContent: 'center',
               flexDirection: 'column',
               flex: 1,
             }}>
+            <H4 font="regular" align="center" horizontal="XXL">
+              Tap the button above to scan the network preview QR code. You can
+              find the QR code in your email when your update build is ready.
+            </H4>
             <View style={ThemedStyles.style.rowJustifyCenter}>
               <Button type="action" size="large" onPress={() => setScan(true)}>
                 Scan QR code
               </Button>
             </View>
-
-            <H4 font="medium" align="center" horizontal="XXL">
-              Tap the button above to scan the network preview QR code. You can
-              find the QR code in your email when your update build is ready.
+            <H4 font="regular" align="center" horizontal="L">
+              Want to spin up your own social network?
+              <H4 color="link" flat onPress={openTrial}>
+                Get a free trial today
+              </H4>
             </H4>
           </View>
         </>
