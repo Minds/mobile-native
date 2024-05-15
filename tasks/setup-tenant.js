@@ -54,6 +54,7 @@ async function setupTenant(id) {
             query,
             { tenantId: parseInt(id, 10) },
             {
+              cookie: 'staging=1;',
               Token: generateToken({ TENANT_ID: process.env.TENANT_ID }),
             },
           )
