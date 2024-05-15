@@ -140,7 +140,7 @@ const RequestActionSheet = ({
   return (
     <BottomSheet
       ref={ref}
-      title={`Accept chat request from ${name}`}
+      title={'Accept chat request'}
       detail="They will only be notified that you've seen their chat after you accept it."
       onChange={index =>
         index === -1 && !accepted.current && navigation.goBack()
