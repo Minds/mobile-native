@@ -94,8 +94,7 @@ const Empty = () => (
   <Spacer horizontal="XL" top="L">
     <H3>Say hello to chats!</H3>
     <B2 vertical="M">
-      Start a direct conversation with a friend, stranger, or group of people on
-      Minds.
+      Start a direct conversation with a friend, stranger, or group of people.
     </B2>
     <Button
       onPress={() => {
