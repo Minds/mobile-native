@@ -10,6 +10,7 @@ import {
 } from '~/graphql/api';
 import {
   InfiniteData,
+  QueryClient,
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
   useInfiniteQuery,
@@ -17,12 +18,12 @@ import {
 } from '@tanstack/react-query';
 import sessionService from '~/common/services/session.service';
 import moment from 'moment';
-import { ChatMessage } from '../types';
+import { ChatMessage, ChatRoomEventType } from '../types';
 import delay from '~/common/helpers/delay';
 import logService from '~/common/services/log.service';
 import { showNotification } from 'AppMessages';
 import { gqlFetcher } from '~/common/services/api.service';
-import { useChatRoomNewMessageEvent } from './useChatRoomNewMessageEvent';
+import { useChatRoomEventByType } from './useChatRoomEventByType';
 
 const PAGE_SIZE = 12;
 
@@ -183,28 +184,9 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
     },
     onSuccess: (data, context) => {
       showNotification('Message deleted');
-      // we remove the message from the list
-      queryClient.setQueryData<InfiniteData<GetChatMessagesQuery>>(
-        key,
-        oldData => {
-          if (oldData && data.deleteChatMessage) {
-            // keep an eye on performance, we might need to use a different approach
-            // generating an entirely new list when deleting a new message may be expensive for large chats
-            return produce(oldData, draft => {
-              draft.pages.forEach(page => {
-                const indexOf = page.chatMessages.edges.findIndex(
-                  message => message.node.guid === context.messageGuid,
-                );
-                if (indexOf !== -1) {
-                  page.chatMessages.edges.splice(indexOf, 1);
-                }
-                return page;
-              });
-            });
-          }
-          return oldData;
-        },
-      );
+      if (data.deleteChatMessage) {
+        removeChatMessage(context.messageGuid, key, queryClient);
+      }
     },
   });
 
@@ -232,8 +214,37 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
     [data, render],
   );
 
-  // listen to new messages event
-  useChatRoomNewMessageEvent(roomGuid, loadNewMessages, true);
+  const onEvent = useCallback(
+    event => {
+      switch (event.type) {
+        case ChatRoomEventType.NewMessage: {
+          loadNewMessages();
+          break;
+        }
+        case ChatRoomEventType.MessageDeleted: {
+          if (!event['metadata']?.['messageGuid']) {
+            console.warn(
+              'No message guid found in event data for deleted event',
+            );
+            return;
+          }
+          // remove the message from the list and cache
+          removeChatMessage(
+            event['metadata']?.['messageGuid'],
+            key,
+            queryClient,
+          );
+
+          break;
+        }
+      }
+    },
+    // the mutation is not added since the reference to deleteMessageMutation is not stable, but deleteMessageMutation.mutate is
+    [loadNewMessages, roomGuid],
+  );
+
+  // listen to events messages event
+  useChatRoomEventByType(roomGuid, eventTypes, onEvent, true);
 
   return {
     fetchPreviousPage,
@@ -348,4 +359,35 @@ export const useInfiniteGetChatMessagesQuery = <
       )(),
     options,
   );
+};
+
+const eventTypes = [
+  ChatRoomEventType.NewMessage,
+  ChatRoomEventType.MessageDeleted,
+];
+
+const removeChatMessage = (
+  messageGuid: string,
+  key,
+  queryClient: QueryClient,
+) => {
+  // we remove the message from the list
+  queryClient.setQueryData<InfiniteData<GetChatMessagesQuery>>(key, oldData => {
+    if (oldData) {
+      // keep an eye on performance, we might need to use a different approach
+      // generating an entirely new list when deleting a new message may be expensive for large chats
+      return produce(oldData, draft => {
+        draft.pages.forEach(page => {
+          const indexOf = page.chatMessages.edges.findIndex(
+            message => message.node.guid === messageGuid,
+          );
+          if (indexOf !== -1) {
+            page.chatMessages.edges.splice(indexOf, 1);
+          }
+          return page;
+        });
+      });
+    }
+    return oldData;
+  });
 };

@@ -1,14 +1,17 @@
 import { useCallback } from 'react';
 import { useChatRoomEvent } from './useChatRoomEvent';
 import sessionService from '~/common/services/session.service';
+import { ChatRoomEventType } from '../types';
 
 /**
  * Subscribes to a room message event and unsubscribes on unmount
  *
- * Important: the callback should be a stable reference to avoid re-subscription on each render
+ * Important: the callback and types array should be a stable references
+ * to avoid re-subscription on each render
  */
-export function useChatRoomNewMessageEvent(
+export function useChatRoomEventByType(
   roomGuid: string,
+  types: ChatRoomEventType[],
   callback: (data: any) => void,
   ignoreSelf = false,
 ) {
@@ -17,7 +20,7 @@ export function useChatRoomNewMessageEvent(
     useCallback(
       event => {
         if (
-          event.type === 'NEW_MESSAGE' &&
+          types.includes(event.type) &&
           (ignoreSelf
             ? event.metadata.senderGuid !== sessionService.guid
             : true)
@@ -25,7 +28,7 @@ export function useChatRoomNewMessageEvent(
           callback(event);
         }
       },
-      [callback, ignoreSelf],
+      [callback, ignoreSelf, types],
     ),
   );
 }
