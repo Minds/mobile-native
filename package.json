@@ -144,6 +144,7 @@
     "react-native-image-pan-zoom": "^2.1.12",
     "react-native-inappbrowser-reborn": "https://github.com/proyecto26/react-native-inappbrowser",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-keyboard-controller": "^1.12.1",
     "react-native-markdown-display": "^7.0.0-alpha.2",
     "react-native-mmkv-storage": "^0.9.1",
     "react-native-modal": "^13.0.1",

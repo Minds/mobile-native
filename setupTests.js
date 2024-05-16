@@ -147,3 +147,7 @@ jest.mock('@expo/vector-icons', () => ({
     return 'FontAwesome';
   },
 }));
+
+jest.mock('react-native-keyboard-controller', () =>
+  require('react-native-keyboard-controller/jest'),
+);

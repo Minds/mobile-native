@@ -1,7 +1,7 @@
 import React from 'react';
+import { StyleSheet, View } from 'react-native';
+
 import { Avatar, Row, ScreenHeader } from '~/common/ui';
-import { View } from 'react-native';
-import { StyleSheet } from 'react-native';
 import { ChatMember } from '../types';
 import { useChatRoomContext } from '../contexts/ChatRoomContext';
 import { APP_URI } from '~/config/Config';

@@ -1,9 +1,7 @@
 import React from 'react';
 import { ViewProps } from 'react-native';
-import Animated, {
-  useAnimatedKeyboard,
-  useAnimatedStyle,
-} from 'react-native-reanimated';
+import { useReanimatedKeyboardAnimation } from 'react-native-keyboard-controller';
+import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IS_IOS } from '~/config/Config';
 
@@ -22,7 +20,7 @@ export const screenRealHeightContext = React.createContext<number>(0);
  *
  * this component is disabled on android by default (we are using the adjustResizeMode that already resize the view)
  */
-export default function KeyboardSpacingView({
+export default function ({
   children,
   style,
   translate,
@@ -32,7 +30,7 @@ export default function KeyboardSpacingView({
 }: PropsType) {
   const isEnabled = enabled !== false;
   const { bottom: bottomOffset } = useSafeAreaInsets();
-  const keyboard = useAnimatedKeyboard();
+  const keyboard = useReanimatedKeyboardAnimation();
   const translateStyle = useAnimatedStyle(() => {
     return !isEnabled
       ? {}

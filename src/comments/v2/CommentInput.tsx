@@ -12,8 +12,15 @@ import { observer } from 'mobx-react';
 import { useBackHandler } from '@react-native-community/hooks';
 import { action, observable } from 'mobx';
 import { Flow } from 'react-native-animated-spinkit';
+import { KeyboardStickyView } from 'react-native-keyboard-controller';
+import Animated, {
+  useAnimatedStyle,
+  withSpring,
+} from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 
-import KeyboardSpacingView from '../../common/components/keyboard/KeyboardSpacingView';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import type CommentsStore from './CommentsStore';
@@ -25,15 +32,9 @@ import preventDoubleTap from '../../common/components/PreventDoubleTap';
 import { CHAR_LIMIT } from '../../config/Config';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
-import Animated, {
-  useAnimatedStyle,
-  withSpring,
-} from 'react-native-reanimated';
+
 import Tags from '~/common/components/Tags';
-import { useNavigation } from '@react-navigation/native';
-import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import onImageInput from '~/common/helpers/onImageInput';
 
 const { height } = Dimensions.get('window');
@@ -110,10 +111,7 @@ const CommentInput = observer((onShow, onDismiss) => {
   };
 
   return (
-    <KeyboardSpacingView
-      enabled
-      style={StyleSheet.absoluteFill}
-      pointerEvents="box-none">
+    <KeyboardStickyView pointerEvents="box-none">
       <View style={[theme.justifyEnd, theme.flexContainer]}>
         <View style={theme.flexContainer}>
           <Touchable
@@ -253,7 +251,7 @@ const CommentInput = observer((onShow, onDismiss) => {
           )}
         </View>
       </View>
-    </KeyboardSpacingView>
+    </KeyboardStickyView>
   );
 });
 

@@ -9,6 +9,8 @@ import {
   ChatRoomMessagesProvider,
 } from '../contexts/ChatRoomMessageContext';
 import { useSetReadReceipt } from '../hooks/useSetReadReceipt';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 type Props = {
   roomGuid: string;
@@ -39,7 +41,10 @@ function MessageFlatList({ isRequest }: Props) {
   );
 
   return (
-    <>
+    <KeyboardAvoidingView
+      behavior="padding"
+      enabled
+      style={ThemedStyles.style.flexContainer}>
       <FlatList
         ref={listRef}
         data={messages}
@@ -57,7 +62,7 @@ function MessageFlatList({ isRequest }: Props) {
         keyExtractor={keyExtractor}
       />
       {!isRequest && <ChatInput onSendMessage={sendMessage} />}
-    </>
+    </KeyboardAvoidingView>
   );
 }
 

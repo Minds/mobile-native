@@ -10,6 +10,7 @@ import {
   NativeEventSubscription,
   EmitterSubscription,
 } from 'react-native';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { Provider, observer } from 'mobx-react';
 import { setup } from 'react-native-iap';
 
@@ -170,48 +171,52 @@ class App extends Component<Props> {
     const stores = getStores();
 
     return (
-      <FontsLoader>
-        <GestureHandlerRootView style={appContainerStyle}>
-          <SafeAreaProvider>
-            <UIProvider
-              defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
-              {sessionService.ready && (
-                <StoresProvider>
-                  <QueryProvider>
-                    <Provider key="app" {...stores}>
-                      <NavigationContainer
-                        ref={navigationRef}
-                        theme={ThemedStyles.navTheme}
-                        onReady={appInitManager.onNavigatorReady}
-                        onStateChange={NavigationService.onStateChange}>
-                        <AppMessageProvider
-                          key={`message_${ThemedStyles.theme}`}>
-                          <FriendlyCaptchaProvider
-                            ref={setFriendlyCaptchaReference}>
-                            <PortalProvider>
-                              <BottomSheetModalProvider>
-                                <ErrorBoundary
-                                  message="An error occurred"
-                                  containerStyle={ThemedStyles.style.centered}>
-                                  <ConfigProvider>
-                                    <NavigationStack
-                                      key={ThemedStyles.theme + i18n.locale}
-                                    />
-                                  </ConfigProvider>
-                                </ErrorBoundary>
-                              </BottomSheetModalProvider>
-                            </PortalProvider>
-                          </FriendlyCaptchaProvider>
-                        </AppMessageProvider>
-                      </NavigationContainer>
-                    </Provider>
-                  </QueryProvider>
-                </StoresProvider>
-              )}
-            </UIProvider>
-          </SafeAreaProvider>
-        </GestureHandlerRootView>
-      </FontsLoader>
+      <KeyboardProvider>
+        <FontsLoader>
+          <GestureHandlerRootView style={appContainerStyle}>
+            <SafeAreaProvider>
+              <UIProvider
+                defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
+                {sessionService.ready && (
+                  <StoresProvider>
+                    <QueryProvider>
+                      <Provider key="app" {...stores}>
+                        <NavigationContainer
+                          ref={navigationRef}
+                          theme={ThemedStyles.navTheme}
+                          onReady={appInitManager.onNavigatorReady}
+                          onStateChange={NavigationService.onStateChange}>
+                          <AppMessageProvider
+                            key={`message_${ThemedStyles.theme}`}>
+                            <FriendlyCaptchaProvider
+                              ref={setFriendlyCaptchaReference}>
+                              <PortalProvider>
+                                <BottomSheetModalProvider>
+                                  <ErrorBoundary
+                                    message="An error occurred"
+                                    containerStyle={
+                                      ThemedStyles.style.centered
+                                    }>
+                                    <ConfigProvider>
+                                      <NavigationStack
+                                        key={ThemedStyles.theme + i18n.locale}
+                                      />
+                                    </ConfigProvider>
+                                  </ErrorBoundary>
+                                </BottomSheetModalProvider>
+                              </PortalProvider>
+                            </FriendlyCaptchaProvider>
+                          </AppMessageProvider>
+                        </NavigationContainer>
+                      </Provider>
+                    </QueryProvider>
+                  </StoresProvider>
+                )}
+              </UIProvider>
+            </SafeAreaProvider>
+          </GestureHandlerRootView>
+        </FontsLoader>
+      </KeyboardProvider>
     );
   }
 }
