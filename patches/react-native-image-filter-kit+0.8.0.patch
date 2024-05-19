@@ -13,3 +13,34 @@ index 6546ccf..18e64f9 100755
      compileOptions {
          sourceCompatibility JavaVersion.VERSION_1_8
          targetCompatibility JavaVersion.VERSION_1_8
+diff --git a/node_modules/react-native-image-filter-kit/ios/IFKFilterableImage.h b/node_modules/react-native-image-filter-kit/ios/IFKFilterableImage.h
+index 8651bef..01dd103 100644
+--- a/node_modules/react-native-image-filter-kit/ios/IFKFilterableImage.h
++++ b/node_modules/react-native-image-filter-kit/ios/IFKFilterableImage.h
+@@ -1,4 +1,4 @@
+-#import "RCTImageView.h"
++#import <React/RCTImageView.h>
+ #import "IFKPostProcessor.h"
+ 
+ @interface IFKFilterableImage : NSObject
+diff --git a/node_modules/react-native-image-filter-kit/ios/IFKImageFilter.m b/node_modules/react-native-image-filter-kit/ios/IFKImageFilter.m
+index ec11ddf..3bd1e57 100755
+--- a/node_modules/react-native-image-filter-kit/ios/IFKImageFilter.m
++++ b/node_modules/react-native-image-filter-kit/ios/IFKImageFilter.m
+@@ -1,5 +1,5 @@
+ #import "IFKImageFilter.h"
+-#import "RCTImageView.h"
++#import <React/RCTImageView.h>
+ #import <React/RCTImageSource.h>
+ #import "RCTImageView+CacheKey.h"
+ #import "NSArray+FilterMapReduce.h"
+diff --git a/node_modules/react-native-image-filter-kit/ios/RCTImageView+CacheKey.h b/node_modules/react-native-image-filter-kit/ios/RCTImageView+CacheKey.h
+index ea580ab..9590c8a 100644
+--- a/node_modules/react-native-image-filter-kit/ios/RCTImageView+CacheKey.h
++++ b/node_modules/react-native-image-filter-kit/ios/RCTImageView+CacheKey.h
+@@ -1,4 +1,4 @@
+-#import "RCTImageView.h"
++#import <React/RCTImageView.h>
+ #import "IFKCacheable.h"
+ 
+ @interface RCTImageView (CacheKey) <IFKCacheable>
