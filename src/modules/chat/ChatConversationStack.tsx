@@ -49,6 +49,7 @@ export function ChatConversationStack({}: PropsType) {
       <Screen
         name="Chat"
         getComponent={() => require('./screens/ChatScreen').default}
+        getId={({ params }) => params?.roomGuid}
       />
       <Screen
         name="ChatDetails"
