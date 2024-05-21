@@ -22,6 +22,7 @@ import { useRefreshOnFocus } from '~/services/hooks/useRefreshOnFocus';
 import ErrorLoading from '~/common/components/ErrorLoading';
 import analyticsService from '~/common/services/analytics.service';
 import { useChatNotificationMutation } from '../hooks/useChatNotificationMutation';
+import ChatEditName from '../components/ChatEditName';
 
 type Props = ChatStackScreenProps<'ChatDetails'>;
 
@@ -35,6 +36,10 @@ export default function ChatDetailsScreen({ route, navigation }: Props) {
   }
 
   const { data, isLoading, error, refetch } = useChatRoomInfoQuery(roomGuid);
+
+  const showEdit =
+    data?.chatRoom.node.roomType === ChatRoomTypeEnum.MultiUser &&
+    data?.chatRoom.node.isUserRoomOwner;
 
   const { mutate } = useChatNotificationMutation();
 
@@ -160,6 +165,17 @@ export default function ChatDetailsScreen({ route, navigation }: Props) {
                 Block user
               </Link>
             </TouchableOpacity>
+          )}
+          {showEdit && data && (
+            <ChatEditName
+              roomGuid={roomGuid}
+              currentName={data.chatRoom.node.name}
+              children={
+                <Link style={styles.simpleLink} decoration={false}>
+                  Change chat name
+                </Link>
+              }
+            />
           )}
           {!privateChat && !isUserRoomOwner && (
             <TouchableOpacity onPress={leaveChat}>

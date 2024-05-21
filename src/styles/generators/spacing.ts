@@ -12,7 +12,7 @@ function getSpacing(name) {
       return n * STEP;
     }
     if (n === 0) {
-      return STEP / 4;
+      return 1;
     }
   }
   return null;
@@ -24,7 +24,7 @@ function getFixedSpacing(name: UIUnitType) {
 
 export default function spacing(name: string) {
   const regex =
-    /^(margin|padding)(Top|Bottom|Left|Right|Vertical|Horizontal)?(.*)?/g;
+    /^(margin|padding|gap)(Top|Bottom|Left|Right|Vertical|Horizontal)?(.*)?/g;
   const result = regex.exec(name);
 
   if (result) {

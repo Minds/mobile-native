@@ -384,6 +384,10 @@ const ICON_MAP = {
     font: 'MaterialCommunityIcons',
     name: 'palette-swatch-variant',
   },
+  pencil: {
+    font: 'MaterialCommunityIcons',
+    name: 'pencil',
+  },
   account_edit: {
     font: 'MaterialCommunityIcons',
     name: 'account-edit',

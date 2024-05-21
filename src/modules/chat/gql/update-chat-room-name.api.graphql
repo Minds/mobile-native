@@ -1,0 +1,3 @@
+mutation UpdateChatRoomName($roomGuid: String!, $roomName: String!) {
+  updateChatRoomName(roomGuid: $roomGuid, roomName: $roomName)
+}

@@ -13,19 +13,27 @@ import { Portal } from '@gorhom/portal';
 
 import KeyboardSpacingView from './keyboard/KeyboardSpacingView';
 import ThemedStyles from '../../styles/ThemedStyles';
-import preventDoubleTap from '../../common/components/PreventDoubleTap';
 import { Flow } from 'react-native-animated-spinkit';
 import TextInput from '../../common/components/TextInput';
 import { FullWindowOverlay } from 'react-native-screens';
+import { H3 } from '../ui';
 
 const { height } = Dimensions.get('window');
 
-const Touchable = preventDoubleTap(TouchableOpacity);
-
 type PropsType = {
+  /**
+   * If true, the progress indicator will be shown
+   */
   progress?: boolean;
+  /**
+   * If true, the keyboard will be hidden when the input is shown
+   */
   hideKeyboard?: boolean;
-  onSubmit?: () => void;
+  /**
+   * If true, the submit button will be placed on a new row
+   */
+  submitNewRow?: boolean;
+  title?: string;
   onCancel?: () => void;
   children?: React.ReactNode;
 } & TextInputProps;
@@ -36,8 +44,9 @@ type PropsType = {
 const FloatingInput = React.forwardRef(
   (
     {
-      onSubmit,
+      submitNewRow,
       progress,
+      title,
       onCancel,
       children,
       hideKeyboard,
@@ -45,7 +54,6 @@ const FloatingInput = React.forwardRef(
     }: PropsType,
     ref,
   ) => {
-    const theme = ThemedStyles.style;
     const inputRef = React.useRef<TextInputType>(null);
     const [show, setShow] = React.useState(false);
 
@@ -84,6 +92,11 @@ const FloatingInput = React.forwardRef(
                 style={styles.backdrop}
               />
               <View style={styles.inputContainer}>
+                {Boolean(title) && (
+                  <View style={styles.title}>
+                    <H3 font="medium">{title}</H3>
+                  </View>
+                )}
                 <View style={styles.inputRow}>
                   <TextInput
                     ref={inputRef}
@@ -93,23 +106,13 @@ const FloatingInput = React.forwardRef(
                     {...props}
                     style={styles.input}
                   />
-                  {!progress ? (
-                    onSubmit ? (
-                      <View>
-                        <Touchable
-                          onPress={onSubmit}
-                          testID="submitButton"
-                          style={theme.paddingBottom}>
-                          {children}
-                        </Touchable>
-                      </View>
-                    ) : null
-                  ) : (
-                    <View style={styles.indicator}>
-                      <Flow color={ThemedStyles.getColor('PrimaryText')} />
-                    </View>
-                  )}
+                  {!submitNewRow ? (
+                    <Submit progress={progress}>{children}</Submit>
+                  ) : null}
                 </View>
+                {submitNewRow ? (
+                  <Submit progress={progress}>{children}</Submit>
+                ) : null}
               </View>
             </View>
           </KeyboardSpacingView>
@@ -119,59 +122,60 @@ const FloatingInput = React.forwardRef(
   },
 );
 
-export default FloatingInput;
+const Submit = ({
+  children,
+  progress,
+}: {
+  progress?: boolean;
+  children?: React.ReactNode;
+}) => {
+  return (
+    <>
+      {!progress ? (
+        children
+      ) : (
+        <View style={styles.indicator}>
+          <Flow color={ThemedStyles.getColor('PrimaryText')} />
+        </View>
+      )}
+    </>
+  );
+};
+
+export default React.memo(FloatingInput);
 
 const styles = ThemedStyles.create({
   mainContainer: ['justifyEnd', 'flexContainer'],
   backdrop: ['flexContainer', 'bgBlack', 'opacity50'],
   indicator: ['alignSelfCenter', 'justifyEnd'],
   inputRow: ['rowJustifyStart', 'alignEnd', 'paddingHorizontal4x'],
-  meta: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    marginBottom: 20,
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-    elevation: 16,
-  },
-  preview: {
-    minHeight: 80,
-    margin: 10,
-  },
-  sendIconCont: {
-    paddingBottom: Platform.select({
-      android: 13,
-      ios: 8,
-    }),
-  },
+  title: ['rowJustifyCenter', 'paddingHorizontal4x', 'marginBottom3x'],
   input: [
     'colorPrimaryText',
     'fontL',
     'fullWidth',
+    'bcolorPrimaryBorder',
+    'border',
+    'borderRadius3x',
+    'paddingHorizontal2x',
     {
       minHeight: 35,
-      flex: 3,
-      lineHeight: 22,
+      lineHeight: 18,
       maxHeight: height * 0.4,
     },
   ],
   inputContainer: [
-    'bgPrimaryBackground',
+    'bgSecondaryBackground',
     {
+      paddingVertical: 30,
       shadowColor: 'black',
-      maxHeight: height * 0.4,
+      borderTopStartRadius: 15,
+      borderTopEndRadius: 15,
       width: '100%',
       borderColor: 'transparent',
       ...Platform.select({
-        android: { paddingTop: 7, paddingBottom: 9 },
-        ios: { paddingTop: 10, paddingBottom: 12 },
+        android: { paddingTop: 12, paddingBottom: 70 },
+        ios: { paddingTop: 15, paddingBottom: 17 },
       }),
       shadowOffset: {
         width: 0,

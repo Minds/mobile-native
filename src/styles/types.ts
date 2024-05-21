@@ -60,6 +60,7 @@ export type DynamicStyles = {
     | `marginRight${key}x`
     | `marginBottom${key}x`
     | `marginHorizontal${key}x`
+    | `gap${key}x`
     | `margin${key}x`]: any;
 } & {
   border: any;

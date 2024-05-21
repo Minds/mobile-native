@@ -1038,6 +1038,8 @@ export type Mutation = {
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+  /** Update chat room name. */
+  updateChatRoomName: Scalars['Boolean']['output'];
   /** Updates the order of the navigation items */
   updateCustomNavigationItemsOrder: Array<NavigationItem>;
   updateNotificationSettings: Scalars['Boolean']['output'];
@@ -1269,6 +1271,11 @@ export type MutationUpdateAccountArgs = {
   newEmail?: InputMaybe<Scalars['String']['input']>;
   newUsername?: InputMaybe<Scalars['String']['input']>;
   resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type MutationUpdateChatRoomNameArgs = {
+  roomGuid: Scalars['String']['input'];
+  roomName: Scalars['String']['input'];
 };
 
 export type MutationUpdateCustomNavigationItemsOrderArgs = {
@@ -4108,6 +4115,16 @@ export type SetReadReceiptMutation = {
     id: string;
     unreadMessagesCount: number;
   };
+};
+
+export type UpdateChatRoomNameMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  roomName: Scalars['String']['input'];
+}>;
+
+export type UpdateChatRoomNameMutation = {
+  __typename?: 'Mutation';
+  updateChatRoomName: boolean;
 };
 
 export type UpdateChatRoomNotificationSettingsMutationVariables = Exact<{
@@ -7659,6 +7676,45 @@ useSetReadReceiptMutation.fetcher = (
 ) =>
   gqlFetcher<SetReadReceiptMutation, SetReadReceiptMutationVariables>(
     SetReadReceiptDocument,
+    variables,
+    options,
+  );
+export const UpdateChatRoomNameDocument = `
+    mutation UpdateChatRoomName($roomGuid: String!, $roomName: String!) {
+  updateChatRoomName(roomGuid: $roomGuid, roomName: $roomName)
+}
+    `;
+export const useUpdateChatRoomNameMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    UpdateChatRoomNameMutation,
+    TError,
+    UpdateChatRoomNameMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    UpdateChatRoomNameMutation,
+    TError,
+    UpdateChatRoomNameMutationVariables,
+    TContext
+  >(
+    ['UpdateChatRoomName'],
+    (variables?: UpdateChatRoomNameMutationVariables) =>
+      gqlFetcher<
+        UpdateChatRoomNameMutation,
+        UpdateChatRoomNameMutationVariables
+      >(UpdateChatRoomNameDocument, variables)(),
+    options,
+  );
+useUpdateChatRoomNameMutation.fetcher = (
+  variables: UpdateChatRoomNameMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<UpdateChatRoomNameMutation, UpdateChatRoomNameMutationVariables>(
+    UpdateChatRoomNameDocument,
     variables,
     options,
   );
