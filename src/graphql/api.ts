@@ -1038,6 +1038,8 @@ export type Mutation = {
   /** Un-ssigns a user to a role */
   unassignUserFromRole: Scalars['Boolean']['output'];
   updateAccount: Array<Scalars['String']['output']>;
+  /** Update chat room name. */
+  updateChatRoomName: Scalars['Boolean']['output'];
   /** Updates the order of the navigation items */
   updateCustomNavigationItemsOrder: Array<NavigationItem>;
   updateNotificationSettings: Scalars['Boolean']['output'];
@@ -1269,6 +1271,11 @@ export type MutationUpdateAccountArgs = {
   newEmail?: InputMaybe<Scalars['String']['input']>;
   newUsername?: InputMaybe<Scalars['String']['input']>;
   resetMFA?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type MutationUpdateChatRoomNameArgs = {
+  roomGuid: Scalars['String']['input'];
+  roomName: Scalars['String']['input'];
 };
 
 export type MutationUpdateCustomNavigationItemsOrderArgs = {
@@ -4250,6 +4257,24 @@ export type GetGiftCardsQuery = {
       endCursor?: string | null;
     };
   };
+};
+
+export type GetNavigationItemsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetNavigationItemsQuery = {
+  __typename?: 'Query';
+  customNavigationItems: Array<{
+    __typename?: 'NavigationItem';
+    id: string;
+    name: string;
+    type: NavigationItemTypeEnum;
+    action?: NavigationItemActionEnum | null;
+    iconId: string;
+    order: number;
+    url?: string | null;
+    visible: boolean;
+    path?: string | null;
+  }>;
 };
 
 export type FetchNewsfeedQueryVariables = Exact<{
@@ -8103,6 +8128,81 @@ useGetGiftCardsQuery.fetcher = (
 ) =>
   gqlFetcher<GetGiftCardsQuery, GetGiftCardsQueryVariables>(
     GetGiftCardsDocument,
+    variables,
+    options,
+  );
+export const GetNavigationItemsDocument = `
+    query getNavigationItems {
+  customNavigationItems {
+    id
+    name
+    type
+    action
+    iconId
+    order
+    url
+    visible
+    path
+  }
+}
+    `;
+export const useGetNavigationItemsQuery = <
+  TData = GetNavigationItemsQuery,
+  TError = unknown,
+>(
+  variables?: GetNavigationItemsQueryVariables,
+  options?: UseQueryOptions<GetNavigationItemsQuery, TError, TData>,
+) =>
+  useQuery<GetNavigationItemsQuery, TError, TData>(
+    variables === undefined
+      ? ['getNavigationItems']
+      : ['getNavigationItems', variables],
+    gqlFetcher<GetNavigationItemsQuery, GetNavigationItemsQueryVariables>(
+      GetNavigationItemsDocument,
+      variables,
+    ),
+    options,
+  );
+
+useGetNavigationItemsQuery.getKey = (
+  variables?: GetNavigationItemsQueryVariables,
+) =>
+  variables === undefined
+    ? ['getNavigationItems']
+    : ['getNavigationItems', variables];
+export const useInfiniteGetNavigationItemsQuery = <
+  TData = GetNavigationItemsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetNavigationItemsQueryVariables,
+  variables?: GetNavigationItemsQueryVariables,
+  options?: UseInfiniteQueryOptions<GetNavigationItemsQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetNavigationItemsQuery, TError, TData>(
+    variables === undefined
+      ? ['getNavigationItems.infinite']
+      : ['getNavigationItems.infinite', variables],
+    metaData =>
+      gqlFetcher<GetNavigationItemsQuery, GetNavigationItemsQueryVariables>(
+        GetNavigationItemsDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useInfiniteGetNavigationItemsQuery.getKey = (
+  variables?: GetNavigationItemsQueryVariables,
+) =>
+  variables === undefined
+    ? ['getNavigationItems.infinite']
+    : ['getNavigationItems.infinite', variables];
+useGetNavigationItemsQuery.fetcher = (
+  variables?: GetNavigationItemsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetNavigationItemsQuery, GetNavigationItemsQueryVariables>(
+    GetNavigationItemsDocument,
     variables,
     options,
   );
