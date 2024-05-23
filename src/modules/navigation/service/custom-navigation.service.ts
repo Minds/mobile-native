@@ -18,8 +18,11 @@ export function getCustomNavigation() {
   }
   customNavigation = storages.app.getMap('customNavigation');
 
+  // if there is no data on the storage we fall back to the bundled config
   if (!customNavigation) {
-    customNavigation = require('~/modules/navigation/service/custom-navigation.json');
+    customNavigation = filterNavigationItems(
+      require('~/modules/navigation/service/custom-navigation.json'),
+    );
   }
 
   return customNavigation;
