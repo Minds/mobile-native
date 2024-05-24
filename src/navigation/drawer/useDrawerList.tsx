@@ -136,6 +136,10 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
       },
     };
 
+    if (!customNavigation) {
+      throw new Error('Custom navigation is not defined for this tenant');
+    }
+
     list = customNavigation.map(item => ({
       name: item.id === 'channel' ? `@${channel.name}` : item.name,
       icon: (

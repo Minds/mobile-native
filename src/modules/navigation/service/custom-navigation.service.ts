@@ -10,7 +10,14 @@ import { filterNavigationItems } from './helpers';
 
 const tabsIds = ['newsfeed', 'explore', 'chat'];
 
-let customNavigation: GetNavigationItemsQuery['customNavigationItems'];
+export type CustomNavigationItems =
+  | GetNavigationItemsQuery['customNavigationItems']
+  | undefined;
+
+export type CustomNavigationItem =
+  GetNavigationItemsQuery['customNavigationItems'][0];
+
+let customNavigation: CustomNavigationItems;
 
 export function getCustomNavigation() {
   if (customNavigation || !IS_TENANT) {

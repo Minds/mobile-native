@@ -183,6 +183,7 @@ const Tabs = observer(function () {
 
       if (
         menuConf &&
+        navMap &&
         ['Newsfeed', 'ChatListStack', 'Discovery'].includes(route.name)
       ) {
         return (
