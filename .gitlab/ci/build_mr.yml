@@ -20,6 +20,7 @@ eas_update_mr:
     - npx eas-cli update --branch $CI_COMMIT_REF_SLUG --message "$CI_MERGE_REQUEST_TITLE" --json --non-interactive | node tasks/createQRForMR.js
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
 
 stop_review:
   stage: build
