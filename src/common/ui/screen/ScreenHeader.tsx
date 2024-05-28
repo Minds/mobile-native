@@ -45,7 +45,6 @@ export const ScreenHeader = ({
         <View style={styles.titleCenteredContainer}>
           <Typography
             type={titleType}
-            style={styles.title}
             font="bold"
             onPress={onTitlePress}
             numberOfLines={1}
