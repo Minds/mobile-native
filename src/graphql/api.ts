@@ -920,6 +920,7 @@ export enum MultiTenantColorScheme {
 
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
+  boostEnabled?: Maybe<Scalars['Boolean']['output']>;
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
@@ -937,6 +938,7 @@ export type MultiTenantConfig = {
 };
 
 export type MultiTenantConfigInput = {
+  boostEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
@@ -4131,6 +4133,7 @@ export type GetCustomPageQuery = {
     pageType: CustomPageTypesEnum;
     content?: string | null;
     externalLink?: string | null;
+    defaultContent?: string | null;
   };
 };
 
@@ -7709,6 +7712,7 @@ export const GetCustomPageDocument = `
     pageType
     content
     externalLink
+    defaultContent
   }
 }
     `;

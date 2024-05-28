@@ -7,6 +7,7 @@ import Markdown from 'react-native-markdown-display';
 import { RootStackScreenProps } from '~/navigation/NavigationTypes';
 import { CustomPageType } from '../types';
 import useCustomPage from '../hooks/useCustomPage';
+import { showNotification } from 'AppMessages';
 
 type CustomPageScreenProps = RootStackScreenProps<'CustomPages'>;
 
@@ -33,12 +34,13 @@ export default function CustomPageScreen({
 
   if (!config) {
     console.warn('Unknown custom page type', params.page);
+    showNotification('Page not found');
     goBack();
     return null;
   }
 
   return (
-    <ModalFullScreen back title={params.title || ''}>
+    <ModalFullScreen back title={config.title || params.title || ''}>
       <ScrollView style={styles.scrollView}>
         {isLoading ? (
           <CenteredLoading />
