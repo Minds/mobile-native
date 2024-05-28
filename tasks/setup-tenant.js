@@ -104,7 +104,7 @@ function generateTenantJSON(data) {
   const dark_background = data.BACKGROUND_COLOR_DARK || '#010101';
 
   const tenant = {
-    APP_NAME: data.APP_NAME,
+    APP_NAME: data.APP_NAME || 'Minds Network',
     APP_SCHEME: data.APP_SCHEME,
     APP_SLUG: data.APP_SLUG,
     APP_HOST: data.APP_HOST,
@@ -112,8 +112,8 @@ function generateTenantJSON(data) {
     APP_SPLASH_RESIZE: data.APP_SPLASH_RESIZE,
     APP_ANDROID_PACKAGE: data.APP_ANDROID_PACKAGE,
     IS_PREVIEW: preview,
-    ACCENT_COLOR_LIGHT: data.ACCENT_COLOR_LIGHT,
-    ACCENT_COLOR_DARK: data.ACCENT_COLOR_DARK,
+    ACCENT_COLOR_LIGHT: data.ACCENT_COLOR_LIGHT || '#1b85d6',
+    ACCENT_COLOR_DARK: data.ACCENT_COLOR_DARK || '#1b85d6',
     BACKGROUND_COLOR_LIGHT: light_background,
     BACKGROUND_COLOR_DARK: dark_background,
     WELCOME_LOGO: data.WELCOME_LOGO,
