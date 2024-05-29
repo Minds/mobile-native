@@ -63,29 +63,22 @@ exports[`Tos screen render and accept 1`] = `
           numberOfLines={1}
           style={
             [
-              [
-                {
-                  "color": "#F2F2F2",
-                },
-                {
-                  "fontFamily": "Roboto_700Bold",
-                },
-                {
-                  "fontSize": 24,
-                  "lineHeight": 32,
-                },
-                {
-                  "textAlign": "left",
-                },
-                {
-                  "lineHeight": 26,
-                },
-              ],
-              [
-                {
-                  "flex": 1,
-                },
-              ],
+              {
+                "color": "#F2F2F2",
+              },
+              {
+                "fontFamily": "Roboto_700Bold",
+              },
+              {
+                "fontSize": 24,
+                "lineHeight": 32,
+              },
+              {
+                "textAlign": "left",
+              },
+              {
+                "lineHeight": 26,
+              },
             ]
           }
         >

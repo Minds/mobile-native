@@ -210,7 +210,7 @@ class OwnerBlock extends PureComponent<PropsType> {
           <Row horizontal="XL" vertical="S">
             <Icon
               type="ionicon"
-              name="md-trending-up"
+              name="trending-up"
               size={18}
               style={ThemedStyles.style.marginRight}
               color={ThemedStyles.getColor('Link')}

@@ -2,7 +2,7 @@ import React from 'react';
 import * as entities from 'entities';
 import { Alert } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 
 import { showNotification } from '../../../AppMessages';
 
@@ -176,7 +176,9 @@ export default function CommentBottomMenu({
         iconName: 'content-copy',
         iconType: 'material',
         onPress: () => {
-          Clipboard.setString(entities.decodeHTML(comment.description || ''));
+          Clipboard.setStringAsync(
+            entities.decodeHTML(comment.description || ''),
+          );
           showNotification(i18n.t('copied'), 'info');
           close();
         },

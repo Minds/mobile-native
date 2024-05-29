@@ -62,18 +62,26 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   plugins: [
     'react-native-iap',
     'expo-updates',
+    'expo-localization',
     './node_modules/react-native-notifications/app.plugin.js',
+    [
+      '@sentry/react-native/expo',
+      {
+        organization: 'minds-inc',
+        project: 'mobile',
+      },
+    ],
     [
       'expo-build-properties',
       {
         android: {
-          compileSdkVersion: 33,
-          targetSdkVersion: 33,
-          buildToolsVersion: '33.0.0',
+          compileSdkVersion: 34,
+          targetSdkVersion: 34,
+          buildToolsVersion: '34.0.0',
           kotlinVersion: '1.8.0',
         },
         ios: {
-          deploymentTarget: '13.0',
+          deploymentTarget: '13.4',
           flipper: false,
         },
       },

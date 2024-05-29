@@ -205,8 +205,8 @@ const PortraitActivity = observer((props: PropsType) => {
               onPress={store.toggleVolume}
               name={
                 videoPlayerService.currentVolume === 0
-                  ? 'ios-volume-mute'
-                  : 'ios-volume-high'
+                  ? 'volume-mute'
+                  : 'volume-high'
               }
               size={volumeIconSize}
               style={theme.colorWhite}

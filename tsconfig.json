@@ -52,8 +52,7 @@
       "@assets": ["./assets"],
       "@assets/*": ["./assets/*"],
       "@minds/ui": ["packages/design-system/src"],
-      "@minds/ui/*": ["packages/design-system/src/*"],
-      "react": ["./node_modules/@types/react"]
+      "@minds/ui/*": ["packages/design-system/src/*"]
     },
     "types": ["jest"]
   },

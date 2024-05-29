@@ -4,7 +4,7 @@ import { View, ViewStyle } from 'react-native';
 import logService from '../services/log.service';
 import i18n from '../services/i18n.service';
 import { showNotification } from '../../../AppMessages';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 import ThemedStyles from '../../styles/ThemedStyles';
 import MText from './MText';
 
@@ -55,7 +55,7 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
   }
 
   copy = () => {
-    Clipboard.setString(
+    Clipboard.setStringAsync(
       (this.error?.message || this.error) +
         '\nSTACK:\n' +
         this.info.componentStack,

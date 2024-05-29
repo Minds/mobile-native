@@ -23,7 +23,6 @@ import sessionService from '~/common/services/session.service';
 import { Row } from '~/common/ui';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
-import KeyboardSpacingView from '../common/components/keyboard/KeyboardSpacingView';
 import i18n from '../common/services/i18n.service';
 import GroupModel from '../groups/GroupModel';
 import NavigationService from '../navigation/NavigationService';
@@ -44,6 +43,7 @@ import useComposeStore, { ComposeContext } from './useComposeStore';
 import { ComposerStackParamList } from './ComposeStack';
 import ComposeAudienceSelector from './ComposeAudienceSelector';
 import { IS_IOS } from '~/config/Config';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 
 const { width } = Dimensions.get('window');
 
@@ -249,18 +249,20 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
             onPress={closeConfirm}
           />
         </BottomSheet>
-        {showBottomBar && (
-          <KeyboardSpacingView enabled style={styles.bottomBarContainer}>
-            <BottomBar
-              store={store}
-              onHashtag={handleHashtagPress}
-              onMoney={handleMoneyPress}
-              onOptions={handleOptionsPress}
-              onSupermind={handleSupermindPress}
-            />
-          </KeyboardSpacingView>
-        )}
       </SafeAreaView>
+      {showBottomBar && (
+        <KeyboardAvoidingView
+          behavior="padding"
+          style={styles.bottomBarContainer}>
+          <BottomBar
+            store={store}
+            onHashtag={handleHashtagPress}
+            onMoney={handleMoneyPress}
+            onOptions={handleOptionsPress}
+            onSupermind={handleSupermindPress}
+          />
+        </KeyboardAvoidingView>
+      )}
     </ComposeContext.Provider>
   );
 };

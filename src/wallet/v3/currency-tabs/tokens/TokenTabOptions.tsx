@@ -1,4 +1,4 @@
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
@@ -57,7 +57,7 @@ const TokenTabOptions = observer((props: PropsType) => {
         title: i18n.t('copyToClipboard'),
         onPress: () => {
           close();
-          Clipboard.setString(address);
+          Clipboard.setStringAsync(address);
           showNotification(i18n.t('wallet.addressCopied'), 'success');
         },
         iconName: 'content-copy',

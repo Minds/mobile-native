@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHeaderTabContext } from 'showtime-tab-view';
+import { useHeaderTabContext } from '@showtime-xyz/tab-view';
 import { TabFlashListScrollView } from './TabFlashListScrollView';
 
 export default function ScrollableTabComponent({

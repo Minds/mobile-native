@@ -3,27 +3,15 @@
 exports[`SupermindFeedFilter should render 1`] = `
 [
   <View
-    onPress={[Function]}
     style={
-      [
-        {
-          "flexDirection": "row",
-          "justifyContent": "flex-end",
-        },
-        undefined,
-      ]
-    }
-    testID="FilterToggle"
-  >
-    <MaterialCommunityIcons
-      name="filter-variant"
-      size={18}
-      style={
-        {
-          "color": "#AEB0B8",
-        }
+      {
+        "alignSelf": "stretch",
+        "marginBottom": 16,
+        "marginLeft": 20,
+        "marginTop": 16,
       }
-    />
+    }
+  >
     <Text
       style={
         [
@@ -31,1266 +19,1043 @@ exports[`SupermindFeedFilter should render 1`] = `
             "color": "#F2F2F2",
           },
           {
-            "fontFamily": "Roboto_400Regular",
+            "fontFamily": "Roboto_500Medium",
           },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          {
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      Filter Supermind Offers
+    </Text>
+  </View>,
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        [
           [
             {
-              "paddingLeft": 4,
+              "alignItems": "center",
             },
             {
-              "fontSize": 15,
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
             },
-            undefined,
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "paddingHorizontal": 20,
+            },
           ],
+          undefined,
+        ],
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+    testID="allRadio"
+  >
+    <View
+      style={
+        [
+          {
+            "width": 25,
+          },
+          {
+            "alignItems": "center",
+          },
+          {
+            "marginRight": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "overflow": "hidden",
+          }
+        }
+      >
+        <View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <IonIcon
+              color="#242424"
+              name="radio-button-off"
+              size={24}
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#b9bbc0",
+                }
+              }
+              testID="iconIcon"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <Text
+      style={
+        [
+          {
+            "color": "#F2F2F2",
+          },
+          {
+            "fontFamily": "Roboto_500Medium",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          {
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      All
+    </Text>
+  </View>,
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        [
+          [
+            {
+              "alignItems": "center",
+            },
+            {
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "paddingHorizontal": 20,
+            },
+          ],
+          undefined,
+        ],
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+    testID="pendingRadio"
+  >
+    <View
+      style={
+        [
+          {
+            "width": 25,
+          },
+          {
+            "alignItems": "center",
+          },
+          {
+            "marginRight": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "overflow": "hidden",
+          }
+        }
+      >
+        <View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <IonIcon
+              color="#242424"
+              name="radio-button-off"
+              size={24}
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#b9bbc0",
+                }
+              }
+              testID="iconIcon"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <Text
+      style={
+        [
+          {
+            "color": "#F2F2F2",
+          },
+          {
+            "fontFamily": "Roboto_500Medium",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          {
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      Pending
+    </Text>
+  </View>,
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        [
+          [
+            {
+              "alignItems": "center",
+            },
+            {
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "paddingHorizontal": 20,
+            },
+          ],
+          undefined,
+        ],
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+    testID="acceptedRadio"
+  >
+    <View
+      style={
+        [
+          {
+            "width": 25,
+          },
+          {
+            "alignItems": "center",
+          },
+          {
+            "marginRight": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "overflow": "hidden",
+          }
+        }
+      >
+        <View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <IonIcon
+              color="#242424"
+              name="radio-button-on"
+              size={24}
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#b9bbc0",
+                }
+              }
+              testID="iconIcon"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <Text
+      style={
+        [
+          {
+            "color": "#F2F2F2",
+          },
+          {
+            "fontFamily": "Roboto_500Medium",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          {
+            "textAlign": "left",
+          },
         ]
       }
     >
       Accepted
     </Text>
   </View>,
-  <Modal
-    backdropComponent={[Function]}
-    backgroundComponent={null}
-    contentHeight={null}
-    enablePanDownToClose={true}
-    handleComponent={[Function]}
-    handleHeight={null}
-    hardwareAccelerated={false}
-    onAnimate={[Function]}
-    snapPoints={null}
-    stackBehavior="push"
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       [
-        {
-          "shadowColor": "#000000",
-        },
-        {
-          "elevation": 16,
-          "shadowOffset": {
-            "height": -3,
-            "width": 0,
-          },
-          "shadowOpacity": 0.58,
-          "shadowRadius": 4,
-        },
-      ]
-    }
-    topInset={0}
-    visible={true}
-  >
-    <View
-      onLayout={null}
-      style={
         [
           [
             {
-              "backgroundColor": "#0f0f00ff",
+              "alignItems": "center",
+            },
+            {
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "paddingHorizontal": 20,
             },
           ],
+          undefined,
+        ],
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+    testID="revokedRadio"
+  >
+    <View
+      style={
+        [
           {
-            "paddingBottom": 24,
+            "width": 25,
+          },
+          {
+            "alignItems": "center",
+          },
+          {
+            "marginRight": 16,
           },
         ]
       }
     >
-      <RCTScrollView>
+      <View
+        style={
+          {
+            "overflow": "hidden",
+          }
+        }
+      >
         <View>
           <View
             style={
               {
-                "alignSelf": "stretch",
-                "marginBottom": 16,
-                "marginLeft": 20,
-                "marginTop": 16,
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "justifyContent": "center",
               }
             }
           >
-            <Text
-              style={
-                [
-                  {
-                    "color": "#F2F2F2",
-                  },
-                  {
-                    "fontFamily": "Roboto_500Medium",
-                  },
-                  {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "textAlign": "left",
-                  },
-                ]
-              }
-            >
-              Filter Supermind Offers
-            </Text>
-          </View>
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              [
-                [
-                  [
-                    {
-                      "alignItems": "center",
-                    },
-                    {
-                      "flexDirection": "row",
-                      "justifyContent": "flex-start",
-                    },
-                    {
-                      "paddingVertical": 12,
-                    },
-                    {
-                      "paddingHorizontal": 20,
-                    },
-                  ],
-                  undefined,
-                ],
-                {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-            testID="allRadio"
-          >
-            <View
-              style={
-                [
-                  {
-                    "width": 25,
-                  },
-                  {
-                    "alignItems": "center",
-                  },
-                  {
-                    "marginRight": 16,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  {
-                    "overflow": "hidden",
-                  }
-                }
-              >
-                <View>
-                  <View
-                    style={
-                      {
-                        "alignItems": "center",
-                        "backgroundColor": "transparent",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
-                      style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
-                      }
-                      testID="iconIcon"
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-            <Text
-              style={
-                [
-                  {
-                    "color": "#F2F2F2",
-                  },
-                  {
-                    "fontFamily": "Roboto_500Medium",
-                  },
-                  {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "textAlign": "left",
-                  },
-                ]
-              }
-            >
-              All
-            </Text>
-          </View>
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              [
-                [
-                  [
-                    {
-                      "alignItems": "center",
-                    },
-                    {
-                      "flexDirection": "row",
-                      "justifyContent": "flex-start",
-                    },
-                    {
-                      "paddingVertical": 12,
-                    },
-                    {
-                      "paddingHorizontal": 20,
-                    },
-                  ],
-                  undefined,
-                ],
-                {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-            testID="pendingRadio"
-          >
-            <View
-              style={
-                [
-                  {
-                    "width": 25,
-                  },
-                  {
-                    "alignItems": "center",
-                  },
-                  {
-                    "marginRight": 16,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  {
-                    "overflow": "hidden",
-                  }
-                }
-              >
-                <View>
-                  <View
-                    style={
-                      {
-                        "alignItems": "center",
-                        "backgroundColor": "transparent",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
-                      style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
-                      }
-                      testID="iconIcon"
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-            <Text
-              style={
-                [
-                  {
-                    "color": "#F2F2F2",
-                  },
-                  {
-                    "fontFamily": "Roboto_500Medium",
-                  },
-                  {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "textAlign": "left",
-                  },
-                ]
-              }
-            >
-              Pending
-            </Text>
-          </View>
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              [
-                [
-                  [
-                    {
-                      "alignItems": "center",
-                    },
-                    {
-                      "flexDirection": "row",
-                      "justifyContent": "flex-start",
-                    },
-                    {
-                      "paddingVertical": 12,
-                    },
-                    {
-                      "paddingHorizontal": 20,
-                    },
-                  ],
-                  undefined,
-                ],
-                {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-            testID="acceptedRadio"
-          >
-            <View
-              style={
-                [
-                  {
-                    "width": 25,
-                  },
-                  {
-                    "alignItems": "center",
-                  },
-                  {
-                    "marginRight": 16,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  {
-                    "overflow": "hidden",
-                  }
-                }
-              >
-                <View>
-                  <View
-                    style={
-                      {
-                        "alignItems": "center",
-                        "backgroundColor": "transparent",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-on"
-                      size={24}
-                      style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#FFD048",
-                        }
-                      }
-                      testID="iconIcon"
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-            <Text
-              style={
-                [
-                  {
-                    "color": "#F2F2F2",
-                  },
-                  {
-                    "fontFamily": "Roboto_500Medium",
-                  },
-                  {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "textAlign": "left",
-                  },
-                ]
-              }
-            >
-              Accepted
-            </Text>
-          </View>
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              [
-                [
-                  [
-                    {
-                      "alignItems": "center",
-                    },
-                    {
-                      "flexDirection": "row",
-                      "justifyContent": "flex-start",
-                    },
-                    {
-                      "paddingVertical": 12,
-                    },
-                    {
-                      "paddingHorizontal": 20,
-                    },
-                  ],
-                  undefined,
-                ],
-                {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-            testID="revokedRadio"
-          >
-            <View
-              style={
-                [
-                  {
-                    "width": 25,
-                  },
-                  {
-                    "alignItems": "center",
-                  },
-                  {
-                    "marginRight": 16,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  {
-                    "overflow": "hidden",
-                  }
-                }
-              >
-                <View>
-                  <View
-                    style={
-                      {
-                        "alignItems": "center",
-                        "backgroundColor": "transparent",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
-                      style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
-                      }
-                      testID="iconIcon"
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-            <Text
-              style={
-                [
-                  {
-                    "color": "#F2F2F2",
-                  },
-                  {
-                    "fontFamily": "Roboto_500Medium",
-                  },
-                  {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "textAlign": "left",
-                  },
-                ]
-              }
-            >
-              Revoked
-            </Text>
-          </View>
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              [
-                [
-                  [
-                    {
-                      "alignItems": "center",
-                    },
-                    {
-                      "flexDirection": "row",
-                      "justifyContent": "flex-start",
-                    },
-                    {
-                      "paddingVertical": 12,
-                    },
-                    {
-                      "paddingHorizontal": 20,
-                    },
-                  ],
-                  undefined,
-                ],
-                {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-            testID="declinedRadio"
-          >
-            <View
-              style={
-                [
-                  {
-                    "width": 25,
-                  },
-                  {
-                    "alignItems": "center",
-                  },
-                  {
-                    "marginRight": 16,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  {
-                    "overflow": "hidden",
-                  }
-                }
-              >
-                <View>
-                  <View
-                    style={
-                      {
-                        "alignItems": "center",
-                        "backgroundColor": "transparent",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
-                      style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
-                      }
-                      testID="iconIcon"
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-            <Text
-              style={
-                [
-                  {
-                    "color": "#F2F2F2",
-                  },
-                  {
-                    "fontFamily": "Roboto_500Medium",
-                  },
-                  {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "textAlign": "left",
-                  },
-                ]
-              }
-            >
-              Declined
-            </Text>
-          </View>
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              [
-                [
-                  [
-                    {
-                      "alignItems": "center",
-                    },
-                    {
-                      "flexDirection": "row",
-                      "justifyContent": "flex-start",
-                    },
-                    {
-                      "paddingVertical": 12,
-                    },
-                    {
-                      "paddingHorizontal": 20,
-                    },
-                  ],
-                  undefined,
-                ],
-                {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-            testID="failedRadio"
-          >
-            <View
-              style={
-                [
-                  {
-                    "width": 25,
-                  },
-                  {
-                    "alignItems": "center",
-                  },
-                  {
-                    "marginRight": 16,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  {
-                    "overflow": "hidden",
-                  }
-                }
-              >
-                <View>
-                  <View
-                    style={
-                      {
-                        "alignItems": "center",
-                        "backgroundColor": "transparent",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
-                      style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
-                      }
-                      testID="iconIcon"
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-            <Text
-              style={
-                [
-                  {
-                    "color": "#F2F2F2",
-                  },
-                  {
-                    "fontFamily": "Roboto_500Medium",
-                  },
-                  {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "textAlign": "left",
-                  },
-                ]
-              }
-            >
-              Failed
-            </Text>
-          </View>
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              [
-                [
-                  [
-                    {
-                      "alignItems": "center",
-                    },
-                    {
-                      "flexDirection": "row",
-                      "justifyContent": "flex-start",
-                    },
-                    {
-                      "paddingVertical": 12,
-                    },
-                    {
-                      "paddingHorizontal": 20,
-                    },
-                  ],
-                  undefined,
-                ],
-                {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-            testID="paymentFailedRadio"
-          >
-            <View
-              style={
-                [
-                  {
-                    "width": 25,
-                  },
-                  {
-                    "alignItems": "center",
-                  },
-                  {
-                    "marginRight": 16,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  {
-                    "overflow": "hidden",
-                  }
-                }
-              >
-                <View>
-                  <View
-                    style={
-                      {
-                        "alignItems": "center",
-                        "backgroundColor": "transparent",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
-                      style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
-                      }
-                      testID="iconIcon"
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-            <Text
-              style={
-                [
-                  {
-                    "color": "#F2F2F2",
-                  },
-                  {
-                    "fontFamily": "Roboto_500Medium",
-                  },
-                  {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "textAlign": "left",
-                  },
-                ]
-              }
-            >
-              Payment Failed
-            </Text>
-          </View>
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": false,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            collapsable={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              [
-                [
-                  [
-                    {
-                      "alignItems": "center",
-                    },
-                    {
-                      "flexDirection": "row",
-                      "justifyContent": "flex-start",
-                    },
-                    {
-                      "paddingVertical": 12,
-                    },
-                    {
-                      "paddingHorizontal": 20,
-                    },
-                  ],
-                  undefined,
-                ],
-                {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-            testID="expiredRadio"
-          >
-            <View
-              style={
-                [
-                  {
-                    "width": 25,
-                  },
-                  {
-                    "alignItems": "center",
-                  },
-                  {
-                    "marginRight": 16,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  {
-                    "overflow": "hidden",
-                  }
-                }
-              >
-                <View>
-                  <View
-                    style={
-                      {
-                        "alignItems": "center",
-                        "backgroundColor": "transparent",
-                        "justifyContent": "center",
-                      }
-                    }
-                  >
-                    <IonIcon
-                      color="#242424"
-                      name="ios-radio-button-off"
-                      size={24}
-                      style={
-                        {
-                          "backgroundColor": "transparent",
-                          "color": "#b9bbc0",
-                        }
-                      }
-                      testID="iconIcon"
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-            <Text
-              style={
-                [
-                  {
-                    "color": "#F2F2F2",
-                  },
-                  {
-                    "fontFamily": "Roboto_500Medium",
-                  },
-                  {
-                    "fontSize": 16,
-                    "lineHeight": 24,
-                  },
-                  {
-                    "textAlign": "left",
-                  },
-                ]
-              }
-            >
-              Expired
-            </Text>
-          </View>
-          <View
-            style={
-              {
-                "marginTop": 16,
-              }
-            }
-          />
-          <View
-            style={
-              {
-                "alignSelf": "stretch",
-                "marginHorizontal": 16,
-                "marginTop": 16,
-              }
-            }
-          >
-            <View
-              accessibilityState={
-                {
-                  "busy": undefined,
-                  "checked": undefined,
-                  "disabled": undefined,
-                  "expanded": undefined,
-                  "selected": undefined,
-                }
-              }
-              accessibilityValue={
-                {
-                  "max": undefined,
-                  "min": undefined,
-                  "now": undefined,
-                  "text": undefined,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
+            <IonIcon
+              color="#242424"
+              name="radio-button-off"
+              size={24}
               style={
                 {
-                  "alignSelf": "stretch",
+                  "backgroundColor": "transparent",
+                  "color": "#b9bbc0",
                 }
               }
-            >
-              <View
-                style={
-                  [
-                    {
-                      "alignItems": "center",
-                      "backgroundColor": "transparent",
-                      "borderRadius": 100,
-                      "flexDirection": "column",
-                      "justifyContent": "center",
-                      "overflow": "hidden",
-                    },
-                    undefined,
-                    {
-                      "minHeight": 42,
-                      "paddingHorizontal": 24,
-                      "paddingVertical": 2,
-                    },
-                    undefined,
-                    undefined,
-                    undefined,
-                    false,
-                  ]
-                }
-              >
-                <View
-                  style={
-                    {
-                      "alignItems": "center",
-                      "backgroundColor": "#3f4b56",
-                      "borderColor": "transparent",
-                      "borderRadius": 100,
-                      "borderWidth": 1,
-                      "bottom": 0,
-                      "justifyContent": "center",
-                      "left": 0,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                />
-                <View
-                  collapsable={false}
-                  style={
-                    {
-                      "backgroundColor": "rgba(0, 0, 0, 0.1)",
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 0,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
-                    }
-                  }
-                />
-                <View
-                  collapsable={false}
-                  style={
-                    {
-                      "transform": [
-                        {
-                          "scale": 1,
-                        },
-                      ],
-                    }
-                  }
-                >
-                  <Text
-                    numberOfLines={1}
-                    style={
-                      [
-                        {
-                          "color": "#FFFFFF",
-                        },
-                        {
-                          "fontFamily": "Roboto_500Medium",
-                        },
-                        {
-                          "fontSize": 18,
-                          "lineHeight": 24,
-                        },
-                        {
-                          "textAlign": "left",
-                        },
-                      ]
-                    }
-                  >
-                    Close
-                  </Text>
-                </View>
-              </View>
-            </View>
+              testID="iconIcon"
+            />
           </View>
         </View>
-      </RCTScrollView>
+      </View>
     </View>
-  </Modal>,
+    <Text
+      style={
+        [
+          {
+            "color": "#F2F2F2",
+          },
+          {
+            "fontFamily": "Roboto_500Medium",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          {
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      Revoked
+    </Text>
+  </View>,
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        [
+          [
+            {
+              "alignItems": "center",
+            },
+            {
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "paddingHorizontal": 20,
+            },
+          ],
+          undefined,
+        ],
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+    testID="declinedRadio"
+  >
+    <View
+      style={
+        [
+          {
+            "width": 25,
+          },
+          {
+            "alignItems": "center",
+          },
+          {
+            "marginRight": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "overflow": "hidden",
+          }
+        }
+      >
+        <View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <IonIcon
+              color="#242424"
+              name="radio-button-off"
+              size={24}
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#b9bbc0",
+                }
+              }
+              testID="iconIcon"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <Text
+      style={
+        [
+          {
+            "color": "#F2F2F2",
+          },
+          {
+            "fontFamily": "Roboto_500Medium",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          {
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      Declined
+    </Text>
+  </View>,
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        [
+          [
+            {
+              "alignItems": "center",
+            },
+            {
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "paddingHorizontal": 20,
+            },
+          ],
+          undefined,
+        ],
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+    testID="failedRadio"
+  >
+    <View
+      style={
+        [
+          {
+            "width": 25,
+          },
+          {
+            "alignItems": "center",
+          },
+          {
+            "marginRight": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "overflow": "hidden",
+          }
+        }
+      >
+        <View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <IonIcon
+              color="#242424"
+              name="radio-button-off"
+              size={24}
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#b9bbc0",
+                }
+              }
+              testID="iconIcon"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <Text
+      style={
+        [
+          {
+            "color": "#F2F2F2",
+          },
+          {
+            "fontFamily": "Roboto_500Medium",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          {
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      Failed
+    </Text>
+  </View>,
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        [
+          [
+            {
+              "alignItems": "center",
+            },
+            {
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "paddingHorizontal": 20,
+            },
+          ],
+          undefined,
+        ],
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+    testID="paymentFailedRadio"
+  >
+    <View
+      style={
+        [
+          {
+            "width": 25,
+          },
+          {
+            "alignItems": "center",
+          },
+          {
+            "marginRight": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "overflow": "hidden",
+          }
+        }
+      >
+        <View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <IonIcon
+              color="#242424"
+              name="radio-button-off"
+              size={24}
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#b9bbc0",
+                }
+              }
+              testID="iconIcon"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <Text
+      style={
+        [
+          {
+            "color": "#F2F2F2",
+          },
+          {
+            "fontFamily": "Roboto_500Medium",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          {
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      Payment Failed
+    </Text>
+  </View>,
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        [
+          [
+            {
+              "alignItems": "center",
+            },
+            {
+              "flexDirection": "row",
+              "justifyContent": "flex-start",
+            },
+            {
+              "paddingVertical": 12,
+            },
+            {
+              "paddingHorizontal": 20,
+            },
+          ],
+          undefined,
+        ],
+        {
+          "backgroundColor": undefined,
+        },
+      ]
+    }
+    testID="expiredRadio"
+  >
+    <View
+      style={
+        [
+          {
+            "width": 25,
+          },
+          {
+            "alignItems": "center",
+          },
+          {
+            "marginRight": 16,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "overflow": "hidden",
+          }
+        }
+      >
+        <View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <IonIcon
+              color="#242424"
+              name="radio-button-off"
+              size={24}
+              style={
+                {
+                  "backgroundColor": "transparent",
+                  "color": "#b9bbc0",
+                }
+              }
+              testID="iconIcon"
+            />
+          </View>
+        </View>
+      </View>
+    </View>
+    <Text
+      style={
+        [
+          {
+            "color": "#F2F2F2",
+          },
+          {
+            "fontFamily": "Roboto_500Medium",
+          },
+          {
+            "fontSize": 16,
+            "lineHeight": 24,
+          },
+          {
+            "textAlign": "left",
+          },
+        ]
+      }
+    >
+      Expired
+    </Text>
+  </View>,
+  <View
+    style={
+      {
+        "marginTop": 16,
+      }
+    }
+  />,
 ]
 `;

@@ -38,7 +38,7 @@ export default observer(function (props) {
         <TouchableOpacity
           onPress={props.onRemove}
           style={[styles.removeRichEmbed, theme.bgSecondaryBackground]}>
-          <IonIcon name="ios-close" size={22} style={theme.colorPrimaryText} />
+          <IonIcon name="close" size={22} style={theme.colorPrimaryText} />
         </TouchableOpacity>
       )}
       <View

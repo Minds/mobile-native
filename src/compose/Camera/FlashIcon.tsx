@@ -13,9 +13,9 @@ type PropsType = {
 };
 
 const icons: { [key: string]: IconName } = {
-  on: 'md-flash-outline',
-  off: 'md-flash-off-outline',
-  auto: 'md-flash-outline',
+  on: 'flash-outline',
+  off: 'flash-off-outline',
+  auto: 'flash-outline',
 };
 
 /**

@@ -13,7 +13,7 @@ export default function RadioButton(props: RadioButtonProps) {
   return (
     <BottomSheetMenuItem
       {...props}
-      iconName={props.selected ? 'ios-radio-button-on' : 'ios-radio-button-off'}
+      iconName={props.selected ? 'radio-button-on' : 'radio-button-off'}
       iconType="ionicon"
     />
   );

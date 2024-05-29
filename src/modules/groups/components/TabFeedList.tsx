@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlashList } from '@shopify/flash-list';
-import { useHeaderTabContext } from 'showtime-tab-view';
+import { useHeaderTabContext } from '@showtime-xyz/tab-view';
 
 import { TabFlashListScrollView } from './TabFlashListScrollView';
 import type BaseModel from '~/common/BaseModel';

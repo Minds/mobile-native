@@ -7,11 +7,11 @@ import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
 import { useNavigation } from '@react-navigation/core';
 import SearchResultComponent from './SearchResultComponent';
 import { observer } from 'mobx-react';
-import KeyboardSpacingView from '../../common/components/keyboard/KeyboardSpacingView';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TextInput from '../../common/components/TextInput';
 import { Button, IconButton, Icon } from '~ui';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 
 const SearchScreen = withErrorBoundaryScreen(
   observer(() => {
@@ -56,8 +56,8 @@ const SearchScreen = withErrorBoundaryScreen(
     };
 
     return (
-      <KeyboardSpacingView
-        enabled
+      <KeyboardAvoidingView
+        behavior="padding"
         style={[
           StyleSheet.absoluteFill,
           theme.bgPrimaryBackground,
@@ -103,7 +103,7 @@ const SearchScreen = withErrorBoundaryScreen(
           navigation={navigation}
           localStore={localStore}
         />
-      </KeyboardSpacingView>
+      </KeyboardAvoidingView>
     );
   }),
   'SearchScreen',

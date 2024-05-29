@@ -1,8 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
-import { View } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { View, FlatList } from 'react-native';
 import Placeholder from '~/common/components/Placeholder';
 import PressableScale from '~/common/components/PressableScale';
 import { useStores } from '~/common/hooks/use-stores';

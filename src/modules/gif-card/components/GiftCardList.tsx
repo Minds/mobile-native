@@ -22,7 +22,8 @@ import assets from '@assets';
 
 export const GiftCardList = () => {
   const { t } = useTranslation();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NavigationProp<ReactNavigation.RootParamList>>();
   const {
     data,
     isLoading,
