@@ -5,6 +5,7 @@ import {
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
 import { View, Platform, Dimensions } from 'react-native';
+import MIcon from '@expo/vector-icons/MaterialIcons';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
@@ -25,6 +26,7 @@ import withModalProvider from '~/navigation/withModalProvide';
 import { useFeature } from 'ExperimentsProvider';
 import { useUnreadMessages } from '~/modules/chat/hooks/useUnreadMessages';
 import { useIncrementUnreadOnNewMessage } from '~/modules/chat/hooks/useIncrementUnreadOnNewMessage';
+import { useCustomNavigationTabs } from '~/modules/navigation/service/custom-navigation.service';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -37,6 +39,12 @@ export type TabParamList = {
   MindsPlus: {};
   Notifications: {};
   CaptureTab: {};
+};
+
+const routeMap = {
+  Newsfeed: 'newsfeed',
+  Discovery: 'explore',
+  ChatListStack: 'chat',
 };
 
 const { width } = Dimensions.get('screen');
@@ -159,6 +167,50 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
 const Tabs = observer(function () {
   const theme = ThemedStyles.style;
   const chatFF = useFeature('epic-358-chat-mob');
+
+  const menuConf = useCustomNavigationTabs();
+  const navMap = menuConf?.reduce((acc, item) => {
+    acc[item.id] = item;
+    return acc;
+  }, {});
+
+  const tabOptions = ({ route }): BottomTabNavigationOptions => ({
+    headerShown: false,
+    tabBarIcon: ({ focused }) => {
+      if (route.name === 'Notifications') {
+        return <NotificationIcon active={focused} />;
+      }
+
+      if (
+        menuConf &&
+        navMap &&
+        ['Newsfeed', 'ChatListStack', 'Discovery'].includes(route.name)
+      ) {
+        return (
+          <MIcon
+            size={28}
+            active={focused}
+            name={navMap[routeMap[route.name]].iconId.replace('_', '-')}
+            style={
+              focused
+                ? ThemedStyles.style.colorPrimaryText
+                : ThemedStyles.style.colorIcon
+            }
+          />
+        );
+      }
+
+      return (
+        <Icon
+          size="large"
+          active={focused}
+          name={iconFromRoute[route.name]}
+          activeColor="PrimaryText"
+        />
+      );
+    },
+  });
+
   return (
     <View style={theme.flexContainer}>
       {/* <Topbar navigation={navigation} /> */}
@@ -270,24 +322,6 @@ const iconFromRoute: Record<string, IconMapNameType> = {
   Performance: 'dev',
   MindsPlus: 'queue',
 };
-
-const tabOptions = ({ route }): BottomTabNavigationOptions => ({
-  headerShown: false,
-  tabBarIcon: ({ focused }) => {
-    if (route.name === 'Notifications') {
-      return <NotificationIcon active={focused} />;
-    }
-
-    return (
-      <Icon
-        size="large"
-        active={focused}
-        name={iconFromRoute[route.name]}
-        activeColor="PrimaryText"
-      />
-    );
-  },
-});
 
 export default Tabs;
 

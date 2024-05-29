@@ -30,6 +30,7 @@ import blockListService from '~/common/services/block-list.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { queryClient } from '~/services';
 import videoPlayerService from '~/common/services/video-player.service';
+import { updateCustomNavigation } from '~/modules/navigation/service/custom-navigation.service';
 
 /**
  * App initialization manager
@@ -60,6 +61,9 @@ export class AppInitManager {
     sessionService.onLogout(this.onLogout);
 
     openUrlService.init();
+
+    // update custom navigation data
+    updateCustomNavigation();
 
     storeRatingService.track('appSession');
 

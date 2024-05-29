@@ -5,32 +5,37 @@ import {
   DrawerNavigationOptions,
   createDrawerNavigator,
 } from '@react-navigation/drawer';
-import { View, Platform, TouchableOpacity } from 'react-native';
-import ThemedStyles from '../styles/ThemedStyles';
-import { Icon } from '~ui/icons';
-import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
-import DiscoveryIcon from '../discovery/v2/DiscoveryTabIcon';
-import { observer } from 'mobx-react';
-import preventDoubleTap from '~/common/components/PreventDoubleTap';
-import NewsfeedStack from '~/navigation/NewsfeedStack';
-import DiscoveryStack from '~/navigation/DiscoveryStack';
-import NotificationsStack from '../navigation/NotificationsStack';
-import { IconMapNameType } from '~/common/ui/icons/map';
-import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
+import MIcon from '@expo/vector-icons/MaterialIcons';
 import { Icon as NIcon } from 'react-native-elements';
+import { View, Platform, TouchableOpacity } from 'react-native';
+
 import { H4 } from '~/common/ui';
-import { useDimensions } from '@react-native-community/hooks';
-import MoreStack from '~/navigation/MoreStack';
-import sessionService from '~/common/services/session.service';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Icon } from '~ui/icons';
 import { IS_TENANT } from '~/config/Config';
+
+import ThemedStyles from '../styles/ThemedStyles';
+import { IconMapNameType } from '~/common/ui/icons/map';
+import DiscoveryIcon from '../discovery/v2/DiscoveryTabIcon';
+import preventDoubleTap from '~/common/components/PreventDoubleTap';
+import { pushComposeCreateScreen } from '../compose/ComposeCreateScreen';
+import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
+import {
+  CustomNavigationItem,
+  CustomNavigationItems,
+  useCustomNavigation,
+} from '~/modules/navigation/service/custom-navigation.service';
+import useIsPortrait from '~/common/hooks/useIsPortrait';
+import {
+  CoreToCustomMap,
+  useVerticalScreenProps,
+} from './hooks/useVerticalScreenProps';
 
 const DoubleTapSafeButton = preventDoubleTap(TouchableOpacity);
 
 export type DrawerParamList = {
   Newsfeed: {};
   Explore: {};
-  ChatStack: {};
+  ChatListStack: {};
   MindsPlus: {};
   Notifications: {};
   Profile: {};
@@ -44,23 +49,32 @@ export type DrawerParamList = {
   GroupView: {};
 };
 
-export type GroupStackParamList = {
-  Groups: {};
-  GroupView: {};
-};
-
 const Drawer = createDrawerNavigator<DrawerParamList>();
-const GroupStackNav = createNativeStackNavigator<GroupStackParamList>();
+
+const ComposeButton = () => (
+  <View style={styles.editIcon}>
+    <NIcon
+      name="edit"
+      type="material"
+      size={24}
+      color={ThemedStyles.getColor('PrimaryBackground')}
+    />
+  </View>
+);
 
 /**
  * Main tabs
  * @param {Object} props
  */
-const Tabs = observer(function () {
+const Tabs = React.memo(function () {
   const theme = ThemedStyles.style;
-  const { width, height } = useDimensions().window;
-  const channel = sessionService.getUser();
-  const isPortrait = height > width;
+  const isPortrait = useIsPortrait();
+
+  const customNavigation = useCustomNavigation();
+
+  console.log('customNavigation', customNavigation);
+
+  const screensProps = useVerticalScreenProps(customNavigation);
 
   return (
     <View style={theme.flexContainer}>
@@ -68,81 +82,35 @@ const Tabs = observer(function () {
         detachInactiveScreens={Platform.OS === 'android'}
         initialRouteName="Newsfeed"
         defaultStatus="open"
-        drawerContent={props => (
-          <DrawerContent
-            {...{
-              isPortrait,
-              ...props,
-            }}
-          />
-        )}
-        screenOptions={props => drawerOptions({ ...props, isPortrait })}>
-        <Drawer.Screen
-          name="Newsfeed"
-          component={NewsfeedStack}
-          options={{ lazy: false }}
-        />
-        <Drawer.Screen
-          name="Explore"
-          component={DiscoveryStack}
-          options={{ lazy: false }}
-        />
-        <Drawer.Screen
-          name="ChatStack"
-          getComponent={() => require('~/modules/chat').ChatsListStack}
-          options={{ lazy: true }}
-        />
-        <Drawer.Screen name="Notifications" component={NotificationsStack} />
-        <Drawer.Screen
-          name="Profile"
-          getComponent={() => require('~/channel/v2/ChannelScreen').default}
-          initialParams={{ entity: channel }}
-        />
-        {!IS_TENANT && (
-          <>
-            <Drawer.Screen
-              name="Boosts"
-              getComponent={() => require('modules/boost').BoostConsoleScreen}
-            />
-            <Drawer.Screen //*** disabled for iOS ***
-              name="MindsPlus"
-              getComponent={() =>
-                require('~/discovery/v2/PlusDiscoveryScreen').default
-              }
-            />
-            <Drawer.Screen
-              name="Supermind"
-              getComponent={() =>
-                require('~/supermind/SupermindConsoleScreen').default
-              }
-            />
-            <Drawer.Screen
-              name="Wallet"
-              getComponent={() => require('~/wallet/v3/WalletScreen').default}
-            />
-            <Drawer.Screen
-              name="AffiliateProgram"
-              getComponent={() =>
-                require('modules/affiliate/screens/AffiliateProgramScreen')
-                  .default
-              }
-              options={{
-                drawerLabel: 'Affiliate Program',
-              }}
-            />
-          </>
-        )}
-        <Drawer.Screen name="Groups" component={GroupStack} />
-        <Drawer.Screen name="Settings" component={MoreStack} />
+        drawerContent={DrawerContent}
+        screenOptions={props =>
+          drawerOptions({ ...props, isPortrait, customNavigation })
+        }>
+        {Object.entries(screensProps).map(([key, props]) => {
+          // @ts-ignore
+          return <Drawer.Screen name={key} key={key} {...props} />;
+        })}
       </Drawer.Navigator>
     </View>
   );
 });
 
-type DrawerContentProps = DrawerNavigationOptions & {
+type DrawerContentProps = DrawerNavigationOptions;
+const drawerOptions = ({
+  route,
+  isPortrait,
+  customNavigation,
+}: {
+  route: any;
   isPortrait?: boolean;
-};
-const drawerOptions = ({ route, isPortrait }): DrawerContentProps => {
+  customNavigation: CustomNavigationItems;
+}): DrawerContentProps => {
+  const navMap: { [key: string]: CustomNavigationItem } | undefined =
+    customNavigation?.reduce((acc, item) => {
+      acc[item.id] = item;
+      return acc;
+    }, {});
+
   return {
     headerShown: false,
     drawerType: 'permanent',
@@ -152,14 +120,16 @@ const drawerOptions = ({ route, isPortrait }): DrawerContentProps => {
     drawerActiveTintColor: ThemedStyles.getColor('PrimaryText'),
     overlayColor: 'transparent',
     lazy: true,
-    drawerLabelStyle: {
-      paddingLeft: 8,
-      fontSize: 16,
-    },
+    drawerLabelStyle,
     drawerIcon: ({ focused }) => {
       if (route.name === 'Explore') {
         return (
-          <DiscoveryIcon size="large" active={focused} style={styles.icon} />
+          <DiscoveryIcon
+            size="large"
+            icon={navMap?.explore?.iconId}
+            active={focused}
+            style={styles.icon}
+          />
         );
       }
       if (route.name === 'Notifications') {
@@ -167,6 +137,28 @@ const drawerOptions = ({ route, isPortrait }): DrawerContentProps => {
           <NotificationIcon size="large" active={focused} style={styles.icon} />
         );
       }
+
+      if (customNavigation) {
+        const coreName = CoreToCustomMap[route.name];
+        const name = coreName || route.name;
+        const iconName = navMap?.[name]?.iconId;
+        if (iconName) {
+          return iconName ? (
+            <MIcon
+              size={28}
+              // @ts-ignore
+              name={iconName.replace('_', '-')}
+              style={[
+                styles.icon,
+                focused
+                  ? ThemedStyles.style.colorPrimaryText
+                  : ThemedStyles.style.colorIcon,
+              ]}
+            />
+          ) : null;
+        }
+      }
+
       return (
         <Icon
           size="large"
@@ -180,8 +172,17 @@ const drawerOptions = ({ route, isPortrait }): DrawerContentProps => {
   };
 };
 
+const drawerLabelStyle = {
+  paddingLeft: 8,
+  fontSize: 16,
+};
+
+/**
+ * Drawer component
+ */
 function DrawerContent(props) {
-  const { navigation, isPortrait } = props;
+  const isPortrait = useIsPortrait();
+  const { navigation } = props;
   const pushComposeCreate = () =>
     pushComposeCreateScreen({
       onItemPress: async key => {
@@ -213,32 +214,6 @@ function DrawerContent(props) {
   );
 }
 
-const ComposeButton = () => (
-  <View style={styles.editIcon}>
-    <NIcon
-      name="edit"
-      type="material"
-      size={24}
-      color={ThemedStyles.getColor('PrimaryBackground')}
-    />
-  </View>
-);
-
-const GroupStack = () => (
-  <GroupStackNav.Navigator screenOptions={{ headerShown: false }}>
-    <GroupStackNav.Screen
-      name="Groups"
-      getComponent={() => require('~/groups/GroupsListScreen').default}
-    />
-    <GroupStackNav.Screen
-      name="GroupView"
-      getComponent={() =>
-        require('~/modules/groups/screens/GroupScreen').GroupScreen
-      }
-    />
-  </GroupStackNav.Navigator>
-);
-
 export const styles = ThemedStyles.create({
   editIcon: [
     'bgIconActive',
@@ -261,7 +236,7 @@ export const styles = ThemedStyles.create({
 const iconFromRoute: Record<string, IconMapNameType> = {
   More: 'menu',
   Newsfeed: 'home',
-  ChatStack: 'chat',
+  ChatListStack: 'chat',
   User: 'user',
   Discovery: 'search',
   Profile: 'profile',
