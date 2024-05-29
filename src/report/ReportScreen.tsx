@@ -22,6 +22,7 @@ import {
 } from '~/graphql/api';
 import { IS_TENANT } from '~/config/Config';
 import logService from '~/common/services/log.service';
+import UserModel from '~/channel/UserModel';
 
 type PropsType = {
   route: any;
@@ -262,8 +263,13 @@ async function submit({
 
   try {
     const guid =
-      entity instanceof ActivityModel ? entity.guid : entity.node.guid;
-    const urn = entity instanceof ActivityModel ? entity.urn : entity.node.id;
+      entity instanceof ActivityModel || entity instanceof UserModel
+        ? entity.guid
+        : entity.node.guid;
+    const urn =
+      entity instanceof ActivityModel || entity instanceof UserModel
+        ? entity.urn
+        : entity.node.id;
 
     console.log(
       'calling Report',
