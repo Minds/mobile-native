@@ -7,7 +7,6 @@ import i18nService from './i18n.service';
 import { showNotification } from '../../../AppMessages';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 
-const ANDROID_API_VERSION = parseInt(`${Platform.Version}}`, 10);
 /**
  * Download Service
  */
