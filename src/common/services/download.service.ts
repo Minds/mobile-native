@@ -22,7 +22,7 @@ class DownloadService {
       // if it was iOS or the url wasn't a remote resource, use cameraroll
       if (Platform.OS === 'ios') {
         return MediaLibrary.saveToLibraryAsync(this.checkAndFixImageURI(url));
-      } else if (ANDROID_API_VERSION < 11) {
+      } else {
         let permission = await MediaLibrary.getPermissionsAsync(true);
 
         if (permission.status !== 'granted') {
