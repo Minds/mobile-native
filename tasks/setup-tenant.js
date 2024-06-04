@@ -102,13 +102,9 @@ async function setupTenant(id) {
       console.log('- Custom navigation updated');
 
       if (!preview) {
-        const {
-          addAdaptiveIcon,
-          generateNotificationIcon,
-        } = require('./adaptive-icon');
+        const { addAdaptiveIcon } = require('./adaptive-icon');
         // add adaptive icon & notification icon in the assets folder
         await addAdaptiveIcon();
-        await generateNotificationIcon();
       }
     }
     if (preview) {
@@ -207,6 +203,7 @@ const assetsMap = {
   horizontal_logo: 'logo_horizontal.png',
   icon: 'icon.png',
   icon_mono: 'icon_mono.png',
+  monographic_icon: 'icon_mono.png',
 };
 
 setupTenant(tenantId);
