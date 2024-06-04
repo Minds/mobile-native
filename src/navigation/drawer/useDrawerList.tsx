@@ -155,6 +155,15 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
           ? navigationMap[item.id]
           : () => item.url && openUrlService.open(item.url),
     }));
+
+    list.push({
+      name: i18n.t('moreScreen.settings'),
+      icon: 'settings',
+      testID: 'Drawer:settings',
+      onPress: () => {
+        navigation.navigate('Settings');
+      },
+    });
   }
 
   return list;
