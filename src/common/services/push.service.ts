@@ -40,8 +40,8 @@ export class PushService {
         }
         let data = notification?.payload;
         // navigate
-        router.navigate(data);
         analyticsService.trackClick('push-notification');
+        router.navigate(data);
         completion();
       },
     );
@@ -61,6 +61,7 @@ export class PushService {
     }
     // delay navigation on app start
     setTimeout(() => {
+      analyticsService.trackClick('push-notification');
       router.navigate(data);
     }, 500);
   };
