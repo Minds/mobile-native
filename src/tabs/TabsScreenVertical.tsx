@@ -72,8 +72,6 @@ const Tabs = React.memo(function () {
 
   const customNavigation = useCustomNavigation();
 
-  console.log('customNavigation', customNavigation);
-
   const screensProps = useVerticalScreenProps(customNavigation);
 
   return (

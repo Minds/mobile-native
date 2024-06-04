@@ -141,6 +141,8 @@ export class SocketService {
     const i = this.rooms.indexOf(room);
     this.rooms.splice(i, 1);
 
+    logService.info('[ws]:leaving room', room);
+
     return this.emit('leave', room);
   }
 }
