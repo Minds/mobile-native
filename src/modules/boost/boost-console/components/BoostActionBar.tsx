@@ -59,7 +59,7 @@ export default class BoostActionBar extends Component<PropsType> {
   renderTarget() {
     return this.props.boost.destination ? (
       <View style={ThemedStyles.style.flexColumnCentered} key="target">
-        <IonIcon name="md-person" size={20} style={styles.icon} />
+        <IonIcon name="person" size={20} style={styles.icon} />
         <MText style={styles.value} numberOfLines={1}>
           {'@' + this.props.boost.destination.username}
         </MText>

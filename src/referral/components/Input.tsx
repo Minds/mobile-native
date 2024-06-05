@@ -8,7 +8,7 @@ import {
 import { showNotification } from '../../../AppMessages';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
 
@@ -24,7 +24,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
 
   const _onFocus = useCallback(() => {
     _textInput.current!.focus();
-    Clipboard.setString(textToCopy);
+    Clipboard.setStringAsync(textToCopy);
     showNotification(i18n.t('copied'), 'info', 3000);
   }, [textToCopy]);
 

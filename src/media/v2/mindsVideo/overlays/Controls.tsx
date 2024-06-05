@@ -68,7 +68,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
             <View style={styles.controlBarContainer}>
               <Icon
                 onPress={() => localStore.toggleFullScreen()}
-                name="ios-expand"
+                name="expand"
                 size={iconSize}
                 color={controlColor}
                 style={theme.paddingHorizontal}
@@ -80,9 +80,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
                   onPress={() => localStore.toggleVolume()}>
                   <Icon
                     name={
-                      localStore.volume === 0
-                        ? 'ios-volume-mute'
-                        : 'ios-volume-high'
+                      localStore.volume === 0 ? 'volume-mute' : 'volume-high'
                     }
                     size={iconSize}
                     color={controlColor}
@@ -105,7 +103,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
       ]}>
       <Icon
         onPress={localStore.toggleVolume}
-        name={localStore.volume === 0 ? 'ios-volume-mute' : 'ios-volume-high'}
+        name={localStore.volume === 0 ? 'volume-mute' : 'volume-high'}
         size={iconSize}
         color={controlColor}
       />

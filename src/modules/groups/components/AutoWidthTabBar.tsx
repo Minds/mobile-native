@@ -8,7 +8,7 @@ import {
   Pressable,
 } from 'react-native';
 
-import { Route } from 'showtime-tab-view';
+import { Route } from '@showtime-xyz/tab-view';
 
 import {
   NavigationState,

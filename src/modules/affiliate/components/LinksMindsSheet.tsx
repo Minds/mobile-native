@@ -1,6 +1,6 @@
 import React from 'react';
 import { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 
 import {
   BottomSheetButton,
@@ -32,7 +32,7 @@ const LinksMindsSheet = React.forwardRef<BottomSheetModalType>((props, ref) => {
 });
 
 const copyLink = (link: string) => {
-  Clipboard.setString(link);
+  Clipboard.setStringAsync(link);
   showNotification('Link copied to clipboard');
 };
 

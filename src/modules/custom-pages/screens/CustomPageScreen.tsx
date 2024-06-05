@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { Linking, ScrollView } from 'react-native';
 import React from 'react';
 import { H4, ModalFullScreen } from '~/common/ui';
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -39,17 +39,23 @@ export default function CustomPageScreen({
     return null;
   }
 
+  if (customPage?.externalLink) {
+    Linking.openURL(customPage.externalLink);
+    goBack();
+    return null;
+  }
+
   return (
     <ModalFullScreen back title={config.title || params.title || ''}>
-      <ScrollView style={styles.scrollView}>
-        {isLoading ? (
-          <CenteredLoading />
-        ) : error ? (
-          <H4>Loading failed, please try again.</H4>
-        ) : (
+      {isLoading ? (
+        <CenteredLoading />
+      ) : error ? (
+        <H4>Loading failed, please try again.</H4>
+      ) : (
+        <ScrollView style={styles.scrollView}>
           <Markdown style={styles}>{customPage?.content}</Markdown>
-        )}
-      </ScrollView>
+        </ScrollView>
+      )}
     </ModalFullScreen>
   );
 }

@@ -1,5 +1,5 @@
 //@ts-nocheck
-import Share from 'react-native-share';
+import * as Sharing from 'expo-sharing';
 import { pushBottomSheet } from '../common/components/bottom-sheet';
 
 /**
@@ -31,9 +31,8 @@ class ShareService {
       // using a fake bottom sheet to have an easier way to track the visiblity of the share sheet
       pushBottomSheet({
         component: ref => {
-          Share.open({
-            title: title,
-            message: url,
+          Sharing.shareAsync(url, {
+            dialogTitle: title,
           })
             .catch(err => console.error(err))
             .finally(() => ref.close());

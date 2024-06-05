@@ -1,6 +1,12 @@
 import React from 'react';
-import { View, StyleProp, TextStyle, Platform, ViewStyle } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import {
+  View,
+  StyleProp,
+  TextStyle,
+  Platform,
+  ViewStyle,
+  ScrollView,
+} from 'react-native';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import TabBarButtonTabBarItem from './TopBarButtonTabBarItem';
 

@@ -54,7 +54,7 @@ export default class SearchView extends PureComponent<Props> {
 
     return (
       <View style={this.containerStyle}>
-        <Icon size={22} style={iconStyle} name={'md-search'} />
+        <Icon size={22} style={iconStyle} name={'search'} />
         {
           <TextInput
             onFocus={this.props.onFocus}

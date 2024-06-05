@@ -70,7 +70,7 @@ const ICON_MAP = {
   },
   camera: {
     font: 'IonIcon',
-    name: 'ios-camera-sharp',
+    name: 'camera-sharp',
   },
   image: {
     font: 'Feather',
@@ -267,7 +267,7 @@ const ICON_MAP = {
   },
   menu: {
     font: 'IonIcon',
-    name: 'ios-menu',
+    name: 'menu',
   },
   hashtag: {
     font: 'Fontisto',
@@ -325,7 +325,7 @@ const ICON_MAP = {
   },
   'ios-flag-outline': {
     font: 'IonIcon',
-    name: 'ios-flag-outline',
+    name: 'flag-outline',
   },
   'share-social': {
     font: 'IonIcon',
@@ -333,11 +333,11 @@ const ICON_MAP = {
   },
   'remove-circle': {
     font: 'IonIcon',
-    name: 'ios-remove-circle-outline',
+    name: 'remove-circle-outline',
   },
   'add-circle': {
     font: 'IonIcon',
-    name: 'ios-add-circle-outline',
+    name: 'add-circle-outline',
   },
   'radio-button-on': {
     font: 'MaterialIcons',
@@ -394,7 +394,7 @@ const ICON_MAP = {
   },
   eye_off: {
     font: 'IonIcon',
-    name: 'md-eye-off',
+    name: 'eye-off',
   },
   alarm: {
     font: 'MaterialIcons',

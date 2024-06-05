@@ -15,13 +15,13 @@ function getIcon(type: MessageType): any {
       return {
         iconColor: '#59A05E',
         iconFamily: 'Ionicons',
-        iconName: 'md-checkmark',
+        iconName: 'checkmark',
       };
     case 'warning':
       return {
         iconColor: '#D49538',
         iconFamily: 'Ionicons',
-        iconName: 'ios-warning',
+        iconName: 'warning',
       };
     case 'info':
       return {

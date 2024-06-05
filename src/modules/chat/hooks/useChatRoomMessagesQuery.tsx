@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo, useRef } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { produce } from 'immer';
 import {
   GetChatMessagesDocument,
@@ -96,14 +95,17 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
   const loadNewMessages = useCallback(async () => {
     if (loadingMessagesPromise.current) {
       shouldLoadAgain.current = true;
+      console.log('LOADING ALREADY');
       return loadingMessagesPromise.current;
     }
+    console.log('LOADING NEW MESSAGES');
     loadingMessagesPromise.current = loadAllNewMessages({
       fetchPreviousPage,
       queryClient,
       key,
     });
     const result = await loadingMessagesPromise.current;
+    console.log('LOADED', result);
     loadingMessagesPromise.current = null;
     if (shouldLoadAgain.current) {
       shouldLoadAgain.current = false;
@@ -119,7 +121,7 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
     onMutate: params => {
       const me = sessionService.getUser();
       const now = moment();
-      const uuid = uuidv4();
+      const uuid = now.unix() + pendingMessages.current.length.toString();
 
       // new optimistic message
       const newMessage: ChatMessage = {
@@ -291,6 +293,7 @@ async function loadAllNewMessages({
       // });
       const oldPageCount = data?.pages.length;
       const { data: newData } = await fetchPreviousPage();
+
       if (
         !newData?.pages[0].chatMessages.pageInfo.hasNextPage ||
         !newData?.pages[0].chatMessages.edges.length ||

@@ -5,7 +5,7 @@ import {
   WithSafeAreaInsetsProps,
   withSafeAreaInsets,
 } from 'react-native-safe-area-context';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 import { Icon } from '@minds/ui';
 
 import { IconButtonNext } from '~ui/icons';
@@ -446,7 +446,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
   };
 
   copyToClipboard = () => {
-    Clipboard.setString(APP_URI + 'newsfeed/' + this.props.entity.guid);
+    Clipboard.setStringAsync(APP_URI + 'newsfeed/' + this.props.entity.guid);
     showNotification(i18n.t('copied'));
   };
 

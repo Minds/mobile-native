@@ -3,7 +3,7 @@ import { reaction } from 'mobx';
 import { observer } from 'mobx-react';
 
 import { View, LayoutChangeEvent, Pressable } from 'react-native';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 import * as entities from 'entities';
 
 import ExplicitText from '../../common/components/explicit/ExplicitText';
@@ -227,7 +227,7 @@ export default class Activity extends Component<ActivityProps> {
     }
     const entity = this.props.entity;
     const title = entity.link_title || entity.title;
-    Clipboard.setString(
+    Clipboard.setStringAsync(
       entities.decodeHTML(title ? title + '\n' + entity.text : entity.text),
     );
     showNotification(i18n.t('copied'), 'info');

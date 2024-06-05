@@ -81,6 +81,7 @@ function BottomSheetScreen({ route, navigation }: BottomSheetScreenProps) {
       enableContentPanningGesture={true}
       handleHeight={animatedHandleHeight}
       contentHeight={animatedContentHeight}
+      // @ts-ignore until we remove the deprecated useBottomSheetDynamicSnapPoints
       snapPoints={animatedSnapPoints}
       handleComponent={title ? HandleComponent : undefined}
       {...props}

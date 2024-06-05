@@ -4,7 +4,6 @@ import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from '@expo/vector-icons/Ionicons';
 import { Flow } from 'react-native-animated-spinkit';
 
-import KeyboardSpacingView from '~/common/components/keyboard/KeyboardSpacingView';
 import ThemedStyles from '~/styles/ThemedStyles';
 import preventDoubleTap from '~/common/components/PreventDoubleTap';
 import { CHAR_LIMIT } from '~/config/Config';
@@ -46,68 +45,63 @@ const ChatInput = ({ onSendMessage }: Props) => {
   };
 
   return (
-    <KeyboardSpacingView
-      enabled
-      pointerEvents="box-none"
-      style={[theme.borderTopHair, theme.bcolorPrimaryBorder]}>
+    <View
+      style={[
+        theme.bgSecondaryBackground,
+        styles.inputContainer,
+        theme.paddingVertical3x,
+        theme.paddingHorizontal4x,
+        theme.borderRadius30x,
+        theme.marginHorizontal4x,
+        theme.marginVertical3x,
+      ]}>
       <View
         style={[
-          theme.bgSecondaryBackground,
-          styles.inputContainer,
-          theme.paddingVertical3x,
+          theme.rowJustifyStart,
+          theme.alignEnd,
           theme.paddingHorizontal4x,
-          theme.borderRadius30x,
-          theme.marginHorizontal4x,
-          theme.marginVertical3x,
         ]}>
-        <View
+        <TextInput
+          testID="CommentTextInput"
+          ref={ref}
+          multiline={true}
+          editable={!saving}
+          scrollEnabled={true}
+          placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+          placeholder="Message"
+          underlineColorAndroid="transparent"
+          onChangeText={setText}
+          keyboardType={'default'}
+          onFocus={() => {
+            analyticsService.trackClick('data-minds-chat-message-input');
+          }}
+          maxLength={CHAR_LIMIT}
           style={[
-            theme.rowJustifyStart,
-            theme.alignEnd,
-            theme.paddingHorizontal4x,
+            theme.fullWidth,
+            theme.colorPrimaryText,
+            theme.fontL,
+            styles.input,
+            inputMaxHeight,
           ]}>
-          <TextInput
-            testID="CommentTextInput"
-            ref={ref}
-            multiline={true}
-            editable={!saving}
-            scrollEnabled={true}
-            placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
-            placeholder="Message"
-            underlineColorAndroid="transparent"
-            onChangeText={setText}
-            keyboardType={'default'}
-            onFocus={() => {
-              analyticsService.trackClick('data-minds-chat-message-input');
-            }}
-            maxLength={CHAR_LIMIT}
-            style={[
-              theme.fullWidth,
-              theme.colorPrimaryText,
-              theme.fontL,
-              styles.input,
-              inputMaxHeight,
-            ]}>
-            <Tags navigation={navigation} selectable={true}>
-              {text}
-            </Tags>
-          </TextInput>
-          {!saving ? (
-            <Touchable
-              onPress={send}
-              hitSlop={hitSlop}
-              style={styles.sendIcon}
-              testID="PostCommentButton">
-              <Icon name="md-send" size={18} style={theme.colorSecondaryText} />
-            </Touchable>
-          ) : (
-            <View style={[theme.alignSelfCenter, theme.justifyEnd]}>
-              <Flow color={ThemedStyles.getColor('PrimaryText')} />
-            </View>
-          )}
-        </View>
+          <Tags navigation={navigation} selectable={true}>
+            {text}
+          </Tags>
+        </TextInput>
+        {!saving ? (
+          <Touchable
+            onPress={send}
+            hitSlop={hitSlop}
+            style={styles.sendIcon}
+            testID="PostCommentButton">
+            <Icon name="send" size={18} style={theme.colorSecondaryText} />
+          </Touchable>
+        ) : (
+          <View style={[theme.alignSelfCenter, theme.justifyEnd]}>
+            <Flow color={ThemedStyles.getColor('PrimaryText')} />
+          </View>
+        )}
       </View>
-    </KeyboardSpacingView>
+    </View>
   );
 };
 

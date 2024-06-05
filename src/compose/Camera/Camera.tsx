@@ -34,6 +34,7 @@ import PressableScale from '~/common/components/PressableScale';
 import PermissionsService from '~/common/services/permissions.service';
 import { showNotification } from 'AppMessages';
 import i18n from '~/common/services/i18n.service';
+import useIsPortrait from '~/common/hooks/useIsPortrait';
 
 type CaptureScreenRouteProp = RouteProp<RootStackParamList, 'Capture'>;
 
@@ -81,21 +82,10 @@ export default observer(function (props: PropsType) {
   // local store
   const store = useLocalStore(createCameraStore, { navigation, ...props });
 
-  const [devices, device, formats, format] = useBestCameraAndFormat(
-    store,
-    props.mode,
-  );
-
-  const supportsCameraFlipping = React.useMemo(
-    () => devices.back != null && devices.front != null,
-    [devices.back, devices.front],
-  );
+  const [device, format] = useBestCameraAndFormat(store);
 
   const supportsFlash = device?.hasFlash ?? false;
-  const supportsHdr = React.useMemo(
-    () => formats.some(f => f.supportsVideoHDR || f.supportsPhotoHDR),
-    [formats],
-  );
+  const supportsHdr = format?.supportsPhotoHdr;
 
   const insets = useSafeAreaInsets();
   const cleanTop = { marginTop: insets.top || 0 };
@@ -177,6 +167,9 @@ export default observer(function (props: PropsType) {
   );
 
   const orientationStyle = useCameraStyle(insets);
+  const isPortrait = useIsPortrait();
+
+  console.log('isPortrait', isPortrait);
 
   return (
     <View style={theme.flexContainer}>
@@ -201,15 +194,17 @@ export default observer(function (props: PropsType) {
                 lowLightBoost={
                   device.supportsLowLightBoost && store.lowLightBoost
                 }
-                hdr={store.hdr}
+                photoHdr={store.hdr}
+                videoHdr={store.hdr}
                 isActive={props.disabled ? false : store.show}
                 onInitialized={store.isReady}
                 onError={e => console.log(e)}
                 enableZoomGesture={false}
+                orientation={isPortrait ? 'portrait' : 'landscape-left'}
                 animatedProps={cameraAnimatedProps}
-                photo={true}
-                video={true}
-                audio={permissions !== null && permissions[0] === 'authorized'}
+                photo={props.mode === 'photo'}
+                video={props.mode !== 'photo'}
+                audio={permissions !== null && permissions[0] === 'granted'}
               />
             </FocusGesture>
           </ZoomGesture>
@@ -275,7 +270,7 @@ export default observer(function (props: PropsType) {
                     name={
                       store.recordingPaused
                         ? 'play-circle-outline'
-                        : 'ios-pause-circle-outline'
+                        : 'pause-circle-outline'
                     }
                     style={orientationStyle.galleryIcon}
                   />
@@ -291,7 +286,7 @@ export default observer(function (props: PropsType) {
             ) : (
               <View />
             )}
-            {supportsCameraFlipping && (!store.recording || IS_IOS) ? (
+            {!store.recording || IS_IOS ? (
               <FadeFrom delay={PRESENTATION_ORDER.third}>
                 <CamIcon store={store} style={orientationStyle.icon} />
               </FadeFrom>

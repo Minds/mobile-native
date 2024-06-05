@@ -20,7 +20,7 @@ import GrowthbookDev from '../components/GrowthbookDev';
 // import Link from '../../common/components/Link';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import pushService from '~/common/services/push.service';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 import { showNotification } from 'AppMessages';
 
 const DevToolsScreen = () => {
@@ -153,7 +153,7 @@ const DevToolsScreen = () => {
               size="small"
               disabled={!pushService.getToken()}
               onPress={() => {
-                Clipboard.setString(pushService.getToken());
+                Clipboard.setStringAsync(pushService.getToken());
                 showNotification('Token copied to the clipboard');
               }}
               type="action">

@@ -35,7 +35,7 @@ const CamIcon: FC<PropsType> = ({ store, style }: PropsType) => {
         delay: 50,
       }}>
       <Icon
-        name="md-camera-reverse-outline"
+        name="camera-reverse-outline"
         size={35}
         style={style}
         onPress={onPress}

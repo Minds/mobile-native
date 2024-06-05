@@ -1,6 +1,6 @@
 import React from 'react';
 import { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
-import Clipboard from '@react-native-clipboard/clipboard';
+import * as Clipboard from 'expo-clipboard';
 
 import {
   BottomSheetButton,
@@ -87,7 +87,7 @@ const openShare = () => {
 };
 
 const copyReferrer = () => {
-  Clipboard.setString(getURL());
+  Clipboard.setStringAsync(getURL());
   showNotification('Link copied to clipboard');
 };
 
