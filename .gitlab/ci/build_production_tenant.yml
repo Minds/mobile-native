@@ -21,7 +21,7 @@ eas_build_production_android_tenant:
       when: always
 
 # Build and submit the ios play store app
-eas_build_production_ios:
+eas_build_production_ios_tenant:
   stage: build
   image: node:alpine
   tags: [minds-ci]
