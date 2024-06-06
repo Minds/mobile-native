@@ -11,7 +11,7 @@ const checked = value => {
   return (
     <Icon
       size={25}
-      name="md-checkmark-sharp"
+      name="checkmark-sharp"
       style={
         value
           ? ThemedStyle.style.colorGreen
