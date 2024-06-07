@@ -9114,11 +9114,6 @@ expo-localization@~14.8.4:
   dependencies:
     rtl-detect "^1.0.2"
 
-expo-location@~16.5.5:
-  version "16.5.5"
-  resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-16.5.5.tgz#3db84f5fecf8cbfdff1e3dbe06fdc823a56bc02c"
-  integrity sha512-dXEd1HaZgdi6yHVF8R+SMnGlKDYrD+Hkkzd/b9edjMSUBLxF2y824AFSSNUf6BVOM53tJBOFEELneXkU1uj9nA==
-
 expo-manifests@~0.13.0:
   version "0.13.2"
   resolved "https://registry.yarnpkg.com/expo-manifests/-/expo-manifests-0.13.2.tgz#02b28bb2fb002ef93a03faf1ede9ecaa43e5d6c0"
@@ -9155,13 +9150,6 @@ expo-screen-orientation@~6.4.1:
   version "6.4.1"
   resolved "https://registry.yarnpkg.com/expo-screen-orientation/-/expo-screen-orientation-6.4.1.tgz#1c4428a058921e48b5caa45367e626b8bec10e24"
   integrity sha512-VM0C9ORNL1aT6Dr2OUeryzV519n0FjtXI2m+HlijOMi1QT2bPg4tBkCd7HLgywU4dZ1Esa46ewUudmk+fOqmMQ==
-
-expo-sensors@~12.9.1:
-  version "12.9.1"
-  resolved "https://registry.yarnpkg.com/expo-sensors/-/expo-sensors-12.9.1.tgz#d7c856782ffcfa0860b2a713ab768f3fb197608b"
-  integrity sha512-G2WYHO+RMU9Vj7wvzjV3lPMPDEBvS3S9/oYs1ToaaS4LR6VH8Dr2pJqspS7n8GFq+n5ftEi/2oqE4EizlHX/lQ==
-  dependencies:
-    invariant "^2.2.4"
 
 expo-sharing@^11.10.0:
   version "11.10.0"
