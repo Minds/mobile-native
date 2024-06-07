@@ -134,6 +134,7 @@ type TwoFactorConfirmationParams = {
 export type RootStackParamList = {
   CustomPages: { page: string; title: string };
   ChangeEmail: {};
+  Report: {};
   TierManagementScreen: {};
   TierScreen: {};
   GroupsList: {};
@@ -237,7 +238,6 @@ export type AuthStackParamList = {
 export type AppStackParamList = {
   Interactions: InteractionsScreenParams;
   BottomSheet: BottomSheetScreenParams;
-  Report: {};
   ChatStack: undefined;
   ChatNew: undefined;
   GifCardClaim: {
