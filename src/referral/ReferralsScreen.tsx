@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
-import { APP_URI } from '../config/Config';
+import { APP_URI, TENANT } from '../config/Config';
 import ThemedStyles from '../styles/ThemedStyles';
 import Input from './components/Input';
 import Networks from './components/Networks';
@@ -36,7 +36,7 @@ const ReferralsScreen = ({ navigation, route }: ReferralsScreenProps) => {
             theme.marginBottom4x,
             styles.title,
           ]}>
-          {i18n.t('referrals.title')}
+          {i18n.t('referrals.title', { TENANT })}
         </MText>
 
         <MText
@@ -45,7 +45,7 @@ const ReferralsScreen = ({ navigation, route }: ReferralsScreenProps) => {
             theme.textJustify,
             theme.marginBottom,
           ]}>
-          {i18n.t('referrals.description')}
+          {i18n.t('referrals.description', { TENANT })}
         </MText>
 
         <Input
@@ -56,7 +56,7 @@ const ReferralsScreen = ({ navigation, route }: ReferralsScreenProps) => {
 
         <Input
           textToCopy={`?referrer=${user.username}`}
-          label={i18n.t('referrals.codeSuffixLabel')}
+          label={i18n.t('referrals.codeSuffixLabel', { TENANT })}
           style={theme.marginBottom4x}
         />
 

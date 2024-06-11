@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import i18n from '~/common/services/i18n.service';
-import { IS_TENANT } from '~/config/Config';
+import { IS_TENANT, TENANT } from '~/config/Config';
 import { navigateToHelp } from '~/settings/SettingsScreen';
 
 export const useDrawerSmallList = () => {
@@ -8,7 +8,7 @@ export const useDrawerSmallList = () => {
   return !IS_TENANT
     ? [
         {
-          name: i18n.t('earnScreen.title'),
+          name: i18n.t('earnScreen.title', { TENANT }),
           onPress: () => {
             navigation.navigate('EarnModal');
           },

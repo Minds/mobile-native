@@ -15,6 +15,7 @@ import {
   MetricsComparative,
   TokensMetrics,
 } from '../../AnalyticsTypes';
+import { TENANT } from '~/config/Config';
 
 type PropsType = {
   metrics: TokensMetrics;
@@ -68,7 +69,7 @@ const Title = ({ type }: { type: CardType }) => {
         backgroundColor={ThemedStyles.getColor('Link')}
         popover={
           <MText style={theme.colorWhite}>
-            {i18n.t(`analytics.tokens.tooltips.${type}`)}
+            {i18n.t(`analytics.tokens.tooltips.${type}`, { TENANT })}
           </MText>
         }>
         <Icon

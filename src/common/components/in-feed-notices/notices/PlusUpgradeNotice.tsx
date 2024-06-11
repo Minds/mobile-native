@@ -14,9 +14,7 @@ function PlusUpgradeNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
   const user = useCurrentUser()!;
 
-  const description = i18n.t(
-    'inFeedNotices.plusUpgrade.descriptionVariations.3',
-  );
+  const description = i18n.t('inFeedNotices.plusUpgrade.description');
 
   const onPress = useCallback(() => {
     navigation.navigate('UpgradeScreen', {
