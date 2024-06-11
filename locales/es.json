@@ -538,12 +538,6 @@
     "weekly": "Semanal",
     "never": "Never"
   },
-  "plus": {
-    "freeTrialDesciption": "Comienza tu prueba gratuita durante 7 días"
-  },
-  "payments": {
-    "confirmDeleteCard": "Quieres borrar esta tarjeta?"
-  },
   "reports": {
     "reasons": {
       "1": {
@@ -838,11 +832,6 @@
       "canary": "Canary",
       "branding": "Marca"
     }
-  },
-  "comingSoon": {
-    "try": "Intenta la prueba de red de la aplicación",
-    "notSupported": "Esta funcionalidad no está soportada por tu plataforma.",
-    "moreInformation": "Más información en"
   },
   "attachment": {
     "tooLong": "La duración del video debe ser menor a {{minutes}} minutos"
@@ -1298,7 +1287,6 @@
   "postCantBeShown": "No se puede mostrar en aplicaciones instaladas en la tienda",
   "readMore": "Mostrar Más",
   "showLess": "Mostrar menos",
-  "featureUnavailablePlatform": "Esta funcionalidad no está actualmente disponible en tu plataforma",
   "continue": "Continuar",
   "errorDisplaying": "Error mostrando el contenido",
   "tapCopyError": "Pulse aquí para copiar el error",
@@ -1311,15 +1299,12 @@
   "no": "No",
   "ok": "Aceptar",
   "views": "Vistas",
-  "export": "Exportar",
   "delete": "Borrar",
-  "import": "Importar",
   "subscribers": "Suscriptores",
   "subscriptions": "Suscripciones",
   "feed": "Lista",
   "images": "Imágenes",
   "videos": "Videos",
-  "create": "Crear",
   "yesImSure": "Si, estoy seguro",
   "cancel": "Cancelar",
   "reject": "Rechazar",
@@ -1333,7 +1318,6 @@
   "loadMore": "Cargar más",
   "cantLoadMore": "No puedo cargar más",
   "cantLoad": "No puedo cargar",
-  "conversation": "Conversación",
   "confirm": "Confirmar",
   "errorMessage": "Ups! Parece que ha ocurrido un error.",
   "error": "Error",
@@ -1355,8 +1339,6 @@
   "setup": "Configurar",
   "send": "Enviar",
   "sendTo": "Send to",
-  "passwordPlaceholder": "contraseña...",
-  "passwordConmfirmPlaceholder": "confirmar contraseña...",
   "boost": "Boost",
   "boosted": "Promovido",
   "follow": "Seguir",
@@ -1366,7 +1348,6 @@
   "edited": "Editado",
   "success": "Exito",
   "createAPost": "Crear un post",
-  "findChannels": "Encontrar canales",
   "your": "tu",
   "their": "su",
   "for": "para",
@@ -1403,7 +1384,6 @@
   "noInternet": "Sin conexión a internet",
   "cantReachServer": "No puedo conectarme al servidor",
   "showingStored": "Mostrando datos guardados",
-  "actions": "Acciones",
   "notAllowed": "No tienes permiso",
   "undo": "Deshacer",
   "validate": "VALIDATE",
@@ -1416,7 +1396,6 @@
   "title": "Título",
   "filter": "Filtro",
   "captcha": "Introduzca los caracteres de arriba",
-  "startFreeTrial": "Iniciar prueba gratuita",
   "visibility": "Visibilidad",
   "about": "Acerca de",
   "takePhoto": "Tomar una foto",
@@ -1434,14 +1413,6 @@
   "remindRemoved": "Republicación eliminada",
   "deletedRemind": "Este contenido recordado no está disponible. Puede que haya sido eliminado o que no tenga permiso para verlo",
   "undoRemind": "Deshacer recordatorio",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Publicando en permaweb",
-    "terms": "Por favor, marque la casilla para confirmar que comprende los términos de uso de permaweb. He leído y estoy de acuerdo con los Términos y confirmo que tienen todos los derechos necesarios con respecto a cualquier dato, información u otro material (“Material almacenado”) que publique o suba Minds y a la red Arweave (o Permaweb). También entiendo que este contenido no puede ser borrado del Permaweb.",
-    "processingTime": "Puede tardar hasta una hora en que su mensaje aparezca en el Permaweb. Por favor, sea paciente mientras su libertad procesa.",
-    "cannotMonetize": "No se pueden hacer publicaciones monetizadas en permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "Ayuda",
   "unblock": "Desbloquear",
   "earnScreen": {
@@ -1482,7 +1453,6 @@
   "points": "puntos",
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
-  "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",

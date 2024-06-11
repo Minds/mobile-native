@@ -538,12 +538,6 @@
     "weekly": "Weekly",
     "never": "Never"
   },
-  "plus": {
-    "freeTrialDesciption": "Start your free trial for 7 days"
-  },
-  "payments": {
-    "confirmDeleteCard": "Bạn có muốn xóa thẻ này không?"
-  },
   "reports": {
     "reasons": {
       "1": {
@@ -838,11 +832,6 @@
       "canary": "Canary",
       "branding": "Branding"
     }
-  },
-  "comingSoon": {
-    "try": "Dùng thử ứng dụng carany tại địa chỉ www.minds.com/mobile",
-    "notSupported": "Tính năng này không được hỗ trợ bởi nền tảng của bạn.",
-    "moreInformation": "Xem thêm thông tin tại"
   },
   "attachment": {
     "tooLong": "Độ dài video phải ít hơn {{minutes}} phút"
@@ -1298,7 +1287,6 @@
   "postCantBeShown": "Can't be shown on apps installed via the Store",
   "readMore": "Show More",
   "showLess": "Hiển thị ít đi",
-  "featureUnavailablePlatform": "Tính năng này hiện không khả dụng trên nền tảng của bạn",
   "continue": "Tiếp tục",
   "errorDisplaying": "Lỗi khi hiển thị nội dung",
   "tapCopyError": "Bấm để sao chép lỗi",
@@ -1311,15 +1299,12 @@
   "no": "Thôi",
   "ok": "Đồng ý",
   "views": "Lượt xem",
-  "export": "Xuất",
   "delete": "Xóa",
-  "import": "Nhập",
   "subscribers": "Đăng Ký",
   "subscriptions": "Đã đăng ký",
   "feed": "Bảng tin",
   "images": "Hình Ảnh",
   "videos": "Video",
-  "create": "Tạo",
   "yesImSure": "Vâng, tôi chắc chắn",
   "cancel": "Hủy bỏ",
   "reject": "Từ chối",
@@ -1333,7 +1318,6 @@
   "loadMore": "Load more",
   "cantLoadMore": "Không thể tải thêm",
   "cantLoad": "Không thể tải",
-  "conversation": "Trò Chuyện",
   "confirm": "Xác nhận",
   "errorMessage": "Ồ. Có vẻ như đã xảy ra lỗi.",
   "error": "Lỗi",
@@ -1355,8 +1339,6 @@
   "setup": "Thiết lập",
   "send": "Gửi",
   "sendTo": "Send to",
-  "passwordPlaceholder": "Mật khẩu",
-  "passwordConmfirmPlaceholder": "Xác nhận mật khẩu..",
   "boost": "Tăng cường",
   "boosted": "Đã tăng cường",
   "follow": "Theo Dõi",
@@ -1366,7 +1348,6 @@
   "edited": "Đã chỉnh sửa",
   "success": "Thành công",
   "createAPost": "Tạo bài đăng",
-  "findChannels": "Tìm kênh",
   "your": "của bạn",
   "their": "của họ",
   "for": "Cho",
@@ -1403,7 +1384,6 @@
   "noInternet": "Không có kết nối internet",
   "cantReachServer": "Không thể truy cập tới máy chủ",
   "showingStored": "Hiển thị dữ liệu đã lưu",
-  "actions": "Hoạt động",
   "notAllowed": "Bạn không được đồng ý thực hiện",
   "undo": "Quay lại",
   "validate": "VALIDATE",
@@ -1416,7 +1396,6 @@
   "title": "Title",
   "filter": "Filter",
   "captcha": "Enter the characters above",
-  "startFreeTrial": "Start free trial",
   "visibility": "Visibility",
   "about": "About",
   "takePhoto": "Take a photo",
@@ -1434,14 +1413,6 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "Help",
   "unblock": "Unblock",
   "earnScreen": {
@@ -1482,7 +1453,6 @@
   "points": "Điểm",
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
-  "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",

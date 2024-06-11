@@ -538,12 +538,6 @@
     "weekly": "Settimanale",
     "never": "Never"
   },
-  "plus": {
-    "freeTrialDesciption": "Inizia la tua prova gratuita per 7 giorni"
-  },
-  "payments": {
-    "confirmDeleteCard": "Vuoi cancellare questa carta?"
-  },
   "reports": {
     "reasons": {
       "1": {
@@ -838,11 +832,6 @@
       "canary": "Canary",
       "branding": "Branding"
     }
-  },
-  "comingSoon": {
-    "try": "Prova l'app Canary a www.minds.com/mobile",
-    "notSupported": "Questa operazione non è supportata dalla tua piattaforma.",
-    "moreInformation": "Più informazioni su"
   },
   "attachment": {
     "tooLong": "La durata del video deve essere inferiore ai {{minutes}} minuti"
@@ -1298,7 +1287,6 @@
   "postCantBeShown": "Non può essere visualizzato sulle app installate tramite lo Store",
   "readMore": "Show More",
   "showLess": "Mostra meno",
-  "featureUnavailablePlatform": "Questa attività non è attualmente disponibile sulla tua piattaforma",
   "continue": "Continua",
   "errorDisplaying": "Errore nel mostrare il contenuto",
   "tapCopyError": "Tocca per copiare l'errore",
@@ -1311,15 +1299,12 @@
   "no": "No",
   "ok": "Ok",
   "views": "Visualizzazioni",
-  "export": "Esporta",
   "delete": "Cancella",
-  "import": "Importa",
   "subscribers": "Iscritti",
   "subscriptions": "Iscrizioni",
   "feed": "Feed",
   "images": "Immagini",
   "videos": "Video",
-  "create": "Crea",
   "yesImSure": "Sì, sono sicuro",
   "cancel": "Cancella",
   "reject": "Rifiuta",
@@ -1333,7 +1318,6 @@
   "loadMore": "Load more",
   "cantLoadMore": "Impossibile caricare altro",
   "cantLoad": "Impossibile caricare",
-  "conversation": "Conversazione",
   "confirm": "Conferma",
   "errorMessage": "Ooops. Sembra ci sia stato un errore.",
   "error": "Errore",
@@ -1355,8 +1339,6 @@
   "setup": "Impostazioni",
   "send": "Invia",
   "sendTo": "Send to",
-  "passwordPlaceholder": "password...",
-  "passwordConmfirmPlaceholder": "conferma password...",
   "boost": "Boost",
   "boosted": "Boostato",
   "follow": "Segui",
@@ -1366,7 +1348,6 @@
   "edited": "Modificato",
   "success": "Successo",
   "createAPost": "Crea post",
-  "findChannels": "Trova canale",
   "your": "tuo",
   "their": "loro",
   "for": "per",
@@ -1403,7 +1384,6 @@
   "noInternet": "Nessuna Connessione Internet",
   "cantReachServer": "Impossibile raggiunngere il server",
   "showingStored": "Mostra dati salvati",
-  "actions": "Azioni",
   "notAllowed": "Non hai il permesso ",
   "undo": "Annulla",
   "validate": "VALIDA",
@@ -1416,7 +1396,6 @@
   "title": "Titolo",
   "filter": "Filtro",
   "captcha": "Inserisci i caratteri sopra",
-  "startFreeTrial": "Start free trial",
   "visibility": "Visibility",
   "about": "Informazioni",
   "takePhoto": "Take a photo",
@@ -1434,14 +1413,6 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "Aiuto",
   "unblock": "Sblocca",
   "earnScreen": {
@@ -1482,7 +1453,6 @@
   "points": "punti",
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
-  "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",

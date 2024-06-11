@@ -538,12 +538,6 @@
     "weekly": "每周的",
     "never": "Never"
   },
-  "plus": {
-    "freeTrialDesciption": "Start your free trial for 7 days"
-  },
-  "payments": {
-    "confirmDeleteCard": "您要删除此卡吗？"
-  },
   "reports": {
     "reasons": {
       "1": {
@@ -838,11 +832,6 @@
       "canary": "加那利州",
       "branding": "品牌化"
     }
-  },
-  "comingSoon": {
-    "try": "试试canary应用程序：www.minds.com/mobile\n\n",
-    "notSupported": "您的平台不支持此功能。\n",
-    "moreInformation": "更多信息在\n"
   },
   "attachment": {
     "tooLong": "视频时长必须小于{{minutes}}分钟\n"
@@ -1298,7 +1287,6 @@
   "postCantBeShown": "Can't be shown on apps installed via the Store",
   "readMore": "Show More",
   "showLess": "显示更少",
-  "featureUnavailablePlatform": "此功能目前在您的平台上不可用\n",
   "continue": "继续",
   "errorDisplaying": "显示内容时出错\n",
   "tapCopyError": "点按即可复制错误\n",
@@ -1311,15 +1299,12 @@
   "no": "不是",
   "ok": "好的",
   "views": "观看",
-  "export": "倒出",
   "delete": "删除",
-  "import": "引入",
   "subscribers": "订阅者",
   "subscriptions": "订阅",
   "feed": "新闻",
   "images": "图片",
   "videos": "视频",
-  "create": "创建",
   "yesImSure": "是的，我确定",
   "cancel": "取消",
   "reject": "拒绝",
@@ -1333,7 +1318,6 @@
   "loadMore": "Load more",
   "cantLoadMore": "不能加载更多了",
   "cantLoad": "无法加载",
-  "conversation": "对话",
   "confirm": "确定",
   "errorMessage": "啊！看来有个错误",
   "error": "错误",
@@ -1355,8 +1339,6 @@
   "setup": "设置",
   "send": "发送",
   "sendTo": "Send to",
-  "passwordPlaceholder": "密码...",
-  "passwordConmfirmPlaceholder": "确认密码...",
   "boost": "提升",
   "boosted": "已提升",
   "follow": "跟随",
@@ -1366,7 +1348,6 @@
   "edited": "编辑",
   "success": "成功",
   "createAPost": "创建一个帖子",
-  "findChannels": "寻找频道",
   "your": "你的",
   "their": "他们的",
   "for": "为了",
@@ -1403,7 +1384,6 @@
   "noInternet": "无网络链接",
   "cantReachServer": "无法到达服务器",
   "showingStored": "显示储存数据",
-  "actions": "活动",
   "notAllowed": "您没有权限",
   "undo": "撤销",
   "validate": "VALIDATE",
@@ -1416,7 +1396,6 @@
   "title": "标题",
   "filter": "筛选器",
   "captcha": "输入上述字符",
-  "startFreeTrial": "Start free trial",
   "visibility": "Visibility",
   "about": "关于",
   "takePhoto": "Take a photo",
@@ -1434,14 +1413,6 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "帮助",
   "unblock": "取消屏蔽",
   "earnScreen": {
@@ -1482,7 +1453,6 @@
   "points": "得分",
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
-  "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",

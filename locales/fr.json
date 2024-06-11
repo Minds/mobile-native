@@ -538,12 +538,6 @@
     "weekly": "Hebdomadaire",
     "never": "Never"
   },
-  "plus": {
-    "freeTrialDesciption": "Start your free trial for 7 days"
-  },
-  "payments": {
-    "confirmDeleteCard": "Voulez-vous supprimer cette carte?"
-  },
   "reports": {
     "reasons": {
       "1": {
@@ -838,11 +832,6 @@
       "canary": "Canarie",
       "branding": "Image de marque"
     }
-  },
-  "comingSoon": {
-    "try": "Essayez l’application Canary sur",
-    "notSupported": "Cette fonctionnalité n'est pas prise en charge par votre plate-forme.",
-    "moreInformation": "Plus d'informations sur"
   },
   "attachment": {
     "tooLong": "La durée de la vidéo doit être inférieure à {{minutes}} minutes."
@@ -1298,7 +1287,6 @@
   "postCantBeShown": "Can't be shown on apps installed via the Store",
   "readMore": "Show More",
   "showLess": "Afficher moins",
-  "featureUnavailablePlatform": "Cette fonctionnalité est actuellement indisponible sur votre plateforme.",
   "continue": "Continuer",
   "errorDisplaying": "Erreur d'affichage du contenu",
   "tapCopyError": "Cliquer pour copier l'erreur",
@@ -1311,15 +1299,12 @@
   "no": "Non",
   "ok": "OK",
   "views": "Vues",
-  "export": "Exporter",
   "delete": "Supprimer",
-  "import": "Importer",
   "subscribers": "Abonnés",
   "subscriptions": "Abonnements",
   "feed": "Fil",
   "images": "Images",
   "videos": "Vidéos",
-  "create": "Créer",
   "yesImSure": "Oui, je suis sûr",
   "cancel": "Annuler",
   "reject": "Rejeter",
@@ -1333,7 +1318,6 @@
   "loadMore": "Load more",
   "cantLoadMore": "Impossible de charger plus",
   "cantLoad": "Chargement impossible",
-  "conversation": "Conversation",
   "confirm": "Confirmer",
   "errorMessage": "Désolé, il semble qu'il y ait eu une erreur.",
   "error": "Erreur",
@@ -1355,8 +1339,6 @@
   "setup": "Installer",
   "send": "Envoyer",
   "sendTo": "Send to",
-  "passwordPlaceholder": "mot de passe...",
-  "passwordConmfirmPlaceholder": "confirmer le mot de passe...",
   "boost": "Boost",
   "boosted": "Boosté",
   "follow": "Suivre",
@@ -1366,7 +1348,6 @@
   "edited": "Édité",
   "success": "Succès",
   "createAPost": "Créer un post",
-  "findChannels": "Trouver des chaînes",
   "your": "votre",
   "their": "leur",
   "for": "pour",
@@ -1403,7 +1384,6 @@
   "noInternet": "Pas de connexion Internet",
   "cantReachServer": "Impossible d'atteindre le serveur",
   "showingStored": "Affichage des données stockées",
-  "actions": "Actes",
   "notAllowed": "Vous n'êtes pas autorisé",
   "undo": "Annuler",
   "validate": "VALIDATE",
@@ -1416,7 +1396,6 @@
   "title": "Titre de la page",
   "filter": "Filtre",
   "captcha": "Entrez les caractères ci-dessus",
-  "startFreeTrial": "Start free trial",
   "visibility": "Visibility",
   "about": "À propos de",
   "takePhoto": "Take a photo",
@@ -1434,14 +1413,6 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "Aide",
   "unblock": "Débloquer",
   "earnScreen": {
@@ -1482,7 +1453,6 @@
   "points": "points",
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
-  "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",

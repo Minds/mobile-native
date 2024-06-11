@@ -1,15 +1,4 @@
 {
-  "date": {
-    "formats": {
-      "small": "%b %-d, %Y",
-      "medium": "%a, %b %-d, %Y"
-    }
-  },
-  "datetime": {
-    "formats": {
-      "small": "%b %-d, %Y %-I:%M%p"
-    }
-  },
   "activity": {
     "loadEarlier": "LOAD EARLIER",
     "loadLater": "LOAD LATER",
@@ -397,9 +386,6 @@
     "referral_pending": "Referral Pending",
     "referral_complete": "Referral Complete"
   },
-  "payments": {
-    "confirmDeleteCard": "Do you want to delete this card?"
-  },
   "reports": {
     "reasons": {
       "1": {
@@ -582,11 +568,6 @@
       "d": "INFO",
       "d1": "App"
     }
-  },
-  "comingSoon": {
-    "try": "Try the canary app at",
-    "notSupported": "This feature is not supported by your platform.",
-    "moreInformation": "More information at"
   },
   "attachment": {
     "tooLong": "Video duration must be less than {{minutes}} minutes"
@@ -860,7 +841,6 @@
   "postCantBeShown": "This post can't be shown on apps installed via the Play Store.",
   "readMore": "Read More",
   "showLess": "Show less",
-  "featureUnavailablePlatform": "This feature is currently unavailable on your platform",
   "continue": "Continue",
   "errorDisplaying": "Error displaying the content",
   "tapCopyError": "Tap to copy the error",
@@ -872,15 +852,12 @@
   "no": "No",
   "ok": "Ok",
   "views": "Views",
-  "export": "Export",
   "delete": "Delete",
-  "import": "Import",
   "subscribers": "Subscribers",
   "subscriptions": "Subscriptions",
   "feed": "Feed",
   "images": "Images",
   "videos": "Videos",
-  "create": "Create",
   "yesImSure": "Yes, I'm sure",
   "cancel": "Cancel",
   "reject": "Reject",
@@ -893,7 +870,6 @@
   "confirmMessage": "Are you sure?",
   "cantLoadMore": "Can't load more",
   "cantLoad": "Can't load",
-  "conversation": "Conversation",
   "confirm": "Confirm",
   "errorMessage": "Sorry, it looks like there was an error.",
   "error": "Error",
@@ -914,8 +890,6 @@
   "unlockPost": "Unlock Post",
   "setup": "Setup",
   "send": "Send",
-  "passwordPlaceholder": "password...",
-  "passwordConmfirmPlaceholder": "confirm password...",
   "boost": "Boost",
   "boosted": "Boosted",
   "follow": "Follow",
@@ -925,7 +899,6 @@
   "edited": "Edited",
   "success": "Success",
   "createAPost": "Create a post",
-  "findChannels": "Find channels",
   "your": "your",
   "their": "their",
   "for": "for",
@@ -958,7 +931,6 @@
   "noInternet": "No Internet Connection",
   "cantReachServer": "Can't reach the server",
   "showingStored": "Showing stored data",
-  "actions": "Actions",
   "notAllowed": "You are not allowed",
   "undo": "Undo",
   "validate": "VALIDATE",
@@ -970,7 +942,7 @@
   "filter": "Filter",
   "captcha": "Enter the characters above",
   "about": "About",
-  "purchase": "Purchase",
   "verify": "Verify",
-  "other": "Other"
+  "other": "Other",
+  "purchase": "Purchase"
 }

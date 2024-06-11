@@ -538,12 +538,6 @@
     "weekly": "साप्ताहिक",
     "never": "Never"
   },
-  "plus": {
-    "freeTrialDesciption": "Start your free trial for 7 days"
-  },
-  "payments": {
-    "confirmDeleteCard": "क्या आप इस कार्ड को हटाना चाहते हैं?"
-  },
   "reports": {
     "reasons": {
       "1": {
@@ -838,11 +832,6 @@
       "canary": "Canary",
       "branding": "ब्रांडिंग"
     }
-  },
-  "comingSoon": {
-    "try": "यहां Canary ऐप आज़माएं",
-    "notSupported": "यह फ़ीचर आपके प्लेटफ़ॉर्म द्वारा समर्थित नहीं है।",
-    "moreInformation": "पर अधिक जानकारी"
   },
   "attachment": {
     "tooLong": "वीडियो की अवधि {{minutes}} मिनट से कम होनी चाहिए"
@@ -1298,7 +1287,6 @@
   "postCantBeShown": "Can't be shown on apps installed via the Store",
   "readMore": "Show More",
   "showLess": "कम दिखाएं",
-  "featureUnavailablePlatform": "यह फ़ीचर वर्तमान में आपके प्लेटफ़ॉर्म पर अनुपलब्ध है",
   "continue": "जारी रहें",
   "errorDisplaying": "कंटेंट डिस्प्ले करने में त्रुटि",
   "tapCopyError": "त्रुटि को कॉपी करने के लिए टैप करें",
@@ -1311,15 +1299,12 @@
   "no": "नहीं",
   "ok": "ठीक",
   "views": "दृश्य",
-  "export": "निर्यात",
   "delete": "हटाना",
-  "import": "आयात",
   "subscribers": "सदस्य",
   "subscriptions": "सदस्यता",
   "feed": "फ़ीड",
   "images": "तस्वीरें",
   "videos": "वीडियो",
-  "create": "निर्माण",
   "yesImSure": "हाँ मुझे यकीन है",
   "cancel": "रद्द",
   "reject": "अस्वीकार",
@@ -1333,7 +1318,6 @@
   "loadMore": "Load more",
   "cantLoadMore": "अधिक लोड नहीं कर सकते",
   "cantLoad": "लोड नहीं कर सकता",
-  "conversation": "बातचीत",
   "confirm": "पुष्टि करें",
   "errorMessage": "ओह। लगता है कि कोई त्रुटि थी।",
   "error": "त्रुटि",
@@ -1355,8 +1339,6 @@
   "setup": "सेट अप",
   "send": "भेजें",
   "sendTo": "Send to",
-  "passwordPlaceholder": "पासवर्ड ",
-  "passwordConmfirmPlaceholder": "पासवर्ड की पुष्टि करें...",
   "boost": "बढ़ावा",
   "boosted": "बढ़ाया",
   "follow": "अनुसरण करें",
@@ -1366,7 +1348,6 @@
   "edited": "संपादित",
   "success": "सफलता",
   "createAPost": "एक पोस्ट बनाएँ",
-  "findChannels": "चैनल खोजें",
   "your": "तुम्हारा",
   "their": "उनका",
   "for": "के लिये",
@@ -1403,7 +1384,6 @@
   "noInternet": "कोई इंटरनेट कनेक्शन नहीं",
   "cantReachServer": "सर्वर तक नहीं पहुंच सकता",
   "showingStored": "संग्रहित डेटा दिखा रहा है",
-  "actions": "क्रिया",
   "notAllowed": "आपको अनुमति नहीं है",
   "undo": "पहले जैसा करें",
   "validate": "VALIDATE",
@@ -1416,7 +1396,6 @@
   "title": "शीर्षक",
   "filter": "फ़िल्टर",
   "captcha": "ऊपर वर्ण दर्ज करें",
-  "startFreeTrial": "Start free trial",
   "visibility": "Visibility",
   "about": "About",
   "takePhoto": "Take a photo",
@@ -1434,14 +1413,6 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "मदद",
   "unblock": "Unblock",
   "earnScreen": {
@@ -1482,7 +1453,6 @@
   "points": "अंक",
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
-  "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",

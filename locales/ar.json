@@ -538,12 +538,6 @@
     "weekly": "أسبوعيا",
     "never": "Never"
   },
-  "plus": {
-    "freeTrialDesciption": "Start your free trial for 7 days"
-  },
-  "payments": {
-    "confirmDeleteCard": "هل تريد حذف هذه البطاقة؟"
-  },
   "reports": {
     "reasons": {
       "1": {
@@ -838,11 +832,6 @@
       "canary": "الكناري",
       "branding": "العلامة"
     }
-  },
-  "comingSoon": {
-    "try": "جرب تطبيق الكناري في",
-    "notSupported": "هذه الميزة غير مدعومة من المنصة الخاصة بك.",
-    "moreInformation": "معلومات إضافية على"
   },
   "attachment": {
     "tooLong": "مدة الفيديو يجب أن تكون أقل من {{minutes}} دقيقة"
@@ -1298,7 +1287,6 @@
   "postCantBeShown": "Can't be shown on apps installed via the Store",
   "readMore": "Show More",
   "showLess": "إظهار أقل",
-  "featureUnavailablePlatform": "هذه الميزة غير متوفرة حاليا على المنصة الخاصة بك",
   "continue": "متابعة",
   "errorDisplaying": "خطأ في عرض المحتوى",
   "tapCopyError": "انقر لنسخ الخطأ",
@@ -1311,15 +1299,12 @@
   "no": "لا",
   "ok": "حسناً",
   "views": "المشاهدات",
-  "export": "تصدير",
   "delete": "حذف",
-  "import": "استيراد",
   "subscribers": "المشتركون",
   "subscriptions": "اشتراكات",
   "feed": "تغذية",
   "images": "الصور",
   "videos": "فيديوهات",
-  "create": "إنشاء",
   "yesImSure": "نعم، أنا متأكد",
   "cancel": "إلغاء",
   "reject": "رفض",
@@ -1333,7 +1318,6 @@
   "loadMore": "Load more",
   "cantLoadMore": "لا يمكن تحميل المزيد",
   "cantLoad": "لا يمكن التحميل",
-  "conversation": "محادثة",
   "confirm": "تأكيد",
   "errorMessage": "عذراً، يبدو أن هناك خطأ.",
   "error": "خطأ",
@@ -1355,8 +1339,6 @@
   "setup": "الإعداد",
   "send": "إرسال",
   "sendTo": "Send to",
-  "passwordPlaceholder": "كلمة المرور...",
-  "passwordConmfirmPlaceholder": "تأكيد كلمة المرور...",
   "boost": "تعزيز",
   "boosted": "معززة",
   "follow": "اتبع",
@@ -1366,7 +1348,6 @@
   "edited": "تعديل",
   "success": "نجاح",
   "createAPost": "إنشاء مشاركة",
-  "findChannels": "البحث عن القنوات",
   "your": "الخاص بك",
   "their": "هم",
   "for": "من أجل",
@@ -1403,7 +1384,6 @@
   "noInternet": "لا يوجد اتصال بالإنترنت",
   "cantReachServer": "لا يمكن الوصول إلى الخادم",
   "showingStored": "عرض البيانات المخزنة",
-  "actions": "الإجراءات",
   "notAllowed": "غير مسموح لك",
   "undo": "التراجع",
   "validate": "VALIDATE",
@@ -1416,7 +1396,6 @@
   "title": "العنوان",
   "filter": "تصفية",
   "captcha": "أدخل الأحرف أعلاه",
-  "startFreeTrial": "Start free trial",
   "visibility": "Visibility",
   "about": "حول",
   "takePhoto": "Take a photo",
@@ -1434,14 +1413,6 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "مساعدة",
   "unblock": "إلغاء الحظر",
   "earnScreen": {
@@ -1482,7 +1453,6 @@
   "points": "نقاط",
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
-  "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",

@@ -538,12 +538,6 @@
     "weekly": "รายสัปดาห์",
     "never": "Never"
   },
-  "plus": {
-    "freeTrialDesciption": "Start your free trial for 7 days"
-  },
-  "payments": {
-    "confirmDeleteCard": "คุณต้องการลบบัตรใบนี้ใช่หรือไม่"
-  },
   "reports": {
     "reasons": {
       "1": {
@@ -838,11 +832,6 @@
       "canary": "ทดลอง",
       "branding": "การสร้างแบรนด์"
     }
-  },
-  "comingSoon": {
-    "try": "ทดลอง canary app ที่ www.minds.com/mobile",
-    "notSupported": "แพลตฟอร์มของคุณยังไม่รองรับฟีเจอร์นี้",
-    "moreInformation": "ข้อมูลเพิ่มเติมที่"
   },
   "attachment": {
     "tooLong": "ระยะเวลาของวิดีโอต้องน้อยกว่า {{minutes}} นาที"
@@ -1298,7 +1287,6 @@
   "postCantBeShown": "Can't be shown on apps installed via the Store",
   "readMore": "Show More",
   "showLess": "แสดงน้อยลง",
-  "featureUnavailablePlatform": "ฟีเจอร์นี้ไม่สามารถใช้งานบนแพลตฟอร์มของคุณได้ในขณะนี้",
   "continue": "ต่อไป",
   "errorDisplaying": "ข้อผิดพลาดในการแสดงเนื้อหา",
   "tapCopyError": "แตะเพื่อคัดลอกข้อผิดพลาด",
@@ -1311,15 +1299,12 @@
   "no": "ไม่ใช่",
   "ok": "ตกลง",
   "views": "ยอดเข้าชม",
-  "export": "ส่งออก",
   "delete": "ลบ",
-  "import": "นำเข้า",
   "subscribers": "สมาชิก",
   "subscriptions": "การสมัครสมาชิก",
   "feed": "ฟีด",
   "images": "รูปภาพ",
   "videos": "วิดีโอ",
-  "create": "สร้าง",
   "yesImSure": "ใช่ ฉันแน่ใจ",
   "cancel": "ยกเลิก",
   "reject": "ปฏิเสธ",
@@ -1333,7 +1318,6 @@
   "loadMore": "โหลดเพิ่ม",
   "cantLoadMore": "ไม่สามารถโหลดเพิ่มได้",
   "cantLoad": "ไม่สามารถโหลด",
-  "conversation": "การสนทนา",
   "confirm": "ยืนยัน",
   "errorMessage": "ขอโทษด้วย ดูเหมือนจะมีข้อผิดพลาด",
   "error": "ข้อผิดพลาด",
@@ -1355,8 +1339,6 @@
   "setup": "ตั้งค่า",
   "send": "ส่ง",
   "sendTo": "Send to",
-  "passwordPlaceholder": "รหัสผ่าน...",
-  "passwordConmfirmPlaceholder": "ยืนยันรหัสผ่าน",
   "boost": "บูสต์",
   "boosted": "Boost แล้ว",
   "follow": "ติดตาม",
@@ -1366,7 +1348,6 @@
   "edited": "ถูกแก้ไข",
   "success": "สำเร็จ",
   "createAPost": "สร้างโพสต์",
-  "findChannels": "ค้นหาแชนแนล",
   "your": "ของคุณ",
   "their": "ของพวกเขา",
   "for": "สำหรับ",
@@ -1403,7 +1384,6 @@
   "noInternet": "ไม่มีการเชื่อมต่ออินเทอร์เน็ต",
   "cantReachServer": "ไม่สามารถเข้าถึงเซิร์ฟเวอร์",
   "showingStored": "แสดงข้อมูลที่เก็บไว้",
-  "actions": "การกระทำ",
   "notAllowed": "คุณไม่ได้รับอนุญาต",
   "undo": "ยกเลิก",
   "validate": "ตรวจสอบ",
@@ -1416,7 +1396,6 @@
   "title": "หัวเรื่อง",
   "filter": "ตัวกรอง",
   "captcha": "ใส่ตัวอักษรที่ปรากฎข้างบน",
-  "startFreeTrial": "Start free trial",
   "visibility": "การมองเห็น",
   "about": "เกี่ยวกับ",
   "takePhoto": "Take a photo",
@@ -1434,14 +1413,6 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "ช่วยเหลือ",
   "unblock": "ยกเลิกบล็อค",
   "earnScreen": {
@@ -1482,7 +1453,6 @@
   "points": "เเต้ม",
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
-  "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",

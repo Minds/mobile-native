@@ -538,12 +538,6 @@
     "weekly": "Weekly",
     "never": "Never"
   },
-  "plus": {
-    "freeTrialDesciption": "Start your free trial for 7 days"
-  },
-  "payments": {
-    "confirmDeleteCard": "このカードを削除しますか？"
-  },
   "reports": {
     "reasons": {
       "1": {
@@ -838,11 +832,6 @@
       "canary": "カナリー",
       "branding": "Branding"
     }
-  },
-  "comingSoon": {
-    "try": "www.minds.com/mobile でカナリーアプリを試す",
-    "notSupported": "この機能はあなたのプラットフォームには対応していません。",
-    "moreInformation": "より詳しい情報は"
   },
   "attachment": {
     "tooLong": "ビデオの長さは{{minutes}} 分より短くなくてはいけません"
@@ -1298,7 +1287,6 @@
   "postCantBeShown": "Can't be shown on apps installed via the Store",
   "readMore": "Show More",
   "showLess": "表示を少なくする",
-  "featureUnavailablePlatform": "この機能はあなたのプラットフォームで現在使用できません。",
   "continue": "続ける",
   "errorDisplaying": "コンテンツ表示エラー",
   "tapCopyError": "タップしてエラーをコピー",
@@ -1311,15 +1299,12 @@
   "no": "いいえ",
   "ok": "オーケー",
   "views": "閲覧",
-  "export": "エクスポート",
   "delete": "削除",
-  "import": "インポート",
   "subscribers": "加入者",
   "subscriptions": "申し込み",
   "feed": "フィード",
   "images": "画像",
   "videos": "ビデオ",
-  "create": "作成",
   "yesImSure": "はい、確かです",
   "cancel": "キャンセル",
   "reject": "却下",
@@ -1333,7 +1318,6 @@
   "loadMore": "Load more",
   "cantLoadMore": "これ以上読み込めません",
   "cantLoad": "読み込めません",
-  "conversation": "会話",
   "confirm": "確認",
   "errorMessage": "おっと、エラーが発生したようです。",
   "error": "エラー",
@@ -1355,8 +1339,6 @@
   "setup": "設定",
   "send": "送信",
   "sendTo": "Send to",
-  "passwordPlaceholder": "パスワード...",
-  "passwordConmfirmPlaceholder": "パスワード確認...",
   "boost": "ブースト",
   "boosted": "Boost中",
   "follow": "フォロー",
@@ -1366,7 +1348,6 @@
   "edited": "編集済み",
   "success": "成功",
   "createAPost": "投稿を作成",
-  "findChannels": "チャンネルを探す",
   "your": "あなたの",
   "their": "彼らの",
   "for": "に",
@@ -1403,7 +1384,6 @@
   "noInternet": "インターネット接続無し",
   "cantReachServer": "サーバーに到達できません。",
   "showingStored": "保存されたデータを表示する。",
-  "actions": "行動",
   "notAllowed": "許可されていません。",
   "undo": "元に戻す。",
   "validate": "VALIDATE",
@@ -1416,7 +1396,6 @@
   "title": "タイトル",
   "filter": "フィルター",
   "captcha": "上記の文字を入力してください",
-  "startFreeTrial": "Start free trial",
   "visibility": "Visibility",
   "about": "About",
   "takePhoto": "Take a photo",
@@ -1434,14 +1413,6 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "ヘルプ",
   "unblock": "ブロックを解除",
   "earnScreen": {
@@ -1482,7 +1453,6 @@
   "points": "ポイント",
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
-  "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",

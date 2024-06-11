@@ -538,12 +538,6 @@
     "weekly": "Еженедельно",
     "never": "Never"
   },
-  "plus": {
-    "freeTrialDesciption": "Start your free trial for 7 days"
-  },
-  "payments": {
-    "confirmDeleteCard": "Вы хотите удалить эту карту?"
-  },
   "reports": {
     "reasons": {
       "1": {
@@ -838,11 +832,6 @@
       "canary": "Канал",
       "branding": "Branding"
     }
-  },
-  "comingSoon": {
-    "try": "Попробуйте приложение canary на www.minds.com/mobile",
-    "notSupported": "Это функция не поддерживается вашей платформой.",
-    "moreInformation": "Больнее информации"
   },
   "attachment": {
     "tooLong": "Продолжительность видео должна быть меньше {{minutes}} минут"
@@ -1298,7 +1287,6 @@
   "postCantBeShown": "Can't be shown on apps installed via the Store",
   "readMore": "Show More",
   "showLess": "Показать меньше",
-  "featureUnavailablePlatform": "Это функция в настоящий момент недоступна на вшей платформе",
   "continue": "Продолжить",
   "errorDisplaying": "Ошибка отображения контента",
   "tapCopyError": "Нажмите, чтобы скопировать текст ошибки",
@@ -1311,15 +1299,12 @@
   "no": "Нет",
   "ok": "Хорошо",
   "views": "Просмотры",
-  "export": "Экспортировать",
   "delete": "Удалить",
-  "import": "Импортировать",
   "subscribers": "Подписчики",
   "subscriptions": "Подписки",
   "feed": "Лента новостей",
   "images": "Изображения",
   "videos": "Видео",
-  "create": "Создать",
   "yesImSure": "Да, я уверен",
   "cancel": "Отменить",
   "reject": "Отклонить",
@@ -1333,7 +1318,6 @@
   "loadMore": "Load more",
   "cantLoadMore": "Невозможно загрузить больше",
   "cantLoad": "Невозможно загрузить",
-  "conversation": "Разговор",
   "confirm": "Подтвердить",
   "errorMessage": "Ой. Кажется, возникла ошибка.",
   "error": "Ошибка",
@@ -1355,8 +1339,6 @@
   "setup": "Настроить",
   "send": "Отправить",
   "sendTo": "Send to",
-  "passwordPlaceholder": "пароль...",
-  "passwordConmfirmPlaceholder": "подтвердить пароль...",
   "boost": "Ускорить",
   "boosted": "Усилено",
   "follow": "Следить",
@@ -1366,7 +1348,6 @@
   "edited": "Отредактированный",
   "success": "Успех",
   "createAPost": "Создать публикацию",
-  "findChannels": "Найти каналы",
   "your": "ваш",
   "their": "их",
   "for": "для",
@@ -1403,7 +1384,6 @@
   "noInternet": "Отсутствует интернет соединение",
   "cantReachServer": "Сервер недоступен",
   "showingStored": "Показаны данные из хранилища",
-  "actions": "Действия",
   "notAllowed": "Вам не разрешено",
   "undo": "Не может быть отменено",
   "validate": "VALIDATE",
@@ -1416,7 +1396,6 @@
   "title": "Заголовок",
   "filter": "Фильтр",
   "captcha": "Введите символы выше",
-  "startFreeTrial": "Start free trial",
   "visibility": "Visibility",
   "about": "О программе",
   "takePhoto": "Take a photo",
@@ -1434,14 +1413,6 @@
   "remindRemoved": "Remind has been removed",
   "deletedRemind": "This reminded content is unavailable. It may have been deleted or you do not have permission to view it",
   "undoRemind": "Undo remind",
-  "permaweb": {
-    "title": "Permaweb",
-    "description": "Posting to permaweb",
-    "terms": "Please check the box to confirm that you understand the terms of usage for the permaweb. I have read and agree to the Terms and confirm have all necessary rights with regard to any data, information or other material (“Stored Material”) which I post or upload to Minds and the Arweave network (or Permaweb). I also understand that this content cannot be deleted from the Permaweb.",
-    "processingTime": "It may take up to an hour for your post to appear on the Permaweb. Please be patient while your freedom processes.",
-    "cannotMonetize": "Cannot post monetized posts to permaweb",
-    "viewOnPermaweb": "Permaweb"
-  },
   "help": "Справка",
   "unblock": "Разблокировать",
   "earnScreen": {
@@ -1482,7 +1453,6 @@
   "points": "баллы",
   "mindsPlusFeature": "Minds+ Feature",
   "browserOnly": "Browser Only",
-  "clickHere": "click here",
   "enabled": "Enabled",
   "copyToClipboard": "Copy to Clipboard",
   "emptyList": "Sorry the list is empty",

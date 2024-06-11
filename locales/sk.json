@@ -1,15 +1,4 @@
 {
-  "date": {
-    "formats": {
-      "small": "%b %-d, %Y",
-      "medium": "%a, %b %-d, %Y"
-    }
-  },
-  "datetime": {
-    "formats": {
-      "small": "%b %-d, %Y %-I:%M%p"
-    }
-  },
   "activity": {
     "loadEarlier": "NAČÍTAŤ SKORŠIE",
     "typeComment": "Zadajte svoj komentár...",
@@ -18,6 +7,39 @@
     "loadLater": "NAČÍTAŤ NESKÔR",
     "remindBlocked": "Toto pripomenutie nie je dostupné, lebo ste zablokovali",
     "scheduled": "Táto aktivita je naplánovaná na zobrazenie"
+  },
+  "permissions": {
+    "externalStorage": "Minds potrebuje prístup k vášmu externému úložisku, aby ste mohli nahrávať úžasné obrázky.",
+    "writeExternalStorage": "Minds potrebuje prístup k vášmu externému úložisku, aby ste mohli sťahovať úžasné obrázky.",
+    "sms": "Minds potrebuje prístup k čítaniu SMS pre automatické zistenie overovacieho kódu.",
+    "camera": "Minds potrebuje prístup k vášmu externému fotoaparátu, aby ste mohli nahrávať úžasné fotky.",
+    "notAllowed": {
+      "appoint_admin": "Nemáte povolenie ustanoviť správcu",
+      "appoint_moderator": "Nemáte povolenie ustanoviť moderátora",
+      "approve_subscriber": "Nemáte povolenie schváliť odberateľa",
+      "create_channel": "Nemáte povolenie vytvoriť kanál",
+      "create_comment": "Nemáte povolenie vytvoriť komentár",
+      "create_group": "Nemáte povolenie vytvoriť skupinu",
+      "create_post": "Nemáte povolenie vytvoriť príspevok",
+      "delete_channel": "Nemáte povolenie odstrániť tento kanál",
+      "delete_comment": "Nemáte povolenie odstrániť tento komentár",
+      "delete_group": "Nemáte povolenie odstrániť túto skupinu",
+      "delete_post": "Nemáte povolenie odstrániť tento príspevok",
+      "edit_channel": "Nemáte povolenie upraviť tento kanál",
+      "edit_comment": "Nemáte povolenie upraviť tento komentár",
+      "edit_group": "Nemáte povolenie upraviť túto skupinu",
+      "edit_post": "Nemáte povolenie upraviť tento príspevok",
+      "invite": "Nemáte povolenie pozývať",
+      "join": "Nemáte povolenie pridať sa",
+      "gathering": "Nemáte povolenie pridať sa k tomuto zhromaždeniu",
+      "message": "Nemáte povolenie poslať správu tomuto používateľovi",
+      "subscribe": "Nemáte povolenie prihlásiť sa na odber",
+      "tag": "Nemáte povolenie označiť tento obsah",
+      "remind": "Nemáte povolenie pripomenúť tento obsah",
+      "wire": "Nemáte povolenie odoslať platbu wire tomuto používateľovi",
+      "view": "Nemáte povolenie zobraziť tento obsah",
+      "vote": "Nemáte povolenie hlasovať o tomto obsahu"
+    }
   },
   "auth": {
     "login": "PRIHLÁSENIE",
@@ -143,6 +165,17 @@
     },
     "errorGet": "Ajaj, nepodarilo sa získať boosty"
   },
+  "translate": {
+    "from": "preložené z",
+    "translate": "Preložiť",
+    "changeLanguage": "Zmeniť jazyk",
+    "error": "Pri preklade sa vyskytla chyba."
+  },
+  "hashtags": {
+    "exists": "Tag už existuje",
+    "preferred": "Preferované",
+    "hold": "Podržte pre výber iba jedného"
+  },
   "capture": {
     "couldNotLoad": "Médiá z {{domain}} sa nepodarilo načítať.",
     "post": "PRÍSPEVOK",
@@ -245,6 +278,11 @@
     "boostfeed": "BOOSTOVANÉ NOVINKY",
     "designYourChannel": "Navrhnite si svoj kanál",
     "empty": "Vaše novinky sú prázdne"
+  },
+  "comments": {
+    "successRemoving": "Komentár bol úspešne odstránený",
+    "comments": "Komentáre",
+    "errorRemoving": "Chyba pri odstraňovaní komentára"
   },
   "notification": {
     "boostAccepted": "Bolo prijatých {{count}} tokenov &{description}&.",
@@ -389,6 +427,9 @@
       "10": {
         "label": "Porušuje moje autorské práva"
       },
+      "11": {
+        "label": "Iný dôvod"
+      },
       "12": {
         "label": "Nesprávne použitie hashtagov"
       },
@@ -400,9 +441,6 @@
       },
       "16": {
         "label": "Manipulácia tokenov"
-      },
-      "11": {
-        "label": "Iný dôvod"
       }
     },
     "DMCA": "Odošlite, prosím, oznámenie DMCA na adresu copyright@minds.com.",
@@ -438,10 +476,54 @@
     "logOnlyErrors": "Zaznamenaj iba chyby",
     "leftHandedMode": "Režim pre ľavákov"
   },
-  "comingSoon": {
-    "try": "Vyskúšajte canary aplikáciu na www.minds.com/mobile  ",
-    "notSupported": "Vaša platforma nepodporuje túto funkciu.",
-    "moreInformation": "Viac informácií na  "
+  "attachment": {
+    "tooLong": "Dĺžka videa musí byť menej ako {{minutes}} minút"
+  },
+  "onboarding": {
+    "welcome": "Vitajte v Minds!",
+    "welcome1": "Skôr ako začneme, potrebujeme vedieť zopár vecí, aby sme vám mohli poskytnúť čo najlepšiu skúsenosť.",
+    "welcome2": "Otázka na začiatok: ako často uverejňujete príspevky na sociálnych médiách?",
+    "chooseAvatar": "Zvoľte si avatar",
+    "chooseName": "Zvoľte si zobrazované meno",
+    "describeChannel": "V krátkosti popíšte svoj kanál",
+    "hashtagSelect": "O aké témy sa zaujímate?",
+    "earnTokens": "Zarábajte tokeny za svoju aktivitu",
+    "weDontStorePhone": "Vaše telefónne číslo neuchovávame na našich serveroch.",
+    "suggestedChannels": "Navrhované kanály",
+    "suggestedChannelsDescription": "Prihláste sa na odber niektorého z populárnych kanálov nižšie na základe vašich záujmov",
+    "suggestedGroups": "Navrhované skupiny",
+    "suggestedGroupsDescription": "Pridajte sa k niektorej z populárnych skupín nižšie na základe vašich záujmov",
+    "tokensCanBeUsed": "Tokeny možno použiť na podporu iných kanálov alebo na boostovanie obsahu pre ďalšie zhliadnutia (1 token = 1 000 zhliadnutí). Aby ste mohli získavať tokeny, budeme potrebovať vaše telefónne číslo kvôli overeniu, že váš kanál je jedinečný.",
+    "yourAreReady": "Teraz máte všetko nastavené a ste pripravení začať!",
+    "readyDescription1": "Super! Úspešne ste si nastavili peňaženku, aby ste mohli prijímať odmeny a onchainové i offchainové platby.",
+    "readyDescription2": "Ak sa chcete dozvedieť viac o tokenoch a kryptomenách, navštívte kedykoľvek sekciu &{tokens}& nižšie, kde nájdete kurzy, videá a často kladené otázky (FAQ).",
+    "moreOnRewards": "VIAC O ODMENÁCH",
+    "moreAboutWire": "ĎALŠIE INFORMÁCIE O WIREI",
+    "moreAboutBoost": "ĎALŠIE INFORMÁCIE O BOOSTE",
+    "startEarning": "Aby ste mohli začať získavať odmeny, musíte zadať jedinečné telefónne číslo.",
+    "phoneNumber": "Telefónne číslo",
+    "weJustSentCode": "Práve sme odoslali kód na {{phone}} pre overenie správnosti vášho čísla.",
+    "confirmationCode": "Potvrdzovací kód",
+    "rewardsDescription": "Tokeny môžete získavať za svoje príspevky v sieti Minds. Čím viac interakcií zaznamená váš obsah, tým väčší podiel z denného množstva tokenových odmien poputuje na vašu offchainovú adresu.",
+    "rewardsNote": "Poznámka: Minds neuchováva telefónne čísla, ktoré poskytneš. Čísla sú hašované pomocou SHA-256 a sú kombinované s kľúčom salt (salt key) na účely ochrany súkromia.",
+    "ensureYouExportKey": "Daj si pozor, aby si si VYEXPORTOVAL/A a urobil/a zálohu svojho kľúča pred odinštalovaním alebo výmazaním údajov aplikácie, inak prídeš o všetky svoje prostriedky. Export možno urobiť z obrazovky s podrobnosťami adresy.",
+    "6digitDescription": "Pre vytvorenie novej adresy peňaženky zadajte heslo kľúčenky",
+    "6digitConfirm": "Prosím, potvrďte ešte raz svoje heslo kľúčenky. Po jeho potvrdení sa na tomto zariadení vytvorí vaša peňaženka a priradí sa k vášmu účtu.",
+    "6digitAlreadySetup": "Heslo kľúčenky je už nastavené, teraz je ešte potrebné, aby ste potvrdili vytvorenie peňaženky. Po potvrdení sa peňaženka vytvorí na tomto zariadení a bude priradená k vášmu účtu.",
+    "passwordInvalid": "Heslo musí mať najmenej 6 znakov a môže obsahovať alfanumerické znaky alebo symboly.",
+    "pinAlreadySetup": "KĽÚČENKA BOLA UŽ NASTAVENÁ",
+    "skip": "PRESKOČIŤ, NEMÁM ZÁUJEM",
+    "setupOnchianAddress": "Nastavte svoju OnChain adresu",
+    "onchainDescription1": "Aby ste mohli prijímať OnChain platby z iných kanálov (napr. z Wireu alebo Boostu), budete nám musieť oznámiť, na ktorú adresu máme tieto tokeny smerovať.",
+    "onchainDescription2": "Táto adresa bude uvedená vo vašej peňaženke ako „Adresa príjemcu“ a možno ju kedykoľvek zmeniť.",
+    "onchainDescription3": "OnChain adresy a ich súkromné kľúče sú uložené lokálne v šifrovanom priestore úložiska. Budú k dispozícii akémukoľvek kanálu, ktorý je práve prihlásený na tomto zariadení.",
+    "welcomToWallet": "Vitajte vo svojej peňaženke",
+    "tokensDescription": "Tokeny sú kryptomenou používanou v rámci Minds. Váš celkový zostatok tokenov bude uchovávaný v dvoch odlišných typoch adries.",
+    "onchainDescription": "OnChain platby budú zverejňované na verejnom blockchaine a vyžadujú malý poplatok gas v ETH. Môžete si nastaviť svoje vlastné súkromné kľúče alebo si vytvoriť nové peňaženky.",
+    "offchainDescription": "OffChain platby nebudú zverejnené na blockchaine a majú výdavkové limity. Na túto adresu budete dostávať odmeny.",
+    "rewardsDescription1": "Čím viac interakcií zaznamená váš obsah, tým väčší podiel tokenov z denného fondu odmien príde na vašu offchain adresu.",
+    "ensureYouExportKey1": "Export je možné vykonať z obrazovky s podrobnosťami o adrese.",
+    "6digitDescription1": "ktoré bude použité na zašifrovanie vášho súkromného kľúča na tomto zariadení."
   },
   "wallet": {
     "address": "Adresa",
@@ -513,13 +595,6 @@
     "email": "Neplatný e-mail",
     "number": "Neplatné číslo"
   },
-  "imagePicker": {
-    "gallery": "Vyberte z galérie",
-    "camera": "Vytvorte novú fotku",
-    "cancel": "Zrušiť",
-    "deniedExternal": "Odmietli ste povolenia k externému úložisku pre Minds",
-    "deniedCamera": "Odmietli ste povolenia k fotoaparátu pre Minds"
-  },
   "subtype": {
     "image": "obrázok",
     "video": "video"
@@ -535,26 +610,44 @@
     "reportBug": "Nahlásiť chybu",
     "exit": "Ukončiť"
   },
-  "featureUnavailablePlatform": "Táto funkcia nie je momentálne dostupná na vašej platforme.",
+  "userTypeAhead": {
+    "placeholder": "Začnite zadávať používateľské meno, ktoré chcete vyhľadať...",
+    "noResults": "Žiadne výsledky pre {{query}}"
+  },
+  "nsfw": {
+    "1": "Nahota",
+    "2": "Pornografia",
+    "3": "Zneváženie",
+    "4": "Násilie a krviprelievanie",
+    "5": "Rasa a náboženstvo",
+    "6": "Iné",
+    "button": "NSFW"
+  },
+  "update": {
+    "title": "Aktualizujte na v{{version}}"
+  },
+  "downloading": "Sťahuje sa",
+  "confirm18": "Potvrďte, že máte viac ako 18 rokov",
+  "postCantBeShown": "Tento príspevok nemožno zobraziť",
+  "readMore": "Čítať ďalej",
+  "showLess": "Zobraziť menej",
   "continue": "Pokračovať",
+  "errorDisplaying": "Chyba pri zobrazovaní obsahu",
+  "tapCopyError": "Ťuknite pre skopírovanie chyby",
   "save": "Uložiť",
   "edit": "Upraviť",
   "goback": "ÍSŤ SPÄŤ",
-  "language": "Jazyk",
-  "categories": "Kategórie",
+  "copy": "Kopírovať",
   "yes": "Áno",
   "no": "Nie",
   "ok": "Ok",
   "views": "Zhliadnutia",
-  "export": "Exportovať",
   "delete": "Odstrániť",
-  "import": "Importovať",
   "subscribers": "Odberatelia",
   "subscriptions": "Odbery",
   "feed": "Novinky",
   "images": "Obrázky",
   "videos": "Videá",
-  "create": "Vytvoriť",
   "yesImSure": "Áno, som si istý/á",
   "cancel": "Zrušiť",
   "reject": "Odmietnuť",
@@ -565,10 +658,11 @@
   "accept": "Prijať",
   "confirmNoUndo": "Ste si istý/á? Akciu NEMOŽNO vrátiť späť.",
   "confirmMessage": "Ste si istý/á?",
+  "cantLoadMore": "Nedá sa načítať viac",
+  "cantLoad": "Nedá sa načítať",
   "confirm": "Potvrdiť",
   "errorMessage": "Ale nie! Vyzerá to, že sa vyskytla chyba.",
   "error": "Chyba",
-  "rewards": "Odmeny",
   "reply": "Odpovedať",
   "setExplicit": "Nastaviť ako explicitné",
   "report": "Nahlásiť",
@@ -579,172 +673,31 @@
   "description": "Popis",
   "sorry": "Prepáčte!",
   "tryAgain": "Skúsiť znova",
+  "pleaseTryAgain": "Skúste to znova.",
+  "attention": "Pozor",
   "retry": "Skúsiť znova",
   "unlock": "Odomknúť",
   "setup": "Nastaviť",
   "send": "Poslať",
-  "passwordPlaceholder": "heslo...",
-  "passwordConmfirmPlaceholder": "potvrďte heslo...",
   "boost": "Boost",
   "boosted": "Boostované",
+  "follow": "Sledovať",
+  "unfollow": "Zrušiť sledovanie",
   "tokens": "Tokeny",
   "share": "Zdieľať",
   "edited": "Upravené",
   "success": "Úspech",
   "createAPost": "Vytvoriť príspevok",
-  "findChannels": "Nájsť kanály",
   "your": "váš",
   "their": "ich",
   "for": "za",
   "usd": "USD",
   "locked": "Zamknuté",
-  "headsUp": "Pozor!",
   "thanks": "Ďakujem",
-  "iUnderstand": "Rozumiem",
-  "onchain": "OnChain",
   "completed": "Dokončené",
   "pending": "Spracúva sa",
-  "ops": "Ale nie",
-  "permissions": {
-    "externalStorage": "Minds potrebuje prístup k vášmu externému úložisku, aby ste mohli nahrávať úžasné obrázky.",
-    "writeExternalStorage": "Minds potrebuje prístup k vášmu externému úložisku, aby ste mohli sťahovať úžasné obrázky.",
-    "sms": "Minds potrebuje prístup k čítaniu SMS pre automatické zistenie overovacieho kódu.",
-    "camera": "Minds potrebuje prístup k vášmu externému fotoaparátu, aby ste mohli nahrávať úžasné fotky.",
-    "notAllowed": {
-      "appoint_admin": "Nemáte povolenie ustanoviť správcu",
-      "appoint_moderator": "Nemáte povolenie ustanoviť moderátora",
-      "approve_subscriber": "Nemáte povolenie schváliť odberateľa",
-      "create_channel": "Nemáte povolenie vytvoriť kanál",
-      "create_comment": "Nemáte povolenie vytvoriť komentár",
-      "create_group": "Nemáte povolenie vytvoriť skupinu",
-      "create_post": "Nemáte povolenie vytvoriť príspevok",
-      "delete_channel": "Nemáte povolenie odstrániť tento kanál",
-      "delete_comment": "Nemáte povolenie odstrániť tento komentár",
-      "delete_group": "Nemáte povolenie odstrániť túto skupinu",
-      "delete_post": "Nemáte povolenie odstrániť tento príspevok",
-      "edit_channel": "Nemáte povolenie upraviť tento kanál",
-      "edit_comment": "Nemáte povolenie upraviť tento komentár",
-      "edit_group": "Nemáte povolenie upraviť túto skupinu",
-      "edit_post": "Nemáte povolenie upraviť tento príspevok",
-      "invite": "Nemáte povolenie pozývať",
-      "join": "Nemáte povolenie pridať sa",
-      "gathering": "Nemáte povolenie pridať sa k tomuto zhromaždeniu",
-      "message": "Nemáte povolenie poslať správu tomuto používateľovi",
-      "subscribe": "Nemáte povolenie prihlásiť sa na odber",
-      "tag": "Nemáte povolenie označiť tento obsah",
-      "remind": "Nemáte povolenie pripomenúť tento obsah",
-      "wire": "Nemáte povolenie odoslať platbu wire tomuto používateľovi",
-      "view": "Nemáte povolenie zobraziť tento obsah",
-      "vote": "Nemáte povolenie hlasovať o tomto obsahu"
-    }
-  },
-  "translate": {
-    "from": "preložené z",
-    "translate": "Preložiť",
-    "changeLanguage": "Zmeniť jazyk",
-    "error": "Pri preklade sa vyskytla chyba."
-  },
-  "hashtags": {
-    "exists": "Tag už existuje",
-    "preferred": "Preferované",
-    "hold": "Podržte pre výber iba jedného"
-  },
-  "comments": {
-    "successRemoving": "Komentár bol úspešne odstránený",
-    "comments": "Komentáre",
-    "errorRemoving": "Chyba pri odstraňovaní komentára"
-  },
-  "attachment": {
-    "tooLong": "Dĺžka videa musí byť menej ako {{minutes}} minút"
-  },
-  "onboarding": {
-    "welcome": "Vitajte v Minds!",
-    "welcome1": "Skôr ako začneme, potrebujeme vedieť zopár vecí, aby sme vám mohli poskytnúť čo najlepšiu skúsenosť.",
-    "welcome2": "Otázka na začiatok: ako často uverejňujete príspevky na sociálnych médiách?",
-    "chooseAvatar": "Zvoľte si avatar",
-    "chooseName": "Zvoľte si zobrazované meno",
-    "describeChannel": "V krátkosti popíšte svoj kanál",
-    "hashtagSelect": "O aké témy sa zaujímate?",
-    "earnTokens": "Zarábajte tokeny za svoju aktivitu",
-    "weDontStorePhone": "Vaše telefónne číslo neuchovávame na našich serveroch.",
-    "suggestedChannels": "Navrhované kanály",
-    "suggestedChannelsDescription": "Prihláste sa na odber niektorého z populárnych kanálov nižšie na základe vašich záujmov",
-    "suggestedGroups": "Navrhované skupiny",
-    "suggestedGroupsDescription": "Pridajte sa k niektorej z populárnych skupín nižšie na základe vašich záujmov",
-    "tokensCanBeUsed": "Tokeny možno použiť na podporu iných kanálov alebo na boostovanie obsahu pre ďalšie zhliadnutia (1 token = 1 000 zhliadnutí). Aby ste mohli získavať tokeny, budeme potrebovať vaše telefónne číslo kvôli overeniu, že váš kanál je jedinečný.",
-    "yourAreReady": "Teraz máte všetko nastavené a ste pripravení začať!",
-    "readyDescription1": "Super! Úspešne ste si nastavili peňaženku, aby ste mohli prijímať odmeny a onchainové i offchainové platby.",
-    "readyDescription2": "Ak sa chcete dozvedieť viac o tokenoch a kryptomenách, navštívte kedykoľvek sekciu &{tokens}& nižšie, kde nájdete kurzy, videá a často kladené otázky (FAQ).",
-    "moreOnRewards": "VIAC O ODMENÁCH",
-    "moreAboutWire": "ĎALŠIE INFORMÁCIE O WIREI",
-    "moreAboutBoost": "ĎALŠIE INFORMÁCIE O BOOSTE",
-    "startEarning": "Aby ste mohli začať získavať odmeny, musíte zadať jedinečné telefónne číslo.",
-    "phoneNumber": "Telefónne číslo",
-    "weJustSentCode": "Práve sme odoslali kód na {{phone}} pre overenie správnosti vášho čísla.",
-    "confirmationCode": "Potvrdzovací kód",
-    "rewardsDescription": "Tokeny môžete získavať za svoje príspevky v sieti Minds. Čím viac interakcií zaznamená váš obsah, tým väčší podiel z denného množstva tokenových odmien poputuje na vašu offchainovú adresu.",
-    "rewardsNote": "Poznámka: Minds neuchováva telefónne čísla, ktoré poskytneš. Čísla sú hašované pomocou SHA-256 a sú kombinované s kľúčom salt (salt key) na účely ochrany súkromia.",
-    "ensureYouExportKey": "Daj si pozor, aby si si VYEXPORTOVAL/A a urobil/a zálohu svojho kľúča pred odinštalovaním alebo výmazaním údajov aplikácie, inak prídeš o všetky svoje prostriedky. Export možno urobiť z obrazovky s podrobnosťami adresy.",
-    "6digitDescription": "Pre vytvorenie novej adresy peňaženky zadajte heslo kľúčenky",
-    "6digitConfirm": "Prosím, potvrďte ešte raz svoje heslo kľúčenky. Po jeho potvrdení sa na tomto zariadení vytvorí vaša peňaženka a priradí sa k vášmu účtu.",
-    "6digitAlreadySetup": "Heslo kľúčenky je už nastavené, teraz je ešte potrebné, aby ste potvrdili vytvorenie peňaženky. Po potvrdení sa peňaženka vytvorí na tomto zariadení a bude priradená k vášmu účtu.",
-    "passwordInvalid": "Heslo musí mať najmenej 6 znakov a môže obsahovať alfanumerické znaky alebo symboly.",
-    "pinAlreadySetup": "KĽÚČENKA BOLA UŽ NASTAVENÁ",
-    "skip": "PRESKOČIŤ, NEMÁM ZÁUJEM",
-    "setupOnchianAddress": "Nastavte svoju OnChain adresu",
-    "onchainDescription1": "Aby ste mohli prijímať OnChain platby z iných kanálov (napr. z Wireu alebo Boostu), budete nám musieť oznámiť, na ktorú adresu máme tieto tokeny smerovať.",
-    "onchainDescription2": "Táto adresa bude uvedená vo vašej peňaženke ako „Adresa príjemcu“ a možno ju kedykoľvek zmeniť.",
-    "onchainDescription3": "OnChain adresy a ich súkromné kľúče sú uložené lokálne v šifrovanom priestore úložiska. Budú k dispozícii akémukoľvek kanálu, ktorý je práve prihlásený na tomto zariadení.",
-    "welcomToWallet": "Vitajte vo svojej peňaženke",
-    "tokensDescription": "Tokeny sú kryptomenou používanou v rámci Minds. Váš celkový zostatok tokenov bude uchovávaný v dvoch odlišných typoch adries.",
-    "onchainDescription": "OnChain platby budú zverejňované na verejnom blockchaine a vyžadujú malý poplatok gas v ETH. Môžete si nastaviť svoje vlastné súkromné kľúče alebo si vytvoriť nové peňaženky.",
-    "offchainDescription": "OffChain platby nebudú zverejnené na blockchaine a majú výdavkové limity. Na túto adresu budete dostávať odmeny.",
-    "rewardsDescription1": "Čím viac interakcií zaznamená váš obsah, tým väčší podiel tokenov z denného fondu odmien príde na vašu offchain adresu.",
-    "ensureYouExportKey1": "Export je možné vykonať z obrazovky s podrobnosťami o adrese.",
-    "6digitDescription1": "ktoré bude použité na zašifrovanie vášho súkromného kľúča na tomto zariadení."
-  },
-  "userTypeAhead": {
-    "placeholder": "Začnite zadávať používateľské meno, ktoré chcete vyhľadať...",
-    "noResults": "Žiadne výsledky pre {{query}}"
-  },
-  "nsfw": {
-    "button": "NSFW",
-    "1": "Nahota",
-    "2": "Pornografia",
-    "3": "Zneváženie",
-    "4": "Násilie a krviprelievanie",
-    "5": "Rasa a náboženstvo",
-    "6": "Iné"
-  },
-  "newsfeedFilters": {
-    "hot": "Horúce",
-    "top": "Top",
-    "latest": "Najnovšie",
-    "topPeriod12": "12 hodín",
-    "topPeriod24": "24 hodín",
-    "topPeriod7": "7 dní",
-    "topPeriod30": "30 dní",
-    "topPeriod1": "1 rok"
-  },
-  "update": {
-    "title": "Aktualizujte na v{{version}}"
-  },
-  "downloading": "Sťahuje sa",
-  "confirm18": "Potvrďte, že máte viac ako 18 rokov",
-  "postCantBeShown": "Tento príspevok nemožno zobraziť",
-  "readMore": "Čítať ďalej",
-  "showLess": "Zobraziť menej",
-  "errorDisplaying": "Chyba pri zobrazovaní obsahu",
-  "tapCopyError": "Ťuknite pre skopírovanie chyby",
-  "copy": "Kopírovať",
-  "view": "Zobraziť",
-  "cantLoadMore": "Nedá sa načítať viac",
-  "cantLoad": "Nedá sa načítať",
-  "conversation": "Konverzácia",
-  "attention": "Pozor",
-  "follow": "Sledovať",
-  "unfollow": "Zrušiť sledovanie",
   "hide": "Skryť",
+  "ops": "Ale nie",
   "pin": "Pripnúť",
   "unpin": "Zrušiť pripnutie",
   "downloadGallery": "Stiahnuť do galérie",
@@ -753,27 +706,18 @@
   "errorDownloading": "Chyba pri sťahovaní súboru",
   "errorMedia": "Médiá sa nepodarilo načítať.",
   "errorMediaDisplay": "Pri zobrazovaní tohto média sa vyskytla chyba",
+  "transcodingMediaDisplay": "Video sa prevádza",
   "stacktraceCopied": "Sledovanie zásobníka bolo skopírované do schránky.",
   "errorPinnedPost": "Ajaj, vyskytla sa chyba pri nastavovaní pripnutého príspevku",
   "errorShowActivity": "Táto aktivita sa nedá zobraziť",
   "wantToUpdate": "Chcete aktualizovať aplikáciu?",
   "updateAvailable": "Je dostupná aktualizácia",
   "rememberTomorrow": "Zapamätať ma neskôr",
-  "noInternet": "Žiadne internetové pripojenie",
-  "offline": "Offline",
-  "cantReachServer": "Nedá sa spojiť so serverom",
-  "showingStored": "Zobrazujú sa uložené údaje",
   "enableComments": "Zapnúť komentáre",
   "disableComments": "Vypnúť komentáre",
-  "payments": {
-    "confirmDeleteCard": "Chcete odstrániť túto kartu?"
-  },
-  "more": "Viac",
-  "transcodingMediaDisplay": "Video sa prevádza",
-  "actions": "Akcie",
-  "requests": "Žiadosti",
+  "noInternet": "Žiadne internetové pripojenie",
+  "cantReachServer": "Nedá sa spojiť so serverom",
+  "showingStored": "Zobrazujú sa uložené údaje",
   "notAllowed": "Nemáte povolenie",
-  "undo": "Zrušiť zmenu",
-  "tryAgainLater": "Skúste to znova neskôr",
-  "pleaseTryAgain": "Skúste to znova."
+  "undo": "Zrušiť zmenu"
 }
