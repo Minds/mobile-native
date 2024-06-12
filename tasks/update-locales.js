@@ -1,8 +1,12 @@
 const fs = require('fs');
 const path = require('path');
 
-const folderPath = './languages'; // Folder containing the language files
+const folderPath = './locales'; // Folder containing the language files
 const referenceFileName = 'en.json'; // Reference language file
+
+const args = process.argv.slice(2);
+
+const replaceMinds = args[0] === '--replaceMinds';
 
 // Read the reference file
 const referenceFilePath = path.join(folderPath, referenceFileName);
@@ -15,7 +19,9 @@ const files = fs.readdirSync(folderPath);
 const updateLanguageFiles = (referenceData, files) => {
   files.forEach(file => {
     // Skip the reference file
-    if (file === referenceFileName) return;
+    if (file === referenceFileName || !file.endsWith('.json')) return;
+
+    console.log(`Updating file: ${file}`);
 
     const filePath = path.join(folderPath, file);
     const fileData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -33,19 +39,26 @@ const updateLanguageFiles = (referenceData, files) => {
 const updateFileData = (referenceData, fileData) => {
   const updatedData = {};
 
-  // Add or update properties from the reference file
   for (const key in referenceData) {
-    if (referenceData.hasOwnProperty(key)) {
-      updatedData[key] = fileData.hasOwnProperty(key)
-        ? fileData[key]
-        : referenceData[key];
-    }
-  }
-
-  // Remove properties not in the reference file
-  for (const key in fileData) {
-    if (fileData.hasOwnProperty(key) && !referenceData.hasOwnProperty(key)) {
-      delete fileData[key];
+    if (typeof referenceData[key] === 'object' && referenceData[key] !== null) {
+      updatedData[key] = updateFileData(
+        referenceData[key],
+        fileData.hasOwnProperty(key) ? fileData[key] : {},
+      );
+      // cleanup empty objects
+      if (Object.keys(updatedData[key]).length === 0) {
+        delete updatedData[key];
+      }
+    } else if (fileData.hasOwnProperty(key)) {
+      updatedData[key] = fileData[key];
+      // remove keys that are the same as the reference
+      if (updatedData[key] === referenceData[key]) {
+        delete updatedData[key];
+      }
+      // if the reference contains {{TENANT}} replace the 'Minds' word on the updatedData with it
+      if (replaceMinds && referenceData[key].includes('{{TENANT}}')) {
+        updatedData[key] = updatedData[key].replace('Minds', '{{TENANT}}');
+      }
     }
   }
 
