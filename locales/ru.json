@@ -316,7 +316,7 @@
     "disableChannelButton": "Деактивировать мой аккаунт",
     "deleteChannelButton": "Удалить мой аккаунт",
     "deleteChannel": "Удалить Канал",
-    "disableDescription": "Отключение вашего аккаунта сделает ваш профиль невидимым. Вы также не получите уведомлений и писем на эл. почту. Ваш логин будет зарезервирован, в случае если вы вернётесь на Minds.",
+    "disableDescription": "Отключение вашего аккаунта сделает ваш профиль невидимым. Вы также не получите уведомлений и писем на эл. почту. Ваш логин будет зарезервирован, в случае если вы вернётесь на {{TENANT}}.",
     "deleteDescription": "Предупреждение: Это необратимо и приведет к постоянной потере вашего канала и всех ваших данных. Ваш канал будет подлежать к восстановлению. Ваш логин будет возвращён для общего пользования.",
     "confirmNewPassword": "Подтвердите Новый Пароль",
     "currentEmail": "Текущий Email",
@@ -342,7 +342,7 @@
       "appTitle": "Приложение",
       "smsTitle": "СМС"
     },
-    "sessionsOpened": "You are currently signed into Minds account on the following devices.",
+    "sessionsOpened": "You are currently signed into {{TENANT}} account on the following devices.",
     "subscriptionListEmpty": "У вас нет периодической подписки",
     "recurringPaymentsDescription": "Отслеживайте периодические платежи, которые вы совершаете для поддержки других каналов.",
     "enterDark": "Войти в темный режим",
@@ -467,7 +467,7 @@
       "reward": "Награды за день",
       "filterTransactions": "Фильтр транзакций",
       "allFilter": "Все",
-      "mindsReward": "Награда Minds",
+      "mindsReward": "Награда {{TENANT}}",
       "rewardsFilter": "Награда за удар",
       "boostsFilter": "Усиление",
       "transferFilter": "Переводы в цепи",
@@ -531,7 +531,7 @@
         "EngagementScore": "Вовлечение"
       },
       "tooltips": {
-        "TokensReclaimed": "The total number of tokens reclaimed by Minds for providing services"
+        "TokensReclaimed": "The total number of tokens reclaimed by {{TENANT}} for providing services"
       }
     }
   },
@@ -605,7 +605,7 @@
   "referrals": {
     "moreWaysToShare": "Больше способов поделиться",
     "myReferrals": "Мои рекомендации",
-    "joinMeOnMinds": "Join me on Minds",
+    "joinMeOnMinds": "Join me on {{TENANT}}",
     "user": "Пользователь",
     "status": "Статус",
     "rewardsSignup": "Регистрация наград"

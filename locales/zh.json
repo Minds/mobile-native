@@ -310,7 +310,7 @@
     "disableChannelButton": "停用我的帐户",
     "deleteChannelButton": "删除我的帐户",
     "deleteChannel": "删除频道\n",
-    "disableDescription": "停用您的帐户会使您的个人资料不可见。 您也不会收到电子邮件或通知。 如果您返回到Minds，将保留您的用户名。\n",
+    "disableDescription": "停用您的帐户会使您的个人资料不可见。 您也不会收到电子邮件或通知。 如果您返回到{{TENANT}}，将保留您的用户名。\n",
     "deleteDescription": "警告：这是不可逆的，会导致您的频道和所有数据永久丢失。 您的频道无法恢复。 您的用户名将被释放回公众。",
     "confirmNewPassword": "确认新密码",
     "currentEmail": "当前邮箱",

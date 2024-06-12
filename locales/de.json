@@ -57,8 +57,8 @@
     "invalidGrant": "Benutzername/Passwort falsch. Bitte versuchen Sie es erneut.",
     "invalidPassword": "Falsches Passwort. Bitte versuchen Sie es erneut.",
     "termsAcceptedError": "Sie sollten die Allgemeinen Geschäftsbedingungen akzeptieren.",
-    "promotions": "Receive exclusive promotions from Minds",
-    "createChannel": "Join Minds",
+    "promotions": "Receive exclusive promotions from {{TENANT}}",
+    "createChannel": "Join {{TENANT}}",
     "failedToLoginNewAccount": "Die Anmeldung mit Ihrem neuen Konto ist fehlgeschlagen, bitte versuchen Sie sich in den Anmeldebildschirm einzuloggen",
     "authCode": "Authentifizierungs Code",
     "recoveryCode": "Wiederherstellungscode",
@@ -126,7 +126,7 @@
     "pleaseTryAgain": "Bitte versuchen Sie es gleich erneut.",
     "nothingToPost": "Nichts zum Posten...",
     "photo": "Foto",
-    "allowMinds": "Enable access so you can take photos and record videos to share on Minds"
+    "allowMinds": "Enable access so you can take photos and record videos to share on {{TENANT}}"
   },
   "channel": {
     "editChannel": "Kanaleinstellungen bearbeiten",
@@ -229,8 +229,8 @@
     "emailWhen": "E-Mail an mich, wenn",
     "emailWith": "E-Mail mit",
     "emailUpdated": "Halte mich auf dem Laufenden mit",
-    "minds_news": "Neuigkeiten zu neuen Minds Produkten und Funktionen",
-    "minds_tips": "Tipps zur Verwendung von Minds",
+    "minds_news": "Neuigkeiten zu neuen {{TENANT}} Produkten und Funktionen",
+    "minds_tips": "Tipps zur Verwendung von {{TENANT}}",
     "boost_completed": "Mein Boost wurde abgeschlossen",
     "unread_notifications": "Ich habe ungelesene Benachrichtigungen",
     "wire_received": "Ich erhalte einen Draht",
@@ -326,7 +326,7 @@
     "disableChannelButton": "Mein Konto deaktivieren",
     "deleteChannelButton": "Mein Konto löschen",
     "deleteChannel": "Kanal löschen",
-    "disableDescription": "Deaktivierung macht Ihr Profil unsichtbar. Sie werden ebenso keine E-Mails oder Benachrichtigungen erhalten. Ihr Nutzername wird reserviert, falls Sie zu Minds zurückkehren wollen.",
+    "disableDescription": "Deaktivierung macht Ihr Profil unsichtbar. Sie werden ebenso keine E-Mails oder Benachrichtigungen erhalten. Ihr Nutzername wird reserviert, falls Sie zu {{TENANT}} zurückkehren wollen.",
     "deleteDescription": "Achtung: Dies ist unumkehrbar und Ihr Kanal und Daten gehen für immer verloren. Sie lassen sich nicht wiederherstellen. Ihr Nutzername wird wieder für neue Nutzer freigegeben.",
     "confirmNewPassword": "Neues Passwort bestätigen",
     "currentEmail": "Aktuelle E-Mail",
@@ -348,14 +348,14 @@
     "passwordFormatNumber": "Mindestens eine Zahl",
     "passwordFormatNoSpaces": "Hat keine Leerzeichen",
     "showMatureContent": "Immer reife Inhalte anzeigen (+18)",
-    "TFAdescription": "Two-factor authentication adds an extra layer of security to your account. In addition to your username and password, you’ll need to enter a code that Minds sends to you via text or an app on your phone.",
+    "TFAdescription": "Two-factor authentication adds an extra layer of security to your account. In addition to your username and password, you’ll need to enter a code that {{TENANT}} sends to you via text or an app on your phone.",
     "TFADisable": "2FA deaktivieren",
-    "TFADisableDesc": "Are you sure you wish to disable two-factor authentication on your Minds account?",
-    "TFARecoveryCodeUsedDesc": "2FA has been disabled on your Minds account because you used your one-time TOTP recovery code.",
+    "TFADisableDesc": "Are you sure you wish to disable two-factor authentication on your {{TENANT}} account?",
+    "TFARecoveryCodeUsedDesc": "2FA has been disabled on your {{TENANT}} account because you used your one-time TOTP recovery code.",
     "TFAOptions": {
-      "smsDescription": "Minds will send you an SMS with a two-factor authentication code when prompted"
+      "smsDescription": "{{TENANT}} will send you an SMS with a two-factor authentication code when prompted"
     },
-    "sessionsOpened": "You are currently signed into Minds account on the following devices.",
+    "sessionsOpened": "You are currently signed into {{TENANT}} account on the following devices.",
     "subscriptionListEmpty": "Sie haben kein wiederkehrendes Abonnement",
     "recurringPaymentsDescription": "Verfolgen Sie wiederkehrende Zahlungen, die Sie vornehmen, um andere Kanäle zu unterstützen.",
     "enterDark": "Dunkler Modus aktivieren",
@@ -585,11 +585,11 @@
   },
   "referrals": {
     "sendLinkToFriends": "Sende diesen Link an deine Freunde, um Tokens für Empfehlungen zu erhalten",
-    "codeSuffixLabel": "Du kannst auch Empfehlungen erhalten, indem du diesen Code am Ende eines beliebigen Minds Links hinzufügst, den du teilst",
+    "codeSuffixLabel": "Du kannst auch Empfehlungen erhalten, indem du diesen Code am Ende eines beliebigen {{TENANT}} Links hinzufügst, den du teilst",
     "moreWaysToShare": "Weitere Möglichkeiten zum Teilen",
     "myReferrals": "Meine Empfehlungen",
     "noReferrals": "Du hast noch keine Empfehlungen.",
-    "joinMeOnMinds": "Join me on Minds",
+    "joinMeOnMinds": "Join me on {{TENANT}}",
     "user": "Benutzer",
     "rewardsSignup": "Belohnungen Anmeldung"
   },

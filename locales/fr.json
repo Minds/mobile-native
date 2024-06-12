@@ -45,8 +45,8 @@
     "invalidGrant": "Nom d'utilisateur/mot de passe incorrect. Veuillez réessayer.",
     "invalidPassword": "Mot de passe incorrect. Veuillez réessayer",
     "termsAcceptedError": "Vous devez accepter les conditions générales",
-    "promotions": "Receive exclusive promotions from Minds",
-    "createChannel": "Join Minds",
+    "promotions": "Receive exclusive promotions from {{TENANT}}",
+    "createChannel": "Join {{TENANT}}",
     "failedToLoginNewAccount": "La connexion avec votre nouveau compte a échoué, essayez de vous connecter à l'écran de connexion",
     "authCode": "Authentication code",
     "resetPassword": "Réinitialiser le mot de passe"
@@ -212,7 +212,7 @@
     "emailWhen": "Envoyez-moi un e-mail quand",
     "emailWith": "Envoyez-moi un e-mail avec",
     "emailUpdated": "Tenez-moi à jour avec",
-    "minds_news": "Nouvelles sur les nouveaux produits et fonctionnalités de Minds",
+    "minds_news": "Nouvelles sur les nouveaux produits et fonctionnalités de {{TENANT}}",
     "minds_tips": "Conseils sur la façon d'utiliser les esprits",
     "boost_completed": "Mon boost a été terminé",
     "unread_notifications": "J'ai des notifications non lues",
@@ -312,7 +312,7 @@
     "disableChannelButton": "Désactiver mon compte",
     "deleteChannelButton": "Supprimer mon compte",
     "deleteChannel": "Supprimer la chaîne",
-    "disableDescription": "La désactivation de votre compte rendra votre profil invisible et vous ne recevrez plus les e-mails et notifications. Votre nom d'utilisateur sera réservé si vous revenez sur Minds.",
+    "disableDescription": "La désactivation de votre compte rendra votre profil invisible et vous ne recevrez plus les e-mails et notifications. Votre nom d'utilisateur sera réservé si vous revenez sur {{TENANT}}.",
     "deleteDescription": "Avertissement: ceci n'est pas réversible et entraînera une perte permanente de votre chaîne et de toutes vos données. Votre chaîne ne sera pas récupérable. Votre nom d'utilisateur sera rendu public.",
     "confirmNewPassword": "Confirmer le nouveau mot de passe",
     "currentEmail": "Email actuel",
@@ -480,7 +480,7 @@
       "reward": "Récompense quotidienne du jour",
       "filterTransactions": "Filtrer les transactions",
       "allFilter": "Tout",
-      "mindsReward": "Récompense Minds",
+      "mindsReward": "Récompense {{TENANT}}",
       "rewardsFilter": "Récompenses d'esprit",
       "boostsFilter": "Amplifier",
       "transferFilter": "Transferts On-chain",
@@ -546,7 +546,7 @@
     "tokens": {
       "title": "Jetons",
       "tooltips": {
-        "TokensReclaimed": "The total number of tokens reclaimed by Minds for providing services"
+        "TokensReclaimed": "The total number of tokens reclaimed by {{TENANT}} for providing services"
       }
     }
   },
@@ -638,17 +638,17 @@
     }
   },
   "referrals": {
-    "title": "Earn tokens by inviting your friends to Minds",
+    "title": "Earn tokens by inviting your friends to {{TENANT}}",
     "sendLinkToFriends": "Envoyez ce lien à vos amis pour gagner des jetons de parrainage",
-    "codeSuffixLabel": "Vous pouvez également obtenir des recommandations en ajoutant ce code à la fin de tout lien Minds que vous partagez",
+    "codeSuffixLabel": "Vous pouvez également obtenir des recommandations en ajoutant ce code à la fin de tout lien {{TENANT}} que vous partagez",
     "moreWaysToShare": "Plus de façons de partager",
     "myReferrals": "Mes recommandations",
     "noReferrals": "Tu n'as pas encore de recommandations.",
-    "joinMeOnMinds": "Join me on Minds",
+    "joinMeOnMinds": "Join me on {{TENANT}}",
     "user": "Utilisateur",
     "status": "Statut",
     "rewardsSignup": "Inscription aux récompenses",
-    "description": "Si votre ami s'inscrit dans les 24 heures après avoir cliqué sur le lien que vous avez partagé avec lui, il sera ajouté à vos recommandations en attente. Une fois qu'ils s'inscrivent au programme de récompenses en configurant leur portefeuille Minds, la recommandation est terminée et vous obtiendrez tous les deux +10 à vos scores de contribution !"
+    "description": "Si votre ami s'inscrit dans les 24 heures après avoir cliqué sur le lien que vous avez partagé avec lui, il sera ajouté à vos recommandations en attente. Une fois qu'ils s'inscrivent au programme de récompenses en configurant leur portefeuille {{TENANT}}, la recommandation est terminée et vous obtiendrez tous les deux +10 à vos scores de contribution !"
   },
   "add": "Ajouter",
   "downloading": "Téléchargement",

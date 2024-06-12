@@ -57,10 +57,10 @@
     "invalidGrant": "Usuario o clave incorrectas. Prueba de nuevo.",
     "invalidPassword": "Clave incorrecta, Prueba de nuevo.",
     "termsAcceptedError": "Debes de aceptar los términos y condiciones",
-    "promotions": "Recibe promociones exclusivas de Minds",
+    "promotions": "Recibe promociones exclusivas de {{TENANT}}",
     "accept": "Acepto los",
     "termsAndConditions": "Términos & Condiciones",
-    "createChannel": "Únete a Minds",
+    "createChannel": "Únete a {{TENANT}}",
     "failedToLoginNewAccount": "El inicio de sesión con su nueva cuenta ha fallado, por favor intente iniciar sesión en la pantalla",
     "authCode": "Código de autenticación",
     "recoveryCode": "Código de recuperación",
@@ -148,7 +148,7 @@
     "photo": "Foto",
     "video": "Vídeo",
     "postOptions": "Opciones",
-    "allowMinds": "Habilita el acceso para que puedas tomar fotos y grabar vídeos para compartir en Minds",
+    "allowMinds": "Habilita el acceso para que puedas tomar fotos y grabar vídeos para compartir en {{TENANT}}",
     "blockedMinds": "Ha bloqueado el acceso a su cámara y micrófono. Por favor, vaya a la configuración de su dispositivo para habilitarlo.",
     "noHashtags": "Lo siento, las publicaciones monetizadas Plus deben tener hashtags.",
     "noExternalLinks": "Lo sentimos, las publicaciones monetizadas Plus no deben tener enlaces externos.",
@@ -278,8 +278,8 @@
     "emailWhen": "Escríbeme cuando",
     "emailWith": "Escríbeme con",
     "emailUpdated": "Mantenerme informado con",
-    "minds_news": "Noticias acerca de nuevos productos y servicios en Minds",
-    "minds_tips": "Consejos para utilizar Minds",
+    "minds_news": "Noticias acerca de nuevos productos y servicios en {{TENANT}}",
+    "minds_tips": "Consejos para utilizar {{TENANT}}",
     "boost_completed": "Mi promocion ha sido completada",
     "unread_notifications": "Tengo notificaciones sin leer",
     "wire_received": "Recibo una transferencia",
@@ -375,7 +375,7 @@
     "disableChannelButton": "Desactivar mi cuenta",
     "deleteChannelButton": "Eliminar mi cuenta",
     "deleteChannel": "Borrar Canal",
-    "disableDescription": "Desactivar tu cuenta hará tu perfil invisible. Tu tampoco no recibirás correos o notificaciones. Tu nombre de usuario será reservado en caso que retornes a Minds.",
+    "disableDescription": "Desactivar tu cuenta hará tu perfil invisible. Tu tampoco no recibirás correos o notificaciones. Tu nombre de usuario será reservado en caso que retornes a {{TENANT}}.",
     "deleteDescription": "Alerta: Esto no es reversible y resultará en la pérdida de tu canal y todos tus datos. Tu canal no se podrá recuperar. Tu nombre de usuario será liberado nuevamente al público.",
     "confirmNewPassword": "Confirmar nueva contraseña",
     "currentEmail": "Correo actual",
@@ -397,15 +397,15 @@
     "passwordFormatNumber": "Al menos 1 número",
     "passwordFormatNoSpaces": "No tiene espacios",
     "showMatureContent": "Mostrar siempre contenido adulto (+18)",
-    "TFAdescription": "Two-factor authentication adds an extra layer of security to your account. In addition to your username and password, you’ll need to enter a code that Minds sends to you via text or an app on your phone.",
+    "TFAdescription": "Two-factor authentication adds an extra layer of security to your account. In addition to your username and password, you’ll need to enter a code that {{TENANT}} sends to you via text or an app on your phone.",
     "TFADisable": "Desactivar 2FA",
-    "TFADisableDesc": "Are you sure you wish to disable two-factor authentication on your Minds account?",
-    "TFARecoveryCodeUsedDesc": "2FA has been disabled on your Minds account because you used your one-time TOTP recovery code.",
+    "TFADisableDesc": "Are you sure you wish to disable two-factor authentication on your {{TENANT}} account?",
+    "TFARecoveryCodeUsedDesc": "2FA has been disabled on your {{TENANT}} account because you used your one-time TOTP recovery code.",
     "TFAOptions": {
       "appDescription": "Utilice una aplicación en su teléfono para obtener códigos de autenticación de doble factor cuando se le solicite.",
-      "smsDescription": "Minds te enviará un SMS con un código de autenticación de dos factores cuando se te solicite"
+      "smsDescription": "{{TENANT}} te enviará un SMS con un código de autenticación de dos factores cuando se te solicite"
     },
-    "sessionsOpened": "Has iniciado sesión en la cuenta de Minds en los siguientes dispositivos.",
+    "sessionsOpened": "Has iniciado sesión en la cuenta de {{TENANT}} en los siguientes dispositivos.",
     "subscriptionListEmpty": "No tienes ninguna suscripción recurrente",
     "recurringPaymentsDescription": "Registra los pagos recurrentes que realices para soportar otros canales.",
     "enterDark": "Entrar en modo oscuro",
@@ -603,7 +603,7 @@
       "reward": "Recompensa diaria de hoy",
       "filterTransactions": "Filtrar transacciones",
       "allFilter": "Todo",
-      "mindsReward": "Recompensa de Minds",
+      "mindsReward": "Recompensa de {{TENANT}}",
       "rewardsFilter": "Recompensas",
       "boostsFilter": "Optimizar",
       "transferFilter": "Transferencias en cadena",
@@ -676,7 +676,7 @@
         "EngagementScore": "Participación"
       },
       "tooltips": {
-        "TokensReclaimed": "The total number of tokens reclaimed by Minds for providing services"
+        "TokensReclaimed": "The total number of tokens reclaimed by {{TENANT}} for providing services"
       }
     }
   },
@@ -772,7 +772,7 @@
     }
   },
   "referrals": {
-    "title": "Gana tokens invitando a tus amigos a Minds",
+    "title": "Gana tokens invitando a tus amigos a {{TENANT}}",
     "sendLinkToFriends": "Envía este enlace a tus amigos para ganar tokens por referencias",
     "codeSuffixLabel": "También puedes obtener referencias añadiendo este código al final de cualquier enlace de mentes que compartas",
     "moreWaysToShare": "Más formas de compartir",
@@ -780,7 +780,7 @@
     "noReferrals": "Aún no tienes ninguna referencia.",
     "signedUpOn": "Registrado en",
     "pinged": "Has hecho ping a @{{username}}",
-    "joinMeOnMinds": "Únete a mí en Minds",
+    "joinMeOnMinds": "Únete a mí en {{TENANT}}",
     "user": "Usuario",
     "status": "Estado",
     "rewardsSignup": "Regístrate en recompensas",

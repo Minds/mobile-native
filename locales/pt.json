@@ -45,8 +45,8 @@
     "invalidGrant": "Nome de utilizador ou palavra-passe incorreta. Por favor tente novamente.",
     "invalidPassword": "Palavra-passe incorrecta. Por favor, tente novamente.",
     "termsAcceptedError": "Deve aceitar os termos e as condições.",
-    "promotions": "Receive exclusive promotions from Minds",
-    "createChannel": "Join Minds",
+    "promotions": "Receive exclusive promotions from {{TENANT}}",
+    "createChannel": "Join {{TENANT}}",
     "failedToLoginNewAccount": "O login com sua nova conta falhou, por favor, tente entrar na tela de login",
     "authCode": "Authentication code",
     "resetPassword": "Redefinir a senha"
@@ -104,7 +104,7 @@
     "nothingToPost": "Nada para publicar...",
     "photo": "Foto",
     "video": "Vídeo",
-    "allowMinds": "Enable access so you can take photos and record videos to share on Minds"
+    "allowMinds": "Enable access so you can take photos and record videos to share on {{TENANT}}"
   },
   "channel": {
     "editChannel": "Edite as definições do seu canal",
@@ -308,7 +308,7 @@
     "disableChannelButton": "Desativar a minha conta",
     "deleteChannelButton": "Excluir minha conta",
     "deleteChannel": "Apagar canal",
-    "disableDescription": "Desativar sua conta tornará seu perfil invisível. Também não receberá emails ou notificações. Seu nome de utilizador será reservado caso volte para a Minds. ",
+    "disableDescription": "Desativar sua conta tornará seu perfil invisível. Também não receberá emails ou notificações. Seu nome de utilizador será reservado caso volte para a {{TENANT}}. ",
     "deleteDescription": "Aviso: isso não é reversível e resultará na perda permanente de seu canal e de todos os seus dados. Seu canal não será recuperável. Seu nome de utilizador será liberado para o público.",
     "confirmNewPassword": "Confirme a nova palavra-passe",
     "currentEmail": "Email actual",
@@ -462,7 +462,7 @@
       "reward": "Recompensa diária de hoje",
       "filterTransactions": "Filtrar transações",
       "allFilter": "Todos(as)",
-      "mindsReward": "Recompensa do Minds",
+      "mindsReward": "Recompensa do {{TENANT}}",
       "rewardsFilter": "Recompensas de Mente",
       "boostsFilter": "Compartilhamentos",
       "transferFilter": "Transferências online",
@@ -619,7 +619,7 @@
     "moreWaysToShare": "Mais formas de compartilhar",
     "myReferrals": "Minhas referências",
     "noReferrals": "Você ainda não tem nenhuma referência.",
-    "joinMeOnMinds": "Join me on Minds",
+    "joinMeOnMinds": "Join me on {{TENANT}}",
     "user": "Usuário",
     "status": "Estado",
     "rewardsSignup": "Inscrição de Recompensas",

@@ -244,7 +244,7 @@
     "newPassword": "Nové heslo",
     "disableChannel": "Vypnúť kanál",
     "deleteChannel": "Odstrániť kanál",
-    "disableDescription": "Vypnutie účtu urobí váš profil neviditeľným. Taktiež nebudete prijímať e-maily či oznámenia. Vaše používateľské meno bude rezervované pre prípad, že sa na Minds opäť vrátite.",
+    "disableDescription": "Vypnutie účtu urobí váš profil neviditeľným. Taktiež nebudete prijímať e-maily či oznámenia. Vaše používateľské meno bude rezervované pre prípad, že sa na {{TENANT}} opäť vrátite.",
     "deleteDescription": "Varovanie: Tento krok nemožno vrátiť späť a bude mať za následok trvalú stratu vášho kanála a všetkých vašich údajov. Váš kanál nebude možné obnoviť. Vaše používateľské meno bude znovu uvoľnené pre verejnosť.",
     "confirmNewPassword": "Potvrďte nové heslo",
     "currentEmail": "Súčasný e-mail",

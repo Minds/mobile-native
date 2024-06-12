@@ -90,7 +90,7 @@
     "pleaseTryAgain": "Vui lòng thử lại sau giây lát",
     "nothingToPost": "Không có gì để đăng ...",
     "photo": "Hình Ảnh",
-    "allowMinds": "Enable access so you can take photos and record videos to share on Minds"
+    "allowMinds": "Enable access so you can take photos and record videos to share on {{TENANT}}"
   },
   "channel": {
     "editChannel": "Chỉnh sửa cài đặt kênh của bạn",
@@ -180,8 +180,8 @@
     "comments": "Bình luận",
     "reminds": "Nhắc nhở",
     "tokens": "Token",
-    "minds_news": "Tin tức về sản phẩm và tính năng mới của Minds",
-    "minds_tips": "Mẹo sử dụng Minds",
+    "minds_news": "Tin tức về sản phẩm và tính năng mới của {{TENANT}}",
+    "minds_tips": "Mẹo sử dụng {{TENANT}}",
     "boost_completed": "Quảng cáo của tôi đã hoàn tất",
     "unread_notifications": "Tôi có thông báo chưa đọc",
     "wire_received": "Tôi nhận được một kết nối",
@@ -276,7 +276,7 @@
     "newPassword": "Mật khẩu mới",
     "disableChannel": "Vô hiệu hóa kênh",
     "deleteChannel": "Xóa Kênh",
-    "disableDescription": "Vô hiệu hóa tài khoản của bạn sẽ ẩn thông tin của bạn. Bạn sẽ không nhận bất kỳ email hay thông báo nào . Username của bạn sẽ được phục hồi nếu bạn quay lại Minds",
+    "disableDescription": "Vô hiệu hóa tài khoản của bạn sẽ ẩn thông tin của bạn. Bạn sẽ không nhận bất kỳ email hay thông báo nào . Username của bạn sẽ được phục hồi nếu bạn quay lại {{TENANT}}",
     "deleteDescription": "Cảnh báo: Hành động này không thể khôi phục, bạn sẽ mất kênh và dữ liệu của mình vĩnh viễn. Kênh của bạn sẽ không được khôi phục. Username của bạn sẽ được bất kỳ ai sử dụng",
     "confirmNewPassword": "Xác nhận mật khẩu mới",
     "currentEmail": "Email hiện tại",
@@ -351,8 +351,8 @@
     "transactions": {
       "transactions": "Giao dịch",
       "allFilter": "Tất cả",
-      "mindsReward": "Minds Reward",
-      "rewardsFilter": "Minds Rewards",
+      "mindsReward": "{{TENANT}} Reward",
+      "rewardsFilter": "{{TENANT}} Rewards",
       "wiresFilter": "Kết Nối"
     },
     "bank": {
@@ -418,7 +418,7 @@
   },
   "referrals": {
     "status": "Trạng thái",
-    "description": "If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +10 added to your contribution scores!"
+    "description": "If your friend signs up for {{TENANT}} within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +10 added to your contribution scores!"
   },
   "downloading": "Đang tải",
   "showLess": "Hiển thị ít đi",
