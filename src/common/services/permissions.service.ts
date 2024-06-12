@@ -16,37 +16,59 @@ export default class PermissionsService {
   }
 
   public static canCreatePost(showMessage = false) {
-    return this.hasPermission('CAN_CREATE_POST', showMessage);
+    return this.hasPermission(PermissionsEnum.CanCreatePost, showMessage);
   }
 
   public static canComment(showMessage = false) {
-    return this.hasPermission('CAN_COMMENT', showMessage);
+    return this.hasPermission(PermissionsEnum.CanComment, showMessage);
   }
 
   public static canUploadVideo(showMessage = false) {
-    return this.hasPermission('CAN_UPLOAD_VIDEO', showMessage);
+    return this.hasPermission(PermissionsEnum.CanUploadVideo, showMessage);
   }
 
   public static canInteract(showMessage = false) {
-    return this.hasPermission('CAN_INTERACT', showMessage);
+    return this.hasPermission(PermissionsEnum.CanInteract, showMessage);
   }
 
   public static canCreateGroup(showMessage = false) {
-    return this.hasPermission('CAN_CREATE_GROUP', showMessage);
+    return this.hasPermission(PermissionsEnum.CanCreateGroup, showMessage);
   }
 
   public static canBoost(showMessage = false) {
-    return this.hasPermission('CAN_BOOST', showMessage);
+    return this.hasPermission(PermissionsEnum.CanBoost, showMessage);
+  }
+
+  public static canCreateChatRoom(showMessage = false) {
+    return this.hasPermission(PermissionsEnum.CanCreateChatRoom, showMessage);
+  }
+
+  public static canUploadChatMedia(showMessage = false) {
+    return this.hasPermission(PermissionsEnum.CanUploadChatMedia, showMessage);
   }
 
   public static getMessage(error: PermissionsKeys) {
     const message = {
-      CAN_CREATE_POST: i18n.t('permissions.notAllowed.create_post'),
-      CAN_COMMENT: i18n.t('permissions.notAllowed.create_comment'),
-      CAN_UPLOAD_VIDEO: i18n.t('permissions.notAllowed.upload_video'),
-      CAN_INTERACT: i18n.t('permissions.notAllowed.interact'),
-      CAN_CREATE_GROUP: i18n.t('permissions.notAllowed.create_group'),
-      CAN_BOOST: i18n.t('permissions.notAllowed.boost'),
+      [PermissionsEnum.CanCreatePost]: i18n.t(
+        'permissions.notAllowed.create_post',
+      ),
+      [PermissionsEnum.CanComment]: i18n.t(
+        'permissions.notAllowed.create_comment',
+      ),
+      [PermissionsEnum.CanUploadVideo]: i18n.t(
+        'permissions.notAllowed.upload_video',
+      ),
+      [PermissionsEnum.CanInteract]: i18n.t('permissions.notAllowed.interact'),
+      [PermissionsEnum.CanCreateGroup]: i18n.t(
+        'permissions.notAllowed.create_group',
+      ),
+      [PermissionsEnum.CanBoost]: i18n.t('permissions.notAllowed.boost'),
+      [PermissionsEnum.CanCreateChatRoom]: i18n.t(
+        'permissions.notAllowed.create_chat',
+      ),
+      [PermissionsEnum.CanUploadChatMedia]: i18n.t(
+        'permissions.notAllowed.upload_chat_media',
+      ),
     }[error];
 
     return message || i18n.t('notAllowed');
