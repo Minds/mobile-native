@@ -57,7 +57,9 @@
       "tag": "You are not allowed to tag this content",
       "remind": "Your user role does not allow you to remind or quote post",
       "wire": "You are not allowed to wire this user",
-      "view": "You are not allowed to view this content"
+      "view": "You are not allowed to view this content",
+      "create_chat": "You are not allowed to create a chat",
+      "upload_chat_media": "You are not allowed to upload media to chat"
     }
   },
   "supermind": {
