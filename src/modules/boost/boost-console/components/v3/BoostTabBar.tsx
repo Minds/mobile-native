@@ -10,6 +10,7 @@ import { useBoostConsoleStore } from '../../contexts/boost-store.context';
 import FeedFilter from './FeedFilter';
 import BoostLatestPostPrompt from './BoostLatestPostPrompt';
 import BoostChannelPrompt from './BoostChannelPrompt';
+import { IS_TENANT } from '~/config/Config';
 
 interface BoostTabBarProps {}
 
@@ -33,6 +34,12 @@ function BoostTabBar({}: BoostTabBarProps) {
     },
   ];
 
+  const prompt = IS_TENANT ? null : boostConsoleStore.filter !== 'sidebar' ? (
+    <BoostLatestPostPrompt />
+  ) : (
+    <BoostChannelPrompt />
+  );
+
   return (
     <>
       <Row flex align="centerEnd">
@@ -50,12 +57,7 @@ function BoostTabBar({}: BoostTabBarProps) {
       </Row>
 
       <HairlineRow />
-
-      {boostConsoleStore.filter !== 'sidebar' ? (
-        <BoostLatestPostPrompt />
-      ) : (
-        <BoostChannelPrompt />
-      )}
+      {prompt}
     </>
   );
 }

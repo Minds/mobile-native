@@ -18,6 +18,8 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { NavigationItemTypeEnum } from '~/graphql/api';
 import openUrlService from '~/common/services/open-url.service';
 import { useCustomNavigationMenu } from '~/modules/navigation/service/custom-navigation.service';
+import mindsConfigService from '~/common/services/minds-config.service';
+import PermissionsService from '~/common/services/permissions.service';
 
 type Flags = Record<'hasPro' | 'hasPlus', boolean>;
 
@@ -125,6 +127,9 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
     ];
   } else {
     const navigationMap = {
+      boost: () => {
+        navigation.push('BoostConsole');
+      },
       channel: () => {
         navigation.push('Channel', { entity: channel });
       },
@@ -140,21 +145,30 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
       throw new Error('Custom navigation is not defined for this tenant');
     }
 
-    list = customNavigation.map(item => ({
-      name: item.id === 'channel' ? `@${channel.name}` : item.name,
-      icon: (
-        <MIcon
-          name={item.id === 'channel' ? 'person' : (item.iconId as any)}
-          size={24}
-          style={ThemedStyles.style.colorPrimaryText}
-        />
-      ),
-      testID: `Drawer:${item.id}`,
-      onPress:
-        item.type === NavigationItemTypeEnum.Core
-          ? navigationMap[item.id]
-          : () => item.url && openUrlService.open(item.url),
-    }));
+    const config = mindsConfigService.getSettings();
+
+    list = customNavigation
+      .filter(item =>
+        item.id === 'boost' &&
+        (!config?.tenant?.boost_enabled || !PermissionsService.canBoost())
+          ? false
+          : true,
+      )
+      .map(item => ({
+        name: item.id === 'channel' ? `@${channel.name}` : item.name,
+        icon: (
+          <MIcon
+            name={item.id === 'channel' ? 'person' : (item.iconId as any)}
+            size={24}
+            style={ThemedStyles.style.colorPrimaryText}
+          />
+        ),
+        testID: `Drawer:${item.id}`,
+        onPress:
+          item.type === NavigationItemTypeEnum.Core
+            ? navigationMap[item.id]
+            : () => item.url && openUrlService.open(item.url),
+      }));
 
     list.push({
       name: i18n.t('moreScreen.settings'),
