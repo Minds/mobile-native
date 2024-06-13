@@ -191,6 +191,7 @@ const redirectPages = [
   'login',
   'boost',
   'rewards',
+  'memberships',
   'youtube-migration',
   'branding',
   'localization',

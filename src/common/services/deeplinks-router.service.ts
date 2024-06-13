@@ -4,6 +4,7 @@ import {
   MINDS_DEEPLINK,
   APP_SCHEME_URI,
   IS_TENANT,
+  APP_URI,
 } from '../../config/Config';
 import navigationService from '../../navigation/NavigationService';
 import { Linking } from 'react-native';
@@ -12,6 +13,7 @@ import analyticsService from '~/common/services/analytics.service';
 import apiService from './api.service';
 import referrerService from './referrer.service';
 import PreviewUpdateService from 'preview/PreviewUpdateService';
+import openUrlService from './open-url.service';
 
 /**
  * Deeplinks router
@@ -146,15 +148,18 @@ class DeeplinksRouter {
     } else if (url !== APP_API_URI) {
       if (url.startsWith(APP_SCHEME_URI)) {
         // how to avoid redirection loop
-        Linking.openURL(
-          url.replace(
-            APP_SCHEME_URI,
-            IS_TENANT ? APP_API_URI : 'https://mobile.minds.com/',
-          ),
-        );
+        if (IS_TENANT) {
+          openUrlService.openLinkInInAppBrowser(
+            url.replace(APP_SCHEME_URI, APP_URI),
+          );
+        } else {
+          Linking.openURL(
+            url.replace(APP_SCHEME_URI, 'https://mobile.minds.com/'),
+          );
+        }
       } else {
         IS_TENANT
-          ? Linking.openURL(url)
+          ? openUrlService.openLinkInInAppBrowser(url)
           : Linking.openURL(url.replace('https://www.', 'https://mobile.'));
       }
       return true;
