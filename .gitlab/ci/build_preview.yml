@@ -43,6 +43,7 @@ eas_build_preview:
     - export NODE_OPTIONS="--max_old_space_size=4096"
     - npx eas-cli update --branch "$TENANT_ID" --message "preview" --json --non-interactive || exit_code=$?
     - echo "Exit code ${exit_code}"
+    - npx eas-cli channel:create $TENANT_ID --json --non-interactive
     - if [ $exit_code -ne 0 ]; then node tasks/callbuild-webhook failed; fi;
     - node tasks/callbuild-webhook
     - echo "Demo link mindspreview://preview/$TENANT_ID"
