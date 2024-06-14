@@ -28,11 +28,6 @@ LogBox.ignoreLogs([
   'Require cycle: ',
 ]);
 
-process.env.DEBUG === 'tamagui';
-process.env.TAMAGUI_TARGET = 'native';
-process.env.TAMAGUI_ENABLE_DYNAMIC_LOAD = 1;
-process.env.TAMAGUI_DISABLE_WARN_DYNAMIC_LOAD = 1;
-
 enableFreeze(true);
 
 // // grab this text blob, and put it in a file named packager/modulePaths.js

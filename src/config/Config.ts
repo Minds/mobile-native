@@ -302,8 +302,6 @@ export const STORE_LINK = Platform.select({
   android: PLAY_STORE_LINK,
 }) as string;
 
-export const isStoryBookOn = storages.app.getBool('storybook');
-
 export const BOOSTS_DELAY = 604800;
 
 /**

@@ -9,9 +9,6 @@ import { getStores } from '../AppStores';
 jest.mock('../AppInitManager');
 jest.mock('../FontsLoader');
 jest.mock('../src/common/services/update.service.ts');
-jest.mock('@minds/ui', () => ({
-  UIProvider: ({ children }) => children,
-}));
 
 jest.mock('react-native-exception-handler');
 

@@ -1,8 +1,5 @@
 const path = require('path');
 
-process.env.TAMAGUI_TARGET = 'native';
-process.env.TAMAGUI_ENABLE_DYNAMIC_LOAD = 1;
-process.env.TAMAGUI_DISABLE_WARN_DYNAMIC_LOAD = 1;
 const env = process.env.BABEL_ENV || process.env.NODE_ENV;
 module.exports = {
   presets: [
@@ -26,20 +23,6 @@ module.exports = {
     ],
     ['react-native-reanimated/plugin'],
     [
-      'transform-inline-environment-variables',
-      {
-        include: ['APP_VERSION', 'TAMAGUI_TARGET'],
-      },
-    ],
-    [
-      '@tamagui/babel-plugin',
-      {
-        exclude: /node_modules/,
-        config: './tamagui.config.ts',
-        components: ['@minds/ui', 'tamagui'],
-      },
-    ],
-    [
       'module-resolver',
       {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -58,7 +41,6 @@ module.exports = {
           services: path.resolve(__dirname, 'src/services'),
           styles: path.resolve(__dirname, 'src/styles'),
           utils: path.resolve(__dirname, 'src/utils'),
-          '@minds/ui': path.resolve(__dirname, 'packages/design-system/src'),
         },
       },
     ],
