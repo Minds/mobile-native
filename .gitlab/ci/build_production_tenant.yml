@@ -13,6 +13,11 @@ eas_build_production_android_tenant:
     - wget -q -O - "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - cp .secure_files/google-services.json .
   script:
+    - |
+      if [ -z "$TENANT_ID" ]; then
+        echo "ERROR: TENANT_ID is not set."
+        exit 1
+      fi
     - echo "Building tenant $TENANT_ID..."
     - node tasks/setup-tenant.js $TENANT_ID
     - npx eas-cli build --platform android --profile production --json --non-interactive --auto-submit --no-wait

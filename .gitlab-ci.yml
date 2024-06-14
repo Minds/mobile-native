@@ -10,6 +10,8 @@ include:
   - local: .gitlab/ci/build_preview.yml
   - local: .gitlab/ci/build_production.yml
   - local: .gitlab/ci/build_production_tenant.yml
+  - local: .gitlab/ci/update_production.yml
+  - local: .gitlab/ci/update_production_tenant.yml
   - local: .gitlab/ci/release.yml
   - local: .gitlab/ci/submit.yml
   - local: .gitlab/ci/maintenance.yml
