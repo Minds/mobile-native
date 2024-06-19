@@ -1,7 +1,7 @@
 import { Timeout } from '~/types/Common';
 import apiService from '../../common/services/api.service';
 import logService from '../../common/services/log.service';
-import sessionService from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import socketService from '../../common/services/socket.service';
 import type NotificationModel from './notification/NotificationModel';
 import { NotificationsTabOptions } from './NotificationsTopBar';

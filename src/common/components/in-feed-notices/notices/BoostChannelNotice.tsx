@@ -4,7 +4,7 @@ import React from 'react';
 
 import i18n from '~/common/services/i18n.service';
 // import openUrlService from '~/common/services/open-url.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
 import { TENANT } from '~/config/Config';

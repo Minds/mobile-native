@@ -149,3 +149,7 @@ jest.mock('@expo/vector-icons', () => ({
 jest.mock('react-native-keyboard-controller', () =>
   require('react-native-keyboard-controller/jest'),
 );
+
+// mocked here since mocking it locally on the api.service is not working (probably because of the circular dependency)
+jest.mock('./src/navigation/NavigationService');
+jest.mock('~/auth/AuthService');

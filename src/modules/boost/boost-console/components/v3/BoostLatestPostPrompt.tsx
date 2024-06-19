@@ -1,7 +1,7 @@
 import React from 'react';
 import BaseNotice from '~/common/components/in-feed-notices/notices/BaseNotice';
 import apiService from '~/common/services/api.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import NavigationService from '~/navigation/NavigationService';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import { showNotification } from '../../../../../../AppMessages';

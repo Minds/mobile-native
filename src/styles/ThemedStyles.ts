@@ -8,7 +8,7 @@ import { DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { buildStyle, updateTheme } from './Style';
 
 import type { Styles } from './Style';
-import { storages } from '../common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 import useIsPortrait from '../common/hooks/useIsPortrait';
 import { IS_TENANT, TENANT_THEME } from '~/config/Config';
 
@@ -42,7 +42,9 @@ export class ThemedStylesStore {
   style: Styles;
 
   constructor() {
-    this.theme = !IS_TENANT ? storages.app.getInt('theme') ?? 1 : TENANT_THEME;
+    this.theme = !IS_TENANT
+      ? storagesService.app.getNumber('theme') ?? 1
+      : TENANT_THEME;
     this.style = buildStyle(this.theme === 0 ? LIGHT_THEME : DARK_THEME);
     this.generateNavStyle();
   }
@@ -72,7 +74,7 @@ export class ThemedStylesStore {
   @action
   setDark() {
     this.theme = 1;
-    storages.app.setInt('theme', this.theme);
+    storagesService.app.set('theme', this.theme);
     this.generateNavStyle();
     updateTheme(this.style);
   }
@@ -83,7 +85,7 @@ export class ThemedStylesStore {
   @action
   setLight() {
     this.theme = 0;
-    storages.app.setInt('theme', this.theme);
+    storagesService.app.set('theme', this.theme);
     this.generateNavStyle();
     updateTheme(this.style);
   }

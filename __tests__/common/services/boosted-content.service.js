@@ -1,6 +1,6 @@
 import boostedContentService from '../../../src/modules/boost/services/boosted-content.service';
 import blockListService from '../../../src/common/services/block-list.service';
-import sessionService from '../../../src/common/services/session.service';
+import { sessionService } from '~/common/services';
 
 jest.mock('../../../src/common/services/feeds.service');
 jest.mock('../../../src/common/services/session.service');

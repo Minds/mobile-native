@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx';
 import apiService from '~/common/services/api.service';
 import FeedStore from '~/common/stores/FeedStore';
-import { storages } from '~/common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 import { IS_TENANT } from '~/config/Config';
 
 export default class DiscoveryV2Store {
@@ -60,7 +60,8 @@ export default class DiscoveryV2Store {
       .setInjectBoost(false)
       .setLimit(15);
 
-    this.lastDiscoveryTimestamp = storages.app.getInt(DISCOVERY_TS_KEY) ?? 0;
+    this.lastDiscoveryTimestamp =
+      storagesService.app.getNumber(DISCOVERY_TS_KEY) ?? 0;
 
     this.badgeVisible =
       +new Date() - (this.lastDiscoveryTimestamp ?? 0) > 86400 * 1000; // 24 hours
@@ -228,13 +229,13 @@ export default class DiscoveryV2Store {
   clearBadge() {
     this.badgeVisible = false;
     this.lastDiscoveryTimestamp = +new Date();
-    storages.app.setInt(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
+    storagesService.app.set(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
   }
 
   showBadge() {
     this.badgeVisible = true;
     this.lastDiscoveryTimestamp = 0;
-    storages.app.setInt(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
+    storagesService.app.set(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
   }
 }
 

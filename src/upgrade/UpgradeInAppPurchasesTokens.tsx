@@ -23,7 +23,7 @@ import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
 import PlanOptionsIAP from './PlanOptionsIAP';
 import logService from '~/common/services/log.service';
 import { showNotification } from 'AppMessages';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import apiService from '~/common/services/api.service';
 import { useStores } from '~/common/hooks/use-stores';
 import { WalletStoreType } from '~/wallet/v2/createWalletStore';

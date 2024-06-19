@@ -1,5 +1,5 @@
 import logService from '../common/services/log.service';
-import { storages } from '../common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 
 const KEEP_SECONDS = 60 * 60 * 48; // 48 hours
 
@@ -7,13 +7,16 @@ const KEEP_SECONDS = 60 * 60 * 48; // 48 hours
  * Portrait content service
  */
 export class PortraitContentService {
+  private _seen: Map<string, number> = new Map();
+  private _seenLoaded = false;
+
   /**
    * Mark as seen
    * @param {string} urn
    */
   seen(urn: string) {
     try {
-      storages.userPortrait?.setInt(urn, Math.floor(Date.now() / 1000));
+      this._seen.set(urn, Math.floor(Date.now() / 1000));
     } catch (err) {
       logService.exception('[PortraitContentService]', err);
     }
@@ -24,18 +27,15 @@ export class PortraitContentService {
    */
   async getSeen(): Promise<Map<string, number> | null> {
     try {
-      const urns: any =
-        (await storages.userPortrait?.indexer.numbers.getAll()) || [];
-
-      if (
-        urns &&
-        Array.isArray(urns[0]) &&
-        urns[0][1] < Date.now() / 1000 - KEEP_SECONDS
-      ) {
-        this.cleanOld(urns);
+      if (!this._seenLoaded) {
+        const seen: any = storagesService.userPortrait?.getObject('seen');
+        if (seen) {
+          this._seen = new Map(Object.entries(seen));
+          this.cleanOld();
+        }
+        this._seenLoaded = true;
       }
-
-      return new Map(urns);
+      return this._seen;
     } catch (err) {
       logService.exception('[PortraitContentService]', err);
 
@@ -44,14 +44,28 @@ export class PortraitContentService {
   }
 
   /**
+   * Save the seen urns
+   */
+  save() {
+    try {
+      storagesService.userPortrait?.setObject(
+        'seen',
+        Object.fromEntries(this._seen),
+      );
+    } catch (err) {
+      logService.exception('[PortraitContentService]', err);
+    }
+  }
+
+  /**
    * Delete old information (older than 48hs)
    */
-  async cleanOld(urns: Array<[string, number]>) {
+  cleanOld() {
     const threshold = Date.now() / 1000 - KEEP_SECONDS;
     try {
-      urns.forEach(data => {
-        if (data[1] < threshold) {
-          storages.userPortrait?.removeItem(data[0]);
+      this._seen.forEach((value, key) => {
+        if (value < threshold) {
+          this._seen.delete(key);
         }
       });
     } catch (err) {

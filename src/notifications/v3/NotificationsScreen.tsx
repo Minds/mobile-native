@@ -13,7 +13,7 @@ import NotificationModel from './notification/NotificationModel';
 import EmptyList from '../../common/components/EmptyList';
 import MText from '../../common/components/MText';
 import { pushInteractionsScreen } from '../../common/components/interactions/pushInteractionsBottomSheet';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ActivityIndicator from '~/common/components/ActivityIndicator';

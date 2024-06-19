@@ -7,7 +7,7 @@ import { ModalFullScreen } from '~ui';
 import FitScrollView from '../../common/components/FitScrollView';
 import MenuItem from '../../common/components/menus/MenuItem';
 import i18n from '../../common/services/i18n.service';
-import sessionService from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import ThemedStyles from '../../styles/ThemedStyles';
 import LoggedUsersList from './logged-users/LoggedUsersList';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';

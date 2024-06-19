@@ -1,6 +1,5 @@
 import PostHog from 'posthog-react-native';
 
-import { storages } from './storage/storages.service';
 import {
   IS_REVIEW,
   IS_TENANT,
@@ -8,12 +7,13 @@ import {
   POSTHOG_HOST,
   TENANT_ID,
 } from '~/config/Config';
+import { storagesService } from '~/common/services';
 import BaseModel from '../BaseModel';
 import { Metadata } from './metadata.service';
 import { DismissIdentifier } from '../stores/DismissalStore';
 import mindsConfigService from './minds-config.service';
 import { observe } from 'mobx';
-import sessionService from './session.service';
+import { sessionService } from '~/common/services';
 
 const IGNORE_SCREENS = ['Comments'];
 
@@ -149,11 +149,11 @@ export class AnalyticsService {
    */
   addExperiment(key: string, response: string | boolean): void {
     const CACHE_KEY = `experiment:${key}`;
-    const date = storages.user?.getInt(CACHE_KEY);
+    const date = storagesService.user?.getNumber(CACHE_KEY);
     if (date && date > Date.now() - 86400000) {
       return; // Do not emit event
     } else {
-      storages.user?.setInt(CACHE_KEY, Date.now());
+      storagesService.user?.set(CACHE_KEY, Date.now());
     }
     if (!IS_REVIEW) {
       this.posthog.capture('$feature_flag_called', {

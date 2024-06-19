@@ -1,5 +1,5 @@
 import api, { ApiResponse } from './../common/services/api.service';
-import session from './../common/services/session.service';
+import { sessionService } from '~/common/services';
 import delay from '../common/helpers/delay';
 import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
@@ -108,23 +108,23 @@ class AuthService {
       }
     }
 
-    if (session.isRelogin(username, data)) {
+    if (sessionService.isRelogin(username, data)) {
       return data;
     }
 
-    const isFirstLogin = session.sessionsCount === 0;
+    const isFirstLogin = sessionService.sessionsCount === 0;
 
     // if already have other sessions...
     if (!isFirstLogin) {
-      session.setSwitchingAccount(true);
+      sessionService.setSwitchingAccount(true);
       this.sessionLogout(newUser);
     }
 
     await api.clearCookies();
     await delay(100);
 
-    await session.addOAuthSession(data);
-    await session.login();
+    await sessionService.addOAuthSession(data);
+    await sessionService.login();
     await mindsConfigService.update();
 
     // if this is not the first login we reset the stack keeping the login screen and the main only.
@@ -133,7 +133,7 @@ class AuthService {
       resetStackAndGoBack();
     }
 
-    session.setSwitchingAccount(false);
+    sessionService.setSwitchingAccount(false);
 
     return data;
   }
@@ -143,7 +143,7 @@ class AuthService {
    */
   checkUserExist(username: string) {
     if (
-      session.sessions.some(
+      sessionService.sessions.some(
         token => token.user.username === username && !token.sessionExpired,
       )
     ) {
@@ -152,14 +152,14 @@ class AuthService {
   }
 
   async loginWithIndex(sessionIndex: number) {
-    session.setSwitchingAccount(true);
+    sessionService.setSwitchingAccount(true);
     await this.sessionLogout();
     await api.clearCookies();
     await delay(100);
-    await session.switchUser(sessionIndex);
-    await session.login();
+    await sessionService.switchUser(sessionIndex);
+    await sessionService.login();
     resetStackAndGoBack();
-    session.setSwitchingAccount(false);
+    sessionService.setSwitchingAccount(false);
   }
 
   /**
@@ -168,7 +168,7 @@ class AuthService {
    * @param callback the callback to be called on success
    */
   async loginWithGuid(guid: string, callback: Function) {
-    const index = session.getIndexSessionFromGuid(guid);
+    const index = sessionService.getIndexSessionFromGuid(guid);
 
     if (index !== false) {
       await this.loginWithIndex(index);
@@ -180,10 +180,10 @@ class AuthService {
 
   async handleActiveAccount() {
     // if after logout we have other accounts...
-    if (session.sessionsCount > 0) {
+    if (sessionService.sessionsCount > 0) {
       await delay(100);
-      await session.switchUser(session.activeIndex);
-      await session.login();
+      await sessionService.switchUser(sessionService.activeIndex);
+      await sessionService.login();
       resetStackAndGoBack();
     }
   }
@@ -217,7 +217,7 @@ class AuthService {
     this.justRegistered = false;
     this.onboardCompleted = false;
     try {
-      if (session.sessionsCount > 0) {
+      if (sessionService.sessionsCount > 0) {
         const state = NavigationService.getCurrentState();
         if (state && state.name !== 'MultiUserScreen') {
           NavigationService.navigate('MultiUserScreen');
@@ -225,7 +225,7 @@ class AuthService {
       }
 
       // delete device token first
-      await this.unregisterTokenFrom(session.activeIndex);
+      await this.unregisterTokenFrom(sessionService.activeIndex);
 
       if (preLogoutCallBack) {
         await preLogoutCallBack();
@@ -238,7 +238,7 @@ class AuthService {
 
       return true;
     } catch (err) {
-      session.setSwitchingAccount(false);
+      sessionService.setSwitchingAccount(false);
       logService.exception('[AuthService] logout', err);
       return false;
     }
@@ -248,13 +248,13 @@ class AuthService {
    * Logout session and handle user switching or navigating to welcome screen
    */
   private async logoutSession() {
-    session.setSwitchingAccount(true);
-    session.logout();
+    sessionService.setSwitchingAccount(true);
+    sessionService.logout();
 
     // Fixes auto-subscribe issue on register
     await api.clearCookies();
     await this.handleActiveAccount();
-    session.setSwitchingAccount(false);
+    sessionService.setSwitchingAccount(false);
   }
 
   /**
@@ -265,7 +265,7 @@ class AuthService {
     this.onboardCompleted = false;
 
     try {
-      if (session.sessionsCount > 0) {
+      if (sessionService.sessionsCount > 0) {
         const state = NavigationService.getCurrentState();
         if (state && state.name !== 'MultiUserScreen') {
           NavigationService.navigate('MultiUserScreen');
@@ -273,20 +273,20 @@ class AuthService {
         }
       }
       // delete device token first
-      await this.unregisterTokenFrom(session.activeIndex);
+      await this.unregisterTokenFrom(sessionService.activeIndex);
 
-      session.setSwitchingAccount(true);
+      sessionService.setSwitchingAccount(true);
       // revoke local session
-      session.setSessionExpired(true);
+      sessionService.setSessionExpired(true);
 
       this.tryToRelog(() => {
-        session.setSessionExpired(false);
+        sessionService.setSessionExpired(false);
         NavigationService.goBack();
       });
 
       return true;
     } catch (err) {
-      session.setSwitchingAccount(false);
+      sessionService.setSwitchingAccount(false);
       logService.exception('[AuthService] revokeTokens', err);
       return false;
     }
@@ -301,7 +301,9 @@ class AuthService {
       this.logoutSession();
     };
 
-    const currentSession = session.getSessionForIndex(session.activeIndex);
+    const currentSession = sessionService.getSessionForIndex(
+      sessionService.activeIndex,
+    );
 
     if (currentSession.authType === AuthType.Cookie) {
       await onCancel();
@@ -319,9 +321,9 @@ class AuthService {
    */
   async unregisterTokenFrom(index: number) {
     try {
-      const deviceToken = session.deviceToken;
+      const deviceToken = sessionService.deviceToken;
       if (deviceToken) {
-        return await session.apiServiceInstances[index].delete(
+        return await sessionService.apiServiceInstances[index].delete(
           `api/v3/notifications/push/token/${deviceToken}`,
         );
       }
@@ -343,19 +345,19 @@ class AuthService {
       await this.unregisterTokenFrom(index);
 
       // revoke access token from backend
-      session.apiServiceInstances[index].post('api/v3/oauth/revoke');
-      session.setSwitchingAccount(true);
-      const logoutActive = session.logoutFrom(index);
+      sessionService.apiServiceInstances[index].post('api/v3/oauth/revoke');
+      sessionService.setSwitchingAccount(true);
+      const logoutActive = sessionService.logoutFrom(index);
 
       // Fixes auto-subscribe issue on register
       await api.clearCookies();
       if (logoutActive) {
         await this.handleActiveAccount();
       }
-      session.setSwitchingAccount(false);
+      sessionService.setSwitchingAccount(false);
       return true;
     } catch (err) {
-      session.setSwitchingAccount(false);
+      sessionService.setSwitchingAccount(false);
       logService.exception('[AuthService] logoutFrom', err);
       return false;
     }
@@ -369,7 +371,7 @@ class AuthService {
     try {
       this.justRegistered = newUser;
       this.onboardCompleted = false;
-      session.logout(false);
+      sessionService.logout(false);
       // Fixes auto-subscribe issue on register
       await api.clearCookies();
       return true;
@@ -386,7 +388,7 @@ class AuthService {
     try {
       await api.delete('api/v1/authenticate/all');
       await api.post('api/v3/oauth/revoke');
-      session.logout();
+      sessionService.logout();
 
       // Fixes auto-subscribe issue on register
       await api.clearCookies();
@@ -408,7 +410,7 @@ class AuthService {
       grant_type: 'refresh_token',
       client_id: 'mobile',
       //client_secret: '',
-      refresh_token: refreshToken || session.refreshToken,
+      refresh_token: refreshToken || sessionService.refreshToken,
     } as loginParms;
 
     const headers = accessToken

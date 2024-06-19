@@ -2,7 +2,7 @@ import { observable, action, computed, toJS, runInAction } from 'mobx';
 import get from 'lodash/get';
 import EventEmitter from 'eventemitter3';
 
-import sessionService from './services/session.service';
+import { sessionService } from '~/common/services';
 import { vote } from './services/votes.service';
 import { recordView, toggleExplicit } from '../newsfeed/NewsfeedService';
 import logService from './services/log.service';

@@ -5,7 +5,7 @@ import i18n from '../../common/services/i18n.service';
 import settingsService from '../SettingsService';
 import CenteredLoading from '../../common/components/CenteredLoading';
 import MText from '../../common/components/MText';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import Switch from '~/common/components/controls/Switch';
 
 export default function () {

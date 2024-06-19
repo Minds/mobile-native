@@ -1,4 +1,4 @@
-import sessionService from '../services/session.service';
+import { sessionService } from '~/common/services';
 import type UserModel from '../../channel/UserModel';
 
 /**

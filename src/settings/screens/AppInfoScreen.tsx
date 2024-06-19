@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+import { Platform, View } from 'react-native';
+import { osVersion, deviceName, brand } from 'expo-device';
 import { Image } from 'expo-image';
 
 import ThemedStyles from '~/styles/ThemedStyles';
@@ -37,15 +37,17 @@ export default function AppInfoScreen() {
       </MText>
       <View style={rowStyle}>
         <MText style={titleStyle}>Brand</MText>
-        <MText style={valueStyle}>{DeviceInfo.getBrand()}</MText>
+        <MText style={valueStyle}>{brand}</MText>
       </View>
       <View style={rowStyle}>
         <MText style={titleStyle}>Type</MText>
-        <MText style={valueStyle}>{DeviceInfo.getDeviceType()}</MText>
+        <MText style={valueStyle}>{deviceName}</MText>
       </View>
       <View style={rowStyle}>
-        <MText style={titleStyle}>Device</MText>
-        <MText style={valueStyle}>{DeviceInfo.getModel()}</MText>
+        <MText style={titleStyle}>
+          {Platform.select({ ios: 'iOS', android: 'Android' })}
+        </MText>
+        <MText style={valueStyle}>{osVersion}</MText>
       </View>
     </Screen>
   );

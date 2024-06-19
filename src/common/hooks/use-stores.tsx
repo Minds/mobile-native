@@ -10,7 +10,7 @@ import createSearchResultStore, {
 import createPortraitStore, {
   PortraitStoreType,
 } from '~/portrait/portrait.store';
-import sessionService from '../services/session.service';
+import { sessionService } from '~/common/services';
 import logService from '../services/log.service';
 import createChatStore, { ChatStoreType } from '~/chat/createChatStore';
 import createNotificationsStore, {

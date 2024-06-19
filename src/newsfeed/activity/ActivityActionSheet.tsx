@@ -20,7 +20,7 @@ import { isFollowing } from '../NewsfeedService';
 import shareService from '../../share/ShareService';
 import i18n from '../../common/services/i18n.service';
 import translationService from '../../common/services/translation.service';
-import sessionService from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import NavigationService from '../../navigation/NavigationService';
 import type ActivityModel from '../ActivityModel';
 import { showNotification } from '../../../AppMessages';

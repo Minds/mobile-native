@@ -10,7 +10,7 @@ import PressableScale from '~/common/components/PressableScale';
 import TabChatPreModal, { ChatModalHandle } from '~/tabs/TabChatPreModal';
 import ChatIcon from '~/chat/ChatIcon';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import SendIntentAndroid from 'react-native-send-intent';
 import { ANDROID_CHAT_APP, CHAT_ENABLED } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';

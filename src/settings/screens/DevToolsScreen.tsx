@@ -5,14 +5,9 @@ import { ScrollView } from 'react-native-gesture-handler';
 import FloatingInput from '~/common/components/FloatingInput';
 import Toggle from '~/common/components/Toggle';
 import api from '~/common/services/api.service';
-import { storages } from '~/common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 import { B1, B2, Button, Column, H3, Row, ScreenSection } from '~/common/ui';
-import {
-  CANARY_KEY,
-  CUSTOM_API_URL,
-  DEV_MODE,
-  STAGING_KEY,
-} from '~/config/Config';
+import { CANARY_KEY, STAGING_KEY } from '~/config/Config';
 import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '~/styles/ThemedStyles';
 // import { CodePushDebugger, codePush } from 'modules/codepush';
@@ -22,15 +17,16 @@ import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen
 import pushService from '~/common/services/push.service';
 import * as Clipboard from 'expo-clipboard';
 import { showNotification } from 'AppMessages';
+import { DEV_MODE } from '~/config/StoredConfig';
 
 const DevToolsScreen = () => {
   const navigation = useNavigation();
-  const [apiURL, setApi] = useState(CUSTOM_API_URL);
+  const [apiURL, setApi] = useState(DEV_MODE.getApiURL());
   const [staging, setStaging] = useState(
-    storages.app.getBool(STAGING_KEY) || false,
+    storagesService.app.getBoolean(STAGING_KEY) || false,
   );
   const [canary, setCanary] = useState(
-    storages.app.getBool(CANARY_KEY) || false,
+    storagesService.app.getBoolean(CANARY_KEY) || false,
   );
   const inputRef = React.useRef<any>();
   const theme = ThemedStyles.style;
@@ -42,7 +38,7 @@ const DevToolsScreen = () => {
   };
 
   const [storyBook, setStoryBook] = useState(
-    storages.app.getBool('storybook') || false,
+    storagesService.app.getBoolean('storybook') || false,
   );
 
   const requestPushNote = () => {
@@ -93,7 +89,7 @@ const DevToolsScreen = () => {
               value={staging}
               onValueChange={val => {
                 setStaging(val);
-                storages.app.setBool(STAGING_KEY, val);
+                storagesService.app.set(STAGING_KEY, val);
               }}
             />
           </Row>
@@ -103,7 +99,7 @@ const DevToolsScreen = () => {
               value={canary}
               onValueChange={val => {
                 setCanary(val);
-                storages.app.setBool(CANARY_KEY, val);
+                storagesService.app.set(CANARY_KEY, val);
               }}
             />
           </Row>
@@ -120,7 +116,7 @@ const DevToolsScreen = () => {
                 onSubmit={setApiURLCallback}
                 autoCapitalize="none"
                 keyboardType="url"
-                onCancel={() => setApi(CUSTOM_API_URL)}
+                onCancel={() => setApi(DEV_MODE.getApiURL())}
                 onSubmitEditing={setApiURLCallback}
                 defaultValue={apiURL || 'https://'}
                 onChangeText={v => setApi(v)}
@@ -139,7 +135,7 @@ const DevToolsScreen = () => {
               value={storyBook}
               onValueChange={val => {
                 setStoryBook(val);
-                storages.app.setBool('storybook', val);
+                storagesService.app.set('storybook', val);
               }}
             />
           </Row>

@@ -1,6 +1,6 @@
 import React from 'react';
 import UserModel from '../../../channel/UserModel';
-import sessionService from '../../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import { Session } from '../../../common/services/storage/session.storage.service';
 import AuthService from '../../AuthService';
 import ChannelListItem from '../../../common/components/ChannelListItem';

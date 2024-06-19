@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import MText from '../common/components/MText';
 import i18n from '../common/services/i18n.service';
-import sessionService from '../common/services/session.service';
+import { sessionService } from '~/common/services';
 import { APP_URI } from '../config/Config';
 import ThemedStyles from '../styles/ThemedStyles';
 import Input from './components/Input';

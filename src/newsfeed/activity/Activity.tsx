@@ -19,7 +19,7 @@ import blockListService from '../../common/services/block-list.service';
 import i18n from '../../common/services/i18n.service';
 import ActivityModel from '../ActivityModel';
 import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
-import sessionService from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import NavigationService from '../../navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
 import DeletedRemind from './DeletedRemind';

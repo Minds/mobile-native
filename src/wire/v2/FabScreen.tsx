@@ -14,7 +14,7 @@ import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
 import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
-import { storages } from '../../common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 import MText from '../../common/components/MText';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import { confirm } from '~/common/components/Confirm';
@@ -47,12 +47,12 @@ const createFabScreenStore = () => {
       this.loaded = true;
     },
     getLastAmount() {
-      const lastAmount = storages.user?.getString(lastAmountStorageKey);
+      const lastAmount = storagesService.user?.getString(lastAmountStorageKey);
       this.amount = lastAmount ? parseFloat(lastAmount) : 0;
       this.wire.setAmount(this.amount);
     },
     async setLastAmount(amount: string) {
-      storages.user?.setString(lastAmountStorageKey, amount);
+      storagesService.user?.set(lastAmountStorageKey, amount);
     },
     setCard(card: any) {
       this.card = card;

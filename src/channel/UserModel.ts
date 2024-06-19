@@ -4,7 +4,7 @@ import { MINDS_CDN_URI, GOOGLE_PLAY_STORE } from '../config/Config';
 import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
 import ChannelService from './ChannelService';
-import sessionService from '../common/services/session.service';
+import { sessionService } from '~/common/services';
 import apiService from '../common/services/api.service';
 import logService from '../common/services/log.service';
 import { SupportTiersType } from '../wire/WireTypes';

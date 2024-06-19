@@ -4,7 +4,7 @@ import { useAsObservableSource, useLocalStore } from 'mobx-react';
 import { useCallback, useEffect } from 'react';
 import apiService from '../services/api.service';
 import { isAbort } from '../services/ApiErrors';
-import { storages } from '../services/storage/storages.service';
+import { storagesService } from '~/common/services';
 
 const getCacheKey = (url: string, params: any) =>
   `useFetch:${url}${params ? `?${JSON.stringify(params)}` : ''}`;
@@ -163,7 +163,9 @@ const createStore = (storeOptions: {
   },
   hydrate(params: any, updateState) {
     try {
-      const data = storages.user?.getMap(getCacheKey(storeOptions.url, params));
+      const data = storagesService.user?.getObject(
+        getCacheKey(storeOptions.url, params),
+      );
       if (data) {
         this.setResult(updateState(data, this.result));
       }
@@ -172,7 +174,7 @@ const createStore = (storeOptions: {
     }
   },
   persist(params: any) {
-    return storages.user?.setMap(
+    return storagesService.user?.setObject(
       getCacheKey(storeOptions.url, params),
       this.result,
     );

@@ -1,10 +1,11 @@
-import { showNotification } from 'AppMessages';
+import { URL, URLSearchParams } from 'react-native-url-polyfill';
+import { nativeApplicationVersion } from 'expo-application';
 import * as Updates from 'expo-updates';
-import DeviceInfo from 'react-native-device-info';
+
+import { showNotification } from 'AppMessages';
 import { compareVersions } from '~/common/helpers/compareVersions';
 import logService from '~/common/services/log.service';
-import { storages } from '~/common/services/storage/storages.service';
-import { URL, URLSearchParams } from 'react-native-url-polyfill';
+import { storagesService } from '~/common/services/storage/storages.service';
 /**
  * This service is used to download the demo app using the modified expo-updates library.
  */
@@ -26,7 +27,7 @@ export default class PreviewUpdateService {
         }
 
         // we clear the session to prevent starting with the session of a different tenant demo app
-        storages.session?.clearStore();
+        storagesService.session?.clearAll();
 
         // restart the app with the new demo app
         await Updates.reloadAsync();
@@ -69,7 +70,7 @@ export default class PreviewUpdateService {
       return true;
     }
 
-    const currentVersion = DeviceInfo.getVersion();
+    const currentVersion = nativeApplicationVersion;
 
     // if the current version is the same as the required version, we can install the preview
     if (version === currentVersion) {

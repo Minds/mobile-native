@@ -1,7 +1,7 @@
 import { WebView } from 'react-native-webview';
 import React, { useEffect, useState } from 'react';
 import { ModalFullScreen } from '~/common/ui';
-import session from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import mindsConfigService from '~/common/services/minds-config.service';
 
@@ -21,11 +21,11 @@ const OidcScreen = ({ route }: PropsType) => {
   const onLoginComplete = async () => {
     setLoginUrl('');
 
-    await session.addCookieSession();
-    await session.login();
+    await sessionService.addCookieSession();
+    await sessionService.login();
     await mindsConfigService.update();
 
-    session.setSwitchingAccount(false);
+    sessionService.setSwitchingAccount(false);
   };
 
   const [redirecting, setRedirecting] = useState(false);

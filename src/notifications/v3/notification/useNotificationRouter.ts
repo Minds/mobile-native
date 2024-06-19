@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import UserModel from '../../../channel/UserModel';
-import sessionService from '../../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import type NotificationModel from './NotificationModel';
 import { NotificationType } from './NotificationModel';
 import { GOOGLE_PLAY_STORE } from '~/config/Config';

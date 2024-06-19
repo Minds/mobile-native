@@ -7,7 +7,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import { Avatar, B1, B2 } from '~/common/ui';
 import { ChatMessage } from '../types';
 import i18n from '~/common/services/i18n.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import {
   ChatRoomMessagesContextType,
   useChatRoomMessageContext,

@@ -23,7 +23,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Actions from '../../../newsfeed/activity/Actions';
 import Activity from '../../../newsfeed/activity/Activity';
 import CommentsStore from '../../../comments/v2/CommentsStore';
-import sessionService from '../../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import videoPlayerService from '../../../common/services/video-player.service';
 import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
 import LockV2 from '../../../wire/v2/lock/Lock';

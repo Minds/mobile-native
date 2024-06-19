@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { invert } from 'lodash';
 import openUrlService from '~/common/services/open-url.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import { IS_TENANT } from '~/config/Config';
 import { NavigationItemTypeEnum } from '~/graphql/api';
 import { CustomNavigationItems } from '~/modules/navigation/service/custom-navigation.service';

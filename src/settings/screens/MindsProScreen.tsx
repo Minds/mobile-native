@@ -1,7 +1,7 @@
 import { B1, Button, Screen } from '~/common/ui';
 import subscriptionProService from '~/common/services/subscription.pro.service';
 import { useEffect, useState } from 'react';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import { useNavigation } from '@react-navigation/native';
 import { confirm } from '~/common/components/Confirm';
 

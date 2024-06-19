@@ -1,6 +1,6 @@
 import { waitFor } from '@testing-library/react-native';
 import AuthService from '../../auth/AuthService';
-import { SessionService } from './session.service';
+import { SessionService } from '~/common/services';
 import {
   AuthType,
   SessionStorageService,

@@ -12,7 +12,7 @@ import MText from '~/common/components/MText';
 import MediaView from '~/common/components/MediaView';
 import ExplicitOverlay from '~/common/components/explicit/ExplicitOverlay';
 import i18n from '~/common/services/i18n.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import videoPlayerService from '~/common/services/video-player.service';
 import type ActivityModel from '~/newsfeed/ActivityModel';
 import Actions from '~/newsfeed/activity/Actions';

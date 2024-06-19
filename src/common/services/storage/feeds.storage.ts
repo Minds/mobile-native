@@ -1,5 +1,5 @@
 import logService from '../log.service';
-import { storages } from '../storage/storages.service';
+import { storagesService } from '~/common/services';
 
 /**
  * Feeds Storage
@@ -15,7 +15,7 @@ export class FeedsStorage {
     try {
       const key = this.getKey(feed);
 
-      storages.userCache?.setMap(key, {
+      storagesService.userCache?.setObject(key, {
         feed: this.map(feed.feed),
         next: feed.pagingToken,
         fallbackAt: feed.fallbackAt,
@@ -34,7 +34,7 @@ export class FeedsStorage {
     try {
       const key = this.getKey(feed);
 
-      return storages.userCache?.getMap(key) || null;
+      return storagesService.userCache?.getObject(key) || null;
     } catch (err) {
       logService.exception('[FeedsStorage]', err);
       return null;

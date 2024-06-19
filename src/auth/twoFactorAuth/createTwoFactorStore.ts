@@ -6,7 +6,7 @@ import { showNotification } from '../../../AppMessages';
 import apiService from '../../common/services/api.service';
 import i18n from '../../common/services/i18n.service';
 import logService from '../../common/services/log.service';
-import sessionService from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import twoFactorAuthenticationService from '../../common/services/two-factor-authentication.service';
 import authService from '../AuthService';
 export type Options = 'app' | 'sms' | 'email' | 'disable';

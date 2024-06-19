@@ -1,4 +1,4 @@
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import mindsConfigService from '~/common/services/minds-config.service';
 import { getStores } from 'AppStores';
 import NavigationService from '~/navigation/NavigationService';

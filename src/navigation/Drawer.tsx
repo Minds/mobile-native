@@ -1,6 +1,6 @@
 import React from 'react';
 
-import sessionService from '../common/services/session.service';
+import { sessionService } from '~/common/services';
 import FitScrollView from '../common/components/FitScrollView';
 
 import {

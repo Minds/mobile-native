@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite';
 
 import i18nService from '~/common/services/i18n.service';
 import inFeedNoticesService from '~/common/services/in-feed.notices.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
 import useCurrentUser from '~/common/hooks/useCurrentUser';

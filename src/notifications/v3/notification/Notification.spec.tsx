@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react-native';
 import * as React from 'react';
 import UserModel from '../../../channel/UserModel';
-import sessionService from '../../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import NotificationItem from './Notification';
 import NotificationModel, { NotificationType } from './NotificationModel';
 import { hasVariation } from '../../../../ExperimentsProvider';

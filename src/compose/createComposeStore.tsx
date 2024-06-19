@@ -7,7 +7,6 @@ import api from '../common/services/api.service';
 import ActivityModel from '../newsfeed/ActivityModel';
 import mindsConfigService from '../common/services/minds-config.service';
 import supportTiersService from '../common/services/support-tiers.service';
-import settingsStore from '../settings/SettingsStore';
 import attachmentService from '../common/services/attachment.service';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
@@ -70,7 +69,6 @@ export default function (props) {
     isRemind: false,
     isEdit: false,
     accessId: 2,
-    mode: settingsStore.composerMode,
     isTitleOpen: false,
     /**
      * what compose mode is allowed? photo, video, and null for any
@@ -134,26 +132,13 @@ export default function (props) {
         this.setCreateMode(params.createMode, true);
       }
 
-      this.mode = params.mode
-        ? params.mode
-        : this.isRemind || this.isEdit
-        ? 'text'
-        : settingsStore.composerMode;
-
-      // if noText is enabled the first screen shouldn't be text.
-      if (this.mode === 'text' && this.noText) {
-        this.mode = 'photo';
-      }
-
       if (params.media) {
-        this.mode = 'text';
         this.mediaToConfirm = params.media;
         this.attachments.attachMedia(params.media);
       }
 
       if (params.text) {
         this.setText(params.text);
-        this.mode = 'text';
       }
 
       if (this.isEdit) {
@@ -444,28 +429,6 @@ export default function (props) {
       this.selection = selection;
     },
     /**
-     * Set mode photo
-     */
-    setModePhoto(clear = true) {
-      if (clear) this.clear();
-      this.mode = 'photo';
-      settingsStore.setComposerMode(this.mode);
-    },
-    /**
-     * Set mode video
-     */
-    setModeVideo() {
-      this.mode = 'video';
-      settingsStore.setComposerMode(this.mode);
-    },
-    /**
-     * Set mode text
-     */
-    setModeText() {
-      this.mode = 'text';
-      settingsStore.setComposerMode(this.mode);
-    },
-    /**
      * Clear the store to the initial values
      */
     clear(deleteMedia = true) {
@@ -484,7 +447,6 @@ export default function (props) {
       this.mediaToConfirm = null;
       this.posting = false;
       this.entity = null;
-      this.mode = 'photo';
       this.isRemind = false;
       this.isEdit = false;
       this.nsfw = [];
@@ -493,25 +455,7 @@ export default function (props) {
       this.group = null;
       this.createMode = 'post';
     },
-    /**
-     * On media
-     * @param {object} media
-     * @param {string} mode
-     */
-    onMedia(media: Media, mode = 'confirm') {
-      setTimeout(() => {
-        this.mediaToConfirm = media;
-        this.mediaToConfirm.key = 1;
-        this.mode = mode;
-      }, 100);
-    },
-    /**
-     * Reject acptured image
-     */
-    rejectImage() {
-      this.mediaToConfirm = null;
-      this.mode = settingsStore.composerMode;
-    },
+
     /**
      * Select media from gallery
      */
@@ -553,7 +497,6 @@ export default function (props) {
             this.extra,
           );
         });
-        this.mode = 'text';
       } else {
         if (this.portraitMode && media.height < media.width) {
           showError(i18n.t('capture.mediaPortraitError'));
@@ -570,7 +513,6 @@ export default function (props) {
           },
           this.extra,
         );
-        this.mode = 'text';
       }
     },
     /**
@@ -583,7 +525,6 @@ export default function (props) {
       }
 
       this.attachments.attachMedia(this.mediaToConfirm, this.extra);
-      this.mode = 'text';
     },
     /**
      * is the composer input valid or not. Is it ready to be submitted?

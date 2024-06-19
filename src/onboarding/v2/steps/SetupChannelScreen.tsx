@@ -17,7 +17,7 @@ import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
 import createChannelStore from '../../../channel/v2/createChannelStore';
 import DismissKeyboard from '../../../common/components/DismissKeyboard';
 import { showNotification } from '../../../../AppMessages';
-import sessionService from '../../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import MText from '../../../common/components/MText';
 import { Button as Btn } from '~/common/ui';
 import { useKeyboard } from '@react-native-community/hooks';

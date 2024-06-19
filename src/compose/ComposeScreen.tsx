@@ -19,7 +19,7 @@ import {
 } from 'react-native-safe-area-context';
 
 import { StackScreenProps } from '@react-navigation/stack';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import { Row } from '~/common/ui';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';

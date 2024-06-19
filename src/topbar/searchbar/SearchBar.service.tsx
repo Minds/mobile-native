@@ -1,6 +1,6 @@
 import apiService from '../../common/services/api.service';
 import UserModel from '../../channel/UserModel';
-import { storages } from '../../common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 
 export type userItem = { user: UserModel };
 
@@ -13,7 +13,7 @@ class SearchBarService {
   searchHistory: Array<userItem | string> = [];
 
   getSearchHistoryFromStorage() {
-    const searchHistory = storages.user?.getMap(storageKey);
+    const searchHistory = storagesService.user?.getObject(storageKey);
     if (searchHistory && Array.isArray(searchHistory)) {
       this.searchHistory = searchHistory;
     }
@@ -63,12 +63,12 @@ class SearchBarService {
       this.searchHistory.pop();
     }
 
-    storages.user?.setMap(storageKey, this.searchHistory);
+    storagesService.user?.setObject(storageKey, this.searchHistory);
   }
 
   async clearSearchHistory() {
     this.searchHistory = [];
-    storages.user?.setMap(storageKey, this.searchHistory);
+    storagesService.user?.setObject(storageKey, this.searchHistory);
   }
 }
 

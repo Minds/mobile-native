@@ -14,7 +14,7 @@ import {
   useInfiniteQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import moment from 'moment';
 import { ChatMessage } from '../types';
 import delay from '~/common/helpers/delay';

@@ -3,7 +3,7 @@ import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { CheckBox } from 'react-native-elements';
 import { observer } from 'mobx-react';
-import sessionService from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import MText from '../../common/components/MText';
 import { Screen } from '~/common/ui';
 

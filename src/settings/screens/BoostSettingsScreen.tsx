@@ -3,7 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import i18n from '../../common/services/i18n.service';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
-import sessionService from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import { Tooltip } from 'react-native-elements';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { UserError } from '../../common/UserError';

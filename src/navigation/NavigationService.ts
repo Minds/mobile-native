@@ -4,7 +4,8 @@ import {
   StackActions,
   createNavigationContainerRef,
 } from '@react-navigation/native';
-import analyticsService from '~/common/services/analytics.service';
+
+// import analyticsService from '~/common/services/analytics.service';
 
 export const navigationRef = createNavigationContainerRef();
 
@@ -74,7 +75,7 @@ function onStateChange() {
   const currentRouteParams = currentRoute?.params;
 
   // record analytics event for screen view
-  analyticsService.onNavigatorStateChange(currentRouteName, currentRouteParams);
+  // analyticsService.onNavigatorStateChange(currentRouteName, currentRouteParams);
 }
 
 export default {

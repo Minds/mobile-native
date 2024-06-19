@@ -7,7 +7,7 @@ import i18n from 'i18n-js';
 import { I18nManager, NativeModules, Platform } from 'react-native';
 import moment from 'moment-timezone';
 import { action, observable } from 'mobx';
-import { storages } from './storage/storages.service';
+import { storagesService } from '~/common/services/storage/storages.service';
 // importing directly to use the type
 import enLocale from '../../../locales/en.json';
 import i18next from 'utils/locales';
@@ -135,7 +135,7 @@ class I18nService {
    */
   init() {
     // read locale from storage
-    let language = storages.app.getString('locale');
+    let language = storagesService.app.getString('locale');
     // get best available language when app start
     this.bestLocale = this.getBestLanguage();
 
@@ -282,7 +282,7 @@ class I18nService {
   @action
   setLocale(locale: string, store = true) {
     if (store) {
-      storages.app.setString('locale', locale);
+      storagesService.app.set('locale', locale);
     }
 
     i18next.changeLanguage(locale);

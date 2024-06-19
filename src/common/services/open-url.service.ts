@@ -3,7 +3,7 @@ import { Alert, Linking } from 'react-native';
 import deeplinksRouterService from './deeplinks-router.service';
 import { InAppBrowser } from 'react-native-inappbrowser-reborn';
 import ThemedStyles from '../../styles/ThemedStyles';
-import { storages } from './storage/storages.service';
+import { storagesService } from '~/common/services';
 import NavigationService from '~/navigation/NavigationService';
 
 const STORAGE_NAMESPACE = 'openLinksBrowser';
@@ -21,7 +21,7 @@ export class OpenURLService {
    */
   init() {
     this.preferredBrowser =
-      (storages.app.getInt(STORAGE_NAMESPACE) as 0 | 1) ?? undefined;
+      (storagesService.app.getNumber(STORAGE_NAMESPACE) as 0 | 1) ?? undefined;
   }
 
   /**
@@ -29,7 +29,7 @@ export class OpenURLService {
    */
   setPreferredBrowser(value: BrowserType) {
     this.preferredBrowser = value;
-    storages.app.setInt(STORAGE_NAMESPACE, value);
+    storagesService.app.set(STORAGE_NAMESPACE, value);
   }
 
   shouldOpenInIABrowser(url: string): boolean {

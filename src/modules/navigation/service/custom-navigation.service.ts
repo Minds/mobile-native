@@ -1,5 +1,5 @@
 import { gqlFetcher } from '~/common/services/api.service';
-import { storages } from '~/common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 import { IS_TENANT } from '~/config/Config';
 import {
   GetNavigationItemsDocument,
@@ -25,7 +25,7 @@ export function getCustomNavigation() {
   if (customNavigation || !IS_TENANT) {
     return customNavigation;
   }
-  customNavigation = storages.app.getMap('customNavigation');
+  customNavigation = storagesService.app.getObject('customNavigation');
 
   // if there is no data on the storage we fall back to the bundled config
   if (!customNavigation) {
@@ -44,7 +44,7 @@ export async function updateCustomNavigation() {
   try {
     const config = await fetchCustomNavigation();
 
-    storages.app.setMap('customNavigation', config);
+    storagesService.app.setObject('customNavigation', config);
   } catch (error) {
     console.error('Failed to fetch custom navigation', error);
   }

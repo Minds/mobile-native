@@ -2,8 +2,8 @@ import logService from '../log.service';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import type BlogModel from '../../../blogs/BlogModel';
 import type UserModel from '../../../channel/UserModel';
-import { storages } from './storages.service';
-import sessionService from '../session.service';
+import { storagesService } from '~/common/services';
+import { sessionService } from '~/common/services';
 
 type storageEntity = ActivityModel | BlogModel | UserModel;
 
@@ -53,16 +53,18 @@ export class EntitiesStorage {
 
     // Save only if the update time doesn't exist or if it's different
     if (time_updated) {
-      const last_update = storages.userCache?.getInt(`${entity.urn}-tu`);
+      const last_update = storagesService.userCache?.getNumber(
+        `${entity.urn}-tu`,
+      );
       if (last_update && last_update === time_updated) {
         return;
       }
     }
 
     try {
-      storages.userCache?.setMap(entity.urn, entity);
+      storagesService.userCache?.setObject(entity.urn, entity);
       if (time_updated) {
-        storages.userCache?.setInt(`${entity.urn}-tu`, time_updated);
+        storagesService.userCache?.set(`${entity.urn}-tu`, time_updated);
       }
     } catch (err) {
       logService.exception('[EntitiesStorage]', err);
@@ -75,7 +77,7 @@ export class EntitiesStorage {
    */
   read(urn) {
     try {
-      return storages.userCache?.getMap<Object>(urn) || null;
+      return storagesService.userCache?.getObject<Object>(urn) || null;
     } catch (err) {
       logService.exception('[EntitiesStorage]', err);
       return null;
@@ -90,7 +92,7 @@ export class EntitiesStorage {
     try {
       const entities: Array<storageEntity> = [];
       urns.forEach(urn => {
-        const entity = storages.userCache?.getMap<storageEntity>(urn);
+        const entity = storagesService.userCache?.getObject<storageEntity>(urn);
         if (entity) {
           entities.push(entity);
         }
@@ -108,7 +110,7 @@ export class EntitiesStorage {
    * @param {string} urn
    */
   remove(urn) {
-    storages.userCache?.removeItem(urn);
+    storagesService.userCache?.delete(urn);
   }
 
   /**

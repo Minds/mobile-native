@@ -3,14 +3,13 @@ import { ScrollView, View } from 'react-native';
 import AuthService from '../auth/AuthService';
 import MenuItem, { MenuItemProps } from '../common/components/menus/MenuItem';
 import i18n from '../common/services/i18n.service';
-import sessionService from '../common/services/session.service';
+import { sessionService } from '~/common/services';
 import ThemedStyles from '../styles/ThemedStyles';
 import { ScreenHeader, Screen } from '~/common/ui/screen';
 import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
 import {
   AFFILIATES_ENABLED,
-  DEV_MODE,
   GOOGLE_PLAY_STORE,
   IS_IOS,
   IS_IPAD,
@@ -18,6 +17,7 @@ import {
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import openUrlService from '~/common/services/open-url.service';
+import { DEV_MODE } from '~/config/StoredConfig';
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.

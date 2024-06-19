@@ -2,7 +2,7 @@ import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 import UserModel from '~/channel/UserModel';
 import logService from '~/common/services/log.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import FeedStore from '~/common/stores/FeedStore';
 import { IS_TENANT, MINDS_GUID } from '~/config/Config';
 import type ActivityModel from '~/newsfeed/ActivityModel';

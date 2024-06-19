@@ -1,5 +1,5 @@
 import moment from 'moment';
-import sessionService from './session.service';
+import { sessionService } from '~/common/services';
 import hashCode from '../helpers/hash-code';
 import NavigationService from '../../navigation/NavigationService';
 

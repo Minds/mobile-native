@@ -7,7 +7,7 @@ import {
   BottomSheetModal,
 } from '~/common/components/bottom-sheet';
 import { B2, Row } from '~/common/ui';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import { APP_URI } from '~/config/Config';
 import { showNotification } from 'AppMessages';
 import { IconButtonCircle } from './IconButtonCircle';

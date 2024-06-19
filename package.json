@@ -144,6 +144,7 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-keyboard-controller": "^1.12.1",
     "react-native-markdown-display": "^7.0.0-alpha.2",
+    "react-native-mmkv": "2.12.2",
     "react-native-mmkv-storage": "^0.9.1",
     "react-native-modal": "^13.0.1",
     "react-native-modern-datepicker": "https://gitlab.com/minds/react-native-modern-datepicker.git",

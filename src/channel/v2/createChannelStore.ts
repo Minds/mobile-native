@@ -6,7 +6,7 @@ import channelsService from '~/common/services/channels.service';
 import FeedStore from '~/common/stores/FeedStore';
 import ChannelService from '../ChannelService';
 import imagePickerService from '~/common/services/image-picker.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import supportTiersService from '~/common/services/support-tiers.service';
 import type { SupportTiersType } from '~/wire/WireTypes';
 import NavigationService from '~/navigation/NavigationService';

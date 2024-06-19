@@ -17,7 +17,7 @@ import type BlogModel from '../../blogs/BlogModel';
 import i18n from '../../common/services/i18n.service';
 import { useFocusEffect } from '@react-navigation/native';
 import BlockedChannel from '../../common/components/BlockedChannel';
-import sessionService from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
 import ChannelTopBar from './ChannelTopBar';
 import UserNotFound from './UserNotFound';

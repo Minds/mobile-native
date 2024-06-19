@@ -1,6 +1,6 @@
 import { Socket, io } from 'socket.io-client';
 import logService from './log.service';
-import sessionService from './session.service';
+import { sessionService } from '~/common/services';
 import { GlobalChatSocketService } from '~/modules/chat/service/chat-socket-service';
 import { APP_HOST } from '~/config/Config';
 

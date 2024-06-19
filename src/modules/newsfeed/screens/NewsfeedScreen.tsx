@@ -108,7 +108,6 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
 
   useEffect(() => {
     // newsfeed.loadFeed();
-
     return navigation.getParent()?.addListener(
       //@ts-ignore
       'tabPress',

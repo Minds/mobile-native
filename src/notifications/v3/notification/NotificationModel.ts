@@ -3,7 +3,7 @@ import UserModel from '../../../channel/UserModel';
 import AbstractModel from '../../../common/AbstractModel';
 import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
 import i18n from '../../../common/services/i18n.service';
-import sessionService from '../../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import GroupModel from '~/groups/GroupModel';
 
 export default class NotificationModel extends AbstractModel {

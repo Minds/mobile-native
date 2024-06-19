@@ -1,8 +1,8 @@
 import apiService from './api.service';
-import sessionService from './session.service';
+import { sessionService } from '~/common/services';
 import logService from './log.service';
 import { observable, action } from 'mobx';
-import { storages } from './storage/storages.service';
+import { storagesService } from '~/common/services';
 import { BLOCK_USER_ENABLED } from '~/config/Config';
 
 const key = 'blockedChannels';
@@ -31,7 +31,7 @@ export class BlockListService {
   }
 
   loadFromStorage() {
-    const guids = storages.user?.getArray<string>(key);
+    const guids = storagesService.user?.getObject<Array<string>>(key);
     if (guids) {
       guids.forEach(g => this.blocked.set(g, undefined));
     }
@@ -49,7 +49,7 @@ export class BlockListService {
         response.guids.forEach(g => this.blocked.set(g, undefined));
       }
 
-      storages.user?.setArray(key, response.guids); // save to storage
+      storagesService.user?.setObject<Array<string>>(key, response.guids); // save to storage
     } catch (err) {
       logService.exception('[BlockListService]', err);
     }
@@ -57,7 +57,7 @@ export class BlockListService {
 
   prune() {
     this.blocked.clear();
-    storages.user?.setArray(key, []);
+    storagesService.user?.setObject(key, []);
   }
 
   getList() {
@@ -67,13 +67,19 @@ export class BlockListService {
   @action
   add(guid: string) {
     this.blocked.set(guid, undefined);
-    storages.user?.setArray(key, Array.from(this.blocked.keys()));
+    storagesService.user?.setObject<Array<string>>(
+      key,
+      Array.from(this.blocked.keys()),
+    );
   }
 
   @action
   remove(guid: string) {
     this.blocked.delete(guid);
-    storages.user?.setArray(key, Array.from(this.blocked.keys()));
+    storagesService.user?.setObject<Array<string>>(
+      key,
+      Array.from(this.blocked.keys()),
+    );
   }
 }
 

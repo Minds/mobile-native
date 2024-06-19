@@ -15,15 +15,8 @@ export const TWO_FACTOR_INVALID =
 
 export type TwoFactorType = 'sms' | 'email' | 'totp';
 
-import session from './session.service';
 import { isTokenExpired } from './TokenExpiredError';
-import {
-  IS_IOS,
-  APP_API_URI,
-  MINDS_CANARY,
-  MINDS_STAGING,
-  NETWORK_TIMEOUT,
-} from '../../config/Config';
+import { IS_IOS, APP_API_URI, NETWORK_TIMEOUT } from '../../config/Config';
 import { Version } from '../../config/Version';
 import logService from './log.service';
 import { observable, action } from 'mobx';
@@ -40,7 +33,8 @@ import {
   ApiError,
   FieldError,
 } from './ApiErrors';
-import sessionService from './session.service';
+import { sessionService, storagesService } from '~/common/services';
+import { DEV_MODE } from '~/config/StoredConfig';
 
 export interface ApiResponse {
   status: 'success' | 'error';
@@ -68,6 +62,9 @@ export class ApiService {
   abortTags = new Map<any, CancelTokenSource>();
   @observable mustVerify = false;
   sessionIndex: number | null;
+  APP_API_URI: string;
+  STAGING: boolean;
+  CANARY: boolean;
 
   private twoFactorHandlerEnabled: boolean = true;
 
@@ -83,9 +80,19 @@ export class ApiService {
 
   constructor(sessionIndex: number | null = null, axiosInstance = null) {
     this.sessionIndex = sessionIndex;
+    this.APP_API_URI = DEV_MODE.isActive
+      ? DEV_MODE.getApiURL() || APP_API_URI
+      : APP_API_URI;
 
-    if (MINDS_CANARY) {
-      CookieManager.set(APP_API_URI, {
+    this.STAGING = DEV_MODE.isActive
+      ? storagesService.app.getBoolean('staging') || false
+      : false;
+    this.CANARY = DEV_MODE.isActive
+      ? storagesService.app.getBoolean('canary') || false
+      : false;
+
+    if (this.CANARY) {
+      CookieManager.set(this.APP_API_URI, {
         name: 'canary',
         value: '1',
         path: '/',
@@ -94,11 +101,11 @@ export class ApiService {
       });
     } else {
       if (IS_IOS) {
-        CookieManager.clearByName(APP_API_URI, 'canary');
+        CookieManager.clearByName(this.APP_API_URI, 'canary');
       }
     }
-    if (MINDS_STAGING) {
-      CookieManager.set(APP_API_URI, {
+    if (this.STAGING) {
+      CookieManager.set(this.APP_API_URI, {
         name: 'staging',
         value: '1',
         path: '/',
@@ -107,14 +114,14 @@ export class ApiService {
       });
     } else {
       if (IS_IOS) {
-        CookieManager.clearByName(APP_API_URI, 'staging');
+        CookieManager.clearByName(this.APP_API_URI, 'staging');
       }
     }
 
     this.axios =
       axiosInstance ||
       axios.create({
-        baseURL: APP_API_URI,
+        baseURL: this.APP_API_URI,
       });
 
     this.axios.interceptors.request.use(config => {
@@ -290,20 +297,20 @@ export class ApiService {
 
   get accessToken() {
     return this.sessionIndex !== null
-      ? session.getAccessTokenFrom(this.sessionIndex)
-      : session.token;
+      ? sessionService.getAccessTokenFrom(this.sessionIndex)
+      : sessionService.token;
   }
 
   get refreshToken() {
     return this.sessionIndex !== null
-      ? session.getRefreshTokenFrom(this.sessionIndex)
-      : session.refreshToken;
+      ? sessionService.getRefreshTokenFrom(this.sessionIndex)
+      : sessionService.refreshToken;
   }
 
   get refreshAuthTokenPromise() {
     return this.sessionIndex !== null
-      ? session.refreshAuthTokenFrom(this.sessionIndex)
-      : session.refreshAuthToken();
+      ? sessionService.refreshAuthTokenFrom(this.sessionIndex)
+      : sessionService.refreshAuthToken();
   }
 
   /**
@@ -324,9 +331,9 @@ export class ApiService {
         (this.accessToken || sessionService.sessionToken)
       ) {
         if (this.sessionIndex !== null) {
-          session.setSessionExpiredFor(true, this.sessionIndex);
+          sessionService.setSessionExpiredFor(true, this.sessionIndex);
         } else {
-          session.setSessionExpired(true);
+          sessionService.setSessionExpired(true);
           AuthService.tryToRelog(onLogin);
         }
       }
@@ -437,10 +444,10 @@ export class ApiService {
       params.cb = Date.now(); //bust the cache every time
     }
 
-    if (MINDS_STAGING) {
+    if (this.STAGING) {
       params.staging = '1';
     }
-    if (MINDS_CANARY) {
+    if (this.CANARY) {
       params.canary = '1';
     }
 
@@ -651,7 +658,7 @@ export class ApiService {
       if (progress) {
         xhr.upload.addEventListener('progress', progress);
       }
-      xhr.open('POST', APP_API_URI + this.buildUrl(url));
+      xhr.open('POST', this.APP_API_URI + this.buildUrl(url));
 
       if (sessionService.sessionToken) {
         xhr.setRequestHeader('X-SESSION-TOKEN', sessionService.sessionToken);

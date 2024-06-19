@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import {
   useBoostRotatorStore,
   withBoostRotatorStore,

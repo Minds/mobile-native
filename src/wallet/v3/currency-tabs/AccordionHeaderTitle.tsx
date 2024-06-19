@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core';
 import { observer } from 'mobx-react';
 import React from 'react';
-import sessionService from '../../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import { getFriendlyLabel } from './EarningsOverview';
 import { B1, B2, Column } from '~ui';
 

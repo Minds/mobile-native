@@ -2,7 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import MIcon from '@expo/vector-icons/MaterialIcons';
 
 import i18n from '~/common/services/i18n.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import { Icon as IconV2 } from '@minds/ui';
 import {
   AFFILIATES_ENABLED,

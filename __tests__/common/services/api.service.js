@@ -1,19 +1,16 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import auth from '~/auth/AuthService';
+import { APP_API_URI } from '~/config/Config';
+import { UserError } from '~/common/UserError';
+import { getStores } from '../../../AppStores';
+import NavigationService from '../../../src/navigation/NavigationService';
 import {
   ApiService,
   TWO_FACTOR_ERROR,
 } from '../../../src/common/services/api.service';
 import { ApiError } from '../../../src/common/services/ApiErrors';
-
-import session from '../../../src/common/services/session.service';
-import auth from '../../../src/auth/AuthService';
-import { APP_API_URI } from '../../../src/config/Config';
-import { UserError } from '../../../src/common/UserError';
-import { getStores } from '../../../AppStores';
-import NavigationService from '../../../src/navigation/NavigationService';
-
-jest.mock('../../../src/navigation/NavigationService');
+import { sessionService } from '../../../src/common/services';
 
 getStores.mockReturnValue({
   user: {
@@ -23,7 +20,6 @@ getStores.mockReturnValue({
   },
 });
 
-jest.mock('../../../src/auth/AuthService');
 jest.mock('~/common/services/analytics.service');
 
 var mock = new MockAdapter(axios);
@@ -111,7 +107,7 @@ describe('api service POST', () => {
  */
 describe('api service GET', () => {
   beforeAll(() => {
-    session.addOAuthSession({
+    sessionService.addOAuthSession({
       access_token: 'sometoken',
       refresh_token: 'sometoken',
     });
@@ -192,7 +188,7 @@ describe('api service GET', () => {
  */
 describe('api service DELETE', () => {
   beforeAll(() => {
-    session.addOAuthSession({
+    sessionService.addOAuthSession({
       access_token: 'sometoken',
       refresh_token: 'sometoken',
     });
@@ -274,7 +270,7 @@ describe('api service DELETE', () => {
  */
 describe('api service PUT', () => {
   beforeAll(() => {
-    session.addOAuthSession({
+    sessionService.addOAuthSession({
       access_token: 'sometoken',
       refresh_token: 'sometoken',
     });
@@ -356,12 +352,13 @@ describe('api service PUT', () => {
  */
 describe('api service auth refresh', () => {
   beforeAll(() => {
-    return session.addOAuthSession({
+    return sessionService.addOAuthSession({
       access_token: 'sometoken',
       refresh_token: 'sometoken',
     });
   });
   beforeEach(() => {
+    mock.reset();
     NavigationService.getCurrentState.mockClear();
     NavigationService.getCurrentState.mockReturnValue({});
   });
@@ -370,8 +367,8 @@ describe('api service auth refresh', () => {
     auth.refreshToken.mockClear();
   });
   it('auth token should be refreshed only once for simultaneous calls', async () => {
-    session.refreshTokenExpires = Date.now() / 1000 + 10000;
-    session.refreshToken = 'refreshtokenfake';
+    sessionService.refreshTokenExpires = Date.now() / 1000 + 10000;
+    sessionService.refreshToken = 'refreshtokenfake';
     const data1 = { user_id: 1, status: 'success' };
     const data2 = { user_id: 2, status: 'success' };
     const data3 = { user_id: 3, status: 'success' };
@@ -410,9 +407,9 @@ describe('api service auth refresh', () => {
   });
 
   it('must fail without logout if token refresh fails by connectivity/server error', async () => {
-    session.refreshTokenExpires = Date.now() / 1000 + 10000;
+    sessionService.refreshTokenExpires = Date.now() / 1000 + 10000;
     // has session token
-    session.token = 'sometoken';
+    sessionService.token = 'sometoken';
     const data1 = { user_id: 1, status: 'success' };
     const data2 = { user_id: 2, status: 'success' };
     const data3 = { user_id: 3, status: 'success' };
@@ -458,9 +455,9 @@ describe('api service auth refresh', () => {
 
   it('should logout if refresh fails with response is 401', async () => {
     // not expired session token
-    session.refreshTokenExpires = Date.now() / 1000 + 10000;
+    sessionService.refreshTokenExpires = Date.now() / 1000 + 10000;
     // has session token
-    session.token = 'sometoken';
+    sessionService.token = 'sometoken';
 
     const data1 = { user_id: 1, status: 'success' };
     const data2 = { user_id: 2, status: 'success' };

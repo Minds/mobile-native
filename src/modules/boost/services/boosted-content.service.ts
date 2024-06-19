@@ -1,6 +1,6 @@
 import FeedsService from '~/common/services/feeds.service';
 import logService from '~/common/services/log.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import BoostedActivityModel from '~/newsfeed/BoostedActivityModel';
 import { cleanBoosts } from '../utils/clean-boosts';
 import { BOOSTS_DELAY } from '~/config/Config';

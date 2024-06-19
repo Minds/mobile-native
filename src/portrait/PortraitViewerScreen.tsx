@@ -21,6 +21,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 
 import UserContentSwiper from './components/UserContentSwiper';
 import usePortraitAnimation from './hooks/usePortraitAnimation';
+import portraitContentService from './portrait-content.service';
 
 type ActivityFullScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -130,7 +131,10 @@ const PortraitViewerScreen = withErrorBoundaryScreen(
     useFocusEffect(
       useCallback(() => {
         // resort data when unfocused
-        return () => portraitStore.sort();
+        return () => {
+          portraitStore.sort();
+          portraitContentService.save();
+        };
       }, [portraitStore]),
     );
 

@@ -14,7 +14,7 @@ import {
 import ActivityModel from '~/newsfeed/ActivityModel';
 import UserModel from '~/channel/UserModel';
 import GroupModel from '~/groups/GroupModel';
-import { storages } from '~/common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 import { gqlFetcher } from '~/common/services/api.service';
 import { NewsfeedType } from '~/newsfeed/NewsfeedStore';
 import useDismissible from '~/services/hooks/useDismissable';
@@ -104,8 +104,10 @@ export function useInfiniteNewsfeed(algorithm: NewsfeedType) {
 
   // only on the first run
   if (local.cachedData === null) {
-    // storages.userCache?.removeItem('NewsfeedCache');
-    local.cachedData = storages.userCache?.getMap(`NewsfeedCache-${algorithm}`);
+    // storagesService.userCache?.removeItem('NewsfeedCache');
+    local.cachedData = storagesService.userCache?.getObject(
+      `NewsfeedCache-${algorithm}`,
+    );
   }
 
   const query = useInfiniteFetchNewsfeedQuery(
@@ -177,7 +179,7 @@ export function useInfiniteNewsfeed(algorithm: NewsfeedType) {
     query,
     refresh: useCallback(() => {
       inFeedNoticesDelivered.current = emptyArray;
-      storages.userCache?.removeItem(`NewsfeedCache-${algorithm}`);
+      storagesService.userCache?.delete(`NewsfeedCache-${algorithm}`);
       local.cachedData = undefined;
       local.lastFetchAt = Date.now();
       query.remove();
@@ -217,10 +219,13 @@ const useInfiniteFetchNewsfeedQuery = <
 
       // save to cache when fetching the first page
       if (!metaData.pageParam && data?.newsfeed?.edges?.length) {
-        storages.userCache?.setMap(`NewsfeedCache-${variables['algorithm']}`, {
-          pages: [data],
-          pageParams: [undefined],
-        });
+        storagesService.userCache?.setObject(
+          `NewsfeedCache-${variables['algorithm']}`,
+          {
+            pages: [data],
+            pageParams: [undefined],
+          },
+        );
       }
 
       return data;

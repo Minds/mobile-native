@@ -1,5 +1,5 @@
 import api from '~/common/services/api.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 
 /**
  * Settings Service

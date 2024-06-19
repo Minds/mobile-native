@@ -3,7 +3,7 @@ import { boostedContentService, cleanBoosts } from 'modules/boost';
 import React, { useContext, useEffect } from 'react';
 import apiService from '~/common/services/api.service';
 import MetadataService from '~/common/services/metadata.service';
-import { storages } from '~/common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 import ActivityModel from '../ActivityModel';
 import { recordView } from '../NewsfeedService';
 import { BOOSTS_DELAY } from '~/config/Config';
@@ -62,7 +62,10 @@ const createBoostRotatorStore = ({}: BoostRotatorStoreProps) => {
           );
 
           // cache boosts
-          storages.session?.setArray(CACHE_KEY, filteredBoosts);
+          storagesService.session?.setObject<Array<ActivityModel>>(
+            CACHE_KEY,
+            filteredBoosts,
+          );
         }
       } finally {
         this.fetching = false;
@@ -71,7 +74,8 @@ const createBoostRotatorStore = ({}: BoostRotatorStoreProps) => {
   };
 
   // load from cache
-  const boosts = storages.session?.getArray<ActivityModel>(CACHE_KEY);
+  const boosts =
+    storagesService.session?.getObject<Array<ActivityModel>>(CACHE_KEY);
   if (boosts) {
     store.activites = ActivityModel.createMany(boosts);
   } else {

@@ -12,7 +12,7 @@ import type CommentsStore from './CommentsStore';
 import CommentListHeader from './CommentListHeader';
 import LoadMore from './LoadMore';
 import CommentInput, { CommentInputContext } from './CommentInput';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import GroupModel from '~/groups/GroupModel';
 
 import i18n from '~/common/services/i18n.service';

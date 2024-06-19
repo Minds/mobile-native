@@ -1,4 +1,4 @@
-import sessionService from './../../session.service';
+import { sessionService } from '~/common/services';
 import AuthService from '../../../../auth/AuthService';
 import { APP_URI } from '../../../../config/Config';
 import deeplinksRouterService from '../../deeplinks-router.service';

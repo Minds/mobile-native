@@ -5,7 +5,7 @@ import hashtag from '../../common/stores/HashtagStore';
 import reportStore from '../../report/ReportStore';
 import wallet from '../../wallet/WalletStore';
 
-import sessionService from '../services/session.service';
+import { sessionService } from '~/common/services';
 import logService from '../services/log.service';
 import DiscoveryV2Store from '../../discovery/v2/DiscoveryV2Store';
 import { RecentSubscriptionsStore } from '~/channel/subscription/RecentSubscriptionsStore';

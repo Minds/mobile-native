@@ -13,7 +13,7 @@ import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import difference from 'lodash/difference';
 import { showNotification } from 'AppMessages';
 import { BoostedContentService } from '../../modules/boost/services/boosted-content.service';
-import sessionService from './session.service';
+import { sessionService } from '~/common/services';
 
 export const shouldInjectBoostAtIndex = (i: number) => i > 0 && i % 5 === 0;
 

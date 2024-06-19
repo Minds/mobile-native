@@ -21,7 +21,7 @@ import {
 import { useGroup } from '../hooks/useGroup';
 import SearchTopBar from '../../../common/components/SearchTopBar';
 import CaptureFab from '~/capture/CaptureFab';
-import { storages } from '~/common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 import FeedFilter from '~/common/components/FeedFilter';
 import ThemedStyles from '~/styles/ThemedStyles';
 import ErrorLoading from '~/common/components/ErrorLoading';
@@ -97,7 +97,7 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
 
   // initial loading
   if (initialTab.current === -1) {
-    initialTab.current = storages.user?.getInt('GroupTab') || 0;
+    initialTab.current = storagesService.user?.getNumber('GroupTab') || 0;
   }
 
   const [index, setIndex] = useState(initialTab.current);
@@ -166,7 +166,7 @@ const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
 
   const onIndexChange = useCallback(idx => {
     setIndex(idx);
-    storages.user?.setInt('GroupTab', idx);
+    storagesService.user?.set('GroupTab', idx);
   }, []);
 
   const renderTabBar = useCallback(

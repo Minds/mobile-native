@@ -1,12 +1,12 @@
 import { InFeedNoticesService } from './in-feed.notices.service';
-import sessionService from './session.service';
-import apiService from './api.service';
 import { when } from 'mobx';
-import { storages } from '~/common/services/storage/storages.service';
+import { storagesService } from './storage/storages.service';
+import { sessionService } from './session.service';
+import apiService from './api.service';
 
-jest.mock('./api.service');
-jest.mock('./session.service');
 jest.mock('./storage/storages.service');
+jest.mock('./session.service');
+jest.mock('./api.service');
 
 apiService.get.mockResolvedValue({
   status: 'success',
@@ -21,9 +21,11 @@ describe('InFeedNoticesService', () => {
   let onLoginCB, onLogoutCB;
 
   sessionService.onLogin.mockImplementation(onLogin => {
+    console.log('onLogin', onLogin);
     onLoginCB = onLogin;
   });
   sessionService.onLogout.mockImplementation(onLogout => {
+    console.log('onLogout', onLogout);
     onLogoutCB = onLogout;
   });
 
@@ -33,8 +35,8 @@ describe('InFeedNoticesService', () => {
   beforeEach(() => {
     onLoginCB = null;
     onLogoutCB = null;
-    storages.user?.getArray.mockClear();
-    storages.user?.getArray
+    storagesService.user?.getObject.mockClear();
+    storagesService.user?.getObject
       .mockReturnValueOnce([
         { key: 'verify-email', location: 'top', should_show: true },
         { key: 'build-your-algorithm', location: 'inline', should_show: false },
@@ -55,7 +57,7 @@ describe('InFeedNoticesService', () => {
 
     // init called
     expect(init).toHaveBeenCalled();
-    expect(storages.user?.getArray).toHaveBeenCalled();
+    expect(storagesService.user?.getObject).toHaveBeenCalled();
 
     // formatted data
     expect(service.data).toEqual([

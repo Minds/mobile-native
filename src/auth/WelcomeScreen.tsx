@@ -5,13 +5,7 @@ import { View, ViewStyle } from 'react-native';
 import { Image } from 'expo-image';
 
 import MText from '~/common/components/MText';
-import {
-  DEV_MODE,
-  IS_IPAD,
-  IS_TENANT,
-  TENANT,
-  WELCOME_LOGO,
-} from '~/config/Config';
+import { IS_IPAD, IS_TENANT, TENANT, WELCOME_LOGO } from '~/config/Config';
 import { HiddenTap } from '~/settings/screens/DevToolsScreen';
 import { B1, Button, ButtonPropsType, Screen } from '~ui';
 import i18n from '../common/services/i18n.service';
@@ -23,6 +17,7 @@ import { UISpacingPropType } from '~/styles/Tokens';
 import { OnboardingCarousel } from '~/modules/onboarding/components/OnboardingCarousel';
 import assets from '@assets';
 import { useLoginWeb } from './oidc/Oidc';
+import { DEV_MODE } from '~/config/StoredConfig';
 
 type PropsType = {
   navigation: NavigationProp<any>;

@@ -4,7 +4,7 @@ import { useLocalStore } from 'mobx-react';
 import AuthService from '~/auth/AuthService';
 import { TwoFactorError } from '~/common/services/ApiErrors';
 import apiService from '~/common/services/api.service';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import i18n from '~/utils/locales';
 
 export const use2FAEmailVerification = () => {

@@ -13,7 +13,7 @@ import {
 } from './src/config/Config';
 import updateService from './src/common/services/update.service';
 import logService from './src/common/services/log.service';
-import sessionService from './src/common/services/session.service';
+import { sessionService } from '~/common/services';
 import deeplinkService from './src/common/services/deeplinks-router.service';
 import { boostedContentService } from 'modules/boost';
 import NavigationService from './src/navigation/NavigationService';

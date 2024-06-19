@@ -6,7 +6,7 @@ import { Audio, InterruptionModeAndroid, InterruptionModeIOS } from 'expo-av';
 import SilentSwitch from 'react-native-silent-switch';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
 import { IS_IOS } from '~/config/Config';
-import { storages } from './storage/storages.service';
+import { storagesService } from '~/common/services';
 
 /**
  * Video Player Service
@@ -56,10 +56,9 @@ class VideoPlayerService {
   }
 
   init() {
-    storages.app.getBoolAsync('BACKGROUND_SOUND').then(value => {
-      this.backgroundSound = value ?? true;
-      this.setAudioMode();
-    });
+    this.backgroundSound =
+      storagesService.app.getBoolean('BACKGROUND_SOUND') ?? true;
+    this.setAudioMode();
   }
 
   /**
@@ -74,7 +73,7 @@ class VideoPlayerService {
   @action
   toggleBackgroundSound = () => {
     this.backgroundSound = !this.backgroundSound;
-    storages.app.setBoolAsync('BACKGROUND_SOUND', this.backgroundSound);
+    storagesService.app.set('BACKGROUND_SOUND', this.backgroundSound);
     this.setAudioMode();
   };
 

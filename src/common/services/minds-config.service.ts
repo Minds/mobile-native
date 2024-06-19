@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 import delay from '../helpers/delay';
 import api from './api.service';
-import { storages } from './storage/storages.service';
+import { storagesService } from '~/common/services';
 
 /**
  * Minds Service
@@ -38,7 +38,7 @@ export class MindsConfigService {
       // nsfw enabled by default
       settings.nsfw_enabled = settings.nsfw_enabled ?? true;
 
-      storages.user?.setMap('mindsSettings', settings);
+      storagesService.user?.setObject('mindsSettings', settings);
       this.settings = settings;
       this.currentPromise = null;
     } catch (error) {
@@ -73,7 +73,7 @@ export class MindsConfigService {
   getSettings() {
     let settings;
     if (!this.settings) {
-      settings = storages.user?.getMap('mindsSettings');
+      settings = storagesService.user?.getObject('mindsSettings');
       this.settings = settings;
     }
     return this.settings;
@@ -84,7 +84,7 @@ export class MindsConfigService {
    */
   clear() {
     this.settings = undefined;
-    storages.user?.removeItem('mindsSettings');
+    storagesService.user?.delete('mindsSettings');
   }
 }
 

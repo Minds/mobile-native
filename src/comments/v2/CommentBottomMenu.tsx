@@ -13,7 +13,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import i18n from '../../common/services/i18n.service';
 import type GroupModel from '../../groups/GroupModel';
 import type ActivityModel from '../../newsfeed/ActivityModel';
-import sessionService from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import {
   BottomSheetModal,

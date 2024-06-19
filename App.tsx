@@ -31,7 +31,7 @@ import { getStores } from './AppStores';
 import './AppErrors';
 import './src/common/services/socket.service';
 
-import sessionService from './src/common/services/session.service';
+import { sessionService } from '~/common/services';
 import deeplinkService from './src/common/services/deeplinks-router.service';
 import ErrorBoundary from './src/common/components/ErrorBoundary';
 import ThemedStyles from './src/styles/ThemedStyles';

@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import MText from '../../../common/components/MText';
 import i18n from '../../../common/services/i18n.service';
 import logService from '../../../common/services/log.service';
-import sessionService from '../../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import ThemedStyles from '../../../styles/ThemedStyles';
 
 type PropsType = {

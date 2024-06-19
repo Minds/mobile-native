@@ -25,7 +25,7 @@ import ModalTransition from './ModalTransition';
 import AuthTransition from './AuthTransition';
 
 import { observer } from 'mobx-react';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import AuthService from '~/auth/AuthService';
 import { IS_IPAD, IS_TENANT } from '~/config/Config';
 // import { isStoryBookOn } from '~/config/Config';

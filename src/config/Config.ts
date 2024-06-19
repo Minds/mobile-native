@@ -1,12 +1,9 @@
 import { Platform, PlatformIOSStatic } from 'react-native';
 import RNConfig from 'react-native-config';
-import DeviceInfo from 'react-native-device-info';
 import tinycolor from 'tinycolor2';
 
-import { storages } from '~/common/services/storage/storages.service';
-import { DevMode } from './DevMode';
-
 import Tenant from '../../tenant.json';
+import { Version } from './Version';
 
 export const IS_IOS = Platform.OS === 'ios';
 export const IS_IPAD = (Platform as PlatformIOSStatic).isPad;
@@ -24,12 +21,7 @@ export const ENV =
 
 export const IS_PRODUCTION = ENV === 'production';
 export const IS_REVIEW = ENV === 'review';
-
 // developer mode controller
-export const DEV_MODE = new DevMode(IS_REVIEW);
-
-export const CUSTOM_API_URL = DEV_MODE.getApiURL();
-
 // Enabled Features for the app
 export const IS_TENANT = Tenant.APP_NAME !== 'Minds';
 /**
@@ -101,18 +93,6 @@ export const TENANT_ID = Tenant.TENANT_ID;
 
 export const WELCOME_LOGO = Tenant.WELCOME_LOGO;
 
-/**
- * We get the values only for review apps in order to avoid issues
- * by setting them to true in a review app and after updating the app
- * with a production version having that option turned on
- */
-export const MINDS_STAGING = DEV_MODE.isActive
-  ? storages.app.getBool(STAGING_KEY) || false
-  : false;
-export const MINDS_CANARY = DEV_MODE.isActive
-  ? storages.app.getBool(CANARY_KEY) || false
-  : false;
-
 // network timeout time
 export const NETWORK_TIMEOUT = 15000;
 
@@ -132,8 +112,7 @@ export const STRAPI_URI = 'https://cms.minds.com';
 export const APP_SCHEME_URI = `${Tenant.APP_SCHEME}://`;
 export const APP_HOST = Tenant.APP_HOST;
 export const APP_URI = Tenant.API_URL;
-export const APP_API_URI =
-  DEV_MODE.isActive && CUSTOM_API_URL ? CUSTOM_API_URL : Tenant.API_URL;
+export const APP_API_URI = Tenant.API_URL;
 
 const STRAPI_PROD = true;
 export const STRAPI_API_URI = STRAPI_PROD
@@ -247,7 +226,7 @@ export const MINDS_DEEPLINK = [
   ['boost/console/newsfeed/history', 'BoostConsole', 'navigate'],
 ];
 
-const buildNumber = parseInt(`${DeviceInfo.getBuildNumber()}`, 10);
+const buildNumber = parseInt(`${Version.BUILD}`, 10);
 
 export const GOOGLE_PLAY_STORE =
   buildNumber < 1050000000 && Platform.OS === 'android';
@@ -301,8 +280,6 @@ export const STORE_LINK = Platform.select({
   ios: APP_STORE_LINK,
   android: PLAY_STORE_LINK,
 }) as string;
-
-export const isStoryBookOn = storages.app.getBool('storybook');
 
 export const BOOSTS_DELAY = 604800;
 

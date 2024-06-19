@@ -3,7 +3,7 @@ import debounce from 'lodash/debounce';
 import moment from 'moment';
 import { InteractionManager, Linking } from 'react-native';
 import openUrlService from '../../common/services/open-url.service';
-import { storages } from '../../common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 import {
   IS_TENANT,
   RATING_APP_SCORE_THRESHOLD,
@@ -17,8 +17,8 @@ const LAST_PROMPTED_AT_KEY = 'STORE_RATING_LAST_PROMPTED_AT';
 
 class StoreRatingService {
   lastPromptedAt: number | null =
-    storages.app.getInt(LAST_PROMPTED_AT_KEY) || null;
-  points = storages.app.getInt(SCORES_KEY) || 0;
+    storagesService.app.getNumber(LAST_PROMPTED_AT_KEY) || null;
+  points = storagesService.app.getNumber(SCORES_KEY) || 0;
 
   constructor() {
     this.debouncedSetStorage = debounce(this.debouncedSetStorage, 2000);
@@ -74,7 +74,7 @@ class StoreRatingService {
   async prompt() {
     const rated = await rateApp();
     this.lastPromptedAt = Date.now();
-    storages.app.setIntAsync(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
+    storagesService.app.set(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
 
     if (rated === null) {
       return null;
@@ -98,11 +98,11 @@ class StoreRatingService {
 
     await StoreReview.requestReview();
     this.lastPromptedAt = Date.now();
-    storages.app.setIntAsync(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
+    storagesService.app.set(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
   }
 
   debouncedSetStorage(key: string, value: any) {
-    storages.app.setIntAsync(key, value);
+    storagesService.app.set(key, value);
   }
 }
 

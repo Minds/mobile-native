@@ -1,6 +1,6 @@
 import apiService, { ApiResponse } from './api.service';
 import { MindsConfigService } from './minds-config.service';
-import { storages } from './storage/storages.service';
+import { storagesService } from '~/common/services/storage/storages.service';
 
 jest.mock('../helpers/delay', () =>
   jest.fn().mockImplementation(_ => new Promise<void>(resolve => resolve())),
@@ -36,13 +36,16 @@ describe('MindsConfigService', () => {
     await service.update(3);
 
     expect(mockedApiService.get).toHaveBeenCalledWith('api/v1/minds/config');
-    expect(storages.user?.setMap).toHaveBeenCalledWith('mindsSettings', {
-      ...mockSettings,
-      permissions: {
-        permission1: true,
-        permission2: true,
+    expect(storagesService.user?.setObject).toHaveBeenCalledWith(
+      'mindsSettings',
+      {
+        ...mockSettings,
+        permissions: {
+          permission1: true,
+          permission2: true,
+        },
       },
-    });
+    );
     expect(service.settings).toEqual({
       ...mockSettings,
       permissions: {

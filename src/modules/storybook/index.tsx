@@ -15,7 +15,7 @@ import {
   TextInputsScreen,
   ListItemsScreen,
 } from './screens'; // end-of-screen-list HYGEN
-import { storages } from '~/common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ControlsScreen } from './screens/storybook/ControlsScreen';
 
@@ -70,7 +70,7 @@ function ThemeWrapper({ children }: ThemeWrapperProps) {
             <Button
               circular
               icon={Icons.Clear}
-              onPress={() => storages.app.setBool('storybook', false)}
+              onPress={() => storagesService.app.set('storybook', false)}
             />
           </View>
           {children}

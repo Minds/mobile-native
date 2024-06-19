@@ -5,12 +5,12 @@ import {
   SupportedLanguages,
   findBestAvailableLanguage,
 } from '~/common/services/i18n.service';
-import { storages } from '~/common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 
 const languageDetector: LanguageDetectorModule = {
   type: 'languageDetector',
   detect: () => {
-    const language = storages.app.getString('locale');
+    const language = storagesService.app.getString('locale');
     if (language) {
       return language;
     }

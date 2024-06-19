@@ -9,7 +9,7 @@ import {
   IS_TENANT,
   MEMBERSHIP_TIERS_ENABLED,
 } from '~/config/Config';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import { Screen } from '~/common/ui';
 
 function useNavCallback(screen) {

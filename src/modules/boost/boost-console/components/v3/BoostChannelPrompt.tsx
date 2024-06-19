@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import BaseNotice from '~/common/components/in-feed-notices/notices/BaseNotice';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import NavigationService from '~/navigation/NavigationService';
 import { useTranslation } from '../../../locales';
 import { pushAudienceSelector } from '../../../../../compose/ComposeAudienceSelector';

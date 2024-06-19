@@ -4,7 +4,7 @@ import {
   pushBottomSheet,
 } from '~/common/components/bottom-sheet';
 import { ChatMessage } from '../types';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import { ChatRoomMessagesContextType } from '../contexts/ChatRoomMessageContext';
 import NavigationService from '~/navigation/NavigationService';
 

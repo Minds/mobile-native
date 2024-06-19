@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useChatRoomEvent } from './useChatRoomEvent';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 
 /**
  * Subscribes to a room message event and unsubscribes on unmount

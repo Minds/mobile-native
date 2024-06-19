@@ -11,7 +11,6 @@ import AuthService from '../../auth/AuthService';
 import { getStores } from '../../../AppStores';
 import logService from './log.service';
 import type UserModel from '../../channel/UserModel';
-import { createUserStore } from './storage/storages.service';
 import SettingsStore from '../../settings/SettingsStore';
 import { ApiService } from './api.service';
 import analyticsService from './analytics.service';
@@ -19,6 +18,7 @@ import { TokenExpiredError } from './TokenExpiredError';
 import { IS_TENANT } from '../../config/Config';
 import CookieManager from '@react-native-cookies/cookies';
 import { APP_API_URI } from '~/config/Config';
+import { storagesService } from './';
 
 const atob = (text: string) => Buffer.from(text, 'base64');
 
@@ -175,7 +175,7 @@ export class SessionService {
       await this.loadUser(user);
 
       if (this.guid) {
-        createUserStore(this.guid);
+        storagesService.initStores(this.guid);
         SettingsStore.loadUserSettings();
       }
 
@@ -388,7 +388,7 @@ export class SessionService {
   async login() {
     // create user data storage
     if (this.guid) {
-      createUserStore(this.guid);
+      storagesService.initStores(this.guid);
       SettingsStore.loadUserSettings();
     }
 
@@ -718,13 +718,6 @@ export class SessionService {
     );
   }
 
-  /**
-   * Clear messenger keys
-   */
-  clearMessengerKeys() {
-    return this.sessionStorage.clearPrivateKey();
-  }
-
   setRecoveryCodeUsed(used: boolean) {
     this.recoveryCodeUsed = used;
   }
@@ -742,4 +735,4 @@ export class SessionService {
   }
 }
 
-export default new SessionService(new SessionStorageService());
+export const sessionService = new SessionService(new SessionStorageService());

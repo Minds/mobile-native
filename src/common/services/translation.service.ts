@@ -1,6 +1,6 @@
 import api from './api.service';
 import logService from './log.service';
-import { storages } from './storage/storages.service';
+import { storagesService } from '~/common/services';
 
 type Language = {
   language: string;
@@ -30,7 +30,7 @@ class TranslationService {
    */
   async getLanguages() {
     if (!this.languagesReady) {
-      const cached = storages.app.getArray<Language>(
+      const cached = storagesService.app.getObject<Array<Language>>(
         `translation:languages:${this.defaultLanguage}`,
       );
       if (cached && cached.length > 0) {
@@ -44,11 +44,11 @@ class TranslationService {
           if (!response.languages) {
             throw new Error('No languages array');
           }
-          storages.app.setArray(
+          storagesService.app.setObject(
             `translation:languages:${this.defaultLanguage}`,
             response.languages,
           );
-          storages.app.setString(
+          storagesService.app.set(
             'translation:userDefault',
             response.userDefault || '', // if value is null it crashes the app on ios
           );
@@ -67,7 +67,7 @@ class TranslationService {
    */
   async getUserDefaultLanguage() {
     await this.getLanguages();
-    return storages.app.getString('translation:userDefault');
+    return storagesService.app.getString('translation:userDefault');
   }
 
   /**
@@ -75,8 +75,8 @@ class TranslationService {
    */
   async purgeLanguagesCache() {
     this.languagesReady = null;
-    storages.app.removeItem(`translation:languages:${this.defaultLanguage}`);
-    storages.app.removeItem('translation:userDefault');
+    storagesService.app.delete(`translation:languages:${this.defaultLanguage}`);
+    storagesService.app.delete('translation:userDefault');
   }
 
   /**
@@ -138,11 +138,13 @@ class TranslationService {
         target: language,
       },
     );
-    const defaultLanguage = storages.app.getString('translation:userDefault');
+    const defaultLanguage = storagesService.app.getString(
+      'translation:userDefault',
+    );
 
     if (!defaultLanguage !== language) {
       // update it async
-      storages.app.setString('translation:userDefault', language);
+      storagesService.app.set('translation:userDefault', language);
     }
 
     if (response.purgeLanguagesCache) {

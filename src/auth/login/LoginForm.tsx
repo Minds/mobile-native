@@ -7,7 +7,7 @@ import createLoginStore from './createLoginStore';
 import { Image } from 'expo-image';
 
 import UserModel from '../../channel/UserModel';
-import sessionService from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import InputContainer, {
   InputContainerImperativeHandle,
 } from '../../common/components/InputContainer';

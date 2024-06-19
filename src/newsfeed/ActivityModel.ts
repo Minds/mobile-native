@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
 import wireService from '../wire/WireService';
-import sessionService from '../common/services/session.service';
+import { sessionService } from '~/common/services';
 import {
   setPinPost,
   deleteItem,

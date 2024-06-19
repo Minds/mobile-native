@@ -1,13 +1,13 @@
 import { action, observable } from 'mobx';
 import moment from 'moment-timezone';
 import { Alert } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+import { nativeApplicationVersion } from 'expo-application';
 import * as UpdateAPK from 'rn-update-apk';
 import { showNotification } from '../../../AppMessages';
 import navigationService from '../../navigation/NavigationService';
 import i18n from './i18n.service';
 import logService from './log.service';
-import { storages } from './storage/storages.service';
+import { storagesService } from '~/common/services';
 import { compareVersions } from '../helpers/compareVersions';
 
 /**
@@ -23,7 +23,7 @@ class UpdateService {
    */
   async rememberTomorrow() {
     try {
-      const ignoreDate = storages.app.getString('@mindsUpdateDate');
+      const ignoreDate = storagesService.app.getString('@mindsUpdateDate');
       if (ignoreDate) {
         const now = moment();
         if (ignoreDate === now.format('YYYY-MM-DD')) return true;
@@ -46,7 +46,7 @@ class UpdateService {
 
     if (last) {
       try {
-        if (this.needUpdate(DeviceInfo.getVersion(), last.version)) {
+        if (this.needUpdate(nativeApplicationVersion, last.version)) {
           if (await this.rememberTomorrow()) return;
 
           const doUpdate = () => {
@@ -68,7 +68,7 @@ class UpdateService {
               {
                 text: i18n.t('rememberTomorrow'),
                 onPress: () => {
-                  storages.app.setString(
+                  storagesService.app.set(
                     '@mindsUpdateDate',
                     moment().format('YYYY-MM-DD'),
                   );

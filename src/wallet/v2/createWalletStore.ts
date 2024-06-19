@@ -12,7 +12,7 @@ import type {
 import i18n from '../../common/services/i18n.service';
 // import BlockchainApiService from '../../blockchain/BlockchainApiService';
 import { ChartTimespanType } from './currency-tabs/TokensChart';
-import sessionService from '../../common/services/session.service';
+import { sessionService } from '~/common/services';
 import walletService, { WalletJoinResponse } from '../WalletService';
 import moment from 'moment';
 

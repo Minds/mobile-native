@@ -10,7 +10,7 @@ import {
 
 import CommentModel from './CommentModel';
 import socket from '../../common/services/socket.service';
-import session from '../../common/services/session.service';
+import { sessionService } from '../../common/services';
 import AttachmentStore from '../../common/stores/AttachmentStore';
 import attachmentService from '../../common/services/attachment.service';
 import { toggleExplicit } from '../../newsfeed/NewsfeedService';
@@ -287,7 +287,7 @@ export default class CommentsStore {
 
   @action
   voteSocket = (guid, owner_guid, direction) => {
-    if (owner_guid === session.guid) {
+    if (owner_guid === sessionService.guid) {
       return;
     }
     let key = 'thumbs:' + direction + ':count';
@@ -300,7 +300,7 @@ export default class CommentsStore {
 
   @action
   voteCancelSocket = (guid, owner_guid, direction) => {
-    if (owner_guid === session.guid) {
+    if (owner_guid === sessionService.guid) {
       return;
     }
     let key = 'thumbs:' + direction + ':count';
@@ -327,7 +327,7 @@ export default class CommentsStore {
    */
   @action
   commentSocket = async (parent_guid, owner_guid, guid) => {
-    if (owner_guid === session.guid) {
+    if (owner_guid === sessionService.guid) {
       return;
     }
 

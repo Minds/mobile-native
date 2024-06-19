@@ -6,8 +6,8 @@ import {
 import analyticsService from './analytics.service';
 import apiService, { ApiResponse } from './api.service';
 import logService from './log.service';
-import sessionService from './session.service';
-import { storages } from './storage/storages.service';
+import { sessionService } from './session.service';
+import { storagesService } from './storage/storages.service';
 
 type Notice = {
   key: NoticeName;
@@ -87,21 +87,23 @@ export class InFeedNoticesService {
    * Store the notices in local storage
    */
   private storeData(data: Notices) {
-    storages.user?.setArray('IN_FEED_NOTICES_DATA', data);
+    storagesService.user?.setObject('IN_FEED_NOTICES_DATA', data);
   }
 
   /**
    * Load from storage
    */
   private loadStoredData(): Notices | undefined | null {
-    return storages.user?.getArray('IN_FEED_NOTICES_DATA');
+    return storagesService.user?.getObject('IN_FEED_NOTICES_DATA');
   }
 
   /**
    * Load dismissed from storage
    */
   private loadDismissed(): Dismissed | undefined | null {
-    return storages.user?.getMap<Dismissed>('IN_FEED_NOTICES_DISMISSED');
+    return storagesService.user?.getObject<Dismissed>(
+      'IN_FEED_NOTICES_DISMISSED',
+    );
   }
 
   /**
@@ -203,7 +205,10 @@ export class InFeedNoticesService {
   @action
   dismiss(noticeName: NoticeName) {
     this.dismissed[noticeName] = String(Date.now());
-    storages.user?.setMap('IN_FEED_NOTICES_DISMISSED', this.dismissed);
+    storagesService.user?.setObject(
+      'IN_FEED_NOTICES_DISMISSED',
+      this.dismissed,
+    );
   }
 
   /**

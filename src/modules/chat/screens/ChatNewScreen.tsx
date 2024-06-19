@@ -12,7 +12,7 @@ import { ScrollView } from 'react-native';
 import ChatUserItem from '../components/ChatUserItem';
 import UserModel from '~/channel/UserModel';
 import ChatUserChip from '../components/ChatUserChip';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services';
 import { useCreateChatRoom } from '../hooks/useCreateChatRoom';
 
 /**

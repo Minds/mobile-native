@@ -1,5 +1,5 @@
 import { action, observable } from 'mobx';
-import { storages } from '../services/storage/storages.service';
+import { storagesService } from '~/common/services';
 import analyticsService from '../services/analytics.service';
 
 const DEFAULT_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 days
@@ -64,7 +64,7 @@ export class DismissalStore {
   private _rehydrate(): void {
     try {
       const dismisses: DismissItem[] =
-        storages.user?.getArray(DismissalStore.STORAGE_KEY) || [];
+        storagesService.user?.getObject(DismissalStore.STORAGE_KEY) || [];
       this.dismisses = dismisses.filter(
         item => item.expiry >= Date.now(),
       ) as DismissItem[];
@@ -83,7 +83,7 @@ export class DismissalStore {
    */
   private _persist(dismisses): void {
     try {
-      storages.user?.setArray(DismissalStore.STORAGE_KEY, dismisses);
+      storagesService.user?.setObject(DismissalStore.STORAGE_KEY, dismisses);
     } catch (e) {
       console.error(
         '[DismissalStore] something went wrong while rehydrating',
