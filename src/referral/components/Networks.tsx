@@ -1,7 +1,7 @@
 import React from 'react';
 import { Linking, View } from 'react-native';
 import IonIcon from '@expo/vector-icons/Ionicons';
-import { IS_IOS } from '~/config/Config';
+import { IS_IOS, TENANT } from '~/config/Config';
 import MText from '../../common/components/MText';
 import Touchable from '../../common/components/Touchable';
 import i18n from '../../common/services/i18n.service';
@@ -23,7 +23,7 @@ type NetworkItem = {
 const Networks = ({ referralLink }: NetworksProps) => {
   const theme = ThemedStyles.style;
 
-  const message = i18n.t('referrals.joinMeOnMinds');
+  const message = i18n.t('referrals.joinMeOnMinds', { TENANT });
 
   const networks = (
     [

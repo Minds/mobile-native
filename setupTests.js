@@ -43,7 +43,6 @@ jest.mock('./src/newsfeed/NewsfeedService');
 
 jest.mock('expo-font');
 
-jest.mock('react-native-localize');
 jest.mock('@react-native-camera-roll/camera-roll');
 jest.mock('expo-image');
 // jest.mock('react-native-device-info', () =>
@@ -119,8 +118,6 @@ jest.mock('@stripe/stripe-react-native', () =>
   require('@stripe/stripe-react-native/jest/mock.js'),
 );
 
-jest.mock('expo-sensors', () => jest.fn());
-
 jest.mock('react-native-exception-handler');
 
 import ri18n from 'utils/locales';
@@ -148,3 +145,7 @@ jest.mock('@expo/vector-icons', () => ({
     return 'FontAwesome';
   },
 }));
+
+jest.mock('react-native-keyboard-controller', () =>
+  require('react-native-keyboard-controller/jest'),
+);

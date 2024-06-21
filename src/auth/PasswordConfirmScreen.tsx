@@ -125,7 +125,7 @@ const PasswordConfirmScreen = withErrorBoundaryScreen(
               autoFocus
             />
             <IonIcon
-              name={localStore.hidePassword ? 'md-eye-off' : 'md-eye'}
+              name={localStore.hidePassword ? 'eye-off' : 'eye'}
               size={25}
               onPress={localStore.toggleHidePassword}
               style={[theme.inputIcon, icon, theme.paddingRight]}

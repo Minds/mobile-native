@@ -67,7 +67,7 @@ const PasswordInput = (
         {...props}
       />
       <Icon
-        name={showPassword ? 'md-eye' : 'md-eye-off'}
+        name={showPassword ? 'eye' : 'eye-off'}
         size={25}
         onPress={toggle}
         style={iconStyle}

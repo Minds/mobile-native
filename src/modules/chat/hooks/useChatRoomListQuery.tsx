@@ -7,6 +7,7 @@ import { useMemo } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import logService from '~/common/services/log.service';
 import { produce } from 'immer';
+import { ChatRoomEventType } from '../types';
 
 export function useChatRoomListQuery() {
   const queryClient = useQueryClient();
@@ -37,7 +38,12 @@ export function useChatRoomListQuery() {
   );
 
   useAllChatRoomsEvent(async (roomGuid, event) => {
-    if (!data || event.type !== 'NEW_MESSAGE') return;
+    if (
+      !data ||
+      (event.type !== ChatRoomEventType.NewMessage &&
+        event.type !== ChatRoomEventType.MessageDeleted)
+    )
+      return;
     let pageIndex = -1;
     let itemIndex = -1;
 
@@ -81,7 +87,9 @@ export function useChatRoomListQuery() {
                 current.lastMessageCreatedTimestamp =
                   newRoom.chatRoom.lastMessageCreatedTimestamp;
                 current.unreadMessagesCount =
-                  newRoom.chatRoom.unreadMessagesCount + 1; //TODO: remove this workaround when the backend is fixed
+                  event.type === ChatRoomEventType.NewMessage
+                    ? newRoom.chatRoom.unreadMessagesCount + 1
+                    : newRoom.chatRoom.unreadMessagesCount; //TODO: remove this workaround when the backend is fixed
               });
             }
           },

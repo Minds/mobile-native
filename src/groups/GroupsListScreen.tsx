@@ -42,7 +42,10 @@ const GroupsListScreen = observer(() => {
 
   return (
     <Screen safe>
-      <ScreenHeader title={i18n.t('discovery.groups')} back={!IS_IPAD} />
+      <ScreenHeader
+        title={i18n.t('discovery.filters.groups')}
+        back={!IS_IPAD}
+      />
       <OffsetList
         renderItem={renderGroup}
         header={

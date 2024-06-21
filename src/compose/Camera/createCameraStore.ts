@@ -1,6 +1,8 @@
+import { RefObject } from 'react';
 import { Platform } from 'react-native';
 import { Timeout } from '~/types/Common';
 import mindsConfigService from '../../common/services/minds-config.service';
+import { Camera } from 'react-native-vision-camera';
 
 type FocusPoint = {
   x: number;
@@ -106,7 +108,7 @@ const createCameraStore = p => {
         onRecordingError: error => console.error(error),
       });
     },
-    async takePicture(camera) {
+    async takePicture(camera: RefObject<Camera>) {
       const options = {
         qualityPrioritization: 'speed',
         flash: this.flashMode,
@@ -117,13 +119,22 @@ const createCameraStore = p => {
       //   options.orientation = 'portrait';
       // }
 
-      const result = await camera.current.takePhoto(options);
+      const result = await camera.current?.takePhoto(options);
+
       if (result && p.onMedia) {
+        if (
+          result.orientation &&
+          ['portrait', 'portrait-upside-down'].includes(result.orientation)
+        ) {
+          const { width, height } = result;
+          result.width = height;
+          result.height = width;
+        }
+
         p.onMedia({
           type: 'image/jpeg',
           ...result,
           uri: `file://${result.path}`,
-          pictureOrientation: result.metadata.Orientation,
         });
       }
     },

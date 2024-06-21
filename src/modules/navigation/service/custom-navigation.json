@@ -1,0 +1,90 @@
+[
+  {
+    "id": "newsfeed",
+    "name": "Newsfeed",
+    "type": "CORE",
+    "action": null,
+    "iconId": "home",
+    "order": 0,
+    "url": null,
+    "visible": true,
+    "path": "/newsfeed"
+  },
+  {
+    "id": "channel",
+    "name": "",
+    "type": "CORE",
+    "action": null,
+    "iconId": "",
+    "order": 1,
+    "url": null,
+    "visible": true,
+    "path": null
+  },
+  {
+    "id": "explore",
+    "name": "Explore",
+    "type": "CORE",
+    "action": null,
+    "iconId": "tag",
+    "order": 2,
+    "url": null,
+    "visible": true,
+    "path": "/discovery"
+  },
+  {
+    "id": "groups",
+    "name": "Groups",
+    "type": "CORE",
+    "action": null,
+    "iconId": "group",
+    "order": 3,
+    "url": null,
+    "visible": true,
+    "path": "/groups"
+  },
+  {
+    "id": "chat",
+    "name": "Chat",
+    "type": "CORE",
+    "action": null,
+    "iconId": "chat_bubble",
+    "order": 4,
+    "url": null,
+    "visible": true,
+    "path": "/chat/rooms"
+  },
+  {
+    "id": "memberships",
+    "name": "Memberships",
+    "type": "CORE",
+    "action": null,
+    "iconId": "verified",
+    "order": 5,
+    "url": null,
+    "visible": true,
+    "path": "/memberships"
+  },
+  {
+    "id": "admin",
+    "name": "Admin",
+    "type": "CORE",
+    "action": null,
+    "iconId": "dashboard",
+    "order": 6,
+    "url": null,
+    "visible": true,
+    "path": "/network/admin"
+  },
+  {
+    "id": "clarin1716386678715",
+    "name": "Clarin",
+    "type": "CUSTOM_LINK",
+    "action": null,
+    "iconId": "article",
+    "order": 7,
+    "url": "https://www.clarin.com",
+    "visible": true,
+    "path": null
+  }
+]

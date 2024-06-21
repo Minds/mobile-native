@@ -49,7 +49,7 @@ const FeedFilter = (props: PropsType) => {
       filters
         .filter(filter => !(props.hideBlogs && filter === 'blogs'))
         .map(filter => ({
-          title: i18n.t(`discovery.${filter}`),
+          title: i18n.t(`discovery.filters.${filter}`),
           onPress: () => {
             dismiss();
             // we need to delay due to a bug on the bottomsheet that opens it again if rendered too fast

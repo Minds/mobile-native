@@ -2,8 +2,9 @@ import React, { forwardRef, useCallback } from 'react';
 import {
   BottomSheetModal,
   BottomSheetModalProps,
-  useBottomSheetDynamicSnapPoints,
   BottomSheetBackdrop,
+  useBottomSheetDynamicSnapPoints,
+  BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import { StatusBar, View } from 'react-native';
 import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
@@ -46,17 +47,14 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
 
     const insets = useSafeAreaInsets();
 
-    const snapPointsMemo = React.useMemo(
-      () => snapPoints || ['CONTENT_HEIGHT'],
-      [snapPoints],
-    );
-
     const {
       animatedHandleHeight,
       animatedSnapPoints,
       animatedContentHeight,
       handleContentLayout,
-    } = useBottomSheetDynamicSnapPoints(snapPointsMemo);
+    } = useBottomSheetDynamicSnapPoints(
+      (snapPoints as (string | number)[]) ?? ['CONTENT_HEIGHT'],
+    );
 
     const contStyle = useStyle(styles.contentContainer, {
       paddingBottom: insets.bottom || 24,
@@ -68,7 +66,7 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
         //@ts-ignore
         ref.current.present();
       }
-    }, [autoShow]);
+    }, [autoShow, ref]);
 
     const renderHandle = useCallback(() => <Handle />, []);
 
@@ -90,17 +88,19 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
         ref={ref}
         topInset={StatusBar.currentHeight || 0}
         handleComponent={renderHandle}
-        snapPoints={animatedSnapPoints}
-        stackBehavior="push"
+        enableDynamicSizing
         handleHeight={animatedHandleHeight}
         contentHeight={animatedContentHeight}
+        // @ts-ignore until we remove the deprecated useBottomSheetDynamicSnapPoints
+        snapPoints={animatedSnapPoints}
+        stackBehavior="push"
         backdropComponent={renderBackdrop}
         enablePanDownToClose={true}
         backgroundComponent={null}
         style={styles.sheetContainer as any}
         {...other}
         onAnimate={onAnimateHandler}>
-        <View style={contStyle} onLayout={handleContentLayout}>
+        <BottomSheetView style={contStyle} onLayout={handleContentLayout}>
           {Boolean(title) && (
             <View style={styles.header}>
               <H3 vertical="M" align="center">
@@ -138,7 +138,7 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
             </B1>
           )}
           <>{children}</>
-        </View>
+        </BottomSheetView>
       </BottomSheetModal>
     );
   },

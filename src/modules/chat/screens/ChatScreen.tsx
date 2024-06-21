@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
+import { TouchableOpacity, View } from 'react-native';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { useNavigation } from '@react-navigation/native';
+
 import { Icon, Screen } from '~/common/ui';
 import MessageList from '../components/MessageList';
 import ChatHeader from '../components/ChatHeader';
-import { TouchableOpacity, View } from 'react-native';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import {
   BottomSheetButton,
   BottomSheetModal as BottomSheet,
@@ -13,7 +15,6 @@ import {
   ChatRoomTypeEnum,
   useReplyToRoomInviteRequestMutation,
 } from '~/graphql/api';
-import { useNavigation } from '@react-navigation/native';
 import { showNotification } from 'AppMessages';
 import i18nService from '~/common/services/i18n.service';
 import logService from '~/common/services/log.service';

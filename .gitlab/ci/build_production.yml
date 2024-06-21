@@ -67,7 +67,7 @@ eas_build_production_ios:
   script:
     - npx eas-cli build --platform ios --profile production --json --non-interactive --auto-submit --no-wait
   rules:
-    - if: $BUILD_MODE == "PRODUCTION"
+    - if: $BUILD_MODE == "PRODUCTION" || $BUILD_MODE == "PRODUCTION_IOS"
       when: always
     - if: $CI_COMMIT_REF_NAME == "master"
       when: manual

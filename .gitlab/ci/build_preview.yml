@@ -44,6 +44,7 @@ eas_build_preview:
     - npx eas-cli update --branch "$TENANT_ID" --message "preview" --json --non-interactive || exit_code=$?
     - echo "Exit code ${exit_code}"
     - if [ $exit_code -ne 0 ]; then node tasks/callbuild-webhook failed; fi;
+    - npx eas-cli channel:create $TENANT_ID --json --non-interactive || true
     - node tasks/callbuild-webhook
     - echo "Demo link mindspreview://preview/$TENANT_ID"
     - echo "Demo QR https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=mindspreview://preview/$TENANT_ID"

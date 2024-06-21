@@ -31,6 +31,7 @@ import { useBackHandler } from '@react-native-community/hooks';
 import { Orientation } from '~/services';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import PermissionsService from '~/common/services/permissions.service';
+import { IS_IOS } from '~/config/Config';
 
 // TODO: move this and all its instances accross the app to somewhere common
 /**
@@ -98,7 +99,7 @@ export default withErrorBoundaryScreen(
     }, []);
 
     useEffect(() => {
-      Orientation.unlock();
+      !IS_IOS && Orientation.unlock();
       return () => {
         Orientation.lockPortrait();
       };
@@ -108,7 +109,7 @@ export default withErrorBoundaryScreen(
       if (mediaToConfirm) {
         Orientation.lockPortrait();
       } else {
-        Orientation.unlock();
+        !IS_IOS && Orientation.unlock();
       }
     }, [mediaToConfirm]);
 
@@ -418,7 +419,12 @@ const BottomBarMediaConfirm = ({ mode, onRetake, onConfirm, extracting }) => {
   return (
     <View style={containerStyle}>
       <View style={styles.tabs}>
-        <Button onPress={onRetake} text={'Retake'} transparent small />
+        <Button
+          onPress={onRetake}
+          text={i18nService.t('capture.retake')}
+          transparent
+          small
+        />
         <Button
           onPress={onConfirm}
           text={

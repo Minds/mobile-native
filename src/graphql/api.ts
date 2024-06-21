@@ -920,6 +920,7 @@ export enum MultiTenantColorScheme {
 
 export type MultiTenantConfig = {
   __typename?: 'MultiTenantConfig';
+  boostEnabled?: Maybe<Scalars['Boolean']['output']>;
   /** Whether federation can be enabled. */
   canEnableFederation?: Maybe<Scalars['Boolean']['output']>;
   colorScheme?: Maybe<MultiTenantColorScheme>;
@@ -937,6 +938,7 @@ export type MultiTenantConfig = {
 };
 
 export type MultiTenantConfigInput = {
+  boostEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
@@ -4148,6 +4150,7 @@ export type GetCustomPageQuery = {
     pageType: CustomPageTypesEnum;
     content?: string | null;
     externalLink?: string | null;
+    defaultContent?: string | null;
   };
 };
 
@@ -4267,6 +4270,24 @@ export type GetGiftCardsQuery = {
       endCursor?: string | null;
     };
   };
+};
+
+export type GetNavigationItemsQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetNavigationItemsQuery = {
+  __typename?: 'Query';
+  customNavigationItems: Array<{
+    __typename?: 'NavigationItem';
+    id: string;
+    name: string;
+    type: NavigationItemTypeEnum;
+    action?: NavigationItemActionEnum | null;
+    iconId: string;
+    order: number;
+    url?: string | null;
+    visible: boolean;
+    path?: string | null;
+  }>;
 };
 
 export type FetchNewsfeedQueryVariables = Exact<{
@@ -7765,6 +7786,7 @@ export const GetCustomPageDocument = `
     pageType
     content
     externalLink
+    defaultContent
   }
 }
     `;
@@ -8159,6 +8181,81 @@ useGetGiftCardsQuery.fetcher = (
 ) =>
   gqlFetcher<GetGiftCardsQuery, GetGiftCardsQueryVariables>(
     GetGiftCardsDocument,
+    variables,
+    options,
+  );
+export const GetNavigationItemsDocument = `
+    query getNavigationItems {
+  customNavigationItems {
+    id
+    name
+    type
+    action
+    iconId
+    order
+    url
+    visible
+    path
+  }
+}
+    `;
+export const useGetNavigationItemsQuery = <
+  TData = GetNavigationItemsQuery,
+  TError = unknown,
+>(
+  variables?: GetNavigationItemsQueryVariables,
+  options?: UseQueryOptions<GetNavigationItemsQuery, TError, TData>,
+) =>
+  useQuery<GetNavigationItemsQuery, TError, TData>(
+    variables === undefined
+      ? ['getNavigationItems']
+      : ['getNavigationItems', variables],
+    gqlFetcher<GetNavigationItemsQuery, GetNavigationItemsQueryVariables>(
+      GetNavigationItemsDocument,
+      variables,
+    ),
+    options,
+  );
+
+useGetNavigationItemsQuery.getKey = (
+  variables?: GetNavigationItemsQueryVariables,
+) =>
+  variables === undefined
+    ? ['getNavigationItems']
+    : ['getNavigationItems', variables];
+export const useInfiniteGetNavigationItemsQuery = <
+  TData = GetNavigationItemsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetNavigationItemsQueryVariables,
+  variables?: GetNavigationItemsQueryVariables,
+  options?: UseInfiniteQueryOptions<GetNavigationItemsQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetNavigationItemsQuery, TError, TData>(
+    variables === undefined
+      ? ['getNavigationItems.infinite']
+      : ['getNavigationItems.infinite', variables],
+    metaData =>
+      gqlFetcher<GetNavigationItemsQuery, GetNavigationItemsQueryVariables>(
+        GetNavigationItemsDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useInfiniteGetNavigationItemsQuery.getKey = (
+  variables?: GetNavigationItemsQueryVariables,
+) =>
+  variables === undefined
+    ? ['getNavigationItems.infinite']
+    : ['getNavigationItems.infinite', variables];
+useGetNavigationItemsQuery.fetcher = (
+  variables?: GetNavigationItemsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetNavigationItemsQuery, GetNavigationItemsQueryVariables>(
+    GetNavigationItemsDocument,
     variables,
     options,
   );

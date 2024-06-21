@@ -123,7 +123,7 @@ const ItemTitle = ({ id, enabled }: OptionDef) => {
         )}
       </View>
       <MText style={styles.optDescription}>
-        {i18n.t(`settings.TFAOptions.${id}Description`)}
+        {i18n.t(`settings.TFAOptions.${id}Description`, { TENANT })}
       </MText>
     </View>
   );

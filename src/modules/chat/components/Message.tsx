@@ -176,7 +176,7 @@ const styles = ThemedStyles.create({
   ],
   container: ['fullWidth', 'rowJustifyStart', 'alignEnd'],
   containerRight: ['fullWidth', 'rowJustifyEnd'],
-  containerRightSending: ['fullWidth', 'rowJustifyEnd', 'opacity75'],
+  containerRightSending: ['fullWidth', 'rowJustifyEnd', 'opacity50'],
   image: [
     {
       flex: 1,

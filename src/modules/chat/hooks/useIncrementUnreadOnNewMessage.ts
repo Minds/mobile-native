@@ -1,3 +1,4 @@
+import { ChatRoomEventType } from '../types';
 import { useAllChatRoomsEvent } from './useAllChatRoomsEvent';
 import { useIncrementUnreadMessages } from './useUnreadMessages';
 
@@ -9,7 +10,7 @@ export function useIncrementUnreadOnNewMessage() {
 
   // Increment the unread messages count when a new message is received.
   useAllChatRoomsEvent(async (roomGuid, event) => {
-    if (event.type !== 'NEW_MESSAGE') return;
+    if (event.type !== ChatRoomEventType.NewMessage) return;
 
     incrementUnreadMessages(1);
   });

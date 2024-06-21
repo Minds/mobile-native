@@ -5,6 +5,12 @@ import SupermindConsoleFeedFilter, {
 } from './SupermindConsoleFeedFilter';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 
+jest.mock('~/common/components/feed-filters/BaseFeedFilter', () => {
+  return jest.fn().mockImplementation(({ children }) => {
+    return <>{children}</>;
+  });
+});
+
 describe('SupermindFeedFilter', () => {
   it('should render', async () => {
     render(

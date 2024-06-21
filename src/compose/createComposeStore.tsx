@@ -11,7 +11,7 @@ import settingsStore from '../settings/SettingsStore';
 import attachmentService from '../common/services/attachment.service';
 import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
-import { Image, Platform } from 'react-native';
+import { Image } from 'react-native';
 import getNetworkError from '~/common/helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
 import { SupermindRequestParam } from './SupermindComposeScreen';
@@ -347,17 +347,18 @@ export default function (props) {
                     mediaToConfirm.key = 0;
                   }
 
-                  if (
-                    Platform.OS === 'android' &&
-                    typeof mediaToConfirm.pictureOrientation === 'number' &&
-                    mediaToConfirm.pictureOrientation <= 2
-                  ) {
-                    mediaToConfirm.width = h;
-                    mediaToConfirm.height = w;
-                  } else {
-                    mediaToConfirm.width = w;
-                    mediaToConfirm.height = h;
-                  }
+                  // if (
+                  //   Platform.OS === 'android' &&
+                  //   mediaToConfirm.orientation &&
+                  //   (mediaToConfirm.orientation === 'portrait' ||
+                  //     mediaToConfirm.orientation === 'portrait-upside-down')
+                  // ) {
+                  //   mediaToConfirm.width = h;
+                  //   mediaToConfirm.height = w;
+                  // } else {
+                  //   mediaToConfirm.width = w;
+                  //   mediaToConfirm.height = h;
+                  // }
                 });
               },
               err => console.log(err),

@@ -1,6 +1,6 @@
-import { FlashList, FlashListProps } from '@shopify/flash-list';
 import React from 'react';
-import { RefreshControl } from 'react-native-gesture-handler';
+import { FlashList, FlashListProps } from '@shopify/flash-list';
+import { RefreshControl } from 'react-native';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';

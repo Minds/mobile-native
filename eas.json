@@ -17,7 +17,8 @@
       "extends": "production",
       "autoIncrement": false,
       "android": {
-        "buildType": "apk"
+        "buildType": "apk",
+        "resourceClass": "large"
       },
       "env": {}
     },

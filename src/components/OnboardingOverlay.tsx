@@ -76,7 +76,6 @@ export const useExplainer = (key: string) => {
     key,
   });
 
-  console.log('useExplainer', dismissed);
   const { data } = useGetExplainerScreenQuery({
     key,
   });

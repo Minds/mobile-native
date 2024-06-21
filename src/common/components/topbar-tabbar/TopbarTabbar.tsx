@@ -5,8 +5,8 @@ import {
   StyleProp,
   TextStyle,
   ViewStyle,
+  ScrollView,
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import ThemedStyles from '../../../styles/ThemedStyles';
 import { B1, B2 } from '~ui';
 

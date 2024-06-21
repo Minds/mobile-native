@@ -15,7 +15,7 @@ import type { ComposeStoreType } from './useComposeStore';
 import BaseModel from '../common/BaseModel';
 import { ReplyType } from './SupermindComposeScreen';
 import delay from '~/common/helpers/delay';
-import { IS_TENANT } from '~/config/Config';
+import { IS_TENANT, TENANT } from '~/config/Config';
 
 interface ComposeTopBarProps {
   onPressBack: () => void;
@@ -60,7 +60,9 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
       if (
         !(await confirm({
           title: i18n.t('supermind.liveReplyRequest.title'),
-          description: i18n.t('supermind.liveReplyRequest.description'),
+          description: i18n.t('supermind.liveReplyRequest.description', {
+            TENANT,
+          }),
         }))
       ) {
         return;

@@ -14,23 +14,27 @@ import socketService from '~/common/services/socket.service';
 import { useRefetchUnreadMessages } from '../hooks/useUnreadMessages';
 import { useStyle } from '~/styles/ThemedStyles';
 import analyticsService from '~/common/services/analytics.service';
+import permissionsService from '~/common/services/permissions.service';
 
 /**
  * Chat rooms list screen
  */
 export default function ChatsListScreen({ navigation }) {
+  const canCreateChat = permissionsService.canCreateChatRoom();
   return (
     <Screen safe>
       <ScreenHeader back={false} title="Chat" extra={<Alpha />} />
       <ChatList />
-      <ChatNewButton
-        onPress={() => {
-          analyticsService.trackClick(
-            'data-minds-chat-room-list-new-chat-button',
-          );
-          navigation.push('ChatNew');
-        }}
-      />
+      {canCreateChat && (
+        <ChatNewButton
+          onPress={() => {
+            analyticsService.trackClick(
+              'data-minds-chat-room-list-new-chat-button',
+            );
+            navigation.push('ChatNew');
+          }}
+        />
+      )}
     </Screen>
   );
 }

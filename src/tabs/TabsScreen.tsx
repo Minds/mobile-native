@@ -5,6 +5,7 @@ import {
   BottomTabScreenProps,
 } from '@react-navigation/bottom-tabs';
 import { View, Platform, Dimensions } from 'react-native';
+import MIcon from '@expo/vector-icons/MaterialIcons';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
@@ -14,7 +15,7 @@ import TopShadow from '../common/components/TopShadow';
 import PressableScale from '~/common/components/PressableScale';
 import NewsfeedStack from '~/navigation/NewsfeedStack';
 import MoreStack from '~/navigation/MoreStack';
-import { IS_IOS, IS_TENANT } from '~/config/Config';
+import { IS_IOS } from '~/config/Config';
 import Animated, {
   useAnimatedStyle,
   withSpring,
@@ -22,9 +23,9 @@ import Animated, {
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
 import withModalProvider from '~/navigation/withModalProvide';
-import { useFeature } from 'ExperimentsProvider';
 import { useUnreadMessages } from '~/modules/chat/hooks/useUnreadMessages';
 import { useIncrementUnreadOnNewMessage } from '~/modules/chat/hooks/useIncrementUnreadOnNewMessage';
+import { useCustomNavigationTabs } from '~/modules/navigation/service/custom-navigation.service';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -37,6 +38,12 @@ export type TabParamList = {
   MindsPlus: {};
   Notifications: {};
   CaptureTab: {};
+};
+
+const routeMap = {
+  Newsfeed: 'newsfeed',
+  Discovery: 'explore',
+  ChatListStack: 'chat',
 };
 
 const { width } = Dimensions.get('screen');
@@ -158,7 +165,50 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
  */
 const Tabs = observer(function () {
   const theme = ThemedStyles.style;
-  const chatFF = useFeature('epic-358-chat-mob');
+
+  const menuConf = useCustomNavigationTabs();
+  const navMap = menuConf?.reduce((acc, item) => {
+    acc[item.id] = item;
+    return acc;
+  }, {});
+
+  const tabOptions = ({ route }): BottomTabNavigationOptions => ({
+    headerShown: false,
+    tabBarIcon: ({ focused }) => {
+      if (route.name === 'Notifications') {
+        return <NotificationIcon active={focused} />;
+      }
+
+      if (
+        menuConf &&
+        navMap &&
+        ['Newsfeed', 'ChatListStack', 'Discovery'].includes(route.name)
+      ) {
+        return (
+          <MIcon
+            size={28}
+            active={focused}
+            name={navMap[routeMap[route.name]].iconId.replace('_', '-')}
+            style={
+              focused
+                ? ThemedStyles.style.colorPrimaryText
+                : ThemedStyles.style.colorIcon
+            }
+          />
+        );
+      }
+
+      return (
+        <Icon
+          size="large"
+          active={focused}
+          name={iconFromRoute[route.name]}
+          activeColor="PrimaryText"
+        />
+      );
+    },
+  });
+
   return (
     <View style={theme.flexContainer}>
       {/* <Topbar navigation={navigation} /> */}
@@ -178,25 +228,11 @@ const Tabs = observer(function () {
           getComponent={() => require('~/navigation/DiscoveryStack').default}
           options={discoveryOptions}
         />
-        {chatFF ? (
-          <Tab.Screen
-            name="ChatListStack"
-            getComponent={() => require('~/modules/chat').ChatsListStack}
-            options={discoveryOptions}
-          />
-        ) : (
-          !IS_TENANT && (
-            <Tab.Screen
-              name="MindsPlus"
-              getComponent={() =>
-                require('~/discovery/v2/PlusDiscoveryScreen').default
-              }
-              options={{ tabBarTestID: 'Tabs:MindsPlus' }}
-              initialParams={{ backEnable: false }}
-            />
-          )
-        )}
-
+        <Tab.Screen
+          name="ChatListStack"
+          getComponent={() => require('~/modules/chat').ChatsListStack}
+          options={discoveryOptions}
+        />
         <Tab.Screen
           name="Notifications"
           component={NotificationsStack}
@@ -259,7 +295,7 @@ const notificationOptions = {
 const moreOptions = { tabBarTestID: 'Tabs:More' };
 const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
 const focusedState = { selected: true };
-const tabBar = props => <TabBar disableTabIndicator {...props} />;
+const tabBar = props => <TabBar {...props} />;
 
 const iconFromRoute: Record<string, IconMapNameType> = {
   More: 'menu',
@@ -270,24 +306,6 @@ const iconFromRoute: Record<string, IconMapNameType> = {
   Performance: 'dev',
   MindsPlus: 'queue',
 };
-
-const tabOptions = ({ route }): BottomTabNavigationOptions => ({
-  headerShown: false,
-  tabBarIcon: ({ focused }) => {
-    if (route.name === 'Notifications') {
-      return <NotificationIcon active={focused} />;
-    }
-
-    return (
-      <Icon
-        size="large"
-        active={focused}
-        name={iconFromRoute[route.name]}
-        activeColor="PrimaryText"
-      />
-    );
-  },
-});
 
 export default Tabs;
 

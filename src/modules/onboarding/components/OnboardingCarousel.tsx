@@ -26,6 +26,9 @@ export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
   const isPortrait = width < height;
   const insets = useSafeAreaInsets();
 
+  const heightCarrousel =
+    height - ((IS_IOS ? 300 : 350) + insets.top + insets.bottom);
+
   return (
     <>
       <RNImage
@@ -33,17 +36,21 @@ export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
         source={assets.LOGO_SQUARED}
         style={styles.logo}
       />
-      <Carousel
-        autoPlay
-        autoPlayInterval={2500}
-        pagingEnabled
-        onSnapToItem={setIndex}
-        height={height - ((IS_IOS ? 300 : 350) + insets.top + insets.bottom)}
-        width={width}
-        data={data?.length ? data : defaultData}
-        renderItem={renderItem(isPortrait)}
-        style={ThemedStyles.style.marginBottom1x}
-      />
+      <View
+        style={{
+          height: heightCarrousel,
+        }}>
+        <Carousel
+          autoPlay
+          autoPlayInterval={2500}
+          pagingEnabled
+          onSnapToItem={setIndex}
+          height={heightCarrousel}
+          width={width}
+          data={data?.length ? data : defaultData}
+          renderItem={renderItem(isPortrait)}
+        />
+      </View>
       <Pagination
         activeDotIndex={index}
         dotsLength={data?.length ?? 0}

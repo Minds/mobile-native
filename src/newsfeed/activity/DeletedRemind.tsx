@@ -10,7 +10,7 @@ export default function DeletedRemind() {
   return (
     <View style={[theme.columnAlignCenter, theme.padding4x]}>
       <Icon
-        name="md-information-circle"
+        name="information-circle"
         size={35}
         style={[theme.colorSecondaryText, theme.paddingRight]}
       />

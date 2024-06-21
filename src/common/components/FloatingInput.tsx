@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
 import { Portal } from '@gorhom/portal';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 
-import KeyboardSpacingView from './keyboard/KeyboardSpacingView';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { Flow } from 'react-native-animated-spinkit';
 import TextInput from '../../common/components/TextInput';
@@ -78,11 +78,10 @@ const FloatingInput = React.forwardRef(
         <FullWindowOverlay
           //@ts-ignore missing style type
           style={StyleSheet.absoluteFill}>
-          <KeyboardSpacingView
-            enabled
-            translate
-            style={StyleSheet.absoluteFill}
-            pointerEvents="box-none">
+          <KeyboardAvoidingView
+            behavior="padding"
+            pointerEvents="box-none"
+            style={StyleSheet.absoluteFill}>
             <View style={styles.mainContainer}>
               <TouchableOpacity
                 onPress={() => {
@@ -115,7 +114,7 @@ const FloatingInput = React.forwardRef(
                 ) : null}
               </View>
             </View>
-          </KeyboardSpacingView>
+          </KeyboardAvoidingView>
         </FullWindowOverlay>
       </Portal>
     );

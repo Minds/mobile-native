@@ -8,6 +8,7 @@ import { AvatarIcon, DeltaIcon } from './Icons';
 import i18n from '../../../../common/services/i18n.service';
 import capitalize from '../../../../common/helpers/capitalize';
 import { B1, B2, B3, Row, Column, Avatar } from '~ui';
+import { TENANT } from '~/config/Config';
 
 const Item = ({ entity, navigation, currency }: ItemPropsType) => {
   const { typeString, avatar } = getTypeStringAndIcon(
@@ -71,7 +72,7 @@ const getTypeStringAndIcon = (
         <B2>
           {entity.reward_type
             ? `${capitalize(entity.reward_type)} Reward`
-            : i18n.t('wallet.transactions.mindsReward')}
+            : i18n.t('wallet.transactions.mindsReward', { TENANT })}
         </B2>
       );
       break;

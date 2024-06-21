@@ -15,6 +15,7 @@ import MText from '../../../../common/components/MText';
 import { B1 } from '../../../../common/ui';
 import MenuItemOption from '../../../../common/components/menus/MenuItemOption';
 import openUrlService from '../../../../common/services/open-url.service';
+import { TENANT } from '~/config/Config';
 
 type PropsType = {
   localStore: BankInfoStore;
@@ -170,7 +171,7 @@ const CashOnboarding = observer(
                         'https://www.minds.com/p/monetization-terms',
                       )
                     }>
-                    {i18n.t('wallet.bank.mmt')}
+                    {i18n.t('wallet.bank.mmt', { TENANT })}
                   </MText>
                 </B1>
               }

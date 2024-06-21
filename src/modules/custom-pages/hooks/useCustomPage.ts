@@ -16,7 +16,10 @@ export default function useCustomPage(pageType?: CustomPageType) {
   const customPage = useMemo(() => {
     if (data && data.customPage) {
       return {
-        content: data.customPage.content || getDefault(pageType || ''),
+        content:
+          data.customPage.content ||
+          data.customPage.defaultContent ||
+          getDefault(pageType || ''),
         externalLink: data.customPage.externalLink,
       };
     }

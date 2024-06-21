@@ -3,7 +3,7 @@ import { Platform, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
 import { useSharedValue } from 'react-native-reanimated';
 
-import { TabView } from 'showtime-tab-view';
+import { TabView } from '@showtime-xyz/tab-view';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 

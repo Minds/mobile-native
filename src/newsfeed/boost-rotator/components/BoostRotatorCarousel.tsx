@@ -87,7 +87,7 @@ const BOOST_CTA_HEIGHT = 45;
 const WINDOW_SIZE = 3;
 const gestureHandlerProps = {
   cancelsTouchesInView: true,
-  activeOffsetX: [-10, 10],
+  activeOffsetX: [-10, 10] as [number, number],
 };
 
 export default observer(BoostRotatorCarousel);

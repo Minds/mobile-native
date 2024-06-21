@@ -11,6 +11,9 @@ export class UpdateExpoService {
     } catch (err) {
       this.checkResult = {
         isAvailable: false,
+        reason:
+          Updates.UpdateCheckResultNotAvailableReason
+            .NO_UPDATE_AVAILABLE_ON_SERVER,
         manifest: undefined,
         isRollBackToEmbedded: false,
       };

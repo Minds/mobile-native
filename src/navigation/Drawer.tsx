@@ -1,6 +1,5 @@
 import React from 'react';
 
-import i18n from '../common/services/i18n.service';
 import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
 
@@ -18,149 +17,12 @@ import {
   PressableLine,
   Spacer,
 } from '~ui';
-import { Icon as IconV2 } from '@minds/ui';
-import { IconMapNameType, IconNameType } from '~/common/ui/icons/map';
-import { navigateToHelp } from '../settings/SettingsScreen';
-import {
-  AFFILIATES_ENABLED,
-  BOOSTS_ENABLED,
-  GOOGLE_PLAY_STORE,
-  IS_IOS,
-  IS_TENANT,
-  SUPERMIND_ENABLED,
-  WALLET_ENABLED,
-} from '~/config/Config';
-import ThemedStyles from '~/styles/ThemedStyles';
-
-const getOptionsSmallList = navigation => {
-  return !IS_TENANT
-    ? [
-        {
-          name: i18n.t('earnScreen.title'),
-          onPress: () => {
-            navigation.navigate('EarnModal');
-          },
-        },
-        {
-          name: i18n.t('analytics.title'),
-          onPress: () => {
-            navigation.navigate('Analytics');
-          },
-        },
-        {
-          name: i18n.t('help'),
-          onPress: navigateToHelp,
-        },
-      ]
-    : null;
-};
-
-type Flags = Record<'hasPro' | 'hasPlus', boolean>;
-
-type MenuItem = {
-  name: string;
-  icon: IconNameType | JSX.Element;
-  onPress: () => void;
-  testID?: string;
-} | null;
-const getOptionsList = (navigation, { hasPro, hasPlus }: Flags) => {
-  const channel = sessionService.getUser();
-  const list: MenuItem[] = [
-    {
-      name: i18n.t('settings.profile'),
-      icon: 'profile',
-      testID: 'Drawer:channel',
-      onPress: () => {
-        navigation.push('Channel', { entity: channel });
-      },
-    },
-    !IS_IOS && !IS_TENANT
-      ? {
-          name: i18n.t('wire.lock.plus'),
-          icon: 'queue',
-          onPress: () => {
-            navigation.navigate('PlusDiscoveryScreen');
-          },
-        }
-      : null,
-    BOOSTS_ENABLED
-      ? {
-          name: i18n.t('settings.boostConsole'),
-          icon: 'boost',
-          onPress: () => {
-            navigation.push('BoostConsole');
-          },
-        }
-      : null,
-    SUPERMIND_ENABLED
-      ? {
-          name: 'Supermind',
-          icon: 'supermind',
-          onPress: () => {
-            navigation.navigate('SupermindConsole');
-          },
-        }
-      : null,
-    WALLET_ENABLED && !GOOGLE_PLAY_STORE
-      ? {
-          name: i18n.t('moreScreen.wallet'),
-          icon: 'bank',
-          testID: 'Drawer:wallet',
-          onPress: () => {
-            navigation.navigate('Wallet');
-          },
-        }
-      : null,
-    AFFILIATES_ENABLED
-      ? {
-          name: 'Affiliate',
-          icon: 'affiliate',
-          onPress: () => {
-            navigation.navigate('AffiliateProgram');
-          },
-        }
-      : null,
-    {
-      name: i18n.t('discovery.groups'),
-      icon: 'group',
-      onPress: () => {
-        navigation.navigate('GroupsList');
-      },
-    },
-    !IS_TENANT && !(hasPro && hasPlus)
-      ? {
-          name: i18n.t('moreScreen.upgrade'),
-          icon: (
-            <IconV2
-              name="verified"
-              color={ThemedStyles.getColor('PrimaryText')}
-            />
-          ),
-          testID: 'Drawer:upgrade',
-          onPress: () => {
-            navigation.navigate('UpgradeScreen', {
-              onComplete: () => null,
-              pro: hasPro,
-            });
-          },
-        }
-      : null,
-    {
-      name: i18n.t('moreScreen.settings'),
-      icon: 'settings',
-      testID: 'Drawer:settings',
-      onPress: () => {
-        navigation.navigate('Settings');
-      },
-    },
-  ];
-
-  return list;
-};
+import { IconMapNameType } from '~/common/ui/icons/map';
+import { useDrawerList } from './drawer/useDrawerList';
+import { useDrawerSmallList } from './drawer/useDrawerSmallList';
 
 /**
  * Drawer menu
- * @param props
  */
 export default function Drawer(props) {
   const channel = sessionService.getUser();
@@ -174,11 +36,13 @@ export default function Drawer(props) {
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
-  const optionsList = getOptionsList(props.navigation, {
+  const optionsList = useDrawerList({
     hasPlus: channel.pro,
     hasPro: channel.plus,
   });
-  const optionsSmallList = getOptionsSmallList(props.navigation);
+
+  const optionsSmallList = useDrawerSmallList();
+
   return (
     <Screen safe>
       <FitScrollView>
@@ -207,6 +71,9 @@ export default function Drawer(props) {
   );
 }
 
+/**
+ * Drawer list component
+ */
 const DrawerList = ({ list, small }) => {
   return list.map((l, i) =>
     !l ? null : (
@@ -222,6 +89,9 @@ const DrawerList = ({ list, small }) => {
   );
 };
 
+/**
+ * Header
+ */
 const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
   return (
     <Row left="XL" right="XL" bottom="XXL">
@@ -254,6 +124,10 @@ type DrawerNavItemProps = {
   small?: boolean;
   testID?: string;
 };
+
+/**
+ * Drawer item
+ */
 const DrawerNavItem = ({
   icon,
   name,

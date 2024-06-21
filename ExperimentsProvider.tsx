@@ -45,6 +45,7 @@ export const useIsGoogleFeatureOn = (feature: FeatureID) =>
 export const featureList = [
   'epic-358-chat-mob',
   'mobile-create-group-chat-new',
+  'mobile-custom-nav-links',
 ] as const;
 
 export type FeatureID = typeof featureList[number];
