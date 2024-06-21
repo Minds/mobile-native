@@ -67,11 +67,6 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         <AppStackNav.Screen
-          name="Report"
-          options={{ title: i18n.t('report') }}
-          getComponent={() => require('~/report/ReportScreen').default}
-        />
-        <AppStackNav.Screen
           name="GifCardClaim"
           getComponent={() =>
             require('~/modules/gif-card/screens/GifCardClaimScreen')
@@ -351,6 +346,11 @@ const RootStack = observer(function () {
                 })}
               />
             )}
+            <RootStackNav.Screen
+              name="Report"
+              options={{ title: i18n.t('report'), headerShown: true }}
+              getComponent={() => require('~/report/ReportScreen').default}
+            />
             <RootStackNav.Screen
               name="Capture"
               getComponent={() => require('~/compose/CameraScreen').default}
