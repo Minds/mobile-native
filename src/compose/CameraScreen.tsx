@@ -419,7 +419,12 @@ const BottomBarMediaConfirm = ({ mode, onRetake, onConfirm, extracting }) => {
   return (
     <View style={containerStyle}>
       <View style={styles.tabs}>
-        <Button onPress={onRetake} text={'Retake'} transparent small />
+        <Button
+          onPress={onRetake}
+          text={i18nService.t('capture.retake')}
+          transparent
+          small
+        />
         <Button
           onPress={onConfirm}
           text={

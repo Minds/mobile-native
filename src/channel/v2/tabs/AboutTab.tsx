@@ -100,7 +100,7 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
       )}
 
       <LabeledComponent
-        label={i18n.t('discovery.groups')}
+        label={i18n.t('discovery.filters.groups')}
         wrapperStyle={margin}>
         <MText>{localStore.groupCount}</MText>
       </LabeledComponent>

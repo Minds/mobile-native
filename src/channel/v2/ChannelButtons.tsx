@@ -26,7 +26,6 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { SUPERMIND_ENABLED, WIRE_ENABLED } from '~/config/Config';
 import PostSubscription from './buttons/PostSubscription';
 import { useCreateChatRoom } from '~/modules/chat/hooks/useCreateChatRoom';
-import { useFeature } from 'ExperimentsProvider';
 
 export type ButtonsType =
   | 'edit'
@@ -91,7 +90,6 @@ const check = {
  */
 const ChannelButtons = withErrorBoundary(
   observer((props: PropsWithChildren<ChannelButtonsPropsType>) => {
-    const chatFF = useFeature('epic-358-chat-mob');
     const menuRef = useRef<any>();
     const navigation =
       useNavigation<NativeStackNavigationProp<AppStackParamList>>();
@@ -149,7 +147,7 @@ const ChannelButtons = withErrorBoundary(
             style={ThemedStyles.style.marginLeft2x}
           />
         )}
-        {shouldShow('chat') && Boolean(chatFF) && (
+        {shouldShow('chat') && (
           <ChatButton
             raisedIcons={props.raisedIcons}
             iconColor={props.iconColor}

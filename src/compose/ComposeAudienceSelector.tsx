@@ -23,7 +23,7 @@ import {
   Screen,
   ScreenHeader,
 } from '../common/ui';
-import { IS_IOS, IS_TENANT } from '../config/Config';
+import { IS_IOS, IS_TENANT, TENANT } from '../config/Config';
 import GroupModel from '../groups/GroupModel';
 import NavigationService from '../navigation/NavigationService';
 import ThemedStyles from '../styles/ThemedStyles';
@@ -335,7 +335,7 @@ const PlusTerms = () => (
 
 const TermsLink = () => (
   <Link url="https://www.minds.com/p/monetization-terms">
-    <B2>{i18n.t('monetize.terms.linkTitle')}</B2>
+    <B2>{i18n.t('monetize.terms.linkTitle', { TENANT })}</B2>
   </Link>
 );
 

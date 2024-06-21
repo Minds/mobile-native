@@ -92,7 +92,7 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
           }
         : null,
       {
-        name: i18n.t('discovery.groups'),
+        name: i18n.t('discovery.filters.groups'),
         icon: 'group',
         onPress: () => {
           navigation.navigate('GroupsList');

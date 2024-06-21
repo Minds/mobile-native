@@ -13,6 +13,7 @@ import {
   LIQUIDITY_ENABLED,
   PRO_PLUS_SUBSCRIPTION_ENABLED,
   GOOGLE_PLAY_STORE,
+  TENANT,
 } from '../config/Config';
 import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
@@ -189,7 +190,7 @@ export default withErrorBoundaryScreen(
       <>
         <ModalScreen
           source={require('../assets/withdrawalbg.jpg')}
-          title={i18n.t('earnScreen.title')}>
+          title={i18n.t('earnScreen.title', { TENANT })}>
           <MText style={titleStyle}>{i18n.t('earnScreen.increase')}</MText>
           {earnItems.map(item => (
             <EarnItem key={item.name} content={item} />

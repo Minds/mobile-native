@@ -13,6 +13,7 @@ import MText from '../MText';
 import QuestionSlider from './QuestionSlider';
 import { useAnswers } from './useAnswers';
 import { IQuestion } from './useQuestions';
+import { TENANT } from '~/config/Config';
 
 type PropsType = {
   onSubmit: () => void;
@@ -57,7 +58,11 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
 
   const _onSubmit = useCallback(async () => {
     await answer();
-    showNotification(i18n.t('socialCompass.thanks'), 'success', 3000);
+    showNotification(
+      i18n.t('socialCompass.thanks', { TENANT }),
+      'success',
+      3000,
+    );
     onSubmit();
   }, [answer, onSubmit]);
   // #endregion

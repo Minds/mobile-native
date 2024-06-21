@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
-import { IconCircled, Spacer, IconButton, H2, Avatar } from '~ui';
+import { IconCircled, IconButton, H2, Avatar } from '~ui';
 import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
 import PressableScale from '~/common/components/PressableScale';
-import TabChatPreModal, { ChatModalHandle } from '~/tabs/TabChatPreModal';
-import ChatIcon from '~/chat/ChatIcon';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import sessionService from '~/common/services/session.service';
 import SendIntentAndroid from 'react-native-send-intent';
@@ -61,7 +59,6 @@ export const Topbar = observer((props: PropsType) => {
   }).current as ViewStyle;
   // dereference to react to observable changes
 
-  const chatModal = React.useRef<ChatModalHandle>(null);
   useEffect(() => {
     if (user) {
       wallet.loadPrices();
@@ -77,9 +74,6 @@ export const Topbar = observer((props: PropsType) => {
 
   return (
     <Animated.View style={[styles.shadow, animatedStyle]}>
-      {CHAT_ENABLED && !isInterChatEnabled && (
-        <TabChatPreModal ref={chatModal} />
-      )}
       <View style={container}>
         <View style={styles.topbar}>
           <View style={styles.topbarLeft}>
@@ -125,13 +119,6 @@ export const Topbar = observer((props: PropsType) => {
             )}
           </View>
           <View style={styles.topbarRight}>
-            <Spacer right="L">
-              {isChatIconHidden ? null : (
-                <PressableScale onPress={() => chatModal.current?.showModal()}>
-                  <ChatIcon />
-                </PressableScale>
-              )}
-            </Spacer>
             <PressableScale onPress={() => navigation.navigate('SearchScreen')}>
               <IconCircled size="small" name="search" color="PrimaryText" />
             </PressableScale>

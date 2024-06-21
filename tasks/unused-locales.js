@@ -17,6 +17,27 @@ const ignore = [
   'validation.',
   'date.formats.',
   'settings.reportedContent.action.',
+  'channel.mutualSubscribers.',
+  'discovery.filters.',
+  'auth.createNewPassword',
+  'auth.resetPassword',
+  'supermind.filter.',
+  'supermind.replyType.',
+  'notification.verbs.',
+  'notification.empty.',
+  'interactions.',
+  'settings.',
+  'analytics.tokens.labels.',
+  'analytics.tokens.tooltips.',
+  'earnScreen.',
+  'join',
+  'leave',
+  'awaiting',
+  'group.buttonInvited',
+  'monetize.',
+  'nsfw.',
+  'wallet.tokens.',
+  'wallet.transactions.',
 ];
 
 /**
@@ -24,9 +45,9 @@ const ignore = [
  * @param {string} term
  */
 async function search(term) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     // ignore dynamic generated terms
-    if (ignore.some((t) => term.startsWith(t))) {
+    if (ignore.some(t => (t.endsWith('.') ? term.startsWith(t) : term === t))) {
       resolve(true);
       return;
     }

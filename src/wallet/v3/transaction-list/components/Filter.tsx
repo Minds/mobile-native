@@ -11,6 +11,7 @@ import {
   SectionTitle,
 } from '../../../../common/components/bottom-sheet';
 import { B3, Icon, Row } from '~ui';
+import { TENANT } from '~/config/Config';
 
 type titleType =
   | 'allFilter'
@@ -42,7 +43,7 @@ const Filter = observer((props: PropsType) => {
   const options = React.useMemo(
     () =>
       filters.map(f => ({
-        title: i18n.t(`wallet.transactions.${f.title}`),
+        title: i18n.t(`wallet.transactions.${f.title}`, { TENANT }),
         onPress: () => {
           close();
           setTimeout(() => {

@@ -15,7 +15,7 @@ import TopShadow from '../common/components/TopShadow';
 import PressableScale from '~/common/components/PressableScale';
 import NewsfeedStack from '~/navigation/NewsfeedStack';
 import MoreStack from '~/navigation/MoreStack';
-import { IS_IOS, IS_TENANT } from '~/config/Config';
+import { IS_IOS } from '~/config/Config';
 import Animated, {
   useAnimatedStyle,
   withSpring,
@@ -23,7 +23,6 @@ import Animated, {
 import NotificationsStack from '../navigation/NotificationsStack';
 import { IconMapNameType } from '~/common/ui/icons/map';
 import withModalProvider from '~/navigation/withModalProvide';
-import { useFeature } from 'ExperimentsProvider';
 import { useUnreadMessages } from '~/modules/chat/hooks/useUnreadMessages';
 import { useIncrementUnreadOnNewMessage } from '~/modules/chat/hooks/useIncrementUnreadOnNewMessage';
 import { useCustomNavigationTabs } from '~/modules/navigation/service/custom-navigation.service';
@@ -166,7 +165,6 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
  */
 const Tabs = observer(function () {
   const theme = ThemedStyles.style;
-  const chatFF = useFeature('epic-358-chat-mob');
 
   const menuConf = useCustomNavigationTabs();
   const navMap = menuConf?.reduce((acc, item) => {
@@ -230,25 +228,11 @@ const Tabs = observer(function () {
           getComponent={() => require('~/navigation/DiscoveryStack').default}
           options={discoveryOptions}
         />
-        {chatFF ? (
-          <Tab.Screen
-            name="ChatListStack"
-            getComponent={() => require('~/modules/chat').ChatsListStack}
-            options={discoveryOptions}
-          />
-        ) : (
-          !IS_TENANT && (
-            <Tab.Screen
-              name="MindsPlus"
-              getComponent={() =>
-                require('~/discovery/v2/PlusDiscoveryScreen').default
-              }
-              options={{ tabBarTestID: 'Tabs:MindsPlus' }}
-              initialParams={{ backEnable: false }}
-            />
-          )
-        )}
-
+        <Tab.Screen
+          name="ChatListStack"
+          getComponent={() => require('~/modules/chat').ChatsListStack}
+          options={discoveryOptions}
+        />
         <Tab.Screen
           name="Notifications"
           component={NotificationsStack}

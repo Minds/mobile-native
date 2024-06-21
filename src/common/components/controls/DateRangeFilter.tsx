@@ -24,7 +24,7 @@ export default function DateRangeFilter(props: PropsType) {
     <>
       <RadioButton
         selected={!filtered}
-        title={i18n.t('discovery.all')}
+        title={i18n.t('discovery.filters.all')}
         onPress={props.clear}
       />
       <DateRangePicker {...rest} inputComponent={Component} />

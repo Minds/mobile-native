@@ -24,7 +24,7 @@ const tabs: { id: DiscoveryV2SearchStoreAlgorithm; title: string }[] = [
   { id: 'top', title: 'Top' },
   { id: 'latest', title: 'Latest' },
   { id: 'channels', title: i18n.t('discovery.channels') },
-  { id: 'groups', title: i18n.t('discovery.groups') },
+  { id: 'groups', title: i18n.t('discovery.filters.groups') },
 ];
 
 export const DiscoverySearchHeader = observer(() => {

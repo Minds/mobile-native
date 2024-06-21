@@ -5,6 +5,7 @@ import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
 import i18n from '../../../common/services/i18n.service';
 import sessionService from '../../../common/services/session.service';
 import GroupModel from '~/groups/GroupModel';
+import { TENANT } from '~/config/Config';
 
 export default class NotificationModel extends AbstractModel {
   created_timestamp!: number;
@@ -135,6 +136,7 @@ export default class NotificationModel extends AbstractModel {
     }
     return i18n.t(`notification.verbs.${type}`, {
       amount: this.data?.tokens_formatted ?? this.data?.amount_usd,
+      TENANT,
     });
   }
 
