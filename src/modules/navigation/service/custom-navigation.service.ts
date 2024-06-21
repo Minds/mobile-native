@@ -5,10 +5,8 @@ import {
   GetNavigationItemsDocument,
   GetNavigationItemsQuery,
   GetNavigationItemsQueryVariables,
-  NavigationItemTypeEnum,
 } from '~/graphql/api';
 import { filterNavigationItems } from './helpers';
-import { useIsFeatureOn } from 'ExperimentsProvider';
 
 const tabsIds = ['newsfeed', 'explore', 'chat'];
 
@@ -63,14 +61,7 @@ export async function fetchCustomNavigation() {
  * Returns the custom navigation items
  */
 export const useCustomNavigation = () => {
-  const feature = useIsFeatureOn('mobile-custom-nav-links');
-
-  const result = getCustomNavigation();
-  return result
-    ? !feature
-      ? result.filter(item => item.type !== NavigationItemTypeEnum.CustomLink)
-      : result
-    : result;
+  return getCustomNavigation();
 };
 
 /**
