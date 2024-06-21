@@ -5,6 +5,7 @@ import { StyleSheet } from 'react-native';
 import type UserModel from '../../channel/UserModel';
 import { ColorsNameType } from '../../styles/Colors';
 import MText from './MText';
+import { IS_TENANT } from '~/config/Config';
 
 type IconName = React.ComponentProps<typeof Icon>['name'];
 
@@ -23,7 +24,8 @@ const badges: Array<badge> = [
     shoudlShow: (channel: UserModel, activeBadges: Array<string>) =>
       activeBadges.includes('verified') &&
       channel.verified &&
-      !channel.is_admin,
+      !channel.is_admin &&
+      !IS_TENANT,
   },
   {
     badge: 'Plus',
@@ -51,7 +53,7 @@ const badges: Array<badge> = [
     icon: 'flight-takeoff',
     color: 'IconActive',
     shoudlShow: (channel: UserModel, activeBadges: Array<string>) =>
-      activeBadges.includes('founder') && channel.founder,
+      activeBadges.includes('founder') && channel.founder && !IS_TENANT,
   },
   {
     badge: 'Boosted OnChain in the last 7 days',
