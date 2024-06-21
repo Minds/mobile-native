@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,16 +12,22 @@ import {
 } from '~/common/components/bottom-sheet';
 import {
   ChatRoomInviteRequestActionEnum,
+  ChatRoomTypeEnum,
   useReplyToRoomInviteRequestMutation,
 } from '~/graphql/api';
 import { showNotification } from 'AppMessages';
 import i18nService from '~/common/services/i18n.service';
 import logService from '~/common/services/log.service';
-import { ChatRoomProvider } from '../contexts/ChatRoomContext';
+import {
+  ChatRoomProvider,
+  useChatRoomContext,
+} from '../contexts/ChatRoomContext';
 import { useRefreshRoomsIds } from '../hooks/useRefreshRoomsIds';
 import { useRefetchUnreadMessages } from '../hooks/useUnreadMessages';
 import { useChatroomViewAnalytic } from '../hooks/useChatroomViewAnalytic';
 import analyticsService from '~/common/services/analytics.service';
+import ChatEditName from '../components/ChatEditName';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 /**
  * Chat conversation screen
@@ -53,7 +59,6 @@ export default function ChatScreen({ navigation, route }) {
       </ChatRoomProvider>
       {showRequest && (
         <RequestActionSheet
-          name="someone"
           roomGuid={roomGuid}
           onAccept={() => setAccepted(true)}
         />
@@ -65,22 +70,40 @@ export default function ChatScreen({ navigation, route }) {
 const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
   // track chat room view
   useChatroomViewAnalytic();
+  const query = useChatRoomContext();
+  const showEdit =
+    query.data?.chatRoom.node.roomType === ChatRoomTypeEnum.MultiUser &&
+    query.data?.chatRoom.node.isUserRoomOwner;
+
   return (
     <>
       <ChatHeader
         members={members}
         extra={
-          !isRequest ? (
-            <TouchableOpacity
-              onPress={() => {
-                analyticsService.trackClick(
-                  'data-minds-chat-room-settings-button',
-                );
-                navigation.navigate('ChatDetails', { roomGuid });
-              }}>
-              <Icon name="info-circle" size={20} />
-            </TouchableOpacity>
-          ) : null
+          <View
+            style={[
+              ThemedStyles.style.rowJustifyEnd,
+              ThemedStyles.style.gap2x,
+            ]}>
+            {showEdit && query.data && (
+              <ChatEditName
+                roomGuid={roomGuid}
+                currentName={query.data.chatRoom.node.name}
+                children={<Icon name="pencil" size={20} />}
+              />
+            )}
+            {!isRequest ? (
+              <TouchableOpacity
+                onPress={() => {
+                  analyticsService.trackClick(
+                    'data-minds-chat-room-settings-button',
+                  );
+                  navigation.navigate('ChatDetails', { roomGuid });
+                }}>
+                <Icon name="info-circle" size={20} />
+              </TouchableOpacity>
+            ) : null}
+          </View>
         }
       />
 
@@ -90,11 +113,9 @@ const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
 };
 
 const RequestActionSheet = ({
-  name,
   roomGuid,
   onAccept,
 }: {
-  name: string;
   roomGuid: string;
   onAccept: () => void;
 }) => {

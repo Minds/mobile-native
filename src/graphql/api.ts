@@ -4122,6 +4122,16 @@ export type SetReadReceiptMutation = {
   };
 };
 
+export type UpdateChatRoomNameMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  roomName: Scalars['String']['input'];
+}>;
+
+export type UpdateChatRoomNameMutation = {
+  __typename?: 'Mutation';
+  updateChatRoomName: boolean;
+};
+
 export type UpdateChatRoomNotificationSettingsMutationVariables = Exact<{
   roomGuid: Scalars['String']['input'];
   notificationStatus: ChatRoomNotificationStatusEnum;
@@ -7691,6 +7701,45 @@ useSetReadReceiptMutation.fetcher = (
 ) =>
   gqlFetcher<SetReadReceiptMutation, SetReadReceiptMutationVariables>(
     SetReadReceiptDocument,
+    variables,
+    options,
+  );
+export const UpdateChatRoomNameDocument = `
+    mutation UpdateChatRoomName($roomGuid: String!, $roomName: String!) {
+  updateChatRoomName(roomGuid: $roomGuid, roomName: $roomName)
+}
+    `;
+export const useUpdateChatRoomNameMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    UpdateChatRoomNameMutation,
+    TError,
+    UpdateChatRoomNameMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    UpdateChatRoomNameMutation,
+    TError,
+    UpdateChatRoomNameMutationVariables,
+    TContext
+  >(
+    ['UpdateChatRoomName'],
+    (variables?: UpdateChatRoomNameMutationVariables) =>
+      gqlFetcher<
+        UpdateChatRoomNameMutation,
+        UpdateChatRoomNameMutationVariables
+      >(UpdateChatRoomNameDocument, variables)(),
+    options,
+  );
+useUpdateChatRoomNameMutation.fetcher = (
+  variables: UpdateChatRoomNameMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<UpdateChatRoomNameMutation, UpdateChatRoomNameMutationVariables>(
+    UpdateChatRoomNameDocument,
     variables,
     options,
   );

@@ -117,7 +117,6 @@ const DevToolsScreen = () => {
               )}
               <FloatingInput
                 ref={inputRef}
-                onSubmit={setApiURLCallback}
                 autoCapitalize="none"
                 keyboardType="url"
                 onCancel={() => setApi(CUSTOM_API_URL)}

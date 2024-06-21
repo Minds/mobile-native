@@ -196,7 +196,6 @@ const DiscoveryTagsManager = (props: Props, ref) => {
       </BottomSheetModal>
       <FloatingInput
         ref={inputRef}
-        onSubmit={onCreate}
         autoCapitalize="none"
         onSubmitEditing={onCreate}
         value={store.inputValue}
@@ -205,6 +204,7 @@ const DiscoveryTagsManager = (props: Props, ref) => {
           name="add-circle-outline"
           size={22}
           style={theme.colorSecondaryText}
+          onPress={onCreate}
         />
       </FloatingInput>
     </>

@@ -118,6 +118,7 @@ const SocialLinks = observer(({ store }: PropsType) => {
       </B1>
       <FloatingInput
         ref={ref}
+        title="Add Social Link"
         defaultValue="https://"
         hideKeyboard
         onSubmitEditing={event => {
