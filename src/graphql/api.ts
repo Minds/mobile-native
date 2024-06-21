@@ -188,6 +188,7 @@ export type AnalyticsTableRowUserNode = AnalyticsTableRowNodeInterface &
 export enum ApiScopeEnum {
   All = 'ALL',
   SiteMembershipWrite = 'SITE_MEMBERSHIP_WRITE',
+  TenantCreateTrial = 'TENANT_CREATE_TRIAL',
 }
 
 export type AppReadyMobileConfig = {
@@ -1308,6 +1309,7 @@ export type MutationUpsertCustomNavigationItemArgs = {
   type: NavigationItemTypeEnum;
   url?: InputMaybe<Scalars['String']['input']>;
   visible: Scalars['Boolean']['input'];
+  visibleMobile: Scalars['Boolean']['input'];
 };
 
 export type NavigationItem = {
@@ -1321,6 +1323,7 @@ export type NavigationItem = {
   type: NavigationItemTypeEnum;
   url?: Maybe<Scalars['String']['output']>;
   visible: Scalars['Boolean']['output'];
+  visibleMobile: Scalars['Boolean']['output'];
 };
 
 export enum NavigationItemActionEnum {
@@ -4276,6 +4279,7 @@ export type GetNavigationItemsQuery = {
     order: number;
     url?: string | null;
     visible: boolean;
+    visibleMobile: boolean;
     path?: string | null;
   }>;
 };
@@ -8146,6 +8150,7 @@ export const GetNavigationItemsDocument = `
     order
     url
     visible
+    visibleMobile
     path
   }
 }
