@@ -10,3 +10,8 @@ export type ChatMessage = GetChatMessagesQuery['chatMessages']['edges'][0];
 export type ChatMember = GetChatRoomQuery['chatRoom']['members']['edges'][0];
 
 export type ChatRoom = GetChatRoomsListQuery['chatRoomList']['edges'][0];
+
+export enum ChatRoomEventType {
+  NewMessage = 'NEW_MESSAGE',
+  MessageDeleted = 'MESSAGE_DELETED',
+}
