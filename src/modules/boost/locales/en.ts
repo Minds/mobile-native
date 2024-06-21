@@ -22,6 +22,8 @@ const en = {
     [BoostButtonText.SUBSCRIBE_TO_MY_CHANNEL]: 'Subscribe to my channel',
     [BoostButtonText.GET_CONNECTED]: 'Get connected',
     [BoostButtonText.STAY_IN_THE_LOOP]: 'Stay in the loop',
+    [BoostButtonText.SHOP_NOW]: 'Shop Now',
+    [BoostButtonText.BUY_NOW]: 'Buy Now',
   },
 };
 

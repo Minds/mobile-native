@@ -41,13 +41,21 @@ function BoostLinkScreen({ navigation }: BoostLinkScreenProps) {
       id: BoostButtonText.TRY_FOR_FREE,
       title: t(`goalText.${BoostButtonText.TRY_FOR_FREE}`),
     },
+    {
+      id: BoostButtonText.SHOP_NOW,
+      title: t(`goalText.${BoostButtonText.SHOP_NOW}`),
+    },
+    {
+      id: BoostButtonText.BUY_NOW,
+      title: t(`goalText.${BoostButtonText.BUY_NOW}`),
+    },
   ];
 
   return (
     <Screen safe onlyTopEdge>
       <BoostComposerHeader />
       <FitScrollView>
-        <Column align="centerBoth" vertical="XL2">
+        <Column align="centerBoth" bottom="XL">
           <H2>{t('Add a link and button')}</H2>
           <B1 color="secondary">
             {t('Input your link and choose your button text.')}

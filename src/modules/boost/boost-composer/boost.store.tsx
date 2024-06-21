@@ -198,6 +198,8 @@ export enum BoostButtonText {
   GET_STARTED = 5,
   SIGN_UP = 6,
   TRY_FOR_FREE = 7,
+  SHOP_NOW = 8,
+  BUY_NOW = 9,
 }
 export type IPaymentType = 'cash' | 'offchain_tokens' | 'onchain_tokens';
 type IBoostConfig = {
