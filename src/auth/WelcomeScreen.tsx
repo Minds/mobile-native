@@ -160,7 +160,8 @@ const styles = ThemedStyles.create({
   image: {
     aspectRatio: 1.5,
     width: '65%',
-    marginTop: '25%',
+    marginTop: '10%',
+    maxHeight: '60%',
     alignSelf: 'center',
   },
   devToggleStyle: [
