@@ -46,7 +46,6 @@ import FriendlyCaptchaProvider, {
   setFriendlyCaptchaReference,
 } from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { Orientation, QueryProvider } from '~/services';
-import { UIProvider } from '@minds/ui';
 import { ConfigProvider } from '~/modules/livepeer';
 
 import { FontsLoader } from 'FontsLoader';
@@ -175,44 +174,39 @@ class App extends Component<Props> {
         <FontsLoader>
           <GestureHandlerRootView style={appContainerStyle}>
             <SafeAreaProvider>
-              <UIProvider
-                defaultTheme={ThemedStyles.theme === 0 ? 'dark' : 'light'}>
-                {sessionService.ready && (
-                  <StoresProvider>
-                    <QueryProvider>
-                      <Provider key="app" {...stores}>
-                        <NavigationContainer
-                          ref={navigationRef}
-                          theme={ThemedStyles.navTheme}
-                          onReady={appInitManager.onNavigatorReady}
-                          onStateChange={NavigationService.onStateChange}>
-                          <AppMessageProvider
-                            key={`message_${ThemedStyles.theme}`}>
-                            <FriendlyCaptchaProvider
-                              ref={setFriendlyCaptchaReference}>
-                              <PortalProvider>
-                                <BottomSheetModalProvider>
-                                  <ErrorBoundary
-                                    message="An error occurred"
-                                    containerStyle={
-                                      ThemedStyles.style.centered
-                                    }>
-                                    <ConfigProvider>
-                                      <NavigationStack
-                                        key={ThemedStyles.theme + i18n.locale}
-                                      />
-                                    </ConfigProvider>
-                                  </ErrorBoundary>
-                                </BottomSheetModalProvider>
-                              </PortalProvider>
-                            </FriendlyCaptchaProvider>
-                          </AppMessageProvider>
-                        </NavigationContainer>
-                      </Provider>
-                    </QueryProvider>
-                  </StoresProvider>
-                )}
-              </UIProvider>
+              {sessionService.ready && (
+                <StoresProvider>
+                  <QueryProvider>
+                    <Provider key="app" {...stores}>
+                      <NavigationContainer
+                        ref={navigationRef}
+                        theme={ThemedStyles.navTheme}
+                        onReady={appInitManager.onNavigatorReady}
+                        onStateChange={NavigationService.onStateChange}>
+                        <AppMessageProvider
+                          key={`message_${ThemedStyles.theme}`}>
+                          <FriendlyCaptchaProvider
+                            ref={setFriendlyCaptchaReference}>
+                            <PortalProvider>
+                              <BottomSheetModalProvider>
+                                <ErrorBoundary
+                                  message="An error occurred"
+                                  containerStyle={ThemedStyles.style.centered}>
+                                  <ConfigProvider>
+                                    <NavigationStack
+                                      key={ThemedStyles.theme + i18n.locale}
+                                    />
+                                  </ConfigProvider>
+                                </ErrorBoundary>
+                              </BottomSheetModalProvider>
+                            </PortalProvider>
+                          </FriendlyCaptchaProvider>
+                        </AppMessageProvider>
+                      </NavigationContainer>
+                    </Provider>
+                  </QueryProvider>
+                </StoresProvider>
+              )}
             </SafeAreaProvider>
           </GestureHandlerRootView>
         </FontsLoader>

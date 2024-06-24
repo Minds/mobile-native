@@ -1,4 +1,3 @@
-import { Icon } from '@minds/ui';
 import { observer } from 'mobx-react';
 import React, { useCallback, useMemo } from 'react';
 import MenuItem from '~/common/components/menus/MenuItem';
@@ -65,7 +64,7 @@ function BoostUpgrade() {
         <MenuItem
           title="Upgrade to Minds Pro"
           subtitle="Get $50 / month or $480 / year in Boost credits"
-          leftIcon={<Icon name="mindsPro" size={24} />}
+          leftIcon="pro"
           onPress={upgradePro}
           primaryColor="Black"
           secondaryColor="black"

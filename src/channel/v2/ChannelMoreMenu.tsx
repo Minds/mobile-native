@@ -1,7 +1,6 @@
 import React, { forwardRef, useCallback } from 'react';
 import type { NativeStackNavigationProp } from 'react-native-screens/native-stack';
 import { useNavigation } from '@react-navigation/native';
-import { Icon } from '@minds/ui';
 
 import type UserModel from '../UserModel';
 import i18n from '~/common/services/i18n.service';
@@ -23,7 +22,6 @@ import { Platform } from 'react-native';
 import { useStores } from '~/common/hooks/use-stores';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
 import openUrlService from '../../common/services/open-url.service';
-import ThemedStyles from '../../styles/ThemedStyles';
 import PermissionsService from '~/common/services/permissions.service';
 
 function dismiss(ref) {
@@ -55,13 +53,8 @@ const getOptions = (
   const externalData = channel.getExternalData();
   if (externalData && channel.source === 'activitypub') {
     options.push({
-      icon: (
-        <Icon
-          size={24}
-          name="captivePortal"
-          color={ThemedStyles.getColor('Icon')}
-        />
-      ),
+      iconName: 'language',
+      iconType: 'material',
       title: i18n.t('viewOnExternal', { external: externalData.source }),
       onPress: () => {
         openUrlService.openLinkInInAppBrowser(

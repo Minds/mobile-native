@@ -3,7 +3,6 @@ import MIcon from '@expo/vector-icons/MaterialIcons';
 
 import i18n from '~/common/services/i18n.service';
 import sessionService from '~/common/services/session.service';
-import { Icon as IconV2 } from '@minds/ui';
 import {
   AFFILIATES_ENABLED,
   BOOSTS_ENABLED,
@@ -101,12 +100,7 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
       !(hasPro && hasPlus)
         ? {
             name: i18n.t('moreScreen.upgrade'),
-            icon: (
-              <IconV2
-                name="verified"
-                color={ThemedStyles.getColor('PrimaryText')}
-              />
-            ),
+            icon: 'verified',
             testID: 'Drawer:upgrade',
             onPress: () => {
               navigation.navigate('UpgradeScreen', {

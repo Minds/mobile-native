@@ -50,9 +50,7 @@
       "utils": ["src/utils"],
       "utils/*": ["src/utils/*"],
       "@assets": ["./assets"],
-      "@assets/*": ["./assets/*"],
-      "@minds/ui": ["packages/design-system/src"],
-      "@minds/ui/*": ["packages/design-system/src/*"]
+      "@assets/*": ["./assets/*"]
     },
     "types": ["jest"]
   },

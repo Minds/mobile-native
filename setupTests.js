@@ -123,9 +123,6 @@ jest.mock('react-native-exception-handler');
 import ri18n from 'utils/locales';
 ri18n.init();
 
-// TAMAGUI
-process.env.TAMAGUI_TARGET = 'native';
-
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
 // expo vector icons

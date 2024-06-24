@@ -6,7 +6,6 @@ import {
   withSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
-import { Icon } from '@minds/ui';
 
 import { IconButtonNext } from '~ui/icons';
 import {
@@ -36,7 +35,6 @@ import logService from '~/common/services/log.service';
 import { isApiError } from '~/common/services/ApiErrors';
 import { GroupContext } from '~/modules/groups/contexts/GroupContext';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
-import ThemedStyles from '../../styles/ThemedStyles';
 import openUrlService from '../../common/services/open-url.service';
 import PermissionsService from '~/common/services/permissions.service';
 
@@ -134,13 +132,8 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     if (entity.canonical_url && externalData) {
       options.push({
         title: i18n.t('viewOnExternal', { external: externalData.source }),
-        icon: (
-          <Icon
-            size={24}
-            name="captivePortal"
-            color={ThemedStyles.getColor('Icon')}
-          />
-        ),
+        iconName: 'language',
+        iconType: 'material',
         onPress: () =>
           openUrlService.openLinkInInAppBrowser(entity.canonical_url),
       });
