@@ -872,6 +872,7 @@
       "store": "Store",
       "terms": "Terms of Service",
       "content": "Content Policy",
+      "privacy": "Privacy Policy",
       "dmca": "DMCA"
     },
     "support": {
@@ -879,7 +880,8 @@
       "contact": "Contact",
       "community": "Community",
       "languages": "Languages",
-      "status": "Status"
+      "status": "Status",
+      "help": "Help"
     },
     "business": {
       "title": "Business",
