@@ -1,5 +1,6 @@
 const { request } = require('graphql-request');
 const nodeFetch = require('node-fetch');
+const md5 = require('md5');
 const fse = require('fs-extra');
 const fs = require('fs');
 const { generateToken } = require('./helpers/jwt');
@@ -72,7 +73,7 @@ async function setupTenant(id) {
             { tenantId: parseInt(id, 10) },
             {
               cookie: 'staging=1;',
-              Token: generateToken({ TENANT_ID: process.env.TENANT_ID }),
+              Token: generateToken({ TENANT_ID: id }),
             },
           )
         ).appReadyMobileConfig;
@@ -88,7 +89,7 @@ async function setupTenant(id) {
       await downloadAssets(data.assets);
 
       const customNav = await request(
-        data.API_URL + '/api/graphql',
+        `https://${md5(tenantId)}.networks.minds.com/api/graphql`,
         customNavigationQuery,
         {},
       );
