@@ -53,7 +53,6 @@ export async function fetchCustomNavigation() {
     GetNavigationItemsQuery,
     GetNavigationItemsQueryVariables
   >(GetNavigationItemsDocument)();
-
   return filterNavigationItems(config.customNavigationItems);
 }
 
@@ -72,7 +71,7 @@ export const useCustomNavigationMenu = () => {
 
   // hide main tab items
   return nav
-    ?.filter(item => !tabsIds.includes(item.id))
+    ?.filter(item => !tabsIds.includes(item.id) && item.visibleMobile)
     .sort((a, b) => (a.order > b.order ? 1 : -1))
     .map(item => ({ ...item, iconId: item.iconId.replace('_', '-') }));
 };
