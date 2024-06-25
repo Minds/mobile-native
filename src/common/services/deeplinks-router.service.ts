@@ -213,8 +213,6 @@ class DeeplinksRouter {
   }
 }
 
-type Route = NonNullable<ReturnType<DeeplinksRouter['getUrlRoute']>>;
-
 export default new DeeplinksRouter();
 
 // const forceUpdate = async (file: string) => {
