@@ -49,6 +49,9 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
     resending: false,
     setCode(code: string) {
       this.code = code;
+      if (!this.recovery && this.code.length === 6) {
+        this.submit();
+      }
     },
     toggleRecovery() {
       this.recovery = !this.recovery;
@@ -101,7 +104,7 @@ const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
     },
     submit() {
       this.error = false;
-      if (!this.code) {
+      if (!this.code || (!this.recovery && this.code.length < 6)) {
         this.error = true;
         return;
       }
