@@ -148,7 +148,7 @@ class App extends Component<Props> {
     if (event.url) {
       // the var can be cleaned so we check again
       setTimeout(() => {
-        deeplinkService.navigate(event.url);
+        deeplinkService.navigate(event.url, true);
         event.url = '';
       }, 100);
     }

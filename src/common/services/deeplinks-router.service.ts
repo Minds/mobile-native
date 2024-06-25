@@ -80,7 +80,7 @@ class DeeplinksRouter {
    * navigate to route
    * @param {string} url
    */
-  navigate(url) {
+  navigate(url, trackAnalytics = false) {
     if (IS_TENANT_PREVIEW && url && PreviewUpdateService.isPreviewURL(url)) {
       const channel = PreviewUpdateService.getPreviewChannel(url);
       if (!channel) {
@@ -96,8 +96,8 @@ class DeeplinksRouter {
       return;
     }
 
-    // this will track not only deep links, but navigation initiated from push notifs
-    analyticsService.trackDeepLinkReceivedEvent(url);
+    // track deeplink event (only for external deep links)
+    trackAnalytics && analyticsService.trackDeepLinkReceivedEvent(url);
 
     if (cleanURL.startsWith('forgot-password')) {
       this.navToPasswordReset(url);
@@ -133,8 +133,6 @@ class DeeplinksRouter {
     }
 
     if (route && route.screen !== 'Redirect') {
-      this.handleUtmParams(url, route);
-
       const screens = route.screen.split('/');
       if (screens.length === 1) {
         navigationService[route.type](route.screen, route.params);
@@ -160,15 +158,6 @@ class DeeplinksRouter {
       return true;
     }
     return !!route;
-  }
-
-  /**
-   * Handles the UTM campaign forwarding the request to the backend
-   */
-  private handleUtmParams(url: string, route: Route) {
-    if (route.params?.utm_campaign) {
-      apiService.get(url);
-    }
   }
 
   nestedScreen(data, params) {

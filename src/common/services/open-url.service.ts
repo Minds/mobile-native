@@ -1,6 +1,6 @@
 import { APP_URI, MINDS_PRO } from '../../config/Config';
 import { Alert, Linking } from 'react-native';
-import deeplinksRouterService from './deeplinks-router.service';
+import deeplinkService from './deeplinks-router.service';
 import { InAppBrowser } from 'react-native-inappbrowser-reborn';
 import ThemedStyles from '../../styles/ThemedStyles';
 import { storages } from './storage/storages.service';
@@ -123,7 +123,7 @@ export class OpenURLService {
     }
 
     if (url.startsWith(APP_URI) && !navigatingToPro) {
-      const routed = deeplinksRouterService.navigate(url);
+      const routed = deeplinkService.navigate(url);
       if (routed) return;
     }
 

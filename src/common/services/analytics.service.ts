@@ -205,13 +205,18 @@ export class AnalyticsService {
     });
   }
 
+  // track push notification opened
+  trackPushNotificationOpenedEvent(url: string): void {
+    this.posthog.capture('push_notification_opened', { $current_url: url });
+  }
+
   /**
-   * Tracks a deep link received event
+   * Tracks a deep link received event (triggered by a push notification or a deep link)
    * @param url
    */
   trackDeepLinkReceivedEvent(url: string): void {
-    this.posthog.capture('deeplink', {
-      deeplink_url: url,
+    this.posthog.capture('deeplink_opened', {
+      $current_url: url,
     });
   }
 
