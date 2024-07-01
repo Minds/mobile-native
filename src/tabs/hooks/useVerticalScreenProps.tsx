@@ -94,6 +94,11 @@ export function useVerticalScreenProps(
   const customNav: any = customNavigation.reduce((acc, item) => {
     if (item.type === NavigationItemTypeEnum.Core) {
       const componentName = CoreNavMap[item.id];
+
+      // if there is no component name or the component is not defined in screensProps, skip
+      if (!componentName || !screensProps[componentName]) {
+        return acc;
+      }
       acc[componentName] = screensProps[componentName];
       if (item.name) {
         if (acc[componentName].options) {
@@ -130,6 +135,7 @@ export function useVerticalScreenProps(
 const CoreNavMap = {
   newsfeed: 'Newsfeed',
   groups: 'Groups',
+  boost: 'Boosts',
   explore: 'Explore',
   chat: 'ChatListStack',
   notifications: 'Notifications',
