@@ -970,6 +970,10 @@ export type MultiTenantDomainDnsRecord = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /** Add members to a chat room. */
+  addMembersToChatRoom: Scalars['Boolean']['output'];
+  /** Cancel all Boosts on a given entity. */
+  adminCancelBoosts: Scalars['Boolean']['output'];
   archiveSiteMembership: Scalars['Boolean']['output'];
   /** Assigns a user to a role */
   assignUserToRole: Role;
@@ -1050,6 +1054,15 @@ export type Mutation = {
   updateSiteMembership: SiteMembership;
   /** Add or update a navigation item */
   upsertCustomNavigationItem: NavigationItem;
+};
+
+export type MutationAddMembersToChatRoomArgs = {
+  memberGuids: Array<Scalars['String']['input']>;
+  roomGuid: Scalars['String']['input'];
+};
+
+export type MutationAdminCancelBoostsArgs = {
+  entityGuid: Scalars['String']['input'];
 };
 
 export type MutationArchiveSiteMembershipArgs = {
@@ -1509,6 +1522,8 @@ export type Query = {
   chatUnreadMessagesCount: Scalars['Int']['output'];
   checkoutLink: Scalars['String']['output'];
   checkoutPage: CheckoutPage;
+  /** Returns key value configs */
+  config?: Maybe<Scalars['String']['output']>;
   /** Returns the navigation items that are configured for a site */
   customNavigationItems: Array<NavigationItem>;
   customPage: CustomPage;
@@ -1654,6 +1669,10 @@ export type QueryCheckoutPageArgs = {
   page: CheckoutPageKeyEnum;
   planId: Scalars['String']['input'];
   timePeriod: CheckoutTimePeriodEnum;
+};
+
+export type QueryConfigArgs = {
+  key: Scalars['String']['input'];
 };
 
 export type QueryCustomPageArgs = {
@@ -3677,6 +3696,16 @@ export type GetBoostFeedQuery = {
       startCursor?: string | null;
     };
   };
+};
+
+export type AddMembersToChatRoomMutationVariables = Exact<{
+  roomGuid: Scalars['String']['input'];
+  memberGuids: Array<Scalars['String']['input']> | Scalars['String']['input'];
+}>;
+
+export type AddMembersToChatRoomMutation = {
+  __typename?: 'Mutation';
+  addMembersToChatRoom: boolean;
 };
 
 export type CreateChatMessageMutationVariables = Exact<{
@@ -6628,6 +6657,44 @@ useGetBoostFeedQuery.fetcher = (
     variables,
     options,
   );
+export const AddMembersToChatRoomDocument = `
+    mutation AddMembersToChatRoom($roomGuid: String!, $memberGuids: [String!]!) {
+  addMembersToChatRoom(roomGuid: $roomGuid, memberGuids: $memberGuids)
+}
+    `;
+export const useAddMembersToChatRoomMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    AddMembersToChatRoomMutation,
+    TError,
+    AddMembersToChatRoomMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    AddMembersToChatRoomMutation,
+    TError,
+    AddMembersToChatRoomMutationVariables,
+    TContext
+  >(
+    ['AddMembersToChatRoom'],
+    (variables?: AddMembersToChatRoomMutationVariables) =>
+      gqlFetcher<
+        AddMembersToChatRoomMutation,
+        AddMembersToChatRoomMutationVariables
+      >(AddMembersToChatRoomDocument, variables)(),
+    options,
+  );
+useAddMembersToChatRoomMutation.fetcher = (
+  variables: AddMembersToChatRoomMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    AddMembersToChatRoomMutation,
+    AddMembersToChatRoomMutationVariables
+  >(AddMembersToChatRoomDocument, variables, options);
 export const CreateChatMessageDocument = `
     mutation CreateChatMessage($plainText: String!, $roomGuid: String!) {
   createChatMessage(plainText: $plainText, roomGuid: $roomGuid) {

@@ -31,6 +31,8 @@ import ThemedStyles from '~/styles/ThemedStyles';
 
 /**
  * Chat conversation screen
+ *
+ * This screen also handles chat requests
  */
 export default function ChatScreen({ navigation, route }) {
   const { roomGuid, members, isRequest } = route.params || {};
@@ -71,7 +73,8 @@ const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
   // track chat room view
   useChatroomViewAnalytic();
   const query = useChatRoomContext();
-  const showEdit =
+
+  const isOwnerAndMultiUser =
     query.data?.chatRoom.node.roomType === ChatRoomTypeEnum.MultiUser &&
     query.data?.chatRoom.node.isUserRoomOwner;
 
@@ -83,14 +86,30 @@ const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
           <View
             style={[
               ThemedStyles.style.rowJustifyEnd,
-              ThemedStyles.style.gap2x,
+              ThemedStyles.style.gap3x,
             ]}>
-            {showEdit && query.data && (
+            {isOwnerAndMultiUser && query.data && (
               <ChatEditName
                 roomGuid={roomGuid}
                 currentName={query.data.chatRoom.node.name}
                 children={<Icon name="pencil" size={20} />}
               />
+            )}
+            {isOwnerAndMultiUser && (
+              <TouchableOpacity
+                onPress={() => {
+                  analyticsService.trackClick(
+                    'data-minds-chat-room-settings-button',
+                  );
+                  navigation.navigate('ChatAddUsers', {
+                    roomGuid,
+                    ignore: members
+                      ? members?.map(m => m.node.guid)
+                      : undefined,
+                  });
+                }}>
+                <Icon name="plus" size={20} />
+              </TouchableOpacity>
             )}
             {!isRequest ? (
               <TouchableOpacity
@@ -129,7 +148,6 @@ const RequestActionSheet = ({
   });
   const navigation = useNavigation();
 
-  //
   const accept = async () => {
     analyticsService.trackClick('data-minds-chat-request-accept-button');
     await replyMutation.mutate({

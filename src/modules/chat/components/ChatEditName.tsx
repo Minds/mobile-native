@@ -3,13 +3,11 @@ import { showNotification } from 'AppMessages';
 import { TouchableOpacity } from 'react-native';
 
 import FloatingInput from '~/common/components/FloatingInput';
-import {
-  useGetChatRoomQuery,
-  useUpdateChatRoomNameMutation,
-} from '~/graphql/api';
+import { useUpdateChatRoomNameMutation } from '~/graphql/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '~/common/ui';
 import logService from '~/common/services/log.service';
+import { getChatRoomInfoKey } from '../hooks/useChatRoomInfoQuery';
 
 type PropsType = {
   roomGuid: string;
@@ -33,11 +31,7 @@ export default function ChatEditName({
       showNotification('Chat name updated');
 
       // we invalidate the cache
-      const key = useGetChatRoomQuery.getKey({
-        roomGuid,
-        firstMembers: 3,
-        afterMembers: 0,
-      });
+      const key = getChatRoomInfoKey(roomGuid);
       queryClient.invalidateQueries(key);
     },
     onError: error => {
