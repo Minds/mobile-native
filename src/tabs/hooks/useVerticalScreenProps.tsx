@@ -97,6 +97,7 @@ export function useVerticalScreenProps(
 
       // if there is no component name or the component is not defined in screensProps, skip
       if (!componentName || !screensProps[componentName]) {
+        console.warn('Missing Core Navigation Item map for:', item.id);
         return acc;
       }
       acc[componentName] = screensProps[componentName];
