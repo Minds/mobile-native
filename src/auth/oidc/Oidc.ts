@@ -1,3 +1,4 @@
+import { IS_TENANT } from '~/config/Config';
 import { useFetchOidcProvidersQuery } from '~/graphql/api';
 
 export const useLoginWeb = () => {
@@ -5,6 +6,14 @@ export const useLoginWeb = () => {
     undefined,
     { retry: 15, retryDelay: 2000 },
   );
+
+  // we ignore for minds app
+  if (!IS_TENANT) {
+    return {
+      isLoading: false,
+      refetch: () => {},
+    };
+  }
 
   if (isLoading) {
     return {
