@@ -4,6 +4,8 @@ import { ModalFullScreen } from '~/common/ui';
 import session from '../../common/services/session.service';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import mindsConfigService from '~/common/services/minds-config.service';
+import { APP_URI } from '~/config/Config';
+import openUrlService from '~/common/services/open-url.service';
 
 type PropsType = {
   route: any;
@@ -36,6 +38,13 @@ const OidcScreen = ({ route }: PropsType) => {
         <WebView
           source={{ uri: loginUrl }}
           sharedCookiesEnabled
+          onShouldStartLoadWithRequest={request => {
+            if (request.url.startsWith(`${APP_URI}pages/`)) {
+              openUrlService.open(request.url);
+              return false;
+            }
+            return true;
+          }}
           onLoad={async ({ nativeEvent: { url } }) => {
             const { hostname: baseHostName } = new URL(loginUrl);
             const { hostname } = new URL(url);
