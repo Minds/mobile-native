@@ -21,7 +21,7 @@ import UsdTab from './currency-tabs/cash/UsdTab';
 import i18n from '../../common/services/i18n.service';
 import { useStores } from '../../common/hooks/use-stores';
 import { createTokensTabStore } from './currency-tabs/tokens/createTokensTabStore';
-import TokenPrice from './TokenPrice';
+// import TokenPrice from './TokenPrice';
 import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
 import type { UsdOptions, TokensOptions } from '../v2/WalletTypes';
 import { ScreenHeader, Screen } from '~ui/screen';
@@ -29,7 +29,7 @@ import { IS_IOS, IS_IPAD } from '~/config/Config';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 import CreditsTab from '~/modules/gif-card/components/CreditsTab';
 import { useGetGiftBalance } from '~/modules/gif-card/components/GiftCardList';
-import { IS_FROM_STORE } from '~/config/Config';
+// import { IS_FROM_STORE } from '~/config/Config';
 
 export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
 export type WalletScreenNavigationProp = CompositeNavigationProp<
@@ -139,7 +139,7 @@ const WalletScreen = observer((props: PropsType) => {
       <ScreenHeader
         back={!IS_IPAD}
         title={i18n.t('wallet.wallet')}
-        extra={IS_FROM_STORE ? null : <TokenPrice />}
+        // extra={IS_FROM_STORE ? null : <TokenPrice />} disable token price #5560
       />
       <TopbarTabbar
         titleStyle={theme.fontXL}
