@@ -14,5 +14,6 @@
   "ADAPTIVE_COLOR": "",
   "THEME": "light",
   "API_URL": "https://www.minds.com/",
-  "EAS_PROJECT_ID": "36866456-8056-40f0-b92e-533525cdbf78"
+  "EAS_PROJECT_ID": "36866456-8056-40f0-b92e-533525cdbf78",
+  "POSTHOG_API_KEY": "phc_GBvowRy7KExnom0MfTPgibtCdP4ZRlRb0szn1fLSCeU"
 }
