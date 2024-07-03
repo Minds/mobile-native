@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { View } from 'react-native';
 import ThemedStyles from '../../styles/ThemedStyles';
@@ -31,6 +31,7 @@ type PropsType = {
 export default observer(function LoginForm(props: PropsType) {
   const localStore = useLocalStore(createLoginStore, { props });
   const passwordRef = useRef<InputContainerImperativeHandle>(null);
+  const usernameRef = useRef<InputContainerImperativeHandle>(null);
 
   const theme = ThemedStyles.style;
 
@@ -48,6 +49,13 @@ export default observer(function LoginForm(props: PropsType) {
     return u;
   }, [props.sessionIndex, props.relogin, localStore.username]);
 
+  // focus on username with when mounted (autofocus breaks the autofill on iOS)
+  useEffect(() => {
+    setTimeout(() => {
+      usernameRef.current?.focus();
+    }, 200);
+  }, []);
+
   const usernameInput = props.relogin ? (
     <View style={styles.container}>
       <Image source={user.getAvatarSource('medium')} style={styles.avatar} />
@@ -60,6 +68,7 @@ export default observer(function LoginForm(props: PropsType) {
     </View>
   ) : (
     <InputContainer
+      ref={usernameRef}
       placeholder={i18n.t('auth.username')}
       onChangeText={localStore.setUsername}
       selectionColor={ThemedStyles.getColor('Link')}
@@ -79,7 +88,7 @@ export default observer(function LoginForm(props: PropsType) {
           ? i18n.t('auth.fieldRequired')
           : undefined
       }
-      autoFocus={true}
+      autoFocus={false} // true breaks the user/password autofill
     />
   );
 
