@@ -71,6 +71,7 @@ const CodeConfirmScreen = ({
             autoFocus
             placeholder={placeholder}
             onChangeText={onChangeText}
+            onEndEditing={onVerify}
             error={error ? error : ''}
             value={value}
           />
