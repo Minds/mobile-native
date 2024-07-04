@@ -205,13 +205,59 @@ export class AnalyticsService {
     });
   }
 
+  // track push notification opened
+  trackPushNotificationOpenedEvent(url: string): void {
+    const UTM_PARAMS = this.getUTMParams(url);
+    const UTM_INITIAL_PARAMS = {};
+
+    Object.keys(UTM_PARAMS).forEach(key => {
+      UTM_INITIAL_PARAMS['initial_' + key] = UTM_PARAMS[key];
+    });
+
+    this.posthog.capture('push_notification_opened', {
+      $current_url: url,
+      $set: UTM_PARAMS,
+      $set_once: UTM_INITIAL_PARAMS,
+      ...UTM_PARAMS,
+    });
+  }
+
   /**
-   * Tracks a deep link received event
+   * Extract utm params from url
+   *
+   * @param url
+   */
+  private getUTMParams(url: string): { [key: string]: string } {
+    const urlParams = new URLSearchParams(new URL(url).search);
+
+    const utmParams = {};
+
+    for (const [key, value] of urlParams) {
+      if (key.startsWith('utm_')) {
+        utmParams[key] = value;
+      }
+    }
+
+    return utmParams;
+  }
+
+  /**
+   * Tracks a deep link received event (triggered by a push notification or a deep link)
    * @param url
    */
   trackDeepLinkReceivedEvent(url: string): void {
-    this.posthog.capture('deeplink', {
-      deeplink_url: url,
+    const UTM_PARAMS = this.getUTMParams(url);
+    const UTM_INITIAL_PARAMS = {};
+
+    Object.keys(UTM_PARAMS).forEach(key => {
+      UTM_INITIAL_PARAMS['initial_' + key] = UTM_PARAMS[key];
+    });
+
+    this.posthog.capture('deeplink_opened', {
+      $current_url: url,
+      $set: UTM_PARAMS,
+      $set_once: UTM_INITIAL_PARAMS,
+      ...UTM_PARAMS,
     });
   }
 

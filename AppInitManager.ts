@@ -197,7 +197,7 @@ export class AppInitManager {
       // handle deep link (if the app is opened by one)
       if (deepLinkUrl) {
         setTimeout(() => {
-          deeplinkService.navigate(deepLinkUrl);
+          deeplinkService.navigate(deepLinkUrl, true);
         }, 300);
       }
 
