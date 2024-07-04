@@ -1,5 +1,4 @@
-//@ts-nocheck
-import * as Sharing from 'expo-sharing';
+import { Share } from 'react-native';
 import { pushBottomSheet } from '../common/components/bottom-sheet';
 
 /**
@@ -28,19 +27,22 @@ class ShareService {
 
     // added a settimeout as a workaround for ios, without it the share dialog is not shown
     setTimeout(async () => {
-      // using a fake bottom sheet to have an easier way to track the visiblity of the share sheet
+      // using a fake bottom sheet to have an easier way to track the visibility of the share sheet
       pushBottomSheet({
         component: ref => {
-          Sharing.shareAsync(url, {
-            dialogTitle: title,
-          })
+          Share.share(
+            { url, message: url },
+            {
+              dialogTitle: title,
+            },
+          )
             .catch(err => console.error(err))
             .finally(() => ref.close());
 
           return null;
         },
       });
-    }, 10);
+    }, 30);
   }
 }
 
