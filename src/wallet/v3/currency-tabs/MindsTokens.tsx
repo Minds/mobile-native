@@ -45,15 +45,15 @@ export const format = (number: number | string, decimals = true) => {
 
 const MindsTokens = ({
   value,
-  mindsPrice,
   currencyType,
-  cashAsPrimary,
+  // cashAsPrimary,
+  // mindsPrice,
   containerStyle,
 }: PropsType) => {
   const isTokens = !currencyType || currencyType === 'tokens';
-  const mindsPriceF = parseFloat(mindsPrice);
+  // const mindsPriceF = parseFloat(mindsPrice);
   const mindsF = parseFloat(value);
-  const cash = isTokens ? mindsPriceF * mindsF : mindsF;
+  // const cash = isTokens ? mindsPriceF * mindsF : mindsF;
 
   const text: any = [];
   const mindsFNumber = number(mindsF, 0, 2);
@@ -83,20 +83,22 @@ const MindsTokens = ({
         tokens
       </B2>,
     );
-    text.push(
-      <B2 key={'token4'} flat color="secondary" font="bold">
-        {' · '}
-      </B2>,
-    );
-    text.push(
-      <B2
-        key={'token5'}
-        flat
-        color={cashAsPrimary ? 'primary' : 'secondary'}
-        font="medium">
-        ${number(cash, 0, 2)}
-      </B2>,
-    );
+
+    // disable token price #5560
+    // text.push(
+    //   <B2 key={'token4'} flat color="secondary" font="bold">
+    //     {' · '}
+    //   </B2>,
+    // );
+    // text.push(
+    //   <B2
+    //     key={'token5'}
+    //     flat
+    //     color={cashAsPrimary ? 'primary' : 'secondary'}
+    //     font="medium">
+    //     ${number(cash, 0, 2)}
+    //   </B2>,
+    // );
   }
   return (
     <Row containerStyle={containerStyle} align="baseline">
