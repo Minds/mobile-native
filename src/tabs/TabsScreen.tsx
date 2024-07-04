@@ -302,7 +302,7 @@ const iconFromRoute: Record<string, IconMapNameType> = {
   Newsfeed: 'home',
   User: 'user',
   ChatListStack: 'chat-solid',
-  Discovery: 'search',
+  Discovery: 'hashtag',
   Performance: 'dev',
   MindsPlus: 'queue',
 };
