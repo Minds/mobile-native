@@ -981,7 +981,8 @@
     "join": "Join Membership",
     "pay": "Pay Custom Tier",
     "alreadyMember": "You are already a member",
-    "monthly": "${{usd}}+ / month"
+    "monthly": "${{usd}}+ / month",
+    "pleaseJoin": "Please join {{membership}} to unlock"
   },
   "wallet": {
     "wallet": "Wallet",

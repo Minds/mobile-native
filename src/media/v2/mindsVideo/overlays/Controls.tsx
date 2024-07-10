@@ -54,7 +54,7 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
               <Icon
                 onPress={() =>
                   localStore.paused
-                    ? localStore.play(Boolean(localStore.volume))
+                    ? localStore.play(Boolean(localStore.volume), true)
                     : localStore.pause()
                 }
                 style={[styles.videoIcon, styles.textShadow]}
