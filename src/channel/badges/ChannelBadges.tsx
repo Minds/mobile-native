@@ -5,6 +5,7 @@ import ThemedStyles from '~/styles/ThemedStyles';
 import i18n from '~/common/services/i18n.service';
 import { Row, SpacerPropType } from '~ui';
 import BadgeTooltip from '~/common/components/BadgeTooltip';
+import { IS_TENANT } from '~/config/Config';
 
 type PropsType = {
   channel: UserModel;
@@ -53,7 +54,7 @@ export default class ChannelBadges extends PureComponent<
       );
     }
 
-    if (channel.verified) {
+    if (channel.verified && !IS_TENANT) {
       badges.push(
         <BadgeTooltip
           key={'verified'}
@@ -71,7 +72,7 @@ export default class ChannelBadges extends PureComponent<
       );
     }
 
-    if (channel.founder) {
+    if (channel.founder && !IS_TENANT) {
       badges.push(
         <BadgeTooltip
           key={'founder'}
