@@ -66,6 +66,16 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         <AppStackNav.Screen
+          name="More"
+          options={{
+            gestureDirection: 'horizontal',
+            gestureEnabled: true,
+            animation: 'slide_from_right',
+            ...hideHeader,
+          }}
+          getComponent={() => require('~/navigation/MoreStack').default}
+        />
+        <AppStackNav.Screen
           name="GifCardClaim"
           getComponent={() =>
             require('~/modules/gif-card/screens/GifCardClaimScreen')
@@ -532,7 +542,9 @@ const RootStack = observer(function () {
             />
             <RootStackNav.Screen
               name="GroupsList"
-              getComponent={() => require('~/groups/GroupsListScreen').default}
+              getComponent={() =>
+                require('~/modules/groups/screens/GroupsListScreen').default
+              }
               options={{
                 ...rootStackCardScreenOptions,
                 headerShown: false,

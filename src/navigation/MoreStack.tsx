@@ -134,7 +134,9 @@ export default function () {
       />
       <MoreStack.Screen
         name="GroupsList"
-        getComponent={() => require('~/groups/GroupsListScreen').default}
+        getComponent={() =>
+          require('~/modules/groups/screens/GroupsListScreen').default
+        }
         options={hideHeader}
       />
       <MoreStack.Screen

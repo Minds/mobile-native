@@ -20,6 +20,7 @@ import {
 import { IconMapNameType } from '~/common/ui/icons/map';
 import { useDrawerList } from './drawer/useDrawerList';
 import { useDrawerSmallList } from './drawer/useDrawerSmallList';
+import { useNavigation } from '@react-navigation/native';
 
 /**
  * Drawer menu
@@ -93,8 +94,16 @@ const DrawerList = ({ list, small }) => {
  * Header
  */
 const DrawerHeader = ({ name, username, avatar, onUserPress, onIconPress }) => {
+  const navigation = useNavigation();
   return (
     <Row left="XL" right="XL" bottom="XXL">
+      <IconButton
+        name="chevron-left"
+        size="huge"
+        right="S"
+        color="Icon"
+        onPress={() => navigation.goBack()}
+      />
       <Avatar source={avatar} size="medium" onPress={onUserPress} />
       <Column flex align="centerStart" right="M" left="S">
         <H2 onPress={onUserPress} numberOfLines={1} flat>

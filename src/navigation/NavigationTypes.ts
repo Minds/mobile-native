@@ -46,7 +46,7 @@ export type MoreStackParamList = {
   Interactions: AppStackParamList['Interactions'];
   GroupsManage: {};
   UpgradeOptionsScreen: {};
-  GroupView: {};
+  GroupView: RootStackParamList['GroupView'];
   RssScreen: {};
   SupermindTwitterConnect: SupermindTwitterConnectRouteParams;
   WebView: WebViewParams;
@@ -137,9 +137,14 @@ export type RootStackParamList = {
   Report: {};
   TierManagementScreen: {};
   TierScreen: {};
-  GroupsList: {};
+  GroupsList: {
+    showTopBar?: boolean;
+  };
   GroupsDiscovery: {};
-  GroupView: {};
+  GroupView: {
+    guid?: string;
+    group?: GroupModel;
+  };
   Compose: ComposeScreenParams;
   SupermindConfirmation: SupermindConfirmationRouteParams;
   SupermindCompose: {
@@ -316,7 +321,7 @@ export type AppStackParamList = {
   Conversation: {};
   DiscoveryFeed: {};
 
-  GroupView: {};
+  GroupView: RootStackParamList['GroupView'];
   BlogList: {};
   BlogView: {
     blog?: BlogModel;

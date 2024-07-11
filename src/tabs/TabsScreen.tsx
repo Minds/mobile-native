@@ -14,7 +14,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TopShadow from '../common/components/TopShadow';
 import PressableScale from '~/common/components/PressableScale';
 import NewsfeedStack from '~/navigation/NewsfeedStack';
-import MoreStack from '~/navigation/MoreStack';
 import { IS_IOS } from '~/config/Config';
 import Animated, {
   useAnimatedStyle,
@@ -33,7 +32,7 @@ export type TabParamList = {
   Newsfeed: {};
   User: {};
   Discovery: {};
-  More: {};
+  Groups: {};
   ChatListStack: {};
   MindsPlus: {};
   Notifications: {};
@@ -222,11 +221,17 @@ const Tabs = observer(function () {
           component={NewsfeedStack}
           options={{ tabBarTestID: 'Tabs:Newsfeed' }}
         />
-        {/* <Tab.Screen name="Performance" component={PerformanceScreen} /> */}
         <Tab.Screen
           name="Discovery"
           getComponent={() => require('~/navigation/DiscoveryStack').default}
           options={discoveryOptions}
+        />
+        <Tab.Screen
+          name="Groups"
+          getComponent={() =>
+            require('~/modules/groups/GroupsStack.tsx').GroupsStack
+          }
+          options={moreOptions}
         />
         <Tab.Screen
           name="ChatListStack"
@@ -238,7 +243,6 @@ const Tabs = observer(function () {
           component={NotificationsStack}
           options={notificationOptions}
         />
-        <Tab.Screen name="More" component={MoreStack} options={moreOptions} />
       </Tab.Navigator>
     </View>
   );
@@ -298,10 +302,10 @@ const focusedState = { selected: true };
 const tabBar = props => <TabBar {...props} />;
 
 const iconFromRoute: Record<string, IconMapNameType> = {
-  More: 'menu',
   Newsfeed: 'home',
   User: 'user',
   ChatListStack: 'chat-solid',
+  Groups: 'group',
   Discovery: 'hashtag',
   Performance: 'dev',
   MindsPlus: 'queue',
