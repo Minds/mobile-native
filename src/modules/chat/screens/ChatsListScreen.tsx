@@ -1,7 +1,16 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
 
-import { B2, B3, Button, H3, Screen, ScreenHeader, Spacer } from '~/common/ui';
+import {
+  B2,
+  B3,
+  Button,
+  H3,
+  IconButton,
+  Screen,
+  ScreenHeader,
+  Spacer,
+} from '~/common/ui';
 import ChatListItem from '../components/ChatListItem';
 import NavigationService from '~/navigation/NavigationService';
 import { ChatRoom } from '../types';
@@ -23,7 +32,20 @@ export default function ChatsListScreen({ navigation }) {
   const canCreateChat = permissionsService.canCreateChatRoom();
   return (
     <Screen safe>
-      <ScreenHeader back={false} title="Chat" extra={<Alpha />} />
+      <ScreenHeader
+        back={false}
+        title="Chat"
+        extra={<Alpha />}
+        leftComponent={
+          <IconButton
+            name="menu"
+            size="large"
+            right="S"
+            color="Icon"
+            onPress={() => navigation.push('More')}
+          />
+        }
+      />
       <ChatList />
       {canCreateChat && (
         <ChatNewButton
