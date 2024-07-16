@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect } from 'react';
 import { FlatList, View } from 'react-native';
-import ThemedStyles from '~styles/ThemedStyles';
+
 import { observer } from 'mobx-react';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import useSuggestedHashtags from './useSuggestedHashtags';
 import { B1 } from '~/common/ui';
 import MPressable from '../MPressable';
+import sp from '~/services/serviceProvider';
 
 export interface ChannelAutoCompleteListProps {
   /**
@@ -33,7 +34,7 @@ function ChannelAutoCompleteList({
   flatListComponent,
 }: ChannelAutoCompleteListProps) {
   const { result, loaded } = useSuggestedHashtags(query);
-  const tags = result?.tags || [];
+  const tags = React.useMemo(() => result?.tags || [], [result]);
   const length = tags.length;
 
   useEffect(() => {
@@ -58,7 +59,7 @@ function ChannelAutoCompleteList({
       ListEmptyComponent={loaded ? Empty : null}
       keyExtractor={keyExtractor}
       contentContainerStyle={contentContainerStyle}
-      style={ThemedStyles.style.bgPrimaryBackgroundHighlight}
+      style={sp.styles.style.bgPrimaryBackgroundHighlight}
     />
   );
 }
@@ -69,7 +70,7 @@ const Empty = () => (
   </View>
 );
 
-const contentContainerStyle = ThemedStyles.combine(
+const contentContainerStyle = sp.styles.combine(
   'borderTop',
   'bcolorPrimaryBorder',
 );
@@ -92,7 +93,7 @@ const HashtagListItem = ({
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     {
       flexDirection: 'row',

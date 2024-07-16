@@ -5,10 +5,10 @@ import {
   currencyType,
 } from '../TransactionsListTypes';
 import { AvatarIcon, DeltaIcon } from './Icons';
-import i18n from '../../../../common/services/i18n.service';
-import capitalize from '../../../../common/helpers/capitalize';
+import capitalize from '~/common/helpers/capitalize';
 import { B1, B2, B3, Row, Column, Avatar } from '~ui';
 import { TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 const Item = ({ entity, navigation, currency }: ItemPropsType) => {
   const { typeString, avatar } = getTypeStringAndIcon(
@@ -38,25 +38,25 @@ const Item = ({ entity, navigation, currency }: ItemPropsType) => {
 
 const getTypeLabel = (type: string, currency: currencyType) => {
   const typeLabels = {
-    'offchain:wire': i18n.t('wallet.transactions.offchainWire'),
-    wire: i18n.t('wallet.transactions.onchainWire'),
-    reward: i18n.t('blockchain.receiver'),
-    token: i18n.t('purchase'),
-    withdraw: i18n.t('wallet.withdraw.title'),
-    'offchain:boost': i18n.t('wallet.transactions.offchainBoost'),
-    boost: i18n.t('wallet.transactions.onchainBoost'),
-    pro_earning: i18n.t('wallet.transactions.proEarningsFilter'),
-    payout: i18n.t('wallet.transactions.payoutsFilter'),
-    'onchain:supermind': i18n.t('wallet.transactions.supermindOffer'),
-    'offchain:supermind': i18n.t('wallet.transactions.supermindOffer'),
-    supermind: i18n.t('wallet.transactions.supermindOffer'),
+    'offchain:wire': 'wallet.transactions.offchainWire',
+    wire: 'wallet.transactions.onchainWire',
+    reward: 'blockchain.receiver',
+    token: 'purchase',
+    withdraw: 'wallet.withdraw.title',
+    'offchain:boost': 'wallet.transactions.offchainBoost',
+    boost: 'wallet.transactions.onchainBoost',
+    pro_earning: 'wallet.transactions.proEarningsFilter',
+    payout: 'wallet.transactions.payoutsFilter',
+    'onchain:supermind': 'wallet.transactions.supermindOffer',
+    'offchain:supermind': 'wallet.transactions.supermindOffer',
+    supermind: 'wallet.transactions.supermindOffer',
   };
 
   if (type === 'wire' && currency !== 'tokens') {
     return 'Wire';
   }
 
-  return typeLabels[type];
+  return typeLabels[type] ? sp.i18n.t(typeLabels[type]) : capitalize(type);
 };
 
 const getTypeStringAndIcon = (
@@ -64,6 +64,7 @@ const getTypeStringAndIcon = (
   currency: currencyType,
   navigation: any,
 ) => {
+  const i18n = sp.i18n;
   let typeString: ReactNode, avatar: ReactNode | null;
   switch (entity.superType) {
     case 'reward':
@@ -72,7 +73,7 @@ const getTypeStringAndIcon = (
         <B2>
           {entity.reward_type
             ? `${capitalize(entity.reward_type)} Reward`
-            : i18n.t('wallet.transactions.mindsReward', { TENANT })}
+            : sp.i18n.t('wallet.transactions.mindsReward', { TENANT })}
         </B2>
       );
       break;

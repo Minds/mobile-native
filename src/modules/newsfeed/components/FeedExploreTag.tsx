@@ -1,8 +1,8 @@
 import { View } from 'react-native';
 import React from 'react';
 import { H2, Button, Icon } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
-import NavigationService from '~/navigation/NavigationService';
+
+import sp from '~/services/serviceProvider';
 
 /**
  * Feed Header
@@ -17,7 +17,7 @@ function FeedExploreTag({ tag }: { tag: string }) {
       <Button
         mode="outline"
         onPress={() =>
-          NavigationService.navigate('App', {
+          sp.navigation.navigate('App', {
             screen: 'DiscoverySearch',
             params: { query: tag },
           })
@@ -30,7 +30,7 @@ function FeedExploreTag({ tag }: { tag: string }) {
 
 export default React.memo(FeedExploreTag);
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   titleContainer: ['rowJustifySpaceBetween', 'alignCenter'],
   container: [
     'padding3x',

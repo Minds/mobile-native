@@ -1,5 +1,5 @@
 import type UserModel from '../channel/UserModel';
-import { ApiResponse } from '../common/services/api.service';
+import { ApiResponse } from '~/common/services/ApiResponse';
 export type Currency = 'tokens' | 'usd' | 'eth' | 'btc';
 
 export type Reward = {

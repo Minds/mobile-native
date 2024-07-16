@@ -1,12 +1,13 @@
 import React from 'react';
 import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
 import type NewsfeedStore from './NewsfeedStore';
-import i18n from '~/common/services/i18n.service';
 import { observer } from 'mobx-react';
 import { NewsfeedType } from './NewsfeedStore';
 import { IS_TENANT, NEWSFEED_FORYOU_ENABLED } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 function NewsfeedTabs({ newsfeed }: { newsfeed: NewsfeedStore }) {
+  const i18n = sp.i18n;
   const tabs = React.useMemo(
     () => {
       const _tabs: { id: NewsfeedType; title: string }[] = [

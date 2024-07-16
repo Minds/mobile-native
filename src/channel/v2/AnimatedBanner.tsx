@@ -7,11 +7,11 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import ThemedStyles from '../../styles/ThemedStyles';
-import settingsStore from '../../settings/SettingsStore';
+
 import { View, ViewStyle } from 'react-native';
 import SmallCircleButton from '../../common/components/SmallCircleButton';
 import { IS_IPAD } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 interface AnimatedBannerProps {
   parentScrollOffset: Animated.SharedValue<number>;
@@ -26,7 +26,10 @@ const AnimatedBanner: FC<AnimatedBannerProps> = ({
   parentScrollOffset,
   bannerSource,
 }) => {
-  const [showBanner, setShowBanner] = useState(!settingsStore.dataSaverEnabled);
+  const SettingsService = sp.resolve('settings');
+  const [showBanner, setShowBanner] = useState(
+    !SettingsService.dataSaverEnabled,
+  );
 
   const _onBannerDownload = useCallback(() => setShowBanner(true), []);
   const Background: any = showBanner ? SmartImage : View;
@@ -63,12 +66,12 @@ const AnimatedBanner: FC<AnimatedBannerProps> = ({
         contentFit="cover"
         style={styles.image}
       />
-      {!showBanner && settingsStore.dataSaverEnabled && (
+      {!showBanner && SettingsService.dataSaverEnabled && (
         <SmallCircleButton
           raised
           name="file-download"
           type="material"
-          color={ThemedStyles.getColor('SecondaryBackground')}
+          color={sp.styles.getColor('SecondaryBackground')}
           onPress={_onBannerDownload}
         />
       )}
@@ -78,7 +81,7 @@ const AnimatedBanner: FC<AnimatedBannerProps> = ({
 
 export default AnimatedBanner;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   animatedView: [
     'centered',
     {

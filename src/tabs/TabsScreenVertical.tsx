@@ -13,7 +13,6 @@ import { H4 } from '~/common/ui';
 import { Icon } from '~ui/icons';
 import { IS_TENANT } from '~/config/Config';
 
-import ThemedStyles from '../styles/ThemedStyles';
 import { IconMapNameType } from '~/common/ui/icons/map';
 import DiscoveryIcon from '../discovery/v2/DiscoveryTabIcon';
 import preventDoubleTap from '~/common/components/PreventDoubleTap';
@@ -29,6 +28,7 @@ import {
   CoreToCustomMap,
   useVerticalScreenProps,
 } from './hooks/useVerticalScreenProps';
+import sp from '~/services/serviceProvider';
 
 const DoubleTapSafeButton = preventDoubleTap(TouchableOpacity);
 
@@ -57,7 +57,7 @@ const ComposeButton = () => (
       name="edit"
       type="material"
       size={24}
-      color={ThemedStyles.getColor('PrimaryBackground')}
+      color={sp.styles.getColor('PrimaryBackground')}
     />
   </View>
 );
@@ -67,7 +67,7 @@ const ComposeButton = () => (
  * @param {Object} props
  */
 const Tabs = React.memo(function () {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const isPortrait = useIsPortrait();
 
   const customNavigation = useCustomNavigation();
@@ -115,7 +115,7 @@ const drawerOptions = ({
     drawerStyle: {
       width: isPortrait ? 78 : 270,
     },
-    drawerActiveTintColor: ThemedStyles.getColor('PrimaryText'),
+    drawerActiveTintColor: sp.styles.getColor('PrimaryText'),
     overlayColor: 'transparent',
     lazy: true,
     drawerLabelStyle,
@@ -149,8 +149,8 @@ const drawerOptions = ({
               style={[
                 styles.icon,
                 focused
-                  ? ThemedStyles.style.colorPrimaryText
-                  : ThemedStyles.style.colorIcon,
+                  ? sp.styles.style.colorPrimaryText
+                  : sp.styles.style.colorIcon,
               ]}
             />
           ) : null;
@@ -212,7 +212,7 @@ function DrawerContent(props) {
   );
 }
 
-export const styles = ThemedStyles.create({
+export const styles = sp.styles.create({
   editIcon: [
     'bgIconActive',
     {

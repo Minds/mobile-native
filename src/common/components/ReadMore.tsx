@@ -1,8 +1,10 @@
 import React from 'react';
 import { Platform, StyleSheet, TextStyle, View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import MText from './MText';
 import Tags from './Tags';
+import sp from '~/services/serviceProvider';
+
 const VIEW_MORE_HEIGHT = 33;
 
 // we add an extra line for ios, because the onTextLayout event doesn't clip the last line
@@ -113,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const buttonStyle = ThemedStyles.combine('paddingTop2x', 'colorLink');
+const buttonStyle = sp.styles.combine('paddingTop2x', 'colorLink');

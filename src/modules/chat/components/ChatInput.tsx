@@ -4,13 +4,12 @@ import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from '@expo/vector-icons/Ionicons';
 import { Flow } from 'react-native-animated-spinkit';
 
-import ThemedStyles from '~/styles/ThemedStyles';
 import preventDoubleTap from '~/common/components/PreventDoubleTap';
 import { CHAR_LIMIT } from '~/config/Config';
 import TextInput from '~/common/components/TextInput';
 import Tags from '~/common/components/Tags';
 import { useNavigation } from '@react-navigation/native';
-import analyticsService from '~/common/services/analytics.service';
+import sp from '~/services/serviceProvider';
 
 const { height } = Dimensions.get('window');
 
@@ -26,7 +25,7 @@ type Props = {
 // TODO: Optimize this component (Reduce re-renders)
 const ChatInput = ({ onSendMessage }: Props) => {
   const navigation = useNavigation();
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const ref = React.useRef<TextInputType>(null);
   const [text, setText] = useState('');
 
@@ -37,7 +36,7 @@ const ChatInput = ({ onSendMessage }: Props) => {
   const saving = false;
 
   const send = () => {
-    analyticsService.trackClick('data-minds-chat-send-message-button');
+    sp.resolve('analytics').trackClick('data-minds-chat-send-message-button');
     const trimmedText = text.trim();
     if (!trimmedText) return;
     onSendMessage(trimmedText);
@@ -67,13 +66,13 @@ const ChatInput = ({ onSendMessage }: Props) => {
           multiline={true}
           editable={!saving}
           scrollEnabled={true}
-          placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+          placeholderTextColor={sp.styles.getColor('TertiaryText')}
           placeholder="Message"
           underlineColorAndroid="transparent"
           onChangeText={setText}
           keyboardType={'default'}
           onFocus={() => {
-            analyticsService.trackClick('data-minds-chat-message-input');
+            sp.resolve('analytics').trackClick('data-minds-chat-message-input');
           }}
           maxLength={CHAR_LIMIT}
           style={[
@@ -97,7 +96,7 @@ const ChatInput = ({ onSendMessage }: Props) => {
           </Touchable>
         ) : (
           <View style={[theme.alignSelfCenter, theme.justifyEnd]}>
-            <Flow color={ThemedStyles.getColor('PrimaryText')} />
+            <Flow color={sp.styles.getColor('PrimaryText')} />
           </View>
         )}
       </View>

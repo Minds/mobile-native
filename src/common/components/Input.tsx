@@ -1,13 +1,13 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 import { View, TextStyle, TextInputProps } from 'react-native';
 import InfoPopup from './InfoPopup';
 
-import ThemedStyles from '../../styles/ThemedStyles';
 import TextInput from './TextInput';
 import MText from './MText';
 import ErrorBoundary from './ErrorBoundary';
 import DatePickerInput from './controls/DatePickerInput';
+import sp from '~/services/serviceProvider';
+import { Timeout } from '~/types/Common';
 
 export interface PropsType extends TextInputProps {
   TFA?: any;
@@ -27,7 +27,7 @@ export interface PropsType extends TextInputProps {
   placeholderText?: string;
   value?: string;
   testID?: string;
-  keyboardType?: string;
+  keyboardType?: TextInputProps['keyboardType'];
   editable?: boolean;
   scrollEnabled?: boolean;
   secureTextEntry?: boolean;
@@ -42,14 +42,16 @@ export interface PropsType extends TextInputProps {
   info?: string;
   error?: string;
   hint?: string;
+  minimumDate?: Date;
+  maximumDate?: Date;
 }
 
 /**
  * Form input
  */
 export default class Input extends Component<PropsType> {
-  timeoutCleanup = null;
-
+  timeoutCleanup: Timeout | null = null;
+  inputRef: any;
   /**
    * Constructor
    * @param props
@@ -99,14 +101,14 @@ export default class Input extends Component<PropsType> {
       }
     }
 
-    this.props.onChangeText(dateString);
+    this.props.onChangeText?.(dateString);
   };
 
   /**
    * Text input
    */
   textInput = () => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     return (
       <TextInput
         {...this.props}
@@ -117,7 +119,7 @@ export default class Input extends Component<PropsType> {
         underlineColorAndroid="transparent"
         onChangeText={
           this.props.inputType === 'number'
-            ? value => this.props.onChangeText(value.replace(/[^0-9]/g, ''))
+            ? value => this.props.onChangeText?.(value.replace(/[^0-9]/g, ''))
             : this.props.onChangeText
         }
         ref={this.inputRef}
@@ -135,7 +137,7 @@ export default class Input extends Component<PropsType> {
         hideTitle
         spacing="S"
         noHorizontal
-        date={this.props.value}
+        date={this.props.value as unknown as Date}
         onConfirm={d => this.confirmDatePicker(d)}
         maximumDate={this.props.maximumDate}
         minimumDate={this.props.minimumDate}
@@ -163,7 +165,7 @@ export default class Input extends Component<PropsType> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const optional = this.props.optional ? (
       <MText style={[styles.optional, theme.colorSecondaryText]}>
         {'Optional'}
@@ -185,9 +187,7 @@ export default class Input extends Component<PropsType> {
               </MText>
               {!!this.props.hint && !this.props.error && (
                 <View style={theme.flexContainer}>
-                  <MText style={styles.hintStyles} align="right">
-                    {this.props.hint}
-                  </MText>
+                  <MText style={styles.hintStyles}>{this.props.hint}</MText>
                 </View>
               )}
               {this.props.info && <InfoPopup info={this.props.info} />}
@@ -209,7 +209,7 @@ export default class Input extends Component<PropsType> {
   }
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: {
     paddingTop: 5,
     paddingBottom: 10,

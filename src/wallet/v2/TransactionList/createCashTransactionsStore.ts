@@ -1,15 +1,16 @@
+import moment from 'moment';
+
 import type { WalletStoreType } from '../createWalletStore';
-import type UserStore from '../../../auth/UserStore';
+import type UserStore from '~/auth/UserStore';
 import type {
   SectionListEntities,
   ExtendedEntity,
   ListFiltersType,
 } from './TransactionsListTypes';
-import api from '../../../common/services/api.service';
-import groupBy from '../../../common/helpers/groupBy';
-import UserModel from '../../../channel/UserModel';
-import moment from 'moment';
-import logService from '../../../common/services/log.service';
+
+import groupBy from '~/common/helpers/groupBy';
+import UserModel from '~/channel/UserModel';
+import sp from '~/services/serviceProvider';
 
 type ParamsType = {
   wallet: WalletStoreType;
@@ -61,14 +62,14 @@ const createCashTransactionsStore = ({ wallet, user }: ParamsType) => {
     async load() {
       this.setLoading(true);
       try {
-        const result = await api.get<any>(
+        const result = await sp.api.get<any>(
           'api/v2/payments/stripe/transactions',
           {},
           this,
         );
         this.setEntities(result.transactions);
       } catch (err) {
-        logService.exception(err);
+        sp.log.exception(err);
         this.loading = false;
       }
     },

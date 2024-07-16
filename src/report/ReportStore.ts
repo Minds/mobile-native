@@ -1,10 +1,7 @@
-//@ts-nocheck
 import { observable, action } from 'mobx';
-
 import ReportListStore from './ReportListStore';
-import reportService from './ReportService';
-import logService from '../common/services/log.service';
 import { isNetworkError } from '~/common/services/ApiErrors';
+import sp from '~/services/serviceProvider';
 
 export default class ReportStore {
   @observable filter = 'review';
@@ -20,7 +17,9 @@ export default class ReportStore {
     this.list.setErrorLoading(false);
 
     try {
-      const response = await reportService.get(this.filter, this.list.offset);
+      const response: any = await sp
+        .resolve('report')
+        .get(this.filter, this.list.offset);
 
       if (response.appeals) {
         if (this.list.offset) {
@@ -32,7 +31,7 @@ export default class ReportStore {
       return response;
     } catch (err) {
       if (!isNetworkError(err)) {
-        logService.exception('[ReportStore] loadList', err);
+        sp.log.exception('[ReportStore] loadList', err);
       }
       this.list.setErrorLoading(true);
     } finally {

@@ -2,9 +2,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import { IReactionDisposer, reaction } from 'mobx';
 import { useAsObservableSource, useLocalStore } from 'mobx-react';
 import { useCallback, useEffect } from 'react';
-import apiService from '../services/api.service';
 import { isAbort } from '../services/ApiErrors';
-import { storages } from '../services/storage/storages.service';
+import serviceProvider from '~/services/serviceProvider';
 
 const getCacheKey = (url: string, params: any) =>
   `useFetch:${url}${params ? `?${JSON.stringify(params)}` : ''}`;
@@ -163,7 +162,9 @@ const createStore = (storeOptions: {
   },
   hydrate(params: any, updateState) {
     try {
-      const data = storages.user?.getMap(getCacheKey(storeOptions.url, params));
+      const data = serviceProvider.storages.user?.getObject(
+        getCacheKey(storeOptions.url, params),
+      );
       if (data) {
         this.setResult(updateState(data, this.result));
       }
@@ -172,7 +173,7 @@ const createStore = (storeOptions: {
     }
   },
   persist(params: any) {
-    return storages.user?.setMap(
+    return serviceProvider.storages.user?.setObject(
       getCacheKey(storeOptions.url, params),
       this.result,
     );
@@ -224,7 +225,7 @@ const createStore = (storeOptions: {
     this.setLoading(true);
     this.setError(null);
     try {
-      const result = await apiService[storeOptions.method](
+      const result = await serviceProvider.api[storeOptions.method](
         storeOptions.url,
         data,
         storeOptions.method === 'get' ? this : undefined,

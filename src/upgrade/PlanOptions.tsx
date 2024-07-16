@@ -1,11 +1,12 @@
 import React from 'react';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import { UpgradeStoreType } from './createUpgradeStore';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
 import MText from '../common/components/MText';
 import MenuItemOption from '../common/components/menus/MenuItemOption';
 import { PaymentPlanType, SubscriptionType } from './types';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   store: UpgradeStoreType;
@@ -30,7 +31,7 @@ export const labelSecondaryMap: Record<
  * Plan options component
  */
 const PlanOptions = observer(({ store }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const plans = store.method === 'tokens' ? store.plansTokens : store.plansUSD;
 
   if (!plans || plans.length === 0) {
@@ -60,7 +61,7 @@ export const PlanList = observer(
     plans: Array<PaymentPlanType>;
     store: UpgradeStoreType;
   }) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     return (
       <>
         {plans.map(plan => (

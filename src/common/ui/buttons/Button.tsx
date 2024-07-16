@@ -10,7 +10,7 @@ import {
   StyleProp,
 } from 'react-native';
 import { withSpacer } from '~ui/layout/Spacer';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import {
   timingAnimation,
   bounceAnimation,
@@ -23,6 +23,7 @@ import { COMMON_BUTTON_STYLES, FLAT_BUTTON_STYLES } from './tokens';
 import { TRANSPARENCY, UNIT } from '~/styles/Tokens';
 import { Row, Spacer } from '../layout';
 import { ColorsNameType } from '~/styles/Colors';
+import sp from '~/services/serviceProvider';
 
 export type ButtonPropsType = {
   mode?: 'flat' | 'outline' | 'solid';
@@ -116,7 +117,7 @@ export const ButtonComponent = ({
         spinnerColor: color,
       }
     : getColor({
-        theme: ThemedStyles.theme,
+        theme: sp.styles.theme,
         mode,
         darkContent,
         disabled,
@@ -269,7 +270,7 @@ export const ButtonComponent = ({
 
     const iconComponent =
       typeof icon === 'function'
-        ? icon(ThemedStyles.theme === 1 ? 'Black' : 'White')
+        ? icon(sp.styles.theme === 1 ? 'Black' : 'White')
         : icon;
 
     if (iconOnly) {
@@ -335,7 +336,7 @@ export const ButtonComponent = ({
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   start: {
     alignSelf: 'flex-start',
   },

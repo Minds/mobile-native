@@ -1,27 +1,25 @@
 import React, { useCallback, useRef } from 'react';
 import { View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
-
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import validatePassword from '../../common/helpers/validatePassword';
-import authService from '../../auth/AuthService';
-import settingsService from '../SettingsService';
-import PasswordValidator from '../../common/components/password-input/PasswordValidator';
-import { isUserError } from '../../common/UserError';
-import { showNotification } from '../../../AppMessages';
-import { Button, Screen } from '~ui';
+import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import { Button, Screen } from '~ui';
+
+import validatePassword from '~/common/helpers/validatePassword';
+import PasswordValidator from '~/common/components/password-input/PasswordValidator';
+import { isUserError } from '~/common/UserError';
+import { showNotification } from '~/../AppMessages';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
-import apiService from '~/common/services/api.service';
 import { InputContainerImperativeHandle } from '~/common/components/InputContainer';
+import sp from '~/services/serviceProvider';
 
 export default observer(function () {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const newPasswordRef = useRef<InputContainerImperativeHandle>(null);
   const confirmPasswordRef = useRef<InputContainerImperativeHandle>(null);
   const navigation = useNavigation();
+  const i18n = sp.i18n;
 
   const store = useLocalStore(() => ({
     currentPassword: '',
@@ -92,7 +90,7 @@ export default observer(function () {
     // current password doesn't match
     try {
       store.setCurrentPasswordError('');
-      await authService.validatePassword(store.currentPassword);
+      await sp.resolve('auth').validatePassword(store.currentPassword);
     } catch (err) {
       store.setCurrentPasswordError(i18n.t('auth.invalidPassword'));
       return;
@@ -120,10 +118,10 @@ export default observer(function () {
     };
 
     try {
-      await settingsService.submitSettings(params);
+      await sp.resolve('settings').submitSettings(params);
       store.clearInputs();
       // clear the cookies (fix future issues with calls)
-      await apiService.clearCookies();
+      await sp.api.clearCookies();
       // @ts-ignore
       navigation.popToTop?.();
       showNotification(i18n.t('settings.passwordChanged'), 'success');
@@ -132,7 +130,7 @@ export default observer(function () {
         showNotification(err.message, 'danger');
       }
     }
-  }, [navigation, store]);
+  }, [i18n, navigation, store]);
 
   /**
    * Set save button on header right

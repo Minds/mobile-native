@@ -4,13 +4,13 @@ import { ScrollView } from 'react-native-gesture-handler';
 import TagSelect from '~/common/components/TagSelect';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import { Button, Screen, ScreenSection } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import Header from '../components/Header';
-import AuthService from '~/auth/AuthService';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 function HashTagsScreen({ navigation }) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const { hashtag } = useLegacyStores();
 
   React.useEffect(() => {
@@ -41,7 +41,7 @@ function HashTagsScreen({ navigation }) {
           type="action"
           size="large"
           disabled={hashtag.selectedCount < 3}
-          onPress={() => AuthService.setCompletedOnboard()}>
+          onPress={() => sp.resolve('auth').setCompletedOnboard()}>
           Continue
         </Button>
       </ScreenSection>
@@ -51,7 +51,7 @@ function HashTagsScreen({ navigation }) {
 
 export default withErrorBoundaryScreen(observer(HashTagsScreen));
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   text: ['colorSecondaryText', 'fontM', 'bold'],
   hashtag: [
     {

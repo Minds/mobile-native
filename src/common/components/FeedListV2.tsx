@@ -9,15 +9,15 @@ import Activity from '~/newsfeed/activity/Activity';
 import type FeedStore from '~/common/stores/FeedStore';
 import type BaseModel from '~/common/BaseModel';
 import { InjectItem } from '~/common/components/FeedList';
-import i18n from '~/common/services/i18n.service';
 import ErrorLoading from '~/common/components/ErrorLoading';
 import MText from '~/common/components/MText';
 import { ComponentsStyle } from '~/styles/Components';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import ErrorBoundary from './ErrorBoundary';
 import { IS_IOS } from '~/config/Config';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useDimensions } from '@react-native-community/hooks';
+import sp from '~/services/serviceProvider';
 
 type PlaceholderType =
   | React.ComponentType<any>
@@ -39,7 +39,7 @@ export type FeedListProps<T extends BaseModel> = {
   'data' | 'getItemType' | 'keyExtractor' | 'renderItem'
 >;
 
-const colors = [ThemedStyles.getColor('Link')];
+const colors = [sp.styles.getColor('Link')];
 
 /**
  * Functional implementation of the FeedList component
@@ -127,7 +127,7 @@ function FeedList<T extends BaseModel>(
         refreshing={isRefreshing}
         onRefresh={refresh}
         progressViewOffset={IS_IOS ? 0 : 80}
-        tintColor={ThemedStyles.getColor('Link')}
+        tintColor={sp.styles.getColor('Link')}
         colors={colors}
       />
     ),
@@ -165,7 +165,7 @@ const Empty = observer(({ feedStore, emptyMessage }) => {
         <View style={ComponentsStyle.emptyComponentContainer}>
           <View style={ComponentsStyle.emptyComponent}>
             <MText style={ComponentsStyle.emptyComponentMessage}>
-              {i18n.t('newsfeed.empty')}
+              {sp.i18n.t('newsfeed.empty')}
             </MText>
           </View>
         </View>
@@ -184,8 +184,8 @@ const Footer = observer(({ feedStore, Placeholder }) => {
   }
   if (feedStore.errorLoading) {
     const message = feedStore.entities.length
-      ? i18n.t('cantLoadMore')
-      : i18n.t('cantLoad');
+      ? sp.i18n.t('cantLoadMore')
+      : sp.i18n.t('cantLoad');
 
     return (
       <ErrorLoading message={message} tryAgain={() => feedStore.reload()} />

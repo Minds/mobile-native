@@ -1,15 +1,15 @@
 import React, { useCallback } from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 // import ReadMore from 'react-native-read-more-text';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
 
-import i18n from '../../common/services/i18n.service';
 import type UserModel from '../UserModel';
 import ReadMore from '../../common/components/ReadMore';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import MText from '../../common/components/MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   channel: UserModel;
@@ -20,10 +20,11 @@ type PropsType = {
  * @param props
  */
 const ChannelDescription = withErrorBoundary((props: PropsType) => {
+  const themedStyle = sp.styles;
   const navigation = useNavigation();
-  const theme = ThemedStyles.style;
-  const backgroundColor = ThemedStyles.getColor('PrimaryBackground');
-  const startColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
+  const theme = themedStyle.style;
+  const backgroundColor = themedStyle.getColor('PrimaryBackground');
+  const startColor = (themedStyle.theme ? '#242A30' : '#F5F5F5') + '00';
   const endColor = backgroundColor + 'FF';
 
   const renderRevealedFooter = useCallback(
@@ -32,7 +33,7 @@ const ChannelDescription = withErrorBoundary((props: PropsType) => {
         <MText
           style={[theme.fontL, theme.bold, theme.colorLink, theme.marginTop2x]}
           onPress={handlePress}>
-          {i18n.t('showLess')}
+          {sp.i18n.t('showLess')}
         </MText>
       );
     },

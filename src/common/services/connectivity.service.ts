@@ -1,11 +1,10 @@
-//@ts-nocheck
 import NetInfo from '@react-native-community/netinfo';
 import { observable, action, computed } from 'mobx';
 
 /**
  * Connectivity service
  */
-class ConnectivityService {
+export class ConnectivityService {
   @observable isInternetReachable = false;
 
   @observable connectionInfo = {
@@ -52,5 +51,3 @@ class ConnectivityService {
     this.isInternetReachable = value;
   }
 }
-
-export default new ConnectivityService();

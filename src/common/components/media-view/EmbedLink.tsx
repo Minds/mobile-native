@@ -3,12 +3,13 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import domain from '../../helpers/domain';
 import MText from '../MText';
 import SmartImage from '../SmartImage';
 import MediaViewImage from './MediaViewImage';
 import { FeedStreamPlayer } from '~/modules/livepeer';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -63,12 +64,10 @@ export default function EmbedLink({
             entity={entity}
             onImagePress={onImagePress}
             onImageLongPress={onImageLongPress}
-            style={ThemedStyles.style.bgSecondaryBackground}
+            style={sp.styles.style.bgSecondaryBackground}
           />
         ) : null}
-        <TouchableOpacity
-          style={ThemedStyles.style.padding4x}
-          onPress={openLink}>
+        <TouchableOpacity style={sp.styles.style.padding4x} onPress={openLink}>
           <MText style={titleStyle}>{title}</MText>
           <MText style={domainStyle}>{domain(entity.perma_url)}</MText>
         </TouchableOpacity>
@@ -95,7 +94,7 @@ export default function EmbedLink({
   );
 }
 
-const containerStyle = ThemedStyles.combine(
+const containerStyle = sp.styles.combine(
   'rowJustifyStart',
   'borderHair',
   'bcolorPrimaryBorder',
@@ -111,10 +110,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const titleStyle = ThemedStyles.combine('fontL', 'bold');
-const titleContainerStyle = ThemedStyles.combine('padding2x', 'flexContainer');
-const domainStyle = ThemedStyles.combine('fontM', 'colorSecondaryText');
-const imageStyle = ThemedStyles.combine(
-  styles.thumbnail,
-  'bgTertiaryBackground',
-);
+const titleStyle = sp.styles.combine('fontL', 'bold');
+const titleContainerStyle = sp.styles.combine('padding2x', 'flexContainer');
+const domainStyle = sp.styles.combine('fontM', 'colorSecondaryText');
+const imageStyle = sp.styles.combine(styles.thumbnail, 'bgTertiaryBackground');

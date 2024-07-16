@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import ThemedStyles from '../../../../styles/ThemedStyles';
+
 import type { WalletStoreType } from '../../../v2/createWalletStore';
 import { Tooltip } from 'react-native-elements';
 import { StyleSheet, TouchableOpacity } from 'react-native';
@@ -10,6 +10,7 @@ import TokenTabOptions from './TokenTabOptions';
 import MindsTokens from '../MindsTokens';
 import { Row, Spacer } from '~ui';
 import { ONCHAIN_ENABLED } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -22,7 +23,7 @@ const TokenTopBar = ({
   connectWallet,
   onchainStore,
 }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const tooltipRef = useRef<any>();
   const screen = useDimensions().screen;
   const tokens = (
@@ -37,7 +38,7 @@ const TokenTopBar = ({
         containerStyle={theme.borderRadius}
         width={screen.width - 20}
         height={200}
-        backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
+        backgroundColor={sp.styles.getColor('SecondaryBackground')}
         popover={<BalanceInfo walletStore={walletStore} />}>
         <TouchableOpacity
           style={[theme.bgPrimaryBorder, styles.touchable]}

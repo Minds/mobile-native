@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import i18n from '../../../common/services/i18n.service';
+
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import Button from '../../../common/components/Button';
 import Wrapper from './common/Wrapper';
@@ -12,7 +11,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { AppStackParamList } from '~/navigation/NavigationTypes';
-import openUrlService from '~/common/services/open-url.service';
+import sp from '~/services/serviceProvider';
 
 const createPlusMonetizeStore = () => {
   const store = {
@@ -32,7 +31,8 @@ type PropsType = StackScreenProps<
 const PlusMonetizeScreen = observer(({ navigation }: PropsType) => {
   const { user } = useLegacyStores();
   const store = useComposeContext();
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
 
   const localStore = useLocalStore(createPlusMonetizeStore);
 
@@ -98,9 +98,9 @@ const PlusMonetizeScreen = observer(({ navigation }: PropsType) => {
               <MText
                 style={theme.link}
                 onPress={() =>
-                  openUrlService.open(
-                    'https://www.minds.com/p/monetization-terms',
-                  )
+                  sp
+                    .resolve('openURL')
+                    .open('https://www.minds.com/p/monetization-terms')
                 }>
                 Minds monetization terms{' '}
               </MText>

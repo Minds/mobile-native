@@ -1,16 +1,15 @@
 import React, { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import i18n from '../../services/i18n.service';
-import { TierStoreType } from '../../../compose/PosterOptions/monetize/MembershipMonetizeScreen';
+import { TierStoreType } from '~/compose/PosterOptions/monetize/MembershipMonetizeScreen';
 
-import supportTiersService from '../../services/support-tiers.service';
 import CenteredLoading from '../CenteredLoading';
 import createTierManagementStore from './createTierManagementStore';
 import TiersList from './TiersList';
-import { SupportTiersType } from '../../../wire/WireTypes';
+import { SupportTiersType } from '~/wire/WireTypes';
 import Header from './Header';
 import { withErrorBoundaryScreen } from '../ErrorBoundaryScreen';
 import { Screen } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 
 export type PaymentType = 'usd' | 'tokens';
 
@@ -38,7 +37,7 @@ const TierManagementScreen = observer(
 
     useEffect(() => {
       const getTiers = async () => {
-        const support_tiers = await supportTiersService.getAllFromUser();
+        const support_tiers = await sp.resolve('supportTiers').getAllFromUser();
         if (support_tiers) {
           localStore.setSupportTIers(support_tiers);
         }
@@ -58,7 +57,7 @@ const TierManagementScreen = observer(
       <Screen scroll>
         {localStore.support_tiers.length > 0 && (
           <Header
-            labelText={i18n.t('monetize.membershipMonetize.label')}
+            labelText={sp.i18n.t('monetize.membershipMonetize.label')}
             onLinkPress={() => navToTierScreen(navigation, false, localStore)}
           />
         )}

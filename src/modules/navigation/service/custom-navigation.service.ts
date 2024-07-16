@@ -1,5 +1,3 @@
-import { gqlFetcher } from '~/common/services/api.service';
-import { storages } from '~/common/services/storage/storages.service';
 import { IS_TENANT } from '~/config/Config';
 import {
   GetNavigationItemsDocument,
@@ -7,6 +5,8 @@ import {
   GetNavigationItemsQueryVariables,
 } from '~/graphql/api';
 import { filterNavigationItems } from './helpers';
+import serviceProvider from '~/services/serviceProvider';
+import { gqlFetcher } from '~/common/services/gqlFetcher';
 
 const tabsIds = ['newsfeed', 'explore', 'chat', 'groups'];
 
@@ -23,7 +23,7 @@ export function getCustomNavigation() {
   if (customNavigation || !IS_TENANT) {
     return customNavigation;
   }
-  customNavigation = storages.app.getMap('customNavigation');
+  customNavigation = serviceProvider.storages.app.getObject('customNavigation');
 
   // if there is no data on the storage we fall back to the bundled config
   if (!customNavigation) {
@@ -42,7 +42,7 @@ export async function updateCustomNavigation() {
   try {
     const config = await fetchCustomNavigation();
 
-    storages.app.setMap('customNavigation', config);
+    serviceProvider.storages.app.setObject('customNavigation', config);
   } catch (error) {
     console.error('Failed to fetch custom navigation', error);
   }

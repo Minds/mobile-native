@@ -1,10 +1,8 @@
 import { showNotification } from 'AppMessages';
 import { runInAction } from 'mobx';
 import { useLocalStore } from 'mobx-react';
-import AuthService from '~/auth/AuthService';
 import { TwoFactorError } from '~/common/services/ApiErrors';
-import apiService from '~/common/services/api.service';
-import sessionService from '~/common/services/session.service';
+import sp from '~/services/serviceProvider';
 import i18n from '~/utils/locales';
 
 export const use2FAEmailVerification = () => {
@@ -25,11 +23,11 @@ export const use2FAEmailVerification = () => {
           }
         : undefined;
       try {
-        await apiService
+        await sp.api
           .setTwoFactorHandlingEnabled(false)
           .rawPost('api/v3/email/confirm', {}, headers);
 
-        sessionService.getUser().setEmailConfirmed(true);
+        sp.session.getUser().setEmailConfirmed(true);
       } catch (error) {
         if (error instanceof TwoFactorError) {
           localStore.emailKey = error.message;
@@ -38,7 +36,7 @@ export const use2FAEmailVerification = () => {
           }
         }
       } finally {
-        apiService.setTwoFactorHandlingEnabled(true);
+        sp.api.setTwoFactorHandlingEnabled(true);
       }
     },
     setCode(code: string) {
@@ -48,7 +46,7 @@ export const use2FAEmailVerification = () => {
       localStore.error = error;
     },
     cancel: () => {
-      AuthService.logout();
+      sp.resolve('auth').logout();
     },
     /**
      * Ensures we don't resend the code more than once every 10 seconds

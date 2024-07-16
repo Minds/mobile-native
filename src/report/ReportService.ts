@@ -1,13 +1,21 @@
-//@ts-nocheck
-import api from './../common/services/api.service';
+import type { ApiService } from '~/common/services/api.service';
 import { REASONS } from '../common/services/list-options.service';
+
+type Reason = {
+  label: string;
+  value: number;
+  hasMore?: boolean;
+  reasons?: Reason[];
+};
 
 /**
  * Report Service
  */
-class ReportService {
+export class ReportService {
+  constructor(private api: ApiService) {}
+
   report(entity_guid, entity_urn, reason_code, sub_reason_code, note) {
-    return api.post('api/v2/moderation/report', {
+    return this.api.post('api/v2/moderation/report', {
       entity_guid,
       entity_urn,
       reason_code,
@@ -17,14 +25,14 @@ class ReportService {
   }
 
   async get(filter, offset) {
-    return await api.get(`api/v2/moderation/appeals/${filter}`, {
+    return await this.api.get(`api/v2/moderation/appeals/${filter}`, {
       limit: 12,
       offset: offset,
     });
   }
 
   async sendAppealNote(urn, note) {
-    return await api.post(`api/v2/moderation/appeals/${urn}`, { note });
+    return await this.api.post(`api/v2/moderation/appeals/${urn}`, { note });
   }
 
   getAction(report) {
@@ -48,7 +56,7 @@ class ReportService {
   }
 
   getReasonString(report) {
-    return REASONS.filter(item => {
+    return REASONS.filter((item: Reason) => {
       if (item.hasMore && item.reasons) {
         return (
           item.value === report.reason_code &&
@@ -58,7 +66,7 @@ class ReportService {
       }
       return item.value === report.reason_code;
     })
-      .map(item => {
+      .map((item: Reason) => {
         if (item.hasMore && item.reasons) {
           return item.reasons[report.sub_reason_code - 1].label;
         }
@@ -67,5 +75,3 @@ class ReportService {
       .join(', ');
   }
 }
-
-export default new ReportService();

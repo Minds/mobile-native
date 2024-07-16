@@ -15,17 +15,16 @@ import CenteredLoading from '../common/components/CenteredLoading';
 import MText from '../common/components/MText';
 import SmartImage from '../common/components/SmartImage';
 import { FLAG_VIEW } from '../common/Permissions';
-import i18n from '../common/services/i18n.service';
-import logService from '../common/services/log.service';
 import { AppStackParamList } from '../navigation/NavigationTypes';
 import OwnerBlock from '../newsfeed/activity/OwnerBlock';
 import { ComponentsStyle } from '../styles/Components';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import Lock from '../wire/v2/lock/Lock';
 import BlogActionSheet from './BlogActionSheet';
 import BlogsViewStore from './BlogsViewStore';
 import BlogViewHTML from './BlogViewHTML';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 type BlogScreenRouteProp = RouteProp<AppStackParamList, 'BlogView'>;
 type BlogScreenNavigationProp = StackNavigationProp<
@@ -103,11 +102,16 @@ class BlogsViewScreen extends Component<PropsType> {
         this.blogsView.blog.sendViewed('single');
       }
     } catch (error: any) {
-      logService.exception(error);
+      sp.log.exception(error);
       Alert.alert(
         'Error',
-        error.message || i18n.t('blogs.errorLoading'),
-        [{ text: i18n.t('ok'), onPress: () => this.props.navigation.goBack() }],
+        error.message || sp.i18n.t('blogs.errorLoading'),
+        [
+          {
+            text: sp.i18n.t('ok'),
+            onPress: () => this.props.navigation.goBack(),
+          },
+        ],
         { cancelable: false },
       );
     }
@@ -125,7 +129,7 @@ class BlogsViewScreen extends Component<PropsType> {
     if (!blog) {
       return null;
     }
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     return (
       <SafeAreaView style={theme.bgPrimaryBackground}>
@@ -147,11 +151,12 @@ class BlogsViewScreen extends Component<PropsType> {
    * Render blog
    */
   getBody() {
+    const i18n = sp.i18n;
     const blog = this.blogsView.blog;
     if (!blog) {
       return null;
     }
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const image = blog.getBannerSource();
 
     return (
@@ -230,6 +235,7 @@ class BlogsViewScreen extends Component<PropsType> {
    * Show an error message
    */
   showError() {
+    const i18n = sp.i18n;
     Alert.alert(
       i18n.t('sorry'),
       i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
@@ -247,8 +253,8 @@ class BlogsViewScreen extends Component<PropsType> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
-
+    const theme = sp.styles.style;
+    const i18n = sp.i18n;
     // TODO: add loading state
     if (!this.blogsView.blog) {
       return <CenteredLoading />;
@@ -297,7 +303,7 @@ export const withModal = withModalProvider(
 /**
  * Styles
  */
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   actionSheet: {
     paddingLeft: 5,
   },

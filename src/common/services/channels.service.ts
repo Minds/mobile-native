@@ -1,13 +1,21 @@
-import apiService from './api.service';
 import { isApiForbidden } from './ApiErrors';
 
 import UserModel from '../../channel/UserModel';
-import entitiesStorage from './storage/entities.storage';
+import type { ApiService } from './api.service';
+import type { EntitiesStorage } from './storage/entities.storage';
 
 /**
  * Channels services
  */
-class ChannelsService {
+export class ChannelsService {
+  /**
+   * Constructor
+   */
+  constructor(
+    private apiService: ApiService,
+    private entitiesStorage: EntitiesStorage,
+  ) {}
+
   /**
    * Get one channel
    * @param {string} guid
@@ -20,7 +28,7 @@ class ChannelsService {
     try {
       const urn = `urn:channels:${guidOrUsername}`;
 
-      const local = entitiesStorage.read(urn);
+      const local = this.entitiesStorage.read(urn);
 
       if ((!local && !defaultChannel) || forceUpdate) {
         // we fetch from the server
@@ -42,7 +50,7 @@ class ChannelsService {
     const promises: Promise<UserModel | undefined>[] = guids.map(async guid => {
       try {
         const urn = `urn:channels:${guid}`;
-        const local = entitiesStorage.read(urn);
+        const local = this.entitiesStorage.read(urn);
         if (!local) {
           return await this.fetch(guid);
         }
@@ -79,7 +87,7 @@ class ChannelsService {
    */
   async fetch(guidOrUsername: string, channel?: UserModel) {
     try {
-      const response: any = await apiService.get(
+      const response: any = await this.apiService.get(
         `api/v1/channel/${guidOrUsername}`,
         {},
       );
@@ -94,7 +102,7 @@ class ChannelsService {
         }
         // add urn to channel
         response.channel.urn = urn;
-        entitiesStorage.save(response.channel);
+        this.entitiesStorage.save(response.channel);
         return channel;
       } else {
         throw new Error('No channel response');
@@ -121,7 +129,7 @@ class ChannelsService {
   async save(channel) {
     // add urn to channel
     channel.urn = `urn:channels:${channel.guid}`;
-    entitiesStorage.save(channel);
+    this.entitiesStorage.save(channel);
   }
 
   /**
@@ -130,12 +138,12 @@ class ChannelsService {
    */
   removeFromCache(channel) {
     const urn = `urn:channels:${channel.guid}`;
-    entitiesStorage.remove(urn);
+    this.entitiesStorage.remove(urn);
   }
 
   async getGroupCount(channel: UserModel): Promise<number> {
     try {
-      const response: any = await apiService.get(
+      const response: any = await this.apiService.get(
         `api/v3/channel/${channel.guid}/groups/count`,
       );
       return response.count;
@@ -144,5 +152,3 @@ class ChannelsService {
     }
   }
 }
-
-export default new ChannelsService();

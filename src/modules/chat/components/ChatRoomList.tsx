@@ -3,7 +3,7 @@ import { FlashList, FlashListProps } from '@shopify/flash-list';
 import { RefreshControl } from 'react-native';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { IS_IOS } from '~/config/Config';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 type Props = {
   renderItem: FlashListProps<any>['renderItem'];
@@ -35,8 +35,8 @@ export default function ChatRoomList({
           refreshing={refreshing}
           onRefresh={onRefresh}
           progressViewOffset={IS_IOS ? 0 : 80}
-          tintColor={ThemedStyles.getColor('Link')}
-          colors={[ThemedStyles.getColor('Link')]}
+          tintColor={sp.styles.getColor('Link')}
+          colors={[sp.styles.getColor('Link')]}
         />
       }
       onEndReachedThreshold={0.5}

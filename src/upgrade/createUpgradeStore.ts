@@ -1,13 +1,12 @@
 import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
 import type UserModel from '../channel/UserModel';
-import entitiesService from '../common/services/entities.service';
-import mindsConfigService from '../common/services/minds-config.service';
 import {
   SubscriptionType,
   PayMethodType,
   PaymentPlanType,
   SettingsSubscriptionsType,
 } from './types';
+import sp from '~/services/serviceProvider';
 
 // TODO: move to the backend
 export const IAP_SKUS_PLUS = {
@@ -71,9 +70,9 @@ const createUpgradeStore = () => {
       if (this.loaded) return;
 
       // update the settings
-      await mindsConfigService.update();
+      await sp.config.update();
 
-      const settings = mindsConfigService.getSettings();
+      const settings = sp.config.getSettings();
 
       this.settings = (
         pro ? settings.upgrades.pro : settings.upgrades.plus
@@ -82,9 +81,9 @@ const createUpgradeStore = () => {
       // used to pay plus by wire
       const handler = pro ? settings.handlers.pro : settings.handlers.plus;
 
-      this.owner = (await entitiesService.single(
-        `urn:user:${handler}`,
-      )) as UserModel;
+      this.owner = (await sp
+        .resolve('entities')
+        .single(`urn:user:${handler}`)) as UserModel;
 
       this.isPro = pro;
 

@@ -3,13 +3,13 @@ import sizes from './generators/sizes';
 import borders from './generators/borders';
 import colors from './generators/colors';
 import spacing from './generators/spacing';
-import ThemedStyles from './ThemedStyles';
 import { DynamicStyles } from './types';
 import type { ColorsType } from './Colors';
 import typography from './generators/typography';
 import { IS_IPAD } from '~/config/Config';
+import type { ThemedStyles } from './ThemedStyles';
 
-const dynamicStyleHandler = {
+const dynamicStyleHandler = (themedStyles: ThemedStyles) => ({
   get: function (target, name) {
     // if already exist we return it
     if (name in target) {
@@ -19,8 +19,8 @@ const dynamicStyleHandler = {
     // generate dynamic style
     const m =
       spacing(name) ||
-      colors(name, ThemedStyles) ||
-      typography(name, ThemedStyles) || // it must be after colors because it uses colors inside
+      colors(name, themedStyles) ||
+      typography(name, themedStyles) || // it must be after colors because it uses colors inside
       borders(name) ||
       sizes(name);
 
@@ -33,7 +33,7 @@ const dynamicStyleHandler = {
     }
     return null;
   },
-};
+});
 
 const { width, height } = Dimensions.get('window');
 export const getMaxFeedWidth = () =>
@@ -414,13 +414,13 @@ const _buildStyle = (theme: ColorsType) =>
 
 export type Styles = ReturnType<typeof _buildStyle> & DynamicStyles;
 
-export const buildStyle = (theme): Styles => {
-  return new Proxy(_buildStyle(theme), dynamicStyleHandler);
+export const buildStyle = (theme, themedStyles: ThemedStyles): Styles => {
+  return new Proxy(_buildStyle(theme), dynamicStyleHandler(themedStyles));
 };
 
-export const updateTheme = (styles: Styles) => {
+export const updateTheme = (styles: Styles, themedStyles: ThemedStyles) => {
   Object.getOwnPropertyNames(styles).forEach(name => {
-    const style = colors(name, ThemedStyles);
+    const style = colors(name, themedStyles);
     if (style) {
       Object.assign(styles[name], style);
     }

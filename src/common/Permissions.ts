@@ -1,4 +1,3 @@
-//@ts-nocheck
 export const FLAG_APPOINT_ADMIN = 'appoint_admin';
 export const FLAG_APPOINT_MODERATOR = 'appoint_moderator';
 export const FLAG_APPROVE_SUBSCRIBER = 'approve_subscriber';

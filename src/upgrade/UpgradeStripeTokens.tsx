@@ -4,7 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 
 import { Button } from '~ui';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
-import i18n from '~/common/services/i18n.service';
 import { IS_IOS } from '~/config/Config';
 import { UpgradeStoreType } from './createUpgradeStore';
 import PaymentMethod from './PaymentMethod';
@@ -16,6 +15,7 @@ import { UserError } from '~/common/UserError';
 import type UserModel from '~/channel/UserModel';
 import { StripeCard } from '~/wire/WireTypes';
 import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
+import sp from '~/services/serviceProvider';
 
 type UpgradeStripeProps = {
   store: UpgradeStoreType;
@@ -34,6 +34,7 @@ const UpgradeStripeTokens = ({
   const navigation = useNavigation();
 
   const wireStore = useUpgradeWireStore();
+  const i18n = sp.i18n;
 
   const confirmSend = useCallback(async () => {
     if (
@@ -56,7 +57,7 @@ const UpgradeStripeTokens = ({
       onComplete(pay);
       navigation.goBack();
     }
-  }, [store, navigation, wireStore, onComplete]);
+  }, [store, navigation, wireStore, onComplete, i18n]);
 
   return !store.settings ? (
     <UpgradeScreenPlaceHolder />
@@ -119,14 +120,14 @@ export const useUpgradeWireStore = () => {
         }
         const done = await this.wire.send();
         if (!done) {
-          throw new UserError(i18n.t('boosts.errorPayment'));
+          throw new UserError(sp.i18n.t('boosts.errorPayment'));
         }
         return done;
       } catch (err) {
         if (err instanceof Error) {
           throw new UserError(err.message);
         } else {
-          throw new UserError(i18n.t('boosts.errorPayment'));
+          throw new UserError(sp.i18n.t('boosts.errorPayment'));
         }
       } finally {
         this.setLoading(false);

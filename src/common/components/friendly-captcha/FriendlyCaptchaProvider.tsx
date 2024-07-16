@@ -6,8 +6,8 @@ import React, {
   useState,
 } from 'react';
 import { View } from 'react-native';
-import ThemedStyles from '~/styles/ThemedStyles';
 import FriendlyCaptcha from './FriendlyCaptcha';
+import sp from '~/services/serviceProvider';
 
 export let friendlyCaptchaReference: null | FriendlyCaptchaProviderHandle =
   null;
@@ -30,11 +30,9 @@ interface FriendlyCaptchaProviderHandle {
   solveAPuzzle: (origin: string) => Promise<string>;
 }
 
-interface FriendlyCaptchaProviderProps extends React.FunctionComponent {}
-
 const FriendlyCaptchaProvider: ForwardRefRenderFunction<
   FriendlyCaptchaProviderHandle,
-  PropsWithChildren<FriendlyCaptchaProviderProps>
+  PropsWithChildren<{ children: React.ReactNode }>
 > = ({ children }, ref) => {
   const [captchas, setCaptchas] = useState<Captcha[]>([]);
 
@@ -81,7 +79,7 @@ const FriendlyCaptchaProvider: ForwardRefRenderFunction<
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: {
     height: 0,
     overflow: 'hidden',

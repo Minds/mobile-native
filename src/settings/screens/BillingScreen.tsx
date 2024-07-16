@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 import { View } from 'react-native';
-import StripeCardSelector from '../../common/components/stripe-card-selector/StripeCardSelector';
 
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
-import MText from '../../common/components/MText';
+import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
+
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
 export default class BillingScreen extends Component {
   onSelectCard = _ => {
@@ -13,7 +13,7 @@ export default class BillingScreen extends Component {
   };
 
   render() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     return (
       <View
         style={[
@@ -31,7 +31,7 @@ export default class BillingScreen extends Component {
             theme.fontXL,
             theme.marginBottom2x,
           ]}>
-          {i18n.t('wire.selectCredit')}
+          {sp.i18n.t('wire.selectCredit')}
         </MText>
         <StripeCardSelector onCardSelected={this.onSelectCard} />
       </View>

@@ -22,10 +22,11 @@ import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import Edit from './buttons/Edit';
 import { Row } from '~ui';
 import SupermindButton from '../../common/components/supermind/SupermindButton';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { SUPERMIND_ENABLED, WIRE_ENABLED } from '~/config/Config';
 import PostSubscription from './buttons/PostSubscription';
 import { useCreateChatRoom } from '~/modules/chat/hooks/useCreateChatRoom';
+import sp from '~/services/serviceProvider';
 
 export type ButtonsType =
   | 'edit'
@@ -144,7 +145,7 @@ const ChannelButtons = withErrorBoundary(
         {shouldShow('supermind') && SUPERMIND_ENABLED && (
           <SupermindButton
             entity={props.store.channel}
-            style={ThemedStyles.style.marginLeft2x}
+            style={sp.styles.style.marginLeft2x}
           />
         )}
         {shouldShow('chat') && (

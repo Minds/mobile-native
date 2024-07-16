@@ -1,23 +1,23 @@
-import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect, useCallback, forwardRef } from 'react';
+import { observer, useLocalStore } from 'mobx-react';
+import { View, StyleProp, ViewStyle, SectionListData } from 'react-native';
+import { BottomSheetSectionList } from '@gorhom/bottom-sheet';
+import { useDimensions } from '@react-native-community/hooks';
+import Icon from '@expo/vector-icons/Ionicons';
+
 import {
   BottomSheetModal,
   BottomSheetButton,
-} from '../../../common/components/bottom-sheet';
-import { View, StyleProp, ViewStyle, SectionListData } from 'react-native';
-import { BottomSheetSectionList } from '@gorhom/bottom-sheet';
-import Icon from '@expo/vector-icons/Ionicons';
-
+} from '~/common/components/bottom-sheet';
 import { useDiscoveryV2Store } from '../useDiscoveryV2Store';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
+
+import MenuSubtitle from '~/common/components/menus/MenuSubtitle';
 import { TDiscoveryTagsTag } from '../DiscoveryV2Store';
-import i18n from '../../../common/services/i18n.service';
-import { useDimensions } from '@react-native-community/hooks';
-import MenuItem from '../../../common/components/menus/MenuItem';
-import FloatingInput from '../../../common/components/FloatingInput';
+import MenuItem from '~/common/components/menus/MenuItem';
+import FloatingInput from '~/common/components/FloatingInput';
 import { Spacer } from '~/common/ui';
 import { showNotification } from 'AppMessages';
+import sp from '~/services/serviceProvider';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -96,7 +96,7 @@ type StoreType = ReturnType<typeof createStore>;
  */
 const SectionHeaderPartial = (info: { section: SectionListData<any> }) => {
   return (
-    <View style={ThemedStyles.style.bgPrimaryBackgroundHighlight}>
+    <View style={sp.styles.style.bgPrimaryBackgroundHighlight}>
       <Spacer top="L">
         <MenuSubtitle>{info.section.title.toUpperCase()}</MenuSubtitle>
       </Spacer>
@@ -108,7 +108,8 @@ const SectionHeaderPartial = (info: { section: SectionListData<any> }) => {
  * Discovery Manage Tags
  */
 const DiscoveryTagsManager = (props: Props, ref) => {
-  const theme = ThemedStyles.style;
+  const i18n = sp.i18n;
+  const theme = sp.styles.style;
   const discoveryV2 = useDiscoveryV2Store();
   const store = useLocalStore<StoreType>(createStore);
   const { height } = useDimensions().window;

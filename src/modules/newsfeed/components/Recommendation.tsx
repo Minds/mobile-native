@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import UserModel from '~/channel/UserModel';
 import { B2, H4, Row, Icon, Spacer } from '~/common/ui';
 import GroupsListItem from '~/groups/GroupsListItem';
-import ThemedStyles from '~/styles/ThemedStyles';
 
 import ChannelRecommendationItem from '~/modules/recommendation/Recommendation/components/ChannelRecommendationItem';
 import GroupModel from '~/groups/GroupModel';
@@ -13,10 +12,11 @@ import {
   RecommendationLocation,
   RecommendationType,
 } from '~/modules/recommendation';
-import useDismissible from '~/services/hooks/useDismissable';
-import i18n from '~/common/services/i18n.service';
 import { useNavigation } from '@react-navigation/native';
+
+import useDismissible from '~/services/hooks/useDismissable';
 import MenuSheet from '~/common/components/bottom-sheet/MenuSheet';
+import sp from '~/services/serviceProvider';
 
 export interface RecommendationProps {
   type: RecommendationType;
@@ -104,6 +104,7 @@ const Header = observer(
     type: RecommendationType;
     dismiss?: () => void;
   }) => {
+    const i18n = sp.i18n;
     const navigation = useNavigation();
     const sheetOptions = React.useMemo(
       () => [
@@ -120,8 +121,8 @@ const Header = observer(
       <View
         style={
           shadow
-            ? [ThemedStyles.style.bgPrimaryBackground, headerStyles.shadow]
-            : ThemedStyles.style.bgPrimaryBackground
+            ? [sp.styles.style.bgPrimaryBackground, headerStyles.shadow]
+            : sp.styles.style.bgPrimaryBackground
         }>
         <Row align="centerBetween" vertical="L" horizontal="L">
           <H4>{i18n.t('recommendedForYou')}</H4>
@@ -148,7 +149,7 @@ const Header = observer(
   },
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   borderBottom: ['borderBottom6x', 'bcolorBaseBackground'],
 });
 

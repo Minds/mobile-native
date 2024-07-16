@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
-import socketService from '~/common/services/socket.service';
+import sp from '~/services/serviceProvider';
 
 export function useRefreshRoomsIds(currentRoomId?: string) {
   useEffect(() => {
     if (currentRoomId) {
-      if (!socketService.chat?.getRooms().includes(currentRoomId)) {
-        socketService.chat?.refreshRoomList();
+      if (!sp.socket.chat?.getRooms().includes(currentRoomId)) {
+        sp.socket.chat?.refreshRoomList();
       }
     } else {
-      socketService.chat?.refreshRoomList();
+      sp.socket.chat?.refreshRoomList();
     }
   }, [currentRoomId]);
 }

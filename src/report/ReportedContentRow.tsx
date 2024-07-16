@@ -1,21 +1,22 @@
-//@ts-nocheck
 import React, { useCallback } from 'react';
-import ThemedStyles from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import Button from '../common/components/Button';
-import reportService from './ReportService';
 import MText from '../common/components/MText';
+import sp from '../services/serviceProvider';
+import { showNotification } from 'AppMessages';
 
 export default function ({ appeal }) {
-  const CS = ThemedStyles.style;
-  const navigation = useNavigation();
+  const CS = sp.styles.style;
+  const navigation = useNavigation<any>();
 
   const navToAppealScreen = useCallback(() => {
-    navigation.push('AppealScreen', { appeal });
-  }, [navigation, appeal]);
+    showNotification('Please appeal on the website');
+  }, []);
+
+  const i18n = sp.i18n;
+  const reportService = sp.resolve('report');
 
   const navToActivity = useCallback(() => {
     const entity = appeal.report.entity;
@@ -67,19 +68,16 @@ export default function ({ appeal }) {
       ? i18n.t('settings.reportedContent.entityComment')
       : i18n.t('settings.reportedContent.entityPost');
 
-  const action = (
-    <MText style={CS.bold}>
-      {i18n.t(reportService.getAction(appeal.report))}
-    </MText>
-  );
+  // @ts-ignore
+  const actionText = i18n.t(reportService.getAction(appeal.report));
+  // @ts-ignore
+  const reasonText = i18n.t(reportService.getReasonString(appeal.report));
 
-  const reason = (
-    <MText style={CS.bold}>
-      {i18n.t(reportService.getReasonString(appeal.report))}
-    </MText>
-  );
+  const action = <MText style={CS.bold}>{actionText}</MText>;
 
-  const actionTaken = <MText style={CS.bold}>{i18n.t('actionTaken')}</MText>;
+  const reason = <MText style={CS.bold}>{reasonText}</MText>;
+
+  const actionTaken = <MText style={CS.bold}>Action</MText>;
 
   const actionMessage = i18n.to(
     'notification.boostAccepted',

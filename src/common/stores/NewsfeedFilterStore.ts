@@ -7,7 +7,7 @@ import {
   extendObservable,
 } from 'mobx';
 
-import SettingsStore from '../../settings/SettingsStore';
+import SettingsService from '../../settings/SettingsApiService';
 
 /**
  * Newsfeed Filter Store
@@ -32,13 +32,13 @@ export default class NewsfeedFilterStore {
     this.defaultFilter = defaultFilter;
     this.defaultType = defaultType;
     this.defaultPeriod = defaultPeriod;
-    this.defaultNsfw = SettingsStore.consumerNsfw;
+    this.defaultNsfw = SettingsService.consumerNsfw;
 
     extendObservable(this, {
       filter: defaultFilter,
       type: defaultType,
       period: defaultPeriod,
-      nsfw: SettingsStore.consumerNsfw,
+      nsfw: SettingsService.consumerNsfw,
     });
   }
 
@@ -91,7 +91,7 @@ export default class NewsfeedFilterStore {
    */
   setNsfw(nsfw) {
     this.nsfw = nsfw;
-    SettingsStore.setConsumerNsfw(nsfw);
+    SettingsService.setConsumerNsfw(nsfw);
   }
 
   /**

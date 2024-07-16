@@ -3,11 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import ThemedStyles from '../../styles/ThemedStyles';
 import TopBar from '../TopBar';
-import i18n from '../../common/services/i18n.service';
-import NavigationService from '../../navigation/NavigationService';
-import hashtagService from '../../common/services/hashtag.service';
 import HistoryStore from '../../common/stores/HistoryStore';
 import TextInput from '../../common/components/TextInput';
 import MText from '../../common/components/MText';
@@ -16,7 +12,7 @@ import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { PosterStackScreenProps } from './PosterStackNavigator';
 import { ScrollView } from 'react-native-gesture-handler';
-
+import sp from '~/services/serviceProvider';
 /**
  * Tag row
  * @param {Object} props
@@ -35,7 +31,7 @@ type PropsType = PosterStackScreenProps<'TagSelector'>;
  * Tag selector
  */
 export default observer(function ({}: PropsType) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const store = useComposeContext();
   const inputRef = useRef<any>(null);
 
@@ -58,7 +54,7 @@ export default observer(function ({}: PropsType) {
         localStore.focused = false;
       },
       async loadSuggested() {
-        const tags = await hashtagService.getSuggested();
+        const tags = await sp.resolve('hashtag').getSuggested();
         this.setSuggested(tags);
       },
       setSuggested(s) {
@@ -92,9 +88,9 @@ export default observer(function ({}: PropsType) {
     <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <TopBar
         leftText="Tags"
-        rightText={i18n.t('done')}
-        onPressRight={NavigationService.goBack}
-        onPressBack={NavigationService.goBack}
+        rightText={sp.i18n.t('done')}
+        onPressRight={sp.navigation.goBack}
+        onPressBack={sp.navigation.goBack}
         backIconName="chevron-left"
         backIconSize="large"
         store={store}
@@ -107,7 +103,7 @@ export default observer(function ({}: PropsType) {
             theme.fontL,
             theme.paddingHorizontal3x,
           ]}>
-          {i18n.t('capture.tagsDescription')}
+          {sp.i18n.t('capture.tagsDescription')}
         </MText>
         <View style={styles.suggestedContainer}>
           <ScrollView
@@ -144,7 +140,7 @@ export default observer(function ({}: PropsType) {
             localStore.focused ? theme.bgSecondaryBackground : null,
           ]}
           placeholder="Enter tag"
-          placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+          placeholderTextColor={sp.styles.getColor('TertiaryText')}
           onSubmitEditing={localStore.add}
           onChangeText={localStore.setText}
           textAlignVertical="top"

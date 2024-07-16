@@ -4,12 +4,13 @@ import React, { FC, useEffect } from 'react';
 import { View } from 'react-native';
 import { RootStackParamList } from '~/navigation/NavigationTypes';
 import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import createLocalStore from './createLocalStore';
 import EmailSended from './EmailSended';
 import InputPassword from './InputPassword';
 import InputUser from './InputUser';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 type ResetPasswordScreenPropsType = {
   navigation: any;
@@ -60,12 +61,12 @@ const ResetPasswordScreen: FC<ResetPasswordScreenPropsType> = ({
     </ModalContainer>
   );
 };
-const modalContainerStyle = ThemedStyles.combine(
+const modalContainerStyle = sp.styles.combine(
   'bgPrimaryBackgroundHighlight',
   'alignSelfCenterMaxWidth',
 );
 
-const containerStyle = ThemedStyles.combine(
+const containerStyle = sp.styles.combine(
   'paddingTop2x',
   'borderTop',
   'bcolorPrimaryBorder',

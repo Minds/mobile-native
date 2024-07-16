@@ -11,8 +11,7 @@ import CommentHeader from './CommentHeader';
 import type CommentModel from './CommentModel';
 import type CommentsStore from './CommentsStore';
 import CommentBottomMenu from './CommentBottomMenu';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '~/common/services/i18n.service';
+
 import { useNavigation } from '@react-navigation/native';
 import ThumbAction from '../../newsfeed/activity/actions/ThumbAction';
 import MediaView from '~/common/components/MediaView';
@@ -20,8 +19,8 @@ import { LIGHT_THEME } from '../../styles/Colors';
 import ReadMore from '~/common/components/ReadMore';
 import Translate from '~/common/components/translate/Translate';
 import MText from '~/common/components/MText';
-import NavigationService from '~/navigation/NavigationService';
 import ShareAction from '~/newsfeed/activity/actions/ShareAction';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   comment: CommentModel;
@@ -41,7 +40,8 @@ export default observer(function Comment({
 }: PropsType) {
   const navigation = useNavigation<any>();
   const translateRef = React.useRef<any>();
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
 
   const {
     mature_visibility,
@@ -61,10 +61,10 @@ export default observer(function Comment({
   const mature = comment?.mature && !mature_visibility;
 
   const canReply = parent_guid_l2 && !hideReply && store.entity.allow_comments;
-  const backgroundColor = ThemedStyles.getColor(
+  const backgroundColor = sp.styles.getColor(
     isHeader ? 'SecondaryBackground' : 'PrimaryBackground',
   );
-  const startColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
+  const startColor = (sp.styles.theme ? '#242A30' : '#F5F5F5') + '00';
   const endColor = backgroundColor + 'FF';
 
   const renderRevealedFooter = React.useCallback(
@@ -83,7 +83,7 @@ export default observer(function Comment({
         </TouchableOpacity>
       );
     },
-    [theme],
+    [theme, i18n],
   );
 
   const renderTruncatedFooter = React.useCallback(
@@ -115,6 +115,7 @@ export default observer(function Comment({
       theme.bold,
       theme.textCenter,
       theme.marginTop2x,
+      i18n,
     ],
   );
   const translate = React.useCallback(() => {
@@ -163,7 +164,7 @@ export default observer(function Comment({
               <>
                 <ReadMore
                   numberOfLines={6}
-                  navigation={NavigationService}
+                  navigation={sp.navigation}
                   text={entities.decodeHTML(description)}
                   renderTruncatedFooter={renderTruncatedFooter}
                   renderRevealedFooter={renderRevealedFooter}

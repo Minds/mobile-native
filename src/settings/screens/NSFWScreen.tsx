@@ -1,15 +1,13 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import { View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import settingsService from '../SettingsService';
+
 import CenteredLoading from '../../common/components/CenteredLoading';
 import MText from '../../common/components/MText';
-import sessionService from '~/common/services/session.service';
 import Switch from '~/common/components/controls/Switch';
+import sp from '~/services/serviceProvider';
 
 export default function () {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const [matureContent, setMatureContent] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -19,7 +17,7 @@ export default function () {
    */
   useEffect(() => {
     async function getMatureContent() {
-      const { channel } = await settingsService.getSettings();
+      const { channel } = await sp.resolve('settings').getSettings();
       setMatureContent(channel.mature);
       setLoading(false);
     }
@@ -33,10 +31,10 @@ export default function () {
     async val => {
       setLoading(true);
       try {
-        await settingsService.submitSettings({ mature: val });
+        await sp.resolve('settings').submitSettings({ mature: val });
 
         // set the value on the active user
-        sessionService.getUser().setMature(val);
+        sp.session.getUser().setMature(val);
 
         setMatureContent(val);
       } catch (err) {
@@ -68,7 +66,7 @@ export default function () {
         ]}>
         <MText
           style={[theme.marginLeft, theme.colorSecondaryText, theme.fontL]}>
-          {i18n.t('settings.showMatureContent')}
+          {sp.i18n.t('settings.showMatureContent')}
         </MText>
         <Switch value={matureContent} onChange={save} />
       </View>

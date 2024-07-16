@@ -3,11 +3,12 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useMemo } from 'react';
 import { View, Keyboard } from 'react-native';
 import { IconButton } from '~ui/icons';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import { IS_IPAD, IS_TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 function ComposeBottomBar(props) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const navigation = useNavigation();
 
   const allowMedia = !props.store.isEdit;
@@ -15,7 +16,7 @@ function ComposeBottomBar(props) {
   const iconStyle = useMemo(
     () => [
       theme.padding3x,
-      ThemedStyles.theme ? theme.colorWhite : theme.colorIcon,
+      sp.styles.theme ? theme.colorWhite : theme.colorIcon,
     ],
     [theme.colorIcon, theme.colorWhite, theme.padding3x],
   );
@@ -85,7 +86,7 @@ function ComposeBottomBar(props) {
 
 export default observer(ComposeBottomBar);
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   bottomBar: [
     'bgPrimaryBackground',
     'paddingLeft2x',

@@ -1,10 +1,12 @@
 import { AnalyticsService } from './analytics.service';
 import mindsConfigService from '~/common/services/minds-config.service';
-import { storages } from './storage/storages.service';
+import { storagesService } from '~/common/services';
 
 //jest.mock('~/common/services/minds-config.service');
 
-const mockedUserStorage = storages.user as jest.Mocked<typeof storages.user>;
+const mockedUserStorage = storagesService.user as jest.Mocked<
+  typeof storagesService.user
+>;
 
 describe('AnalyticsService', () => {
   let service: AnalyticsService;
@@ -58,7 +60,7 @@ describe('AnalyticsService', () => {
 
     expect(service.getFeatureFlag('test-flag')).toBe(true);
     expect(service.posthog.capture).toHaveBeenCalled();
-    expect(mockedUserStorage?.setInt).toHaveBeenCalled();
+    expect(mockedUserStorage?.set).toHaveBeenCalled();
   });
 
   it('should not emit feature flag event when getFeatureFlag called and has emitted before', () => {
@@ -66,7 +68,7 @@ describe('AnalyticsService', () => {
     jest.spyOn(service.posthog, 'capture');
 
     const d = Date.now();
-    mockedUserStorage?.getInt.mockReturnValue(d);
+    mockedUserStorage?.getNumber.mockReturnValue(d);
 
     expect(service.getFeatureFlag('test-flag')).toBe(true);
     expect(service.posthog.capture).not.toHaveBeenCalled();

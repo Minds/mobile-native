@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
 
-import ActivityModel from '../../../newsfeed/ActivityModel';
+import ActivityModel from '~/newsfeed/ActivityModel';
 import { actionsContainerStyle } from './styles';
 import { IconButtonNext } from '~/common/ui';
-import PermissionsService from '~/common/services/permissions.service';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   navigation: any;
@@ -19,14 +19,14 @@ export default class BoostAction extends PureComponent<PropsType> {
    * Render
    */
   render() {
-    const canBoost = PermissionsService.canBoost();
+    const canBoost = sp.permissions.canBoost();
     return (
       <IconButtonNext
         testID="Boost"
         style={
           canBoost
             ? actionsContainerStyle
-            : [actionsContainerStyle, ThemedStyles.style.opacity50]
+            : [actionsContainerStyle, sp.styles.style.opacity50]
         }
         scale
         name="boost"

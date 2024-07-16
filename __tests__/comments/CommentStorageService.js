@@ -1,5 +1,5 @@
 import { CommentStorageService } from '../../src/comments/CommentStorageService';
-import { storages } from '../../src/common/services/storage/storages.service';
+import { storagesService } from '~/common/services';
 jest.mock('../../src/common/services/storage/storages.service');
 jest.mock('../../src/common/services/log.service');
 
@@ -16,8 +16,7 @@ describe('Comment storage service', () => {
         entity_guid: '988128928149561344',
         parent_guid_l1: '0',
         parent_guid_l2: '0',
-        guid:
-          'eyJfdHlwZSI6ImNvbW1lbnQiLCJjaGlsZF9wYXRoIjoiOTg5Njg4NDA0MTEyMDI3NjQ4OjA6MCIsImVudGl0eV9ndWlkIjoiOTg4MTI4OTI4MTQ5NTYxMzQ0IiwiZ3VpZCI6Ijk4OTY4ODQwNDExMjAyNzY0OCIsInBhcmVudF9wYXRoIjoiMDowOjAiLCJwYXJ0aXRpb25fcGF0aCI6IjA6MDowIn0=',
+        guid: 'eyJfdHlwZSI6ImNvbW1lbnQiLCJjaGlsZF9wYXRoIjoiOTg5Njg4NDA0MTEyMDI3NjQ4OjA6MCIsImVudGl0eV9ndWlkIjoiOTg4MTI4OTI4MTQ5NTYxMzQ0IiwiZ3VpZCI6Ijk4OTY4ODQwNDExMjAyNzY0OCIsInBhcmVudF9wYXRoIjoiMDowOjAiLCJwYXJ0aXRpb25fcGF0aCI6IjA6MDowIn0=',
         replies_count: 0,
         owner_guid: '781640694769917958',
         time_created: 1561336103,
@@ -45,13 +44,13 @@ describe('Comment storage service', () => {
   };
 
   it('should return null on empty result', () => {
-    storages.userCache.getMap.mockReturnValue(null);
+    storagesService.userCache.getObject.mockReturnValue(null);
 
     return expect(storage.read('0001', '0:0:0', true, '', '')).toBe(null);
   });
 
   it('should return stored comments', () => {
-    storages.userCache.getMap.mockReturnValue(response);
+    storagesService.userCache.getObject.mockReturnValue(response);
 
     return expect(storage.read('0001', '0:0:0', true, '', '')).toEqual(
       response,
@@ -64,6 +63,6 @@ describe('Comment storage service', () => {
     storage.write('1234', '0:0:0', true, '1', '0002', result);
 
     // TODO: check parameters, for some reason jest is transforming the paramters array.
-    expect(storages.userCache.setMap).toBeCalled();
+    expect(storagesService.userCache.setObject).toBeCalled();
   });
 });

@@ -6,7 +6,7 @@ import { useBottomSheetModal } from '@gorhom/bottom-sheet';
 import { SectionTitle, RadioButton } from '~/common/components/bottom-sheet';
 import { Spacer } from '~ui';
 import BaseFeedFilter from '~/common/components/feed-filters/BaseFeedFilter';
-import i18n from '~/common/services/i18n.service';
+import sp from '~/services/serviceProvider';
 
 const filters = {
   all: 'all',
@@ -43,6 +43,8 @@ const SupermindConsoleFeedFilter = ({
     onFilterChange(filter);
     dismiss();
   };
+
+  const i18n = sp.i18n;
 
   return (
     <BaseFeedFilter label={i18n.t(`supermind.filter.${value}`)} {...otherProps}>

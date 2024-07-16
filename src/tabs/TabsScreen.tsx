@@ -6,7 +6,6 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { View, Platform, Dimensions } from 'react-native';
 import MIcon from '@expo/vector-icons/MaterialIcons';
-import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
 import { observer } from 'mobx-react';
@@ -25,6 +24,8 @@ import withModalProvider from '~/navigation/withModalProvide';
 import { useUnreadMessages } from '~/modules/chat/hooks/useUnreadMessages';
 import { useIncrementUnreadOnNewMessage } from '~/modules/chat/hooks/useIncrementUnreadOnNewMessage';
 import { useCustomNavigationTabs } from '~/modules/navigation/service/custom-navigation.service';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -163,7 +164,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
  * @param {Object} props
  */
 const Tabs = observer(function () {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const menuConf = useCustomNavigationTabs();
   const navMap = menuConf?.reduce((acc, item) => {
@@ -190,8 +191,8 @@ const Tabs = observer(function () {
             name={navMap[routeMap[route.name]].iconId.replace('_', '-')}
             style={
               focused
-                ? ThemedStyles.style.colorPrimaryText
-                : ThemedStyles.style.colorIcon
+                ? sp.styles.style.colorPrimaryText
+                : sp.styles.style.colorIcon
             }
           />
         );
@@ -248,7 +249,7 @@ const Tabs = observer(function () {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   unread: [
     {
       width: 8,

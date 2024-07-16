@@ -1,9 +1,10 @@
 import React from 'react';
 import { IconButton } from '~ui/icons';
-import i18n from '../../../../common/services/i18n.service';
+
 import MindsTokens from '../MindsTokens';
 import { TokensTabStore } from './createTokensTabStore';
 import { B1, Row, HairlineRow } from '~ui';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   minds: string;
@@ -13,6 +14,7 @@ type PropsType = {
 };
 
 const Payout = ({ minds, mindsPrice, isToday, store }: PropsType) => {
+  const i18n = sp.i18n;
   return (
     <HairlineRow>
       <Row flex space="L">

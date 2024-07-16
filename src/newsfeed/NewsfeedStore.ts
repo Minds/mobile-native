@@ -1,7 +1,7 @@
 import { action, computed, observable } from 'mobx';
-import { storages } from '~/common/services/storage/storages.service';
 import EventEmitter from 'eventemitter3';
-import MetadataService from '~/common/services/metadata.service';
+import sp from '~/services/serviceProvider';
+import type { MetadataService } from '~/common/services/metadata.service';
 
 const FEED_TYPE_KEY = 'newsfeed:feedType';
 
@@ -15,13 +15,17 @@ class NewsfeedStore {
 
   static events = new EventEmitter();
 
-  meta = new MetadataService();
+  meta: MetadataService;
+
+  constructor() {
+    this.meta = sp.resolve('metadata');
+  }
 
   @computed
   get feedType() {
     if (!this._feedType) {
       try {
-        let storedFeedType = storages.user?.getString(
+        let storedFeedType = sp.storages.user?.getString(
           FEED_TYPE_KEY,
         ) as NewsfeedType;
 
@@ -55,7 +59,7 @@ class NewsfeedStore {
     this._feedType = feedType;
     this.updateMetadata();
     try {
-      storages.user?.setString(FEED_TYPE_KEY, feedType);
+      sp.storages.user?.set(FEED_TYPE_KEY, feedType);
     } catch (e) {
       console.error(e);
     }

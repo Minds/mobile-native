@@ -12,8 +12,6 @@ import {
 
 import TabsScreen from '../tabs/TabsScreen';
 import TabsScreenVertical from '../tabs/TabsScreenVertical';
-import ThemedStyles from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
 
 import {
   AppStackParamList,
@@ -25,11 +23,9 @@ import ModalTransition from './ModalTransition';
 import AuthTransition from './AuthTransition';
 
 import { observer } from 'mobx-react';
-import sessionService from '~/common/services/session.service';
-import AuthService from '~/auth/AuthService';
 import { IS_IPAD, IS_TENANT } from '~/config/Config';
-import i18nService from '../common/services/i18n.service';
 import withModalProvider from './withModalProvide';
+import sp from '~/services/serviceProvider';
 
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
@@ -47,19 +43,19 @@ const TabScreenWithModal = withModalProvider(
 );
 
 const AppStack = observer(() => {
-  if (sessionService.switchingAccount) {
+  if (sp.session.switchingAccount) {
     return null;
   }
-
+  const i18n = sp.i18n;
   const statusBarStyle =
-    ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
+    sp.styles.theme === 0 ? 'dark-content' : 'light-content';
   return (
     <>
       <StatusBar
         barStyle={statusBarStyle}
-        backgroundColor={ThemedStyles.getColor('PrimaryBackground')}
+        backgroundColor={sp.styles.getColor('PrimaryBackground')}
       />
-      <AppStackNav.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+      <AppStackNav.Navigator screenOptions={sp.styles.defaultScreenOptions}>
         <AppStackNav.Screen
           name="Tabs"
           component={TabScreenWithModal}
@@ -189,7 +185,7 @@ const AppStack = observer(() => {
           options={{
             title: 'Receiver Address',
             headerStyle: {
-              backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+              backgroundColor: sp.styles.getColor('PrimaryBackground'),
             },
             headerShadowVisible: false,
           }}
@@ -202,7 +198,7 @@ const AppStack = observer(() => {
           options={{
             title: i18n.t('wallet.bitcoins.update'),
             headerStyle: {
-              backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+              backgroundColor: sp.styles.getColor('PrimaryBackground'),
             },
             headerShadowVisible: false,
           }}
@@ -215,7 +211,7 @@ const AppStack = observer(() => {
           options={{
             title: i18n.t('wallet.bank.title'),
             headerStyle: {
-              backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+              backgroundColor: sp.styles.getColor('PrimaryBackground'),
             },
             headerShadowVisible: false,
           }}
@@ -280,24 +276,24 @@ const rootStackCardScreenOptions = {
   headerShown: true,
   ...TransitionPresets.SlideFromRightIOS,
   cardStyle: {
-    backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+    backgroundColor: sp.styles.getColor('PrimaryBackground'),
   },
   headerStyle: {
-    backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+    backgroundColor: sp.styles.getColor('PrimaryBackground'),
   },
 };
 
 const RootStack = observer(function () {
-  const is_email_confirmed = sessionService.getUser()?.email_confirmed;
-
+  const is_email_confirmed = sp.session.getUser()?.email_confirmed;
+  const auth = sp.resolve('auth');
+  const session = sp.session;
+  const i18n = sp.i18n;
   const shouldShowEmailVerification =
-    !is_email_confirmed &&
-    !sessionService.switchingAccount &&
-    AuthService.justRegistered;
+    !is_email_confirmed && !sp.session.switchingAccount && auth.justRegistered;
 
   return (
     <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
-      {!sessionService.showAuthNav ? (
+      {!sp.session.showAuthNav ? (
         shouldShowEmailVerification ? (
           <>
             <RootStackNav.Screen
@@ -320,9 +316,7 @@ const RootStack = observer(function () {
           </>
         ) : (
           <>
-            {AuthService.justRegistered &&
-            !AuthService.onboardCompleted &&
-            !IS_TENANT ? (
+            {auth.justRegistered && !auth.onboardCompleted && !IS_TENANT ? (
               <RootStackNav.Screen
                 name="App"
                 getComponent={() =>
@@ -337,7 +331,7 @@ const RootStack = observer(function () {
                 options={({ route }) => ({
                   // only animate on nested route changes (e.g. CommentBottomSheetModal -> channel)
                   animationEnabled: Boolean(route.params),
-                  cardStyle: ThemedStyles.style.bgPrimaryBackground, // avoid dark fade in android transition
+                  cardStyle: sp.styles.style.bgPrimaryBackground, // avoid dark fade in android transition
                   ...(route.params
                     ? TransitionPresets.SlideFromRightIOS
                     : null),
@@ -393,7 +387,7 @@ const RootStack = observer(function () {
               options={modalOptions}
             />
             <RootStackNav.Screen
-              navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+              navigationKey={session.showAuthNav ? 'auth' : 'inApp'}
               name="ChooseBrowserModal"
               getComponent={() =>
                 require('~/settings/screens/ChooseBrowserModalScreen').default
@@ -525,8 +519,8 @@ const RootStack = observer(function () {
                   .default
               }
               options={{
-                title: i18nService.t('settings.otherOptions.b1'),
-                headerBackTitle: i18nService.t('back'),
+                title: i18n.t('settings.otherOptions.b1'),
+                headerBackTitle: i18n.t('back'),
                 ...rootStackCardScreenOptions,
               }}
             />
@@ -586,25 +580,25 @@ const RootStack = observer(function () {
         </>
       )}
       <RootStackNav.Screen
-        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+        navigationKey={session.showAuthNav ? 'auth' : 'inApp'}
         name="OidcLogin"
         getComponent={() => require('~/auth/oidc/OidcScreen').default}
         options={modalOptions}
       />
       <RootStackNav.Screen
-        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+        navigationKey={session.showAuthNav ? 'auth' : 'inApp'}
         name="MultiUserLogin"
         getComponent={() => require('~/auth/multi-user/LoginScreen').default}
         options={modalOptions}
       />
       <RootStackNav.Screen
-        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+        navigationKey={session.showAuthNav ? 'auth' : 'inApp'}
         name="MultiUserRegister"
         getComponent={() => require('~/auth/multi-user/RegisterScreen').default}
         options={modalOptions}
       />
       <RootStackNav.Screen
-        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+        navigationKey={session.showAuthNav ? 'auth' : 'inApp'}
         name="DevTools"
         getComponent={() =>
           require('~/settings/screens/DevToolsScreen').default
@@ -612,7 +606,7 @@ const RootStack = observer(function () {
         options={modalOptions}
       />
       <RootStackNav.Screen
-        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+        navigationKey={session.showAuthNav ? 'auth' : 'inApp'}
         name="ResetPassword"
         getComponent={() =>
           require('~/auth/reset-password/ResetPasswordScreen').default
@@ -620,7 +614,7 @@ const RootStack = observer(function () {
         options={modalOptions}
       />
       <RootStackNav.Screen
-        navigationKey={sessionService.showAuthNav ? 'auth' : 'inApp'}
+        navigationKey={session.showAuthNav ? 'auth' : 'inApp'}
         name="BottomSheet"
         getComponent={() =>
           require('../common/components/bottom-sheet/BottomSheetScreen').default

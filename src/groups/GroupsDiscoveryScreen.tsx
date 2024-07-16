@@ -6,9 +6,9 @@ import withPreventDoubleTap from '../common/components/PreventDoubleTap';
 import OffsetList from '../common/components/OffsetList';
 import GroupModel from './GroupModel';
 import { ScreenHeader, Screen } from '~/common/ui';
-import i18n from '~/common/services/i18n.service';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { IS_TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 const DebouncedGroupsListItem = withErrorBoundary(
   withPreventDoubleTap(GroupsListItem),
@@ -28,7 +28,7 @@ const GroupsDiscoveryScreen = observer(() => {
 
   return (
     <Screen safe>
-      <ScreenHeader title={i18n.t('discovery.discoverGroups')} back />
+      <ScreenHeader title={sp.i18n.t('discovery.discoverGroups')} back />
       <OffsetList
         renderItem={renderGroup}
         fetchEndpoint={endpoint}

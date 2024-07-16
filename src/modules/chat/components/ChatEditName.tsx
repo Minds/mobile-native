@@ -6,8 +6,8 @@ import FloatingInput from '~/common/components/FloatingInput';
 import { useUpdateChatRoomNameMutation } from '~/graphql/api';
 import { useQueryClient } from '@tanstack/react-query';
 import { Button } from '~/common/ui';
-import logService from '~/common/services/log.service';
 import { getChatRoomInfoKey } from '../hooks/useChatRoomInfoQuery';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   roomGuid: string;
@@ -35,7 +35,7 @@ export default function ChatEditName({
       queryClient.invalidateQueries(key);
     },
     onError: error => {
-      logService.exception('[ChatEditName]', error);
+      sp.log.exception('[ChatEditName]', error);
       showNotification('Error updating chat name', 'warning');
     },
   });

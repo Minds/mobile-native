@@ -1,16 +1,17 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useCallback, useEffect } from 'react';
 import { View } from 'react-native';
-import FeedList from '../../../common/components/FeedList';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
+import FeedList from '~/common/components/FeedList';
+
 import createBlockedChannelsStore from './createBlockedChannelsStore';
-import i18n from '../../../common/services/i18n.service';
 import BlockedChannel, { Row } from './BlockedChannel';
-import MText from '../../../common/components/MText';
+import MText from '~/common/components/MText';
 import { Screen } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 
 const BlockedChannelsScreen = observer(props => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const localStore = useLocalStore(createBlockedChannelsStore);
 
   const renderRow = useCallback(
@@ -34,7 +35,7 @@ const BlockedChannelsScreen = observer(props => {
         navigation={props.navigation}
         emptyMessage={
           <View style={[theme.centered, theme.marginTop4x]}>
-            <MText>{i18n.t('settings.noBlockedChannels')}</MText>
+            <MText>{sp.i18n.t('settings.noBlockedChannels')}</MText>
           </View>
         }
         style={[theme.bgPrimaryBackground, theme.flexContainer]}

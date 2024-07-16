@@ -3,19 +3,19 @@ import { RefreshControl, View, ViewToken } from 'react-native';
 import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import { FlashList, FlashListProps } from '@shopify/flash-list';
+import { useDimensions } from '@react-native-community/hooks';
 
 import ActivityModel from '~/newsfeed/ActivityModel';
 import Activity from '~/newsfeed/activity/Activity';
 import BaseModel from '~/common/BaseModel';
-import i18n from '~/common/services/i18n.service';
 import ErrorLoading from '~/common/components/ErrorLoading';
 import MText from '~/common/components/MText';
 import { ComponentsStyle } from '~/styles/Components';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import ErrorBoundary from '../../../common/components/ErrorBoundary';
 import { IS_IOS } from '~/config/Config';
-import ThemedStyles from '~/styles/ThemedStyles';
-import { useDimensions } from '@react-native-community/hooks';
+
+import sp from '~/services/serviceProvider';
 
 type PlaceholderType =
   | React.ComponentType<any>
@@ -33,7 +33,7 @@ export type FeedListProps<T extends BaseModel> = {
   placeholder?: PlaceholderType;
 } & Omit<FlashListProps<T>, 'getItemType' | 'renderItem'>;
 
-const colors = [ThemedStyles.getColor('Link')];
+const colors = [sp.styles.getColor('Link')];
 
 /**
  * Functional implementation of the FeedList component
@@ -85,7 +85,7 @@ function FeedListCmp<T extends BaseModel>(
         refreshing={Boolean(refreshing)}
         onRefresh={onRefresh}
         progressViewOffset={IS_IOS ? 0 : 80}
-        tintColor={ThemedStyles.getColor('Link')}
+        tintColor={sp.styles.getColor('Link')}
         colors={colors}
       />
     ),
@@ -139,7 +139,7 @@ export const FeedListEmpty = ({
     <View style={ComponentsStyle.emptyComponentContainer}>
       <View style={ComponentsStyle.emptyComponent}>
         <MText style={ComponentsStyle.emptyComponentMessage}>
-          {emptyMessage || i18n.t('newsfeed.empty')}
+          {emptyMessage || sp.i18n.t('newsfeed.empty')}
         </MText>
       </View>
     </View>
@@ -151,7 +151,7 @@ export const FeedListFooter = ({ loading, error, reload }) => {
     return <CenteredLoading />;
   }
   if (error) {
-    return <ErrorLoading message={i18n.t('cantLoad')} tryAgain={reload} />;
+    return <ErrorLoading message={sp.i18n.t('cantLoad')} tryAgain={reload} />;
   }
   return null;
 };

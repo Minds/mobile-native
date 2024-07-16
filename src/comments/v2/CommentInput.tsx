@@ -21,8 +21,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
 import type CommentsStore from './CommentsStore';
 import MediaPreview from './MediaPreview';
 import MetaPreview from '../../compose/MetaPreview';
@@ -36,6 +34,7 @@ import MText from '../../common/components/MText';
 import Tags from '~/common/components/Tags';
 import AutoComplete from '~/common/components/AutoComplete/AutoComplete';
 import onImageInput from '~/common/helpers/onImageInput';
+import sp from '~/services/serviceProvider';
 
 const { height } = Dimensions.get('window');
 
@@ -54,10 +53,10 @@ export const CommentInputContext = React.createContext(storeProvider);
 /**
  * Floating Input component
  */
-const CommentInput = observer((onShow, onDismiss) => {
+const CommentInput = observer(() => {
   const navigation = useNavigation();
   const bottomInset = useSafeAreaInsets().bottom;
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const ref = React.useRef<TextInputType>(null);
   const [autoCompleteVisible, setAutoCompleteVisible] = useState(false);
   const provider = React.useContext(CommentInputContext);
@@ -102,8 +101,8 @@ const CommentInput = observer((onShow, onDismiss) => {
 
   const placeHolder =
     provider.store.entity instanceof GroupModel
-      ? i18n.t('messenger.typeYourMessage')
-      : i18n.t('activity.typeComment');
+      ? sp.i18n.t('messenger.typeYourMessage')
+      : sp.i18n.t('activity.typeComment');
 
   const inputMaxHeight = {
     maxHeight:
@@ -169,8 +168,8 @@ const CommentInput = observer((onShow, onDismiss) => {
             ]}>
             <MText style={theme.colorSecondaryText}>
               {provider.store.edit
-                ? i18n.t('edit')
-                : i18n.t('activity.replyTo', {
+                ? sp.i18n.t('edit')
+                : sp.i18n.t('activity.replyTo', {
                     user: provider.store.parent?.ownerObj.username,
                   })}
             </MText>
@@ -190,7 +189,7 @@ const CommentInput = observer((onShow, onDismiss) => {
             multiline={true}
             editable={!provider.store.saving}
             scrollEnabled={true}
-            placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+            placeholderTextColor={sp.styles.getColor('TertiaryText')}
             placeholder={placeHolder}
             underlineColorAndroid="transparent"
             onChangeText={provider.store?.setText}
@@ -246,7 +245,7 @@ const CommentInput = observer((onShow, onDismiss) => {
             </View>
           ) : (
             <View style={[theme.alignSelfCenter, theme.justifyEnd]}>
-              <Flow color={ThemedStyles.getColor('PrimaryText')} />
+              <Flow color={sp.styles.getColor('PrimaryText')} />
             </View>
           )}
         </View>

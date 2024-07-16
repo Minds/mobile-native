@@ -3,7 +3,7 @@ import React from 'react';
 import { TouchableOpacityProps, TouchableOpacity } from 'react-native';
 import { B2 } from '~/common/ui';
 import { SupermindGradient } from '~/styles/Colors';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 type Props = {
   title?: string;
@@ -32,7 +32,7 @@ export default function GradientButton({ title, style, ...props }: Props) {
 const start = { x: 0, y: 0 };
 const end = { x: 1, y: 0 };
 const locations = [0, 0.4, 1];
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   outerStyle: [
     {
       height: 36,

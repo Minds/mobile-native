@@ -6,11 +6,10 @@ import { View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
 
 import GroupModel from '~/groups/GroupModel';
-import ThemedStyles from '~/styles/ThemedStyles';
-import { pushComposeCreateScreen } from '~/compose/ComposeCreateScreen';
-import PermissionsService from '~/common/services/permissions.service';
-import { IS_TENANT } from '~/config/Config';
 
+import { pushComposeCreateScreen } from '~/compose/ComposeCreateScreen';
+import { IS_TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 type CaptureFabProps = {
   group?: GroupModel;
   navigation: any;
@@ -18,7 +17,7 @@ type CaptureFabProps = {
 };
 
 const CaptureFab = ({ navigation, group, testID }: CaptureFabProps) => {
-  if (!PermissionsService.canComment()) {
+  if (!sp.permissions.canComment()) {
     return null;
   }
   const pushComposeCreate = () =>
@@ -67,7 +66,7 @@ export const CaptureFabIcon = ({
     }>
     <Icon
       name="edit"
-      style={ThemedStyles.style.colorPrimaryBackground}
+      style={sp.styles.style.colorPrimaryBackground}
       size={32}
       onPress={onPress}
       onLongPress={onLongPress}
@@ -76,7 +75,7 @@ export const CaptureFabIcon = ({
   </View>
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   iconContainer: [
     {
       width: 64,

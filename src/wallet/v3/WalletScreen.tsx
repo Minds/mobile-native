@@ -5,21 +5,20 @@ import {
   CompositeNavigationProp,
 } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { observer, useLocalStore } from 'mobx-react';
-import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
+import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
 import TokensTab from './currency-tabs/tokens/TokensTab';
-import type { CurrencyType } from '../../types/Payment';
-import type { TabType } from '../../common/components/topbar-tabbar/TopbarTabbar';
+import type { CurrencyType } from '~/types/Payment';
+import type { TabType } from '~/common/components/topbar-tabbar/TopbarTabbar';
 import type { WalletStoreType } from '../v2/createWalletStore';
 import type {
   AppStackParamList,
   MoreStackParamList,
-} from '../../navigation/NavigationTypes';
-import CenteredLoading from '../../common/components/CenteredLoading';
+} from '~/navigation/NavigationTypes';
+import CenteredLoading from '~/common/components/CenteredLoading';
 import UsdTab from './currency-tabs/cash/UsdTab';
-import i18n from '../../common/services/i18n.service';
-import { useStores } from '../../common/hooks/use-stores';
+import { useStores } from '~/common/hooks/use-stores';
 import { createTokensTabStore } from './currency-tabs/tokens/createTokensTabStore';
 // import TokenPrice from './TokenPrice';
 import createUsdTabStore from './currency-tabs/cash/createUsdTabStore';
@@ -29,6 +28,8 @@ import { IS_IOS, IS_IPAD } from '~/config/Config';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 import CreditsTab from '~/modules/gif-card/components/CreditsTab';
 import { useGetGiftBalance } from '~/modules/gif-card/components/GiftCardList';
+import sp from '~/services/serviceProvider';
+
 // import { IS_FROM_STORE } from '~/config/Config';
 
 export type WalletScreenRouteProp = RouteProp<MoreStackParamList, 'Wallet'>;
@@ -48,7 +49,7 @@ type PropsType = {
 const WalletScreen = observer((props: PropsType) => {
   const { currency, section } = props.route.params ?? {};
 
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const store: WalletStoreType = useStores().wallet;
 
   const tokenTabStore = useLocalStore(createTokensTabStore, store);
@@ -56,7 +57,7 @@ const WalletScreen = observer((props: PropsType) => {
   const balance = useGetGiftBalance(false);
 
   const showCreditTab = (balance ?? 0) > 0;
-
+  const i18n = sp.i18n;
   const tabs: Array<TabType<CurrencyType>> = [
     {
       id: 'tokens',

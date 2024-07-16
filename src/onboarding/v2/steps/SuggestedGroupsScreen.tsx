@@ -1,23 +1,22 @@
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
 import { ScrollView, View } from 'react-native';
-import CenteredLoading from '../../../common/components/CenteredLoading';
-import MText from '../../../common/components/MText';
-import i18n from '../../../common/services/i18n.service';
-import FeedStore from '../../../common/stores/FeedStore';
-import GroupModel from '../../../groups/GroupModel';
-import GroupsListItem from '../../../groups/GroupsListItem';
-import NavigationService from '../../../navigation/NavigationService';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import CenteredLoading from '~/common/components/CenteredLoading';
+import MText from '~/common/components/MText';
+import FeedStore from '~/common/stores/FeedStore';
+import GroupModel from '~/groups/GroupModel';
+import GroupsListItem from '~/groups/GroupsListItem';
+
 import ModalContainer from './ModalContainer';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 /**
  * Subscribe groups Modal Screen
  */
 export default withErrorBoundaryScreen(
   observer(function SuggestedGroupsScreen() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const { current: listStore } = useRef(new FeedStore<GroupModel>());
     useEffect(() => {
       listStore
@@ -31,12 +30,12 @@ export default withErrorBoundaryScreen(
         })
         .fetchRemoteOrLocal();
     }, [listStore]);
-
+    const i18n = sp.i18n;
     return (
       <ModalContainer
         title={i18n.t('onboarding.joinGroup')}
         contentContainer={theme.alignSelfCenterMaxWidth}
-        onPressBack={NavigationService.goBack}>
+        onPressBack={sp.navigation.goBack}>
         <View style={[theme.flexContainer, theme.paddingHorizontal2x]}>
           <MText
             style={[

@@ -1,17 +1,19 @@
 import { observable, action, runInAction } from 'mobx';
+import { Image } from 'expo-image';
 
-import logService from '../services/log.service';
 import ViewStore from './ViewStore';
-import MetadataService, { MetadataMedium } from '../services/metadata.service';
-import FeedsService from '../services/feeds.service';
-import channelService from '../../channel/ChannelService';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import BaseModel from '../BaseModel';
-import settingsStore from '../../settings/SettingsStore';
 import { isAbort } from '../services/ApiErrors';
 import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
 import { InjectItem } from '../components/FeedList';
-import { Image } from 'expo-image';
+import type {
+  MetadataMedium,
+  MetadataService,
+} from '../services/metadata.service';
+import type { FeedsService } from '../services/feeds.service';
+
+import sp from '~/services/serviceProvider';
 
 enum FeedAction {
   Add = 0,
@@ -80,7 +82,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
   /**
    * @var {FeedsService}
    */
-  feedsService = new FeedsService();
+  feedsService: FeedsService;
 
   /**
    * The offset of the list
@@ -110,8 +112,9 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    */
   constructor(includeMetadata = false) {
     if (includeMetadata) {
-      this.metadataService = new MetadataService();
+      this.metadataService = sp.resolve('metadata');
     }
+    this.feedsService = sp.resolve('feed');
   }
 
   /**
@@ -203,7 +206,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
         this.entities.push(entity);
       });
 
-      if (!settingsStore.dataSaverEnabled) {
+      if (!sp.resolve('settings').dataSaverEnabled) {
         // Preload images
         const images = entities
           .map(e => {
@@ -510,7 +513,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
-      logService.exception('[FeedStore]', err);
+      sp.log.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
       this.setLoading(false);
@@ -575,7 +578,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
-      logService.exception('[FeedStore]', err);
+      sp.log.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
       this.setLoading(false);
@@ -624,7 +627,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       // ignore aborts
       if (isAbort(err)) return;
       console.log(err);
-      logService.exception('[FeedStore]', err);
+      sp.log.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
       this.setLoading(false);
@@ -675,7 +678,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
       // ignore aborts
       if (isAbort(err)) return;
       console.log(err);
-      logService.exception('[FeedStore]', err);
+      sp.log.exception('[FeedStore]', err);
       if (this.entities.length === 0) this.setErrorLoading(true);
     } finally {
       this.setLoading(false);
@@ -709,7 +712,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     } catch (err) {
       // ignore aborts
       if (isAbort(err)) return;
-      logService.exception('[FeedStore]', err);
+      sp.log.exception('[FeedStore]', err);
       this.setErrorLoading(true);
     } finally {
       this.setLoading(false);
@@ -727,7 +730,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
     try {
       await this.fetchRemoteOrLocal(true, wait);
     } catch (err) {
-      logService.exception('[FeedStore]', err);
+      sp.log.exception('[FeedStore]', err);
     } finally {
       this.refreshing = false;
     }
@@ -762,8 +765,10 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * Get channel scheduled activities count
    */
   async getScheduledCount(guid) {
-    const count = await channelService.getScheduledCount(guid);
-    this.setScheduledCount(parseInt(count, 10));
+    const count = await sp.resolve('channel').getScheduledCount(guid);
+    this.setScheduledCount(
+      typeof count === 'string' ? parseInt(count, 10) : count,
+    );
   }
 
   @action

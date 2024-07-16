@@ -3,7 +3,6 @@ import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 
 import { B3, Button } from '~ui';
-import i18n from '~/common/services/i18n.service';
 import {
   IAP_SKUS_PLUS,
   IAP_SKUS_PRO,
@@ -21,14 +20,12 @@ import {
 } from 'react-native-iap';
 import UpgradeScreenPlaceHolder from './UpgradeScreenPlaceHolder';
 import PlanOptionsIAP from './PlanOptionsIAP';
-import logService from '~/common/services/log.service';
 import { showNotification } from 'AppMessages';
-import sessionService from '~/common/services/session.service';
-import apiService from '~/common/services/api.service';
 import { useStores } from '~/common/hooks/use-stores';
 import { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { GOOGLE_PLAY_STORE, IS_IOS } from '~/config/Config';
 import CenteredLoading from '~/common/components/CenteredLoading';
+import sp from '~/services/serviceProvider';
 
 type UpgradeInPurchasesProps = {
   store: UpgradeStoreType;
@@ -68,7 +65,7 @@ const UpgradeInAppPurchasesTokens = ({
 
   const insufficientFunds = walletStore.balance < cheapestTokenPrice;
   const hideTokens = GOOGLE_PLAY_STORE;
-
+  const i18n = sp.i18n;
   /**
    * Get IAP subscriptions
    */
@@ -142,7 +139,7 @@ const UpgradeInAppPurchasesTokens = ({
               : { autoRenewingAndroid }),
           };
 
-          await apiService.post(
+          await sp.api.post(
             '/api/v3/payments/iap/subscription/acknowledge',
             payload,
           );
@@ -169,13 +166,14 @@ const UpgradeInAppPurchasesTokens = ({
             'warning',
           );
         }
-        logService.exception(error);
+        sp.log.exception(error);
       }
     };
 
     checkCurrentPurchase();
   }, [currentPurchase, finishTransaction, navigation, onComplete]);
 
+  const sessionService = sp.session;
   /**
    * Confirm and purchase
    */

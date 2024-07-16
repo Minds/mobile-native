@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
-import { Icon, B4 } from '~ui';
-import { ICON_TABS_HEIGHT } from '~styles/Tokens';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import Button from '../Button';
-import MText from '../MText';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
   Easing,
 } from 'react-native-reanimated';
+
+import { Icon, B4 } from '~ui';
+import { ICON_TABS_HEIGHT } from '~styles/Tokens';
+import Button from '../Button';
+import MText from '../MText';
 import PressableScale from '~/common/components/PressableScale';
+import sp from '~/services/serviceProvider';
 
 const TIMED = {
   duration: 175,
@@ -36,7 +37,7 @@ function TabTitle({ isCurrent, title }: TabTiltePropsType) {
 }
 
 const TopBarButtonTabBarItem = ({ tab, buttonCmp, onChange, current }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const transform = useSharedValue(0);
   const isCurrent = tab.id === current;
   const isButton = !buttonCmp || buttonCmp === 'Button';
@@ -73,7 +74,7 @@ const TopBarButtonTabBarItem = ({ tab, buttonCmp, onChange, current }) => {
           ]}
           textStyle={[
             styles.text,
-            ThemedStyles.theme === 1 ? theme.colorBlack : theme.colorWhite,
+            sp.styles.theme === 1 ? theme.colorBlack : theme.colorWhite,
             !isCurrent ? theme.colorSecondaryText : {},
           ]}
           testID={tab.testID}
@@ -171,20 +172,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const touchableTextStyleSelected = ThemedStyles.combine(
+const touchableTextStyleSelected = sp.styles.combine(
   styles.touchableText,
   'colorPrimaryText',
 );
-const touchableTextStyle = ThemedStyles.combine(
+const touchableTextStyle = sp.styles.combine(
   styles.touchableText,
   'colorSecondaryText',
 );
-const containerStyles = ThemedStyles.combine(styles.container);
-const bottomLine = ThemedStyles.combine('bgPrimaryBorder', styles.bottomLine);
-const bottomLineSelected = ThemedStyles.combine(
-  'bgIconActive',
-  styles.bottomLine,
-);
-const touchableContainer = ThemedStyles.combine(styles.touchableContainer);
+const containerStyles = sp.styles.combine(styles.container);
+const bottomLine = sp.styles.combine('bgPrimaryBorder', styles.bottomLine);
+const bottomLineSelected = sp.styles.combine('bgIconActive', styles.bottomLine);
+const touchableContainer = sp.styles.combine(styles.touchableContainer);
 
 export default TopBarButtonTabBarItem;

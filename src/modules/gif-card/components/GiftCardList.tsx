@@ -14,11 +14,12 @@ import {
   useGetGiftCardBalancesQuery,
   useInfiniteGetGiftCardsQuery,
 } from '~/graphql/api';
-import ThemedStyles, { useIsDarkTheme } from '~/styles/ThemedStyles';
 import { dateFormat, useInfiniteQuery, useRefetchOnFocus } from './utils';
 import { useTranslation } from '../locales';
 import { TFunction } from 'i18next';
 import assets from '@assets';
+import sp from '~/services/serviceProvider';
+import { useIsDarkTheme } from '~/styles/hooks';
 
 export const GiftCardList = () => {
   const { t } = useTranslation();
@@ -166,7 +167,7 @@ export const useGetGiftBalance = (refresh = true) => {
 };
 
 const CARD_HEIGHT = 86;
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   card: [
     {
       height: CARD_HEIGHT,

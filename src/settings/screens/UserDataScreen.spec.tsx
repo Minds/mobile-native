@@ -3,7 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react-native';
 import UserDataScreen from './UserDataScreen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import analyticsService from '~/common/services/analytics.service';
-import settingsService from '../SettingsService';
+import settingsService from '../SettingsApiService';
 import mindsConfigService from '~/common/services/minds-config.service';
 import { useDeletePostHogPersonMutation } from '~/graphql/api';
 

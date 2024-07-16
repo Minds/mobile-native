@@ -6,9 +6,9 @@ import { useTranslation } from '../../locales';
 import { AppStackScreenProps } from '~/navigation/NavigationTypes';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import BoostV3 from '../components/v3/Boost';
-import logService from '~/common/services/log.service';
 import { getSingleBoost } from '../boost-console.api';
 import BoostModelV3 from '../../models/BoostModelV3';
+import sp from '~/services/serviceProvider';
 
 type PropsType = AppStackScreenProps<'SingleBoostConsole'>;
 
@@ -44,7 +44,7 @@ function localStore() {
       try {
         this.boost = (await getSingleBoost(guid)) || null;
       } catch (error) {
-        logService.exception(error);
+        sp.log.exception(error);
       } finally {
         this.loading = false;
       }

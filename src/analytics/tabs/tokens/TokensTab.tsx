@@ -1,21 +1,21 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useCallback, useEffect } from 'react';
 import { ScrollView, View } from 'react-native';
-import ActivityIndicator from '../../../common/components/ActivityIndicator';
+import { useRoute } from '@react-navigation/native';
+
+import ActivityIndicator from '~/common/components/ActivityIndicator';
 import TopBarButtonTabBar, {
   ButtonTabType,
-} from '../../../common/components/topbar-tabbar/TopBarButtonTabBar';
-import { useStores } from '../../../common/hooks/use-stores';
-import useApiFetch from '../../../common/hooks/useApiFetch';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
+} from '~/common/components/topbar-tabbar/TopBarButtonTabBar';
+import { useStores } from '~/common/hooks/use-stores';
+import useApiFetch from '~/common/hooks/useApiFetch';
 import { CardType, TokensMetrics } from '../../AnalyticsTypes';
-import capitalize from '../../../common/helpers/capitalize';
+import capitalize from '~/common/helpers/capitalize';
 import { activityIndicatorStyle, errorStyle } from '../dashboard/DashboardTab';
-import MText from '../../../common/components/MText';
-import { useRoute } from '@react-navigation/native';
+import MText from '~/common/components/MText';
 import lowerCase from 'lodash/lowerCase';
 import Card from './Card';
+import sp from '~/services/serviceProvider';
 
 export type DashBoardPropsType = {
   metrics: MetricsSubType;
@@ -51,7 +51,7 @@ const createStore = () => ({
 
 const TokensTab = observer(() => {
   const route = useRoute<any>();
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const store = useLocalStore(createStore);
   const { wallet } = useStores();
 
@@ -93,8 +93,8 @@ const TokensTab = observer(() => {
   if (error || dataError) {
     return (
       <MText style={errorStyle} onPress={onTryAgain}>
-        {i18n.t('error') + '\n'}
-        <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
+        {sp.i18n.t('error') + '\n'}
+        <MText style={theme.colorLink}>{sp.i18n.t('tryAgain')}</MText>
       </MText>
     );
   }
@@ -115,7 +115,7 @@ const TokensTab = observer(() => {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   padding: {
     paddingBottom: 120,
   },
@@ -124,19 +124,19 @@ const styles = ThemedStyles.create({
 const EmissionBreakDown = {
   content: [
     {
-      title: i18n.t('EmissionBreakDown.Total'),
+      title: sp.i18n.t('EmissionBreakDown.Total'),
       value: '10,000 tokens/day',
     },
     {
-      title: i18n.t('EmissionBreakDown.Engagement'),
+      title: sp.i18n.t('EmissionBreakDown.Engagement'),
       value: '4,000 tokens',
     },
     {
-      title: i18n.t('EmissionBreakDown.Holding'),
+      title: sp.i18n.t('EmissionBreakDown.Holding'),
       value: '1,000 tokens',
     },
     {
-      title: i18n.t('EmissionBreakDown.Liquidity'),
+      title: sp.i18n.t('EmissionBreakDown.Liquidity'),
       value: '5,000 tokens',
     },
   ],

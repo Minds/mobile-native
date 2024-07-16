@@ -6,14 +6,14 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { BottomSheetButton } from '~/common/components/bottom-sheet';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { Spacer } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
-import i18n from '../../services/i18n.service';
+
 import FadeView from '../FadeView';
 import MText from '../MText';
 import QuestionSlider from './QuestionSlider';
 import { useAnswers } from './useAnswers';
 import { IQuestion } from './useQuestions';
 import { TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   onSubmit: () => void;
@@ -59,7 +59,7 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
   const _onSubmit = useCallback(async () => {
     await answer();
     showNotification(
-      i18n.t('socialCompass.thanks', { TENANT }),
+      sp.i18n.t('socialCompass.thanks', { TENANT }),
       'success',
       3000,
     );
@@ -76,11 +76,11 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
       <FadeView
         fades={gradients}
         fadeLength={100}
-        backgroundColor={ThemedStyles.getColor('PrimaryBackgroundHighlight')}>
+        backgroundColor={sp.styles.getColor('PrimaryBackgroundHighlight')}>
         <BottomSheetScrollView style={containerHeight}>
           <Spacer horizontal="M" bottom="XL">
             <MText style={styles.desc}>
-              {i18n.t('socialCompass.questionsDesc')}
+              {sp.i18n.t('socialCompass.questionsDesc')}
             </MText>
             {questions.map(question => (
               <QuestionSlider
@@ -95,14 +95,14 @@ const Questions = observer(({ onSubmit, ...props }: PropsType) => {
       <BottomSheetButton
         loading={answering}
         action
-        text={i18n.t('save')}
+        text={sp.i18n.t('save')}
         onPress={_onSubmit}
       />
     </>
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['paddingVertical2x'],
   desc: ['colorSecondaryText', 'marginBottom5x', 'textCenter'],
 });

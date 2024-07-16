@@ -3,15 +3,8 @@ import type { NativeStackNavigationProp } from 'react-native-screens/native-stac
 import { useNavigation } from '@react-navigation/native';
 
 import type UserModel from '../UserModel';
-import i18n from '~/common/services/i18n.service';
 import type { AppStackParamList } from '../../navigation/NavigationTypes';
-import shareService from '../../share/ShareService';
-import {
-  BLOCK_USER_ENABLED,
-  BOOSTS_ENABLED,
-  CHAT_ENABLED,
-  APP_URI,
-} from '../../config/Config';
+import { BOOSTS_ENABLED, CHAT_ENABLED, APP_URI } from '../../config/Config';
 import { observer } from 'mobx-react';
 import {
   BottomSheetModal,
@@ -21,8 +14,8 @@ import {
 import { Platform } from 'react-native';
 import { useStores } from '~/common/hooks/use-stores';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
-import openUrlService from '../../common/services/open-url.service';
-import PermissionsService from '~/common/services/permissions.service';
+import sp from '~/services/serviceProvider';
+import { openLinkInInAppBrowser } from '~/common/services/inapp-browser.service';
 
 function dismiss(ref) {
   setTimeout(() => {
@@ -42,6 +35,7 @@ const getOptions = (
   navigation,
   ref: any,
 ) => {
+  const i18n = sp.i18n;
   let options: Array<{
     icon?: JSX.Element;
     iconName?: string;
@@ -57,7 +51,7 @@ const getOptions = (
       iconType: 'material',
       title: i18n.t('viewOnExternal', { external: externalData.source }),
       onPress: () => {
-        openUrlService.openLinkInInAppBrowser(
+        openLinkInInAppBrowser(
           `https://${externalData.source}/@${externalData.handle}`,
         );
         ref.current.dismiss();
@@ -70,7 +64,10 @@ const getOptions = (
     iconType: 'material',
     title: i18n.t('channel.share'),
     onPress: () => {
-      shareService.share(i18n.t('channel.share'), APP_URI + channel.username);
+      sp.resolve('share').share(
+        i18n.t('channel.share'),
+        APP_URI + channel.username,
+      );
       ref.current.dismiss();
     },
   };
@@ -92,7 +89,7 @@ const getOptions = (
     });
   }
 
-  if (channel.isOwner() && BOOSTS_ENABLED && PermissionsService.canBoost()) {
+  if (channel.isOwner() && BOOSTS_ENABLED && sp.permissions.canBoost()) {
     options.push({
       iconName: 'trending-up',
       iconType: 'material-community',
@@ -157,19 +154,17 @@ const getOptions = (
   }
 
   if (!channel.isOwner()) {
-    if (BLOCK_USER_ENABLED) {
-      options.push({
-        iconName: 'block',
-        iconType: 'material',
-        title: !channel.blocked
-          ? i18n.t('channel.block')
-          : i18n.t('channel.unblock'),
-        onPress: () => {
-          channel.toggleBlock();
-          ref.current.dismiss();
-        },
-      });
-    }
+    options.push({
+      iconName: 'block',
+      iconType: 'material',
+      title: !channel.blocked
+        ? i18n.t('channel.block')
+        : i18n.t('channel.unblock'),
+      onPress: () => {
+        channel.toggleBlock();
+        ref.current.dismiss();
+      },
+    });
 
     options.push({
       title: i18n.t('channel.report'),
@@ -251,7 +246,7 @@ const ChannelMoreMenu = forwardRef((props: PropsType, ref: any) => {
       {options.map((b, i) => (
         <BottomSheetMenuItem {...b} key={i} />
       ))}
-      <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
+      <BottomSheetButton text={sp.i18n.t('cancel')} onPress={close} />
     </BottomSheetModal>
   );
 });

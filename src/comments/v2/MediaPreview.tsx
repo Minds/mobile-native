@@ -13,7 +13,7 @@ import { Flow } from 'react-native-animated-spinkit';
 
 import type AttachmentStore from '../../common/stores/AttachmentStore';
 import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
-import ThemedStyles from '../../styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 const width = Dimensions.get('window').width * 0.8;
 const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
@@ -27,7 +27,7 @@ export default observer(function MediaPreview({
   attachment: AttachmentStore;
 }) {
   if (!attachment.hasAttachment) return null;
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const src = {
     uri: toJS(attachment.uri),

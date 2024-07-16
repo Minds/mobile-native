@@ -1,8 +1,8 @@
-//@ts-nocheck
 import React from 'react';
 import { TouchableProps } from 'react-native-svg';
+import { Timeout } from '~/types/Common';
 
-type Props = { onDoubleTap: () => void } & TouchableProps;
+type Props = { onDoubleTap: () => void; onPress?: () => void } & TouchableProps;
 
 /**
  * Double Tap HOC
@@ -13,14 +13,16 @@ type Props = { onDoubleTap: () => void } & TouchableProps;
  */
 const DoubleTap = (Wrapped, delay = 300): any => {
   class DoubleTapCmp extends React.PureComponent<Props> {
-    lastTap = null;
-    interval = null;
+    lastTap: number | null = null;
+    interval: Timeout | null = null;
 
     handleOnPress = () => {
       const now = Date.now();
       if (this.lastTap && now - this.lastTap < delay) {
         this.props.onDoubleTap();
-        clearTimeout(this.interval);
+        if (this.interval) {
+          clearTimeout(this.interval);
+        }
       } else {
         this.lastTap = now;
         if (!this.props.onDoubleTap) {

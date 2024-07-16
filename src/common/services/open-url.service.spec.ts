@@ -1,10 +1,9 @@
 import { OpenURLService } from './open-url.service';
 import { Linking, Alert } from 'react-native';
 import { InAppBrowser } from 'react-native-inappbrowser-reborn';
-import { storages } from './storage/storages.service';
+import { storagesService } from '~/common/services/storage/storages.service';
 import deeplinksRouterService from './deeplinks-router.service';
 
-const mockedAppStorage = storages.app as jest.Mocked<typeof storages.app>;
 const mockedInAppBrowser = InAppBrowser as jest.Mocked<typeof InAppBrowser>;
 
 // ### Mocks ###
@@ -55,13 +54,18 @@ jest.mock('~/navigation/NavigationService', () => ({
 // ### Tests ###
 describe('OpenURLService', () => {
   let service;
+  const mockedAppStorage = storagesService.app as jest.Mocked<
+    typeof storagesService.app
+  >;
+
+  console.log('mockedAppStorage', mockedAppStorage);
 
   beforeEach(() => {
     service = new OpenURLService();
   });
 
   it('should initialize with preferred browser from storage', () => {
-    mockedAppStorage.getInt.mockReturnValue(1);
+    mockedAppStorage.getNumber.mockReturnValue(1);
     service.init();
     expect(service.preferredBrowser).toBe(1);
   });
@@ -69,7 +73,7 @@ describe('OpenURLService', () => {
   it('should set preferred browser and store it', () => {
     service.setPreferredBrowser(0);
     expect(service.preferredBrowser).toBe(0);
-    expect(storages.app.setInt).toHaveBeenCalledWith('openLinksBrowser', 0);
+    expect(storagesService.app.set).toHaveBeenCalledWith('openLinksBrowser', 0);
   });
 
   it('should open link in in-app browser if available', async () => {

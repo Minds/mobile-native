@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/core';
 import { InteractionManager } from 'react-native';
-import { showNotification } from '../../../../AppMessages';
-import useApiFetch, { useApiCall } from '../../../common/hooks/useApiFetch';
-import i18nService from '../../../common/services/i18n.service';
-import { APP_URI } from '../../../config/Config';
+import { showNotification } from '~/../AppMessages';
+import useApiFetch, { useApiCall } from '~/common/hooks/useApiFetch';
+import { APP_URI } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 interface StripeAccount {
   id: string;
@@ -56,10 +56,7 @@ export default function useStripeConnect() {
         onRedirect: () => {
           refreshAccount();
           InteractionManager.runAfterInteractions(() => {
-            showNotification(
-              i18nService.t('wallet.usd.setupSuccess'),
-              'success',
-            );
+            showNotification(sp.i18n.t('wallet.usd.setupSuccess'), 'success');
           });
         },
       });

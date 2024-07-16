@@ -6,19 +6,15 @@ import { observer } from 'mobx-react';
 import { StyleSheet, View } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 
-import ThemedStyles from '~/styles/ThemedStyles';
 import Comment from './Comment';
 import type CommentsStore from './CommentsStore';
 import CommentListHeader from './CommentListHeader';
 import LoadMore from './LoadMore';
 import CommentInput, { CommentInputContext } from './CommentInput';
-import sessionService from '~/common/services/session.service';
 import GroupModel from '~/groups/GroupModel';
-
-import i18n from '~/common/services/i18n.service';
 import MText from '~/common/components/MText';
 import CommentModel from './CommentModel';
-import PermissionsService from '~/common/services/permissions.service';
+import sp from '~/services/serviceProvider';
 
 // types
 type PropsType = {
@@ -41,7 +37,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
   const ref = React.useRef<any>(null);
   const provider = React.useContext(CommentInputContext);
   const navigation = useNavigation<any>();
-  const user = sessionService.getUser();
+  const user = sp.session.getUser();
 
   const placeHolder =
     props.store.entity instanceof GroupModel
@@ -102,7 +98,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
     });
   }, [navigation, props.store, provider, scrollToFocusedComment]);
 
-  const canComment = PermissionsService.canComment();
+  const canComment = sp.permissions.canComment();
 
   const renderItem = React.useCallback(
     (row: any): React.ReactElement => {
@@ -147,7 +143,9 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
             }>
             <Image source={user.getAvatarSource()} style={styles.avatar} />
             <MText style={styles.reply}>
-              {i18n.t(props.store.parent ? 'activity.typeReply' : placeHolder)}
+              {sp.i18n.t(
+                props.store.parent ? 'activity.typeReply' : placeHolder,
+              )}
             </MText>
           </TouchableOpacity>
         )}
@@ -189,7 +187,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   list: ['flexContainer', 'bgPrimaryBackgroundHighlight'],
   listContainer: ['bgPrimaryBackgroundHighlight', 'paddingBottom3x'],
   container: ['flexContainer', 'bgPrimaryBackgroundHighlight'],

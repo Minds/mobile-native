@@ -2,18 +2,12 @@ import { Platform } from 'react-native';
 import moment from 'moment';
 
 import UserModel from '../UserModel';
-import channelsService from '~/common/services/channels.service';
 import FeedStore from '~/common/stores/FeedStore';
-import ChannelService from '../ChannelService';
 import imagePickerService from '~/common/services/image-picker.service';
-import sessionService from '~/common/services/session.service';
-import supportTiersService from '~/common/services/support-tiers.service';
 import type { SupportTiersType } from '~/wire/WireTypes';
-import NavigationService from '~/navigation/NavigationService';
-import i18n from '~/common/services/i18n.service';
 import { showNotification } from '~/../AppMessages';
 import { IS_IOS } from '~/config/Config';
-import { BoostedContentService } from '../../modules/boost/services/boosted-content.service';
+import sp from '~/services/serviceProvider';
 
 type Entity = { guid: string; nsfw?: Array<string> } | UserModel;
 type InitialLoadParams = {
@@ -47,7 +41,7 @@ type payloadType = {
 const createChannelStore = () => {
   const feedsEndpoint = 'feeds/container';
   const scheduledEndpoint = 'feeds/scheduled';
-
+  const supportTiersService = sp.resolve('supportTiers');
   const store = {
     tab: 'feed' as ChannelTabType,
     channel: undefined as UserModel | undefined,
@@ -110,8 +104,8 @@ const createChannelStore = () => {
     async initialLoad(params: InitialLoadParams) {
       if (params.entity) {
         if (this.isNsfw(params.entity)) {
-          NavigationService.goBack();
-          showNotification(i18n.t('nsfw.notSafeChannel'));
+          sp.navigation.goBack();
+          showNotification(sp.i18n.t('nsfw.notSafeChannel'));
         }
         await this.loadFromEntity(params.entity);
         this.tiers =
@@ -205,10 +199,10 @@ const createChannelStore = () => {
         this.feedStore.getScheduledCount(this.channel.guid);
         if (!this.channel.isOwner()) {
           this.feedStore.setInjectBoost(true);
-          const channelBoostedContent = new BoostedContentService(
-            channel?.guid,
-            'feed/channel',
-          );
+          const channelBoostedContent = sp.resolve('channelBoostedContent', {
+            guid: channel?.guid,
+            source: 'feed/channel',
+          });
           this.feedStore.feedsService.setBoostedContent(channelBoostedContent);
         }
       }
@@ -219,8 +213,8 @@ const createChannelStore = () => {
      */
     checkBanned(channel: UserModel): boolean {
       if (channel.banned === 'yes') {
-        showNotification(i18n.t('channel.banned'), 'warning');
-        NavigationService.goBack();
+        showNotification(sp.i18n.t('channel.banned'), 'warning');
+        sp.navigation.goBack();
         return true;
       }
       return false;
@@ -233,6 +227,7 @@ const createChannelStore = () => {
       defaultChannel: { guid: string } | UserModel,
       useChannel: boolean = false,
     ) {
+      const channelsService = sp.resolve('channels');
       const channel =
         useChannel && defaultChannel instanceof UserModel
           ? await channelsService.getFromEntity(
@@ -257,14 +252,15 @@ const createChannelStore = () => {
      * @param guidOrUsername
      */
     async loadFromGuidOrUsername(guidOrUsername: string) {
+      const channelsService = sp.resolve('channels');
       const channel = await channelsService.get(guidOrUsername);
       if (!channel) {
         this.loaded = true;
         return;
       }
       if (this.isNsfw(channel)) {
-        NavigationService.goBack();
-        showNotification(i18n.t('nsfw.notSafeChannel'));
+        sp.navigation.goBack();
+        showNotification(sp.i18n.t('nsfw.notSafeChannel'));
       }
       if (this.checkBanned(channel)) {
         return false;
@@ -275,6 +271,7 @@ const createChannelStore = () => {
         (await supportTiersService.getAllFromGuid(channel.guid)) || [];
     },
     async updateFromRemote(guidOrUsername: string) {
+      const channelsService = sp.resolve('channels');
       const channel = await channelsService.get(
         guidOrUsername,
         undefined,
@@ -282,7 +279,7 @@ const createChannelStore = () => {
       );
       if (channel) {
         this.setChannel(channel);
-        await sessionService.loadUser(channel);
+        await sp.session.loadUser(channel);
       }
     },
     setIsUploading(uploading: boolean) {
@@ -337,7 +334,7 @@ const createChannelStore = () => {
         this.setIsUploading(true);
         this.setProgress(0, type);
         this.avatarPath = media.uri;
-        await ChannelService.upload(
+        await sp.resolve('channel').upload(
           type,
           {
             uri: media.uri,
@@ -367,7 +364,7 @@ const createChannelStore = () => {
     async save(payload: payloadType) {
       this.uploading = true;
       try {
-        const result = await ChannelService.save(payload);
+        const result = await sp.resolve('channel').save(payload);
         const success = result && result.status === 'success';
 
         if (success && this.channel) {
@@ -387,6 +384,7 @@ const createChannelStore = () => {
     },
     async getGroupCount() {
       if (this.channel) {
+        const channelsService = sp.resolve('channels');
         return await channelsService.getGroupCount(this.channel);
       }
       return 0;
@@ -396,7 +394,7 @@ const createChannelStore = () => {
         Platform.OS === 'ios' &&
         channel.nsfw &&
         channel.nsfw.length > 0 &&
-        channel.guid !== sessionService.getUser().guid
+        channel.guid !== sp.session.getUser().guid
       );
     },
   };

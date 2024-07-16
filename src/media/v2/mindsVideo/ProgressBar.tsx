@@ -3,8 +3,9 @@ import { StyleSheet, View, Platform } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { observer } from 'mobx-react';
 import { MindsVideoStoreType } from './createMindsVideoStore';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import MText from '../../../common/components/MText';
+import sp from '~/services/serviceProvider';
 
 const radiusOfHolder = 5;
 const radiusOfActiveHolder = 7;
@@ -14,14 +15,14 @@ type PropsType = {
 };
 
 const ProgressBar = observer(({ store }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   return (
     <View style={styles.container}>
       <Slider
         style={styles.barView}
-        thumbTintColor={ThemedStyles.getColor('Link')}
-        minimumTrackTintColor={ThemedStyles.getColor('Link')}
+        thumbTintColor={sp.styles.getColor('Link')}
+        minimumTrackTintColor={sp.styles.getColor('Link')}
         value={store.currentSeek || store.currentTime}
         maximumValue={store.duration}
         onValueChange={store.changeSeek}

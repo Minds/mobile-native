@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Platform, Image, ViewStyle } from 'react-native';
 import { IconCircled, IconButton, H2, Avatar } from '~ui';
 import { observer } from 'mobx-react';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useStores } from '../common/hooks/use-stores';
 import useCurrentUser from '../common/hooks/useCurrentUser';
 import PressableScale from '~/common/components/PressableScale';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
-import sessionService from '~/common/services/session.service';
 import SendIntentAndroid from 'react-native-send-intent';
+
 import { ANDROID_CHAT_APP, CHAT_ENABLED } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';
 import assets from '@assets';
 import { useFeature } from 'ExperimentsProvider';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   navigation: any;
@@ -26,12 +27,12 @@ type PropsType = {
 
 export const Topbar = observer((props: PropsType) => {
   const { navigation, title, noInsets, shadowLess, showBack } = props;
-  const channel = sessionService.getUser();
+  const channel = sp.session.getUser();
   const { wallet } = useStores();
   const user = useCurrentUser();
   const insets = useSafeAreaInsets();
   const scrollContext = useScrollContext();
-  const bgColor = ThemedStyles.getColor('PrimaryBackground');
+  const bgColor = sp.styles.getColor('PrimaryBackground');
   const isInterChatEnabled = useFeature('epic-358-chat-mob');
   const isChatIconHidden = useChatIconState(Boolean(isInterChatEnabled));
 
@@ -114,7 +115,7 @@ export const Topbar = observer((props: PropsType) => {
                     <Image
                       resizeMode="contain"
                       source={
-                        ThemedStyles.theme
+                        sp.styles.theme
                           ? assets.LOGO_HORIZONTAL_DARK
                           : assets.LOGO_HORIZONTAL
                       }
@@ -163,7 +164,7 @@ export const styles = StyleSheet.create({
   topbar: {
     flex: 1,
     flexDirection: 'row',
-    ...ThemedStyles.style.alignSelfCenterMaxWidth,
+    ...sp.styles.style.alignSelfCenterMaxWidth,
   },
   topbarLeft: {
     flex: 1,
@@ -198,6 +199,6 @@ const useChatIconState = (isInterChatEnabled: boolean) => {
         setChatIconHidden(!installed);
       });
     }
-  }, []);
+  }, [isInterChatEnabled]);
   return isChatIconHidden;
 };

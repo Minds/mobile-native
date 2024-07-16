@@ -4,25 +4,24 @@ import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Switch from '~/common/components/controls/Switch';
 
-import MText from '../../common/components/MText';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
-import settingsStore from '../SettingsStore';
-import { Screen } from '~/common/ui';
+import MText from '~/common/components/MText';
 
+import { Screen } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 /**
  * Data-saver settings screen
  */
 export default observer(function DataSaverScreen() {
-  const theme = ThemedStyles.style;
-
+  const theme = sp.styles.style;
+  const settingsService = sp.resolve('settings');
+  const i18n = sp.i18n;
   const setDataSaverMode = useCallback(
-    val => settingsStore.setDataSaverMode(val),
-    [],
+    val => settingsService.setDataSaverMode(val),
+    [settingsService],
   );
   const setDataSaverModeDisablesOnWiFi = useCallback(
-    val => settingsStore.setDataSaverModeDisablesOnWiFi(val),
-    [],
+    val => settingsService.setDataSaverModeDisablesOnWiFi(val),
+    [settingsService],
   );
 
   return (
@@ -33,7 +32,7 @@ export default observer(function DataSaverScreen() {
             {i18n.t('settings.networkOptions.1')}
           </MText>
           <Switch
-            value={settingsStore.dataSaverMode}
+            value={settingsService.dataSaverMode}
             onChange={setDataSaverMode}
           />
         </View>
@@ -48,11 +47,11 @@ export default observer(function DataSaverScreen() {
           <MText style={[theme.marginLeft, theme.fontL]}>
             {i18n.t('settings.dataSaverDisableOnWifi')}
           </MText>
-          {settingsStore.dataSaverMode && (
+          {settingsService.dataSaverMode && (
             <Switch
               value={
-                settingsStore.dataSaverMode
-                  ? settingsStore.dataSaverModeDisablesOnWiFi
+                settingsService.dataSaverMode
+                  ? settingsService.dataSaverModeDisablesOnWiFi
                   : false
               }
               onChange={setDataSaverModeDisablesOnWiFi}

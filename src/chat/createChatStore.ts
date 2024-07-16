@@ -2,11 +2,8 @@ import { Linking, Platform } from 'react-native';
 import SendIntentAndroid from 'react-native-send-intent';
 import type { Timeout } from '~/types/Common';
 import { showNotification } from '../../AppMessages';
-import apiService from '../common/services/api.service';
-import i18nService from '../common/services/i18n.service';
-import logService from '../common/services/log.service';
-import mindsService from '../common/services/minds-config.service';
 import { ANDROID_CHAT_APP } from '../config/Config';
+import sp from '~/services/serviceProvider';
 
 const createChatStore = () => ({
   unreadCount: 0,
@@ -35,7 +32,7 @@ const createChatStore = () => ({
       }
       return installed;
     } catch (error) {
-      logService.exception(error);
+      sp.log.exception(error);
       console.log(error);
       return false;
     }
@@ -54,7 +51,7 @@ const createChatStore = () => ({
     }
   },
   async init() {
-    const chatUrl = mindsService.getSettings().matrix?.chat_url;
+    const chatUrl = sp.config.getSettings().matrix?.chat_url;
     if (chatUrl) {
       this.chatUrl = chatUrl;
     }
@@ -69,7 +66,7 @@ const createChatStore = () => ({
     }
     this.inProgress = true;
     try {
-      const response: any = await apiService.get('api/v3/matrix/total-unread');
+      const response: any = await sp.api.get('api/v3/matrix/total-unread');
       const unread = Number(response?.total_unread);
       if (unread !== this.unreadCount) {
         this.unreadCount = unread;
@@ -85,13 +82,13 @@ const createChatStore = () => ({
     }
     this.createInProgress = true;
     try {
-      const response: any = await apiService.put(`api/v3/matrix/room/${guid}`);
+      const response: any = await sp.api.put(`api/v3/matrix/room/${guid}`);
       if (!response.room || !response.room.id) {
         throw new Error('Error: api/v3/matrix/room failed');
       }
       Linking.openURL(`${this.chatUrl}/#/room/${response.room.id}`);
     } catch (err) {
-      showNotification(i18nService.t('messenger.errorDirectMessage'));
+      showNotification(sp.i18n.t('messenger.errorDirectMessage'));
     } finally {
       this.createInProgress = false;
     }

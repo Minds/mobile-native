@@ -1,13 +1,11 @@
 import * as Updates from 'expo-updates';
 import PreviewUpdateService from './PreviewUpdateService';
 import { showNotification } from 'AppMessages';
-import { storages } from '~/common/services/storage/storages.service';
-import logService from '~/common/services/log.service';
+import { storagesService } from '~/common/services/storage/storages.service';
 
-jest.mock('react-native-device-info', () => ({
-  getVersion: jest.fn().mockReturnValue('1.0.0'),
+jest.mock('expo-application', () => ({
+  nativeApplicationVersion: '1.0.0',
 }));
-
 jest.mock('expo-updates', () => ({
   checkForUpdateAsync: jest.fn(),
   fetchUpdateAsync: jest.fn(),
@@ -44,7 +42,7 @@ describe('PreviewUpdateService', () => {
     expect(showNotification).toHaveBeenCalledWith('Downloading demo app...');
     expect(Updates.fetchUpdateAsync).toHaveBeenCalledTimes(1);
     expect(Updates.fetchUpdateAsync).toHaveBeenCalledWith(mockChannel);
-    expect(storages.session.clearStore).toHaveBeenCalled();
+    expect(storagesService.session.clearAll).toHaveBeenCalled();
     expect(Updates.reloadAsync).toHaveBeenCalled();
   });
 

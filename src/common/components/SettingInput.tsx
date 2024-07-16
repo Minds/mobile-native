@@ -1,8 +1,8 @@
-//@ts-nocheck
-import React, { Props } from 'react';
-import ThemedStyles from '../../styles/ThemedStyles';
+import React from 'react';
 import { View } from 'react-native';
+
 import Input from './Input';
+import sp from '~/services/serviceProvider';
 
 type inputType = 'textInput' | 'phoneInput' | 'dateInput';
 
@@ -11,14 +11,14 @@ type PropsType = {
   wrapperBorder: any;
   ref?: any;
   inputType?: inputType;
-} & Props;
+} & React.ComponentProps<typeof Input>;
 
 /**
  * Deprecated!!!
  * Use InputContainer instead
  */
-const SettingInput = ({ onError, ref, ...props }: PropsType) => {
-  const theme = ThemedStyles.style;
+const SettingInput = ({ ref, ...props }: PropsType) => {
+  const theme = sp.styles.style;
 
   const wrapperStyle = [
     theme.paddingHorizontal3x,
@@ -35,15 +35,14 @@ const SettingInput = ({ onError, ref, ...props }: PropsType) => {
       <Input
         style={styles.input}
         labelStyle={labelStyle}
-        onError={onError ?? (() => {})}
-        ref={ref ?? (() => {})}
+        ref={ref}
         {...props}
       />
     </View>
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   input: ['border0x', 'paddingBottom2x'],
 });
 

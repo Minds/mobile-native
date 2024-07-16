@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 export const styles = StyleSheet.create({
   container: {
@@ -56,37 +56,37 @@ export const styles = StyleSheet.create({
   },
 });
 
-export const contentPreviewContainerBorder = ThemedStyles.combine(
+export const contentPreviewContainerBorder = sp.styles.combine(
   'marginTop6x',
   'borderRadius3x',
   'bcolorPrimaryBorder',
   'borderHair',
 );
 
-export const readIndicatorStyle = ThemedStyles.combine(
+export const readIndicatorStyle = sp.styles.combine(
   styles.readIndicator,
   'bgLink',
 );
 
-export const containerStyle = ThemedStyles.combine(
+export const containerStyle = sp.styles.combine(
   styles.container,
   'borderBottomHair',
   'bcolorPrimaryBorder',
 );
 
-export const bodyTextStyle = ThemedStyles.combine(
+export const bodyTextStyle = sp.styles.combine(
   styles.bodyText,
   'fontNormal',
   'colorSecondaryText',
 );
 
-export const bodyTextImportantStyle = ThemedStyles.combine(
+export const bodyTextImportantStyle = sp.styles.combine(
   styles.bodyText,
   'fontMedium',
   'colorPrimaryText',
 );
 
-export const spacedCommentPreview = ThemedStyles.combine(
+export const spacedCommentPreview = sp.styles.combine(
   styles.bodyText,
   'fontNormal',
   'colorSecondaryText',

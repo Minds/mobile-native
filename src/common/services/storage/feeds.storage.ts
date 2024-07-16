@@ -1,10 +1,12 @@
-import logService from '../log.service';
-import { storages } from '../storage/storages.service';
+import type { LogService } from '../log.service';
+import type { Storages } from './storages.service';
 
 /**
  * Feeds Storage
  */
 export class FeedsStorage {
+  constructor(private storages: Storages, private log: LogService) {}
+
   /**
    * Persist a FeedsService to the cache
    * @param {FeedsService} feed
@@ -15,14 +17,14 @@ export class FeedsStorage {
     try {
       const key = this.getKey(feed);
 
-      storages.userCache?.setMap(key, {
+      this.storages.userCache?.setObject(key, {
         feed: this.map(feed.feed),
         next: feed.pagingToken,
         fallbackAt: feed.fallbackAt,
         fallbackIndex: feed.fallbackIndex,
       });
     } catch (err) {
-      logService.exception('[FeedsStorage]', err);
+      this.log.exception('[FeedsStorage]', err);
     }
   }
 
@@ -34,9 +36,9 @@ export class FeedsStorage {
     try {
       const key = this.getKey(feed);
 
-      return storages.userCache?.getMap(key) || null;
+      return this.storages.userCache?.getObject(key) || null;
     } catch (err) {
-      logService.exception('[FeedsStorage]', err);
+      this.log.exception('[FeedsStorage]', err);
       return null;
     }
   }
@@ -60,5 +62,3 @@ export class FeedsStorage {
     return feed.endpoint + JSON.stringify(feed.params);
   }
 }
-
-export default new FeedsStorage();

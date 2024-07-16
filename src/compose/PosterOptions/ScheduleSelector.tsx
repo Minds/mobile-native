@@ -2,21 +2,22 @@ import React, { useCallback, useRef } from 'react';
 import { View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import moment from 'moment-timezone';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import TopBar from '../TopBar';
-import i18n from '../../common/services/i18n.service';
-import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
 import { showNotification } from 'AppMessages';
 import DateTimePicker from '~/common/components/controls/DateTimePicker';
 import { useComposeContext } from '~/compose/useComposeStore';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
+import sp from '~/services/serviceProvider';
 
 /**
  * NSFW selector
  */
 export default observer(function () {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
+  const navigation = sp.navigation;
   const store = useComposeContext();
   const dateTimePickerRef = useRef<any>(null); // todo: don't use any
   const localStore = useLocalStore(() => ({
@@ -43,8 +44,8 @@ export default observer(function () {
       <TopBar
         leftText="Schedule"
         rightText={i18n.t('done')}
-        onPressRight={NavigationService.goBack}
-        onPressBack={NavigationService.goBack}
+        onPressRight={navigation.goBack}
+        onPressBack={navigation.goBack}
         backIconName="chevron-left"
         backIconSize="large"
         store={store}

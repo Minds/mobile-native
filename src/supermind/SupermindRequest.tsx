@@ -1,17 +1,16 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { View } from 'react-native';
+import { observer } from 'mobx-react';
+
 import SupermindLabel from '~/common/components/supermind/SupermindLabel';
-import i18n from '~/common/services/i18n.service';
 import { B2, Button, Column, Row, Spacer } from '~/common/ui';
 import Activity from '~/newsfeed/activity/Activity';
 import { borderBottomStyle } from './AddBankInformation';
 import SupermindRequestModel from './SupermindRequestModel';
 import { SupermindRequestReplyType, SupermindRequestStatus } from './types';
-import inFeedNoticesService from '~/common/services/in-feed.notices.service';
-import { observer } from 'mobx-react';
-import apiService from '~/common/services/api.service';
 import { confirm } from '~/common/components/Confirm';
+import sp from '~/services/serviceProvider';
 
 type Props = {
   request: SupermindRequestModel;
@@ -21,7 +20,8 @@ type Props = {
 function SupermindRequest({ request, outbound }: Props) {
   const navigation = useNavigation();
   const isTwitterEnabled = false;
-
+  const inFeedNoticesService = sp.resolve('inFeedNotices');
+  const i18n = sp.i18n;
   const answer = React.useCallback(async () => {
     if (request.reply_type === SupermindRequestReplyType.LIVE) {
       if (
@@ -30,7 +30,7 @@ function SupermindRequest({ request, outbound }: Props) {
           description: i18n.t('supermind.liveReplyConfirm.description'),
         })
       ) {
-        apiService.post(`api/v3/supermind/${request.guid}/accept-live`);
+        sp.api.post(`api/v3/supermind/${request.guid}/accept-live`);
         request.setStatus(SupermindRequestStatus.ACCEPTED);
 
         // refresh in-feed notices
@@ -52,7 +52,7 @@ function SupermindRequest({ request, outbound }: Props) {
         },
       });
     }
-  }, [navigation, request]);
+  }, [request, i18n, inFeedNoticesService, navigation]);
 
   return (
     <Spacer top="XL">
@@ -129,6 +129,7 @@ export default observer(SupermindRequest);
  * Status label
  */
 const Status = ({ request }: { request: SupermindRequestModel }) => {
+  const i18n = sp.i18n;
   let body: React.ReactNode = null;
   switch (request.status) {
     case SupermindRequestStatus.CREATED:
@@ -184,7 +185,7 @@ const SuperMindViewButton = ({
       type="base"
       disabled={request.isLoading > 0}
       onPress={() => request.viewReply()}>
-      {i18n.t('supermind.viewReply')}
+      {sp.i18n.t('supermind.viewReply')}
     </Button>
   ) : null;
 };

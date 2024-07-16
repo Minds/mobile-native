@@ -1,9 +1,11 @@
 import React from 'react';
-import MetadataService, {
+import type {
+  MetadataService,
   MetadataCampaign,
   MetadataMedium,
   MetadataSource,
 } from '~/common/services/metadata.service';
+import sp from '~/services/serviceProvider';
 
 export function useMetadataService(
   metadataSource?: MetadataSource,
@@ -13,7 +15,7 @@ export function useMetadataService(
   const service = React.useRef<MetadataService | null>(null);
 
   if (!service.current) {
-    service.current = new MetadataService();
+    service.current = sp.resolve('metadata');
     if (metadataSource) {
       service.current.setSource(metadataSource);
     }

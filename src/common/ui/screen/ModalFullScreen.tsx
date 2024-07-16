@@ -3,7 +3,7 @@ import { MotiView } from 'moti';
 import React from 'react';
 import { StatusBar, View } from 'react-native';
 import { Screen, ScreenHeader } from '~ui';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   title?: string;
@@ -33,7 +33,7 @@ export const ModalFullScreen = ({
   borderless,
   headerHidden,
 }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const navigation = useNavigation();
   const goBackPress = React.useCallback(
     () => navigation.goBack(),

@@ -1,77 +1,78 @@
 import { PermissionsEnum } from '~/graphql/api';
-import i18n from './i18n.service';
-import mindsConfigService from './minds-config.service';
 import { showNotification } from 'AppMessages';
+import type { I18nService } from './i18n.service';
+import type { MindsConfigService } from './minds-config.service';
 
-export default class PermissionsService {
-  private static hasPermission(
-    permission: PermissionsKeys,
-    showToaster = false,
-  ) {
-    const permissionValue = mindsConfigService.hasPermission(permission);
+export class PermissionsService {
+  constructor(private i18n: I18nService, private config: MindsConfigService) {}
+
+  private hasPermission(permission: PermissionsKeys, showToaster = false) {
+    const permissionValue = this.config.hasPermission(permission);
     if (!permissionValue && showToaster) {
-      showNotification(PermissionsService.getMessage(permission));
+      showNotification(this.getMessage(permission));
     }
     return permissionValue;
   }
 
-  public static canCreatePost(showMessage = false) {
+  public canCreatePost(showMessage = false) {
     return this.hasPermission(PermissionsEnum.CanCreatePost, showMessage);
   }
 
-  public static canComment(showMessage = false) {
+  public canComment(showMessage = false) {
     return this.hasPermission(PermissionsEnum.CanComment, showMessage);
   }
 
-  public static canUploadVideo(showMessage = false) {
+  public canUploadVideo(showMessage = false) {
     return this.hasPermission(PermissionsEnum.CanUploadVideo, showMessage);
   }
 
-  public static canInteract(showMessage = false) {
+  public canInteract(showMessage = false) {
     return this.hasPermission(PermissionsEnum.CanInteract, showMessage);
   }
 
-  public static canCreateGroup(showMessage = false) {
+  public canCreateGroup(showMessage = false) {
     return this.hasPermission(PermissionsEnum.CanCreateGroup, showMessage);
   }
 
-  public static canBoost(showMessage = false) {
+  public canBoost(showMessage = false) {
     return this.hasPermission(PermissionsEnum.CanBoost, showMessage);
   }
 
-  public static canCreateChatRoom(showMessage = false) {
+  public canCreateChatRoom(showMessage = false) {
     return this.hasPermission(PermissionsEnum.CanCreateChatRoom, showMessage);
   }
 
-  public static canUploadChatMedia(showMessage = false) {
+  public canUploadChatMedia(showMessage = false) {
     return this.hasPermission(PermissionsEnum.CanUploadChatMedia, showMessage);
   }
 
-  public static getMessage(error: PermissionsKeys) {
+  public getMessage(error: PermissionsKeys) {
     const message = {
-      [PermissionsEnum.CanCreatePost]: i18n.t(
+      [PermissionsEnum.CanCreatePost]: this.i18n.t(
         'permissions.notAllowed.create_post',
       ),
-      [PermissionsEnum.CanComment]: i18n.t(
+      [PermissionsEnum.CanComment]: this.i18n.t(
         'permissions.notAllowed.create_comment',
       ),
-      [PermissionsEnum.CanUploadVideo]: i18n.t(
+      [PermissionsEnum.CanUploadVideo]: this.i18n.t(
         'permissions.notAllowed.upload_video',
       ),
-      [PermissionsEnum.CanInteract]: i18n.t('permissions.notAllowed.interact'),
-      [PermissionsEnum.CanCreateGroup]: i18n.t(
+      [PermissionsEnum.CanInteract]: this.i18n.t(
+        'permissions.notAllowed.interact',
+      ),
+      [PermissionsEnum.CanCreateGroup]: this.i18n.t(
         'permissions.notAllowed.create_group',
       ),
-      [PermissionsEnum.CanBoost]: i18n.t('permissions.notAllowed.boost'),
-      [PermissionsEnum.CanCreateChatRoom]: i18n.t(
+      [PermissionsEnum.CanBoost]: this.i18n.t('permissions.notAllowed.boost'),
+      [PermissionsEnum.CanCreateChatRoom]: this.i18n.t(
         'permissions.notAllowed.create_chat',
       ),
-      [PermissionsEnum.CanUploadChatMedia]: i18n.t(
+      [PermissionsEnum.CanUploadChatMedia]: this.i18n.t(
         'permissions.notAllowed.upload_chat_media',
       ),
     }[error];
 
-    return message || i18n.t('notAllowed');
+    return message || this.i18n.t('notAllowed');
   }
 }
 

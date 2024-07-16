@@ -6,8 +6,6 @@ import {
   waitFor,
 } from '@testing-library/react-native';
 import SupermindSettingsScreen from './SupermindSettingsScreen';
-import apiService from '~/common/services/api.service';
-import mindsConfigService from '~/common/services/minds-config.service';
 
 jest.mock('~/common/hooks/use-stores');
 jest.mock('~/common/services/permissions.service');

@@ -5,8 +5,8 @@ import { Image } from 'expo-image';
 
 import number from '../../common/helpers/number';
 import useApiFetch from '../../common/hooks/useApiFetch';
-import ThemedStyles from '~styles/ThemedStyles';
 import { B3 } from '~ui';
+import sp from '~/services/serviceProvider';
 
 export default observer(function TokenPrice() {
   const { result } = useApiFetch<{ minds: number }>(
@@ -44,7 +44,7 @@ export default observer(function TokenPrice() {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   pressableContainer: [
     'bcolorPrimaryBorder',
     'border',

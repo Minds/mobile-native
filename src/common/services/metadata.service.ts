@@ -1,7 +1,7 @@
 import moment from 'moment';
-import sessionService from './session.service';
 import hashCode from '../helpers/hash-code';
-import NavigationService from '../../navigation/NavigationService';
+import type { SessionService } from './session.service';
+import type { NavigationService } from '~/navigation/NavigationService';
 
 export type MetadataSource =
   | 'feed/discovery/search'
@@ -69,7 +69,7 @@ export interface Metadata {
 /**
  * Metadata service for analytics
  */
-class MetadataService {
+export class MetadataService {
   private source: MetadataSource = 'feed/subscribed';
   private medium: MetadataMedium = 'feed';
   private campaign?: MetadataCampaign;
@@ -83,7 +83,10 @@ class MetadataService {
   /**
    * Constructor
    */
-  init() {
+  constructor(
+    private sessionService: SessionService,
+    private navigation: NavigationService,
+  ) {
     sessionService.onLogin(() => {
       this.initDelta();
     });
@@ -143,7 +146,7 @@ class MetadataService {
    * Build the page token
    */
   private buildPageToken() {
-    const user = sessionService.getUser();
+    const user = this.sessionService.getUser();
 
     const tokenParts = [
       this.salt, // NOTE: Salt + hash so individual user activity can't be tracked
@@ -159,7 +162,7 @@ class MetadataService {
    * Get current visible route
    */
   private getCurrentRoute() {
-    const state = NavigationService.getCurrentState();
+    const state = this.navigation.getCurrentState();
     if (state.routeName === 'Tabs') {
       return state.routes[state.index].routeName;
     }
@@ -192,5 +195,3 @@ class MetadataService {
     };
   }
 }
-
-export default MetadataService;

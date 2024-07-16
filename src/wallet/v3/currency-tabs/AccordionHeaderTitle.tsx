@@ -1,16 +1,17 @@
 import { useNavigation } from '@react-navigation/core';
 import { observer } from 'mobx-react';
 import React from 'react';
-import sessionService from '../../../common/services/session.service';
+
 import { getFriendlyLabel } from './EarningsOverview';
 import { B1, B2, Column } from '~ui';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   earningId: string;
 };
 
 const AccordionHeaderTitle = observer(({ earningId }: PropsType) => {
-  const user = sessionService.getUser();
+  const user = sp.session.getUser();
   const navigation = useNavigation();
 
   const onCompletePro = success => {

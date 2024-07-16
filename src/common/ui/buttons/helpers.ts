@@ -1,7 +1,8 @@
 import { Animated } from 'react-native';
-import ThemedStyles from '~styles/ThemedStyles';
+
 import { LayoutAnimation } from 'react-native';
 import { Btn1, Btn2, Btn3 } from '~ui/typography';
+import sp from '~/services/serviceProvider';
 
 const BOUNCE_CONFIG = {
   short: {
@@ -72,7 +73,7 @@ export const getColor = ({
     | 'black'
     | 'danger'
     | undefined = 'primary';
-  let spinnerColor = ThemedStyles.style.colorPrimaryText.color || 'grey';
+  let spinnerColor = sp.styles.style.colorPrimaryText.color || 'grey';
 
   if ((mode === 'solid' || darkContent) && !disabled) {
     textColor = theme === 1 && type === 'action' ? 'black' : 'white';

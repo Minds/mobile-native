@@ -1,19 +1,16 @@
-import type { CurrencyType } from '../../types/Payment';
-import api from '../../common/services/api.service';
-import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
-import logService from '../../common/services/log.service';
+import moment from 'moment';
+
+import type { CurrencyType } from '~/types/Payment';
+import toFriendlyCrypto from '~/common/helpers/toFriendlyCrypto';
 import type {
   StripeDetails,
   Wallet,
   TokensOptions,
   Earnings,
 } from './WalletTypes';
-import i18n from '../../common/services/i18n.service';
-
 import { ChartTimespanType } from './currency-tabs/TokensChart';
-import sessionService from '../../common/services/session.service';
-import walletService, { WalletJoinResponse } from '../WalletService';
-import moment from 'moment';
+import sp from '~/services/serviceProvider';
+import type { WalletJoinResponse } from '../WalletService';
 
 const getStartOfDayUnixTs = (date: Date) =>
   Number(moment(date).utc().startOf('day').format('X'));
@@ -55,54 +52,58 @@ const defaultStripeDetails = <StripeDetails>{
   personalIdNumber: '',
 };
 
-const defaultWallet = <Wallet>{
-  loaded: false,
-  tokens: {
-    label: i18n.t('tokens'),
-    unit: 'tokens',
-    balance: 0,
-    address: null,
-  },
-  offchain: {
-    label: i18n.t('blockchain.offchain'),
-    unit: 'tokens',
-    balance: 0,
-    address: 'offchain',
-  },
-  onchain: {
-    label: i18n.t('blockchain.onchain'),
-    unit: 'tokens',
-    balance: 0, //eth balance
-    address: null,
-  },
-  receiver: {
-    label: i18n.t('blockchain.receiver'),
-    unit: 'tokens',
-    balance: 0,
-    address: null,
-  },
-  cash: {
-    label: i18n.t('wallet.cash'),
-    unit: 'cash',
-    balance: 0,
-    address: null,
-  },
-  eth: {
-    label: i18n.t('ether'),
-    unit: 'eth',
-    balance: 0,
-    address: null,
-  },
-  btc: {
-    label: i18n.t('bitcoin'),
-    unit: 'btc',
-    balance: 0,
-    address: null,
-  },
-  limits: {
-    wire: 0,
-  },
-};
+function getDefaultWallet() {
+  const i18n = sp.i18n;
+  const defaultWallet = <Wallet>{
+    loaded: false,
+    tokens: {
+      label: i18n.t('tokens'),
+      unit: 'tokens',
+      balance: 0,
+      address: null,
+    },
+    offchain: {
+      label: i18n.t('blockchain.offchain'),
+      unit: 'tokens',
+      balance: 0,
+      address: 'offchain',
+    },
+    onchain: {
+      label: i18n.t('blockchain.onchain'),
+      unit: 'tokens',
+      balance: 0, //eth balance
+      address: null,
+    },
+    receiver: {
+      label: i18n.t('blockchain.receiver'),
+      unit: 'tokens',
+      balance: 0,
+      address: null,
+    },
+    cash: {
+      label: i18n.t('wallet.cash'),
+      unit: 'cash',
+      balance: 0,
+      address: null,
+    },
+    eth: {
+      label: i18n.t('ether'),
+      unit: 'eth',
+      balance: 0,
+      address: null,
+    },
+    btc: {
+      label: i18n.t('bitcoin'),
+      unit: 'btc',
+      balance: 0,
+      address: null,
+    },
+    limits: {
+      wire: 0,
+    },
+  };
+  return defaultWallet;
+}
 
 const createWalletStore = () => ({
   currency: 'tokens' as CurrencyType,
@@ -110,7 +111,7 @@ const createWalletStore = () => ({
   chart: <ChartTimespanType>'7d',
   stripeDetails: defaultStripeDetails,
   balance: 0,
-  wallet: defaultWallet,
+  wallet: getDefaultWallet(),
   usdEarnings: [] as Earnings[],
   usdPayouts: [],
   usdEarningsTotal: 0,
@@ -165,7 +166,9 @@ const createWalletStore = () => ({
    */
   async loadOffchainAndReceiver(): Promise<void> {
     try {
-      const response: any = await api.get('api/v2/blockchain/wallet/balance');
+      const response: any = await sp.api.get(
+        'api/v2/blockchain/wallet/balance',
+      );
 
       if (response && response.addresses) {
         this.balance = toFriendlyCrypto(response.balance);
@@ -188,7 +191,7 @@ const createWalletStore = () => ({
         console.error('No data');
       }
     } catch (e) {
-      logService.exception(e);
+      sp.log.exception(e);
     }
   },
   /**
@@ -196,7 +199,9 @@ const createWalletStore = () => ({
    */
   async loadStripeAccount(): Promise<StripeDetails> {
     try {
-      const { account } = await api.get<any>('api/v2/payments/stripe/connect');
+      const { account } = await sp.api.get<any>(
+        'api/v2/payments/stripe/connect',
+      );
       this.setStripeAccount(account);
       this.stripeDetails.loaded = true;
     } catch (e) {
@@ -204,7 +209,7 @@ const createWalletStore = () => ({
       if (e instanceof Error && e.message === 'Account not found') {
         this.stripeDetails.loaded = true;
       }
-      logService.exception(e);
+      sp.log.exception(e);
     }
     return this.stripeDetails;
   },
@@ -243,18 +248,18 @@ const createWalletStore = () => ({
   },
   async loadBtcAccount(): Promise<any> {
     try {
-      const response: any = await api.get('api/v2/wallet/btc/address');
+      const response: any = await sp.api.get('api/v2/wallet/btc/address');
       if (response && response.address) {
         this.wallet.btc.address = response.address;
       }
     } catch (e) {
       console.log('loadBtcAccount');
-      logService.exception(e);
+      sp.log.exception(e);
     }
   },
   async setBtcAccount(address): Promise<boolean> {
     try {
-      const response = await api.post('api/v2/wallet/btc/address', {
+      const response = await sp.api.post('api/v2/wallet/btc/address', {
         address,
       });
 
@@ -264,12 +269,13 @@ const createWalletStore = () => ({
 
       return true;
     } catch (e) {
-      logService.exception(e);
+      sp.log.exception(e);
       return false;
     }
   },
   async createStripeAccount(form): Promise<void | boolean> {
-    const response = await (<any>api.put('api/v2/wallet/usd/account', form));
+    const response = await (<any>sp.api.put('api/v2/wallet/usd/account', form));
+    const sessionService = sp.session;
     if (!sessionService.getUser().programs) {
       sessionService.getUser().programs = [];
     }
@@ -284,7 +290,7 @@ const createWalletStore = () => ({
   },
   async addStripeBank(form) {
     const response = <any>(
-      await api.post('api/v2/payments/stripe/connect/bank', form)
+      await sp.api.post('api/v2/payments/stripe/connect/bank', form)
     );
 
     // Refresh the account
@@ -295,17 +301,17 @@ const createWalletStore = () => ({
   async leaveMonetization() {
     try {
       const response = await (<any>(
-        api.delete('api/v2/payments/stripe/connect')
+        sp.api.delete('api/v2/payments/stripe/connect')
       ));
       return response;
     } catch (e) {
-      logService.exception(e);
+      sp.log.exception(e);
       return false;
     }
   },
   async loadEarnings(from, to) {
     try {
-      const response = <any>await api.get(
+      const response = <any>await sp.api.get(
         'api/v3/monetization/earnings/overview',
         {
           from: from,
@@ -323,7 +329,7 @@ const createWalletStore = () => ({
 
       this.loadEarningsTotals();
     } catch (e) {
-      logService.exception(e);
+      sp.log.exception(e);
       return false;
     }
   },
@@ -359,13 +365,16 @@ const createWalletStore = () => ({
         .startOf('day')
         .format('Y-M-D');
 
-      let rewards = <any>await api.get('api/v3/rewards/', {
+      let rewards = <any>await sp.api.get('api/v3/rewards/', {
         date: formattedDate,
       });
-      const response = <any>await api.get('api/v2/blockchain/contributions', {
-        from: dateTs,
-        to: dateTs + 1,
-      });
+      const response = <any>await sp.api.get(
+        'api/v2/blockchain/contributions',
+        {
+          from: dateTs,
+          to: dateTs + 1,
+        },
+      );
       const contributionScores: ContributionMetric[] = [];
       if (response.contributions && response.contributions.length > 0) {
         Object.keys(response.contributions[0].metrics).forEach(key => {
@@ -378,14 +387,14 @@ const createWalletStore = () => ({
 
       return { rewards, contributionScores };
     } catch (e) {
-      logService.exception(e);
+      sp.log.exception(e);
       return false;
     }
   },
   async loadLiquiditySummary(date: Date) {
     try {
       const dateTs = getStartOfDayUnixTs(date);
-      return <any>await api.get('api/v3/blockchain/liquidity-positions', {
+      return <any>await sp.api.get('api/v3/blockchain/liquidity-positions', {
         timestamp: dateTs,
       });
     } catch (err) {
@@ -398,7 +407,7 @@ const createWalletStore = () => ({
    * @param {boolean} retry
    */
   join(numberToJoin: string, retry: boolean): Promise<WalletJoinResponse> {
-    return walletService.join(numberToJoin, retry);
+    return sp.resolve('wallet').join(numberToJoin, retry);
   },
   /**
    * Confirm join
@@ -407,12 +416,12 @@ const createWalletStore = () => ({
    * @param {string} secret
    */
   confirm(number, code, secret) {
-    return walletService.confirm(number, code, secret);
+    return sp.resolve('wallet').confirm(number, code, secret);
   },
   reset() {
     this.balance = 0;
     this.stripeDetails = defaultStripeDetails;
-    this.wallet = defaultWallet;
+    this.wallet = getDefaultWallet();
     this.usdEarnings = [];
     this.usdPayouts = [];
     this.usdEarningsTotal = 0;

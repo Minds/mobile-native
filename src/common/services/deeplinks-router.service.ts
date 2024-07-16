@@ -6,19 +6,19 @@ import {
   IS_TENANT,
   APP_URI,
 } from '../../config/Config';
-import navigationService from '../../navigation/NavigationService';
 import { Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
-import analyticsService from '~/common/services/analytics.service';
-import apiService from './api.service';
-import referrerService from './referrer.service';
 import PreviewUpdateService from 'preview/PreviewUpdateService';
-import openUrlService from './open-url.service';
+import type { AnalyticsService } from './analytics.service';
+import type { NavigationService } from '~/navigation/NavigationService';
+import type { ApiService } from './api.service';
+import type { ReferrerService } from './referrer.service';
+import { openLinkInInAppBrowser } from './inapp-browser.service';
 
 /**
  * Deeplinks router
  */
-class DeeplinksRouter {
+export class DeepLinksRouterService {
   /**
    * Routes
    */
@@ -33,7 +33,12 @@ class DeeplinksRouter {
   /**
    * Constructor
    */
-  constructor() {
+  constructor(
+    private navigation: NavigationService,
+    private analytics: AnalyticsService,
+    private api: ApiService,
+    private referrer: ReferrerService,
+  ) {
     MINDS_DEEPLINK.forEach(r => this.add(r[0], r[1], r[2], r[3]));
   }
 
@@ -99,7 +104,7 @@ class DeeplinksRouter {
     }
 
     // track deeplink event (only for external deep links)
-    trackAnalytics && analyticsService.trackDeepLinkReceivedEvent(url);
+    trackAnalytics && this.analytics.trackDeepLinkReceivedEvent(url);
 
     if (cleanURL.startsWith('forgot-password')) {
       this.navToPasswordReset(url);
@@ -111,7 +116,7 @@ class DeeplinksRouter {
     const params = this.parseQueryParams(cleanURL);
 
     if (params?.referrer) {
-      referrerService.set(params.referrer);
+      this.referrer.set(params.referrer);
     }
 
     // if it only include parameters we ignore
@@ -127,9 +132,9 @@ class DeeplinksRouter {
       params.webview === '1' &&
       url.startsWith(APP_API_URI || url.startsWith(APP_SCHEME_URI))
     ) {
-      navigationService.navigate('WebView', {
+      this.navigation.navigate('WebView', {
         url: url.replace(APP_SCHEME_URI, APP_API_URI),
-        headers: apiService.buildAuthorizationHeader(),
+        headers: this.api.buildAuthorizationHeader(),
       });
       return true;
     }
@@ -137,19 +142,17 @@ class DeeplinksRouter {
     if (route && route.screen !== 'Redirect') {
       const screens = route.screen.split('/');
       if (screens.length === 1) {
-        navigationService[route.type](route.screen, route.params);
+        this.navigation[route.type](route.screen, route.params);
       } else {
         const screen = screens.shift();
         const calcParams = this.nestedScreen(screens, route.params);
-        navigationService[route.type](screen, calcParams);
+        this.navigation[route.type](screen, calcParams);
       }
     } else if (url !== APP_API_URI) {
       if (url.startsWith(APP_SCHEME_URI)) {
         // how to avoid redirection loop
         if (IS_TENANT) {
-          openUrlService.openLinkInInAppBrowser(
-            url.replace(APP_SCHEME_URI, APP_URI),
-          );
+          openLinkInInAppBrowser(url.replace(APP_SCHEME_URI, APP_URI));
         } else {
           Linking.openURL(
             url.replace(APP_SCHEME_URI, 'https://mobile.minds.com/'),
@@ -157,7 +160,7 @@ class DeeplinksRouter {
         }
       } else {
         IS_TENANT
-          ? openUrlService.openLinkInInAppBrowser(url)
+          ? openLinkInInAppBrowser(url)
           : Linking.openURL(url.replace('https://www.', 'https://mobile.'));
       }
       return true;
@@ -211,14 +214,12 @@ class DeeplinksRouter {
 
     const params = getMatches(link.replace(/%3B/g, ';'), regex);
 
-    navigationService.navigate('ResetPassword', {
+    this.navigation.navigate('ResetPassword', {
       username: params[1],
       code: params[2],
     });
   }
 }
-
-export default new DeeplinksRouter();
 
 // const forceUpdate = async (file: string) => {
 //   try {

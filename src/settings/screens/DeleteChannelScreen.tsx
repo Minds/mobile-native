@@ -1,13 +1,13 @@
 import React from 'react';
 import { Alert } from 'react-native';
 import { Screen, ScreenSection, Button, B1 } from '~ui';
-import i18n from '~/common/services/i18n.service';
-import AuthService from '~/auth/AuthService';
+import sp from '~/services/serviceProvider';
 
 /**
  * Delete Channel Screen
  */
 export default function DeleteChannelScreen({ navigation }) {
+  const i18n = sp.i18n;
   const onDelete = password => {
     Alert.alert(
       i18n.t('attention'),
@@ -15,7 +15,7 @@ export default function DeleteChannelScreen({ navigation }) {
       [
         {
           text: i18n.t('yes'),
-          onPress: () => AuthService.delete(password),
+          onPress: () => sp.resolve('auth').delete(password),
         },
         { text: i18n.t('no') },
       ],

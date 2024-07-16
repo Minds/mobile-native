@@ -10,19 +10,18 @@ import {
   ViewStyle,
 } from 'react-native';
 import RetryableImage from '~/common/components/RetryableImage';
-import type CommentModel from '../../../comments/v2/CommentModel';
-import getVideoThumb from '../../../common/helpers/get-video-thumbnail';
-import videoPlayerService from '../../../common/services/video-player.service';
-import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
-import settingsStore from '../../../settings/SettingsStore';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import type CommentModel from '~/comments/v2/CommentModel';
+import getVideoThumb from '~/common/helpers/get-video-thumbnail';
+import { DATA_SAVER_THUMB_RES } from '~/config/Config';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+
 import createMindsVideoStore from './createMindsVideoStore';
 import Controls from './overlays/Controls';
 import Error from './overlays/Error';
 import InProgress from './overlays/InProgress';
 import Transcoding from './overlays/Transcoding';
 import ExpoVideo from './Video';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -43,9 +42,10 @@ type PropsType = {
 };
 
 const MindsVideo = observer((props: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
+  const videoPlayerService = sp.resolve('videoPlayer');
   const dataSaverEnabled =
-    !props.ignoreDataSaver && settingsStore.dataSaverEnabled;
+    !props.ignoreDataSaver && sp.resolve('settings').dataSaverEnabled;
   const localStore = useLocalStore(createMindsVideoStore, {
     autoplay: props.autoplay,
     repeat: props.repeat,
@@ -158,6 +158,6 @@ const MindsVideo = observer((props: PropsType) => {
   );
 });
 
-const containerStyle = ThemedStyles.combine('flexContainer', 'bgBlack');
+const containerStyle = sp.styles.combine('flexContainer', 'bgBlack');
 
 export default MindsVideo;

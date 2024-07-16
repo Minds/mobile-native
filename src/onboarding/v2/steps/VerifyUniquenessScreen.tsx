@@ -1,15 +1,14 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View } from 'react-native';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import ModalContainer from './ModalContainer';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import { useNavigation } from '@react-navigation/native';
 import LabeledComponent from '../../../common/components/LabeledComponent';
 import { PRO_PLUS_SUBSCRIPTION_ENABLED } from '~/config/Config';
-import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 type MappingItems = {
   title: string;
@@ -22,9 +21,9 @@ type MappingItems = {
  */
 export default withErrorBoundaryScreen(
   observer(function VerifyUniquenessScreen() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const navigation = useNavigation();
-
+    const i18n = sp.i18n;
     const mappingCallback = ({ title, screen, params }: MappingItems) => ({
       title,
       onPress: () => navigation.navigate(screen as any, params),
@@ -36,6 +35,7 @@ export default withErrorBoundaryScreen(
         screen: 'PhoneValidation',
         params: {
           onConfirm: () => {
+            const inFeedNoticesService = sp.resolve('inFeedNotices');
             inFeedNoticesService.load();
             navigation.goBack();
           },
@@ -58,12 +58,18 @@ export default withErrorBoundaryScreen(
       {
         title: i18n.t('monetize.plusHeader'),
         screen: 'UpgradeScreen',
-        params: { onComplete: () => inFeedNoticesService.load(), pro: false },
+        params: {
+          onComplete: () => sp.resolve('inFeedNotices').load(),
+          pro: false,
+        },
       },
       {
         title: i18n.t('monetize.proHeader'),
         screen: 'UpgradeScreen',
-        params: { onComplete: () => inFeedNoticesService.load(), pro: true },
+        params: {
+          onComplete: () => sp.resolve('inFeedNotices').load(),
+          pro: true,
+        },
       },
     ];
 

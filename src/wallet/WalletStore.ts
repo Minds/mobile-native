@@ -1,11 +1,11 @@
 import { observable, computed, action } from 'mobx';
 
-import walletService from './WalletService';
 import token from '../common/helpers/token';
 import number from '../common/helpers/number';
 import TokensStore from './tokens/TokensStore';
-import type { ApiResponse } from '../common/services/api.service';
+import type { ApiResponse } from '~/common/services/ApiResponse';
 import { Timeout } from '~/types/Common';
+import sp from '~/services/serviceProvider';
 
 interface WalletResponse extends ApiResponse {
   balance: number;
@@ -49,8 +49,9 @@ class WalletStore {
 
     this.refreshing = true;
 
-    const { balance, addresses } =
-      (await walletService.getBalances()) as WalletResponse;
+    const { balance, addresses } = (await sp
+      .resolve('wallet')
+      .getBalances()) as WalletResponse;
 
     if (addresses && addresses.length > 0) {
       addresses.forEach(async address => {
@@ -64,7 +65,7 @@ class WalletStore {
       });
     }
 
-    const overview = await walletService.getContributionsOverview();
+    const overview = await sp.resolve('wallet').getContributionsOverview();
 
     this.overview = overview;
     this.balance = balance;
@@ -84,7 +85,7 @@ class WalletStore {
    * @param {boolean} retry
    */
   join(number: string, retry: boolean) {
-    return walletService.join(number, retry);
+    return sp.resolve('wallet').join(number, retry);
   }
 
   /**
@@ -94,7 +95,7 @@ class WalletStore {
    * @param {string} secret
    */
   confirm(number, code, secret) {
-    return walletService.confirm(number, code, secret);
+    return sp.resolve('wallet').confirm(number, code, secret);
   }
 
   @action reset() {

@@ -7,22 +7,19 @@ import React, {
   useState,
 } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import FeedList, { InjectItem } from '../../common/components/FeedList';
+import FeedList, { InjectItem } from '~/common/components/FeedList';
 import createChannelStore from './createChannelStore';
-import CenteredLoading from '../../common/components/CenteredLoading';
+import CenteredLoading from '~/common/components/CenteredLoading';
 import ChannelHeader from './ChannelHeader';
-import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
-import BlogCard from '../../blogs/BlogCard';
-import type BlogModel from '../../blogs/BlogModel';
-import i18n from '../../common/services/i18n.service';
+import BlogCard from '~/blogs/BlogCard';
+import type BlogModel from '~/blogs/BlogModel';
 import { useFocusEffect } from '@react-navigation/native';
-import BlockedChannel from '../../common/components/BlockedChannel';
-import sessionService from '../../common/services/session.service';
-import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
+import BlockedChannel from '~/common/components/BlockedChannel';
+import ExplicitOverlay from '~/common/components/explicit/ExplicitOverlay';
 import ChannelTopBar from './ChannelTopBar';
 import UserNotFound from './UserNotFound';
-import ActivityModel from '../../newsfeed/ActivityModel';
-import Button from '../../common/components/Button';
+import ActivityModel from '~/newsfeed/ActivityModel';
+import Button from '~/common/components/Button';
 import { ChannelContext } from './ChannelContext';
 import Animated, {
   Easing,
@@ -41,10 +38,11 @@ import { B1, Column } from '~/common/ui';
 import ChannelRecommendation from '~/common/components/ChannelRecommendation/ChannelRecommendation';
 import withModalProvider from '~/navigation/withModalProvide';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { pushInteractionsScreen } from '../../common/components/interactions/pushInteractionsBottomSheet';
-import PermissionsService from '~/common/services/permissions.service';
+import { pushInteractionsScreen } from '~/common/components/interactions/pushInteractionsBottomSheet';
 import CaptureFab from '~/capture/CaptureFab';
 import { IS_IPAD } from '~/config/Config';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 const tinycolor = require('tinycolor2');
 
@@ -88,7 +86,7 @@ enum Direction {
  */
 const ChannelScreen = observer((props: PropsType) => {
   // =====================| STATES & VARIABLES |=====================>
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const feedRef = useRef<any>(null);
   const store = useLocalStore(createChannelStore);
   /**
@@ -137,10 +135,10 @@ const ChannelScreen = observer((props: PropsType) => {
    * whether texts should be light or dark
    **/
   const [textStyle, setTextStyle] = useState<StatusBarStyle>(
-    ThemedStyles.theme ? 'light-content' : 'dark-content',
+    sp.styles.theme ? 'light-content' : 'dark-content',
   );
   const [statusBarTextStyle, setStatusBarTextStyle] = useState<StatusBarStyle>(
-    ThemedStyles.theme ? 'light-content' : 'dark-content',
+    sp.styles.theme ? 'light-content' : 'dark-content',
   );
   /**
    * The distance that topbar has to
@@ -171,8 +169,8 @@ const ChannelScreen = observer((props: PropsType) => {
    **/
   const textColor =
     textStyle === 'dark-content'
-      ? ThemedStyles.getColor('Black')
-      : ThemedStyles.getColor('White');
+      ? sp.styles.getColor('Black')
+      : sp.styles.getColor('White');
 
   // =====================| EFFECTS |=====================>
   /**
@@ -201,11 +199,7 @@ const ChannelScreen = observer((props: PropsType) => {
   useFocusEffect(
     React.useCallback(() => {
       const params = props.route.params;
-      if (
-        params &&
-        params.prepend &&
-        store.channel?.guid === sessionService.guid
-      ) {
+      if (params && params.prepend && store.channel?.guid === sp.session.guid) {
         store.feedStore.prepend(params.prepend);
         props.navigation.setParams({ prepend: undefined });
       }
@@ -244,7 +238,7 @@ const ChannelScreen = observer((props: PropsType) => {
            **/
           if (Platform.OS === 'ios') {
             setStatusBarTextStyle(
-              ThemedStyles.theme ? 'light-content' : 'dark-content',
+              sp.styles.theme ? 'light-content' : 'dark-content',
             );
           }
         }
@@ -413,7 +407,7 @@ const ChannelScreen = observer((props: PropsType) => {
       </View>
     );
   }
-
+  const i18n = sp.i18n;
   /**
    * EMPTY FEED
    *
@@ -425,7 +419,7 @@ const ChannelScreen = observer((props: PropsType) => {
     <Empty
       title={i18n.t('channel.createFirstPostTitle')}
       subtitle={i18n.t('channel.createFirstPostSubTitle')}>
-      {store.filter !== 'blogs' && PermissionsService.canCreatePost() && (
+      {store.filter !== 'blogs' && sp.permissions.canCreatePost() && (
         <Button
           onPress={() => props.navigation.navigate('Compose')}
           text={i18n.t('channel.createFirstPostAction')}
@@ -509,7 +503,7 @@ const ChannelScreen = observer((props: PropsType) => {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   nsfwChannel: ['bgPrimaryBackground', 'flexContainer'],
   thickBorder: ['borderBottom6x', 'bcolorBaseBackground'],
 });

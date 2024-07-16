@@ -1,12 +1,13 @@
-import RichEmbedService from '../services/rich-embed.service';
 import Util from '../helpers/util';
 import logService from '../services/log.service';
 import { useLocalStore } from 'mobx-react';
+import { useService } from '~/services/hooks/useService';
 
 /**
  * Local embed store hook
  */
 export default function () {
+  const richEmbedService = useService('richEmbed');
   const store = useLocalStore(() => ({
     hasRichEmbed: false,
     metaInProgress: false,
@@ -78,7 +79,7 @@ export default function () {
       store.metaInProgress = true;
 
       try {
-        const meta = await RichEmbedService.getMeta(url);
+        const meta = await richEmbedService.getMeta(url);
         store.meta = meta;
         store.metaInProgress = false;
       } catch (e) {

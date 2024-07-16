@@ -1,7 +1,5 @@
 import React, { forwardRef } from 'react';
 
-import i18n from '~/common/services/i18n.service';
-import shareService from '../../../share/ShareService';
 import { observer } from 'mobx-react';
 import {
   BottomSheetModal,
@@ -11,12 +9,11 @@ import {
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
 import { APP_URI, BOOSTS_ENABLED } from '~/config/Config';
 import GroupModel from '~/groups/GroupModel';
-import NavigationService from '../../../navigation/NavigationService';
 import { GroupContextType, useGroupContext } from '../contexts/GroupContext';
-import PermissionsService from '~/common/services/permissions.service';
 import { useDeleteGroupChatRoom } from '~/modules/chat/hooks/useDeleteGroupChatRoom';
 import { confirm } from '~/common/components/Confirm';
 import { useIsFeatureOn } from 'ExperimentsProvider';
+import serviceProvider from '~/services/serviceProvider';
 
 type PropsType = {
   group: GroupModel;
@@ -46,14 +43,15 @@ const getOptions = ({
   }> = [];
 
   const link = `${APP_URI}group/${group.guid}/feed`;
+  const i18n = serviceProvider.i18n;
 
-  if (PermissionsService.canBoost() && BOOSTS_ENABLED) {
+  if (serviceProvider.permissions.canBoost() && BOOSTS_ENABLED) {
     options.push({
       iconName: 'trending-up',
       iconType: 'material',
       title: i18n.t('group.boost'),
       onPress: () => {
-        NavigationService.navigate('BoostScreenV2', {
+        serviceProvider.navigation.navigate('BoostScreenV2', {
           entity: group,
           boostType: 'group',
         });
@@ -80,7 +78,7 @@ const getOptions = ({
     iconType: 'material',
     title: i18n.t('group.share'),
     onPress: () => {
-      shareService.share(i18n.t('group.share'), link);
+      serviceProvider.resolve('share').share(i18n.t('group.share'), link);
       ref.current.dismiss();
     },
   });
@@ -151,7 +149,10 @@ const GroupMoreMenu = forwardRef((props: PropsType, ref: any) => {
       {options.map((b, i) => (
         <BottomSheetMenuItem {...b} key={i} />
       ))}
-      <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
+      <BottomSheetButton
+        text={serviceProvider.i18n.t('cancel')}
+        onPress={close}
+      />
     </BottomSheetModal>
   );
 });

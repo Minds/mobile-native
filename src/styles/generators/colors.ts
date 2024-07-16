@@ -1,5 +1,5 @@
 import { ColorsNameType, DARK_THEME, LIGHT_THEME } from '../Colors';
-import type { ThemedStylesStore } from '../ThemedStyles';
+import type { ThemedStyles } from '../ThemedStyles';
 
 const LIGHT_SUFFIX = '_Light';
 const DARK_SUFFIX = '_Dark';
@@ -12,7 +12,7 @@ const getDarkThemeColor = (prop: ColorsNameType) => {
   return DARK_THEME[prop];
 };
 
-export default function colors(name: string, ts: ThemedStylesStore) {
+export default function colors(name: string, ts: ThemedStyles) {
   let fn = ts.getColor.bind(ts),
     tName = name;
 

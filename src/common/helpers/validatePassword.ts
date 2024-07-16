@@ -1,4 +1,3 @@
-//@ts-nocheck
 export default function (str) {
   const lengthCheck = str.length >= 8;
   const specialCharCheck = /[^a-zA-Z\d]/.exec(str) !== null;

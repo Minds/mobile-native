@@ -13,7 +13,7 @@ import { Dimensions, StatusBar } from 'react-native';
 import { SharedValue } from 'react-native-reanimated';
 import Handle from './Handle';
 import useBackHandler from './useBackHandler';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 const { height: windowHeight } = Dimensions.get('window');
 const DEFAULT_SNAP_POINTS = [Math.floor(windowHeight * 0.8)];
@@ -71,7 +71,7 @@ const MBottomSheet = forwardRef<BottomSheet, PropsType>((props, ref) => {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['bgPrimaryBackgroundHighlight'],
   handleIndicator: ['bgSecondaryText'],
 });

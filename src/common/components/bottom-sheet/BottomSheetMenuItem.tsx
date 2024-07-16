@@ -1,10 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Icon, IconType } from 'react-native-elements';
-import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import MPressable from '../MPressable';
 import MText from '../MText';
 import { B1 } from '~ui';
+import { useStyle } from '~/styles/hooks';
+import sp from '~/services/serviceProvider';
 
 export type BottomSheetMenuItemProps = {
   title: string | JSX.Element;
@@ -30,7 +31,7 @@ const BottomSheetMenuItem = ({
   testID = '',
 }: BottomSheetMenuItemProps) => {
   iconSize = iconSize || 24;
-
+  const themedStyles = sp.styles;
   const txtStyle = useStyle(styles.menuText, textStyle);
   const containerStyle = useStyle(styles.menuContainer, style);
 
@@ -49,8 +50,8 @@ const BottomSheetMenuItem = ({
               type={iconType}
               iconStyle={
                 iconName === 'ios-radio-button-on'
-                  ? ThemedStyles.style.colorIconActive
-                  : ThemedStyles.style.colorSecondaryText
+                  ? themedStyles.style.colorIconActive
+                  : themedStyles.style.colorSecondaryText
               }
             />
           ) : (
@@ -69,7 +70,7 @@ const BottomSheetMenuItem = ({
 
 export default BottomSheetMenuItem;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   iconContainer: [{ width: 25 }, 'alignCenter', 'marginRight4x'],
   menuContainer: [
     'alignCenter',

@@ -14,10 +14,10 @@ import {
 import ActivityModel from '~/newsfeed/ActivityModel';
 import UserModel from '~/channel/UserModel';
 import GroupModel from '~/groups/GroupModel';
-import { storages } from '~/common/services/storage/storages.service';
-import { gqlFetcher } from '~/common/services/api.service';
 import { NewsfeedType } from '~/newsfeed/NewsfeedStore';
 import useDismissible from '~/services/hooks/useDismissable';
+import serviceProvider from '~/services/serviceProvider';
+import { gqlFetcher } from '~/common/services/gqlFetcher';
 
 export const mapModels = (
   edge: any,
@@ -104,8 +104,10 @@ export function useInfiniteNewsfeed(algorithm: NewsfeedType) {
 
   // only on the first run
   if (local.cachedData === null) {
-    // storages.userCache?.removeItem('NewsfeedCache');
-    local.cachedData = storages.userCache?.getMap(`NewsfeedCache-${algorithm}`);
+    // storagesService.userCache?.removeItem('NewsfeedCache');
+    local.cachedData = serviceProvider.storages.userCache?.getObject(
+      `NewsfeedCache-${algorithm}`,
+    );
   }
 
   const query = useInfiniteFetchNewsfeedQuery(
@@ -177,12 +179,12 @@ export function useInfiniteNewsfeed(algorithm: NewsfeedType) {
     query,
     refresh: useCallback(() => {
       inFeedNoticesDelivered.current = emptyArray;
-      storages.userCache?.removeItem(`NewsfeedCache-${algorithm}`);
+      serviceProvider.storages.userCache?.delete(`NewsfeedCache-${algorithm}`);
       local.cachedData = undefined;
       local.lastFetchAt = Date.now();
       query.remove();
       query.refetch();
-    }, [query, local]),
+    }, [algorithm, local, query]),
     entities,
   };
 }
@@ -217,10 +219,13 @@ const useInfiniteFetchNewsfeedQuery = <
 
       // save to cache when fetching the first page
       if (!metaData.pageParam && data?.newsfeed?.edges?.length) {
-        storages.userCache?.setMap(`NewsfeedCache-${variables['algorithm']}`, {
-          pages: [data],
-          pageParams: [undefined],
-        });
+        serviceProvider.storages.userCache?.setObject(
+          `NewsfeedCache-${variables['algorithm']}`,
+          {
+            pages: [data],
+            pageParams: [undefined],
+          },
+        );
       }
 
       return data;

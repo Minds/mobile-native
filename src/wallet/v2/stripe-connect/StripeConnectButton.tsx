@@ -1,10 +1,10 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import ActivityIndicator from '../../../common/components/ActivityIndicator';
-import Button from '../../../common/components/Button';
-import i18n from '../../../common/services/i18n.service';
-import { B1, B2, Column, ColumnPropType } from '../../../common/ui';
+import ActivityIndicator from '~/common/components/ActivityIndicator';
+import Button from '~/common/components/Button';
+import { B1, B2, Column, ColumnPropType } from '~/common/ui';
 import useStripeConnect from './useStripeConnect';
+import sp from '~/services/serviceProvider';
 
 type StripeConnectButtonProps = ColumnPropType & {};
 
@@ -24,6 +24,8 @@ const StripeConnectButton = (props: StripeConnectButtonProps) => {
   if (!account && loading) {
     return <ActivityIndicator />;
   }
+
+  const i18n = sp.i18n;
 
   const restrictedMapping: {
     [k: string]: { title: string; description: string };

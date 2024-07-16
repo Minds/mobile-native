@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { PureComponent } from 'react';
 
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
@@ -8,17 +7,17 @@ import { Image } from 'expo-image';
 
 import { FLAG_VIEW } from '../common/Permissions';
 import Actions from '../newsfeed/activity/Actions';
-import ThemedStyles from '../styles/ThemedStyles';
 import BlogModel from './BlogModel';
 import BlogActionSheet from './BlogActionSheet';
-import i18n from '../common/services/i18n.service';
 import MText from '../common/components/MText';
 import MPressable from '~/common/components/MPressable';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity: BlogModel;
   navigation: any;
   showOnlyContent?: boolean;
+  hideTabs?: boolean;
 };
 
 /**
@@ -48,7 +47,7 @@ export default class BlogCard extends PureComponent<PropsType> {
   }
 
   renderOnlyContent(image, title) {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     return (
       <View>
         <TouchableOpacity
@@ -78,7 +77,7 @@ export default class BlogCard extends PureComponent<PropsType> {
     const channel = this.props.entity.ownerObj;
     const image = blog.getBannerSource?.();
     const title = this.cleanTitle(blog.title);
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const showOnlyContent = this.props.showOnlyContent;
 
     if (showOnlyContent) {
@@ -105,12 +104,7 @@ export default class BlogCard extends PureComponent<PropsType> {
                   theme.alignCenter,
                 ]}>
                 {channel && (
-                  <Avatar
-                    width={26}
-                    height={26}
-                    rounded
-                    source={channel.getAvatarSource()}
-                  />
+                  <Avatar rounded source={channel.getAvatarSource()} />
                 )}
                 <MText
                   style={[
@@ -122,7 +116,7 @@ export default class BlogCard extends PureComponent<PropsType> {
                   {blog.ownerObj && blog.ownerObj.username}
                 </MText>
                 <MText style={[theme.fontXS, theme.paddingLeft]}>
-                  {i18n.date(blog.time_created * 1000)}
+                  {sp.i18n.date(parseInt(blog.time_created, 10) * 1000)}
                 </MText>
                 <View style={theme.paddingLeft}>
                   <BlogActionSheet
@@ -133,9 +127,7 @@ export default class BlogCard extends PureComponent<PropsType> {
               </View>
             </View>
           </View>
-          {!this.props.hideTabs && (
-            <Actions entity={blog} navigation={this.props.navigation} />
-          )}
+          {!this.props.hideTabs && <Actions entity={blog} />}
         </MPressable>
       </View>
     );

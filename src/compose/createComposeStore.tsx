@@ -1,24 +1,14 @@
 import RNPhotoEditor from 'react-native-photo-editor';
 import { measureHeights } from '@bigbee.dev/react-native-measure-text-size';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
-import i18n from '../common/services/i18n.service';
-import hashtagService from '../common/services/hashtag.service';
-import api from '../common/services/api.service';
 import ActivityModel from '../newsfeed/ActivityModel';
-import mindsConfigService from '../common/services/minds-config.service';
-import supportTiersService from '../common/services/support-tiers.service';
-import settingsStore from '../settings/SettingsStore';
-import attachmentService from '../common/services/attachment.service';
-import logService from '../common/services/log.service';
 import { runInAction } from 'mobx';
 import { Image } from 'react-native';
 import getNetworkError from '~/common/helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
 import { SupermindRequestParam } from './SupermindComposeScreen';
-import NavigationService from '../navigation/NavigationService';
 import MultiAttachmentStore from '~/common/stores/MultiAttachmentStore';
 import SupermindRequestModel from '../supermind/SupermindRequestModel';
-import { storeRatingService } from 'modules/store-rating';
 import { PickedMedia } from '~/common/services/image-picker.service';
 import { confirmSupermindReply } from './SupermindConfirmation';
 import { Media } from '../common/stores/AttachmentStore';
@@ -26,7 +16,7 @@ import type GroupModel from '../groups/GroupModel';
 import type { SupportTiersType } from '../wire/WireTypes';
 import { pushAudienceSelector } from './ComposeAudienceSelector';
 import { regex } from '~/services';
-import PermissionsService from '~/common/services/permissions.service';
+import sp from '~/services/serviceProvider';
 
 /**
  * Display an error message to the user.
@@ -70,7 +60,6 @@ export default function (props) {
     isRemind: false,
     isEdit: false,
     accessId: 2,
-    mode: settingsStore.composerMode,
     isTitleOpen: false,
     /**
      * what compose mode is allowed? photo, video, and null for any
@@ -79,6 +68,8 @@ export default function (props) {
     videoPoster: null,
     entity: null as ActivityModel | null,
     attachments: new MultiAttachmentStore(),
+    supportTier: sp.resolve('supportTiers'),
+    attachment: sp.resolve('attachment'),
     nsfw: [] as number[],
     tags: [] as string[],
     wire_threshold: DEFAULT_MONETIZE as any,
@@ -134,26 +125,13 @@ export default function (props) {
         this.setCreateMode(params.createMode, true);
       }
 
-      this.mode = params.mode
-        ? params.mode
-        : this.isRemind || this.isEdit
-        ? 'text'
-        : settingsStore.composerMode;
-
-      // if noText is enabled the first screen shouldn't be text.
-      if (this.mode === 'text' && this.noText) {
-        this.mode = 'photo';
-      }
-
       if (params.media) {
-        this.mode = 'text';
         this.mediaToConfirm = params.media;
         this.attachments.attachMedia(params.media);
       }
 
       if (params.text) {
         this.setText(params.text);
-        this.mode = 'text';
       }
 
       if (this.isEdit) {
@@ -339,7 +317,7 @@ export default function (props) {
           onDone: _result => {
             Image.getSize(
               mediaToConfirm.uri,
-              (w, h) => {
+              () => {
                 runInAction(() => {
                   if (mediaToConfirm.key) {
                     mediaToConfirm.key++;
@@ -366,7 +344,7 @@ export default function (props) {
           },
         });
       } catch (err) {
-        logService.exception(err);
+        sp.log.exception(err);
       }
     },
     /**
@@ -374,7 +352,7 @@ export default function (props) {
      * @param {string} tag
      */
     addTag(tag: string) {
-      if (this.tags.length === hashtagService.maxHashtags) {
+      if (this.tags.length === sp.resolve('hashtag').maxHashtags) {
         this.maxHashtagsError();
         return false;
       }
@@ -402,7 +380,7 @@ export default function (props) {
         const results = matched.map(v => v.trim().slice(1));
         const all = [...new Set(results.concat(this.tags))];
 
-        if (all.length <= hashtagService.maxHashtags) {
+        if (all.length <= sp.resolve('hashtag').maxHashtags) {
           this.tags = all;
           return true;
         } else {
@@ -444,28 +422,6 @@ export default function (props) {
       this.selection = selection;
     },
     /**
-     * Set mode photo
-     */
-    setModePhoto(clear = true) {
-      if (clear) this.clear();
-      this.mode = 'photo';
-      settingsStore.setComposerMode(this.mode);
-    },
-    /**
-     * Set mode video
-     */
-    setModeVideo() {
-      this.mode = 'video';
-      settingsStore.setComposerMode(this.mode);
-    },
-    /**
-     * Set mode text
-     */
-    setModeText() {
-      this.mode = 'text';
-      settingsStore.setComposerMode(this.mode);
-    },
-    /**
      * Clear the store to the initial values
      */
     clear(deleteMedia = true) {
@@ -484,7 +440,6 @@ export default function (props) {
       this.mediaToConfirm = null;
       this.posting = false;
       this.entity = null;
-      this.mode = 'photo';
       this.isRemind = false;
       this.isEdit = false;
       this.nsfw = [];
@@ -493,25 +448,7 @@ export default function (props) {
       this.group = null;
       this.createMode = 'post';
     },
-    /**
-     * On media
-     * @param {object} media
-     * @param {string} mode
-     */
-    onMedia(media: Media, mode = 'confirm') {
-      setTimeout(() => {
-        this.mediaToConfirm = media;
-        this.mediaToConfirm.key = 1;
-        this.mode = mode;
-      }, 100);
-    },
-    /**
-     * Reject acptured image
-     */
-    rejectImage() {
-      this.mediaToConfirm = null;
-      this.mode = settingsStore.composerMode;
-    },
+
     /**
      * Select media from gallery
      */
@@ -519,11 +456,11 @@ export default function (props) {
       const max = 4 - this.attachments.length;
 
       if (max === 0) {
-        showNotification(i18n.t('capture.max4Images'));
+        showNotification(sp.i18n.t('capture.max4Images'));
         return;
       }
 
-      const response = await attachmentService.gallery(
+      const response = await this.attachment.gallery(
         mode || 'All',
         false, // crop
         max, // max files allowed
@@ -537,11 +474,11 @@ export default function (props) {
      * On media selected from gallery
      */
     async onMediaFromGallery(media: PickedMedia | PickedMedia[]) {
-      const canUploadVideo = PermissionsService.canUploadVideo();
+      const canUploadVideo = sp.permissions.canUploadVideo();
       if (Array.isArray(media)) {
         media.forEach(mediaItem => {
           if (!canUploadVideo && mediaItem.type?.startsWith('video')) {
-            showError(i18n.t('composer.create.mediaVideoError'));
+            showError(sp.i18n.t('composer.create.mediaVideoError'));
             return;
           }
 
@@ -553,14 +490,13 @@ export default function (props) {
             this.extra,
           );
         });
-        this.mode = 'text';
       } else {
         if (this.portraitMode && media.height < media.width) {
-          showError(i18n.t('capture.mediaPortraitError'));
+          showError(sp.i18n.t('capture.mediaPortraitError'));
           return;
         }
         if (!canUploadVideo && media.type?.startsWith('video')) {
-          showError(i18n.t('composer.create.mediaVideoError'));
+          showError(sp.i18n.t('composer.create.mediaVideoError'));
           return;
         }
         this.attachments.attachMedia(
@@ -570,7 +506,6 @@ export default function (props) {
           },
           this.extra,
         );
-        this.mode = 'text';
       }
     },
     /**
@@ -583,7 +518,6 @@ export default function (props) {
       }
 
       this.attachments.attachMedia(this.mediaToConfirm, this.extra);
-      this.mode = 'text';
     },
     /**
      * is the composer input valid or not. Is it ready to be submitted?
@@ -601,7 +535,7 @@ export default function (props) {
      * Submit post
      */
     async submit() {
-      if (!PermissionsService.canCreatePost(true)) {
+      if (!sp.permissions.canCreatePost(true)) {
         return;
       }
 
@@ -625,11 +559,11 @@ export default function (props) {
           this.wire_threshold &&
           'support_tier' in this.wire_threshold &&
           this.wire_threshold.support_tier.urn ===
-            mindsConfigService.settings.plus.support_tier_urn
+            sp.config.settings.plus.support_tier_urn
         ) {
           // Must have tags
           if (this.tags.length === 0) {
-            showError(i18n.t('capture.noHashtags'));
+            showError(sp.i18n.t('capture.noHashtags'));
             return false;
           }
 
@@ -638,20 +572,20 @@ export default function (props) {
             this.embed.hasRichEmbed &&
             !this.embed.meta?.url.toLowerCase().includes('minds.com')
           ) {
-            showError(i18n.t('capture.noExternalLinks'));
+            showError(sp.i18n.t('capture.noExternalLinks'));
             return false;
           }
         }
 
         // is uploading?
         if (this.attachments.hasAttachment && this.attachments.uploading) {
-          showError(i18n.t('capture.pleaseTryAgain'));
+          showError(sp.i18n.t('capture.pleaseTryAgain'));
           return false;
         }
 
         // Something to post?
         if (!this.isValid) {
-          showError(i18n.t('capture.nothingToPost'));
+          showError(sp.i18n.t('capture.nothingToPost'));
           return false;
         }
 
@@ -732,8 +666,11 @@ export default function (props) {
         this.setPosting(true);
 
         const reqPromise = this.isEdit
-          ? api.post(`api/v3/newsfeed/activity/${this.entity!.guid}`, newPost)
-          : api.put('api/v3/newsfeed/activity', newPost);
+          ? sp.api.post(
+              `api/v3/newsfeed/activity/${this.entity!.guid}`,
+              newPost,
+            )
+          : sp.api.put('api/v3/newsfeed/activity', newPost);
 
         const response = await reqPromise;
 
@@ -747,10 +684,10 @@ export default function (props) {
           return this.entity;
         }
 
-        storeRatingService.track('createPost', true);
+        sp.resolve('storeRating').track('createPost', true);
 
         if (this.supermindRequest) {
-          showNotification(i18n.t('supermind.requestSubmitted'), 'success');
+          showNotification(sp.i18n.t('supermind.requestSubmitted'), 'success');
         }
 
         return ActivityModel.create(response);
@@ -759,9 +696,11 @@ export default function (props) {
         if (message) {
           showError(message);
         } else {
-          showError(i18n.t('errorMessage') + '\n' + i18n.t('pleaseTryAgain'));
+          showError(
+            sp.i18n.t('errorMessage') + '\n' + sp.i18n.t('pleaseTryAgain'),
+          );
         }
-        logService.exception(e);
+        sp.log.exception(e);
       } finally {
         this.setPosting(false);
       }
@@ -774,7 +713,7 @@ export default function (props) {
       this.wire_threshold = { support_tier };
     },
     async saveCustomMonetize(usd, has_usd, has_tokens) {
-      const support_tier = await supportTiersService.createPrivate(
+      const support_tier = await this.supportTier.createPrivate(
         usd,
         has_usd,
         has_tokens,
@@ -784,7 +723,7 @@ export default function (props) {
     async savePlusMonetize(expires) {
       this.wire_threshold = {
         support_tier: {
-          urn: mindsConfigService.getSettings().plus.support_tier_urn,
+          urn: sp.config.getSettings().plus.support_tier_urn,
           expires,
         },
       };
@@ -810,8 +749,8 @@ export default function (props) {
     },
     maxHashtagsError() {
       showError(
-        i18n.t('capture.maxHashtags', {
-          maxHashtags: hashtagService.maxHashtags,
+        sp.i18n.t('capture.maxHashtags', {
+          maxHashtags: sp.resolve('hashtag').maxHashtags,
         }),
       );
     },
@@ -820,7 +759,7 @@ export default function (props) {
       closeComposerOnClear?: boolean,
     ) {
       return new Promise(resolve => {
-        NavigationService.navigate('SupermindCompose', {
+        sp.navigation.navigate('SupermindCompose', {
           data: supermindRequest || this.supermindRequest,
           closeComposerOnClear,
           onSave: (payload: SupermindRequestParam) => {

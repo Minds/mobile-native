@@ -1,17 +1,18 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { transactionTypes } from '../../../v2/TransactionList/TransactionsListTypes';
-import i18n from '../../../../common/services/i18n.service';
 import { TokensTransactionsListStoreType } from '../../../v2/TransactionList/createTokensTransactionsStore';
 import {
   BottomSheetModal,
   BottomSheetButton,
   RadioButton,
   SectionTitle,
-} from '../../../../common/components/bottom-sheet';
+} from '~/common/components/bottom-sheet';
 import { B3, Icon, Row } from '~ui';
 import { TENANT } from '~/config/Config';
+import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import sp from '~/services/serviceProvider';
 
 type titleType =
   | 'allFilter'
@@ -31,6 +32,7 @@ type PropsType = {
 };
 
 const Filter = observer((props: PropsType) => {
+  const i18n = sp.i18n;
   const ref = React.useRef<any>();
   const close = React.useCallback(() => {
     ref.current?.dismiss();
@@ -54,7 +56,7 @@ const Filter = observer((props: PropsType) => {
         },
         selected: transactionType === f.id,
       })),
-    [close, props.store, transactionType],
+    [close, props.store, transactionType, i18n],
   );
 
   return (
@@ -72,14 +74,14 @@ const Filter = observer((props: PropsType) => {
         title={
           i18n.t('filter') + ' ' + i18n.t('wallet.transactions.transactions')
         }>
-        <ScrollView>
+        <BottomSheetScrollView style={{ flex: 1 }}>
           <SectionTitle>
             {i18n.t('wallet.transactions.filterTypes')}
           </SectionTitle>
           {options.map((b, i) => {
             return <RadioButton {...b} key={i} />;
           })}
-        </ScrollView>
+        </BottomSheetScrollView>
         <BottomSheetButton text={i18n.t('close')} onPress={close} />
       </BottomSheetModal>
     </>

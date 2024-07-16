@@ -2,11 +2,10 @@ import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback } from 'react';
 import useCurrentUser from '~/common/hooks/useCurrentUser';
-import i18nService from '~/common/services/i18n.service';
-import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
 import { TENANT } from '~/config/Config';
+import serviceProvider from '~/services/serviceProvider';
 
 /**
  * Setup Channel Notice
@@ -14,7 +13,9 @@ import { TENANT } from '~/config/Config';
 function SetupChannelNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
   const user = useCurrentUser();
+  const i18n = serviceProvider.i18n;
 
+  const inFeedNoticesService = serviceProvider.resolve('inFeedNotices');
   // on button press
   const onPress = useCallback(() => {
     navigation.navigate('SetupChannel');
@@ -26,11 +27,11 @@ function SetupChannelNotice({ name }: NoticeProps) {
   return (
     <InFeedNotice
       name={name}
-      title={i18nService.t('inFeedNotices.whois', { name: user?.name })}
-      description={i18nService.t('inFeedNotices.userDescription', {
+      title={i18n.t('inFeedNotices.whois', { name: user?.name })}
+      description={i18n.t('inFeedNotices.userDescription', {
         TENANT,
       })}
-      btnText={i18nService.t('inFeedNotices.userButton')}
+      btnText={i18n.t('inFeedNotices.userButton')}
       iconName="info-outline"
       onPress={onPress}
     />

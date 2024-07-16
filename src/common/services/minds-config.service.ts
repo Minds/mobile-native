@@ -1,7 +1,7 @@
 import { observable } from 'mobx';
 import delay from '../helpers/delay';
-import api from './api.service';
-import { storages } from './storage/storages.service';
+import type { ApiService } from './api.service';
+import type { Storages } from './storage/storages.service';
 
 /**
  * Minds Service
@@ -10,6 +10,8 @@ export class MindsConfigService {
   @observable
   settings: any = null;
   private currentPromise: Promise<any> | null = null;
+
+  constructor(private api: ApiService, private storages: Storages) {}
 
   /**
    * Update the settings from the server
@@ -28,7 +30,7 @@ export class MindsConfigService {
    */
   private async _updateWithRetry(retries: number) {
     try {
-      const settings = await api.get<any>('api/v1/minds/config');
+      const settings = await this.api.get<any>('api/v1/minds/config');
       if (settings.permissions) {
         settings.permissions = settings.permissions.reduce((acc, cur) => {
           acc[cur] = true;
@@ -38,7 +40,7 @@ export class MindsConfigService {
       // nsfw enabled by default
       settings.nsfw_enabled = settings.nsfw_enabled ?? true;
 
-      storages.user?.setMap('mindsSettings', settings);
+      this.storages.user?.setObject('mindsSettings', settings);
       this.settings = settings;
       this.currentPromise = null;
     } catch (error) {
@@ -73,7 +75,7 @@ export class MindsConfigService {
   getSettings() {
     let settings;
     if (!this.settings) {
-      settings = storages.user?.getMap('mindsSettings');
+      settings = this.storages.user?.getObject('mindsSettings');
       this.settings = settings;
     }
     return this.settings;
@@ -84,10 +86,6 @@ export class MindsConfigService {
    */
   clear() {
     this.settings = undefined;
-    storages.user?.removeItem('mindsSettings');
+    this.storages.user?.delete('mindsSettings');
   }
 }
-
-const mindsConfigService = new MindsConfigService();
-
-export default mindsConfigService;

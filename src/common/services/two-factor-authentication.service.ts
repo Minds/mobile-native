@@ -1,15 +1,17 @@
-import api, { ApiResponse } from './api.service';
+import { ApiResponse } from './ApiResponse';
+import type { ApiService } from './api.service';
 
 interface TFASetupResponse extends ApiResponse {
   secret: string;
 }
 
-class TwoFactorAuthenticationService {
+export class TwoFactorAuthenticationService {
+  constructor(private api: ApiService) {}
   /**
    * request endpoint to ask if user has twofactor activated
    */
   async has() {
-    return await api.get('api/v1/twofactor');
+    return await this.api.get('api/v1/twofactor');
   }
 
   /**
@@ -18,7 +20,7 @@ class TwoFactorAuthenticationService {
    */
   async authenticate(tel: string): Promise<TFASetupResponse> {
     const params = { tel, retry: 1 };
-    return await api.post('api/v1/twofactor/setup', params);
+    return await this.api.post('api/v1/twofactor/setup', params);
   }
 
   /**
@@ -28,7 +30,11 @@ class TwoFactorAuthenticationService {
    * @param {String} secret
    */
   async check(telno: string, code: string, secret: string) {
-    return await api.post('api/v1/twofactor/check', { telno, code, secret });
+    return await this.api.post('api/v1/twofactor/check', {
+      telno,
+      code,
+      secret,
+    });
   }
 
   /**
@@ -36,8 +42,6 @@ class TwoFactorAuthenticationService {
    * @param {String} password
    */
   async remove(password) {
-    return await api.post('api/v1/twofactor/remove', { password });
+    return await this.api.post('api/v1/twofactor/remove', { password });
   }
 }
-
-export default new TwoFactorAuthenticationService();

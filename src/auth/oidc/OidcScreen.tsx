@@ -1,11 +1,9 @@
 import { WebView } from 'react-native-webview';
 import React, { useEffect, useState } from 'react';
 import { ModalFullScreen } from '~/common/ui';
-import session from '../../common/services/session.service';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import mindsConfigService from '~/common/services/minds-config.service';
 import { APP_URI } from '~/config/Config';
-import openUrlService from '~/common/services/open-url.service';
+import serviceProvider from '~/services/serviceProvider';
 
 type PropsType = {
   route: any;
@@ -22,12 +20,12 @@ const OidcScreen = ({ route }: PropsType) => {
 
   const onLoginComplete = async () => {
     setLoginUrl('');
+    const sessionService = serviceProvider.session;
+    await sessionService.addCookieSession();
+    await sessionService.login();
+    await serviceProvider.config.update();
 
-    await session.addCookieSession();
-    await session.login();
-    await mindsConfigService.update();
-
-    session.setSwitchingAccount(false);
+    sessionService.setSwitchingAccount(false);
   };
 
   const [redirecting, setRedirecting] = useState(false);
@@ -40,7 +38,7 @@ const OidcScreen = ({ route }: PropsType) => {
           sharedCookiesEnabled
           onShouldStartLoadWithRequest={request => {
             if (request.url.startsWith(`${APP_URI}pages/`)) {
-              openUrlService.open(request.url);
+              serviceProvider.resolve('openURL').open(request.url);
               return false;
             }
             return true;

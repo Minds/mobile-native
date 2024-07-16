@@ -3,12 +3,11 @@ import { ViewStyle } from 'react-native';
 import { B1 } from '~/common/ui';
 import { View } from 'moti';
 
-import ThemedStyles from '~/styles/ThemedStyles';
 import { Icon } from '~/common/ui';
 import { IconMapNameType } from '~/common/ui/icons/map';
 import PressableScale from '~/common/components/PressableScale';
 import { ColorsNameType } from '~/styles/Colors';
-
+import sp from '~/services/serviceProvider';
 /**
  * Circle icon button
  */
@@ -26,7 +25,7 @@ export const IconButtonCircle = ({
   backgroundColor?: ViewStyle['backgroundColor'];
 }) => (
   <PressableScale onPress={onPress}>
-    <View style={ThemedStyles.style.alignCenter}>
+    <View style={sp.styles.style.alignCenter}>
       <View
         style={
           backgroundColor ? [{ backgroundColor }, styles.circle] : styles.circle
@@ -38,7 +37,7 @@ export const IconButtonCircle = ({
   </PressableScale>
 );
 
-export const styles = ThemedStyles.create({
+export const styles = sp.styles.create({
   circle: [
     {
       width: 55,

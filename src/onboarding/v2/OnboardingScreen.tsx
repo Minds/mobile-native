@@ -12,19 +12,15 @@ import {
 } from '~/common/components/bottom-sheet';
 import MenuItem, { MenuItemProps } from '~/common/components/menus/MenuItem';
 import Topbar from '~/topbar/Topbar';
-import { showNotification } from '../../../AppMessages';
+import { showNotification } from '~/../AppMessages';
+import CenteredLoading from '~/common/components/CenteredLoading';
+import MText from '~/common/components/MText';
 
-import CenteredLoading from '../../common/components/CenteredLoading';
-
-import MText from '../../common/components/MText';
-import i18n from '../../common/services/i18n.service';
-import SettingsStore from '../../settings/SettingsStore';
-import ThemedStyles from '../../styles/ThemedStyles';
 import useOnboardingProgress, {
   OnboardingGroupState,
 } from './useOnboardingProgress';
-
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 type StepDefinition = {
   screen: string;
@@ -37,7 +33,8 @@ type StepDefinition = {
  */
 export default withErrorBoundaryScreen(
   observer(function OnboardingScreen() {
-    const theme = ThemedStyles.style;
+    const i18n = sp.i18n;
+    const theme = sp.styles.style;
     const { width } = useDimensions().screen;
     const navigation = useNavigation();
     // Do not render BottomSheet unless it is necessary
@@ -60,7 +57,7 @@ export default withErrorBoundaryScreen(
       if (newData && oldData && newData.id !== oldData.id) {
         onOnboardingCompleted();
         const m = moment().add(2, 'hours');
-        SettingsStore.setIgnoreOnboarding(m);
+        sp.resolve('settings').setIgnoreOnboarding(m);
         // show old data (initial onboarding)
         return oldData;
       } else if (newData && newData.is_completed) {
@@ -215,8 +212,8 @@ export default withErrorBoundaryScreen(
               />
             </View>
             <Progress.Bar
-              color={ThemedStyles.getColor('Link')}
-              unfilledColor={ThemedStyles.getColor('SecondaryText')}
+              color={sp.styles.getColor('Link')}
+              unfilledColor={sp.styles.getColor('SecondaryText')}
               progress={progressStore.result?.completed_pct}
               width={width - 40}
               borderWidth={0}
@@ -230,7 +227,7 @@ export default withErrorBoundaryScreen(
                 text={i18n.t('onboarding.hidePanel')}
                 onPress={() => {
                   const m = moment().add(2, 'days');
-                  SettingsStore.setIgnoreOnboarding(m);
+                  sp.resolve('settings').setIgnoreOnboarding(m);
                   store.hidePicker();
                   navigation.goBack();
                 }}

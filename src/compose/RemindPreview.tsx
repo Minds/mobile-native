@@ -4,8 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import BlogCard from '../blogs/BlogCard';
 import Activity from '../newsfeed/activity/Activity';
-import ThemedStyles from '~/styles/ThemedStyles';
-
+import sp from '~/services/serviceProvider';
 /**
  * Remind Preview
  * @param {Object} props
@@ -27,7 +26,7 @@ export default function (props) {
   );
 }
 
-const remindContainerStyle = ThemedStyles.combine(
+const remindContainerStyle = sp.styles.combine(
   'marginVertical3x',
   'borderRadius3x',
   'border1x',

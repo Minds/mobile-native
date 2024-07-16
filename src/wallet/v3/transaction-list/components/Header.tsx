@@ -1,16 +1,17 @@
 import React from 'react';
 import Filter from './Filter';
-import i18n from '../../../../common/services/i18n.service';
 import { TokensTransactionsListStoreType } from '../../../v2/TransactionList/createTokensTransactionsStore';
 import { AvatarIcon } from '../../../v2/TransactionList/components/Icons';
 import { B2, Row, Spacer } from '~ui';
 import capitalize from '~/common/helpers/capitalize';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   store?: TokensTransactionsListStoreType;
 };
 
 const Header = ({ store }: PropsType) => {
+  const i18n = sp.i18n;
   return (
     <Spacer>
       <Row bottom="S" align="centerBetween">

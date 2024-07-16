@@ -5,11 +5,10 @@ import { InteractionManager } from 'react-native';
 import { WebViewNavigation } from 'react-native-webview';
 import { showNotification } from '../../AppMessages';
 import useApiFetch from '../common/hooks/useApiFetch';
-import apiService from '../common/services/api.service';
-import i18n from '../common/services/i18n.service';
 import { B2, Button, Column, H3, Screen, ScreenHeader } from '../common/ui';
 import { APP_URI } from '../config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 export interface SupermindTwitterConnectRouteParams {
   onConnect: (success: boolean) => void;
@@ -28,6 +27,8 @@ function SupermindTwitterConnectScreen() {
     },
   );
 
+  const i18n = sp.i18n;
+
   const openTwitter = async () => {
     try {
       const { authorization_url } = await getRedirectUrl();
@@ -38,7 +39,7 @@ function SupermindTwitterConnectScreen() {
           redirectUrl: APP_URI + 'api/v3/twitter/oauth-callback',
           onRedirect: async (event: WebViewNavigation) => {
             resolve(true);
-            await apiService.get(event.url);
+            await sp.api.get(event.url);
             showNotification(
               i18n.t('supermind.twitterConnect.connectSuccess'),
               'success',
@@ -102,7 +103,7 @@ export const ensureTwitterConnected = async navigation => {
      * Get twitter config
      */
     const { twitter_oauth2_connected } =
-      await apiService.get<TwitterConfigResponse>('api/v3/twitter/config');
+      await sp.api.get<TwitterConfigResponse>('api/v3/twitter/config');
 
     /**
      * Open twitter connect screen if twitter wasn't connected
@@ -125,14 +126,14 @@ export const ensureTwitterConnected = async navigation => {
   } catch (e) {
     if (e === false) {
       showNotification(
-        i18n.t('supermind.twitterConnect.connectFailed'),
+        sp.i18n.t('supermind.twitterConnect.connectFailed'),
         'danger',
       );
       return false;
     }
 
     showNotification(
-      i18n.t('supermind.twitterConnect.connectConfigFailed'),
+      sp.i18n.t('supermind.twitterConnect.connectConfigFailed'),
       'danger',
     );
     return false;

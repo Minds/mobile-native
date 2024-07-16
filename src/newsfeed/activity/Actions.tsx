@@ -11,7 +11,6 @@ import RemindAction from './actions/RemindAction';
 import BoostAction from './actions/BoostAction';
 import BaseModel from '../../common/BaseModel';
 import { useNavigation } from '@react-navigation/native';
-import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
 import SupermindAction from './actions/SupermindAction';
 import ShareAction from './actions/ShareAction';
 import {
@@ -25,7 +24,8 @@ import { Button, HairlineRow, Icon, Row } from '../../common/ui';
 import { useAnalytics } from '../../common/contexts/analytics.context';
 import ActivityModel from '../ActivityModel';
 import Counter from './actions/Counter';
-import PermissionsService from '~/common/services/permissions.service';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 type PropsType = {
   entity: ActivityModel;
@@ -145,7 +145,7 @@ export const Actions = observer((props: PropsType) => {
 
 export default Actions;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     {
       display: 'flex',
@@ -180,18 +180,16 @@ const VoteButtonWithText = ({
     size="small"
     mode="outline"
     containerStyle={
-      PermissionsService.canInteract()
-        ? undefined
-        : ThemedStyles.style.opacity50
+      sp.permissions.canInteract() ? undefined : sp.styles.style.opacity50
     }
-    disabled={!PermissionsService.canInteract()}
+    disabled={!sp.permissions.canInteract()}
     color={voted ? 'link' : undefined}
     icon={
       <Row align="centerBoth" right="XS">
         <Icon color={voted ? 'Link' : undefined} name={`thumb-${direction}`} />
         {!!count && (
           <Counter
-            style={voted ? ThemedStyles.style.colorLink : undefined}
+            style={voted ? sp.styles.style.colorLink : undefined}
             count={Number(count)}
             spaced={true}
             animated={false}

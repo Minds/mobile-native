@@ -1,10 +1,8 @@
-//@ts-nocheck
-import i18n from './i18n.service';
-
+import sp from '~/services/serviceProvider';
 /**
  * Validator
  */
-class ValidatorService {
+export class ValidatorService {
   rules = {
     number: /^(([0-9]*)|(([0-9]*)\.([0-9]*)))$/,
     // RFC 5322 Official Standard Email validation
@@ -27,8 +25,8 @@ class ValidatorService {
    * @param {mixed} value
    * @returns i18n translated message if it is invalid or null
    */
-  validateMessage(rule, value) {
-    return !this.validate(rule, value) ? i18n.t('validation.' + rule) : null;
+  validateMessage(rule: 'email' | 'number' | 'amount', value) {
+    return !this.validate(rule, value) ? sp.i18n.t(`validation.${rule}`) : null;
   }
 
   /**

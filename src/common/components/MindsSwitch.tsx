@@ -1,8 +1,9 @@
 import React from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import MText from './MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   leftText: string;
@@ -42,7 +43,7 @@ const MindsSwitch = observer(
     initialValue,
     onSelectedValueChange,
   }: PropsType) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const textStyle = [styles.text, theme.colorPrimaryText];
     const localStore = useLocalStore(createMindsSwitchStore, {
       leftValue,

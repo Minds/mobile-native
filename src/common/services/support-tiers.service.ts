@@ -1,4 +1,5 @@
-import api, { ApiResponse } from './api.service';
+import { ApiResponse } from './ApiResponse';
+import type { ApiService } from './api.service';
 import { SupportTiersType } from '../../wire/WireTypes';
 import { Platform } from 'react-native';
 import useApiFetch from '../hooks/useApiFetch';
@@ -8,19 +9,21 @@ interface SupportTiersResponse extends ApiResponse {
   support_tiers?: SupportTiersType[];
 }
 
-class SupportTiersService {
+export class SupportTiersService {
   endpoint = 'api/v3/wire/supporttiers';
+
+  constructor(private api: ApiService) {}
 
   async getSingle(urn: string): Promise<SupportTiersType | undefined> {
     const response = <SupportTiersResponse>(
-      await api.get(`${this.endpoint}/${urn}`)
+      await this.api.get(`${this.endpoint}/${urn}`)
     );
     return response.support_tier;
   }
 
   async getAllFromGuid(guid: string): Promise<SupportTiersType[] | undefined> {
     const response = <SupportTiersResponse>(
-      await api.get(`${this.endpoint}/all/${guid}`)
+      await this.api.get(`${this.endpoint}/all/${guid}`)
     );
     // only show tiers with tokens on iOS
     if (response.support_tiers && Platform.OS === 'ios') {
@@ -30,7 +33,9 @@ class SupportTiersService {
   }
 
   async getAllFromUser(): Promise<SupportTiersType[] | undefined> {
-    const response = <SupportTiersResponse>await api.get(`${this.endpoint}/`);
+    const response = <SupportTiersResponse>(
+      await this.api.get(`${this.endpoint}/`)
+    );
     return response.support_tiers;
   }
 
@@ -41,13 +46,16 @@ class SupportTiersService {
     has_usd: boolean,
     has_tokens: boolean,
   ): Promise<SupportTiersType | undefined> {
-    const response = <SupportTiersResponse>await api.post(`${this.endpoint}/`, {
-      name,
-      usd,
-      description,
-      has_usd,
-      has_tokens,
-    });
+    const response = <SupportTiersResponse>await this.api.post(
+      `${this.endpoint}/`,
+      {
+        name,
+        usd,
+        description,
+        has_usd,
+        has_tokens,
+      },
+    );
     return response.support_tier;
   }
 
@@ -56,7 +64,7 @@ class SupportTiersService {
     has_usd: boolean,
     has_tokens: boolean,
   ): Promise<SupportTiersType | undefined> {
-    const response = <SupportTiersResponse>await api.post(
+    const response = <SupportTiersResponse>await this.api.post(
       `${this.endpoint}/custom`,
       {
         usd,
@@ -72,7 +80,7 @@ class SupportTiersService {
     name: string,
     description: string,
   ): Promise<SupportTiersType | undefined> {
-    const response = <SupportTiersResponse>await api.post(
+    const response = <SupportTiersResponse>await this.api.post(
       `${this.endpoint}/${encodeURIComponent(urn)}`,
       {
         name,
@@ -84,15 +92,11 @@ class SupportTiersService {
 
   async delete(urn: string): Promise<'success' | 'error'> {
     const response = <SupportTiersResponse>(
-      await api.delete(`${this.endpoint}/${encodeURIComponent(urn)}`)
+      await this.api.delete(`${this.endpoint}/${encodeURIComponent(urn)}`)
     );
     return response.status;
   }
 }
-
-const supportTiersService = new SupportTiersService();
-
-export default supportTiersService;
 
 export const useSupportTiers = (skip?: boolean) => {
   const store = useApiFetch<SupportTiersResponse>('api/v3/wire/supporttiers', {

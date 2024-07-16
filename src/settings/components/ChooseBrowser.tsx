@@ -4,9 +4,8 @@ import { View } from 'react-native';
 import { SectionTitle } from '~/common/components/bottom-sheet';
 import SectionSubtitle from '~/common/components/bottom-sheet/SectionSubtitle';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
-import i18n from '~/common/services/i18n.service';
-import openUrlService from '~/common/services/open-url.service';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   onSelected?: () => void;
@@ -16,12 +15,13 @@ type PropsType = {
  * Browser Selector Component
  */
 const ChooseBrowser = (props: PropsType) => {
+  const i18n = sp.i18n;
   const store = useLocalStore(
     p => ({
-      browser: openUrlService.preferredBrowser,
+      browser: sp.resolve('openURL').preferredBrowser,
       setBrowser(value: 0 | 1) {
         store.browser = value;
-        openUrlService.setPreferredBrowser(value);
+        sp.resolve('openURL').setPreferredBrowser(value);
         if (p.onSelected) {
           setTimeout(() => {
             p.onSelected && p.onSelected();
@@ -42,14 +42,14 @@ const ChooseBrowser = (props: PropsType) => {
 
   return (
     <>
-      <View style={ThemedStyles.style.paddingBottom3x}>
+      <View style={sp.styles.style.paddingBottom3x}>
         <SectionTitle>
           {i18n.t('settings.chooseBrowserDescription')}
         </SectionTitle>
       </View>
       <MenuItemOption {...store.optionInApp} selected={store.browser === 0} />
       <MenuItemOption {...store.optionDefault} selected={store.browser === 1} />
-      <View style={ThemedStyles.style.paddingTop6x}>
+      <View style={sp.styles.style.paddingTop6x}>
         <SectionSubtitle>
           {i18n.t('settings.chooseBrowserHint')}
         </SectionSubtitle>

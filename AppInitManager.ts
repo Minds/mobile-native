@@ -2,35 +2,19 @@ import { Linking, Alert } from 'react-native';
 // import ShareMenu from 'react-native-share-menu';
 import * as Sentry from '@sentry/react-native';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Clipboard from 'expo-clipboard';
 
-import pushService from './src/common/services/push.service';
 // import receiveShare from './src/common/services/receive-share.service';
-
 import {
   IS_ANDROID_OSS,
   IS_TENANT,
   IS_TENANT_PREVIEW,
 } from './src/config/Config';
-import updateService from './src/common/services/update.service';
-import logService from './src/common/services/log.service';
-import sessionService from './src/common/services/session.service';
-import deeplinkService from './src/common/services/deeplinks-router.service';
-import { boostedContentService } from 'modules/boost';
-import NavigationService from './src/navigation/NavigationService';
-import translationService from './src/common/services/translation.service';
-import mindsConfigService from './src/common/services/minds-config.service';
-import openUrlService from '~/common/services/open-url.service';
 import { updateFeatureFlags } from 'ExperimentsProvider';
 import checkTOS from '~/tos/checkTOS';
-import * as Clipboard from 'expo-clipboard';
-import { storeRatingService } from 'modules/store-rating';
-import portraitBoostedContentService from './src/portrait/services/portraitBoostedContentService';
-import socketService from '~/common/services/socket.service';
-import blockListService from '~/common/services/block-list.service';
-import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { queryClient } from '~/services';
-import videoPlayerService from '~/common/services/video-player.service';
 import { updateCustomNavigation } from '~/modules/navigation/service/custom-navigation.service';
+import serviceProvider from '~/services/serviceProvider';
 
 /**
  * App initialization manager
@@ -43,44 +27,44 @@ export class AppInitManager {
    * Initialize services without waiting for the promises
    */
   async initializeServices() {
-    socketService.init();
+    serviceProvider.socket.init();
 
     // init block list service
-    blockListService.init();
+    serviceProvider.resolve('blockList').init();
 
     // init in feed notices service
-    inFeedNoticesService.init();
+    serviceProvider.resolve('inFeedNotices').init();
 
     // init video player service
-    videoPlayerService.init();
+    serviceProvider.resolve('videoPlayer').init();
 
     // On app login (runs if the user login or if it is already logged in)
-    sessionService.onLogin(this.onLogin);
+    serviceProvider.session.onLogin(this.onLogin);
 
     //on app logout
-    sessionService.onLogout(this.onLogout);
+    serviceProvider.session.onLogout(this.onLogout);
 
-    openUrlService.init();
+    serviceProvider.resolve('openURL').init();
 
     // update custom navigation data
     updateCustomNavigation();
 
-    storeRatingService.track('appSession');
+    serviceProvider.resolve('storeRating').track('appSession');
 
     try {
-      logService.info('[App] init session');
-      const token = await sessionService.init();
+      serviceProvider.log.info('[App] init session');
+      const token = await serviceProvider.session.init();
 
       if (!token) {
         // update settings and init growthbook
         this.updateMindsConfigAndInitFeatureFlags();
-        logService.info('[App] there is no active session');
+        serviceProvider.log.info('[App] there is no active session');
         SplashScreen.hideAsync();
       } else {
-        logService.info('[App] session initialized');
+        serviceProvider.log.info('[App] session initialized');
       }
     } catch (err) {
-      logService.exception('[App] Error initializing the app', err);
+      serviceProvider.log.exception('[App] Error initializing the app', err);
       if (err instanceof Error) {
         console.error('INIT ERROR', err.stack);
         Alert.alert(
@@ -116,7 +100,7 @@ export class AppInitManager {
     };
 
     // Update the config
-    mindsConfigService.update().then(afterUpdate);
+    serviceProvider.config.update().then(afterUpdate);
   }
 
   /**
@@ -124,12 +108,13 @@ export class AppInitManager {
    */
   onLogout = () => {
     // clear app badge
+    const pushService = serviceProvider.resolve('push');
     pushService.setBadgeCount(0);
     pushService.clearNotifications();
-    translationService.purgeLanguagesCache();
+    serviceProvider.resolve('translation').purgeLanguagesCache();
     updateFeatureFlags();
-    boostedContentService.clear();
-    portraitBoostedContentService.clear();
+    serviceProvider.resolve('boostedContent').clear();
+    serviceProvider.resolve('portraitBoostedContent').clear();
     queryClient.clear();
   };
 
@@ -137,15 +122,15 @@ export class AppInitManager {
    * Handle session login
    */
   onLogin = async () => {
-    const user = sessionService.getUser();
+    const user = serviceProvider.session.getUser();
 
     // update settings for this user and init growthbook
     this.updateMindsConfigAndInitFeatureFlags();
 
     // load boosted content
     if (!IS_TENANT) {
-      boostedContentService.load();
-      portraitBoostedContentService.load();
+      serviceProvider.resolve('boostedContent').load();
+      serviceProvider.resolve('portraitBoostedContent').load();
     }
 
     Sentry.configureScope(scope => {
@@ -153,13 +138,13 @@ export class AppInitManager {
     });
 
     // register device token into backend on login
-    pushService.registerToken();
+    serviceProvider.resolve('push').registerToken();
 
     // OSS check update
     if (IS_ANDROID_OSS) {
       setTimeout(async () => {
-        const user = sessionService.getUser();
-        updateService.checkUpdate(!user.canary);
+        const user = serviceProvider.session.getUser();
+        serviceProvider.resolve('update').checkUpdate(!user.canary);
       }, 5000);
     }
 
@@ -171,17 +156,21 @@ export class AppInitManager {
   };
 
   navigateToInitialScreen() {
-    if (sessionService.initialScreen) {
-      logService.info(
-        '[App] navigating to initial screen: ' + sessionService.initialScreen,
+    if (serviceProvider.session.initialScreen) {
+      serviceProvider.log.info(
+        '[App] navigating to initial screen: ' +
+          serviceProvider.session.initialScreen,
       );
-      NavigationService.navigate(sessionService.initialScreen, {
-        initial: true,
-        ...sessionService.initialScreenParams,
-      });
+      serviceProvider.navigation.navigate(
+        serviceProvider.session.initialScreen,
+        {
+          initial: true,
+          ...serviceProvider.session.initialScreenParams,
+        },
+      );
     }
 
-    sessionService.setInitialScreen('');
+    serviceProvider.session.setInitialScreen('');
   }
 
   async initialNavigationHandling() {
@@ -197,24 +186,24 @@ export class AppInitManager {
       // handle deep link (if the app is opened by one)
       if (deepLinkUrl) {
         setTimeout(() => {
-          deeplinkService.navigate(deepLinkUrl, true);
+          serviceProvider.resolve('deepLinks').navigate(deepLinkUrl, true);
         }, 300);
       }
 
       // handle initial notifications (if the app is opened by tap on one)
-      pushService.handleInitialNotification();
+      serviceProvider.resolve('push').handleInitialNotification();
 
       // handle initial shared content`
       // ShareMenu.getInitialShare(receiveShare.handle);
 
-      if (sessionService.recoveryCodeUsed) {
-        sessionService.setRecoveryCodeUsed(false);
-        NavigationService.navigate('RecoveryCodeUsedScreen');
+      if (serviceProvider.session.recoveryCodeUsed) {
+        serviceProvider.session.setRecoveryCodeUsed(false);
+        serviceProvider.navigation.navigate('RecoveryCodeUsedScreen');
       }
       SplashScreen.hideAsync();
     } catch (err) {
       SplashScreen.hideAsync();
-      logService.exception(err);
+      serviceProvider.log.exception(err);
     }
   }
 
@@ -224,15 +213,15 @@ export class AppInitManager {
   onNavigatorReady = async () => {
     this.navReady = true;
     // Emit first state change
-    NavigationService.onStateChange();
+    serviceProvider.navigation.onStateChange();
     // if the user is already logged in, handle initial navigation
-    if (sessionService.userLoggedIn) {
+    if (serviceProvider.session.userLoggedIn) {
       this.initialNavigationHandling();
     } else if (IS_TENANT_PREVIEW) {
       const deepLinkUrl = (await Linking.getInitialURL()) || '';
       if (deepLinkUrl) {
         setTimeout(() => {
-          deeplinkService.navigate(deepLinkUrl);
+          serviceProvider.resolve('deepLinks').navigate(deepLinkUrl);
         }, 300);
       }
     }

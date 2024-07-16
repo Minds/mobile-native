@@ -4,13 +4,10 @@ import { Alert, Platform } from 'react-native';
 import RNConvertPhAsset from 'react-native-convert-ph-asset';
 import { Orientation } from 'react-native-vision-camera';
 
-import attachmentService from '../services/attachment.service';
-import logService from '../services/log.service';
-import i18n from '../services/i18n.service';
-import mindsConfigService from '../services/minds-config.service';
 import { showNotification } from '../../../AppMessages';
 import { UserError } from '../UserError';
-import { ApiResponse } from '../services/api.service';
+import { ApiResponse } from '../services/ApiResponse';
+import sp from '~/services/serviceProvider';
 
 export type Media = {
   key?: number;
@@ -68,6 +65,8 @@ export default class AttachmentStore {
       return;
     }
 
+    const attachmentService = sp.resolve('attachment');
+
     if (this.uploading) {
       // abort current upload
       this.cancelCurrentUpload();
@@ -77,7 +76,7 @@ export default class AttachmentStore {
         await attachmentService.deleteMedia(this.guid);
       } catch (error) {
         // we ignore delete error for now
-        logService.info('Error deleting the uploaded media ' + this.guid);
+        sp.log.info('Error deleting the uploaded media ' + this.guid);
       }
     }
 
@@ -128,7 +127,7 @@ export default class AttachmentStore {
         },
       );
 
-      // we need to defer the set because a cenceled promise could set it to false
+      // we need to defer the set because a canceled promise could set it to false
       setTimeout(() => this.setUploading(true), 0);
 
       this.uploadPromise = uploadPromise;
@@ -143,7 +142,7 @@ export default class AttachmentStore {
       this.clear();
       if (!(err instanceof UserError)) {
         showNotification(
-          err instanceof Error ? err.message : i18n.t('uploadFailed'),
+          err instanceof Error ? err.message : sp.i18n.t('uploadFailed'),
         );
       }
       throw err;
@@ -155,11 +154,11 @@ export default class AttachmentStore {
   }
 
   validate(media) {
-    const settings = mindsConfigService.getSettings();
+    const settings = sp.config.getSettings();
     if (media.duration && media.duration > settings.max_video_length * 1000) {
       Alert.alert(
-        i18n.t('sorry'),
-        i18n.t('attachment.tooLong', {
+        sp.i18n.t('sorry'),
+        sp.i18n.t('attachment.tooLong', {
           minutes: settings.max_video_length / 60,
         }),
       );
@@ -198,6 +197,7 @@ export default class AttachmentStore {
     if (!this.uploading && this.hasAttachment && this.guid) {
       try {
         if (deleteRemote) {
+          const attachmentService = sp.resolve('attachment');
           attachmentService.deleteMedia(this.guid);
         }
         this.clear();

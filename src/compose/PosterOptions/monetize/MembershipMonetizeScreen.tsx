@@ -1,20 +1,20 @@
 import React, { useCallback, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import i18n from '../../../common/services/i18n.service';
+
 import Wrapper from './common/Wrapper';
 import type { SupportTiersType } from '~/wire/WireTypes';
-import TierManagementScreen from '../../../common/components/tier-management/TierManagementScreen';
-import supportTiersService from '../../../common/services/support-tiers.service';
-import CenteredLoading from '../../../common/components/CenteredLoading';
-import MText from '../../../common/components/MText';
+import TierManagementScreen from '~/common/components/tier-management/TierManagementScreen';
+import CenteredLoading from '~/common/components/CenteredLoading';
+import MText from '~/common/components/MText';
 import { useComposeContext } from '~/compose/useComposeStore';
 import { PosterStackScreenProps } from '~/compose/PosterOptions/PosterStackNavigator';
+import sp from '~/services/serviceProvider';
 
 type PropsType = PosterStackScreenProps<'MembershipMonetize'>;
 
 const createMembershipMonetizeStore = () => {
+  const supportTiersService = sp.resolve('supportTiers');
   const store = {
     loaded: false,
     supportTiers: [] as SupportTiersType[],
@@ -50,7 +50,7 @@ export type TierStoreType = ReturnType<typeof createMembershipMonetizeStore>;
 const MembershipMonetizeScreen = observer(
   ({ route, navigation }: PropsType) => {
     const store = useComposeContext();
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     const descriptionTextStyle = [
       theme.colorSecondaryText,
@@ -71,7 +71,7 @@ const MembershipMonetizeScreen = observer(
     }, [localStore, store]);
 
     const title = [styles.title, theme.colorPrimaryText, theme.paddingTop3x];
-
+    const i18n = sp.i18n;
     return (
       <Wrapper
         store={store}

@@ -2,8 +2,9 @@ import React from 'react';
 import { DimensionValue, StyleProp, View, ViewStyle } from 'react-native';
 import { Slider as ValueSlider } from 'react-native-elements';
 import MText from '~/common/components/MText';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { B2, B3, Row } from '../ui';
+import sp from '~/services/serviceProvider';
 
 const THUMB_TOUCH_SIZE = {
   width: 80,
@@ -72,14 +73,14 @@ const Slider = ({
       <ValueSlider
         value={value}
         onValueChange={handleValueChange}
-        thumbTintColor={ThemedStyles.getColor('PrimaryText')}
+        thumbTintColor={sp.styles.getColor('PrimaryText')}
         minimumValue={props.minimumRangeValue || 0}
         allowTouchTrack={false}
         step={props.stepSize}
         maximumValue={props.maximumRangeValue || 100}
         thumbTouchSize={THUMB_TOUCH_SIZE}
-        maximumTrackTintColor={ThemedStyles.getColor('PrimaryBorder')}
-        minimumTrackTintColor={ThemedStyles.getColor('Link')}
+        maximumTrackTintColor={sp.styles.getColor('PrimaryBorder')}
+        minimumTrackTintColor={sp.styles.getColor('Link')}
       />
       <View style={styles.textContainer} pointerEvents="none">
         <B2 color="secondary" font="regular">
@@ -93,7 +94,7 @@ const Slider = ({
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['marginBottom7x'],
   title: ['fontL', 'fontMedium'],
   textContainer: ['rowJustifySpaceBetween'],

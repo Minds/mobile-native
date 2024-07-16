@@ -1,18 +1,16 @@
 import { observable, action } from 'mobx';
 
-import entitiesService from '../services/entities.service';
-import logService from '../services/log.service';
 import type BaseModel from '../BaseModel';
-
+import sp from '~/services/serviceProvider';
 /**
  * Single Entity Store
  */
 class SingleEntityStore<T extends BaseModel> {
-  @observable entity?: T;
+  @observable entity?: T | null;
   @observable errorLoading = false;
 
   @action
-  setEntity(entity: T) {
+  setEntity(entity: T | null) {
     this.entity = entity;
   }
 
@@ -24,15 +22,13 @@ class SingleEntityStore<T extends BaseModel> {
   async loadEntity(urn, defaultEntity: T | null = null, asActivity = false) {
     this.setErrorLoading(false);
     try {
-      const entity: T = (await entitiesService.single(
-        urn,
-        defaultEntity,
-        asActivity,
-      )) as T;
+      const entity: T | null = (await sp
+        .resolve('entities')
+        .single(urn, defaultEntity, asActivity)) as T | null;
       this.setEntity(entity);
     } catch (err) {
       this.setErrorLoading(true);
-      logService.exception(err);
+      sp.log.exception(err);
     }
   }
 

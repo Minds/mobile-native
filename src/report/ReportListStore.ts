@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { observable, action } from 'mobx';
 
 export default class ReportListStore {
@@ -26,7 +25,7 @@ export default class ReportListStore {
   /**
    * Fetched data
    */
-  appeals = [];
+  appeals: Array<any> = [];
 
   /**
    * Set or add to the list

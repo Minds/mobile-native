@@ -1,10 +1,9 @@
 import { StackActions, useNavigation } from '@react-navigation/native';
 import { showNotification } from 'AppMessages';
 import { useCallback } from 'react';
-import i18nService from '~/common/services/i18n.service';
-import logService from '~/common/services/log.service';
 import { useCreateGroupChatRoomMutation } from '~/graphql/api';
 import type GroupModel from '~/groups/GroupModel';
+import sp from '~/services/serviceProvider';
 
 export function useCreateGroupChatRoom(group: GroupModel, replace = false) {
   const navigation = useNavigation<any>();
@@ -30,8 +29,8 @@ export function useCreateGroupChatRoom(group: GroupModel, replace = false) {
       }
     },
     onError: error => {
-      logService.exception('Error creating chat room', error);
-      showNotification(i18nService.t('errorMessage'));
+      sp.log.exception('Error creating chat room', error);
+      showNotification(sp.i18n.t('errorMessage'));
     },
   });
 

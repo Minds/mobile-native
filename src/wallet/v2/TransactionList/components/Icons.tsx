@@ -1,7 +1,8 @@
 import React from 'react';
 import { DeltaIconPropsType } from '../TransactionsListTypes';
 import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
-import ThemedStyles from '../../../../styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 export const DeltaIcon = ({ delta }: DeltaIconPropsType) => {
   let iconName, iconColor;
@@ -25,8 +26,8 @@ export const DeltaIcon = ({ delta }: DeltaIconPropsType) => {
 export const AvatarIcon = ({ name }) => (
   <MIcon
     name={name}
-    color={ThemedStyles.getColor('Icon')}
+    color={sp.styles.getColor('Icon')}
     size={36}
-    style={ThemedStyles.style.marginRight3x}
+    style={sp.styles.style.marginRight3x}
   />
 );

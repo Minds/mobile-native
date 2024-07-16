@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import { InteractionManager, Keyboard, View, ViewStyle } from 'react-native';
 import ModernDatePicker from 'react-native-modern-datepicker';
-import i18n from '~/common/services/i18n.service';
 import { UIUnitType } from '~/styles/Tokens';
 import { B1, B2, Column, Icon, PressableLine, Row } from '~ui';
 import {
@@ -17,6 +16,7 @@ import {
   BottomSheetModalHandle,
 } from '../bottom-sheet';
 import useModernTheme from './useModernTheme';
+import sp from '~/services/serviceProvider';
 
 export type DatePickerInputHandle = {
   show: () => void;
@@ -56,8 +56,8 @@ const DatePickerInput: ForwardRefRenderFunction<
   const shownDate = !value
     ? ''
     : todaysDate === dateText
-    ? i18n.t('wallet.today')
-    : i18n.date(value, 'date', 'UTC');
+    ? sp.i18n.t('wallet.today')
+    : sp.i18n.date(value, 'date', 'UTC');
 
   const show = useCallback(() => {
     // if the keyboard is shown dismiss it
@@ -97,7 +97,7 @@ const DatePickerInput: ForwardRefRenderFunction<
           vertical={props.noHorizontal ? space : undefined}>
           <Column stretch>
             {!props.hideTitle && (
-              <B2 color="secondary">{i18n.t('wallet.date')}</B2>
+              <B2 color="secondary">{sp.i18n.t('wallet.date')}</B2>
             )}
             <B1 font="medium">{shownDate}</B1>
           </Column>
@@ -119,7 +119,7 @@ const DatePickerInput: ForwardRefRenderFunction<
           />
         </View>
 
-        <BottomSheetButton text={i18n.t('close')} onPress={dismiss} />
+        <BottomSheetButton text={sp.i18n.t('close')} onPress={dismiss} />
       </BottomSheetModal>
     </PressableLine>
   );

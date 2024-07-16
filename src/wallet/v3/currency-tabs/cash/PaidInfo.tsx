@@ -1,16 +1,17 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import MText from '../../../../common/components/MText';
-import i18n from '../../../../common/services/i18n.service';
-import ThemedStyles from '../../../../styles/ThemedStyles';
+import MText from '~/common/components/MText';
+
 import { WalletStoreType } from '../../../v2/createWalletStore';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   walletStore: WalletStoreType;
 };
 
 const PaidInfo = ({ walletStore }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
   const unpaidEarnings = walletStore.stripeDetails.pendingBalanceSplit;
   const totalPaidOuts = walletStore.stripeDetails.totalPaidOutSplit;
   const allTimeEarnings = unpaidEarnings + totalPaidOuts;

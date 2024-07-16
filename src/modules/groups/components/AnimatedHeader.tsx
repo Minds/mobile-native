@@ -11,9 +11,10 @@ import { Image } from 'expo-image';
 
 import GroupModel from '~/groups/GroupModel';
 import { MINDS_CDN_URI } from '~/config/Config';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { B2, H4 } from '~/common/ui';
 import SubscribeButton from './SubscribeButton';
+import sp from '~/services/serviceProvider';
 
 const avatarSize = 83;
 const avatarBorder = 3;
@@ -89,7 +90,7 @@ export default function AnimatedHeader({
   }, []);
 
   return (
-    <View style={ThemedStyles.style.bgPrimaryBackground}>
+    <View style={sp.styles.style.bgPrimaryBackground}>
       <Animated.View style={bannerStyle}>
         <Image style={styles.banner} source={getBanner(group)} />
       </Animated.View>
@@ -122,7 +123,7 @@ function getBanner(group: GroupModel) {
   return `${MINDS_CDN_URI}fs/v1/banners/${group.guid}/fat/${group.icontime}`;
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   banner: { right: 0, bottom: 0, position: 'absolute', left: 0, top: 0 },
   headerContainer: [
     {

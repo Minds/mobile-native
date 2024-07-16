@@ -2,8 +2,8 @@
 import { Image } from 'react-native';
 import type { EmitterSubscription } from 'react-native';
 import getPath from '@flyerhq/react-native-android-uri-path';
-import navigationService from '../../navigation/NavigationService';
 import { IS_IOS } from '~/config/Config';
+import { NavigationService } from '~/navigation/NavigationService';
 
 export type SharedItem = {
   mimeType: string;
@@ -12,7 +12,8 @@ export type SharedItem = {
 /**
  * Receive Share Service
  */
-class ReceiveShareService {
+export class ReceiveShareService {
+  constructor(private navigation: NavigationService) {}
   subscription!: EmitterSubscription;
 
   /**
@@ -29,7 +30,7 @@ class ReceiveShareService {
       Image.getSize(
         item.data,
         (width, height) => {
-          navigationService.navigate('Compose', {
+          this.navigation.navigate('Compose', {
             media: {
               type: item.mimeType,
               uri: item.data,
@@ -41,7 +42,7 @@ class ReceiveShareService {
         err => console.log(err),
       );
     } else if (item.mimeType.startsWith('video/')) {
-      navigationService.navigate('Compose', {
+      this.navigation.navigate('Compose', {
         media: {
           type: item.mimeType,
           uri: item.data,
@@ -67,9 +68,7 @@ class ReceiveShareService {
     if (data.mimeType.includes('image/') || data.mimeType.includes('video/')) {
       this.handleMedia(data);
     } else if (data.mimeType.includes('text')) {
-      navigationService.navigate('Compose', { text: data.data });
+      this.navigation.navigate('Compose', { text: data.data });
     }
   };
 }
-
-export default new ReceiveShareService();

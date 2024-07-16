@@ -1,8 +1,9 @@
 import React from 'react';
 import { Flow } from 'react-native-animated-spinkit';
-import { styles } from './styles';
-import ThemedStyles from '../../../../styles/ThemedStyles';
 import { View } from 'react-native';
+
+import { styles } from './styles';
+import sp from '~/services/serviceProvider';
 
 const InProgress = () => {
   return (
@@ -10,9 +11,9 @@ const InProgress = () => {
       style={[
         styles.overlayContainer,
         styles.overlayContainerTransparent,
-        ThemedStyles.style.rowJustifyCenter,
+        sp.styles.style.rowJustifyCenter,
       ]}>
-      <Flow color={ThemedStyles.getColor('Link')} />
+      <Flow color={sp.styles.getColor('Link')} />
     </View>
   );
 };

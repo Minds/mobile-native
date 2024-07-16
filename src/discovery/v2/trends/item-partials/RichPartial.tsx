@@ -1,13 +1,14 @@
 import React from 'react';
 import { View } from 'react-native';
+
 import RichPartialThumbnail from './RichPartialThumbnail';
-import excerpt from '../../../../common/helpers/excerpt';
+import excerpt from '~/common/helpers/excerpt';
 import {
   DISCOVERY_TRENDING_MAX_LENGTH,
   styles,
 } from '../DiscoveryTrendsListItem';
-import i18n from '../../../../common/services/i18n.service';
-import MText from '../../../../common/components/MText';
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   data: any;
@@ -23,7 +24,7 @@ const RichPartial = ({ data }: PropsType) => {
         </MText>
         <MText style={styles.secondaryInformationBottom}>
           {data.volume} channels discussing -{' '}
-          {i18n.date(parseInt(entity.time_created, 10) * 1000, 'friendly')}
+          {sp.i18n.date(parseInt(entity.time_created, 10) * 1000, 'friendly')}
         </MText>
       </View>
       <RichPartialThumbnail entity={data.entity} />

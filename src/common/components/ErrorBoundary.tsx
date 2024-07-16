@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 
 import { View, ViewStyle } from 'react-native';
-import logService from '../services/log.service';
-import i18n from '../services/i18n.service';
 import { showNotification } from '../../../AppMessages';
 import * as Clipboard from 'expo-clipboard';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import MText from './MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   message?: string;
@@ -49,7 +48,7 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
   }
 
   componentDidCatch(error: Error, info) {
-    logService.exception(error);
+    sp.log.exception(error);
     this.error = error;
     this.info = info;
   }
@@ -60,13 +59,13 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
         '\nSTACK:\n' +
         this.info.componentStack,
     );
-    showNotification(i18n.t('stacktraceCopied'));
+    showNotification(sp.i18n.t('stacktraceCopied'));
   };
 
   getErrorMessage() {
     const { containerStyle, textSmall, fallback } = this.props;
-    const theme = ThemedStyles.style;
-
+    const theme = sp.styles.style;
+    const i18n = sp.i18n;
     if (fallback) {
       return fallback;
     }
@@ -120,7 +119,9 @@ export default class ErrorBoundary extends Component<PropsType, StateType> {
 export const withErrorBoundary =
   (WrappedComponent, message = '', small = false) =>
   props => {
-    if (!message) message = i18n.t('errorDisplaying');
+    if (!message) {
+      message = sp.i18n.t('errorDisplaying');
+    }
     return (
       <ErrorBoundary message={message} textSmall={small}>
         <WrappedComponent {...props} />

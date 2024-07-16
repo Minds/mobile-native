@@ -4,7 +4,7 @@ import TopBarButtonTabBar, {
   ButtonTabType,
 } from '../../../../common/components/topbar-tabbar/TopBarButtonTabBar';
 import { TokensOptions } from '../../../v2/WalletTypes';
-import ThemedStyles from '../../../../styles/ThemedStyles';
+
 import type { WalletStoreType } from '../../../v2/createWalletStore';
 import TokensOverview from '../../../v2/currency-tabs/TokensOverview';
 import TransactionsListTokens from '../../../v2/TransactionList/TransactionsListTokens';
@@ -15,11 +15,10 @@ import TokensEarnings from '../Earnings';
 import TokenTopBar from './TokenTopBar';
 import useUniqueOnchain from '../../useUniqueOnchain';
 import { TokensTabStore } from './createTokensTabStore';
-import i18n from '../../../../common/services/i18n.service';
 import { Screen, Column } from '~ui';
 import TransactionsListWithdrawals from './widthdrawal/TransactionsListWithdrawals';
 import { showNotification } from 'AppMessages';
-
+import sp from '~/services/serviceProvider';
 type PropsType = {
   walletStore: WalletStoreType;
   navigation: WalletScreenNavigationProp;
@@ -30,9 +29,9 @@ type PropsType = {
  * Tokens tab
  */
 const TokensTab = observer(({ walletStore, navigation, store }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const onchainStore = useUniqueOnchain();
-
+  const i18n = sp.i18n;
   const options: Array<ButtonTabType<TokensOptions>> = [
     { id: 'rewards', title: i18n.t('wallet.rewards', { count: 2 }) },
     { id: 'earnings', title: i18n.t('wallet.usd.earnings') },

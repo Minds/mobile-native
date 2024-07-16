@@ -1,31 +1,28 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { Button, H4, B3, B1, Column, Item, ScreenSection, Screen } from '~ui';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import CenteredLoading from '../../common/components/CenteredLoading';
-// import Button from '../../common/components/Button';
-import useApiFetch from '../../common/hooks/useApiFetch';
-import apiService from '../../common/services/api.service';
-import MText from '../../common/components/MText';
+
+import CenteredLoading from '~/common/components/CenteredLoading';
+// import Button from '~/common/components/Button';
+import useApiFetch from '~/common/hooks/useApiFetch';
+import MText from '~/common/components/MText';
 import { TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 const options = {
   retry: 0,
 };
 
 export default observer(function DeviceScreen() {
-  const theme = ThemedStyles.style;
-  const inset = useSafeAreaInsets();
+  const theme = sp.styles.style;
 
-  const { result, loading, error, fetch } = useApiFetch(
-    'api/v3/sessions/common-sessions/all',
-    options,
-  );
+  const { result, loading, error, fetch } = useApiFetch<{
+    sessions: Array<any>;
+  }>('api/v3/sessions/common-sessions/all', options);
   const revokeSession = React.useCallback(
     session => {
-      apiService
+      sp.api
         .delete(
           `api/v3/sessions/common-sessions/session?id=${session.id}&platform=${session.platform}`,
         )
@@ -33,20 +30,10 @@ export default observer(function DeviceScreen() {
     },
     [fetch],
   );
-
-  const padding = {
-    paddingBottom: inset.bottom + 20,
-  };
+  const i18n = sp.i18n;
 
   return (
-    <Screen
-      scroll
-      style={[
-        theme.flexContainer,
-        theme.bgPrimaryBackground,
-        theme.paddingTop4x,
-        padding,
-      ]}>
+    <Screen scroll safe>
       {error && (
         <MText style={[theme.fontL, theme.centered, theme.colorSecondaryText]}>
           {i18n.t('sorry')} {i18n.t('cantLoad')}
@@ -61,7 +48,7 @@ export default observer(function DeviceScreen() {
           </ScreenSection>
           {result?.sessions.map((s, i) => {
             return (
-              <Item>
+              <Item key={i}>
                 <Column right="XS">
                   <H4>{s.platform}</H4>
                   <B3 top="XS">{s.ip}</B3>
@@ -88,15 +75,3 @@ export default observer(function DeviceScreen() {
     </Screen>
   );
 });
-
-const styles = {
-  button: {
-    position: 'absolute',
-    zIndex: 1000,
-    right: 20,
-    top: 15,
-  },
-  text: {
-    paddingVertical: 3,
-  },
-};

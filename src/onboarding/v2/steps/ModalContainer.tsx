@@ -3,10 +3,11 @@ import { View, Platform, ViewStyle, TextStyle, StyleProp } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { IconButton } from '~ui/icons';
 import { HORIZONTAL } from '~styles/Tokens';
-import Handle from '../../../common/components/bottom-sheet/Handle';
-import MText from '../../../common/components/MText';
-import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
+import Handle from '~/common/components/bottom-sheet/Handle';
+import MText from '~/common/components/MText';
 import { useNavigation } from '@react-navigation/core';
+import sp from '~/services/serviceProvider';
+import { useStyle } from '~/styles/hooks';
 
 type PropsType = {
   title: string;
@@ -48,7 +49,7 @@ export default function ModalContainer(props: PropsType) {
 
   return (
     <View style={contentContainer}>
-      <Handle style={ThemedStyles.style.bgPrimaryBackgroundHighlight} />
+      <Handle style={sp.styles.style.bgPrimaryBackgroundHighlight} />
       <View style={styles.header}>
         <MText style={titleStyle}>{props.title}</MText>
         {props.leftButton}
@@ -61,7 +62,7 @@ export default function ModalContainer(props: PropsType) {
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   header: [
     {
       flexDirection: 'row',

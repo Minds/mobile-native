@@ -7,7 +7,7 @@ import SmartImage from '../../common/components/SmartImage';
 import { MINDS_CDN_URI } from '../../config/Config';
 import abbrev from '../../common/helpers/abbrev';
 import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import MText from '../../common/components/MText';
 import { Image } from 'expo-image';
 
@@ -45,7 +45,7 @@ export default class GroupCard extends Component {
     const group = this.props.entity;
     const avatar = this.getAvatar();
     const iurl = this.getBannerFromGroup();
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     return (
       <View>

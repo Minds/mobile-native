@@ -1,12 +1,12 @@
 import { observable, action } from 'mobx';
-import { storages } from '../services/storage/storages.service';
+import sp from '~/services/serviceProvider';
 
 /**
  * History store with persistence
  */
 export default class HistoryStore {
   @observable loaded = false;
-  @observable history = [];
+  @observable history: Array<string> = [];
   max = 12;
   key;
 
@@ -25,7 +25,7 @@ export default class HistoryStore {
    * Load data
    */
   async load() {
-    const data = storages.user?.getArray(this.key);
+    const data = sp.storages.user?.getObject(this.key);
     if (data) {
       this.setHistory(data);
     }
@@ -37,7 +37,7 @@ export default class HistoryStore {
   @action
   clear = () => {
     this.history = [];
-    storages.user?.setArray(this.key, this.history);
+    sp.storages.user?.setObject(this.key, this.history);
   };
 
   /**
@@ -55,7 +55,7 @@ export default class HistoryStore {
    * @param {any} item
    */
   @action
-  add(item) {
+  add(item: string) {
     const index = this.history.indexOf(item);
     if (index !== -1) {
       this.history.splice(index, 1);
@@ -63,6 +63,6 @@ export default class HistoryStore {
     if (this.history.unshift(item) > this.max) {
       this.history.pop();
     }
-    storages.user?.setArray(this.key, this.history);
+    sp.storages.user?.setObject(this.key, this.history);
   }
 }

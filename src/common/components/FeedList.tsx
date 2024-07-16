@@ -15,13 +15,12 @@ import {
 import Animated from 'react-native-reanimated';
 
 import { observer } from 'mobx-react';
-import Activity from '../../newsfeed/activity/Activity';
-import TileElement from '../../newsfeed/TileElement';
-import { ComponentsStyle } from '../../styles/Components';
+import Activity from '~/newsfeed/activity/Activity';
+import TileElement from '~/newsfeed/TileElement';
+import { ComponentsStyle } from '~/styles/Components';
 import ErrorLoading from './ErrorLoading';
 import ErrorBoundary from './ErrorBoundary';
-import i18n from '../services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import type FeedStore from '../stores/FeedStore';
 import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
@@ -29,6 +28,7 @@ import ActivityModel from '~/newsfeed/ActivityModel';
 import type BaseModel from '../BaseModel';
 import { IS_IOS } from '~/config/Config';
 import { withFeedStoreProvider } from '../contexts/feed-store.context';
+import sp from '~/services/serviceProvider';
 
 export interface InjectItemComponentProps {
   index: number;
@@ -130,7 +130,7 @@ export class FeedList<T extends BaseModel> extends Component<
    */
   constructor(props) {
     super(props);
-    this.cantShowActivity = i18n.t('errorShowActivity');
+    this.cantShowActivity = sp.i18n.t('errorShowActivity');
     this.AnimatedFlashList = Animated.createAnimatedComponent(FlashList);
   }
 
@@ -178,7 +178,7 @@ export class FeedList<T extends BaseModel> extends Component<
           <View style={ComponentsStyle.emptyComponentContainer}>
             <View style={ComponentsStyle.emptyComponent}>
               <MText style={ComponentsStyle.emptyComponentMessage}>
-                {i18n.t('newsfeed.empty')}
+                {sp.i18n.t('newsfeed.empty')}
               </MText>
             </View>
           </View>
@@ -247,8 +247,8 @@ export class FeedList<T extends BaseModel> extends Component<
    */
   getErrorLoading() {
     const message = this.props.feedStore.entities.length
-      ? i18n.t('cantLoadMore')
-      : i18n.t('cantLoad');
+      ? sp.i18n.t('cantLoadMore')
+      : sp.i18n.t('cantLoad');
 
     return <ErrorLoading message={message} tryAgain={this.loadFeedForce} />;
   }
@@ -324,8 +324,8 @@ export class FeedList<T extends BaseModel> extends Component<
     return (
       <ErrorBoundary
         message={this.cantShowActivity}
-        containerStyle={ThemedStyles.style.borderBottomHair}>
-        <View style={ThemedStyles.style.alignSelfCenterMaxWidth}>
+        containerStyle={sp.styles.style.borderBottomHair}>
+        <View style={sp.styles.style.alignSelfCenterMaxWidth}>
           {entity instanceof InjectItem && InjectedComponent ? (
             <InjectedComponent {...row} />
           ) : (
@@ -399,8 +399,8 @@ export class FeedList<T extends BaseModel> extends Component<
               refreshing={this.refreshing}
               onRefresh={this.refresh}
               progressViewOffset={IS_IOS ? 0 : 80}
-              tintColor={ThemedStyles.getColor('Link')}
-              colors={[ThemedStyles.getColor('Link')]}
+              tintColor={sp.styles.getColor('Link')}
+              colors={[sp.styles.getColor('Link')]}
             />
           }
           disableAutoLayout={true}
@@ -424,8 +424,8 @@ export class FeedList<T extends BaseModel> extends Component<
   }
 }
 
-const footerStyle = ThemedStyles.combine('centered', 'padding3x');
-const containerStyle = ThemedStyles.combine('flexContainer', {
+const footerStyle = sp.styles.combine('centered', 'padding3x');
+const containerStyle = sp.styles.combine('flexContainer', {
   overflow: 'hidden',
 });
 

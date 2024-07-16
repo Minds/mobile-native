@@ -6,12 +6,13 @@ import {
 } from 'react-native';
 import React from 'react';
 import TextInput from '~/common/components/TextInput';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { IS_IOS } from '~/config/Config';
 import PressableScale from '~/common/components/PressableScale';
 import { AnimatePresence, MotiView } from 'moti';
 import { Icon } from '~/common/ui';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import sp from '~/services/serviceProvider';
 
 type SearchTopBarProps = Pick<
   TextInputProps,
@@ -48,12 +49,12 @@ export default function SearchTopBar({
       <AnimatePresence>
         {visible && (
           <MotiView
-            style={ThemedStyles.style.alignSelfCenterMaxWidth}
+            style={sp.styles.style.alignSelfCenterMaxWidth}
             {...animation}>
             <TextInput
               ref={ref}
               style={styles.searchInput}
-              placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
+              placeholderTextColor={sp.styles.getColor('SecondaryText')}
               returnKeyType={'search'}
               {...textInputProps}
             />
@@ -67,7 +68,7 @@ export default function SearchTopBar({
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   name: {
     fontSize: 18,
     fontWeight: '600',

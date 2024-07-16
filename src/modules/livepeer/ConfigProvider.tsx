@@ -5,10 +5,11 @@ import {
 } from '@livepeer/react-native';
 import { observer } from 'mobx-react';
 import { useMemo } from 'react';
-import mindsConfigService from '~/common/services/minds-config.service';
+
+import sp from '~/services/serviceProvider';
 
 export const ConfigProvider = observer(({ children }) => {
-  const API_KEY = mindsConfigService.getSettings()?.livepeer_api_key;
+  const API_KEY = sp.config.getSettings()?.livepeer_api_key;
 
   const client = useMemo(
     () =>

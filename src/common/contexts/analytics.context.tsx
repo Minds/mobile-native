@@ -1,9 +1,6 @@
 import React, { PropsWithChildren, createContext, useContext } from 'react';
-import analyticsService, {
-  ClickRef,
-  EventContext,
-} from '../services/analytics.service';
-
+import type { ClickRef, EventContext } from '../services/analytics.service';
+import sp from '~/services/serviceProvider';
 const Context = createContext<EventContext[]>([]);
 
 interface AnalyticsProviderProps {
@@ -33,7 +30,7 @@ export const useAnalytics = () => {
 
   return {
     trackClick: (ref: ClickRef) => {
-      return analyticsService.trackClick(ref, analyticsContext);
+      return sp.resolve('analytics').trackClick(ref, analyticsContext);
     },
     contexts: analyticsContext,
   };

@@ -1,14 +1,15 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { ScrollView, View } from 'react-native';
-import MenuSubtitle from '../../../../common/components/menus/MenuSubtitle';
-import i18n from '../../../../common/services/i18n.service';
+
+import MenuSubtitle from '~/common/components/menus/MenuSubtitle';
 import CountrySelector, {
   allowedCountries,
-} from '../../../../common/components/CountrySelector';
-import SettingInput from '../../../../common/components/SettingInput';
-import ThemedStyles from '../../../../styles/ThemedStyles';
+} from '~/common/components/CountrySelector';
+import SettingInput from '~/common/components/SettingInput';
+
 import { BankInfoStore } from './createBankInfoStore';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   localStore: BankInfoStore;
@@ -16,7 +17,8 @@ type PropsType = {
 };
 
 const CashForm = observer(({ localStore, friendlyFormKeys }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
   return (
     <ScrollView keyboardShouldPersistTaps={true}>
       <MenuSubtitle>{i18n.t('wallet.bank.finish')}</MenuSubtitle>

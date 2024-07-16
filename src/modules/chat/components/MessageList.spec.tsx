@@ -3,7 +3,7 @@ import { render } from '@testing-library/react-native';
 import { useChatRoomMessagesQuery } from '../hooks/useChatRoomMessagesQuery';
 import MessageList from './MessageList';
 import { ChatMessage } from '../types';
-import sessionService from '~/common/services/session.service';
+import { sessionService } from '~/common/services/session.service';
 import UserModel from '~/channel/UserModel';
 import { ChatRoomProvider } from '../contexts/ChatRoomContext';
 import { useChatRoomInfoQuery } from '../hooks/useChatRoomInfoQuery';

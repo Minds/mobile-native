@@ -1,14 +1,14 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { forwardRef, useCallback } from 'react';
 import { View } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import BaseModel from '../../BaseModel';
 import capitalize from '../../helpers/capitalize';
-import i18n from '../../services/i18n.service';
 import MText from '../MText';
 import BottomSheet from '../bottom-sheet/BottomSheet';
 import Handle from '../bottom-sheet/Handle';
 import Interactions from './Interactions';
+import sp from '~/services/serviceProvider';
 
 type Interactions =
   | 'upVotes'
@@ -37,11 +37,11 @@ export interface InteractionsActionSheetHandles {
 export const getTitle = (interaction: Interactions) => {
   switch (interaction) {
     case 'channelSubscribers':
-      return i18n.t('subscribers');
+      return sp.i18n.t('subscribers');
     case 'channelSubscriptions':
-      return i18n.t('subscriptions');
+      return sp.i18n.t('subscriptions');
     default:
-      return i18n.t(`interactions.${interaction}`, { count: 2 });
+      return sp.i18n.t(`interactions.${interaction}`, { count: 2 });
   }
 };
 
@@ -115,7 +115,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
         store.setVisibility(shouldShow);
       }
     },
-    [keepOpen],
+    [keepOpen, store],
   );
 
   // =====================| RENDERS |=====================>
@@ -151,7 +151,7 @@ const InteractionsBottomSheet: React.ForwardRefRenderFunction<
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['bgPrimaryBackground', 'flexContainer'],
   navbarContainer: ['padding2x', 'alignCenter', 'bgPrimaryBackground'],
   titleStyle: ['fontXL', 'marginLeft2x', 'marginBottom', 'bold'],

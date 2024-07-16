@@ -1,14 +1,13 @@
-//@ts-nocheck
 import { action } from 'mobx';
 
-import walletService from '../WalletService';
 import OffsetListStore from '../../common/stores/OffsetListStore';
-import logService from '../../common/services/log.service';
 import { ListFiltersType } from '../v2/TransactionList/TransactionsListTypes';
+import sp from '~/services/serviceProvider';
 
 export default class TokensStore {
   list = new OffsetListStore('shallow');
   loading = false;
+  loaded = false;
   mode = 'rewards';
 
   /**
@@ -30,8 +29,8 @@ export default class TokensStore {
 
     const fetchFn =
       this.mode === 'transactions'
-        ? walletService.getTransactionsLedger
-        : walletService.getContributions;
+        ? sp.resolve('wallet').getTransactionsLedger
+        : sp.resolve('wallet').getContributions;
 
     return fetchFn(from, to, this.list.offset)
       .then(feed => {
@@ -42,14 +41,14 @@ export default class TokensStore {
         this.loading = false;
       })
       .catch(err => {
-        logService.exception('[TokensStore]', err);
+        sp.log.exception('[TokensStore]', err);
       });
   }
 
   @action
   async loadTransactionsListAsync(
     filters: ListFiltersType,
-    callback?: Function,
+    callback?: () => any,
   ) {
     if (this.list.cantLoadMore() || this.loading) {
       return false;
@@ -57,22 +56,24 @@ export default class TokensStore {
     this.loading = true;
 
     try {
-      const feed = await walletService.getFilteredTransactionsLedger(
-        filters,
-        this.list.offset,
-      );
+      const feed = await sp
+        .resolve('wallet')
+        .getFilteredTransactionsLedger(filters, this.list.offset);
 
       this.list.setList(feed, false, callback);
       this.loaded = true;
     } catch (err) {
-      logService.exception('[TokensStore]', err);
+      sp.log.exception('[TokensStore]', err);
     } finally {
       this.loading = false;
     }
   }
 
   @action
-  async refreshTransactionsList(filters: ListFiltersType, callback?: Function) {
+  async refreshTransactionsList(
+    filters: ListFiltersType,
+    callback?: () => any,
+  ) {
     this.list.refresh();
     await this.loadTransactionsListAsync(filters, callback);
     this.list.refreshDone();

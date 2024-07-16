@@ -14,17 +14,16 @@ import Link from '../common/components/Link';
 import MenuItemOption from '../common/components/menus/MenuItemOption';
 import StripeCardSelector from '../common/components/stripe-card-selector/StripeCardSelector';
 import TopbarTabbar from '../common/components/topbar-tabbar/TopbarTabbar';
-import i18nService from '../common/services/i18n.service';
 import { B1, B2, Button, IconButton, ModalFullScreen } from '../common/ui';
 import { IS_FROM_STORE } from '../config/Config';
-import NavigationService from '../navigation/NavigationService';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
 } from './SupermindOnboarding';
 import { PosterStackScreenProps } from './PosterOptions/PosterStackNavigator';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 const showError = (error: string) =>
   showNotification(error, 'danger', undefined);
@@ -94,7 +93,7 @@ type PropsType = PosterStackScreenProps<'ComposeSupermind'>;
  * @param {Object} props
  */
 const SupermindComposeScreen: React.FC<PropsType> = props => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const { params } = props.route ?? {};
   const { data, closeComposerOnClear, onClear } = params ?? {};
   const offerRef = useRef<InputContainerImperativeHandle>(null);
@@ -141,7 +140,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
 
   // hide payment method tabs
   const tabsDisabled = IS_FROM_STORE;
-
+  const i18n = sp.i18n;
   const validate = useCallback(() => {
     const err: any = {};
     if (!channel) {
@@ -164,7 +163,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
     } else if (oferValue < minValue) {
       err.offer = `Offer must be greater than ${minValue}`;
     } else if (offer?.includes('.') && offer.split('.')[1].length > 2) {
-      err.offer = i18nService.t('supermind.maxTwoDecimals');
+      err.offer = i18n.t('supermind.maxTwoDecimals');
     }
     if (!termsAgreed) {
       err.termsAgreed = 'You have to agree to the Terms';
@@ -176,7 +175,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
       setState({ errors: err });
     }
     return !hasErrors;
-  }, [cardId, channel, offer, paymentMethod, termsAgreed, minValue]);
+  }, [channel, paymentMethod, cardId, offer, minValue, termsAgreed, i18n]);
 
   const onBack = useCallback(() => {
     onClear?.();
@@ -207,11 +206,11 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
 
     // if object wasn't dirty, just go back without saving
     if (isEqual(supermindRequest, data)) {
-      NavigationService.goBack();
+      sp.navigation.goBack();
       return;
     }
 
-    NavigationService.goBack();
+    sp.navigation.goBack();
     params?.onSave?.(supermindRequest);
   }, [
     validate,
@@ -245,30 +244,30 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
           <IconButton name="close" size="large" onPress={onBack} />
         ) : (
           <Button mode="flat" size="small" onPress={onBack}>
-            {i18nService.t('searchBar.clear')}
+            {i18n.t('searchBar.clear')}
           </Button>
         )
       }
       extra={
         !onboarding && (
           <Button mode="flat" size="small" type="action" onPress={onSave}>
-            {i18nService.t('done')}
+            {i18n.t('done')}
           </Button>
         )
       }>
       <FitScrollView
         keyboardShouldPersistTaps="handled"
-        style={ThemedStyles.style.flexContainer}>
+        style={sp.styles.style.flexContainer}>
         {!tabsDisabled && (
           <TopbarTabbar
             current={paymentMethod}
             onChange={paymentMethod => setState({ paymentMethod })}
             containerStyle={theme.paddingTop}
             tabs={[
-              { id: PaymentType.cash, title: i18nService.t('wallet.cash') },
+              { id: PaymentType.cash, title: i18n.t('wallet.cash') },
               {
                 id: PaymentType.token,
-                title: i18nService.t('analytics.tokens.title'),
+                title: i18n.t('analytics.tokens.title'),
               },
             ]}
           />
@@ -277,7 +276,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
         <InputBase
           label={'Target Channel'}
           onPress={() => {
-            NavigationService.push('ChannelSelectScreen', {
+            sp.navigation.push('ChannelSelectScreen', {
               onSelect: (channel?: UserModel) => setState({ channel }),
             });
             setState({ errors: { ...errors, username: '' } });
@@ -358,7 +357,7 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
           borderless
         />
         <B2 color="secondary" horizontal="L" top="S">
-          {i18nService.t('supermind.7daysToReply')}
+          {i18n.t('supermind.7daysToReply')}
         </B2>
       </FitScrollView>
 

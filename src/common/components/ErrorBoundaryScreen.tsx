@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 
 import { View } from 'react-native';
-import logService from '../services/log.service';
-import i18n from '../services/i18n.service';
 import { showNotification } from '../../../AppMessages';
 import * as Clipboard from 'expo-clipboard';
-import ThemedStyles from '../../styles/ThemedStyles';
 import { Button } from '../ui/buttons';
 import { B2, H1, H4 } from '../ui';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   screenName?: string;
@@ -39,7 +37,7 @@ export default class ErrorBoundaryScreen extends Component<
   }
 
   componentDidCatch(error: Error, info) {
-    logService.exception({ screen: this.props.screenName, ...error });
+    sp.log.exception({ screen: this.props.screenName, ...error });
     this.error = error;
     this.info = info;
   }
@@ -50,26 +48,26 @@ export default class ErrorBoundaryScreen extends Component<
         `\nSTACK:\nScreen: ${this.props.screenName}\n` +
         this.info.componentStack,
     );
-    showNotification(i18n.t('stacktraceCopied'));
+    showNotification(sp.i18n.t('stacktraceCopied'));
   };
 
   render() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     return this.state.hasError ? (
       <View style={[theme.flexColumnCentered]}>
-        <H1 vertical="L">{i18n.t('sorry')}</H1>
-        <H4 vertical="M">{i18n.t('errorDisplaying')}</H4>
+        <H1 vertical="L">{sp.i18n.t('sorry')}</H1>
+        <H4 vertical="M">{sp.i18n.t('errorDisplaying')}</H4>
         <B2 bottom="L" onPress={this.copy} align="center">
-          {i18n.t('tapCopyError')}
+          {sp.i18n.t('tapCopyError')}
           {'\n'}
-          {i18n.t('and')}
+          {sp.i18n.t('and')}
         </B2>
         <Button
           vertical="L"
           mode="solid"
           type="warning"
           onPress={this.props.navigation?.goBack}>
-          {i18n.t(this.props.navigation ? 'goback' : 'restart')}
+          {sp.i18n.t(this.props.navigation ? 'goback' : 'restart')}
         </Button>
       </View>
     ) : (

@@ -1,5 +1,5 @@
 //@ts-nocheck
-export default {
+export const sessionService = {
   login: jest.fn(),
   logout: jest.fn(),
   isLoggedIn: jest.fn(),

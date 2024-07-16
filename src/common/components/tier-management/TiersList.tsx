@@ -1,13 +1,13 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { TierStoreType } from '../../../compose/PosterOptions/monetize/MembershipMonetizeScreen';
-import { SupportTiersType } from '../../../wire/WireTypes';
+import { TierStoreType } from '~/compose/PosterOptions/monetize/MembershipMonetizeScreen';
+import { SupportTiersType } from '~/wire/WireTypes';
 import MenuItem from '../menus/MenuItem';
-import i18n from '../../services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import { navToTierScreen } from './TierManagementScreen';
 import Empty from '~/common/components/Empty';
 import { Button } from '~ui';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   tiers: SupportTiersType[];
@@ -27,8 +27,8 @@ const TiersList = observer(
     navigation,
     onLinkPress,
   }: PropsType) => {
-    const theme = ThemedStyles.style;
-
+    const theme = sp.styles.style;
+    const i18n = sp.i18n;
     if (!tiers || tiers.length === 0) {
       return (
         <Empty

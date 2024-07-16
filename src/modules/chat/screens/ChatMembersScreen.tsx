@@ -4,7 +4,7 @@ import { FlashList } from '@shopify/flash-list';
 import { Icon, Screen, ScreenHeader } from '~/common/ui';
 import { ChatStackScreenProps } from '../ChatConversationStack';
 import CenteredLoading from '~/common/components/CenteredLoading';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { RefreshControl, TouchableOpacity } from 'react-native';
 import { IS_IOS } from '~/config/Config';
 import ChatUserItem from '../components/ChatUserItem';
@@ -15,6 +15,7 @@ import {
 } from '../contexts/ChatRoomMembersContext';
 import { showMemberMenu } from '../components/MemberMenu';
 import ErrorLoading from '~/common/components/ErrorLoading';
+import sp from '~/services/serviceProvider';
 
 type Props = ChatStackScreenProps<'ChatMembers'>;
 
@@ -58,8 +59,8 @@ function MembersList() {
           refreshing={isRefetching}
           onRefresh={refetch}
           progressViewOffset={IS_IOS ? 0 : 80}
-          tintColor={ThemedStyles.getColor('Link')}
-          colors={[ThemedStyles.getColor('Link')]}
+          tintColor={sp.styles.getColor('Link')}
+          colors={[sp.styles.getColor('Link')]}
         />
       }
       estimatedItemSize={68}

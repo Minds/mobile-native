@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Linking, View } from 'react-native';
-import ThemedStyles from '../styles/ThemedStyles';
-import i18nService from '../common/services/i18n.service';
+
 import { useAppState } from '@react-native-community/hooks';
 import { Camera, CameraPermissionStatus } from 'react-native-vision-camera';
 import { IS_IOS, TENANT } from '../config/Config';
 import MText from '../common/components/MText';
-import NavigationService from '~/navigation/NavigationService';
 import { Button } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   children: React.ReactNode;
@@ -30,7 +29,7 @@ export const PermissionsContext = React.createContext<
  * @param props
  */
 export default function PermissionsCheck(props: PropsType) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const [status, setStatus] = useState<
     null | [CameraPermissionStatus, CameraPermissionStatus]
   >(null);
@@ -56,11 +55,13 @@ export default function PermissionsCheck(props: PropsType) {
     return <View style={theme.flexContainer} />;
   }
 
+  const i18n = sp.i18n;
+
   if (status[1] === 'not-determined' || (status[1] === 'denied' && !IS_IOS)) {
     return (
       <View style={[theme.flexContainer, theme.centered, theme.padding8x]}>
         <MText style={[theme.fontXL, theme.textCenter, theme.colorWhite]}>
-          {i18nService.t('capture.allowMinds', { TENANT })}
+          {i18n.t('capture.allowMinds', { TENANT })}
         </MText>
         <Button
           size="small"
@@ -68,14 +69,14 @@ export default function PermissionsCheck(props: PropsType) {
           onPress={tap}
           type="action"
           top="XL">
-          {i18nService.t('continue')}
+          {i18n.t('continue')}
         </Button>
 
         {!IS_IOS && (
           <MText
             style={[theme.fontL, theme.paddingTop8x, theme.colorSecondaryText]}
-            onPress={() => NavigationService.goBack()}>
-            {i18nService.t('back')}
+            onPress={() => sp.navigation.goBack()}>
+            {i18n.t('back')}
           </MText>
         )}
       </View>
@@ -88,7 +89,7 @@ export default function PermissionsCheck(props: PropsType) {
         <MText
           style={[theme.fontXL, theme.textCenter, theme.colorWhite]}
           onPress={() => Linking.openSettings()}>
-          {i18nService.t('capture.blockedMinds')}
+          {i18n.t('capture.blockedMinds')}
         </MText>
         <Button
           size="small"
@@ -96,12 +97,12 @@ export default function PermissionsCheck(props: PropsType) {
           onPress={() => Linking.openSettings()}
           type="action"
           top="XL">
-          {i18nService.t('moreScreen.settings')}
+          {i18n.t('moreScreen.settings')}
         </Button>
         <MText
           style={[theme.fontL, theme.paddingTop10x, theme.colorSecondaryText]}
-          onPress={() => NavigationService.goBack()}>
-          {i18nService.t('back')}
+          onPress={() => sp.navigation.goBack()}>
+          {i18n.t('back')}
         </MText>
       </View>
     );

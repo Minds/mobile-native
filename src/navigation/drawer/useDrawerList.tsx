@@ -1,8 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import MIcon from '@expo/vector-icons/MaterialIcons';
 
-import i18n from '~/common/services/i18n.service';
-import sessionService from '~/common/services/session.service';
 import {
   AFFILIATES_ENABLED,
   BOOSTS_ENABLED,
@@ -13,12 +11,10 @@ import {
   WALLET_ENABLED,
 } from '~/config/Config';
 import { IconNameType } from '~/common/ui/icons/map';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { NavigationItemTypeEnum } from '~/graphql/api';
-import openUrlService from '~/common/services/open-url.service';
 import { useCustomNavigationMenu } from '~/modules/navigation/service/custom-navigation.service';
-import mindsConfigService from '~/common/services/minds-config.service';
-import PermissionsService from '~/common/services/permissions.service';
+import sp from '~/services/serviceProvider';
 
 type Flags = Record<'hasPro' | 'hasPlus', boolean>;
 
@@ -32,7 +28,8 @@ type MenuItem = {
 export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
   const navigation = useNavigation<any>();
   const customNavigation = useCustomNavigationMenu();
-  const channel = sessionService.getUser();
+  const channel = sp.session.getUser();
+  const i18n = sp.i18n;
   let list: MenuItem[];
   if (!IS_TENANT) {
     list = [
@@ -132,12 +129,12 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
       throw new Error('Custom navigation is not defined for this tenant');
     }
 
-    const config = mindsConfigService.getSettings();
+    const config = sp.config.getSettings();
 
     list = customNavigation
       .filter(item =>
         item.id === 'boost' &&
-        (!config?.tenant?.boost_enabled || !PermissionsService.canBoost())
+        (!config?.tenant?.boost_enabled || !sp.permissions.canBoost())
           ? false
           : true,
       )
@@ -147,14 +144,14 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
           <MIcon
             name={item.id === 'channel' ? 'person' : (item.iconId as any)}
             size={24}
-            style={ThemedStyles.style.colorPrimaryText}
+            style={sp.styles.style.colorPrimaryText}
           />
         ),
         testID: `Drawer:${item.id}`,
         onPress:
           item.type === NavigationItemTypeEnum.Core
             ? navigationMap[item.id]
-            : () => item.url && openUrlService.open(item.url),
+            : () => item.url && sp.resolve('openURL').open(item.url),
       }));
 
     list.push({

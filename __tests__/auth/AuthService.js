@@ -1,9 +1,7 @@
 import api, { isNetworkError } from '../../src/common/services/api.service';
 import authService from '../../src/auth/AuthService';
 import delay from '../../src/common/helpers/delay';
-import sessionService, {
-  SessionService,
-} from '../../src/common/services/session.service';
+import { sessionService, SessionService } from '../../src/common/services';
 import { SessionStorageService } from '../../src/common/services/storage/session.storage.service';
 
 jest.mock('../../src/common/services/api.service');

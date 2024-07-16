@@ -12,24 +12,22 @@ import {
   Spacer,
 } from '~/common/ui';
 import ChatListItem from '../components/ChatListItem';
-import NavigationService from '~/navigation/NavigationService';
 import { ChatRoom } from '../types';
 import { useChatRoomListQuery } from '../hooks/useChatRoomListQuery';
 import ChatRequestCount from '../components/ChatRequestCount';
 import ChatRoomList from '../components/ChatRoomList';
 import ChatNewButton from '../components/ChatNewButton';
 import { useRefreshOnFocus } from '~/services/hooks/useRefreshOnFocus';
-import socketService from '~/common/services/socket.service';
 import { useRefetchUnreadMessages } from '../hooks/useUnreadMessages';
-import { useStyle } from '~/styles/ThemedStyles';
-import analyticsService from '~/common/services/analytics.service';
-import permissionsService from '~/common/services/permissions.service';
+
+import serviceProvider from '~/services/serviceProvider';
+import { useStyle } from '~/styles/hooks';
 
 /**
  * Chat rooms list screen
  */
 export default function ChatsListScreen({ navigation }) {
-  const canCreateChat = permissionsService.canCreateChatRoom();
+  const canCreateChat = serviceProvider.permissions.canCreateChatRoom();
   return (
     <Screen safe>
       <ScreenHeader
@@ -50,9 +48,9 @@ export default function ChatsListScreen({ navigation }) {
       {canCreateChat && (
         <ChatNewButton
           onPress={() => {
-            analyticsService.trackClick(
-              'data-minds-chat-room-list-new-chat-button',
-            );
+            serviceProvider
+              .resolve('analytics')
+              .trackClick('data-minds-chat-room-list-new-chat-button');
             navigation.push('ChatNew');
           }}
         />
@@ -84,7 +82,7 @@ function ChatList() {
     refetch();
 
     // refresh sockets room list subscriptions
-    socketService.chat?.refreshRoomList();
+    serviceProvider.socket.chat?.refreshRoomList();
 
     // refresh global unread messages count
     refetchUnreadMessages();
@@ -99,10 +97,10 @@ function ChatList() {
       ListHeaderComponent={
         <ChatRequestCount
           onPress={() => {
-            analyticsService.trackClick(
-              'data-minds-chat-pending-requests-button',
-            );
-            NavigationService.push('ChatRequestsList');
+            serviceProvider
+              .resolve('analytics')
+              .trackClick('data-minds-chat-pending-requests-button');
+            serviceProvider.navigation.push('ChatRequestsList');
           }}
         />
       }
@@ -124,10 +122,10 @@ const Empty = () => (
     </B2>
     <Button
       onPress={() => {
-        analyticsService.trackClick(
-          'data-minds-chat-no-chats-empty-list-button',
-        );
-        NavigationService.push('ChatNew');
+        serviceProvider
+          .resolve('analytics')
+          .trackClick('data-minds-chat-no-chats-empty-list-button');
+        serviceProvider.navigation.push('ChatNew');
       }}
       align="start"
       type="action">
@@ -143,8 +141,10 @@ const renderItem = ({ item }: { item: ChatRoom }) => (
   <ChatListItem
     chat={item}
     onPress={() => {
-      analyticsService.trackClick('data-minds-chat-room-list-item');
-      NavigationService.push('ChatStack', {
+      serviceProvider
+        .resolve('analytics')
+        .trackClick('data-minds-chat-room-list-item');
+      serviceProvider.navigation.push('ChatStack', {
         screen: 'Chat',
         params: {
           roomGuid: item.node.guid,

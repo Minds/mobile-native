@@ -1,8 +1,8 @@
 import { action, observable } from 'mobx';
 import debounce from 'lodash/debounce';
-import { storages } from '~/common/services/storage/storages.service';
 
-import FeedStore from '../../../common/stores/FeedStore';
+import FeedStore from '~/common/stores/FeedStore';
+import sp from '~/services/serviceProvider';
 
 export type DiscoveryV2SearchStoreAlgorithm =
   | 'top'
@@ -34,7 +34,7 @@ export default class DiscoveryV2SearchStore {
 
   constructor() {
     this.listStore.getMetadataService()?.setSource(`search/${this.algorithm}`);
-    this.params.nsfw = storages.user?.getArray('discovery-nsfw') || [];
+    this.params.nsfw = sp.storages.user?.getObject('discovery-nsfw') || [];
     this.nsfw = this.params.nsfw;
     this.listStore
       .setEndpoint('api/v3/discovery/search')
@@ -84,7 +84,7 @@ export default class DiscoveryV2SearchStore {
 
   @action
   setNsfw = (nsfw: Array<number>) => {
-    storages.user?.setArray('discovery-nsfw', nsfw);
+    sp.storages.user?.setObject('discovery-nsfw', nsfw);
     this.nsfw = nsfw;
     this.params.nsfw = nsfw;
     this.refresh();

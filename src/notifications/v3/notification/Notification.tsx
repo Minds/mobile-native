@@ -15,10 +15,10 @@ import ContentPreview from './content/ContentPreview';
 import useNotificationRouter from './useNotificationRouter';
 import Merged from './content/Merged';
 import type Notification from './NotificationModel';
-import i18n from '../../../common/services/i18n.service';
-import MText from '../../../common/components/MText';
+import MText from '~/common/components/MText';
 import { Image } from 'expo-image';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   notification: Notification;
@@ -59,7 +59,7 @@ const NotificationItem = observer(
 
     return (
       <TouchableOpacity
-        style={[containerStyle, ThemedStyles.style.alignSelfCenterMaxWidth]}
+        style={[containerStyle, sp.styles.style.alignSelfCenterMaxWidth]}
         onPress={router.navToEntity}>
         <View style={styles.innerContainer}>
           <View style={styles.avatarContainer}>
@@ -88,7 +88,7 @@ const NotificationItem = observer(
           </View>
           <View style={styles.timeContainer}>
             <MText style={bodyTextStyle}>
-              {i18n.date(notification.created_timestamp * 1000, 'friendly')}
+              {sp.i18n.date(notification.created_timestamp * 1000, 'friendly')}
             </MText>
             {notification.read === false && <View style={readIndicatorStyle} />}
           </View>

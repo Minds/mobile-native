@@ -1,15 +1,16 @@
 import React, { useCallback } from 'react';
 import { Alert, View } from 'react-native';
+
 import { B1, B2, H3, Spacer } from '~ui';
-import MenuItem from '../../../common/components/menus/MenuItem';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import MenuItem from '~/common/components/menus/MenuItem';
+
 import {
   WalletScreenNavigationProp,
   WalletScreenRouteProp,
 } from '../../v3/WalletScreen';
 import { WalletStoreType } from '../createWalletStore';
 import StripeConnectButton from '../stripe-connect/StripeConnectButton';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   navigation: WalletScreenNavigationProp;
@@ -18,10 +19,12 @@ type PropsType = {
 };
 
 const UsdSettings = ({ walletStore }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const hasBankInfo =
     walletStore.wallet.cash.address !== null &&
     walletStore.wallet.cash.address !== '';
+
+  const i18n = sp.i18n;
 
   const confirm = useCallback(() => {
     Alert.alert(
@@ -35,7 +38,7 @@ const UsdSettings = ({ walletStore }: PropsType) => {
         },
       ],
     );
-  }, [walletStore]);
+  }, [walletStore, i18n]);
 
   return (
     <Spacer top="M">

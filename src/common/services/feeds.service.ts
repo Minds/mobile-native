@@ -1,33 +1,29 @@
-//@ts-nocheck
-import logService from './log.service';
-import apiService from './api.service';
 import { isAbort, isNetworkError } from './ApiErrors';
-import entitiesService from './entities.service';
-import feedsStorage from './storage/feeds.storage';
-import i18n from './i18n.service';
-import connectivityService from './connectivity.service';
-import { boostedContentService } from 'modules/boost';
 import BaseModel from '../BaseModel';
 import { Platform } from 'react-native';
 import { GOOGLE_PLAY_STORE } from '../../config/Config';
 import difference from 'lodash/difference';
-import { showNotification } from 'AppMessages';
-import { BoostedContentService } from '../../modules/boost/services/boosted-content.service';
-import sessionService from './session.service';
+import { FeedsStorage } from './storage/feeds.storage';
+import type { ApiService } from './api.service';
+import type { LogService } from './log.service';
+import type { SessionService } from './session.service';
+import type { EntitiesService } from './entities.service';
+import type { Storages } from './storage/storages.service';
+import type { BoostedContentService } from '~/modules/boost';
 
 export const shouldInjectBoostAtIndex = (i: number) => i > 0 && i % 5 === 0;
 
-export type FeedRecordType = {
-  owner_guid: string;
-  timestamp: string;
+export type FeedRecordType<T extends BaseModel = BaseModel> = {
+  owner_guid?: string | null;
+  timestamp: number | null;
   urn: string;
-  entity?: Object;
+  entity?: T;
 };
 
 /**
  * Feed store
  */
-export default class FeedsService {
+export class FeedsService<T extends BaseModel = BaseModel> {
   /**
    * @var {boolean}
    */
@@ -66,7 +62,7 @@ export default class FeedsService {
   /**
    * @var {Array}
    */
-  feed: Array<FeedRecordType> = [];
+  feed: Array<FeedRecordType<T>> = [];
 
   /**
    * @var {string}
@@ -105,6 +101,24 @@ export default class FeedsService {
    */
   dataProperty: string = 'entities';
 
+  /**
+   * @var {FeedsStorage}
+   */
+  feedStorage: FeedsStorage;
+
+  constructor(
+    private api: ApiService,
+    private log: LogService,
+    private session: SessionService,
+    private entitiesService: EntitiesService,
+    private storages: Storages,
+    private boostedContentService: BoostedContentService,
+  ) {
+    console.log('FeedsService constructor');
+    this.feedStorage = new FeedsStorage(this.storages, this.log);
+    console.log('FeedsService constructor 2');
+  }
+
   setDataProperty(name: string) {
     this.dataProperty = name;
     return this;
@@ -121,7 +135,7 @@ export default class FeedsService {
         await this.fetch(true);
       } catch (err) {
         if (!isNetworkError(err)) {
-          logService.exception('[FeedService] getEntities', err);
+          this.log.exception('[FeedService] getEntities', err);
         }
       }
     }
@@ -129,10 +143,14 @@ export default class FeedsService {
     const feedPage = this.feed.slice(this.offset, end);
 
     const result: Array<any> = this.params.sync
-      ? await entitiesService.getFromFeed(feedPage, this, this.asActivities)
+      ? await this.entitiesService.getFromFeed(
+          feedPage,
+          this,
+          this.asActivities,
+        )
       : feedPage;
 
-    if (!this.injectBoost || sessionService.getUser()?.disabled_boosts) {
+    if (!this.injectBoost || this.session.getUser()?.disabled_boost) {
       return result;
     }
 
@@ -147,7 +165,9 @@ export default class FeedsService {
 
     for (let i = this.offset; i < this.offset + result.length; i++) {
       if (shouldInjectBoostAtIndex(i)) {
-        const boost = (this.boostedContent ?? boostedContentService).fetch();
+        const boost = (
+          this.boostedContent ?? this.boostedContentService
+        ).fetch();
         if (boost) {
           result.splice(i, 0, boost);
         }
@@ -164,7 +184,7 @@ export default class FeedsService {
   prepend(entity: BaseModel) {
     this.feed.unshift({
       owner_guid: entity.owner_guid,
-      timestamp: Date.now().toString(),
+      timestamp: Date.now(),
       urn: entity.urn,
     });
 
@@ -173,9 +193,9 @@ export default class FeedsService {
 
     const plainEntity = entity.toPlainObject();
 
-    entitiesService.save(plainEntity);
+    this.entitiesService.save(plainEntity);
     // save without wait
-    feedsStorage.save(this);
+    this.feedStorage.save(this);
   }
 
   /**
@@ -195,10 +215,10 @@ export default class FeedsService {
 
   /**
    * Set feed
-   * @param {Array<FeedRecordType>} feed
+   * @param {Array<FeedRecordType<T>>} feed
    * @returns {FeedsService}
    */
-  setFeed(feed: Array<FeedRecordType>): FeedsService {
+  setFeed(feed: Array<FeedRecordType<T>>): FeedsService {
     this.feed = feed;
     return this;
   }
@@ -267,7 +287,7 @@ export default class FeedsService {
    * Set parameters
    * @param {Object} params
    */
-  setParams(params: Object): FeedsService {
+  setParams(params: any): FeedsService {
     this.params = params;
     if (!params.sync) {
       this.params.sync = 1;
@@ -304,7 +324,7 @@ export default class FeedsService {
    * Abort pending fetch
    */
   abort() {
-    apiService.abort(this);
+    this.api.abort(this);
   }
 
   /**
@@ -318,6 +338,7 @@ export default class FeedsService {
         r =>
           r.entity &&
           r.entity.time_created &&
+          this.fallbackAt &&
           parseInt(r.entity.time_created, 10) < this.fallbackAt,
       );
     }
@@ -334,7 +355,7 @@ export default class FeedsService {
    * @param {boolean} more
    */
   async fetch(more: boolean = false): Promise<void> {
-    const params = {
+    const params: any = {
       ...this.params,
       ...{
         limit: 150,
@@ -352,7 +373,7 @@ export default class FeedsService {
       params.from_timestamp = this.pagingToken;
     }
     const fetchTime = Date.now();
-    const response = await apiService.get(this.endpoint, params, this);
+    const response = await this.api.get<any>(this.endpoint, params, this);
     this.feedLastFetchedAt = fetchTime;
 
     if (response[this.dataProperty] && response[this.dataProperty].length) {
@@ -384,7 +405,7 @@ export default class FeedsService {
     }
 
     // save without wait
-    feedsStorage.save(this);
+    this.feedStorage.save(this);
   }
 
   /**
@@ -393,14 +414,15 @@ export default class FeedsService {
    */
   async fetchLocal(): Promise<boolean> {
     try {
-      const feed = await feedsStorage.read(this);
+      const feed: any = await this.feedStorage.read(this);
       if (feed) {
         // support old format
         if (Array.isArray(feed)) {
-          this.feed = feed;
-          this.pagingToken = (
-            this.feed[this.feed.length - 1].timestamp - 1
-          ).toString();
+          this.feed = feed as Array<FeedRecordType<T>>;
+          const last = this.feed[this.feed.length - 1];
+          this.pagingToken = last.timestamp
+            ? (last.timestamp - 1).toString()
+            : '';
         } else {
           this.feed = feed.feed;
           this.fallbackAt = feed.fallbackAt;
@@ -410,7 +432,7 @@ export default class FeedsService {
         return true;
       }
     } catch (err) {
-      logService.error('[FeedService] error loading local data');
+      this.log.error('[FeedService] error loading local data');
     }
 
     return false;
@@ -432,7 +454,7 @@ export default class FeedsService {
       }
 
       if (!isNetworkError(err)) {
-        logService.exception('[FeedService]', err);
+        this.log.exception('[FeedService]', err);
       }
 
       throw err;
@@ -451,27 +473,13 @@ export default class FeedsService {
       }
 
       if (!isNetworkError(err)) {
-        logService.exception('[FeedService]', err);
+        this.log.exception('[FeedService]', err);
       }
 
       if (!(await this.fetchLocal())) {
         // if there is no local data rethrow the exception
         throw err;
       }
-
-      // TODO: remove this after fixed https://github.com/react-native-netinfo/react-native-netinfo/issues/669
-      if (connectivityService.isConnected) {
-        return;
-      }
-
-      showNotification(
-        connectivityService.isConnected
-          ? i18n.t('cantReachServer')
-          : i18n.t('noInternet'),
-        'info',
-        3000,
-        i18n.t('showingStored'),
-      );
     }
   }
 
@@ -479,12 +487,12 @@ export default class FeedsService {
    * Remove all from owner
    * @param {string} guid
    */
-  removeFromOwner(guid: string): Promise<void> {
+  removeFromOwner(guid: string) {
     let count = this.feed.length;
     this.feed = this.feed.filter(e => !e.owner_guid || e.owner_guid !== guid);
     count -= this.feed.length;
     this.offset -= count;
-    feedsStorage.save(this);
+    this.feedStorage.save(this);
   }
 
   /**
@@ -525,7 +533,11 @@ export default class FeedsService {
       from_timestamp: fromTimestamp,
     };
 
-    const result = await apiService.get(this.countEndpoint, params, this);
+    const result = await this.api.get<{ count: number }>(
+      this.countEndpoint,
+      params,
+      this,
+    );
     return result.count;
   }
 }

@@ -4,11 +4,10 @@ import {
   pushBottomSheet,
 } from '~/common/components/bottom-sheet';
 import { ChatMessage } from '../types';
-import sessionService from '~/common/services/session.service';
 import { ChatRoomMessagesContextType } from '../contexts/ChatRoomMessageContext';
-import NavigationService from '~/navigation/NavigationService';
 import type { ChatRoomContextType } from '../contexts/ChatRoomContext';
 import { ChatRoomTypeEnum } from '~/graphql/api';
+import sp from '~/services/serviceProvider';
 
 export const showMessageMenu = (
   message: ChatMessage,
@@ -17,11 +16,11 @@ export const showMessageMenu = (
 ) => {
   const chatRoom = chatRoomContext.data?.chatRoom.node;
   const showDelete =
-    message.node.sender.node.guid === sessionService.getUser().guid ||
+    message.node.sender.node.guid === sp.session.getUser().guid ||
     (chatRoom?.isUserRoomOwner &&
       chatRoom?.roomType === ChatRoomTypeEnum.GroupOwned);
   const showReport =
-    message.node.sender.node.guid !== sessionService.getUser().guid;
+    message.node.sender.node.guid !== sp.session.getUser().guid;
   pushBottomSheet({
     safe: true,
     title: 'Message Options',
@@ -41,7 +40,7 @@ export const showMessageMenu = (
         {showReport && (
           <BottomSheetMenuItem
             onPress={async () => {
-              NavigationService.push('Report', {
+              sp.navigation.push('Report', {
                 entity: message,
                 title: 'Report Message',
               });

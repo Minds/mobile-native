@@ -7,22 +7,22 @@ import {
   Linking,
   Dimensions,
 } from 'react-native';
-import Button from '../../common/components/Button';
-import MText from '../../common/components/MText';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+import Button from '~/common/components/Button';
+import MText from '~/common/components/MText';
+
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 const wHeight = Dimensions.get('window').height;
 
 const RecoveryCodeUsedScreen = () => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const navigation = useNavigation();
   const textStyle = [theme.colorSecondaryText, styles.text];
   const navTo2fa = () => navigation.navigate('TwoFactorAuthSettingsScreen');
   const mailToMinds = () => Linking.openURL('mailto:support@example.com');
-
+  const i18n = sp.i18n;
   return (
     <View style={[styles.mainContainer, theme.bgPrimaryBackground]}>
       <View style={theme.rowJustifyStart}>

@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 import {
   BackHandler,
@@ -20,25 +19,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PortalProvider } from '@gorhom/portal';
 import { focusManager } from '@tanstack/react-query';
+import sp from '~/services/serviceProvider';
 
 import { IS_IPAD } from '~/config/Config';
 
-import NavigationService, {
-  navigationRef,
-} from './src/navigation/NavigationService';
 import NavigationStack from './src/navigation/NavigationStack';
 import { getStores } from './AppStores';
 import './AppErrors';
 import './src/common/services/socket.service';
 
-import sessionService from './src/common/services/session.service';
-import deeplinkService from './src/common/services/deeplinks-router.service';
 import ErrorBoundary from './src/common/components/ErrorBoundary';
-import ThemedStyles from './src/styles/ThemedStyles';
 import { StoresProvider } from './src/common/hooks/use-stores';
-import i18n from './src/common/services/i18n.service';
 
-// import receiveShareService from './src/common/services/receive-share.service';
 import appInitManager from './AppInitManager';
 import AppMessageProvider from 'AppMessageProvider';
 import * as SplashScreen from 'expo-splash-screen';
@@ -106,9 +98,6 @@ class App extends Component<Props> {
       'url',
       this.handleOpenURL,
     );
-    // this.shareReceiveSubscription = ShareMenu.addNewShareListener(
-    //   receiveShareService.handle,
-    // );
 
     // send focus states to react query
     this.stateSubscription = AppState.addEventListener(
@@ -134,7 +123,7 @@ class App extends Component<Props> {
    */
   onBackPress = () => {
     try {
-      NavigationService.goBack();
+      sp.navigation.goBack();
       return false;
     } catch (err) {
       return true;
@@ -148,7 +137,7 @@ class App extends Component<Props> {
     if (event.url) {
       // the var can be cleaned so we check again
       setTimeout(() => {
-        deeplinkService.navigate(event.url, true);
+        sp.resolve('deepLinks').navigate(event.url, true);
         event.url = '';
       }, 100);
     }
@@ -162,8 +151,9 @@ class App extends Component<Props> {
    * Render
    */
   render() {
+    const styles = sp.styles;
     // App not shown until the theme is loaded
-    if (ThemedStyles.theme === -1) {
+    if (styles.theme === -1) {
       return null;
     }
 
@@ -174,27 +164,26 @@ class App extends Component<Props> {
         <FontsLoader>
           <GestureHandlerRootView style={appContainerStyle}>
             <SafeAreaProvider>
-              {sessionService.ready && (
+              {sp.session.ready && (
                 <StoresProvider>
                   <QueryProvider>
                     <Provider key="app" {...stores}>
                       <NavigationContainer
-                        ref={navigationRef}
-                        theme={ThemedStyles.navTheme}
+                        ref={sp.navigation.navigationRef}
+                        theme={styles.navTheme}
                         onReady={appInitManager.onNavigatorReady}
-                        onStateChange={NavigationService.onStateChange}>
-                        <AppMessageProvider
-                          key={`message_${ThemedStyles.theme}`}>
+                        onStateChange={sp.navigation.onStateChange}>
+                        <AppMessageProvider key={`message_${styles.theme}`}>
                           <FriendlyCaptchaProvider
                             ref={setFriendlyCaptchaReference}>
                             <PortalProvider>
                               <BottomSheetModalProvider>
                                 <ErrorBoundary
                                   message="An error occurred"
-                                  containerStyle={ThemedStyles.style.centered}>
+                                  containerStyle={styles.style.centered}>
                                   <ConfigProvider>
                                     <NavigationStack
-                                      key={ThemedStyles.theme + i18n.locale}
+                                      key={styles.theme + sp.i18n.locale}
                                     />
                                   </ConfigProvider>
                                 </ErrorBoundary>
@@ -217,7 +206,7 @@ class App extends Component<Props> {
 
 export default App;
 
-const appContainerStyle = ThemedStyles.combine(
+const appContainerStyle = sp.styles.combine(
   'flexContainer',
   'bgPrimaryBackground',
 );

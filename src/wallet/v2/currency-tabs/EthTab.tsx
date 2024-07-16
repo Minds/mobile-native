@@ -1,21 +1,22 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
+
 import type { WalletStoreType } from '../createWalletStore';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import MText from '../../../common/components/MText';
+
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   walletStore: WalletStoreType;
 };
 
 const EthTab = ({ walletStore }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const onPress = useCallback(() => {
     walletStore.setCurrent('tokens', 'settings');
   }, [walletStore]);
-
+  const i18n = sp.i18n;
   return (
     <View style={theme.paddingHorizontal4x}>
       <MText style={[theme.fontXXL, theme.paddingTop3x, theme.fontMedium]}>

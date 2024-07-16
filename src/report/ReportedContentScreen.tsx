@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { StyleSheet, FlatList, View, TouchableHighlight } from 'react-native';
@@ -7,18 +6,19 @@ import { observer, inject } from 'mobx-react';
 
 import ErrorLoading from '../common/components/ErrorLoading';
 import CenteredLoading from '../common/components/CenteredLoading';
-import ThemedStyles from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
+
 import ReportedContentRow from './ReportedContentRow';
-import { ComponentsStyle } from '../styles/Components';
 import MText from '../common/components/MText';
+import type ReportStore from './ReportStore';
+import EmptyList from '~/common/components/EmptyList';
+import sp from '~/services/serviceProvider';
 
 /**
  * Discovery screen
  */
 @inject('reportstore')
 @observer
-class ReportedContentScreen extends Component {
+class ReportedContentScreen extends Component<{ reportstore: ReportStore }> {
   /**
    * On component will mount
    */
@@ -39,25 +39,17 @@ class ReportedContentScreen extends Component {
   };
 
   /**
-   * Load data
-   */
-  loadMore = () => {
-    if (this.props.reportstore.list.errorLoading) return;
-    this.props.blogs.loadList();
-  };
-
-  /**
    * Render
    */
   render() {
-    const CS = ThemedStyles.style;
+    const CS = sp.styles.style;
 
     let body;
 
     const store = this.props.reportstore;
 
     const footerCmp = store.list.errorLoading ? (
-      <ErrorLoading message={i18n.t('cantLoad')} tryAgain={store.loadList} />
+      <ErrorLoading message={sp.i18n.t('cantLoad')} tryAgain={store.loadList} />
     ) : null;
 
     if (
@@ -67,22 +59,8 @@ class ReportedContentScreen extends Component {
     ) {
       body = <CenteredLoading />;
     } else {
-      const empty = (
-        <View style={ComponentsStyle.emptyComponentContainer}>
-          <View style={ComponentsStyle.emptyComponent}>
-            <MText
-              style={[
-                ComponentsStyle.emptyComponentMessage,
-                CS.colorSecondaryText,
-              ]}>
-              {i18n.t('blogs.blogListEmpty')}
-            </MText>
-          </View>
-        </View>
-      );
-
       body = (
-        <FlatList
+        <FlatList<{ guid: string }>
           data={store.list.appeals.slice()}
           renderItem={this.renderRow}
           keyExtractor={item => item.guid}
@@ -93,7 +71,7 @@ class ReportedContentScreen extends Component {
           style={styles.listView}
           ListFooterComponent={footerCmp}
           ListEmptyComponent={
-            !store.list.loaded && !stores.list.refreshing ? null : empty
+            !store.list.loaded && !store.list.refreshing ? null : <EmptyList />
           }
         />
       );
@@ -106,6 +84,7 @@ class ReportedContentScreen extends Component {
     };
 
     const headerStyle = [CS.colorSecondaryText, CS.fontM, CS.textCenter];
+    const i18n = sp.i18n;
 
     return (
       <View style={[CS.flexContainer, CS.bgSecondaryBackground]}>

@@ -3,12 +3,13 @@ import moment from 'moment';
 import React from 'react';
 import { View } from 'react-native';
 import { B1, B2, Icon, Row } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import type UserModel from '../../../../../channel/UserModel';
 import { useTranslation } from '../../../locales';
 import BoostModel from '../../../models/BoostModelV3';
 import { BoostPaymentMethod, BoostStatus } from '../../types/BoostConsoleBoost';
 import { getColor } from '~/common/ui/buttons/helpers';
+import sp from '~/services/serviceProvider';
 
 interface BoostHeader {
   boost: BoostModel;
@@ -47,7 +48,7 @@ export default function BoostHeader({ boost }: BoostHeader) {
       'Pending on-chain confirmation',
     ),
   };
-  const { textColor } = getColor({ theme: ThemedStyles.theme });
+  const { textColor } = getColor({ theme: sp.styles.theme });
 
   return (
     <>
@@ -91,7 +92,7 @@ const SupermindTarget = ({ channel }: { channel: UserModel }) => {
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   rectangle: [
     'borderRadius4x',
     'bgLink',

@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
 import MenuItem from '../../common/components/menus/MenuItem';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import MenuSubtitle from './menus/MenuSubtitle';
+import sp from '~/services/serviceProvider';
 
 const keyExtractor = (_, index) => `_${index}`;
 
@@ -29,7 +30,7 @@ export default function ({ navigation, route }) {
   ) : null;
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     'flexContainer',
     'bgPrimaryBackground',

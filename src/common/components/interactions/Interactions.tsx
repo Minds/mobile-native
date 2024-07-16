@@ -1,22 +1,23 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { Platform, StyleSheet, View } from 'react-native';
-import BaseModel from '../../BaseModel';
-import Activity from '../../../newsfeed/activity/Activity';
-import UserModel from '../../../channel/UserModel';
-import ActivityModel from '../../../newsfeed/ActivityModel';
-import OffsetList from '../OffsetList';
-import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
-import i18n from '../../services/i18n.service';
-import { BottomSheetButton } from '../bottom-sheet';
+import { useNavigation } from '@react-navigation/core';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+
+import BaseModel from '../../BaseModel';
+import Activity from '~/newsfeed/activity/Activity';
+import UserModel from '~/channel/UserModel';
+import ActivityModel from '~/newsfeed/ActivityModel';
+import OffsetList from '../OffsetList';
+import { BottomSheetButton } from '../bottom-sheet';
 import ChannelListItem from '../ChannelListItem';
 import ChannelListItemPlaceholder from '../ChannelListItemPlaceholder';
-import ActivityPlaceHolder from '../../../newsfeed/ActivityPlaceHolder';
-import { useNavigation } from '@react-navigation/core';
+import ActivityPlaceHolder from '~/newsfeed/ActivityPlaceHolder';
 import FeedStore from '~/common/stores/FeedStore';
 import FeedList from '../FeedList';
+import sp from '~/services/serviceProvider';
+import { useStyle } from '~/styles/hooks';
 
 type InteractionsProps = {
   entity: BaseModel;
@@ -42,8 +43,8 @@ const Interactions = (props: InteractionsProps) => {
   });
   const footerGradientColors = useMemo(
     () => [
-      ThemedStyles.getColor('PrimaryBackground') + '00',
-      ThemedStyles.getColor('PrimaryBackground'),
+      sp.styles.getColor('PrimaryBackground') + '00',
+      sp.styles.getColor('PrimaryBackground'),
     ],
     [],
   );
@@ -164,7 +165,7 @@ const Interactions = (props: InteractionsProps) => {
         colors={footerGradientColors}
         pointerEvents={'none'}
       />
-      <BottomSheetButton text={i18n.t('cancel')} onPress={props.onCancel} />
+      <BottomSheetButton text={sp.i18n.t('cancel')} onPress={props.onCancel} />
     </View>
   );
 
@@ -247,7 +248,7 @@ const mapActivity = data =>
     return ActivityModel.create(d);
   });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['bgPrimaryBackground', 'flexContainer'],
   navbarContainer: ['padding2x', 'alignCenter', 'bgPrimaryBackground'],
   titleStyle: ['fontXL', 'marginLeft2x', 'marginBottom', 'bold'],

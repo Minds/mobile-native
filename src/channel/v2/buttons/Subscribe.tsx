@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
-import i18n from '../../../common/services/i18n.service';
 import UserModel from '../../UserModel';
 import { observer } from 'mobx-react';
 import { Alert } from 'react-native';
 import { Button, ButtonPropsType, Icon } from '~ui';
+import serviceProvider from '~/services/serviceProvider';
 
 export interface SubscribeProps {
   channel: UserModel;
@@ -31,7 +31,7 @@ const HITSLOP = {
 
 const Subscribe = (props: SubscribeProps) => {
   const { channel, mini, onSubscribed } = props;
-
+  const i18n = serviceProvider.i18n;
   const subscriptionText =
     props.text ??
     (channel.subscribed

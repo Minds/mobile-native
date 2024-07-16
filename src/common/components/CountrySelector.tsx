@@ -1,6 +1,6 @@
 import React from 'react';
 import InputSelector from './InputSelector';
-import i18n from '../services/i18n.service';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   onSelected: Function;
@@ -18,7 +18,7 @@ const CountrySelector = ({ allowed, onSelected, selected }: PropsType) => {
       data={filteredCountries}
       valueExtractor={item => item.name}
       keyExtractor={item => item.code}
-      label={i18n.t('wallet.bank.country')}
+      label={sp.i18n.t('wallet.bank.country')}
       onSelected={onSelected}
       selected={selected}
     />

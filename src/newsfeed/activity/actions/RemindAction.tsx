@@ -2,29 +2,27 @@ import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
 
 import { IconButtonNext } from '~ui/icons';
-import { FLAG_REMIND } from '../../../common/Permissions';
-import ActivityModel from '../../../newsfeed/ActivityModel';
-import type BlogModel from '../../../blogs/BlogModel';
-import i18n from '../../../common/services/i18n.service';
+import { FLAG_REMIND } from '~/common/Permissions';
+import ActivityModel from '~/newsfeed/ActivityModel';
+import type BlogModel from '~/blogs/BlogModel';
 import createComposeStore, {
   ComposeAudience,
-} from '../../../compose/createComposeStore';
-import { pushAudienceSelector } from '../../../compose/ComposeAudienceSelector';
-import { showNotification } from '../../../../AppMessages';
+} from '~/compose/createComposeStore';
+import { pushAudienceSelector } from '~/compose/ComposeAudienceSelector';
+import { showNotification } from '~/../AppMessages';
 import { actionsContainerStyle } from './styles';
-import { useLegacyStores } from '../../../common/hooks/use-stores';
+import { useLegacyStores } from '~/common/hooks/use-stores';
 import {
   BottomSheetButton,
   BottomSheetMenuItem,
   pushBottomSheet,
-} from '../../../common/components/bottom-sheet';
+} from '~/common/components/bottom-sheet';
 import EntityCounter from './EntityCounter';
-import { storeRatingService } from 'modules/store-rating';
 import { useAnalytics } from '~/common/contexts/analytics.context';
-import NavigationService from '../../../navigation/NavigationService';
+
 import type NewsfeedStore from '../../NewsfeedStore';
-import PermissionsService from '~/common/services/permissions.service';
 import getNetworkError from '~/common/helpers/getNetworkError';
+import serviceProvider from '~/services/serviceProvider';
 
 type PropsTypes = {
   entity: ActivityModel | BlogModel;
@@ -38,13 +36,14 @@ type PropsTypes = {
  */
 export default observer(function ({ entity, hideCount }: PropsTypes) {
   const disabled = !entity.can(FLAG_REMIND);
-
+  const i18n = serviceProvider.i18n;
   const { newsfeed } = useLegacyStores();
   const analytics = useAnalytics();
 
   const showDropdown = useCallback(() => {
-    const canPost = PermissionsService.canCreatePost();
-    const canInteract = PermissionsService.canInteract();
+    const permissions = serviceProvider.permissions;
+    const canPost = permissions.canCreatePost();
+    const canInteract = permissions.canInteract();
     if (!canPost && !canInteract) {
       showNotification(i18n.t('permissions.notAllowed.interact'));
       return;
@@ -54,7 +53,7 @@ export default observer(function ({ entity, hideCount }: PropsTypes) {
       newsfeed,
       analytics,
     });
-  }, [entity, newsfeed, analytics]);
+  }, [entity, newsfeed, analytics, i18n]);
 
   return (
     <IconButtonNext
@@ -84,6 +83,7 @@ const pushRemindActionSheet = async ({
   newsfeed: NewsfeedStore;
   analytics;
 }) => {
+  const i18n = serviceProvider.i18n;
   /**
    * Open quote in composer
    */
@@ -92,8 +92,7 @@ const pushRemindActionSheet = async ({
     if (!entity.can(FLAG_REMIND, true)) {
       return;
     }
-
-    NavigationService.navigate('Compose', {
+    serviceProvider.navigation.navigate('Compose', {
       isRemind: true,
       entity,
     });
@@ -109,7 +108,7 @@ const pushRemindActionSheet = async ({
       // append the entity to the feed
       ActivityModel.events.emit('newPost', activity);
       analytics.trackClick('remind');
-      storeRatingService.track('remind', true);
+      serviceProvider.resolve('storeRating').track('remind', true);
       entity.setHasReminded(true);
 
       showNotification(i18n.t('postReminded'), 'success');
@@ -134,8 +133,9 @@ const pushRemindActionSheet = async ({
       title: i18n.t('shareToGroup'),
       mode: 'groups',
       onSelect: (audience: ComposeAudience) => {
-        NavigationService.goBack();
-        NavigationService.navigate('Compose', {
+        const nav = serviceProvider.navigation;
+        nav.goBack();
+        nav.navigate('Compose', {
           audience,
           isRemind: true,
           entity,
@@ -143,9 +143,9 @@ const pushRemindActionSheet = async ({
       },
     });
   };
-
-  const canPost = PermissionsService.canCreatePost();
-  const canInteract = PermissionsService.canInteract();
+  const permissions = serviceProvider.permissions;
+  const canPost = permissions.canCreatePost();
+  const canInteract = permissions.canInteract();
 
   const reminded = await entity.hasReminded();
 

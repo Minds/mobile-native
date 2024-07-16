@@ -1,8 +1,7 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { View } from 'react-native';
-import i18n from '../../services/i18n.service';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 import ModernDatePicker from 'react-native-modern-datepicker';
@@ -12,6 +11,7 @@ import Animated, { FadeInRight, FadeOutLeft } from 'react-native-reanimated';
 import moment from 'moment';
 import useModernTheme from './useModernTheme';
 import Delayed from '../Delayed';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   date?: Date | null;
@@ -25,6 +25,7 @@ const DateTimePicker = observer(
     const bottomSheetRef = React.useRef<BottomSheetModalType>(null);
     const timePickerRef = React.useRef<any>(null);
     const theme = useModernTheme();
+    const i18n = sp.i18n;
 
     const localStore = useLocalStore(
       (p: PropsType) => ({
@@ -96,7 +97,7 @@ const DateTimePicker = observer(
             <Animated.View
               entering={FadeInRight}
               exiting={FadeOutLeft}
-              style={ThemedStyles.style.flexContainer}>
+              style={sp.styles.style.flexContainer}>
               <Calendar
                 current={localStore.textDate}
                 maxDate={maxDate}
@@ -114,7 +115,7 @@ const DateTimePicker = observer(
             <Animated.View
               entering={FadeInRight}
               exiting={FadeOutLeft}
-              style={ThemedStyles.style.flexContainer}>
+              style={sp.styles.style.flexContainer}>
               <Delayed delay={0}>
                 <ModernDatePicker
                   ref={timePickerRef}
@@ -147,7 +148,7 @@ const DateTimePicker = observer(
   }),
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: {
     height: 400,
   },
@@ -159,7 +160,7 @@ const styles = ThemedStyles.create({
   },
 });
 
-const backButtonStyle = ThemedStyles.combine('colorLink', 'fontL', {
+const backButtonStyle = sp.styles.combine('colorLink', 'fontL', {
   position: 'absolute',
   left: 16,
   top: 16,

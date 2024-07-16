@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import LottieView from 'lottie-react-native';
 import Animated from 'react-native-reanimated';
 import { mix, useTransition } from 'react-native-redash';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 export default function SwipeAnimation(props) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const [hide, setHide] = useState(false);
   const [finished, setFinished] = useState(false);
   const transition = useTransition(hide, { duration: 400 });
@@ -22,7 +23,7 @@ export default function SwipeAnimation(props) {
 
   const containerStyle = {
     opacity,
-    backgroundColor: ThemedStyles.getColor('SecondaryBackground') + '76',
+    backgroundColor: sp.styles.getColor('SecondaryBackground') + '76',
   };
 
   if (finished) {
@@ -43,15 +44,15 @@ export default function SwipeAnimation(props) {
         colorFilters={[
           {
             keypath: 'Shape Layer 3',
-            color: ThemedStyles.getColor('PrimaryText'),
+            color: sp.styles.getColor('PrimaryText'),
           },
           {
             keypath: 'Shape Layer 2',
-            color: ThemedStyles.getColor('PrimaryText'),
+            color: sp.styles.getColor('PrimaryText'),
           },
           {
             keypath: 'Shape Layer 1',
-            color: ThemedStyles.getColor('PrimaryText'),
+            color: sp.styles.getColor('PrimaryText'),
           },
         ]}
       />

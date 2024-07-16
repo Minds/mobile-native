@@ -7,7 +7,7 @@ import { ComponentsStyle as CmpS } from '../styles/Components';
 import { Version } from '../config/Version';
 import Button from '../common/components/Button';
 import gitlab from '../common/services/gitlab.service';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import TextInput from '../common/components/TextInput';
 import MText from '../common/components/MText';
 
@@ -101,7 +101,7 @@ export default class IssueReportScreen extends Component {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     return (
       <ScrollView
         style={[theme.flexContainer, theme.padding2x, theme.backgroundLight]}

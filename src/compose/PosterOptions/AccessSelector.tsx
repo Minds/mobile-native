@@ -1,13 +1,12 @@
 import React, { useCallback } from 'react';
 import { ScrollView, View } from 'react-native';
 import { observer } from 'mobx-react';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import TopBar from '../TopBar';
-import i18n from '../../common/services/i18n.service';
-import NavigationService from '../../navigation/NavigationService';
 import { ACCESS } from '~/common/services/list-options.service';
 import { useComposeContext } from '~/compose/useComposeStore';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
+import sp from '~/services/serviceProvider';
 
 /**
  * Option
@@ -31,9 +30,10 @@ const Option = props => {
  * Access selector
  */
 export default observer(function () {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const store = useComposeContext();
-
+  const i18n = sp.i18n;
+  const navigation = sp.navigation;
   return (
     <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <TopBar
@@ -41,8 +41,8 @@ export default observer(function () {
         rightText={i18n.t('done')}
         backIconName="chevron-left"
         backIconSize="large"
-        onPressRight={NavigationService.goBack}
-        onPressBack={NavigationService.goBack}
+        onPressRight={navigation.goBack}
+        onPressBack={navigation.goBack}
         store={store}
       />
       <ScrollView>

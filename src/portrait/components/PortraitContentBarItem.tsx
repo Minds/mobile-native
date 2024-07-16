@@ -2,9 +2,9 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import excerpt from '~/common/helpers/excerpt';
 import { Icon } from '~/common/ui/icons';
-import navigationService from '~/navigation/NavigationService';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { Avatar, B3, Column } from '~ui';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   avatarUrl?: any;
@@ -21,7 +21,7 @@ type PropsType = {
  */
 export default observer(function PortraitContentBarItem(props: PropsType) {
   const onPress = React.useCallback(() => {
-    navigationService.push('PortraitViewerScreen', {
+    sp.navigation.push('PortraitViewerScreen', {
       guid: props.guid,
     });
   }, [props.guid]);
@@ -46,7 +46,7 @@ const PlusIcon = () => (
   <Icon style={styles.plusIcon} name="plus-circle" color="Link" />
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: {
     padding: 10,
     overflow: 'visible',

@@ -1,9 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import PressableScale from '~/common/components/PressableScale';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { AVATAR_SIZE, UNIT } from '~styles/Tokens';
 import { Avatar } from './Avatar';
+import sp from '~/services/serviceProvider';
 
 export const AvatarCircled = ({ active, onPress, ...more }: any) => {
   const avatar = (
@@ -19,7 +20,7 @@ export const AvatarCircled = ({ active, onPress, ...more }: any) => {
   return avatar;
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: {
     borderRadius: AVATAR_SIZE.large,
     borderWidth: UNIT.XXS,

@@ -2,11 +2,12 @@ import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { Image, ImageProps } from 'expo-image';
+import { autorun } from 'mobx';
 import ProgressCircle from 'react-native-progress/CircleSnail';
 import Icon from '@expo/vector-icons/Ionicons';
-import settingsStore from '../../settings/SettingsStore';
-import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
-import { autorun } from 'mobx';
+
+import sp from '~/services/serviceProvider';
+import { useStyle } from '~/styles/hooks';
 
 export type SmartImageProps = {
   ignoreDataSaver?: boolean;
@@ -23,8 +24,9 @@ export type SmartImageProps = {
  * @param {Object} props
  */
 const SmartImage = observer(function (props: SmartImageProps) {
+  const settings = sp.resolve('settings');
   const { withoutDownloadButton, ...otherProps } = props;
-  const dataSaverEnabled = settingsStore.dataSaverEnabled;
+  const dataSaverEnabled = settings.dataSaverEnabled;
   const store = useLocalStore(createSmartImageStore, props);
 
   useEffect(() => {
@@ -38,20 +40,20 @@ const SmartImage = observer(function (props: SmartImageProps) {
   useEffect(
     () =>
       autorun(() => {
-        if (store.showOverlay && !settingsStore.dataSaverEnabled) {
+        if (store.showOverlay && !settings.dataSaverEnabled) {
           store.showImage();
         }
       }),
-    [store],
+    [settings, store],
   );
 
   if (store.error) {
     return (
-      <View style={[props.style, ThemedStyles.style.centered]}>
+      <View style={[props.style, sp.styles.style.centered]}>
         <Icon
           name="cloud-offline-outline"
           size={props.iconSize || 24}
-          style={ThemedStyles.style.colorTertiaryText}
+          style={sp.styles.style.colorTertiaryText}
         />
       </View>
     );
@@ -79,7 +81,7 @@ const SmartImage = observer(function (props: SmartImageProps) {
 });
 
 const DownloadButton = ({ store }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   return (
     <TouchableOpacity
       activeOpacity={0.9}
@@ -101,7 +103,7 @@ const DownloadButton = ({ store }) => {
 };
 
 const createSmartImageStore = props => {
-  const dataSaverEnabled = settingsStore.dataSaverEnabled;
+  const dataSaverEnabled = sp.resolve('settings').dataSaverEnabled;
   return {
     error: false,
     retries: 0,
@@ -171,7 +173,7 @@ export type SmartImageStore = ReturnType<typeof createSmartImageStore>;
 
 export default SmartImage;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   downloadButton: [
     'centered',
     {
@@ -182,4 +184,4 @@ const styles = ThemedStyles.create({
     },
   ],
 });
-const absoluteCenter = ThemedStyles.combine('positionAbsolute', 'centered');
+const absoluteCenter = sp.styles.combine('positionAbsolute', 'centered');

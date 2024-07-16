@@ -6,11 +6,9 @@ import {
   BottomSheetButton,
   BottomSheetMenuItem,
   BottomSheetMenuItemProps,
-} from '../../../common/components/bottom-sheet';
-import MText from '../../../common/components/MText';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import AuthService from '../../AuthService';
+} from '~/common/components/bottom-sheet';
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   index: number;
@@ -22,7 +20,7 @@ type PropsType = {
 const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
 
 const Options = ({ index, isActive, username, onSwitchPress }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const ref = React.useRef<any>();
   const close = React.useCallback(() => {
     ref.current?.dismiss();
@@ -33,19 +31,19 @@ const Options = ({ index, isActive, username, onSwitchPress }: PropsType) => {
   const userOptions: Array<BottomSheetMenuItemProps> = React.useMemo(() => {
     const actions: Array<BottomSheetMenuItemProps> = [
       {
-        title: i18n.t('settings.logout'),
+        title: sp.i18n.t('settings.logout'),
         iconName: 'logout',
         iconType: 'material',
         onPress: () => {
           close();
-          AuthService.logoutFrom(index);
+          sp.resolve('auth').logoutFrom(index);
         },
       },
     ];
 
     if (!isActive) {
       actions.unshift({
-        title: i18n.t('multiUser.switchChannel'),
+        title: sp.i18n.t('multiUser.switchChannel'),
         iconName: 'account-box-multiple',
         iconType: 'material-community',
         onPress: () => {
@@ -68,13 +66,13 @@ const Options = ({ index, isActive, username, onSwitchPress }: PropsType) => {
         {userOptions.map((a, i) => (
           <BottomSheetMenuItem {...a} key={i} />
         ))}
-        <BottomSheetButton text={i18n.t('cancel')} onPress={close} />
+        <BottomSheetButton text={sp.i18n.t('cancel')} onPress={close} />
       </BottomSheetModal>
     </TouchableOpacity>
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   username: ['centered', 'bold', 'marginVertical5x', { fontSize: 20 }],
 });
 

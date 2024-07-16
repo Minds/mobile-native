@@ -1,8 +1,6 @@
 import { useLocalStore } from 'mobx-react';
 import React, { useContext } from 'react';
 import UserModel from '~/channel/UserModel';
-import apiService from '~/common/services/api.service';
-import mindsConfigService from '~/common/services/minds-config.service';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import type { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import { showNotification } from '../../../../AppMessages';
@@ -12,6 +10,7 @@ import {
   DEFAULT_DAILY_TOKEN_BUDGET,
   DEFAULT_DURATION,
 } from './boost.constants';
+import sp from '~/services/serviceProvider';
 
 export type BoostType = 'post' | 'channel' | 'group';
 
@@ -27,7 +26,7 @@ export const createBoostStore = ({
   wallet,
 }: BoostStoreParams) => ({
   goalsEnabled: boostType === 'post' && entity?.isOwner(),
-  config: mindsConfigService.getSettings().boost as IBoostConfig,
+  config: sp.config.getSettings().boost as IBoostConfig,
   entity,
   insights: null as null | InsightEstimateResponse,
   wallet,
@@ -134,7 +133,7 @@ export const createBoostStore = ({
       }
     }
 
-    return apiService.post('api/v3/boosts', payload).catch(e => {
+    return sp.api.post('api/v3/boosts', payload).catch(e => {
       console.error('boost error', JSON.stringify(payload), JSON.stringify(e));
       showNotification(e.message || 'Something went wrong', 'danger');
       throw e;

@@ -1,10 +1,11 @@
 import React from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 import { Tooltip } from 'react-native-elements';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { Column, Icon, Row } from '../ui';
 import MPressable from './MPressable';
 import MText from './MText';
+import sp from '~/services/serviceProvider';
 
 interface InputBaseProps {
   style?: any;
@@ -31,7 +32,7 @@ export default function InputBase({
   error,
   borderless,
 }: InputBaseProps) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   return (
     <MPressable
@@ -80,7 +81,7 @@ export default function InputBase({
             containerStyle={theme.borderRadius}
             width={200}
             height={100}
-            backgroundColor={ThemedStyles.getColor('Link')}
+            backgroundColor={sp.styles.getColor('Link')}
             popover={<MText style={theme.colorWhite}>{info}</MText>}>
             <Icon left="S" name="info-outline" bottom="S" />
           </Tooltip>

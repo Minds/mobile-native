@@ -5,12 +5,13 @@ import { View } from 'react-native';
 import UserModel from '~/channel/UserModel';
 import { useLegacyStores } from '~/common/hooks/use-stores';
 import { Spacer } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
 import useChannelRecommendationContext from './hooks/useChannelRecommendationContext';
 import GroupsListItem from '~/groups/GroupsListItem';
 import { ChannelRecommendationItem } from '~/modules/recommendation';
 import GroupModel from '~/groups/GroupModel';
+import sp from '~/services/serviceProvider';
 
 export interface ChannelRecommendationProps {
   location: string;
@@ -109,7 +110,7 @@ const ChannelRecommendationBody: FC<ChannelRecommendationProps> = ({
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   borderBottom: ['borderBottom6x', 'bcolorBaseBackground'],
   centerMaxWidth: ['alignSelfCenterMaxWidth'],
 });

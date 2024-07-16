@@ -7,8 +7,9 @@ import {
   ViewStyle,
   ScrollView,
 } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import { B1, B2 } from '~ui';
+import sp from '~/services/serviceProvider';
 
 export type TabType<T> = {
   id: T;
@@ -37,7 +38,7 @@ export const topbarTabbarRef = React.createRef<ScrollView>();
  * Tab bar
  */
 function TopbarTabbar<T>(props: PropsType<T>) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   return (
     <View
@@ -79,7 +80,7 @@ function TopbarTabbar<T>(props: PropsType<T>) {
 
 export default TopbarTabbar;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   scrollContainer: ['marginHorizontal2x', 'paddingRight4x'],
   tabStyleCurrent: [
     'paddingVertical2x',

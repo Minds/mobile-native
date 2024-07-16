@@ -1,13 +1,14 @@
-import api, { ApiResponse } from './api.service';
+import { ApiService } from './api.service';
+import { ApiResponse } from './ApiResponse';
 import imagePicker, { MediaType } from './image-picker.service';
 import Cancelable from 'promise-cancelable';
-import logService from './log.service';
 import imageManipulatorService from './image-manipulator.service';
 import { IMAGE_MAX_SIZE } from './../../config/Config';
 import { UserError } from '../UserError';
-import i18n from './i18n.service';
 import { Media } from '../stores/AttachmentStore';
-import PermissionsService from './permissions.service';
+import type { LogService } from './log.service';
+import type { PermissionsService } from './permissions.service';
+import type { I18nService } from './i18n.service';
 
 type S3Response = {
   lease: {
@@ -20,7 +21,13 @@ type S3Response = {
 /**
  * Attachment service
  */
-class AttachmentService {
+export class AttachmentService {
+  constructor(
+    private api: ApiService,
+    private logService: LogService,
+    private permissions: PermissionsService,
+    private i18n: I18nService,
+  ) {}
   /**
    * Attach media file
    * @param {object} media
@@ -50,13 +57,13 @@ class AttachmentService {
     };
 
     if (file.type.includes('video')) {
-      if (PermissionsService.canUploadVideo(true) === false) {
+      if (this.permissions.canUploadVideo(true) === false) {
         return;
       }
 
       return this.uploadToS3(file, progress);
     } else {
-      return api.upload('api/v1/media/', { file }, extra, progress);
+      return this.api.upload('api/v1/media/', { file }, extra, progress);
     }
   }
 
@@ -126,12 +133,16 @@ class AttachmentService {
   uploadToS3(file, progress) {
     return new Cancelable(async (resolve, reject, onCancel) => {
       try {
-        const response = await api.put<S3Response>(
-          'api/v2/media/upload/prepare/video',
+        const response = await this.api.put<S3Response>(
+          'this.api/v2/media/upload/prepare/video',
         );
 
         // upload file to s3
-        const uploadPromise = api.uploadToS3(response.lease, file, progress);
+        const uploadPromise = this.api.uploadToS3(
+          response.lease,
+          file,
+          progress,
+        );
         // handle cancel
         onCancel(cb => {
           uploadPromise.cancel();
@@ -140,7 +151,7 @@ class AttachmentService {
         // await upload
         await uploadPromise;
 
-        const { status } = await api.put(
+        const { status } = await this.api.put(
           `api/v2/media/upload/complete/${response.lease.media_type}/${response.lease.guid}`,
         );
 
@@ -151,8 +162,8 @@ class AttachmentService {
       }
     }).catch(error => {
       if (error.name !== 'CancelationError') {
-        logService.exception('[ApiService] upload', error);
-        throw new UserError(i18n.t('uploadFailed'));
+        this.logService.exception('[ApiService] upload', error);
+        throw new UserError(this.i18n.t('uploadFailed'));
       }
     });
   }
@@ -162,15 +173,15 @@ class AttachmentService {
    * @param {string} guid
    */
   deleteMedia(guid) {
-    return api.delete('api/v1/media/' + guid);
+    return this.api.delete('api/v1/media/' + guid);
   }
 
   isTranscoding(guid) {
-    return api.get(`api/v1/media/transcoding/${guid}`);
+    return this.api.get(`api/v1/media/transcoding/${guid}`);
   }
 
   getVideo(guid) {
-    return api.get(`api/v2/media/video/${guid}`);
+    return this.api.get(`api/v2/media/video/${guid}`);
   }
 
   /**
@@ -246,5 +257,3 @@ class AttachmentService {
   //   return media;
   // }
 }
-
-export default new AttachmentService();

@@ -4,19 +4,17 @@ import {
   WithdrawalStatus,
 } from './TransactionsListWithdrawalTypes';
 import { View } from 'react-native';
-import ThemedStyles from '../../../../../styles/ThemedStyles';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import { Tooltip } from 'react-native-elements';
-import i18n from '../../../../../common/services/i18n.service';
-import MText from '~/common/components/MText';
-import openUrlService from '~/common/services/open-url.service';
 
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 /**
  * Individual withdrawal row
  */
 const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const tooltipRef = useRef<any>();
 
   /**
@@ -68,7 +66,7 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
    * @returns { void }
    */
   const navigateToEtherscan = (address: string): void => {
-    openUrlService.open(`https://etherscan.com/tx/${address}`);
+    sp.resolve('openURL').open(`https://etherscan.com/tx/${address}`);
   };
 
   /**
@@ -120,7 +118,7 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
       <View style={innerColumnStyle}>
         <TransactionAddress address={withdrawal.tx} />
         <MText style={theme.colorSecondaryText}>
-          {i18n.date(withdrawal.timestamp * 1000, 'date')}
+          {sp.i18n.date(withdrawal.timestamp * 1000, 'date')}
         </MText>
       </View>
       <View style={innerColumnStyle}>
@@ -139,7 +137,7 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
               containerStyle={theme.borderRadius}
               width={250}
               height={100}
-              backgroundColor={ThemedStyles.getColor('Link')}
+              backgroundColor={sp.styles.getColor('Link')}
               popover={<TooltipText status={withdrawal.status} />}
             />
             <View style={tooltipViewStyle}>
@@ -159,19 +157,19 @@ const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
 
 export default React.memo(WithdrawalEntry);
 
-const outerContainerStyle = ThemedStyles.combine(
+const outerContainerStyle = sp.styles.combine(
   'flexContainer',
   'fullWidth',
   'rowJustifySpaceBetween',
 );
 
-const innerColumnStyle = ThemedStyles.combine(
+const innerColumnStyle = sp.styles.combine(
   'flexColumn',
   'padding3x',
   'justifyCenter',
 );
 
-const launchButtonContainerStyle = ThemedStyles.combine(
+const launchButtonContainerStyle = sp.styles.combine(
   'flexContainer',
   'fullWidth',
   'rowJustifyStart',
@@ -179,7 +177,7 @@ const launchButtonContainerStyle = ThemedStyles.combine(
   { flexWrap: 'nowrap' },
 );
 
-const tooltipViewStyle = ThemedStyles.combine(
+const tooltipViewStyle = sp.styles.combine(
   'flexContainer',
   'fullWidth',
   'rowJustifyCenter',
@@ -187,9 +185,6 @@ const tooltipViewStyle = ThemedStyles.combine(
   'bgPrimaryBackground',
 );
 
-const inlineIconStyle = ThemedStyles.combine('colorWhite', 'marginLeft1x');
+const inlineIconStyle = sp.styles.combine('colorWhite', 'marginLeft1x');
 
-const mindsTokenTextStyle = ThemedStyles.combine(
-  'colorSecondaryText',
-  'fontXS',
-);
+const mindsTokenTextStyle = sp.styles.combine('colorSecondaryText', 'fontXS');

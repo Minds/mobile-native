@@ -1,35 +1,34 @@
 import React from 'react';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { CheckBox } from 'react-native-elements';
 import { observer } from 'mobx-react';
-import MText from '../../common/components/MText';
-import { Screen } from '~/common/ui';
-import mindsConfigService from '~/common/services/minds-config.service';
-import analyticsService from '~/common/services/analytics.service';
-import settingsService from '../SettingsService';
-import { showNotification } from 'AppMessages';
 import { View } from 'react-native';
+
+import MText from '~/common/components/MText';
+import { Screen } from '~/common/ui';
+import { showNotification } from 'AppMessages';
 import { Button } from '~/common/ui/buttons';
 import { useDeletePostHogPersonMutation } from '~/graphql/api';
 
+import sp from '~/services/serviceProvider';
+
 const UserDataScreen = observer(() => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const deleteDataMutation = useDeletePostHogPersonMutation();
 
-  const isOptOut = () => mindsConfigService.getSettings()?.posthog?.opt_out;
+  const isOptOut = () => sp.config.getSettings()?.posthog?.opt_out;
 
   const toggleOptOut = () => {
-    analyticsService.setOptOut(!isOptOut());
+    sp.resolve('analytics').setOptOut(!isOptOut());
 
     try {
-      settingsService.submitSettings({
+      sp.resolve('settings').submitSettings({
         opt_out_analytics: isOptOut(),
       });
-      showNotification(i18n.t('settings.saved'), 'info');
+      showNotification(sp.i18n.t('settings.saved'), 'info');
     } catch (err) {
-      showNotification(i18n.t('errorMessage'));
+      showNotification(sp.i18n.t('errorMessage'));
       console.error(err);
     }
   };
@@ -37,9 +36,12 @@ const UserDataScreen = observer(() => {
   const deleteData = async () => {
     try {
       await deleteDataMutation.mutateAsync({});
-      showNotification(i18n.t('settings.userData.deletedSuccess'), 'success');
+      showNotification(
+        sp.i18n.t('settings.userData.deletedSuccess'),
+        'success',
+      );
     } catch (err) {
-      showNotification(i18n.t('settings.userData.deletedError'), 'warning');
+      showNotification(sp.i18n.t('settings.userData.deletedError'), 'warning');
       console.log(err);
     }
   };
@@ -113,7 +115,7 @@ const UserDataScreen = observer(() => {
       </MText>
 
       <CheckBox
-        title={i18n.t('settings.userData.optOut')}
+        title={sp.i18n.t('settings.userData.optOut')}
         containerStyle={[theme.checkbox, theme.marginLeft4x]}
         checked={isOptOut()}
         onPress={toggleOptOut}
@@ -151,7 +153,7 @@ const UserDataScreen = observer(() => {
           onPress={deleteData}
           type="warning"
           testID="delete-data-btn">
-          {i18n.t('settings.userData.deleteData')}
+          {sp.i18n.t('settings.userData.deleteData')}
         </Button>
       </View>
     </Screen>

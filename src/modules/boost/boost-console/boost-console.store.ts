@@ -1,10 +1,10 @@
 import { action, observable } from 'mobx';
 import { isAbort, isNetworkError } from '~/common/services/ApiErrors';
-import logService from '~/common/services/log.service';
 import OffsetListStore from '~/common/stores/OffsetListStore';
 import BoostModelV3 from '../models/BoostModelV3';
 import { getBoostsV3 } from './boost-console.api';
 import { BoostStatus } from './types/BoostConsoleBoost';
+import sp from '~/services/serviceProvider';
 
 /**
  * Boosts Store
@@ -54,7 +54,7 @@ class BoostConsoleStore {
       // ignore aborts
       if (isAbort(err)) return;
       if (!isNetworkError(err)) {
-        logService.exception('[BoostStore]', err);
+        sp.log.exception('[BoostStore]', err);
       }
     } finally {
       this.loading = false;

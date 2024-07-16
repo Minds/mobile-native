@@ -1,12 +1,11 @@
 import { useBackHandler } from '@react-native-community/hooks';
 import { RouteProp } from '@react-navigation/native';
 import React, { useCallback } from 'react';
-import i18n from '../common/services/i18n.service';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import ModalContainer from '../onboarding/v2/steps/ModalContainer';
-import ThemedStyles from '../styles/ThemedStyles';
 import LoginForm from './login/LoginForm';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 type RelogScreenRouteProp = RouteProp<RootStackParamList, 'RelogScreen'>;
 
@@ -16,7 +15,7 @@ type PropsType = {
 };
 
 const RelogScreen = ({ route, navigation }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const { sessionIndex, onLogin, onCancel } = route.params;
 
@@ -39,7 +38,7 @@ const RelogScreen = ({ route, navigation }: PropsType) => {
 
   return (
     <ModalContainer
-      title={i18n.t('auth.login')}
+      title={sp.i18n.t('auth.login')}
       onPressBack={onBackHandler}
       marginTop={20}
       contentContainer={[

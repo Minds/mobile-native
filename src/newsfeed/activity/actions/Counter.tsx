@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import MText from '~/common/components/MText';
 import abbrev from '../../../common/helpers/abbrev';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 export type CounterPropsType = {
   size?: number;
@@ -14,7 +14,7 @@ export type CounterPropsType = {
 };
 
 const Counter = ({ count, style, spaced }: CounterPropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const fontStyle = [textStyle, style];
 
   return (
@@ -26,4 +26,4 @@ const Counter = ({ count, style, spaced }: CounterPropsType) => {
 
 export default Counter;
 
-const textStyle = ThemedStyles.combine('colorIcon', 'fontM', 'fontMedium');
+const textStyle = sp.styles.combine('colorIcon', 'fontM', 'fontMedium');

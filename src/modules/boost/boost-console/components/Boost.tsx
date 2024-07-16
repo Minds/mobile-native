@@ -2,9 +2,9 @@ import { NavigationProp } from '@react-navigation/native';
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import IonIcon from '@expo/vector-icons/Ionicons';
-import i18n from '~/common/services/i18n.service';
+
 import { B1, B2 } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import BlogCard from '~/blogs/BlogCard';
 import BlogModel from '~/blogs/BlogModel';
 import ChannelCard from '~/channel/card/ChannelCard';
@@ -17,6 +17,7 @@ import Activity from '~/newsfeed/activity/Activity';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import BoostActionBar from './BoostActionBar';
 import BoostModel from '../../models/BoostModel';
+import sp from '~/services/serviceProvider';
 
 interface BoostProps {
   boost: BoostModel;
@@ -46,7 +47,7 @@ export default class Boost extends Component<BoostProps> {
       <View style={styles.rejection}>
         <IonIcon name="warning" style={styles.icon} size={18} />
         <B2>
-          {i18n.t(
+          {sp.i18n.t(
             `boosts.rejectionReasons.${this.props.boost.rejection_reason}`,
           )}
         </B2>
@@ -126,7 +127,7 @@ export default class Boost extends Component<BoostProps> {
   }
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   icon: ['colorSecondaryText', 'paddingRight'],
   rejection: [
     'padding2x',

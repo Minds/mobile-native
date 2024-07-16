@@ -1,26 +1,27 @@
 import React, { useRef } from 'react';
 import { observer } from 'mobx-react';
+import { useDimensions } from '@react-native-community/hooks';
+import { Tooltip } from 'react-native-elements';
+
 import TopBarButtonTabBar, {
   ButtonTabType,
-} from '../../../../common/components/topbar-tabbar/TopBarButtonTabBar';
+} from '~/common/components/topbar-tabbar/TopBarButtonTabBar';
 import { UsdOptions } from '../../../v2/WalletTypes';
-import ThemedStyles from '../../../../styles/ThemedStyles';
+
 import type { WalletStoreType } from '../../../v2/createWalletStore';
 import {
   WalletScreenRouteProp,
   WalletScreenNavigationProp,
 } from '../../WalletScreen';
 import UsdSettings from '../../../v2/address/UsdSettings';
-import i18n from '../../../../common/services/i18n.service';
 import TransactionsListCash from '../../../v2/TransactionList/TransactionsListCash';
 import PaidButton from './PaidButton';
-import { Tooltip } from 'react-native-elements';
-import { useDimensions } from '@react-native-community/hooks';
 import PaidInfo from './PaidInfo';
 import Earnings from '../Earnings';
 import { TokensTabStore } from '../tokens/createTokensTabStore';
 import { UsdTabStore } from './createUsdTabStore';
 import { Screen, Column, Row } from '~ui';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -43,8 +44,8 @@ const UsdTab = observer(
   }: PropsType) => {
     const tooltipRef = useRef<any>();
     const screen = useDimensions().screen;
-    const theme = ThemedStyles.style;
-
+    const theme = sp.styles.style;
+    const i18n = sp.i18n;
     const options: Array<ButtonTabType<UsdOptions>> = [
       { id: 'earnings', title: i18n.t('wallet.usd.earnings') },
       { id: 'transactions', title: i18n.t('wallet.transactions.transactions') },
@@ -101,7 +102,7 @@ const UsdTab = observer(
               containerStyle={theme.borderRadius}
               width={screen.width - 20}
               height={250}
-              backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
+              backgroundColor={sp.styles.getColor('SecondaryBackground')}
               popover={<PaidInfo walletStore={walletStore} />}>
               <PaidButton
                 containerStyle={theme.marginRight2x}

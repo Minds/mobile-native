@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import ThemedStyles, { useMemoStyle, useStyle } from '~/styles/ThemedStyles';
 import { Icon } from 'react-native-elements';
 import type { ChannelStoreType } from './createChannelStore';
 import ChannelButtons, { ButtonsType } from './ChannelButtons';
@@ -24,6 +23,8 @@ import { Image } from 'expo-image';
 import { isLight } from './ChannelScreen';
 import Subscribe from './buttons/Subscribe';
 import { Spacer } from '~/common/ui';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle, useStyle } from '~/styles/hooks';
 
 const BLURRED_BANNER_BACKGROUND = true;
 
@@ -80,7 +81,7 @@ const ChannelTopBar = observer(
     onPress,
   }: PropsType) => {
     // =====================| STATES & VARIABLES |=====================>
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const insets = useSafeAreaInsets();
     const isBgLight = !!backgroundColor && isLight(backgroundColor);
     const cleanTop = insets.top ? { paddingTop: insets.top } : null;
@@ -179,7 +180,7 @@ const ChannelTopBar = observer(
               styles.searchInput,
               Platform.OS === 'ios' && { padding: 15 },
             ]}
-            placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
+            placeholderTextColor={sp.styles.getColor('SecondaryText')}
             value={store?.channelSearch}
             onChangeText={store?.setChannelSearch}
             returnKeyType={'search'}
@@ -189,9 +190,9 @@ const ChannelTopBar = observer(
             reverse
             name={'close'}
             type={'material-community'}
-            color={ThemedStyles.getColor('PrimaryBackground')}
+            color={sp.styles.getColor('PrimaryBackground')}
             reverseColor={theme.colorIcon.color}
-            // reverseColor={props.reverseColor || ThemedStyles.getColor('PrimaryText')}
+            // reverseColor={props.reverseColor ||  sp.styles.getColor('PrimaryText')}
             size={20}
             onPress={onSearchClosePressed}
             containerStyle={styles.searchInputIconContainerStyle}
@@ -253,7 +254,7 @@ const ChannelTopBar = observer(
           color={
             withBg
               ? tinycolor(backgroundColor).setAlpha(0.15).toRgbString()
-              : tinycolor(ThemedStyles.getColor('PrimaryBackground'))
+              : tinycolor(sp.styles.getColor('PrimaryBackground'))
                   .setAlpha(0.75)
                   .toRgbString()
           }
@@ -272,7 +273,7 @@ const ChannelTopBar = observer(
             iconColor={
               withBg
                 ? tinycolor(backgroundColor).setAlpha(0.15).toRgbString()
-                : tinycolor(ThemedStyles.getColor('PrimaryBackground'))
+                : tinycolor(sp.styles.getColor('PrimaryBackground'))
                     .setAlpha(0.75)
                     .toRgbString()
             }
@@ -295,7 +296,7 @@ const ChannelTopBar = observer(
 
 export default ChannelTopBar;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   name: {
     fontSize: 18,
     fontWeight: '600',

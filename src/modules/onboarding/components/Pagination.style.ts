@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 const DEFAULT_DOT_SIZE = 12;
-const DEFAULT_DOT_COLOR = ThemedStyles.getColor('PrimaryText');
+const DEFAULT_DOT_COLOR = sp.styles.getColor('PrimaryText');
 
 export default StyleSheet.create({
   sliderPagination: {

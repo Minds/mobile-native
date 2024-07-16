@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import ThemedStyles from '~/styles/ThemedStyles';
-import i18n from '../../services/i18n.service';
+
 import { Icon } from '../../ui';
 import { BottomSheetButton, pushBottomSheet } from '../bottom-sheet';
 import InputBase from '../InputBase';
@@ -10,6 +9,7 @@ import MenuItem from '../menus/MenuItem';
 import { useTranslation } from 'react-i18next';
 import number from '~/common/helpers/number';
 import { useGifts } from '~/common/hooks/useGifts';
+import sp from '~/services/serviceProvider';
 
 type CashSelectorProps = {
   methodSelected: MethodKey;
@@ -24,7 +24,7 @@ export const CashSelector = observer(
     methodSelected,
     ...inputSelectorProps
   }: CashSelectorProps) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const { methods, selected, setSelected } = useSelectMethod(methodSelected);
     const singleItem = methods.length === 1;
 
@@ -43,7 +43,7 @@ export const CashSelector = observer(
       <InputBase
         onPress={onPress}
         {...inputSelectorProps}
-        label={i18n.t('orderReport.paymentMethod')}
+        label={sp.i18n.t('orderReport.paymentMethod')}
         labelStyle={[theme.colorPrimaryText, theme.fontBold]}
         value={selected.name}
         valueStyle={[theme.colorSecondaryText, theme.fontM]}
@@ -107,7 +107,7 @@ const pushCardSelectorBottomSheet = ({
             noIcon
             title={method.name}
             titleStyle={
-              selected === method ? ThemedStyles.style.colorLink : undefined
+              selected === method ? sp.styles.style.colorLink : undefined
             }
             onPress={() => {
               selectMethod(method);
@@ -116,7 +116,7 @@ const pushCardSelectorBottomSheet = ({
           />
         ))}
         <BottomSheetButton
-          text={i18n.t('cancel')}
+          text={sp.i18n.t('cancel')}
           onPress={() => bottomSheetRef.close()}
         />
       </>

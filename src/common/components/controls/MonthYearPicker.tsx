@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import { View } from 'react-native';
 import ModernDatePicker from 'react-native-modern-datepicker';
-import i18n from '~/common/services/i18n.service';
 import {
   BottomSheetButton,
   BottomSheetModal,
@@ -16,6 +15,7 @@ import {
 } from '../bottom-sheet';
 import Delayed from '../Delayed';
 import useModernTheme from './useModernTheme';
+import sp from '~/services/serviceProvider';
 
 export type MonthYearPickerHandle = {
   show: () => void;
@@ -77,7 +77,7 @@ const MonthYearPicker: ForwardRefRenderFunction<
         </Delayed>
       </View>
 
-      <BottomSheetButton text={i18n.t('close')} onPress={onClose} />
+      <BottomSheetButton text={sp.i18n.t('close')} onPress={onClose} />
     </BottomSheetModal>
   );
 };

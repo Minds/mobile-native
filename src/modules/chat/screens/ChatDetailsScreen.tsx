@@ -4,7 +4,7 @@ import { View, TouchableOpacity } from 'react-native';
 import Link from '~/common/components/Link';
 import Toggle from '~/common/components/Toggle';
 import { B1, H3, IconButton, Row, Screen, ScreenHeader } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useChatRoomInfoQuery } from '../hooks/useChatRoomInfoQuery';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import {
@@ -20,9 +20,9 @@ import { showNotification } from 'AppMessages';
 import MPressable from '~/common/components/MPressable';
 import { useRefreshOnFocus } from '~/services/hooks/useRefreshOnFocus';
 import ErrorLoading from '~/common/components/ErrorLoading';
-import analyticsService from '~/common/services/analytics.service';
 import { useChatNotificationMutation } from '../hooks/useChatNotificationMutation';
 import ChatEditName from '../components/ChatEditName';
+import sp from '~/services/serviceProvider';
 
 type Props = ChatStackScreenProps<'ChatDetails'>;
 
@@ -88,7 +88,7 @@ export default function ChatDetailsScreen({ route, navigation }: Props) {
     ChatRoomNotificationStatusEnum.Muted;
 
   const deleteChat = async () => {
-    analyticsService.trackClick('data-minds-chat-info-delete-button');
+    sp.resolve('analytics').trackClick('data-minds-chat-info-delete-button');
     const result = await confirm({
       title: 'Delete chat',
       description: 'Are you sure you want to delete this chat?',
@@ -197,7 +197,7 @@ export default function ChatDetailsScreen({ route, navigation }: Props) {
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['flexContainer', 'marginHorizontal7x', 'marginTopL'],
   separator: ['bcolorPrimaryBorder', 'borderTop1x'],
   simpleLink: [

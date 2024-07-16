@@ -2,7 +2,8 @@ import React from 'react';
 import GradientBorderView from '../GradientBorderView';
 import { SupermindGradient } from '~/styles/Colors';
 import { View } from 'react-native';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   children: React.ReactNode;
@@ -30,6 +31,6 @@ export default function SupermindBorderView({ children }: PropsType) {
 const start = { x: 0, y: 0 };
 const end = { x: 1, y: 0 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   outerStyle: ['margin3x', 'marginHorizontal4x'],
 });

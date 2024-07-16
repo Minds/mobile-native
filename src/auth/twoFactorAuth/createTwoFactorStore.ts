@@ -1,14 +1,9 @@
 import { Linking } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 
-import SettingsService from '~/settings/SettingsService';
-import { showNotification } from '../../../AppMessages';
-import apiService from '../../common/services/api.service';
-import i18n from '../../common/services/i18n.service';
-import logService from '../../common/services/log.service';
-import sessionService from '../../common/services/session.service';
-import twoFactorAuthenticationService from '../../common/services/two-factor-authentication.service';
-import authService from '../AuthService';
+import { showNotification } from '~/../AppMessages';
+import sp from '~/services/serviceProvider';
+
 export type Options = 'app' | 'sms' | 'email' | 'disable';
 
 // Used to 'navigate' between forms inside loginscreen
@@ -49,13 +44,13 @@ const createTwoFactorStore = () => ({
   async load() {
     this.loadError = false;
     try {
-      const settings: any = await SettingsService.getSettings();
+      const settings: any = await sp.resolve('settings').getSettings();
       if (settings && settings.channel) {
         this.has2fa(settings.channel.has2fa);
       }
     } catch (error) {
       this.loadError = true;
-      logService.exception(error);
+      sp.log.exception(error);
     }
   },
   get has2faEnabled() {
@@ -66,7 +61,7 @@ const createTwoFactorStore = () => ({
     showNotification('Secret copied to clipboard', 'success');
     Linking.openURL(
       `otpauth://totp/Minds.com?secret=${this.secret}&issuer=${
-        sessionService.getUser().username
+        sp.session.getUser().username
       }`,
     );
   },
@@ -75,7 +70,7 @@ const createTwoFactorStore = () => ({
     showNotification('Recovery code copied to clipboard', 'success');
   },
   async fetchSecret() {
-    const response = <any>await apiService.get('api/v3/security/totp/new');
+    const response = <any>await sp.api.get('api/v3/security/totp/new');
     if (!response.secret) {
       throw new Error("Couldn't fetch a secret");
     }
@@ -83,7 +78,7 @@ const createTwoFactorStore = () => ({
   },
   async submitCode(onComplete: Function) {
     try {
-      const response = <any>await apiService.post('api/v3/security/totp/new', {
+      const response = <any>await sp.api.post('api/v3/security/totp/new', {
         code: this.appCode,
         secret: this.secret,
       });
@@ -92,7 +87,7 @@ const createTwoFactorStore = () => ({
         onComplete();
       }
     } catch (err) {
-      logService.exception(err);
+      sp.log.exception(err);
     }
   },
   async disable2fa(onComplete: Function, password: string) {
@@ -100,17 +95,17 @@ const createTwoFactorStore = () => ({
       this.error = false;
 
       if (this.appAuthEnabled) {
-        <any>await apiService.delete('api/v3/security/totp', {
+        <any>await sp.api.delete('api/v3/security/totp', {
           code: this.appCode,
         });
       } else {
-        await twoFactorAuthenticationService.remove(password);
+        await sp.resolve('twoFactorAuth').remove(password);
       }
       this.appAuthEnabled = false;
       this.smsAuthEnabled = false;
       onComplete();
     } catch (err) {
-      logService.exception(err);
+      sp.log.exception(err);
       this.error = true;
       if (err instanceof Error) {
         showNotification(err.message, 'warning');
@@ -173,22 +168,19 @@ const createTwoFactorStore = () => ({
   async useRecoveryCode() {
     this.setLoading(true);
     try {
-      const response = <any>await apiService.post(
-        'api/v3/security/totp/recovery',
-        {
-          username: this.username,
-          password: this.password,
-          recovery_code: this.recoveryCode,
-        },
-      );
+      const response = <any>await sp.api.post('api/v3/security/totp/recovery', {
+        username: this.username,
+        password: this.password,
+        recovery_code: this.recoveryCode,
+      });
       if (!response.matches) {
-        throw new Error(i18n.t('auth.recoveryFail'));
+        throw new Error(sp.i18n.t('auth.recoveryFail'));
       }
-      sessionService.setRecoveryCodeUsed(true);
-      await authService.login(this.username, this.password);
+      sp.session.setRecoveryCodeUsed(true);
+      await sp.resolve('auth').login(this.username, this.password);
     } catch (err) {
       this.setLoading(false);
-      logService.exception(err);
+      sp.log.exception(err);
       if (err instanceof Error) {
         showNotification(err.message, 'warning');
       }

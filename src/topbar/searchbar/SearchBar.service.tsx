@@ -1,19 +1,23 @@
-import apiService from '../../common/services/api.service';
+import type { ApiService } from '~/common/services/api.service';
 import UserModel from '../../channel/UserModel';
-import { storages } from '../../common/services/storage/storages.service';
+import { Storages } from '~/common/services/storage/storages.service';
 
 export type userItem = { user: UserModel };
 
 const storageKey = 'searchHistory';
 
-class SearchBarService {
+export class SearchBarService {
+  constructor(
+    private apiService: ApiService,
+    private storagesService: Storages,
+  ) {}
   /**
    * The user search history
    */
   searchHistory: Array<userItem | string> = [];
 
   getSearchHistoryFromStorage() {
-    const searchHistory = storages.user?.getMap(storageKey);
+    const searchHistory = this.storagesService.user?.getObject(storageKey);
     if (searchHistory && Array.isArray(searchHistory)) {
       this.searchHistory = searchHistory;
     }
@@ -24,7 +28,7 @@ class SearchBarService {
    * @param {String} search
    */
   async getSuggestedSearch(search: string, limit = 10) {
-    const res: any = await apiService.get('api/v2/search/suggest', {
+    const res: any = await this.apiService.get('api/v2/search/suggest', {
       q: search,
       limit,
     });
@@ -63,13 +67,11 @@ class SearchBarService {
       this.searchHistory.pop();
     }
 
-    storages.user?.setMap(storageKey, this.searchHistory);
+    this.storagesService.user?.setObject(storageKey, this.searchHistory);
   }
 
   async clearSearchHistory() {
     this.searchHistory = [];
-    storages.user?.setMap(storageKey, this.searchHistory);
+    this.storagesService.user?.setObject(storageKey, this.searchHistory);
   }
 }
-
-export default new SearchBarService();

@@ -5,9 +5,10 @@ import {
 } from '@react-navigation/native-stack';
 
 import { MoreStackParamList } from './NavigationTypes';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import Drawer from './Drawer';
-import i18n from '~/common/services/i18n.service';
+import sp from '~/services/serviceProvider';
+
 import {
   IS_FROM_STORE,
   IS_IOS,
@@ -21,6 +22,7 @@ const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 export default function () {
+  const i18n = sp.i18n;
   const AccountScreenOptions = navigation => [
     {
       title: i18n.t('settings.accountOptions.1'),
@@ -125,7 +127,7 @@ export default function () {
   return (
     <MoreStack.Navigator
       initialRouteName={IS_IPAD ? 'Settings' : 'Drawer'}
-      screenOptions={ThemedStyles.defaultScreenOptions}>
+      screenOptions={sp.styles.defaultScreenOptions}>
       <MoreStack.Screen name="Drawer" component={Drawer} options={hideHeader} />
       <MoreStack.Screen
         name="Wallet"

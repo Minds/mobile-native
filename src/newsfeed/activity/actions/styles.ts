@@ -1,13 +1,12 @@
-import ThemedStyles from '../../../styles/ThemedStyles';
-
-export const actionsContainerStyle = ThemedStyles.combine(
+import sp from '~/services/serviceProvider';
+export const actionsContainerStyle = sp.styles.combine(
   'flexColumn',
   'margin',
   'paddingVertical3x',
   'alignCenter',
 );
 
-export const actionsContainerWrapper = ThemedStyles.combine(
+export const actionsContainerWrapper = sp.styles.combine(
   {
     alignItems: 'center',
     flexWrap: 'nowrap',
@@ -16,9 +15,9 @@ export const actionsContainerWrapper = ThemedStyles.combine(
   'margin',
 );
 
-export const iconActiveStyle = ThemedStyles.combine('colorLink', 'marginRight');
-export const iconNormalStyle = ThemedStyles.combine('colorIcon', 'marginRight');
-export const iconDisabledStyle = ThemedStyles.combine(
+export const iconActiveStyle = sp.styles.combine('colorLink', 'marginRight');
+export const iconNormalStyle = sp.styles.combine('colorIcon', 'marginRight');
+export const iconDisabledStyle = sp.styles.combine(
   'colorTertiaryText',
   'marginRight',
 );

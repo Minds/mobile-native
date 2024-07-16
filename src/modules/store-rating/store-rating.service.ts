@@ -2,8 +2,6 @@ import * as StoreReview from 'expo-store-review';
 import debounce from 'lodash/debounce';
 import moment from 'moment';
 import { InteractionManager, Linking } from 'react-native';
-import openUrlService from '../../common/services/open-url.service';
-import { storages } from '../../common/services/storage/storages.service';
 import {
   IS_TENANT,
   RATING_APP_SCORE_THRESHOLD,
@@ -11,17 +9,21 @@ import {
   USAGE_SCORES,
 } from '../../config/Config';
 import { rateApp } from './components/RateApp';
+import type { Storages } from '~/common/services/storage/storages.service';
+import type { OpenURLService } from '~/common/services/open-url.service';
+import { openLinkInInAppBrowser } from '~/common/services/inapp-browser.service';
 
 const SCORES_KEY = 'APP_SCORES';
 const LAST_PROMPTED_AT_KEY = 'STORE_RATING_LAST_PROMPTED_AT';
 
-class StoreRatingService {
-  lastPromptedAt: number | null =
-    storages.app.getInt(LAST_PROMPTED_AT_KEY) || null;
-  points = storages.app.getInt(SCORES_KEY) || 0;
+export class StoreRatingService {
+  lastPromptedAt: number | null;
+  points: number;
 
-  constructor() {
+  constructor(private storages: Storages, private openURL: OpenURLService) {
     this.debouncedSetStorage = debounce(this.debouncedSetStorage, 2000);
+    this.lastPromptedAt = storages.app.getNumber(LAST_PROMPTED_AT_KEY) || null;
+    this.points = storages.app.getNumber(SCORES_KEY) || 0;
   }
 
   track(key: keyof typeof USAGE_SCORES, prompt = false) {
@@ -66,15 +68,13 @@ class StoreRatingService {
   }
 
   async openFeedbackForm() {
-    openUrlService.openLinkInInAppBrowser(
-      'https://mindsdotcom.typeform.com/app-feedback',
-    );
+    openLinkInInAppBrowser('https://mindsdotcom.typeform.com/app-feedback');
   }
 
   async prompt() {
     const rated = await rateApp();
     this.lastPromptedAt = Date.now();
-    storages.app.setIntAsync(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
+    this.storages.app.set(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
 
     if (rated === null) {
       return null;
@@ -98,14 +98,10 @@ class StoreRatingService {
 
     await StoreReview.requestReview();
     this.lastPromptedAt = Date.now();
-    storages.app.setIntAsync(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
+    this.storages.app.set(LAST_PROMPTED_AT_KEY, this.lastPromptedAt);
   }
 
   debouncedSetStorage(key: string, value: any) {
-    storages.app.setIntAsync(key, value);
+    this.storages.app.set(key, value);
   }
 }
-
-const storeRatingService = new StoreRatingService();
-
-export default storeRatingService;

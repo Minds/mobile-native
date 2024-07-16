@@ -9,39 +9,36 @@ import * as entities from 'entities';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import * as Clipboard from 'expo-clipboard';
 
-import type ActivityModel from '../../../newsfeed/ActivityModel';
-import MediaView from '../../../common/components/MediaView';
-import OwnerBlock from '../../../newsfeed/activity/OwnerBlock';
-import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
-import ActivityActionSheet from '../../../newsfeed/activity/ActivityActionSheet';
-import i18n from '../../../common/services/i18n.service';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+import MediaView from '~/common/components/MediaView';
+import OwnerBlock from '~/newsfeed/activity/OwnerBlock';
+import ActivityActionSheet from '~/newsfeed/activity/ActivityActionSheet';
 
-import FloatingBackButton from '../../../common/components/FloatingBackButton';
-import ExplicitText from '../../../common/components/explicit/ExplicitText';
-import Translate from '../../../common/components/translate/Translate';
+import FloatingBackButton from '~/common/components/FloatingBackButton';
+import ExplicitText from '~/common/components/explicit/ExplicitText';
+import Translate from '~/common/components/translate/Translate';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Actions from '../../../newsfeed/activity/Actions';
-import Activity from '../../../newsfeed/activity/Activity';
-import CommentsStore from '../../../comments/v2/CommentsStore';
-import sessionService from '../../../common/services/session.service';
-import videoPlayerService from '../../../common/services/video-player.service';
-import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay';
-import LockV2 from '../../../wire/v2/lock/Lock';
-import { showNotification } from '../../../../AppMessages';
-import { AppStackParamList } from '../../../navigation/NavigationTypes';
-import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
-import { pushCommentBottomSheet } from '../../../comments/v2/CommentBottomSheet';
-import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
+import Actions from '~/newsfeed/activity/Actions';
+import Activity from '~/newsfeed/activity/Activity';
+import CommentsStore from '~/comments/v2/CommentsStore';
+import ExplicitOverlay from '~/common/components/explicit/ExplicitOverlay';
+import LockV2 from '~/wire/v2/lock/Lock';
+import { showNotification } from '~/../AppMessages';
+import { AppStackParamList } from '~/navigation/NavigationTypes';
+import ActivityMetrics from '~/newsfeed/activity/metrics/ActivityMetrics';
+import { pushCommentBottomSheet } from '~/comments/v2/CommentBottomSheet';
+import InteractionsBar from '~/common/components/interactions/InteractionsBar';
 import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
 import {
   useAnalytics,
   withAnalyticsContext,
 } from '~/common/contexts/analytics.context';
-import analyticsService from '~/common/services/analytics.service';
-import MutualSubscribers from '../../../channel/components/MutualSubscribers';
-import { pushInteractionsScreen } from '../../../common/components/interactions/pushInteractionsBottomSheet';
+import MutualSubscribers from '~/channel/components/MutualSubscribers';
+import { pushInteractionsScreen } from '~/common/components/interactions/pushInteractionsBottomSheet';
 import { GroupContextProvider } from '~/modules/groups/contexts/GroupContext';
 import { getMaxFeedWidth } from '~/styles/Style';
+import sp from '~/services/serviceProvider';
+import { useStyle } from '~/styles/hooks';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -70,7 +67,7 @@ const ActivityOwner = ({
   const containerStyle = useStyle('bgPrimaryBackground', cleanTop);
   const right = React.useMemo(
     () => (
-      <View style={ThemedStyles.style.rowJustifyCenter}>
+      <View style={sp.styles.style.rowJustifyCenter}>
         <ActivityActionSheet
           entity={entity}
           navigation={navigation}
@@ -140,7 +137,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const route = useRoute<ActivityRoute>();
   const insets = useSafeAreaInsets();
   const { height } = useDimensions().window;
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const entity: ActivityModel = props.entity;
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
@@ -151,7 +148,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const showText = !!entity.text || !!entity.title || !!entity.link_title;
   const { current: cleanBottom } = useRef({
     paddingBottom: insets.bottom - 10,
-    ...ThemedStyles.style.bgPrimaryBackground,
+    ...sp.styles.style.bgPrimaryBackground,
   });
 
   const openComments = useCallback(() => {
@@ -167,17 +164,17 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }, [route.params]);
 
   useEffect(() => {
-    const user = sessionService.getUser();
+    const user = sp.session.getUser();
 
     // if we have some video playing we pause it and reset the current video
-    videoPlayerService.setCurrent(null);
+    sp.resolve('videoPlayer').setCurrent(null);
 
     if (
       (!user.disable_autoplay_videos || props.forceAutoplay) &&
       mediaRef.current
     ) {
       mediaRef.current.playVideo(
-        !videoPlayerService.isSilent ? true : undefined,
+        !sp.resolve('videoPlayer').isSilent ? true : undefined,
       );
     }
   }, [props.forceAutoplay, store]);
@@ -195,7 +192,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     ? shortTextStyle
     : theme.fontLM;
 
-  const backgroundColor = ThemedStyles.getColor('SecondaryBackground');
+  const backgroundColor = sp.styles.getColor('SecondaryBackground');
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
   const gradientColors = useRef([startColor, endColor]).current;
@@ -232,7 +229,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     Clipboard.setStringAsync(
       entities.decodeHTML(title ? title + '\n' + entity.text : entity.text),
     );
-    showNotification(i18n.t('copied'), 'info');
+    showNotification(sp.i18n.t('copied'), 'info');
   }, [entity]);
 
   /**
@@ -348,7 +345,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
         <View
           style={
             props.noBottomInset
-              ? ThemedStyles.style.bgPrimaryBackground
+              ? sp.styles.style.bgPrimaryBackground
               : cleanBottom
           }>
           <InteractionsBar
@@ -366,8 +363,8 @@ const ActivityFullScreen = observer((props: PropsType) => {
 });
 
 export default withAnalyticsContext<PropsType>(props => [
-  analyticsService.buildEntityContext(props.entity),
-  analyticsService.buildClientMetaContext({
+  sp.resolve('analytics').buildEntityContext(props.entity),
+  sp.resolve('analytics').buildClientMetaContext({
     medium: 'single',
     source: 'single',
     position: 1,
@@ -421,22 +418,22 @@ const styles = StyleSheet.create({
   },
 });
 
-const mediumFontStyle = ThemedStyles.combine('fontXXL', 'fontMedium');
+const mediumFontStyle = sp.styles.combine('fontXXL', 'fontMedium');
 
-const textCopyTouchableStyle = ThemedStyles.combine(
+const textCopyTouchableStyle = sp.styles.combine(
   'paddingHorizontal4x',
   'paddingVertical4x',
 );
-const shortTextStyle = ThemedStyles.combine('fontXXXL', 'fontMedium');
+const shortTextStyle = sp.styles.combine('fontXXXL', 'fontMedium');
 
-const backButtonStyle = ThemedStyles.combine(
+const backButtonStyle = sp.styles.combine(
   'colorPrimaryText',
   styles.backButton,
 );
 
-const contentFitStyle = ThemedStyles.combine(
+const contentFitStyle = sp.styles.combine(
   'justifyCenter',
   'fullWidth',
   styles.content,
 );
-const contentNotFitStyle = ThemedStyles.combine('fullWidth', styles.content);
+const contentNotFitStyle = sp.styles.combine('fullWidth', styles.content);

@@ -6,7 +6,7 @@ import {
   UseInfiniteQueryOptions,
   UseInfiniteQueryResult,
 } from '@tanstack/react-query';
-import apiService from '~/common/services/api.service';
+import serviceProvider from '../serviceProvider';
 
 export type PageResponse<T> = {
   rows: T[];
@@ -58,7 +58,7 @@ export async function fetchFeedPage<T>(
   params: any,
   map?: (d: any) => T,
 ): Promise<PageResponse<T>> {
-  const data = await apiService.get<any>(endpoint, params);
+  const data = await serviceProvider.api.get<any>(endpoint, params);
 
   return {
     nextPage: data['load-next'],

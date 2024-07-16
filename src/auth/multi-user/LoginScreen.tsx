@@ -1,9 +1,9 @@
 import { NavigationProp } from '@react-navigation/core';
 import React from 'react';
 import { ModalFullScreen } from '~/common/ui';
-import i18n from '../../common/services/i18n.service';
 import LoginForm from '../login/LoginForm';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import serviceProvider from '~/services/serviceProvider';
 
 type PropsType = {
   navigation: NavigationProp<any>;
@@ -15,7 +15,7 @@ const LoginScreen = ({ navigation, route }: PropsType) => {
     route.params?.onLogin?.(navigation);
   }, [navigation, route.params]);
   return (
-    <ModalFullScreen back title={i18n.t('auth.login')}>
+    <ModalFullScreen back title={serviceProvider.i18n.t('auth.login')}>
       <LoginForm onLogin={onLogin} />
     </ModalFullScreen>
   );

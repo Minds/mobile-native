@@ -1,5 +1,5 @@
-//@ts-nocheck
-import api, { ApiResponse } from './../common/services/api.service';
+import { ApiResponse } from '~/common/services/ApiResponse';
+import type { ApiService } from './../common/services/api.service';
 import { ListFiltersType } from './v2/TransactionList/TransactionsListTypes';
 import moment from 'moment';
 export interface WalletJoinResponse extends ApiResponse {
@@ -9,14 +9,18 @@ export interface WalletJoinResponse extends ApiResponse {
 /**
  * Wallet Service
  */
-class WalletService {
+export class WalletService {
+  constructor(private api: ApiService) {}
+
   async getCount() {
-    return (await api.get('api/v1/wallet/count')).count;
+    return (await this.api.get<{ count: number }>('api/v1/wallet/count')).count;
   }
 
   getHistory(offset) {
-    return api
-      .get('api/v1/wallet/transactions', { offset: offset, limit: 12 })
+    return this.api
+      .get<{
+        transactions: Array<any>;
+      }>('api/v1/wallet/transactions', { offset: offset, limit: 12 })
       .then(response => {
         return {
           entities: response.transactions,
@@ -29,13 +33,13 @@ class WalletService {
    * Get contributions overview
    */
   getContributionsOverview() {
-    return api.get('api/v2/blockchain/contributions/overview');
+    return this.api.get('api/v2/blockchain/contributions/overview');
   }
 
   // Other currencies (money, usd)
 
   async getBalances() {
-    return await api.get(`api/v2/blockchain/wallet/balance`);
+    return await this.api.get(`api/v2/blockchain/wallet/balance`);
   }
 
   /**
@@ -43,10 +47,12 @@ class WalletService {
    * @param {string} number
    * @param {boolean} retry
    */
-  join(number, retry): Promise<WalletJoinResponse> {
-    const params = { number };
-    if (retry) params.retry = 1;
-    return api.post('api/v2/blockchain/rewards/verify', params);
+  join(number: string, retry): Promise<WalletJoinResponse> {
+    const params: any = { number };
+    if (retry) {
+      params.retry = 1;
+    }
+    return this.api.post('api/v2/blockchain/rewards/verify', params);
   }
 
   /**
@@ -56,7 +62,7 @@ class WalletService {
    * @param {string} secret
    */
   confirm(number, code, secret) {
-    return api.post('api/v2/blockchain/rewards/confirm', {
+    return this.api.post('api/v2/blockchain/rewards/confirm', {
       number,
       code,
       secret,
@@ -73,8 +79,10 @@ class WalletService {
     startDate.setHours(0, 0, 0);
     endDate.setHours(23, 59, 59);
 
-    return api
-      .get(`api/v2/blockchain/transactions/ledger`, {
+    return this.api
+      .get<{
+        transactions: Array<any>;
+      }>(`api/v2/blockchain/transactions/ledger`, {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
         offset: offset,
@@ -103,7 +111,9 @@ class WalletService {
       opts.from = Math.floor(+filters.dateRange.from / 1000);
       opts.to = Math.floor(+filters.dateRange.to / 1000);
     }
-    const data = await api.get('api/v2/blockchain/transactions/ledger', opts);
+    const data = await this.api.get<{
+      transactions: Array<any>;
+    }>('api/v2/blockchain/transactions/ledger', opts);
     return {
       entities: data.transactions || [],
       offset: data['load-next'],
@@ -114,8 +124,8 @@ class WalletService {
     startDate.setHours(0, 0, 0);
     endDate.setHours(23, 59, 59);
 
-    return api
-      .get(`api/v2/blockchain/contributions`, {
+    return this.api
+      .get<{ contributions: Array<any> }>(`api/v2/blockchain/contributions`, {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
         offset: offset,
@@ -128,5 +138,3 @@ class WalletService {
       });
   }
 }
-
-export default new WalletService();

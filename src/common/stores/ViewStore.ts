@@ -1,6 +1,6 @@
-import { recordView } from '../../newsfeed/NewsfeedService';
+import sp from '~/services/serviceProvider';
 import { isNetworkError } from '../services/ApiErrors';
-import type MetadataService from '../services/metadata.service';
+import type { MetadataService } from '../services/metadata.service';
 import { MetadataMedium } from '../services/metadata.service';
 
 /**
@@ -36,7 +36,7 @@ export default class ViewStore {
           medium,
           position,
         );
-        await recordView(entity, meta);
+        await sp.resolve('newsfeed').recordView(entity, meta);
       } catch (e) {
         !medium && this.viewed.delete(entity.guid);
         if (!isNetworkError(e)) {

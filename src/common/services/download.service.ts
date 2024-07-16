@@ -3,14 +3,15 @@ import { Platform } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 
 import RNFS from 'react-native-fs';
-import i18nService from './i18n.service';
 import { showNotification } from '../../../AppMessages';
 import type ActivityModel from '../../newsfeed/ActivityModel';
+import type { I18nService } from './i18n.service';
 
 /**
  * Download Service
  */
-class DownloadService {
+export class DownloadService {
+  constructor(private i18n: I18nService) {}
   /**
    * Download media to the gallery
    * @param {url} string
@@ -47,11 +48,11 @@ class DownloadService {
         if (result.statusCode === 200) {
           return MediaLibrary.saveToLibraryAsync(filePath);
         } else {
-          showNotification(i18nService.t('errorDownloading'), 'danger');
+          showNotification(this.i18n.t('errorDownloading'), 'danger');
         }
       });
     } catch (e) {
-      showNotification(i18nService.t('errorDownloading'), 'danger');
+      showNotification(this.i18n.t('errorDownloading'), 'danger');
     }
   }
 
@@ -87,5 +88,3 @@ class DownloadService {
     return uri;
   }
 }
-
-export default new DownloadService();

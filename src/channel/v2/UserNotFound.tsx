@@ -3,12 +3,12 @@ import { View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import MText from '../../common/components/MText';
-import i18nService from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import ChannelTopBar from './ChannelTopBar';
+import sp from '~/services/serviceProvider';
 
 const UserNotFound = props => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const params = props.route.params;
   return (
     <View>
@@ -18,10 +18,10 @@ const UserNotFound = props => {
           name="alert-circle-outline"
           style={theme.paddingVertical4x}
           size={50}
-          color={ThemedStyles.getColor('PrimaryText')}
+          color={sp.styles.getColor('PrimaryText')}
         />
         <MText style={[theme.fontLM, theme.bold, theme.textCenter]}>
-          {i18nService.t('channel.notExist') + '\n'}@
+          {sp.i18n.t('channel.notExist') + '\n'}@
           {params.guid || params.username}
         </MText>
       </View>

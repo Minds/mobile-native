@@ -3,10 +3,10 @@ import { observer } from 'mobx-react';
 import { Dimensions } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
 import { useDimensions } from '@react-native-community/hooks';
+import { Image } from 'expo-image';
 
 import SmartImage from '../common/components/SmartImage';
-import ThemedStyles from '../styles/ThemedStyles';
-import { Image } from 'expo-image';
+import sp from '~/services/serviceProvider';
 
 /**
  * Image preview with max and min aspect ratio support
@@ -49,8 +49,8 @@ export default observer(function (props) {
           imageStyle,
           props.style,
           props.fullscreen
-            ? ThemedStyles.style.bgBlack
-            : ThemedStyles.style.bgTertiaryBackground,
+            ? sp.styles.style.bgBlack
+            : sp.styles.style.bgTertiaryBackground,
         ]}
         contentFit={props.fullscreen ? 'cover' : 'contain'}
       />
@@ -69,7 +69,7 @@ export default observer(function (props) {
           style={[
             imageStyle,
             props.style,
-            ThemedStyles.style.bgTertiaryBackground,
+            sp.styles.style.bgTertiaryBackground,
           ]}
           contentFit="contain"
         />

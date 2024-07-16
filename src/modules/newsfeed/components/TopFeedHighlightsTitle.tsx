@@ -3,11 +3,11 @@ import React from 'react';
 
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';
 
-import i18n from '~/common/services/i18n.service';
 import { Icon } from '~/common/ui';
 import useDismissible from '~/services/hooks/useDismissable';
 import NewsfeedHeader from '~/newsfeed/NewsfeedHeader';
 import MenuSheet from '~/common/components/bottom-sheet/MenuSheet';
+import sp from '~/services/serviceProvider';
 
 const TopFeedHighlightsTitle = observer(() => {
   const { dismiss, isDismissed } = useDismissible('top-highlights');
@@ -15,7 +15,7 @@ const TopFeedHighlightsTitle = observer(() => {
   const sheetOptions = React.useMemo(
     () => [
       {
-        title: i18n.t('removeFromFeed'),
+        title: sp.i18n.t('removeFromFeed'),
         onPress: dismiss,
         iconName: 'close',
         iconType: 'material-community',

@@ -41,7 +41,7 @@ import FeedExploreTag from '../components/FeedExploreTag';
 import UpdateBanner from '~/common/components/UpdateBanner';
 import TopFeedHighlightsTitle from '../components/TopFeedHighlightsTitle';
 import TopFeedHighlightsFooter from '../components/TopFeedHighlightsFooter';
-import mindsConfigService from '~/common/services/minds-config.service';
+import sp from '~/services/serviceProvider';
 
 type NewsfeedScreenRouteProp = RouteProp<AppStackParamList, 'Newsfeed'>;
 type NewsfeedScreenNavigationProp = StackNavigationProp<
@@ -108,7 +108,6 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
 
   useEffect(() => {
     // newsfeed.loadFeed();
-
     return navigation.getParent()?.addListener(
       //@ts-ignore
       'tabPress',
@@ -211,7 +210,7 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
         }}
         onRefresh={() => {
           refresh();
-          mindsConfigService.update();
+          sp.config.update();
           portrait.load();
         }}
         ListEmptyComponent={

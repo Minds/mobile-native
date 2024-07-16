@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 import { View } from 'react-native';
-import i18n from '../services/i18n.service';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import type BlogModel from '../../blogs/BlogModel';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import UserModel from '../../channel/UserModel';
 import MText from './MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity?: ActivityModel | BlogModel;
@@ -37,12 +37,12 @@ export default class BlockedChannel extends Component<PropsType> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     const user = this.props.entity
       ? this.props.entity.ownerObj
       : this.props.channel;
-
+    const i18n = sp.i18n;
     return (
       <View
         style={[

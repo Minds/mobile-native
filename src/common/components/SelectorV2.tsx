@@ -10,24 +10,23 @@ import React, {
 } from 'react';
 import { Keyboard, TextStyle, View, ViewProps } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import {
   BottomSheetModal,
   BottomSheetButton,
   BottomSheetMenuItem,
 } from './bottom-sheet';
-import i18n from '../../common/services/i18n.service';
 import { LinearGradient } from 'expo-linear-gradient';
 import MText from './MText';
+import sp from '~/services/serviceProvider';
 
 /**
  * a View that has two linear gradients on top and bottom
  **/
 const GradientView: FC<ViewProps> = ({ children, ...props }) => {
-  const backgroundColor = ThemedStyles.getColor('PrimaryBackgroundHighlight');
-  const endColor = (ThemedStyles.theme ? '#242A30' : '#F5F5F5') + '00';
+  const backgroundColor = sp.styles.getColor('PrimaryBackgroundHighlight');
+  const endColor = (sp.styles.theme ? '#242A30' : '#F5F5F5') + '00';
   const startColor = backgroundColor + 'FF';
-
   return (
     <View {...props}>
       {children}
@@ -45,7 +44,7 @@ const GradientView: FC<ViewProps> = ({ children, ...props }) => {
   );
 };
 
-type PropsType = {
+export type SelectorPropsType = {
   data: Array<Object>;
   valueExtractor: (item: any) => JSX.Element | string;
   keyExtractor: (item: any) => string;
@@ -75,10 +74,11 @@ type PropsType = {
  *  selectorRef.current.show()
  * ```
  **/
-const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
+const SelectorV2: ForwardRefRenderFunction<any, SelectorPropsType> = (
   { title, data, keyExtractor, valueExtractor, onItemSelect, children },
   ref,
 ) => {
+  const i18n = sp.i18n;
   // =====================| STATES |==========================>
   /**
    * Is the bottomSheet visible?
@@ -90,7 +90,7 @@ const SelectorV2: ForwardRefRenderFunction<any, PropsType> = (
   const [selected, setSelected] = useState('');
 
   // =====================| VARIABLES |==========================>
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   /**
    * only show the gradient view if we had more than 5 items. this may be
    * a naive logic
@@ -244,7 +244,7 @@ export default forwardRef(SelectorV2);
 
 const gradientHeight = 100;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   menuItem: ['paddingHorizontal5x', 'rowJustifyCenter'],
   flatList: { maxHeight: 300, overflow: 'scroll' },
   title: [
@@ -272,11 +272,8 @@ const styles = ThemedStyles.create({
   },
 });
 
-const topGradientStyle = ThemedStyles.combine(
-  styles.linear,
-  styles.topGradient,
-);
-const bottomGradientStyle = ThemedStyles.combine(
+const topGradientStyle = sp.styles.combine(styles.linear, styles.topGradient);
+const bottomGradientStyle = sp.styles.combine(
   styles.linear,
   styles.bottomGradient,
 );

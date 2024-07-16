@@ -10,9 +10,9 @@ import { FLAG_VIEW } from '../common/Permissions';
 import CenteredLoading from '../common/components/CenteredLoading';
 import type BlogModel from '../blogs/BlogModel';
 import { showNotification } from '../../AppMessages';
-import i18n from '../common/services/i18n.service';
 import withModalProvider from '~/navigation/withModalProvide';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 export type ActivityRouteProp = RouteProp<AppStackParamList, 'Activity'>;
 type ActivityNavigationProp = StackNavigationProp<
@@ -63,7 +63,7 @@ const ActivityScreen = withErrorBoundaryScreen(
 
             if (!store.entityStore.entity) {
               showNotification(
-                i18n.t('settings.reportedContent.postNotFound'),
+                sp.i18n.t('settings.reportedContent.postNotFound'),
                 'info',
                 3000,
               );

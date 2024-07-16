@@ -8,7 +8,8 @@ import {
   UNIT,
 } from '~styles/Tokens';
 import { getSpacingStylesNext } from '~ui/helpers';
-import ThemedStyles from '~styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 export function IconCircled({
   style,
@@ -19,8 +20,8 @@ export function IconCircled({
   const background = backgroundColor
     ? backgroundColor
     : active
-    ? ThemedStyles.getColor(ICON_COLOR_ACTIVE)
-    : ThemedStyles.getColor(ICON_BACKGROUND);
+    ? sp.styles.getColor(ICON_COLOR_ACTIVE)
+    : sp.styles.getColor(ICON_BACKGROUND);
 
   const color = active ? 'White' : ICON_COLOR_DEFAULT;
 

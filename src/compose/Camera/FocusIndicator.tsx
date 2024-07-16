@@ -1,6 +1,6 @@
 import React from 'react';
 import Icon from '@expo/vector-icons/SimpleLineIcons';
-import { useMemoStyle } from '../../styles/ThemedStyles';
+import { useMemoStyle } from '~/styles/hooks';
 
 type PropsType = {
   x: number;

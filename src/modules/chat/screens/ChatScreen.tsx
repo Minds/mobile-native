@@ -16,8 +16,6 @@ import {
   useReplyToRoomInviteRequestMutation,
 } from '~/graphql/api';
 import { showNotification } from 'AppMessages';
-import i18nService from '~/common/services/i18n.service';
-import logService from '~/common/services/log.service';
 import {
   ChatRoomProvider,
   useChatRoomContext,
@@ -25,9 +23,9 @@ import {
 import { useRefreshRoomsIds } from '../hooks/useRefreshRoomsIds';
 import { useRefetchUnreadMessages } from '../hooks/useUnreadMessages';
 import { useChatroomViewAnalytic } from '../hooks/useChatroomViewAnalytic';
-import analyticsService from '~/common/services/analytics.service';
 import ChatEditName from '../components/ChatEditName';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 /**
  * Chat conversation screen
@@ -38,6 +36,7 @@ export default function ChatScreen({ navigation, route }) {
   const { roomGuid, members, isRequest } = route.params || {};
   const [accepted, setAccepted] = React.useState(false);
   const refetchUnreadMessages = useRefetchUnreadMessages();
+
   // refresh rooms ids
   useRefreshRoomsIds(roomGuid);
 
@@ -77,17 +76,14 @@ const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
   const isOwnerAndMultiUser =
     query.data?.chatRoom.node.roomType === ChatRoomTypeEnum.MultiUser &&
     query.data?.chatRoom.node.isUserRoomOwner;
-
+  const analytics = sp.resolve('analytics');
+  const theme = sp.styles.style;
   return (
     <>
       <ChatHeader
         members={members}
         extra={
-          <View
-            style={[
-              ThemedStyles.style.rowJustifyEnd,
-              ThemedStyles.style.gap3x,
-            ]}>
+          <View style={[theme.rowJustifyEnd, theme.gap3x]}>
             {isOwnerAndMultiUser && query.data && (
               <ChatEditName
                 roomGuid={roomGuid}
@@ -98,7 +94,7 @@ const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
             {isOwnerAndMultiUser && (
               <TouchableOpacity
                 onPress={() => {
-                  analyticsService.trackClick(
+                  sp.resolve('analytics').trackClick(
                     'data-minds-chat-room-settings-button',
                   );
                   navigation.navigate('ChatAddUsers', {
@@ -114,9 +110,7 @@ const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
             {!isRequest ? (
               <TouchableOpacity
                 onPress={() => {
-                  analyticsService.trackClick(
-                    'data-minds-chat-room-settings-button',
-                  );
+                  analytics.trackClick('data-minds-chat-room-settings-button');
                   navigation.navigate('ChatDetails', { roomGuid });
                 }}>
                 <Icon name="info-circle" size={20} />
@@ -138,18 +132,19 @@ const RequestActionSheet = ({
   roomGuid: string;
   onAccept: () => void;
 }) => {
+  const analytics = sp.resolve('analytics');
   const ref = React.useRef<BottomSheetModal>(null);
   const accepted = React.useRef(false);
   const replyMutation = useReplyToRoomInviteRequestMutation({
     onError: error => {
-      logService.exception('[useReplyToRoomInviteRequestMutation]', error);
-      showNotification(i18nService.t('errorMessage'));
+      sp.log.exception('[useReplyToRoomInviteRequestMutation]', error);
+      showNotification(sp.i18n.t('errorMessage'));
     },
   });
   const navigation = useNavigation();
 
   const accept = async () => {
-    analyticsService.trackClick('data-minds-chat-request-accept-button');
+    analytics.trackClick('data-minds-chat-request-accept-button');
     await replyMutation.mutate({
       roomGuid,
       action: ChatRoomInviteRequestActionEnum.Accept,
@@ -160,7 +155,7 @@ const RequestActionSheet = ({
   };
 
   const block = async () => {
-    analyticsService.trackClick('data-minds-chat-request-block-user-button');
+    analytics.trackClick('data-minds-chat-request-block-user-button');
     await replyMutation.mutate({
       roomGuid,
       action: ChatRoomInviteRequestActionEnum.RejectAndBlock,
@@ -169,7 +164,7 @@ const RequestActionSheet = ({
   };
 
   const reject = async () => {
-    analyticsService.trackClick('data-minds-chat-request-reject-button');
+    analytics.trackClick('data-minds-chat-request-reject-button');
     await replyMutation.mutate({
       roomGuid,
       action: ChatRoomInviteRequestActionEnum.Reject,

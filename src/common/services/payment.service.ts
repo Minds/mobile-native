@@ -1,4 +1,5 @@
-import api, { ApiResponse } from './api.service';
+import { ApiResponse } from './ApiResponse';
+import type { ApiService } from './api.service';
 
 export type SubscriptionType = {
   amount?: string;
@@ -19,17 +20,16 @@ interface SubscriptionResponseType extends ApiResponse {
   subscriptions: SubscriptionType[];
 }
 
-class PaymentService {
+export class PaymentService {
+  constructor(private api: ApiService) {}
   async subscriptions() {
     const { subscriptions } = <SubscriptionResponseType>(
-      await api.get('api/v1/payments/subscriptions')
+      await this.api.get('api/v1/payments/subscriptions')
     );
     return subscriptions;
   }
 
   async cancelSubscriptions(id) {
-    await api.delete(`api/v1/payments/subscriptions/${id}`);
+    await this.api.delete(`api/v1/payments/subscriptions/${id}`);
   }
 }
-
-export default new PaymentService();

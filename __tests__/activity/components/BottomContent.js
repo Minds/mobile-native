@@ -8,7 +8,7 @@ import ActivityMetrics from '../../../src/newsfeed/activity/metrics/ActivityMetr
 import ActivityModel from '../../../src/newsfeed/ActivityModel';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 import { shallow } from 'enzyme';
-import sessionService from '../../../src/common/services/session.service';
+import { sessionService } from '~/common/services';
 
 jest.mock('~/common/services/analytics.service');
 

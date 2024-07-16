@@ -3,16 +3,17 @@ import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { IconButton } from '~ui/icons';
-import { showNotification } from '../../../../../AppMessages';
-import i18n from '../../../../common/services/i18n.service';
+import { showNotification } from '~/../AppMessages';
+
 import { WalletStoreType } from '../../../v2/createWalletStore';
 import { isConnected as isWalletConnected } from '../../useUniqueOnchain';
 import {
   BottomSheetModal,
   BottomSheetButton,
   BottomSheetMenuItem,
-} from '../../../../common/components/bottom-sheet';
-import { ONCHAIN_ENABLED } from '../../../../config/Config';
+} from '~/common/components/bottom-sheet';
+import { ONCHAIN_ENABLED } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -40,6 +41,8 @@ const TokenTabOptions = observer((props: PropsType) => {
     ref.current?.present();
   }, [ref]);
 
+  const i18n = sp.i18n;
+
   const dismissOptions: Array<ItemType> = React.useMemo(() => {
     const actions: Array<ItemType> = [];
     ONCHAIN_ENABLED &&
@@ -65,7 +68,7 @@ const TokenTabOptions = observer((props: PropsType) => {
       });
     }
     return actions;
-  }, [address, close, isConnected, navigation]);
+  }, [address, close, isConnected, navigation, i18n]);
 
   if (dismissOptions.length === 0) {
     return null;
