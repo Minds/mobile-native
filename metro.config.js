@@ -16,8 +16,6 @@ config.resolver.nodeModulesPaths = [
   path.resolve(workspaceRoot, 'node_modules'),
 ];
 
-console.log('RESOLVE', require.resolve('./src/services/serviceProvider.ts'));
-
 // Override getTransformOptions so we can turn inlineRequires on
 config.transformer.getTransformOptions = async () => ({
   transform: {

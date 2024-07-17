@@ -30,9 +30,7 @@ export class InjectionContainer<Services extends { [key: string]: any }> {
   }
 
   resolve<K extends keyof Services>(identifier: K, arg?: any): Services[K] {
-    // we first check for singletons (for performance reasons)
-    // console.log('DI resolving', identifier);
-
+    // development circular dependency detection
     if (__DEV__) {
       if (this.resolutionStack.includes(identifier)) {
         throw new Error(
@@ -44,10 +42,9 @@ export class InjectionContainer<Services extends { [key: string]: any }> {
       this.resolutionStack.push(identifier);
     }
 
+    // we first check for singletons (for performance reasons)
     const singleton = this.singletons.get(identifier as string);
     if (singleton) {
-      // console.log('DI singleton found', identifier);
-
       if (__DEV__) {
         this.resolutionStack.pop();
       }
@@ -58,9 +55,9 @@ export class InjectionContainer<Services extends { [key: string]: any }> {
     if (!registration) {
       throw new Error(`Service not registered: ${identifier as string}`);
     }
-    console.log('DI building', identifier, arg || '');
+
     const instance = registration.factory(arg);
-    console.log('DI built', identifier);
+
     if (registration.lifetime === Lifetime.Singleton) {
       this.singletons.set(identifier as string, instance);
     }
@@ -81,12 +78,10 @@ export class InjectionContainer<Services extends { [key: string]: any }> {
    * @param identifier String
    */
   resolveLazy<K extends keyof Services>(identifier: K): Services[K] {
-    console.log('DI resolve Lazy', identifier);
     return new Proxy(
       {},
       {
         get: (_, prop) => {
-          console.log('DI resolving Lazy', identifier);
           const service = this.resolve(identifier);
           if (service && prop in service) {
             if (typeof service[prop] === 'function') {
