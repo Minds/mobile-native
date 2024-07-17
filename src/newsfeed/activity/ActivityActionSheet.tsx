@@ -245,7 +245,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       // Report
       options.push({
         title: i18n.t('report'),
-        iconName: 'ios-flag-outline',
+        iconName: 'flag-outline',
         iconType: 'ionicon',
         onPress: () => {
           this.props.navigation.navigate('Report', {

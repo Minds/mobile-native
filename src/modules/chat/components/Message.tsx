@@ -16,12 +16,17 @@ import domain from '~/common/helpers/domain';
 import openUrlService from '~/common/services/open-url.service';
 import NavigationService from '~/navigation/NavigationService';
 import analyticsService from '~/common/services/analytics.service';
+import {
+  ChatRoomContextType,
+  useChatRoomContext,
+} from '../contexts/ChatRoomContext';
 
 type Props = {
   message: ChatMessage;
   onLongPress: (
     message: ChatMessage,
     context: ChatRoomMessagesContextType,
+    roomContext: ChatRoomContextType,
   ) => void | Promise<void>;
 };
 
@@ -29,10 +34,11 @@ function Message({ message, onLongPress }: Props) {
   const sender = message.node.sender.node;
   const date = moment(message.node.timeCreatedISO8601);
   const context = useChatRoomMessageContext();
+  const roomContext = useChatRoomContext();
 
   const longPress = onLongPress
     ? () => {
-        onLongPress(message, context);
+        onLongPress(message, context, roomContext);
       }
     : undefined;
 
