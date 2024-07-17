@@ -323,7 +323,7 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'logout',
   },
-  'ios-flag-outline': {
+  'flag-outline': {
     font: 'IonIcon',
     name: 'flag-outline',
   },

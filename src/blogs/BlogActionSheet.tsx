@@ -65,7 +65,7 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
     if (!entity.isOwner()) {
       options.push({
         title: i18n.t('report'),
-        iconName: 'ios-flag-outline',
+        iconName: 'flag-outline',
         iconType: 'ionicon',
         onPress: () => {
           this.hideActionSheet();

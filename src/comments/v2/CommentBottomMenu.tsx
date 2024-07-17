@@ -164,7 +164,7 @@ export default function CommentBottomMenu({
 
       actions.push({
         title: i18n.t('report'),
-        iconName: 'ios-flag-outline',
+        iconName: 'flag-outline',
         iconType: 'ionicon',
         onPress: () => {
           NavigationService.push('Report', { entity: comment });
