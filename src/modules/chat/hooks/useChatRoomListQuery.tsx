@@ -60,7 +60,7 @@ export function useChatRoomListQuery() {
       const room = data.pages[pageIndex].chatRoomList.edges[itemIndex];
       const variables = {
         roomGuid: room.node.guid,
-        firstMembers: 3,
+        firstMembers: 12,
         afterMembers: 0,
       };
       const key = useGetChatRoomQuery.getKey(variables);

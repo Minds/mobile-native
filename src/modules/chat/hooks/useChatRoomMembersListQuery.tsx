@@ -63,11 +63,6 @@ export function useChatRoomMembersListQuery(roomGuid: string) {
                 const indexOf = page.chatRoom.members.edges.findIndex(
                   member => member.node.guid === context.memberGuid,
                 );
-                console.log(
-                  context.memberGuid,
-                  'indexOf item to delete',
-                  indexOf,
-                );
                 if (indexOf !== -1) {
                   page.chatRoom.members.edges.splice(indexOf, 1);
                 }

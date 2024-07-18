@@ -22,6 +22,10 @@ export type ChatStackParamList = {
     chatRoom: GetChatRoomQuery['chatRoom'];
     roomGuid: string;
   };
+  ChatAddUsers: {
+    roomGuid: string;
+    ignore?: string[];
+  };
 };
 
 export type ChatStackScreenProps<S extends keyof ChatStackParamList> =
@@ -58,6 +62,10 @@ export function ChatConversationStack({}: PropsType) {
       <Screen
         name="ChatMembers"
         getComponent={() => require('./screens/ChatMembersScreen').default}
+      />
+      <Screen
+        name="ChatAddUsers"
+        getComponent={() => require('./screens/ChatAddUsersScreen').default}
       />
     </Navigator>
   );
