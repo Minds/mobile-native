@@ -171,7 +171,10 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         },
       });
 
-      if (!entity.dontPin && this.props.channel) {
+      if (
+        !entity.dontPin &&
+        (this.props.channel || entity.containerObj?.type === 'group')
+      ) {
         // Pin / Unpin
         options.push({
           title: !entity.pinned ? i18n.t('pin') : i18n.t('unpin'),
