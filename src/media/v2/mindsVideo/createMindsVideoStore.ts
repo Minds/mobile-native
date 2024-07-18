@@ -19,6 +19,8 @@ import SettingsStore from '~/settings/SettingsStore';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import { IS_IOS } from '~/config/Config';
 import { Orientation } from '~/services';
+import { showNotification } from 'AppMessages';
+import i18n from '~/common/services/i18n.service';
 
 export type Source = {
   src: string;
@@ -140,7 +142,7 @@ const createMindsVideoStore = ({
       if (video) {
         this.player?.loadAsync(video).then(_ => {
           if (!this.paused || autoplay) {
-            this.play(undefined);
+            this.play(undefined, this.paused && autoplay);
           }
         });
       }
@@ -283,12 +285,19 @@ const createMindsVideoStore = ({
     /**
      * Play the current video and activate the player
      */
-    async play(sound?: boolean) {
+    async play(sound?: boolean, isManualPlay?: boolean) {
       // check site membership
       if (
         this.entity?.site_membership &&
         !this.entity.site_membership_unlocked
       ) {
+        if (isManualPlay) {
+          showNotification(
+            i18n.t('membership.pleaseJoin', { membership: 'membership' }),
+            'info',
+            5000,
+          );
+        }
         return;
       }
 

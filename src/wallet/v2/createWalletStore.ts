@@ -343,11 +343,12 @@ const createWalletStore = () => ({
     }
   },
   async loadPrices() {
-    if (this.prices.minds === '0') {
-      const prices = <any>await api.get('api/v3/blockchain/token-prices');
-      this.prices.minds = prices.minds;
-      this.prices.eth = prices.eth;
-    }
+    // disable token prices load for now
+    // if (this.prices.minds === '0') {
+    //   const prices = <any>await api.get('api/v3/blockchain/token-prices');
+    //   this.prices.minds = prices.minds;
+    //   this.prices.eth = prices.eth;
+    // }
   },
   async loadRewards(date: Date) {
     this.loadPrices();
