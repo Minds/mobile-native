@@ -1,9 +1,9 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { invert } from 'lodash';
 import openUrlService from '~/common/services/open-url.service';
 import sessionService from '~/common/services/session.service';
 import { IS_TENANT } from '~/config/Config';
 import { NavigationItemTypeEnum } from '~/graphql/api';
+import { GroupsStack } from '~/modules/groups/GroupsStack';
 import { CustomNavigationItems } from '~/modules/navigation/service/custom-navigation.service';
 import DiscoveryStack from '~/navigation/DiscoveryStack';
 
@@ -15,21 +15,6 @@ export type GroupStackParamList = {
   Groups: {};
   GroupView: {};
 };
-const GroupStackNav = createNativeStackNavigator<GroupStackParamList>();
-const GroupStack = () => (
-  <GroupStackNav.Navigator screenOptions={{ headerShown: false }}>
-    <GroupStackNav.Screen
-      name="Groups"
-      getComponent={() => require('~/groups/GroupsListScreen').default}
-    />
-    <GroupStackNav.Screen
-      name="GroupView"
-      getComponent={() =>
-        require('~/modules/groups/screens/GroupScreen').GroupScreen
-      }
-    />
-  </GroupStackNav.Navigator>
-);
 
 const NullCmp = () => null;
 
@@ -76,7 +61,7 @@ export function useVerticalScreenProps(
       },
     },
     Groups: {
-      component: GroupStack,
+      component: GroupsStack,
     },
     Settings: {
       component: MoreStack,

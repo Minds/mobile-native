@@ -13,6 +13,7 @@ import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 
 export type DiscoveryStackParamList = Pick<
   AppStackParamList,
+  | 'More'
   | 'Channel'
   | 'Activity'
   | 'DiscoverySearch'

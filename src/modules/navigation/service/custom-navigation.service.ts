@@ -8,7 +8,7 @@ import {
 } from '~/graphql/api';
 import { filterNavigationItems } from './helpers';
 
-const tabsIds = ['newsfeed', 'explore', 'chat'];
+const tabsIds = ['newsfeed', 'explore', 'chat', 'groups'];
 
 export type CustomNavigationItems =
   | GetNavigationItemsQuery['customNavigationItems']

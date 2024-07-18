@@ -86,6 +86,13 @@ export const Topbar = observer((props: PropsType) => {
                 onPress={() => navigation.goBack()}
               />
             )}
+            <IconButton
+              name="menu"
+              size="large"
+              right="S"
+              color="Icon"
+              onPress={() => navigation.push('More')}
+            />
             {title ? (
               <H2>{title}</H2>
             ) : (
@@ -94,7 +101,7 @@ export const Topbar = observer((props: PropsType) => {
                 <Avatar
                   source={avatar}
                   border={'white'}
-                  size="small"
+                  size="tiny"
                   onPress={handleChannelNav}
                   testID="Topbar:Avatar"
                 />

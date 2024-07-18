@@ -9,7 +9,7 @@ import { getStores } from '../AppStores';
 jest.mock('../AppInitManager');
 jest.mock('../FontsLoader');
 jest.mock('../src/common/services/update.service.ts');
-
+jest.mock('@react-navigation/native-stack');
 jest.mock('react-native-exception-handler');
 
 jest.mock('react-native-code-push', () => {

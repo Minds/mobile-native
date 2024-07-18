@@ -86,6 +86,7 @@ const ActivityScreen = withErrorBoundaryScreen(
             // workaround for tagged in group conversation notification
             if (store.entityStore.entity.type === 'group') {
               props.navigation.replace('GroupView', {
+                // @ts-ignore
                 group: store.entityStore.entity,
                 ...params,
               });
