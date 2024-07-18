@@ -5,6 +5,7 @@ import { Avatar, Row, ScreenHeader } from '~/common/ui';
 import { ChatMember } from '../types';
 import { useChatRoomContext } from '../contexts/ChatRoomContext';
 import { APP_URI } from '~/config/Config';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = {
   members: ChatMember[];
@@ -13,6 +14,7 @@ type Props = {
 
 function ChatHeader({ members, extra }: Props) {
   const query = useChatRoomContext();
+  const navigation = useNavigation();
 
   if (!query.data?.chatRoom.members) {
     return null;
@@ -30,6 +32,12 @@ function ChatHeader({ members, extra }: Props) {
     <Avatar
       testID="Avatar"
       size="tiny"
+      onPress={() => {
+        query.data &&
+          navigation.navigate('GroupView', {
+            guid: query.data?.chatRoom.node.groupGuid,
+          });
+      }}
       source={{
         uri: `${APP_URI}fs/v1/avatars/${query.data?.chatRoom.node.groupGuid}/large`,
       }}
