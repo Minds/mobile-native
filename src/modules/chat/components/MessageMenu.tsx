@@ -7,17 +7,27 @@ import { ChatMessage } from '../types';
 import sessionService from '~/common/services/session.service';
 import { ChatRoomMessagesContextType } from '../contexts/ChatRoomMessageContext';
 import NavigationService from '~/navigation/NavigationService';
+import type { ChatRoomContextType } from '../contexts/ChatRoomContext';
+import { ChatRoomTypeEnum } from '~/graphql/api';
 
 export const showMessageMenu = (
   message: ChatMessage,
   context: ChatRoomMessagesContextType,
+  chatRoomContext: ChatRoomContextType,
 ) => {
+  const chatRoom = chatRoomContext.data?.chatRoom.node;
+  const showDelete =
+    message.node.sender.node.guid === sessionService.getUser().guid ||
+    (chatRoom?.isUserRoomOwner &&
+      chatRoom?.roomType === ChatRoomTypeEnum.GroupOwned);
+  const showReport =
+    message.node.sender.node.guid !== sessionService.getUser().guid;
   pushBottomSheet({
     safe: true,
     title: 'Message Options',
     component: ref => (
       <>
-        {message.node.sender.node.guid === sessionService.getUser().guid ? (
+        {showDelete && (
           <BottomSheetMenuItem
             onPress={async () => {
               context.deleteMessage(message.node.guid);
@@ -27,7 +37,8 @@ export const showMessageMenu = (
             iconType="material-community"
             title="Delete"
           />
-        ) : (
+        )}
+        {showReport && (
           <BottomSheetMenuItem
             onPress={async () => {
               NavigationService.push('Report', {
@@ -36,7 +47,7 @@ export const showMessageMenu = (
               });
               await ref.close();
             }}
-            iconName="ios-flag-outline"
+            iconName="flag-outline"
             iconType="ionicon"
             title="Report"
           />

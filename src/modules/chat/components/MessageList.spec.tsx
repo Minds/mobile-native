@@ -5,16 +5,22 @@ import MessageList from './MessageList';
 import { ChatMessage } from '../types';
 import sessionService from '~/common/services/session.service';
 import UserModel from '~/channel/UserModel';
+import { ChatRoomProvider } from '../contexts/ChatRoomContext';
+import { useChatRoomInfoQuery } from '../hooks/useChatRoomInfoQuery';
 
 jest.mock('../hooks/useChatRoomMessagesQuery');
 jest.mock('../hooks/useSetReadReceipt');
 jest.mock('~/common/services/session.service');
+jest.mock('../hooks/useChatRoomInfoQuery', () => ({
+  useChatRoomInfoQuery: jest.fn(),
+}));
 
 const mockedSessionService = sessionService as jest.Mocked<
   typeof sessionService
 >;
 
 const mockedUseChatRoomMessagesQuery = useChatRoomMessagesQuery as jest.Mock;
+const mockedUseChatRoomInfoQuery = useChatRoomInfoQuery as jest.Mock;
 
 describe('MessageList', () => {
   it('renders without crashing', () => {
@@ -32,6 +38,47 @@ describe('MessageList', () => {
     mockedSessionService.getUser.mockReturnValue(
       UserModel.create({ guid: '1' }),
     );
+    mockedUseChatRoomInfoQuery.mockReturnValue({
+      query: jest.fn(),
+      send: jest.fn(),
+      room: {
+        guid: '1',
+        id: '1',
+        name: 'Test Room',
+        description: 'Test Room Description',
+        timeCreatedISO8601: '2022-01-01T00:00:00Z',
+        timeCreatedUnix: '1640995200',
+        timeUpdatedISO8601: '2022-01-01T00:00:00Z',
+        timeUpdatedUnix: '1640995200',
+        creator: {
+          id: '1',
+          node: {
+            name: 'John Doe',
+            iconUrl: 'https://example.com/john-doe.png',
+            username: 'john_doe',
+            guid: '1',
+            id: '1',
+          },
+        },
+        members: {
+          edges: [
+            {
+              cursor: '1',
+              node: {
+                id: '1',
+                node: {
+                  name: 'John Doe',
+                  iconUrl: 'https://example.com/john-doe.png',
+                  username: 'john_doe',
+                  guid: '1',
+                  id: '1',
+                },
+              },
+            },
+          ],
+        },
+      },
+    });
     const mockMessages: ChatMessage[] = [
       {
         cursor: '1',
@@ -82,7 +129,11 @@ describe('MessageList', () => {
       loadNewMessages: jest.fn(),
     });
 
-    const { getByText } = render(<MessageList roomGuid="test-room" />);
+    const { getByText } = render(
+      <ChatRoomProvider roomGuid="1">
+        <MessageList roomGuid="test-room" />
+      </ChatRoomProvider>,
+    );
 
     mockMessages.forEach(message => {
       expect(getByText(message.node.plainText)).toBeTruthy();
