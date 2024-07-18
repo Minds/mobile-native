@@ -13,8 +13,7 @@ export const showMemberMenu = (
   context: ChatRoomMembersContextType,
 ) => {
   const showRemove =
-    (context.chatRoom?.node.roomType === ChatRoomTypeEnum.GroupOwned ||
-      context.chatRoom?.node.roomType === ChatRoomTypeEnum.MultiUser) &&
+    context.chatRoom?.node.roomType === ChatRoomTypeEnum.MultiUser &&
     context.chatRoom?.node.isUserRoomOwner &&
     context.chatRoom?.totalMembers > 2;
 
