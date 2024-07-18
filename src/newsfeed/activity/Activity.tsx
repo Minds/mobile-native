@@ -121,7 +121,9 @@ export default class Activity extends Component<ActivityProps> {
    */
   navToActivity = () => {
     if (this.props.entity.hasSiteMembershipPaywallThumbnail) {
-      showNotification('This post is locked. Please view on web to engage.');
+      showNotification(
+        'This post is for members only. Please view it in a web browser to proceed.',
+      );
       return;
     }
 
