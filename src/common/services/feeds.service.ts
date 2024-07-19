@@ -114,9 +114,7 @@ export class FeedsService<T extends BaseModel = BaseModel> {
     private storages: Storages,
     private boostedContentService: BoostedContentService,
   ) {
-    console.log('FeedsService constructor');
     this.feedStorage = new FeedsStorage(this.storages, this.log);
-    console.log('FeedsService constructor 2');
   }
 
   setDataProperty(name: string) {
