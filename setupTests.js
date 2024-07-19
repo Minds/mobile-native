@@ -3,9 +3,12 @@ import React from 'react';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import moment from 'moment-timezone';
-import i18n from './src/common/services/i18n.service';
+import sp from '~/services/serviceProvider';
 
 require('./node_modules/react-native-gesture-handler/jestSetup.js');
+
+const i18n = sp.i18n;
+i18n.setLocale('en', false);
 
 const XMLHttpRequest = {
   open: jest.fn(),
@@ -15,6 +18,21 @@ const XMLHttpRequest = {
 global.XMLHttpRequest = XMLHttpRequest;
 
 configure({ adapter: new Adapter() });
+
+jest.mock('expo-updates', () => ({
+  checkForUpdateAsync: jest.fn(),
+  fetchUpdateAsync: jest.fn(),
+  reloadAsync: jest.fn(),
+}));
+
+jest.mock('expo-application', () => ({
+  getApplicationName: jest.fn(),
+}));
+
+jest.mock('react-native-url-polyfill', () => ({
+  URL: jest.fn(),
+  URLSearchParams: jest.fn(),
+}));
 
 jest.mock('~/config/Version', () => ({
   Version: {
@@ -64,8 +82,6 @@ jest.doMock('moment-timezone', () => {
   moment.tz.setDefault('America/Los_Angeles');
   return moment;
 });
-
-i18n.setLocale('en', false);
 
 // fix for snapshots and touchables
 
@@ -140,5 +156,5 @@ jest.mock('react-native-keyboard-controller', () =>
 );
 
 // mocked here since mocking it locally on the api.service is not working (probably because of the circular dependency)
-jest.mock('./src/navigation/NavigationService');
-jest.mock('~/auth/AuthService');
+// jest.mock('./src/navigation/NavigationService');
+// jest.mock('~/auth/AuthService');

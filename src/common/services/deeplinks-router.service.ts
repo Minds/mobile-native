@@ -16,7 +16,7 @@ import type { ReferrerService } from './referrer.service';
 import { openLinkInInAppBrowser } from './inapp-browser.service';
 
 /**
- * Deeplinks router
+ * Deep links router
  */
 export class DeepLinksRouterService {
   /**
