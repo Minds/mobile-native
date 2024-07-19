@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 import { ScrollView, Alert } from 'react-native';
 import { Button, ScreenSection, B1 } from '~ui';
@@ -6,6 +5,7 @@ import i18n from '../../common/services/i18n.service';
 
 import AuthService from '~/auth/AuthService';
 import { TENANT } from '~/config/Config';
+import sp from '~/common/styles/common.style';
 
 /**
  * Delete Channel Screen

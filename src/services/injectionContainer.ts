@@ -22,7 +22,6 @@ export class InjectionContainer<Services extends { [key: string]: any }> {
     factory: ServiceFactory<Services[K]>,
     lifetime: Lifetime = Lifetime.Singleton,
   ): void {
-    console.log('DI registering', String(identifier));
     this.registrations.set(
       identifier as string,
       new ServiceRegistration<Services[K]>(factory, lifetime),

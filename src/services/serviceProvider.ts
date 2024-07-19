@@ -60,7 +60,7 @@ const sp = new InjectionContainer<Services>();
 sp.register(
   'navigation',
   () => {
-    return new NavigationService();
+    return new NavigationService(sp.resolveLazy('analytics'));
   },
   Lifetime.Singleton,
 );

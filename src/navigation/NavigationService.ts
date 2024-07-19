@@ -1,14 +1,14 @@
-//@ts-nocheck
 import {
   CommonActions,
   StackActions,
   createNavigationContainerRef,
 } from '@react-navigation/native';
-
-// import analyticsService from '~/common/services/analytics.service';
+import type { AnalyticsService } from '~/common/services/analytics.service';
 
 export class NavigationService {
   navigationRef = createNavigationContainerRef();
+
+  constructor(private analytics: AnalyticsService) {}
 
   getTopLevelNavigator() {
     return this.navigationRef;
@@ -63,13 +63,13 @@ export class NavigationService {
   }
 
   onStateChange() {
-    // if (!this.navigationRef) {
-    //   return;
-    // }
-    // const currentRoute = this.navigationRef.getCurrentRoute();
-    // const currentRouteName = currentRoute?.name;
-    // const currentRouteParams = currentRoute?.params;
+    if (!this.navigationRef) {
+      return;
+    }
+    const currentRoute = this.navigationRef.getCurrentRoute();
+    const currentRouteName = currentRoute?.name;
+    const currentRouteParams = currentRoute?.params;
     // record analytics event for screen view
-    // analyticsService.onNavigatorStateChange(currentRouteName, currentRouteParams);
+    this.analytics.onNavigatorStateChange(currentRouteName, currentRouteParams);
   }
 }
