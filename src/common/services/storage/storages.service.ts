@@ -34,14 +34,11 @@ export function createStorage(
   if (Platform.OS !== 'ios') {
     loader.setProcessingMode(ProcessingModes.MULTI_PROCESS);
   }
-
-  const instance = loader.initialize();
-
   if (encrypted) {
-    instance.encryption.decrypt();
+    loader.withEncryption();
   }
 
-  return instance;
+  return loader.initialize();
 }
 
 /**
