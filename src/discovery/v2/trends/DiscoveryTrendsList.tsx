@@ -6,7 +6,7 @@ import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
 
 import Button from '~/common/components/Button';
-import { InjectItem } from '~/common/components/FeedList';
+import { InjectItem } from '~/common/components/FeedListInjectedItem';
 import type DiscoveryV2Store from '../DiscoveryV2Store';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import DiscoveryTrendPlaceHolder from './DiscoveryTrendPlaceHolder';

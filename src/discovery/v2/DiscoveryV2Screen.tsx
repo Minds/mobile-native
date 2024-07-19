@@ -9,7 +9,7 @@ import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
-import { InjectItem } from '../../common/components/FeedList';
+import { InjectItem } from '../../common/components/FeedListInjectedItem';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import DiscoveryTabContent from './DiscoveryTabContent';
 import Topbar from '~/topbar/Topbar';

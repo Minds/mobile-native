@@ -7,7 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import FeedList, { InjectItem } from '~/common/components/FeedList';
+import FeedList from '~/common/components/FeedList';
 import createChannelStore from './createChannelStore';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import ChannelHeader from './ChannelHeader';
@@ -43,6 +43,7 @@ import CaptureFab from '~/capture/CaptureFab';
 import { IS_IPAD } from '~/config/Config';
 import sp from '~/services/serviceProvider';
 import { useMemoStyle } from '~/styles/hooks';
+import { InjectItem } from '~/common/components/FeedListInjectedItem';
 
 const tinycolor = require('tinycolor2');
 

@@ -3,12 +3,12 @@ import { RefreshControl, View, ViewToken } from 'react-native';
 import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import { FlashList, FlashListProps } from '@shopify/flash-list';
+import { useDimensions } from '@react-native-community/hooks';
 
 import ActivityModel from '~/newsfeed/ActivityModel';
 import Activity from '~/newsfeed/activity/Activity';
 import type FeedStore from '~/common/stores/FeedStore';
 import type BaseModel from '~/common/BaseModel';
-import { InjectItem } from '~/common/components/FeedList';
 import ErrorLoading from '~/common/components/ErrorLoading';
 import MText from '~/common/components/MText';
 import { ComponentsStyle } from '~/styles/Components';
@@ -16,7 +16,7 @@ import CenteredLoading from '~/common/components/CenteredLoading';
 import ErrorBoundary from './ErrorBoundary';
 import { IS_IOS } from '~/config/Config';
 
-import { useDimensions } from '@react-native-community/hooks';
+import { InjectItem } from './FeedListInjectedItem';
 import sp from '~/services/serviceProvider';
 
 type PlaceholderType =

@@ -6,7 +6,7 @@ import type ActivityModel from '../../newsfeed/ActivityModel';
 import BaseModel from '../BaseModel';
 import { isAbort } from '../services/ApiErrors';
 import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
-import { InjectItem } from '../components/FeedList';
+import { InjectItem } from '../components/FeedListInjectedItem';
 import type {
   MetadataMedium,
   MetadataService,
