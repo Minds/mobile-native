@@ -19,7 +19,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { PortalProvider } from '@gorhom/portal';
 import { focusManager } from '@tanstack/react-query';
+
+// we import the service provider first & register the services
 import sp from '~/services/serviceProvider';
+import '~/services/servicesRegister';
 
 import { IS_IPAD } from '~/config/Config';
 

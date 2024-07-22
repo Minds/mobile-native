@@ -1,12 +1,18 @@
-import { createMockMMKV } from 'react-native-mmkv/src/createMMKV.mock';
+export class Storages {
+  session: any;
+  app: any;
+  user: any;
+  userPortrait: any;
+  userCache: any;
 
-export const storagesService = {
-  session: createMockStorage(),
-  app: createMockStorage(),
-  user: createMockStorage(),
-  userPortrait: createMockStorage(),
-  userCache: createMockStorage(),
-};
+  constructor() {
+    this.session = createMockStorage();
+    this.app = createMockStorage();
+    this.user = createMockStorage();
+    this.userPortrait = createMockStorage();
+    this.userCache = createMockStorage();
+  }
+}
 
 export const createUserStore = jest.fn();
 

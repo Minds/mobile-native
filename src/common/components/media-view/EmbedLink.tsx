@@ -2,7 +2,7 @@ import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import type ActivityModel from '../../../newsfeed/ActivityModel';
+import type ActivityModel from '~/newsfeed/ActivityModel';
 
 import domain from '../../helpers/domain';
 import MText from '../MText';

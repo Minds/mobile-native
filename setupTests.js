@@ -3,12 +3,8 @@ import React from 'react';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import moment from 'moment-timezone';
-import sp from '~/services/serviceProvider';
 
 require('./node_modules/react-native-gesture-handler/jestSetup.js');
-
-const i18n = sp.i18n;
-i18n.setLocale('en', false);
 
 const XMLHttpRequest = {
   open: jest.fn(),
@@ -18,6 +14,8 @@ const XMLHttpRequest = {
 global.XMLHttpRequest = XMLHttpRequest;
 
 configure({ adapter: new Adapter() });
+
+jest.mock('@livepeer/react-native');
 
 jest.mock('expo-updates', () => ({
   checkForUpdateAsync: jest.fn(),
