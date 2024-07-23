@@ -1,14 +1,19 @@
 import { render, screen } from '@testing-library/react-native';
 import * as React from 'react';
-import UserModel from '../../../channel/UserModel';
-import { sessionService } from '~/common/services';
+import sp from '~/services/serviceProvider';
+import UserModel from '~/channel/UserModel';
 import NotificationItem from './Notification';
 import NotificationModel, { NotificationType } from './NotificationModel';
-import { hasVariation } from '../../../../ExperimentsProvider';
+import { hasVariation } from '~/../ExperimentsProvider';
 
-jest.mock('../../../common/services/session.service');
+jest.mock('~/services/serviceProvider');
 
-jest.mock('../../../../ExperimentsProvider');
+jest.mock('~/../ExperimentsProvider');
+
+sp.mockService('i18n');
+sp.mockService('api');
+sp.mockService('analytics');
+const sessionService = sp.mockService('session');
 
 const mockedHasVariation = hasVariation as jest.Mock<boolean>;
 

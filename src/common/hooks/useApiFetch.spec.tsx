@@ -1,15 +1,10 @@
 import { renderHook, act } from '@testing-library/react-hooks';
-import useApiFetch from './useApiFetch';
-import { ApiService } from '../services/api.service';
 import sp from '~/services/serviceProvider';
-import { Lifetime } from '~/services/InjectionContainer';
+import useApiFetch from './useApiFetch';
 
-jest.mock('../services/api.service');
+jest.mock('~/services/serviceProvider');
 
-// @ts-ignore
-const mockedApi = new ApiService() as jest.Mocked<ApiService>;
-
-sp.register('api', () => mockedApi, Lifetime.Singleton);
+const mockedApi = sp.mockService('api');
 
 describe('useApiFetch', () => {
   beforeEach(() => {

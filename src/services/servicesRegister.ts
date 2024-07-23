@@ -1,4 +1,4 @@
-import { Lifetime } from './InjectionContainer';
+import { Lifetime } from './injectionContainer';
 import { Storages } from '~/common/services/storage/storages.service';
 import { LogService } from '~/common/services/log.service';
 import { NavigationService } from '~/navigation/NavigationService';

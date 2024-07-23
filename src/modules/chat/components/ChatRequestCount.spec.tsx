@@ -2,6 +2,12 @@ import * as React from 'react';
 import { render } from '@testing-library/react-native';
 import ChatRequestCount from './ChatRequestCount';
 import { useGetTotalRoomInviteRequestsQuery } from '~/graphql/api';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 
 // Mock the useGetTotalRoomInviteRequestsQuery hook
 jest.mock('~/graphql/api', () => ({

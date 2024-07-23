@@ -1,16 +1,26 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import auth from '~/auth/AuthService';
 import { APP_API_URI } from '~/config/Config';
 import { UserError } from '~/common/UserError';
 import { getStores } from '../../../AppStores';
-import NavigationService from '../../../src/navigation/NavigationService';
-import {
-  ApiService,
-  TWO_FACTOR_ERROR,
-} from '../../../src/common/services/api.service';
-import { ApiError } from '../../../src/common/services/ApiErrors';
-import { sessionService } from '../../../src/common/services';
+import { ApiService, TWO_FACTOR_ERROR } from '~/common/services/api.service';
+import { ApiError } from '~/common/services/ApiErrors';
+import { SessionService } from '~/common/services/session.service';
+import { LogService } from '~/common/services/log.service';
+import { I18nService } from '~/common/services/i18n.service';
+import { NavigationService } from '~/navigation/NavigationService';
+import { AuthService } from '~/auth/AuthService';
+import { ReferrerService } from '~/common/services/referrer.service';
+import { DevModeService } from '~/config/DevModeService';
+
+jest.mock('~/common/services/analytics.service');
+jest.mock('~/common/services/session.service');
+jest.mock('~/common/services/log.service');
+jest.mock('~/common/services/i18n.service');
+jest.mock('~/auth/AuthService');
+jest.mock('~/navigation/NavigationService');
+jest.mock('~/common/services/referrer.service');
+jest.mock('~/config/DevModeService');
 
 getStores.mockReturnValue({
   user: {
@@ -20,14 +30,29 @@ getStores.mockReturnValue({
   },
 });
 
-jest.mock('~/common/services/analytics.service');
-
 var mock = new MockAdapter(axios);
 
 const axiosInstance = axios.create();
 // const axiosMock = new MockAdapter(axios);
+const devModeService = new DevModeService();
+const sessionService = new SessionService();
+const log = new LogService();
+const auth = new AuthService();
+const navigationService = new NavigationService();
+const i18n = new I18nService();
+const referrerService = new ReferrerService();
 
-const api = new ApiService(null, axiosInstance);
+const api = new ApiService(
+  devModeService,
+  sessionService,
+  log,
+  auth,
+  navigationService,
+  i18n,
+  referrerService,
+  null,
+  axiosInstance,
+);
 
 /**
  * POST
@@ -35,7 +60,7 @@ const api = new ApiService(null, axiosInstance);
 describe('api service POST', () => {
   afterEach(() => {
     mock.reset();
-    NavigationService.navigate.mockClear();
+    navigationService.navigate.mockClear();
   });
 
   it('POST should fetch and return json decoded', async () => {
@@ -113,8 +138,8 @@ describe('api service GET', () => {
     });
   });
   beforeEach(() => {
-    NavigationService.getCurrentState.mockClear();
-    NavigationService.getCurrentState.mockReturnValue({});
+    navigationService.getCurrentState.mockClear();
+    navigationService.getCurrentState.mockReturnValue({});
   });
   afterEach(() => {
     mock.reset();
@@ -194,8 +219,8 @@ describe('api service DELETE', () => {
     });
   });
   beforeEach(() => {
-    NavigationService.getCurrentState.mockClear();
-    NavigationService.getCurrentState.mockReturnValue({});
+    navigationService.getCurrentState.mockClear();
+    navigationService.getCurrentState.mockReturnValue({});
   });
   afterEach(() => {
     mock.reset();
@@ -276,8 +301,8 @@ describe('api service PUT', () => {
     });
   });
   beforeEach(() => {
-    NavigationService.getCurrentState.mockClear();
-    NavigationService.getCurrentState.mockReturnValue({});
+    navigationService.getCurrentState.mockClear();
+    navigationService.getCurrentState.mockReturnValue({});
   });
   afterEach(() => {
     mock.reset();
@@ -359,8 +384,8 @@ describe('api service auth refresh', () => {
   });
   beforeEach(() => {
     mock.reset();
-    NavigationService.getCurrentState.mockClear();
-    NavigationService.getCurrentState.mockReturnValue({});
+    navigationService.getCurrentState.mockClear();
+    navigationService.getCurrentState.mockReturnValue({});
   });
   afterEach(() => {
     mock.reset();
@@ -489,7 +514,7 @@ describe('api service auth refresh', () => {
 
   it('should prompt for 2fa if required and repeat the call', async () => {
     try {
-      NavigationService.navigate.mockImplementation((screen, params) => {
+      navigationService.navigate.mockImplementation((screen, params) => {
         // mock user entered code
         params && params.onConfirm && params.onConfirm('123123');
       });
@@ -513,7 +538,7 @@ describe('api service auth refresh', () => {
         });
 
       await api.post('api/channels/me1', params);
-      expect(NavigationService.navigate).toBeCalled();
+      expect(navigationService.navigate).toBeCalled();
     } catch (error) {
       console.log(error);
     }
@@ -521,7 +546,7 @@ describe('api service auth refresh', () => {
 
   it('should throw if 2FA is canceled', async () => {
     try {
-      NavigationService.navigate.mockImplementation((screen, params) => {
+      navigationService.navigate.mockImplementation((screen, params) => {
         console.log('CANCEL CALLED');
         // mock user entered code
         params && params.onCancel && params.onCancel();
@@ -538,7 +563,7 @@ describe('api service auth refresh', () => {
         );
 
       await api.post('api/channels/me1', params);
-      expect(NavigationService.navigate).toBeCalled();
+      expect(navigationService.navigate).toBeCalled();
     } catch (error) {
       console.log('error', error);
       expect(error).toBeInstanceOf(UserError);

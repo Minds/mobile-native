@@ -6,6 +6,12 @@ import { shallow } from 'enzyme';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 
 import TileElement from '../../../src/newsfeed/TileElement';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),

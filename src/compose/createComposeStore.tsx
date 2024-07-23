@@ -23,6 +23,7 @@ import sp from '~/services/serviceProvider';
  * @param {string} message
  */
 const showError = message => {
+  console.error(message);
   showNotification(message, 'danger', 3000);
 };
 
@@ -700,6 +701,7 @@ export default function (props) {
             sp.i18n.t('errorMessage') + '\n' + sp.i18n.t('pleaseTryAgain'),
           );
         }
+        console.log('Error submitting post', e);
         sp.log.exception(e);
       } finally {
         this.setPosting(false);

@@ -3,6 +3,15 @@ import * as React from 'react';
 import ActivityModel from '../../../newsfeed/ActivityModel';
 import MediaViewMultiImage from './MediaViewMultiImage';
 
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('api');
+sp.mockService('settings');
+
 describe('MediaViewMultiImage', () => {
   it('should render 2 images correctly', async () => {
     const entity = generateFakeMultiImageEntity({ images: 2 });

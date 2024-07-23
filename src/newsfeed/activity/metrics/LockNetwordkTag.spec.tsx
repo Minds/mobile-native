@@ -2,6 +2,12 @@ import React from 'react';
 import { render } from '@testing-library/react-native';
 import { LockNetworkTag } from './LockNetwordkTag';
 import ActivityModel from '~/newsfeed/ActivityModel'; // Adjust the import path as necessary
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 
 describe('LockNetworkTag', () => {
   it('renders nothing if hasSiteMembershipPaywall is false', () => {

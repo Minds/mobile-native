@@ -3,6 +3,13 @@ import { shallow } from 'enzyme';
 import MutualSubscribers from './MutualSubscribers';
 import generateFakeUser from '../../../__mocks__/fake/channel/UserFactory';
 import UserModel from '../UserModel';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
 
 const mockEntity = generateFakeUser();
 

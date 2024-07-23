@@ -3,13 +3,15 @@ import * as Updates from 'expo-updates';
 import * as Application from 'expo-application';
 import { compareVersions } from '~/common/helpers/compareVersions';
 import { URL, URLSearchParams } from 'react-native-url-polyfill';
-import { Storages } from '~/common/services/storage/storages.service';
-import { LogService } from '~/common/services/log.service';
+import type { Storages } from '~/common/services/storage/storages.service';
+import type { LogService } from '~/common/services/log.service';
 /**
  * This service is used to download the demo app using the modified expo-updates library.
  */
 export default class PreviewUpdateService {
-  public static async updatePreview(channel: string): Promise<void> {
+  constructor(private storages: Storages, private logService: LogService) {}
+
+  public async updatePreview(channel: string): Promise<void> {
     try {
       //@ts-ignore
       const update = await Updates.checkForUpdateAsync(channel);
@@ -25,10 +27,8 @@ export default class PreviewUpdateService {
           await Updates.fetchUpdateAsync(channel);
         }
 
-        const storages = new Storages();
-
         // we clear the session to prevent starting with the session of a different tenant demo app
-        storages.session?.clearAll();
+        this.storages.session?.clearAll();
 
         // restart the app with the new demo app
         await Updates.reloadAsync();
@@ -38,17 +38,17 @@ export default class PreviewUpdateService {
     } catch (error) {
       // You can also add an alert() to see the error message in case of an error when fetching updates.
       showNotification('Error installing demo app');
-      const logService = new LogService();
-      logService.log(error);
+
+      this.logService.error(error);
       throw error;
     }
   }
 
-  public static isPreviewURL(url: string) {
+  public isPreviewURL(url: string) {
     return url.startsWith('mindspreview://preview/');
   }
 
-  public static getPreviewChannel(url: string) {
+  public getPreviewChannel(url: string) {
     const shouldUpdate = this.checkAppVersion(url);
     if (!shouldUpdate) {
       return;
@@ -62,7 +62,7 @@ export default class PreviewUpdateService {
     return urlObj.toString().replace('mindspreview://preview/', '');
   }
 
-  public static checkAppVersion(url: string) {
+  public checkAppVersion(url: string) {
     const urlObj = new URL(url);
     const params = new URLSearchParams(urlObj.search);
     const version = params.get('version');

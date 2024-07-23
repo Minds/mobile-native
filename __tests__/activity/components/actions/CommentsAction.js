@@ -5,8 +5,14 @@ import { shallow } from 'enzyme';
 
 import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
 
-import CommentsAction from '../../../../src/newsfeed/activity/actions/CommentsAction';
-import IconButtonNext from '../../../../src/common/ui/icons';
+import CommentsAction from '~/newsfeed/activity/actions/CommentsAction';
+import IconButtonNext from '~/common/ui/icons';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 
 describe('Comment action component', () => {
   let screen, navigatorStore, navigation;

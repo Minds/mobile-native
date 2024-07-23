@@ -1,16 +1,21 @@
 import 'react-native';
 import React from 'react';
-import BottomContent from '../../../src/newsfeed/activity/BottomContent';
+import BottomContent from '~/newsfeed/activity/BottomContent';
 import Actions from '../../../src/newsfeed/activity/Actions';
-import Scheduled from '../../../src/newsfeed/activity/banners/Scheduled';
-import Pending from '../../../src/newsfeed/activity/banners/Pending';
-import ActivityMetrics from '../../../src/newsfeed/activity/metrics/ActivityMetrics';
-import ActivityModel from '../../../src/newsfeed/ActivityModel';
+import Scheduled from '~/newsfeed/activity/banners/Scheduled';
+import Pending from '~/newsfeed/activity/banners/Pending';
+import ActivityMetrics from '~/newsfeed/activity/metrics/ActivityMetrics';
+import ActivityModel from '~/newsfeed/ActivityModel';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 import { shallow } from 'enzyme';
-import { sessionService } from '~/common/services';
+import sp from '~/services/serviceProvider';
 
-jest.mock('~/common/services/analytics.service');
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('analytics');
+const sessionService = sp.mockService('session');
 
 describe('BottomContent component', () => {
   let model, navigation, screen;

@@ -3,14 +3,20 @@ import { render } from '@testing-library/react-native';
 import { useChatRoomMessagesQuery } from '../hooks/useChatRoomMessagesQuery';
 import MessageList from './MessageList';
 import { ChatMessage } from '../types';
-import { sessionService } from '~/common/services/session.service';
 import UserModel from '~/channel/UserModel';
 import { ChatRoomProvider } from '../contexts/ChatRoomContext';
 import { useChatRoomInfoQuery } from '../hooks/useChatRoomInfoQuery';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
+const sessionService = sp.mockService('session');
 
 jest.mock('../hooks/useChatRoomMessagesQuery');
 jest.mock('../hooks/useSetReadReceipt');
-jest.mock('~/common/services/session.service');
 jest.mock('../hooks/useChatRoomInfoQuery', () => ({
   useChatRoomInfoQuery: jest.fn(),
 }));

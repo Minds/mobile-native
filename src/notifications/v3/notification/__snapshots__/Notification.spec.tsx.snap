@@ -49,13 +49,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -326,13 +320,7 @@ exports[`Notification Affiliate earnings deposited 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -547,13 +535,7 @@ exports[`Notification An offer expires 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -825,13 +807,7 @@ exports[`Notification Boost accepted 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -1129,13 +1105,7 @@ exports[`Notification Boost complete 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -1433,13 +1403,7 @@ exports[`Notification Boost rejected 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -1737,13 +1701,7 @@ exports[`Notification Gift boost created 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -2129,13 +2087,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -2407,13 +2359,7 @@ exports[`Notification Receiver declines an offer 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -2685,13 +2631,7 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -2906,13 +2846,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }

@@ -23,7 +23,7 @@ const UserDataScreen = observer(() => {
     sp.resolve('analytics').setOptOut(!isOptOut());
 
     try {
-      sp.resolve('settings').submitSettings({
+      sp.resolve('settingsApi').submitSettings({
         opt_out_analytics: isOptOut(),
       });
       showNotification(sp.i18n.t('settings.saved'), 'info');

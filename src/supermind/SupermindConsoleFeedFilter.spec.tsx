@@ -4,6 +4,12 @@ import SupermindConsoleFeedFilter, {
   SupermindFilterType,
 } from './SupermindConsoleFeedFilter';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
 
 jest.mock('~/common/components/feed-filters/BaseFeedFilter', () => {
   return jest.fn().mockImplementation(({ children }) => {

@@ -5,6 +5,13 @@ import ComposeCreateScreen, {
   pushComposeCreateScreen,
 } from './ComposeCreateScreen';
 import { pushBottomSheet } from '../common/components/bottom-sheet';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
 
 jest.mock('../navigation/NavigationService');
 jest.mock('../common/components/bottom-sheet');

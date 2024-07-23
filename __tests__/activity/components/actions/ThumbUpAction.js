@@ -5,18 +5,23 @@ import { TouchableOpacity } from 'react-native';
 import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
 import ActivityModel from '../../../../src/newsfeed/ActivityModel';
 import ThumbUpAction from '../../../../src/newsfeed/activity/actions/ThumbAction';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+const permissions = sp.mockService('permissions');
+sp.mockService('analytics');
 
 jest.mock('../../../../src/auth/UserStore');
-jest.mock('~/common/services/analytics.service', () => {
-  return {
-    trackClick: jest.fn(),
-  };
-});
 
 describe('Thumb action component', () => {
   let screen, entity;
   beforeEach(() => {
     const TouchableOpacityCustom = <TouchableOpacity onPress={this.onPress} />;
+
+    permissions.canInteract.mockReturnValue(true);
 
     const navigation = { navigate: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);

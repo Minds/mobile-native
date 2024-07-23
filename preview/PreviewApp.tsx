@@ -4,7 +4,6 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { FontsLoader } from 'FontsLoader';
-import PreviewUpdateService from './PreviewUpdateService';
 
 import { Button, H4, Screen } from '~/common/ui';
 import AppMessageProvider from 'AppMessageProvider';
@@ -12,6 +11,7 @@ import { View } from 'react-native';
 import { QRScanner } from './QRScanner';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import sp from '~/services/serviceProvider';
+import './servicesRegister';
 
 /**
  * Minds Networks Preview App
@@ -39,13 +39,15 @@ const Preview = () => {
   const handleOpenURL = (url: string | { url: string } | null) => {
     url = url && typeof url === 'object' ? url.url : url;
 
-    if (url && PreviewUpdateService.isPreviewURL(url)) {
-      const channel = PreviewUpdateService.getPreviewChannel(url);
+    const previewUpdate = sp.resolve('previewUpdate');
+
+    if (url && previewUpdate.isPreviewURL(url)) {
+      const channel = previewUpdate.getPreviewChannel(url);
       if (!channel) {
         return;
       }
       setLoading(true);
-      PreviewUpdateService.updatePreview(channel).finally(() => {
+      previewUpdate.updatePreview(channel).finally(() => {
         setLoading(false);
       });
     }

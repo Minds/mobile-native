@@ -1,7 +1,13 @@
 import * as Updates from 'expo-updates';
 import PreviewUpdateService from './PreviewUpdateService';
 import { showNotification } from 'AppMessages';
-import { storagesService } from '~/common/services/storage/storages.service';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+const storagesService = sp.mockService('storages');
+const logService = sp.mockService('log');
 
 jest.mock('expo-application', () => ({
   nativeApplicationVersion: '1.0.0',
@@ -16,14 +22,14 @@ jest.mock('AppMessages', () => ({
   showNotification: jest.fn(),
 }));
 
-jest.mock('~/common/services/log.service', () => ({
-  error: jest.fn(),
-}));
-
 const mockedUpdates = Updates as jest.Mocked<typeof Updates>;
 
 describe('PreviewUpdateService', () => {
   const mockChannel = 'testChannel';
+  const previewUpdate = new PreviewUpdateService(
+    sp.resolve('storages'),
+    sp.resolve('log'),
+  );
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -36,7 +42,7 @@ describe('PreviewUpdateService', () => {
     mockedUpdates.fetchUpdateAsync.mockResolvedValueOnce({} as any);
     mockedUpdates.reloadAsync.mockResolvedValueOnce();
 
-    await PreviewUpdateService.updatePreview(mockChannel);
+    await previewUpdate.updatePreview(mockChannel);
 
     expect(Updates.checkForUpdateAsync).toHaveBeenCalledWith(mockChannel);
     expect(showNotification).toHaveBeenCalledWith('Downloading demo app...');
@@ -51,7 +57,7 @@ describe('PreviewUpdateService', () => {
       isAvailable: false,
     });
 
-    await PreviewUpdateService.updatePreview(mockChannel);
+    await previewUpdate.updatePreview(mockChannel);
 
     expect(Updates.checkForUpdateAsync).toHaveBeenCalledWith(mockChannel);
     expect(showNotification).toHaveBeenCalledWith('Demo is not ready yet.');
@@ -61,9 +67,9 @@ describe('PreviewUpdateService', () => {
     const mockError = new Error('Update check failed');
     (Updates.checkForUpdateAsync as jest.Mock).mockRejectedValue(mockError);
 
-    await expect(
-      PreviewUpdateService.updatePreview(mockChannel),
-    ).rejects.toThrow(mockError);
+    await expect(previewUpdate.updatePreview(mockChannel)).rejects.toThrow(
+      mockError,
+    );
 
     expect(Updates.checkForUpdateAsync).toHaveBeenCalledWith(mockChannel);
     expect(showNotification).toHaveBeenCalledWith('Error installing demo app');
@@ -72,14 +78,14 @@ describe('PreviewUpdateService', () => {
 
   it('should update if the version is the same', () => {
     const url = 'mindspreview://preview/testChannel?version=1.0.0';
-    const result = PreviewUpdateService.checkAppVersion(url);
+    const result = previewUpdate.checkAppVersion(url);
 
     expect(result).toBe(true);
   });
 
   it('should show message if the version is the lower', () => {
     const url = 'mindspreview://preview/testChannel?version=1.1.0';
-    const result = PreviewUpdateService.checkAppVersion(url);
+    const result = previewUpdate.checkAppVersion(url);
     expect(showNotification).toHaveBeenCalledWith(
       'This preview requires the version 1.1.0 of the Previewer, please update.',
     );
@@ -88,7 +94,7 @@ describe('PreviewUpdateService', () => {
 
   it('should show message if the version is the higher', () => {
     const url = 'mindspreview://preview/testChannel?version=0.9.0';
-    const result = PreviewUpdateService.checkAppVersion(url);
+    const result = previewUpdate.checkAppVersion(url);
     expect(showNotification).toHaveBeenCalledWith(
       'This preview was build for an old version, please create a new one from the admin panel.',
     );
@@ -97,19 +103,19 @@ describe('PreviewUpdateService', () => {
 
   it('should install if no version is specified', () => {
     const url = 'mindspreview://preview/testChannel';
-    const result = PreviewUpdateService.checkAppVersion(url);
+    const result = previewUpdate.checkAppVersion(url);
     expect(result).toBe(true);
   });
 
   it('should return the channel if the version matches', () => {
     const url = 'mindspreview://preview/testChannel?version=1.0.0';
-    const result = PreviewUpdateService.getPreviewChannel(url);
+    const result = previewUpdate.getPreviewChannel(url);
     expect(result).toBe('testChannel');
   });
 
   it('should not return the channel if the version is not the same', () => {
     const url = 'mindspreview://preview/testChannel?version=1.1.0';
-    const result = PreviewUpdateService.getPreviewChannel(url);
+    const result = previewUpdate.getPreviewChannel(url);
     expect(result).toBe(undefined);
   });
 });

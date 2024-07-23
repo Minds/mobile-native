@@ -1,6 +1,11 @@
 import { render, screen } from '@testing-library/react-native';
 import * as React from 'react';
 import ImageGalleryScreen from './ImageGalleryScreen';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+// mock services
+sp.mockService('styles');
 
 jest.mock('../newsfeed/activity/BottomContent', () => () => {
   return null;

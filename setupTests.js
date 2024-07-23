@@ -27,10 +27,10 @@ jest.mock('expo-application', () => ({
   getApplicationName: jest.fn(),
 }));
 
-jest.mock('react-native-url-polyfill', () => ({
-  URL: jest.fn(),
-  URLSearchParams: jest.fn(),
-}));
+// jest.mock('react-native-url-polyfill', () => ({
+//   URL: jest.fn(),
+//   URLSearchParams: jest.fn(),
+// }));
 
 jest.mock('~/config/Version', () => ({
   Version: {

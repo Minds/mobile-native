@@ -1,4 +1,4 @@
-import { InjectionContainer } from './InjectionContainer';
+import { InjectionContainer } from './injectionContainer';
 
 import type { Storages } from '~/common/services/storage/storages.service';
 import type { LogService } from '~/common/services/log.service';
@@ -52,6 +52,7 @@ import type { PortraitContentService } from '~/portrait/portrait-content.service
 import type { ReportService } from '~/report/ReportService';
 import type { ChannelService } from '~/channel/ChannelService';
 import type { GroupsService } from '~/groups/GroupsService';
+import type PreviewUpdateService from 'preview/PreviewUpdateService';
 
 // service provider
 const sp = new InjectionContainer<Services>();
@@ -95,6 +96,10 @@ export default {
   get permissions() {
     return sp.resolve('permissions');
   },
+  // @ts-ignore
+  mockService: <K extends keyof Services>(_: K): jest.Mocked<Services[K]> => {
+    console.warn('mockService is not implemented');
+  }, //only for testing
 };
 /**
  * Types
@@ -155,6 +160,7 @@ export type Services = {
   report: ReportService;
   channel: ChannelService;
   groups: GroupsService;
+  previewUpdate: PreviewUpdateService; // only for previewer
 };
 
 export type ServiceName = keyof Services;
