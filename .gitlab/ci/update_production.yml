@@ -11,6 +11,6 @@ update_production:
     - apk add --no-cache bash git
     - yarn install --cache-folder ../.yarn
   script:
-    - npx eas-cli update --branch production --message "$CI_COMMIT_DESCRIPTION" --json --non-interactive
+    - npx eas-cli update --branch production --message "$MESSAGE" --json --non-interactive
   rules:
     - if: $BUILD_MODE == 'UPDATE_PRODUCTION'

@@ -19,6 +19,6 @@ update_production_tenant:
       fi
     - echo "Building tenant $TENANT_ID..."
     - node tasks/setup-tenant.js $TENANT_ID
-    - npx eas-cli update --branch production --message "$CI_COMMIT_DESCRIPTION" --json --non-interactive
+    - npx eas-cli update --branch production --message "$MESSAGE" --json --non-interactive
   rules:
     - if: $BUILD_MODE == "UPDATE_PRODUCTION_TENANT"
