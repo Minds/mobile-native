@@ -13,7 +13,4 @@ update_production:
   script:
     - npx eas-cli update --branch production --message "$CI_COMMIT_DESCRIPTION" --json --non-interactive
   rules:
-    - if: $BUILD_MODE == "UPDATE_PRODUCTION"
-      when: always
-    - if: $CI_COMMIT_REF_NAME == "master"
-      when: manual
+    - if: $BUILD_MODE == 'UPDATE_PRODUCTION'
