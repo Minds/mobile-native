@@ -1,12 +1,29 @@
-import { InFeedNoticesService } from './in-feed.notices.service';
 import { when } from 'mobx';
-import { storagesService } from './storage/storages.service';
-import { sessionService } from './session.service';
-import apiService from './api.service';
+import { InFeedNoticesService } from './in-feed.notices.service';
+import { Storages } from './storage/storages.service';
+import { SessionService } from './session.service';
+import { ApiService } from './api.service';
+import { LogService } from './log.service';
+import { AnalyticsService } from './analytics.service';
 
 jest.mock('./storage/storages.service');
 jest.mock('./session.service');
 jest.mock('./api.service');
+jest.mock('./log.service');
+jest.mock('./analytics.service');
+jest.mock('~/common/components/in-feed-notices/notices', () => ({
+  noticeMapper: {
+    'verify-email': 'Verify your email',
+    'build-your-algorithm': 'Build your algorithm',
+    'invite-friends': 'Invite your friends',
+  },
+}));
+
+const apiService = new ApiService();
+const storagesService = new Storages();
+const sessionService = new SessionService();
+const logService = new LogService();
+const analyticsService = new AnalyticsService();
 
 apiService.get.mockResolvedValue({
   status: 'success',
@@ -44,11 +61,23 @@ describe('InFeedNoticesService', () => {
       .mockReturnValueOnce(null);
   });
   test('service instantiation', () => {
-    const service = new InFeedNoticesService();
+    const service = new InFeedNoticesService(
+      sessionService,
+      logService,
+      storagesService,
+      apiService,
+      analyticsService,
+    );
     expect(service).toBeInstanceOf(InFeedNoticesService);
   });
   test('service initialization onLogin and clean-up onLogout', async () => {
-    const service = new InFeedNoticesService();
+    const service = new InFeedNoticesService(
+      sessionService,
+      logService,
+      storagesService,
+      apiService,
+      analyticsService,
+    );
     const init = jest.spyOn(service, 'init');
 
     service.init();
@@ -72,7 +101,13 @@ describe('InFeedNoticesService', () => {
   });
 
   test('service visible method', async () => {
-    const service = new InFeedNoticesService();
+    const service = new InFeedNoticesService(
+      sessionService,
+      logService,
+      storagesService,
+      apiService,
+      analyticsService,
+    );
     service.init();
 
     await onLoginCB();
@@ -99,7 +134,13 @@ describe('InFeedNoticesService', () => {
   // });
 
   test('notice dismissal', async () => {
-    const service = new InFeedNoticesService();
+    const service = new InFeedNoticesService(
+      sessionService,
+      logService,
+      storagesService,
+      apiService,
+      analyticsService,
+    );
     service.init();
 
     await onLoginCB();

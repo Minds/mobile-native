@@ -4,6 +4,14 @@ import { render } from '@testing-library/react-native';
 import NotificationsScreen from '../../src/notifications/v3/NotificationsScreen';
 import { getStores } from '../../AppStores';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
+sp.mockService('log');
 
 jest.mock('@react-navigation/native');
 jest.mock('react-native-system-setting');

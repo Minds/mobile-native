@@ -1,14 +1,32 @@
-import api from '../../../src/common/services/api.service';
-import imagePicker from '../../../src/common/services/image-picker.service';
-import service from '../../../src/common/services/attachment.service';
-jest.mock('../../../src/common/services/api.service');
-// jest.mock('../../../src/capture/CaptureService');
-jest.mock('../../../src/common/services/image-picker.service');
+import { ApiService } from '~/common/services/api.service';
+import { LogService } from '~/common/services/log.service';
+import { I18nService } from '~/common/services/i18n.service';
+import { ImagePickerService } from '~/common/services/image-picker.service';
+import { AttachmentService } from '~/common/services/attachment.service';
+import { PermissionsService } from '~/common/services/permissions.service';
+
+// jest.mock('~/capture/CaptureService');
+jest.mock('~/common/services/api.service');
+jest.mock('~/common/services/image-picker.service');
 
 /**
  * Tests
  */
 describe('Attachment service', () => {
+  const api = new ApiService();
+  const logService = new LogService();
+  const permissions = new PermissionsService();
+  const i18n = new I18nService();
+  const imagePicker = new ImagePickerService();
+
+  const service = new AttachmentService(
+    api,
+    logService,
+    permissions,
+    i18n,
+    imagePicker,
+  );
+
   beforeEach(() => {
     api.upload.mockClear();
     api.delete.mockClear();

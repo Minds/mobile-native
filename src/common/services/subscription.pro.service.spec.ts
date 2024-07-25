@@ -1,12 +1,16 @@
-import subscriptionProService from './subscription.pro.service'; // Replace with the correct import path
-import api from './api.service'; // Replace with the correct import path
+import { SubscriptionProService } from './subscription.pro.service'; // Replace with the correct import path
+import { ApiService } from './api.service'; // Replace with the correct import path
 
 jest.mock('./api.service'); // Mock the API service
+// @ts-ignore
+const api = new ApiService() as jest.Mocked<ApiService>;
 
 describe('SubscriptionProService', () => {
   let mockApiResponse;
+  let subscriptionProService: SubscriptionProService;
 
   beforeEach(() => {
+    subscriptionProService = new SubscriptionProService(api);
     mockApiResponse = {
       expires: 4833978931,
       has_subscription: false,
@@ -55,6 +59,7 @@ describe('SubscriptionProService', () => {
   });
 
   it('should get the expiry string', async () => {
+    await subscriptionProService.isActive();
     const expiryString = subscriptionProService.expiryString;
     expect(expiryString).toBe('7:55pm on Mar 8th, 2123');
   });

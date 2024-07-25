@@ -37,7 +37,7 @@ const EmailScreenS = inject('user')(
         return;
       }
       setState({ saving: true });
-      sp.resolve('settings')
+      sp.resolve('settingsApi')
         .submitSettings({ email })
         .then(() => {
           user.me.confirmEmailCode();
@@ -73,7 +73,7 @@ const EmailScreenS = inject('user')(
     }, [save, disabled]);
 
     useEffect(() => {
-      sp.resolve('settings')
+      sp.resolve('settingsApi')
         .getSettings()
         .then(({ channel }) => {
           setState({ email: channel.email, loaded: true });

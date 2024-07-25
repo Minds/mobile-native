@@ -1,11 +1,17 @@
-import blogsService from '../../src/blogs/BlogsService';
-import BlogsViewStore from '../../src/blogs/BlogsViewStore';
-import BlogModel from '../../src/blogs/BlogModel';
-import NavigationService from '../../src/navigation/NavigationService';
+import BlogsViewStore from '~/blogs/BlogsViewStore';
+import BlogModel from '~/blogs/BlogModel';
 
-jest.mock('../../src/blogs/BlogsService');
-jest.mock('../../src/blogs/BlogModel');
-jest.mock('../../src/navigation/NavigationService');
+jest.mock('~/blogs/BlogsService');
+jest.mock('~/blogs/BlogModel');
+
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+const blogsService = sp.mockService('blogs');
+const navigationService = sp.mockService('navigation');
+sp.mockService('richEmbed');
 
 //mock blog
 BlogModel.checkOrCreate = jest.fn();
@@ -22,7 +28,7 @@ describe('blogs view store', () => {
   beforeEach(() => {
     store = new BlogsViewStore();
 
-    NavigationService.getCurrentState.mockReturnValue({});
+    navigationService.getCurrentState.mockReturnValue({});
   });
 
   it('should call blogs service loadEntity and update the blog', async () => {

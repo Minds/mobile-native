@@ -3,7 +3,6 @@ import moment from 'moment';
 
 import UserModel from '../UserModel';
 import FeedStore from '~/common/stores/FeedStore';
-import imagePickerService from '~/common/services/image-picker.service';
 import type { SupportTiersType } from '~/wire/WireTypes';
 import { showNotification } from '~/../AppMessages';
 import { IS_IOS } from '~/config/Config';
@@ -312,13 +311,13 @@ const createChannelStore = () => {
 
       try {
         const response = camera
-          ? await imagePickerService.launchCamera({
+          ? await sp.resolve('imagePicker').launchCamera({
               type: 'Images',
               crop: !(IS_IOS && isBanner),
               front: true,
               aspect: isBanner ? [15, 6] : [1, 1],
             })
-          : await imagePickerService.launchImageLibrary({
+          : await sp.resolve('imagePicker').launchImageLibrary({
               type: 'Images',
               crop: !(IS_IOS && isBanner),
               aspect: isBanner ? [15, 6] : [1, 1],

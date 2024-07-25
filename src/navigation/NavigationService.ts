@@ -28,6 +28,7 @@ export class NavigationService {
 
   navigate(...args) {
     if (this.navigationRef.isReady()) {
+      // @ts-ignore
       this.navigationRef.navigate(...args);
     } else {
       throw new Error('[NavigationService] Navigation is not ready');
@@ -40,6 +41,7 @@ export class NavigationService {
 
   dispatch(...args) {
     if (this.navigationRef.isReady()) {
+      // @ts-ignore
       this.navigationRef.dispatch(...args);
     } else {
       throw new Error('[NavigationService] Navigation is not ready');
@@ -48,6 +50,7 @@ export class NavigationService {
 
   push(...args) {
     if (this.navigationRef.isReady()) {
+      // @ts-ignore
       this.navigationRef.dispatch(StackActions.push(...args));
     } else {
       throw new Error('[NavigationService] Navigation is not ready');

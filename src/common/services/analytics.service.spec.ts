@@ -1,8 +1,22 @@
+import { observable, extendObservable } from 'mobx';
 import { AnalyticsService } from './analytics.service';
-import mindsConfigService from '~/common/services/minds-config.service';
-import { storagesService } from '~/common/services';
+import { MindsConfigService } from './minds-config.service';
+import { SessionService } from './session.service';
+import { Storages } from './storage/storages.service';
 
-//jest.mock('~/common/services/minds-config.service');
+jest.mock('~/common/services/minds-config.service');
+jest.mock('~/common/services/session.service');
+jest.mock('~/common/services/storage/storages.service');
+
+const storagesService = new Storages();
+// @ts-ignore
+const sessionService = new SessionService();
+// @ts-ignore
+const mindsConfigService = new MindsConfigService();
+
+extendObservable(mindsConfigService, {
+  settings: observable.box({}),
+});
 
 const mockedUserStorage = storagesService.user as jest.Mocked<
   typeof storagesService.user
@@ -12,7 +26,11 @@ describe('AnalyticsService', () => {
   let service: AnalyticsService;
 
   beforeEach(() => {
-    service = new AnalyticsService();
+    service = new AnalyticsService(
+      sessionService,
+      storagesService,
+      mindsConfigService,
+    );
   });
 
   it('should instantiate', () => {
@@ -56,7 +74,7 @@ describe('AnalyticsService', () => {
   it('should emit feature flag event when getFeatureFlag called and not emitted before', () => {
     jest.spyOn(service.posthog, 'getFeatureFlag').mockReturnValue(true);
     jest.spyOn(service.posthog, 'capture');
-    jest.spyOn(<any>mockedUserStorage, 'setInt');
+    jest.spyOn(<any>mockedUserStorage, 'set');
 
     expect(service.getFeatureFlag('test-flag')).toBe(true);
     expect(service.posthog.capture).toHaveBeenCalled();

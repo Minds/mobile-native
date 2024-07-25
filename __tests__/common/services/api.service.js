@@ -384,6 +384,7 @@ describe('api service auth refresh', () => {
   });
   beforeEach(() => {
     mock.reset();
+    sessionService.refreshAuthToken.mockClear();
     navigationService.getCurrentState.mockClear();
     navigationService.getCurrentState.mockReturnValue({});
   });
@@ -398,7 +399,7 @@ describe('api service auth refresh', () => {
     const data2 = { user_id: 2, status: 'success' };
     const data3 = { user_id: 3, status: 'success' };
 
-    auth.refreshToken.mockResolvedValue({
+    sessionService.refreshAuthToken.mockResolvedValue({
       refresh_token: 'refresh',
       access_token: 'access',
     });
@@ -428,7 +429,7 @@ describe('api service auth refresh', () => {
     expect(r2).toEqual(data2);
     expect(r3).toEqual(data3);
 
-    expect(auth.refreshToken).toBeCalledTimes(1);
+    expect(sessionService.refreshAuthToken).toBeCalledTimes(1);
   });
 
   it('must fail without logout if token refresh fails by connectivity/server error', async () => {
@@ -441,7 +442,7 @@ describe('api service auth refresh', () => {
     const data4 = { user_id: 4, status: 'success' };
 
     const error = new Error('Network error');
-    auth.refreshToken.mockRejectedValue(error);
+    sessionService.refreshAuthToken.mockRejectedValue(error);
 
     mock
       .onGet('api/channels/me1')
@@ -475,7 +476,7 @@ describe('api service auth refresh', () => {
     expect(r3).toBe(error);
     expect(r4).toBe(error);
 
-    expect(auth.refreshToken).toBeCalledTimes(1);
+    expect(sessionService.refreshAuthToken).toBeCalledTimes(1);
   });
 
   it('should logout if refresh fails with response is 401', async () => {
@@ -488,7 +489,7 @@ describe('api service auth refresh', () => {
     const data2 = { user_id: 2, status: 'success' };
 
     const error = { response: { status: 401 } };
-    auth.refreshToken.mockRejectedValue(error);
+    sessionService.refreshAuthToken.mockRejectedValue(error);
 
     mock
       .onGet('api/channels/me1')
@@ -509,7 +510,7 @@ describe('api service auth refresh', () => {
     expect(r1).toBe(error);
     expect(r2).toBe(error);
 
-    expect(auth.refreshToken).toBeCalledTimes(1);
+    expect(sessionService.refreshAuthToken).toBeCalledTimes(1);
   });
 
   it('should prompt for 2fa if required and repeat the call', async () => {

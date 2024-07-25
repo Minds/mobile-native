@@ -1,16 +1,8 @@
 import * as ImagePicker from 'expo-image-picker';
-import service from '../../../src/common/services/image-picker.service';
+import { ImagePickerService } from '~/common/services/image-picker.service';
 
 jest.mock('expo-image-picker');
 jest.mock('../../../AppMessages', () => ({}));
-jest.mock('../../../src/common/services/i18n.service', () => ({
-  t: jest.fn(),
-  p: jest.fn(),
-  l: jest.fn(),
-  getCurrentLocale: jest.fn(),
-  setLocale: jest.fn(),
-  getSupportedLocales: jest.fn(),
-}));
 
 jest.mock('react-native', () => ({
   Alert: {
@@ -26,6 +18,7 @@ jest.mock('react-native', () => ({
  * Tests
  */
 describe('Image picker service', () => {
+  const service = new ImagePickerService();
   it('should launch camera', async () => {
     ImagePicker.launchCameraAsync.mockResolvedValue({ assets: null });
 

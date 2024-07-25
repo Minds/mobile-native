@@ -4,7 +4,7 @@ const config = {
   automock: false,
   cacheDirectory: '.jest/cache',
   testRegex: [
-    './__tests__/.*.js$',
+    './__tests__/.*.[tj]sx?$',
     './src/.*\\.spec\\.[tj]sx?$',
     './preview/.*\\.spec\\.[tj]sx?$',
   ],

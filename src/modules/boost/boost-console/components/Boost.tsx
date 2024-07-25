@@ -89,7 +89,6 @@ export default class Boost extends Component<BoostProps> {
           <GroupCard
             // @ts-ignore
             entity={GroupModel.create(entity)}
-            navigation={this.props.navigation}
           />
         );
       case 'object':
@@ -106,7 +105,6 @@ export default class Boost extends Component<BoostProps> {
               <ImageCard
                 // @ts-ignore
                 entity={ActivityModel.create(entity)}
-                navigation={this.props.navigation}
               />
             );
           case 'video':
@@ -114,7 +112,6 @@ export default class Boost extends Component<BoostProps> {
               <VideoCard
                 // @ts-ignore
                 entity={ActivityModel.create(entity)}
-                navigation={this.props.navigation}
               />
             );
         }

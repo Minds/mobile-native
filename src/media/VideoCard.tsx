@@ -5,14 +5,15 @@ import { Image } from 'expo-image';
 
 import { MINDS_CDN_URI } from '../config/Config';
 import MindsVideo from './v2/mindsVideo/MindsVideo';
-import i18n from '../common/services/i18n.service';
 import MText from '../common/components/MText';
+import sp from '~/services/serviceProvider';
+import type ActivityModel from '~/newsfeed/ActivityModel';
 
 /**
  * Video Card
  */
 @observer
-export default class VideoCard extends Component {
+export default class VideoCard extends Component<{ entity: ActivityModel }> {
   /**
    * Get Channel Avatar
    */
@@ -30,6 +31,7 @@ export default class VideoCard extends Component {
   render() {
     const entity = this.props.entity;
 
+    // @ts-ignore: Check if the src property exists
     const video = { uri: entity.src['360.mp4'] };
 
     return (
@@ -46,7 +48,7 @@ export default class VideoCard extends Component {
                   {entity.ownerObj.username.toUpperCase()}
                 </MText>
                 <MText style={styles.createdDate}>
-                  {i18n.date(entity.time_created * 1000)}
+                  {sp.i18n.date(parseInt(entity.time_created, 10) * 1000)}
                 </MText>
               </View>
             </View>

@@ -17,7 +17,7 @@ export default function () {
    */
   useEffect(() => {
     async function getMatureContent() {
-      const { channel } = await sp.resolve('settings').getSettings();
+      const { channel } = await sp.resolve('settingsApi').getSettings();
       setMatureContent(channel.mature);
       setLoading(false);
     }
@@ -31,7 +31,7 @@ export default function () {
     async val => {
       setLoading(true);
       try {
-        await sp.resolve('settings').submitSettings({ mature: val });
+        await sp.resolve('settingsApi').submitSettings({ mature: val });
 
         // set the value on the active user
         sp.session.getUser().setMature(val);

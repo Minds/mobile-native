@@ -43,7 +43,7 @@ type PropsType = {
  */
 @inject('user')
 @observer
-class BlogsViewScreen extends Component<PropsType> {
+export class BlogsViewScreen extends Component<PropsType> {
   commentsRef: any;
   blogsView: BlogsViewStore;
 

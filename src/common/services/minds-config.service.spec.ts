@@ -1,30 +1,25 @@
-import apiService from './api.service';
+import { ApiService } from './api.service';
 import { ApiResponse } from './ApiResponse';
 import { MindsConfigService } from './minds-config.service';
-import { storagesService } from '~/common/services/storage/storages.service';
+import { Storages } from '~/common/services/storage/storages.service';
 
 jest.mock('../helpers/delay', () =>
   jest.fn().mockImplementation(_ => new Promise<void>(resolve => resolve())),
 );
-jest.mock('./api.service', () => ({
-  get: jest.fn(),
-}));
+jest.mock('./api.service');
+jest.mock('~/common/services/storage/storages.service');
 
+// @ts-ignore
+const apiService = new ApiService();
+const storagesService = new Storages();
 const mockedApiService = apiService as jest.Mocked<typeof apiService>;
-
-jest.mock('./storage/storages.service', () => ({
-  user: {
-    setMap: jest.fn(),
-    getMap: jest.fn(),
-  },
-}));
 
 describe('MindsConfigService', () => {
   let service: MindsConfigService;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    service = new MindsConfigService();
+    service = new MindsConfigService(mockedApiService, storagesService);
   });
 
   it('should fetch minds config and update settings', async () => {

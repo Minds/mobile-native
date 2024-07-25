@@ -49,13 +49,7 @@ exports[`Notifications component renders correctly 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/100000000000000519/medium/1623077876",
             }
           }
@@ -332,6 +326,7 @@ exports[`Notifications component renders correctly 1`] = `
             }
           }
         />
+        You earned 0.332 tokens yesterday. Nice job!
          
       </MText>
     </View>

@@ -118,7 +118,7 @@ export default observer(function () {
     };
 
     try {
-      await sp.resolve('settings').submitSettings(params);
+      await sp.resolve('settingsApi').submitSettings(params);
       store.clearInputs();
       // clear the cookies (fix future issues with calls)
       await sp.api.clearCookies();

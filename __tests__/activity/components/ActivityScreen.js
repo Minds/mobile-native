@@ -10,7 +10,7 @@ import {
 } from '../../../__mocks__/@react-navigation/native';
 import { getStores } from '../../../AppStores';
 import sp from '~/services/serviceProvider';
-import ActivityScreen from '~/newsfeed/ActivityScreen';
+import { ActivityScreen } from '~/newsfeed/ActivityScreen';
 
 jest.mock('~/services/serviceProvider');
 
@@ -20,11 +20,17 @@ sp.mockService('metadata');
 const analytics = sp.mockService('analytics');
 sp.mockService('newsfeed');
 sp.mockService('i18n');
+sp.mockService('richEmbed');
+const permissions = sp.mockService('permissions');
+sp.mockService('videoPlayer');
+sp.mockService('api');
+sp.mockService('feed');
+sp.mockService('translation');
+const session = sp.mockService('session');
 sp.mockService('log');
 const NavigationService = sp.mockService('navigation');
 const entitiesService = sp.mockService('entities');
 
-// mock ana
 analytics.buildEntityContext.mockReturnValue({});
 analytics.buildClientMetaContext.mockReturnValue({});
 
@@ -78,7 +84,9 @@ describe('Activity screen component', () => {
       useNavigation.mockReturnValue(navigation);
       useRoute.mockReturnValue({ params: {} });
       NavigationService.getCurrentState.mockReturnValue({ params: {} });
-
+      session.getUser.mockReturnValue({ id: '1' });
+      permissions.canInteract.mockReturnValue(true);
+      permissions.canBoost.mockReturnValue(true);
       const entity = activitiesServiceFaker().load(1).activities[0];
       entity.can = jest.fn(() => true);
 

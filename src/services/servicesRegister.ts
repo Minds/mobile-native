@@ -53,6 +53,8 @@ import type { PortraitContentService } from '~/portrait/portrait-content.service
 import type { ReportService } from '~/report/ReportService';
 import type { ChannelService } from '~/channel/ChannelService';
 import type { GroupsService } from '~/groups/GroupsService';
+import type { ImagePickerService } from '~/common/services/image-picker.service';
+import type PreviewUpdateService from 'preview/PreviewUpdateService';
 
 import sp from '~/services/serviceProvider';
 
@@ -274,6 +276,8 @@ sp.register(
       sp.resolve('log'),
       sp.resolve('session'),
       sp.resolve('navigation'),
+      sp.resolveLazy('i18n'),
+      sp.resolveLazy('config'),
     );
   },
   Lifetime.Singleton,
@@ -328,6 +332,7 @@ sp.register(
       sp.resolve('log'),
       sp.resolve('permissions'),
       sp.resolve('i18n'),
+      sp.resolveLazy('imagePicker'),
     );
   },
   Lifetime.Singleton,
@@ -339,7 +344,7 @@ sp.register(
   () => {
     const Service = require('~/modules/store-rating')
       .StoreRatingService as typeof StoreRatingService;
-    return new Service(sp.resolve('storages'), sp.resolve('openURL'));
+    return new Service(sp.resolve('storages'));
   },
   Lifetime.Singleton,
 );
@@ -484,6 +489,7 @@ sp.register(
       sp.resolve('analytics'),
       sp.resolve('api'),
       sp.resolve('referrer'),
+      sp.resolveLazy('previewUpdate'),
     );
   },
   Lifetime.Singleton,
@@ -746,3 +752,21 @@ sp.register(
   },
   Lifetime.Singleton,
 );
+
+// image picker service
+sp.register(
+  'imagePicker',
+  () => {
+    const Service = require('~/common/services/image-picker.service')
+      .ImagePickerService as typeof ImagePickerService;
+    return new Service();
+  },
+  Lifetime.Singleton,
+);
+
+// preview update service
+sp.register('previewUpdate', () => {
+  const Service = require('preview/PreviewUpdateService')
+    .default as typeof PreviewUpdateService;
+  return new Service(sp.resolve('storages'), sp.resolve('log'));
+});

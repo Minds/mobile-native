@@ -45,7 +45,7 @@ const BoostSettingsScreen = observer(() => {
   const theme = sp.styles.style;
   const user = sp.session.getUser();
   const i18n = sp.i18n;
-  const settingsService = sp.resolve('settings');
+  const settingsService = sp.resolve('settingsApi');
 
   const localStore = useLocalStore(() => ({
     loading: true,

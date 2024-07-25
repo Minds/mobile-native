@@ -44,7 +44,7 @@ const createTwoFactorStore = () => ({
   async load() {
     this.loadError = false;
     try {
-      const settings: any = await sp.resolve('settings').getSettings();
+      const settings: any = await sp.resolve('config').getSettings();
       if (settings && settings.channel) {
         this.has2fa(settings.channel.has2fa);
       }

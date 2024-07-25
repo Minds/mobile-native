@@ -5,13 +5,20 @@ import renderer from 'react-test-renderer';
 import LoginScreen from '../../src/auth/multi-user/LoginScreen';
 import { getStores } from '../../AppStores';
 import { useNavigation } from '@react-navigation/core';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('session');
+sp.mockService('i18n');
 
 jest.mock('@react-navigation/core');
 jest.mock('@gorhom/bottom-sheet');
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );
-jest.mock('../../src/auth/AuthService');
 jest.mock('react-native-safe-area-context');
 
 getStores.mockReturnValue({

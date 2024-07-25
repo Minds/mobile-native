@@ -4,7 +4,6 @@ import { Alert } from 'react-native';
 import { nativeApplicationVersion } from 'expo-application';
 import * as UpdateAPK from 'rn-update-apk';
 
-import { showNotification } from '../../../AppMessages';
 import { compareVersions } from '../helpers/compareVersions';
 import type { Storages } from './storage/storages.service';
 import type { NavigationService } from '~/navigation/NavigationService';
@@ -186,6 +185,7 @@ export class UpdateService {
       },
 
       onError: err => {
+        const showNotification = require('~/../AppMessages').showNotification;
         showNotification(this.i18n.t('update.failed'), 'danger');
         this.log.exception(err);
         this.navigation.goBack();

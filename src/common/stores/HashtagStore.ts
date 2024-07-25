@@ -42,7 +42,6 @@ export class HashtagStore {
   @action
   toggleAll() {
     this.all = !this.all;
-    sp.resolve('settings').setUseHashtags(!this.all);
   }
 
   /**
@@ -51,7 +50,6 @@ export class HashtagStore {
   @action
   setAll(value) {
     this.all = value;
-    sp.resolve('settings').setUseHashtags(!this.all);
   }
 
   /**

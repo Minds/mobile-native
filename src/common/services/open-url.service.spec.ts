@@ -1,15 +1,21 @@
 import { OpenURLService } from './open-url.service';
 import { Linking } from 'react-native';
-import { InAppBrowser } from 'react-native-inappbrowser-reborn';
+
 import { Storages } from './storage/storages.service';
 import { DeepLinksRouterService } from './deeplinks-router.service';
 import { NavigationService } from '~/navigation/NavigationService';
-const mockedInAppBrowser = InAppBrowser as jest.Mocked<typeof InAppBrowser>;
+import { openLinkInInAppBrowser } from './inapp-browser.service';
 
 // ### Mocks ###
-
+jest.mock('react-native-url-polyfill', () => ({
+  URL: jest.fn(),
+  URLSearchParams: jest.fn(),
+}));
 jest.mock('./analytics.service');
 jest.mock('./deeplinks-router.service');
+jest.mock('~/common/services/inapp-browser.service', () => ({
+  openLinkInInAppBrowser: jest.fn(),
+}));
 jest.mock('~/navigation/NavigationService');
 
 jest.mock('../../config/Config', () => ({
@@ -88,11 +94,7 @@ describe('OpenURLService', () => {
 
   it('should open link in in-app browser if it is selected', async () => {
     service.setPreferredBrowser(0);
-    mockedInAppBrowser.isAvailable.mockResolvedValue(true);
     await service.open('https://example.com');
-    expect(mockedInAppBrowser.open).toHaveBeenCalledWith(
-      'https://example.com',
-      expect.any(Object),
-    );
+    expect(openLinkInInAppBrowser).toHaveBeenCalledWith('https://example.com');
   });
 });

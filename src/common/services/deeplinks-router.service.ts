@@ -8,11 +8,11 @@ import {
 } from '../../config/Config';
 import { Linking } from 'react-native';
 import getMatches from '../helpers/getMatches';
-import PreviewUpdateService from 'preview/PreviewUpdateService';
 import type { AnalyticsService } from './analytics.service';
 import type { NavigationService } from '~/navigation/NavigationService';
 import type { ApiService } from './api.service';
 import type { ReferrerService } from './referrer.service';
+import type PreviewUpdateService from 'preview/PreviewUpdateService';
 import { openLinkInInAppBrowser } from './inapp-browser.service';
 
 /**
@@ -38,6 +38,7 @@ export class DeepLinksRouterService {
     private analytics: AnalyticsService,
     private api: ApiService,
     private referrer: ReferrerService,
+    private previewUpdate: PreviewUpdateService,
   ) {
     MINDS_DEEPLINK.forEach(r => this.add(r[0], r[1], r[2], r[3]));
   }
@@ -88,12 +89,12 @@ export class DeepLinksRouterService {
    * @param {string} url
    */
   navigate(url, trackAnalytics = false) {
-    if (IS_TENANT_PREVIEW && url && PreviewUpdateService.isPreviewURL(url)) {
-      const channel = PreviewUpdateService.getPreviewChannel(url);
+    if (IS_TENANT_PREVIEW && url && this.previewUpdate.isPreviewURL(url)) {
+      const channel = this.previewUpdate.getPreviewChannel(url);
       if (!channel) {
         return;
       }
-      PreviewUpdateService.updatePreview(channel);
+      this.previewUpdate.updatePreview(channel);
       return;
     }
 

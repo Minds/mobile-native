@@ -11,7 +11,7 @@ export type MediaResponse = false | PickedMedia[];
 /**
  * Image picker service
  */
-class ImagePickerService {
+export class ImagePickerService {
   /**
    * Check if we have permission or ask the user
    */
@@ -113,5 +113,3 @@ class ImagePickerService {
     });
   }
 }
-
-export default new ImagePickerService();

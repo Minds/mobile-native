@@ -7,6 +7,7 @@ jest.mock('~/services/serviceProvider');
 
 // mock services
 sp.mockService('styles');
+sp.mockService('i18n');
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';

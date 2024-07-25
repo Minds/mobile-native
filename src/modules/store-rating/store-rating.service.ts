@@ -10,7 +10,6 @@ import {
 } from '../../config/Config';
 import { rateApp } from './components/RateApp';
 import type { Storages } from '~/common/services/storage/storages.service';
-import type { OpenURLService } from '~/common/services/open-url.service';
 import { openLinkInInAppBrowser } from '~/common/services/inapp-browser.service';
 
 const SCORES_KEY = 'APP_SCORES';
@@ -20,7 +19,7 @@ export class StoreRatingService {
   lastPromptedAt: number | null;
   points: number;
 
-  constructor(private storages: Storages, private openURL: OpenURLService) {
+  constructor(private storages: Storages) {
     this.debouncedSetStorage = debounce(this.debouncedSetStorage, 2000);
     this.lastPromptedAt = storages.app.getNumber(LAST_PROMPTED_AT_KEY) || null;
     this.points = storages.app.getNumber(SCORES_KEY) || 0;

@@ -1,8 +1,12 @@
 import { when } from 'mobx';
-import wireService from '../../src/wire/WireService';
-import WireStore from '../../src/wire/WireStore';
+import WireStore from '~/wire/WireStore';
+import sp from '~/services/serviceProvider';
 
-jest.mock('../../src/wire/WireService');
+jest.mock('~/services/serviceProvider');
+
+// mock services
+const wireService = sp.mockService('wire');
+sp.mockService('i18n');
 
 /**
  * Wire service

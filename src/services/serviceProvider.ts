@@ -53,6 +53,7 @@ import type { ReportService } from '~/report/ReportService';
 import type { ChannelService } from '~/channel/ChannelService';
 import type { GroupsService } from '~/groups/GroupsService';
 import type PreviewUpdateService from 'preview/PreviewUpdateService';
+import type { ImagePickerService } from '~/common/services/image-picker.service';
 
 // service provider
 const sp = new InjectionContainer<Services>();
@@ -161,6 +162,7 @@ export type Services = {
   channel: ChannelService;
   groups: GroupsService;
   previewUpdate: PreviewUpdateService; // only for previewer
+  imagePicker: ImagePickerService;
 };
 
 export type ServiceName = keyof Services;

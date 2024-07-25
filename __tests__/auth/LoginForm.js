@@ -4,12 +4,19 @@ import renderer from 'react-test-renderer';
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 
-import LoginForm from '../../src/auth/login/LoginForm';
-import authService from '../../src/auth/AuthService';
+import LoginForm from '~/auth/login/LoginForm';
 import { getStores } from '../../AppStores';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('session');
+sp.mockService('i18n');
+const authService = sp.mockService('auth');
 
 jest.mock('@gorhom/bottom-sheet');
-jest.mock('../../src/auth/AuthService');
 
 getStores.mockReturnValue({
   user: {

@@ -1,13 +1,18 @@
 import { CommentStorageService } from '../../src/comments/CommentStorageService';
-import { storagesService } from '~/common/services';
-jest.mock('../../src/common/services/storage/storages.service');
-jest.mock('../../src/common/services/log.service');
+import { Storages } from '~/common/services/storage/storages.service';
+import { LogService } from '~/common/services/log.service';
+
+jest.mock('~/common/services/storage/storages.service');
+jest.mock('~/common/services/log.service');
+
+const storagesService = new Storages();
+const logService = new LogService();
 
 /**
  * Tests
  */
 describe('Comment storage service', () => {
-  const storage = new CommentStorageService();
+  const storage = new CommentStorageService(storagesService, logService);
 
   const response = {
     comments: [

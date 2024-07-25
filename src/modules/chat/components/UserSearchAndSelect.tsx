@@ -5,13 +5,11 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
 import { B1 } from '~/common/ui';
 import UserModel from '~/channel/UserModel';
-import ThemedStyles from '~/styles/ThemedStyles';
 import ChatUserChip from './ChatUserChip';
 import TextInput from '~/common/components/TextInput';
 import ChatUserItem from './ChatUserItem';
-import sessionService from '~/common/services/session.service';
 import CenteredLoading from '~/common/components/CenteredLoading';
-import SearchBarService from '~/topbar/searchbar/SearchBar.service';
+import sp from '~/services/serviceProvider';
 
 export const UserSearchAndSelect = ({
   ActionButton,
@@ -45,8 +43,10 @@ export const UserSearchAndSelect = ({
   const { isLoading, error, data } = useQuery(
     ['search', searchTerm],
     async () => {
-      const currentUser = sessionService.getUser();
-      const response = await SearchBarService.getSuggestedSearch(searchTerm);
+      const currentUser = sp.session.getUser();
+      const response = await sp
+        .resolve('searchBar')
+        .getSuggestedSearch(searchTerm);
       return response.filter(u => u.guid !== currentUser.guid);
     },
     {
@@ -65,14 +65,14 @@ export const UserSearchAndSelect = ({
       <View style={styles.searchContainer}>
         <Icon
           name="magnify"
-          style={ThemedStyles.style.colorSecondaryText}
+          style={sp.styles.style.colorSecondaryText}
           size={22}
         />
         <TextInput
           style={styles.searchInput}
           onChangeText={setSearchTerm}
           placeholder="Search for people"
-          placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+          placeholderTextColor={sp.styles.getColor('TertiaryText')}
         />
       </View>
       <ScrollView>
@@ -130,7 +130,7 @@ export const UserSearchAndSelect = ({
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   buttonContainer: [
     'paddingHorizontal4x',
     'paddingVertical4x',

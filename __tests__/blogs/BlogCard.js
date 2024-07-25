@@ -2,16 +2,24 @@ import 'react-native';
 import React from 'react';
 import { Platform, Linking } from 'react-native';
 import { shallow } from 'enzyme';
-import BlogCard from '../../src/blogs/BlogCard';
+import BlogCard from '~/blogs/BlogCard';
 import blogFakeFactory from '../../__mocks__/fake/blogs/BlogFactory';
-import BlogModel from '../../src/blogs/BlogModel';
+import BlogModel from '~/blogs/BlogModel';
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
-import Actions from '../../src/newsfeed/activity/Actions';
+import Actions from '~/newsfeed/activity/Actions';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('api');
+sp.mockService('i18n');
 
 Linking.openURL = jest.fn();
 
-jest.mock('../../src/newsfeed/activity/Actions', () => 'Actions');
+jest.mock('~/newsfeed/activity/Actions', () => 'Actions');
 
 /**
  * Tests

@@ -1,6 +1,5 @@
 import { ApiService } from './api.service';
 import { ApiResponse } from './ApiResponse';
-import imagePicker, { MediaType } from './image-picker.service';
 import Cancelable from 'promise-cancelable';
 import imageManipulatorService from './image-manipulator.service';
 import { IMAGE_MAX_SIZE } from './../../config/Config';
@@ -9,6 +8,7 @@ import { Media } from '../stores/AttachmentStore';
 import type { LogService } from './log.service';
 import type { PermissionsService } from './permissions.service';
 import type { I18nService } from './i18n.service';
+import type { ImagePickerService, MediaType } from './image-picker.service';
 
 type S3Response = {
   lease: {
@@ -27,6 +27,7 @@ export class AttachmentService {
     private logService: LogService,
     private permissions: PermissionsService,
     private i18n: I18nService,
+    private imagePicker: ImagePickerService,
   ) {}
   /**
    * Attach media file
@@ -188,7 +189,7 @@ export class AttachmentService {
    * Capture video
    */
   async video() {
-    const response = await imagePicker.launchCamera({ type: 'Videos' });
+    const response = await this.imagePicker.launchCamera({ type: 'Videos' });
 
     if (response) {
       // we only use the first one if it is an array
@@ -209,7 +210,7 @@ export class AttachmentService {
    * Capture photo
    */
   async photo() {
-    const response = await imagePicker.launchCamera({ type: 'Images' });
+    const response = await this.imagePicker.launchCamera({ type: 'Images' });
 
     if (response) {
       // we only use the first one if it is an array
@@ -230,7 +231,7 @@ export class AttachmentService {
    * @param {string} mediaType photo or video (or mixed only ios)
    */
   async gallery(type: MediaType = 'Images', crop = false, maxFiles = 1) {
-    const response = await imagePicker.launchImageLibrary({
+    const response = await this.imagePicker.launchImageLibrary({
       type,
       crop,
       maxFiles,

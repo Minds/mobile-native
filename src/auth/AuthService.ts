@@ -9,7 +9,8 @@ import { AuthType } from '~/common/services/storage/session.storage.service';
 import type { LogService } from '~/common/services/log.service';
 import type { SessionService } from '~/common/services/session.service';
 import type { NavigationService } from '~/navigation/NavigationService';
-import sp from '~/services/serviceProvider';
+import type { I18nService } from '~/common/services/i18n.service';
+import type { MindsConfigService } from '~/common/services/minds-config.service';
 
 export type TFA = 'sms' | 'totp';
 
@@ -78,6 +79,8 @@ export class AuthService {
     private log: LogService,
     private session: SessionService,
     private navigation: NavigationService,
+    private i18n: I18nService,
+    private config: MindsConfigService,
   ) {}
 
   /**
@@ -100,10 +103,8 @@ export class AuthService {
 
     // ignore if already logged in
     this.checkUserExist(username);
-
     const { data, headers: responseHeaders } =
       await this.api.rawPost<LoginResponse>('api/v3/oauth/token', params);
-
     if (responseHeaders && responseHeaders['set-cookie']) {
       const regex = /minds_pseudoid=([^;]*);/g;
       const result = regex.exec(responseHeaders['set-cookie'].join());
@@ -129,7 +130,7 @@ export class AuthService {
 
     await this.session.addOAuthSession(data);
     await this.session.login();
-    await sp.config.update();
+    await this.config.update();
 
     // if this is not the first login we reset the stack keeping the login screen and the main only.
     // To force rendering the app behind the modal and get rid of the splash screen
@@ -151,7 +152,7 @@ export class AuthService {
         token => token.user.username === username && !token.sessionExpired,
       )
     ) {
-      throw new Error(sp.i18n.t('auth.alreadyLogged'));
+      throw new Error(this.i18n.t('auth.alreadyLogged'));
     }
   }
 

@@ -50,8 +50,10 @@ export class BoostedContentService {
       const done = await this.feedsService!.setOffset(0).fetchLocal();
 
       if (!done) {
+        console.log('ACA !done');
         await this.update();
       } else {
+        console.log('ACA done');
         this.boosts = cleanBoosts(await this.feedsService!.getEntities());
         await this.update();
       }
