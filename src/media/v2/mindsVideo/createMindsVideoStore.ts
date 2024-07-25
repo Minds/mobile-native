@@ -287,7 +287,7 @@ const createMindsVideoStore = ({
       ) {
         if (isManualPlay) {
           showNotification(
-            sp.i18n.t('membership.pleaseJoin', { membership: 'membership' }),
+            sp.i18n.t('membership.joinWeb', { membership: 'membership' }),
             'info',
             5000,
           );

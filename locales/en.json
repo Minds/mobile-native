@@ -982,7 +982,8 @@
     "pay": "Pay Custom Tier",
     "alreadyMember": "You are already a member",
     "monthly": "${{usd}}+ / month",
-    "pleaseJoin": "Please join {{membership}} to unlock"
+    "pleaseJoin": "Please join {{membership}} to unlock",
+    "joinWeb": "This post is for members only. Please view it in a web browser to proceed."
   },
   "wallet": {
     "wallet": "Wallet",

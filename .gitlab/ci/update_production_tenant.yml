@@ -1,5 +1,5 @@
 # release an expo update for the Minds app
-update_production:
+update_production_tenant:
   stage: build
   image: node:18.18-alpine
   tags: [minds-ci]
@@ -19,9 +19,6 @@ update_production:
       fi
     - echo "Building tenant $TENANT_ID..."
     - node tasks/setup-tenant.js $TENANT_ID
-    - npx eas-cli update --branch production --message "$CI_COMMIT_DESCRIPTION" --json --non-interactive
+    - npx eas-cli update --branch production --message "$MESSAGE" --json --non-interactive
   rules:
     - if: $BUILD_MODE == "UPDATE_PRODUCTION_TENANT"
-      when: always
-    - if: $CI_COMMIT_REF_NAME == "master"
-      when: manual
