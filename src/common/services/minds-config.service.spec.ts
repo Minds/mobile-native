@@ -78,6 +78,7 @@ describe('MindsConfigService', () => {
       status: 'success',
     };
     mockedApiService.get.mockResolvedValueOnce(mockSettings);
+    // @ts-ignore
     mockedApiService.get.mockResolvedValueOnce({ guid: '123' });
     mockedApiService.get.mockResolvedValueOnce(mockSettingsTrue);
 
