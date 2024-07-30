@@ -43,12 +43,15 @@ export class MindsConfigService {
         }
       }
 
-      if (settings.permissions) {
+      if (settings.permissions && settings?.LoggedIn) {
         settings.permissions = settings.permissions.reduce((acc, cur) => {
           acc[cur] = true;
           return acc;
         }, {});
+      } else {
+        settings.permissions = undefined;
       }
+
       // nsfw enabled by default
       settings.nsfw_enabled = settings.nsfw_enabled ?? true;
 
