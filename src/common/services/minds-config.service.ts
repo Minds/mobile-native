@@ -1,7 +1,6 @@
 import { observable } from 'mobx';
 import delay from '../helpers/delay';
 import api from './api.service';
-import sessionService from './session.service';
 import { storages } from './storage/storages.service';
 import { isTokenExpired } from './TokenExpiredError';
 
@@ -30,6 +29,7 @@ export class MindsConfigService {
    */
   private async _updateWithRetry(retries: number) {
     let settings;
+    const sessionService = require('./session.service');
     try {
       settings = await api.get<any>('api/v1/minds/config');
 

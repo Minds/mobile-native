@@ -8,12 +8,12 @@ type SettingsResponse = ApiResponse & {
   LoggedIn: boolean;
 };
 
-jest.mock('../helpers/delay', () =>
-  jest.fn().mockImplementation(_ => new Promise<void>(resolve => resolve())),
-);
 jest.mock('./api.service', () => ({
   get: jest.fn(),
 }));
+jest.mock('../helpers/delay', () =>
+  jest.fn().mockImplementation(_ => new Promise<void>(resolve => resolve())),
+);
 
 jest.mock('./session.service', () => ({
   userLoggedIn: true,
