@@ -4,6 +4,7 @@ import UserModel from '../../UserModel';
 import { observer } from 'mobx-react';
 import { Alert } from 'react-native';
 import { Button, ButtonPropsType, Icon } from '~ui';
+import ThemedStyles from '~/styles/ThemedStyles';
 
 export interface SubscribeProps {
   channel: UserModel;
@@ -66,7 +67,7 @@ const Subscribe = (props: SubscribeProps) => {
         mini && (
           <Icon
             name={channel.subscribed ? 'check' : 'plus'}
-            color="PrimaryText"
+            color={ThemedStyles.theme ? 'PrimaryBackground' : 'PrimaryText'}
             size="small"
             horizontal="S"
           />

@@ -43,13 +43,8 @@ export class AppInitManager {
    * Initialize services without waiting for the promises
    */
   async initializeServices() {
+    // init socket service
     socketService.init();
-
-    // init block list service
-    blockListService.init();
-
-    // init in feed notices service
-    inFeedNoticesService.init();
 
     // init video player service
     videoPlayerService.init();
@@ -59,6 +54,12 @@ export class AppInitManager {
 
     //on app logout
     sessionService.onLogout(this.onLogout);
+
+    // init block list service
+    blockListService.init();
+
+    // init in feed notices service
+    inFeedNoticesService.init();
 
     openUrlService.init();
 

@@ -293,7 +293,7 @@ const createMindsVideoStore = ({
       ) {
         if (isManualPlay) {
           showNotification(
-            i18n.t('membership.pleaseJoin', { membership: 'membership' }),
+            i18n.t('membership.joinWeb', { membership: 'membership' }),
             'info',
             5000,
           );
