@@ -1,13 +1,17 @@
 import {
+  GetChatRoomsListDocument,
+  GetChatRoomsListQuery,
+  GetChatRoomsListQueryVariables,
   useGetChatRoomQuery,
   useInfiniteGetChatRoomsListQuery,
 } from '~/graphql/api';
 import { useAllChatRoomsEvent } from './useAllChatRoomsEvent';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import logService from '~/common/services/log.service';
 import { produce } from 'immer';
 import { ChatRoomEventType } from '../types';
+import { gqlFetcher } from '~/common/services/api.service';
 
 export function useChatRoomListQuery() {
   const queryClient = useQueryClient();
@@ -19,6 +23,8 @@ export function useChatRoomListQuery() {
         first: 12,
       },
       {
+        staleTime: 0,
+        cacheTime: 1000 * 60 * 20,
         getNextPageParam: lastPage => {
           const { endCursor, hasNextPage } =
             lastPage.chatRoomList.pageInfo ?? {};
@@ -101,4 +107,39 @@ export function useChatRoomListQuery() {
   });
 
   return { chats, isLoading, fetchNextPage, refetch, isRefetching };
+}
+
+export function usePrefetchChatRoomList() {
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    queryClient.prefetchInfiniteQuery(
+      useInfiniteGetChatRoomsListQuery.getKey({
+        after: '',
+        first: 12,
+      }),
+      async metaData =>
+        gqlFetcher<GetChatRoomsListQuery, GetChatRoomsListQueryVariables>(
+          GetChatRoomsListDocument,
+          {
+            after: '',
+            first: 12,
+            ...(metaData.pageParam ?? {}),
+          },
+        )(),
+      {
+        staleTime: 0,
+        cacheTime: 1000 * 60 * 20,
+        getNextPageParam: lastPage => {
+          const { endCursor, hasNextPage } =
+            lastPage.chatRoomList.pageInfo ?? {};
+          return hasNextPage
+            ? {
+                after: endCursor,
+                first: 12,
+              }
+            : undefined;
+        },
+      },
+    );
+  }, [queryClient]);
 }

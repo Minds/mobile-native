@@ -25,6 +25,7 @@ import withModalProvider from '~/navigation/withModalProvide';
 import { useUnreadMessages } from '~/modules/chat/hooks/useUnreadMessages';
 import { useIncrementUnreadOnNewMessage } from '~/modules/chat/hooks/useIncrementUnreadOnNewMessage';
 import { useCustomNavigationTabs } from '~/modules/navigation/service/custom-navigation.service';
+import { usePrefetchChatRoomList } from '~/modules/chat/hooks/useChatRoomListQuery';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -164,6 +165,9 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
  */
 const Tabs = observer(function () {
   const theme = ThemedStyles.style;
+
+  // prefetch chat rooms
+  usePrefetchChatRoomList();
 
   const menuConf = useCustomNavigationTabs();
   const navMap = menuConf?.reduce((acc, item) => {
