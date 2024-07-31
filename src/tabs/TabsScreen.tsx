@@ -24,7 +24,10 @@ import { IconMapNameType } from '~/common/ui/icons/map';
 import withModalProvider from '~/navigation/withModalProvide';
 import { useUnreadMessages } from '~/modules/chat/hooks/useUnreadMessages';
 import { useIncrementUnreadOnNewMessage } from '~/modules/chat/hooks/useIncrementUnreadOnNewMessage';
-import { useCustomNavigationTabs } from '~/modules/navigation/service/custom-navigation.service';
+import {
+  CustomNavigationItem,
+  useCustomNavigationTabs,
+} from '~/modules/navigation/service/custom-navigation.service';
 import { usePrefetchChatRoomList } from '~/modules/chat/hooks/useChatRoomListQuery';
 
 const isIOS = Platform.OS === 'ios';
@@ -47,7 +50,6 @@ const routeMap = {
 };
 
 const { width } = Dimensions.get('screen');
-const tabWidth = (width - 40) / 5;
 const shadowOpt = {
   width,
   color: '#000000',
@@ -72,6 +74,11 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
 
   // increment unread messages count on new message
   useIncrementUnreadOnNewMessage();
+
+  const menuConf = useCustomNavigationTabs();
+  const activeTabs =
+    (menuConf?.filter(item => item.visibleMobile).length ?? 4) + 1;
+  const tabWidth = (width - 40) / activeTabs;
 
   const barAnimatedStyle = useAnimatedStyle(() => ({
     width: tabWidth,
@@ -170,10 +177,14 @@ const Tabs = observer(function () {
   usePrefetchChatRoomList();
 
   const menuConf = useCustomNavigationTabs();
-  const navMap = menuConf?.reduce((acc, item) => {
-    acc[item.id] = item;
-    return acc;
-  }, {});
+  const navMap: { [key: string]: CustomNavigationItem } | undefined =
+    menuConf?.reduce((acc, item) => {
+      acc[item.id] = item;
+      return acc;
+    }, {});
+
+  const groupsVisible = navMap?.groups?.visibleMobile ?? true;
+  const chatVisible = navMap?.chat?.visibleMobile ?? true;
 
   const tabOptions = ({ route }): BottomTabNavigationOptions => ({
     headerShown: false,
@@ -191,7 +202,7 @@ const Tabs = observer(function () {
           <MIcon
             size={28}
             active={focused}
-            name={navMap[routeMap[route.name]].iconId.replace('_', '-')}
+            name={navMap[routeMap[route.name]].iconId.replace('_', '-') as any}
             style={
               focused
                 ? ThemedStyles.style.colorPrimaryText
@@ -230,18 +241,22 @@ const Tabs = observer(function () {
           getComponent={() => require('~/navigation/DiscoveryStack').default}
           options={discoveryOptions}
         />
-        <Tab.Screen
-          name="Groups"
-          getComponent={() =>
-            require('~/modules/groups/GroupsStack.tsx').GroupsStack
-          }
-          options={moreOptions}
-        />
-        <Tab.Screen
-          name="ChatListStack"
-          getComponent={() => require('~/modules/chat').ChatsListStack}
-          options={discoveryOptions}
-        />
+        {groupsVisible && (
+          <Tab.Screen
+            name="Groups"
+            getComponent={() =>
+              require('~/modules/groups/GroupsStack.tsx').GroupsStack
+            }
+            options={moreOptions}
+          />
+        )}
+        {chatVisible && (
+          <Tab.Screen
+            name="ChatListStack"
+            getComponent={() => require('~/modules/chat').ChatsListStack}
+            options={discoveryOptions}
+          />
+        )}
         <Tab.Screen
           name="Notifications"
           component={NotificationsStack}
