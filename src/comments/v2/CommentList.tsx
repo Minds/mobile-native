@@ -138,8 +138,11 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
 
         {props.store.entity.allow_comments && (
           <TouchableOpacity
-            onPress={() => props.store.setShowInput(true)}
-            disabled={!canComment}
+            onPress={() => {
+              if (PermissionsService.canComment(true)) {
+                props.store.setShowInput(true);
+              }
+            }}
             style={
               canComment
                 ? styles.touchableStyles
