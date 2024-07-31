@@ -2,6 +2,7 @@ import { observable } from 'mobx';
 import delay from '../helpers/delay';
 import api from './api.service';
 import { storages } from './storage/storages.service';
+import { isTokenExpired } from './TokenExpiredError';
 
 /**
  * Minds Service
@@ -27,26 +28,45 @@ export class MindsConfigService {
    * Update the settings from the server
    */
   private async _updateWithRetry(retries: number) {
+    let settings;
+    const sessionService = require('./session.service');
     try {
-      const settings = await api.get<any>('api/v1/minds/config');
-      if (settings.permissions) {
+      settings = await api.get<any>('api/v1/minds/config');
+
+      // check if user session is still valid
+      if (settings?.LoggedIn === false && sessionService.userLoggedIn) {
+        // call the endpoint to trigger a token refresh
+        const user = await api.get<{ guid: string }>('api/v1/channel/me');
+        // if succeeds the token was refreshed, fetch config again
+        if (user?.guid) {
+          settings = await api.get<any>('api/v1/minds/config');
+        }
+      }
+
+      if (settings.permissions && settings?.LoggedIn) {
         settings.permissions = settings.permissions.reduce((acc, cur) => {
           acc[cur] = true;
           return acc;
         }, {});
+      } else {
+        settings.permissions = undefined;
       }
+
       // nsfw enabled by default
       settings.nsfw_enabled = settings.nsfw_enabled ?? true;
 
       storages.user?.setMap('mindsSettings', settings);
       this.settings = settings;
       this.currentPromise = null;
-    } catch (error) {
-      if (retries === 0) {
+    } catch (error: any) {
+      if (
+        retries === 0 ||
+        isTokenExpired(error) ||
+        error?.response?.status === 401
+      ) {
         this.currentPromise = null;
         throw error;
       }
-      console.log('Error fetching minds config', error, 'Retrying...');
       // Wait for 1 second before retrying
       await delay(retries > 10 ? 800 : 2000);
       this.currentPromise = null;

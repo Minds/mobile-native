@@ -4,7 +4,7 @@ import service from '../../../src/common/services/attachment.service';
 jest.mock('../../../src/common/services/api.service');
 // jest.mock('../../../src/capture/CaptureService');
 jest.mock('../../../src/common/services/image-picker.service');
-
+jest.mock('../../../src/common/services/analytics.service');
 /**
  * Tests
  */
