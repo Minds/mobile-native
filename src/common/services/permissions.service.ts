@@ -1,50 +1,124 @@
-import { PermissionsEnum } from '~/graphql/api';
+import { PermissionIntentTypeEnum, PermissionsEnum } from '~/graphql/api';
 import i18n from './i18n.service';
-import mindsConfigService from './minds-config.service';
+import mindsConfigService, { PermissionIntent } from './minds-config.service';
 import { showNotification } from 'AppMessages';
+import { showUpgradeModal } from './upgrade-modal.service';
 
 export default class PermissionsService {
-  private static hasPermission(
-    permission: PermissionsKeys,
-    showToaster = false,
+  /**
+   * Returns true if the user does not have the permission and the intent is to hide the element.
+   * @param permissionId
+   * @returns
+   */
+  private static shouldHide(permissionId: PermissionsEnum): boolean {
+    return (
+      !this.hasPermission(permissionId) &&
+      mindsConfigService.getPermissionIntent(permissionId)?.intent_type ===
+        PermissionIntentTypeEnum.Hide
+    );
+  }
+
+  /**
+   *
+   * @param permissionId
+   * @returns boolean
+   */
+  public static shouldShowWarningMessage(
+    permissionId: PermissionsEnum,
+  ): boolean {
+    return (
+      !this.hasPermission(permissionId) &&
+      mindsConfigService.getPermissionIntent(permissionId)?.intent_type ===
+        PermissionIntentTypeEnum.WarningMessage
+    );
+  }
+
+  private static canPerformAction(
+    permission: PermissionsEnum,
+    handleAction = false,
   ) {
-    const permissionValue = mindsConfigService.hasPermission(permission);
-    if (!permissionValue && showToaster) {
-      showNotification(PermissionsService.getMessage(permission));
+    if (handleAction) {
+      return this.handleAction(permission);
     }
-    return permissionValue;
+    return this.hasPermission(permission);
   }
 
-  public static canCreatePost(showMessage = false) {
-    return this.hasPermission(PermissionsEnum.CanCreatePost, showMessage);
+  /**
+   * Permissions check and action handling
+   */
+
+  public static canCreatePost(handleAction = false) {
+    return this.canPerformAction(PermissionsEnum.CanCreatePost, handleAction);
   }
 
-  public static canComment(showMessage = false) {
-    return this.hasPermission(PermissionsEnum.CanComment, showMessage);
+  public static canComment(handleAction = false) {
+    return this.canPerformAction(PermissionsEnum.CanComment, handleAction);
   }
 
-  public static canUploadVideo(showMessage = false) {
-    return this.hasPermission(PermissionsEnum.CanUploadVideo, showMessage);
+  public static canUploadVideo(handleAction = false) {
+    return this.canPerformAction(PermissionsEnum.CanUploadVideo, handleAction);
   }
 
-  public static canInteract(showMessage = false) {
-    return this.hasPermission(PermissionsEnum.CanInteract, showMessage);
+  public static canInteract(handleAction = false) {
+    return this.canPerformAction(PermissionsEnum.CanInteract, handleAction);
   }
 
-  public static canCreateGroup(showMessage = false) {
-    return this.hasPermission(PermissionsEnum.CanCreateGroup, showMessage);
+  public static canCreateGroup(handleAction = false) {
+    return this.canPerformAction(PermissionsEnum.CanCreateGroup, handleAction);
   }
 
-  public static canBoost(showMessage = false) {
-    return this.hasPermission(PermissionsEnum.CanBoost, showMessage);
+  public static canBoost(handleAction = false) {
+    return this.canPerformAction(PermissionsEnum.CanBoost, handleAction);
   }
 
-  public static canCreateChatRoom(showMessage = false) {
-    return this.hasPermission(PermissionsEnum.CanCreateChatRoom, showMessage);
+  public static canCreateChatRoom(handleAction = false) {
+    return this.canPerformAction(
+      PermissionsEnum.CanCreateChatRoom,
+      handleAction,
+    );
   }
 
-  public static canUploadChatMedia(showMessage = false) {
-    return this.hasPermission(PermissionsEnum.CanUploadChatMedia, showMessage);
+  public static canUploadChatMedia(handleAction = false) {
+    return this.canPerformAction(
+      PermissionsEnum.CanUploadChatMedia,
+      handleAction,
+    );
+  }
+
+  /**
+   * Should hide actions
+   */
+
+  public static shouldHideCreatePost() {
+    return this.shouldHide(PermissionsEnum.CanCreatePost);
+  }
+
+  public static shouldHideComment() {
+    return this.shouldHide(PermissionsEnum.CanComment);
+  }
+
+  public static shouldHideUploadVideo() {
+    return this.shouldHide(PermissionsEnum.CanUploadVideo);
+  }
+
+  public static shouldHideInteract() {
+    return this.shouldHide(PermissionsEnum.CanInteract);
+  }
+
+  public static shouldHideCreateGroup() {
+    return this.shouldHide(PermissionsEnum.CanCreateGroup);
+  }
+
+  public static shouldHideBoost() {
+    return this.shouldHide(PermissionsEnum.CanBoost);
+  }
+
+  public static shouldHideCreateChatRoom() {
+    return this.shouldHide(PermissionsEnum.CanCreateChatRoom);
+  }
+
+  public static shouldHideUploadChatMedia() {
+    return this.shouldHide(PermissionsEnum.CanUploadChatMedia);
   }
 
   public static getMessage(error: PermissionsKeys) {
@@ -72,6 +146,61 @@ export default class PermissionsService {
     }[error];
 
     return message || i18n.t('notAllowed');
+  }
+
+  /**
+   * Show a warning toast message when the user does not have permission to perform an action.
+   * @param permission
+   * @param showToaster
+   * @returns
+   */
+  private static hasPermission(permission: PermissionsEnum) {
+    return mindsConfigService.hasPermission(permission);
+  }
+
+  /**
+   * Check whether the user has permission to perform an action,
+   * and handle the action if appropriate.
+   */
+  private static handleAction(permissionId: PermissionsEnum): boolean {
+    if (this.hasPermission(permissionId)) {
+      return true;
+    }
+
+    const permissionIntent =
+      mindsConfigService.getPermissionIntent(permissionId);
+
+    if (!permissionIntent) {
+      return false;
+    }
+
+    if (
+      permissionIntent.intent_type === PermissionIntentTypeEnum.WarningMessage
+    ) {
+      showNotification(PermissionsService.getMessage(permissionId));
+      return false;
+    }
+    if (permissionIntent.intent_type === PermissionIntentTypeEnum.Upgrade) {
+      if (!permissionIntent?.membership_guid) {
+        // fallback to showing a warning message.
+        showNotification(PermissionsService.getMessage(permissionId));
+        console.warn(
+          'No membership guid found in permission intent',
+          permissionIntent,
+        );
+        return false;
+      }
+      this.showMembershipModal(permissionIntent);
+      return false;
+    }
+
+    return false;
+  }
+
+  private static showMembershipModal(permissionIntent: PermissionIntent) {
+    if (permissionIntent.membership_guid) {
+      showUpgradeModal(permissionIntent.membership_guid);
+    }
   }
 }
 

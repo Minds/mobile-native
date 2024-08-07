@@ -609,8 +609,7 @@ export default class CommentsStore {
    * Attach a video
    */
   async video() {
-    if (!PermissionsService.canUploadVideo()) {
-      showNotification(i18n.t('composer.create.mediaVideoError'));
+    if (!PermissionsService.canUploadVideo(true)) {
       return;
     }
     try {
@@ -650,9 +649,8 @@ export default class CommentsStore {
 
     if (
       media.type.startsWith('video') &&
-      !PermissionsService.canUploadVideo()
+      !PermissionsService.canUploadVideo(true)
     ) {
-      showNotification(i18n.t('composer.create.mediaVideoError'));
       return;
     }
 
@@ -692,7 +690,11 @@ export default class CommentsStore {
    */
   async gallery(fn?: () => void) {
     try {
-      const response = await attachmentService.gallery('All', false);
+      const shouldHideVideos = PermissionsService.shouldHideUploadVideo();
+      const response = await attachmentService.gallery(
+        shouldHideVideos ? 'Images' : 'All',
+        false,
+      );
 
       if (fn) fn();
 
@@ -703,9 +705,8 @@ export default class CommentsStore {
 
       if (
         media.mime.startsWith('video') &&
-        !PermissionsService.canUploadVideo()
+        !PermissionsService.canUploadVideo(true)
       ) {
-        showNotification(i18n.t('composer.create.mediaVideoError'));
         return;
       }
 

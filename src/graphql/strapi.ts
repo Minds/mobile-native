@@ -721,6 +721,12 @@ export type ComponentProductSectionInput = {
   title?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ComponentTagsTags = {
+  __typename?: 'ComponentTagsTags';
+  id: Scalars['ID']['output'];
+  tag?: Maybe<Scalars['String']['output']>;
+};
+
 export type ComponentV2ProductActionButton = {
   __typename?: 'ComponentV2ProductActionButton';
   action?: Maybe<Enum_Componentv2Productactionbutton_Action>;
@@ -1566,6 +1572,7 @@ export type GenericMorph =
   | ComponentProductHero
   | ComponentProductOther
   | ComponentProductSection
+  | ComponentTagsTags
   | ComponentV2ProductActionButton
   | ComponentV2ProductBasicExplainer
   | ComponentV2ProductClosingCta
@@ -1588,6 +1595,9 @@ export type GenericMorph =
   | Footer
   | Homepage
   | I18NLocale
+  | NetworkBlogAuthor
+  | NetworksBlog
+  | NetworksBlogTag
   | OnboardingV5Version
   | ProductAddOn
   | ProductFeature
@@ -1776,6 +1786,9 @@ export type Mutation = {
   createFeatTableColumn?: Maybe<FeatTableColumnEntityResponse>;
   createFeatTableItem?: Maybe<FeatTableItemEntityResponse>;
   createFeatTableSection?: Maybe<FeatTableSectionEntityResponse>;
+  createNetworkBlogAuthor?: Maybe<NetworkBlogAuthorEntityResponse>;
+  createNetworksBlog?: Maybe<NetworksBlogEntityResponse>;
+  createNetworksBlogTag?: Maybe<NetworksBlogTagEntityResponse>;
   createOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   createProductAddOn?: Maybe<ProductAddOnEntityResponse>;
   createProductFeature?: Maybe<ProductFeatureEntityResponse>;
@@ -1803,6 +1816,9 @@ export type Mutation = {
   deleteFeatTableSection?: Maybe<FeatTableSectionEntityResponse>;
   deleteFooter?: Maybe<FooterEntityResponse>;
   deleteHomepage?: Maybe<HomepageEntityResponse>;
+  deleteNetworkBlogAuthor?: Maybe<NetworkBlogAuthorEntityResponse>;
+  deleteNetworksBlog?: Maybe<NetworksBlogEntityResponse>;
+  deleteNetworksBlogTag?: Maybe<NetworksBlogTagEntityResponse>;
   deleteOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   deleteProductAddOn?: Maybe<ProductAddOnEntityResponse>;
   deleteProductFeature?: Maybe<ProductFeatureEntityResponse>;
@@ -1842,6 +1858,9 @@ export type Mutation = {
   updateFileInfo: UploadFileEntityResponse;
   updateFooter?: Maybe<FooterEntityResponse>;
   updateHomepage?: Maybe<HomepageEntityResponse>;
+  updateNetworkBlogAuthor?: Maybe<NetworkBlogAuthorEntityResponse>;
+  updateNetworksBlog?: Maybe<NetworksBlogEntityResponse>;
+  updateNetworksBlogTag?: Maybe<NetworksBlogTagEntityResponse>;
   updateOnboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   updateProductAddOn?: Maybe<ProductAddOnEntityResponse>;
   updateProductFeature?: Maybe<ProductFeatureEntityResponse>;
@@ -1901,6 +1920,18 @@ export type MutationCreateFeatTableItemArgs = {
 
 export type MutationCreateFeatTableSectionArgs = {
   data: FeatTableSectionInput;
+};
+
+export type MutationCreateNetworkBlogAuthorArgs = {
+  data: NetworkBlogAuthorInput;
+};
+
+export type MutationCreateNetworksBlogArgs = {
+  data: NetworksBlogInput;
+};
+
+export type MutationCreateNetworksBlogTagArgs = {
+  data: NetworksBlogTagInput;
 };
 
 export type MutationCreateOnboardingV5VersionArgs = {
@@ -1998,6 +2029,18 @@ export type MutationDeleteFeatTableItemArgs = {
 };
 
 export type MutationDeleteFeatTableSectionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteNetworkBlogAuthorArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteNetworksBlogArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type MutationDeleteNetworksBlogTagArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -2142,6 +2185,21 @@ export type MutationUpdateHomepageArgs = {
   data: HomepageInput;
 };
 
+export type MutationUpdateNetworkBlogAuthorArgs = {
+  data: NetworkBlogAuthorInput;
+  id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateNetworksBlogArgs = {
+  data: NetworksBlogInput;
+  id: Scalars['ID']['input'];
+};
+
+export type MutationUpdateNetworksBlogTagArgs = {
+  data: NetworksBlogTagInput;
+  id: Scalars['ID']['input'];
+};
+
 export type MutationUpdateOnboardingV5VersionArgs = {
   data: OnboardingV5VersionInput;
   id: Scalars['ID']['input'];
@@ -2218,6 +2276,189 @@ export type MutationUploadArgs = {
   info?: InputMaybe<FileInfoInput>;
   ref?: InputMaybe<Scalars['String']['input']>;
   refId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type NetworkBlogAuthor = {
+  __typename?: 'NetworkBlogAuthor';
+  blogs?: Maybe<NetworksBlogRelationResponseCollection>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  minds_url?: Maybe<Scalars['String']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type NetworkBlogAuthorBlogsArgs = {
+  filters?: InputMaybe<NetworksBlogFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type NetworkBlogAuthorEntity = {
+  __typename?: 'NetworkBlogAuthorEntity';
+  attributes?: Maybe<NetworkBlogAuthor>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type NetworkBlogAuthorEntityResponse = {
+  __typename?: 'NetworkBlogAuthorEntityResponse';
+  data?: Maybe<NetworkBlogAuthorEntity>;
+};
+
+export type NetworkBlogAuthorEntityResponseCollection = {
+  __typename?: 'NetworkBlogAuthorEntityResponseCollection';
+  data: Array<NetworkBlogAuthorEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type NetworkBlogAuthorFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<NetworkBlogAuthorFiltersInput>>>;
+  blogs?: InputMaybe<NetworksBlogFiltersInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  minds_url?: InputMaybe<StringFilterInput>;
+  name?: InputMaybe<StringFilterInput>;
+  not?: InputMaybe<NetworkBlogAuthorFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<NetworkBlogAuthorFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type NetworkBlogAuthorInput = {
+  blogs?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  minds_url?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type NetworksBlog = {
+  __typename?: 'NetworksBlog';
+  author?: Maybe<NetworkBlogAuthorEntityResponse>;
+  content: Scalars['String']['output'];
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  excerpt: Scalars['String']['output'];
+  image?: Maybe<UploadFileEntityResponse>;
+  metadata?: Maybe<ComponentMetadataGeneralPageMetadata>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  slug: Scalars['String']['output'];
+  tags?: Maybe<NetworksBlogTagRelationResponseCollection>;
+  title: Scalars['String']['output'];
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type NetworksBlogTagsArgs = {
+  filters?: InputMaybe<NetworksBlogTagFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type NetworksBlogEntity = {
+  __typename?: 'NetworksBlogEntity';
+  attributes?: Maybe<NetworksBlog>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type NetworksBlogEntityResponse = {
+  __typename?: 'NetworksBlogEntityResponse';
+  data?: Maybe<NetworksBlogEntity>;
+};
+
+export type NetworksBlogEntityResponseCollection = {
+  __typename?: 'NetworksBlogEntityResponseCollection';
+  data: Array<NetworksBlogEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type NetworksBlogFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<NetworksBlogFiltersInput>>>;
+  author?: InputMaybe<NetworkBlogAuthorFiltersInput>;
+  content?: InputMaybe<StringFilterInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  excerpt?: InputMaybe<StringFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  metadata?: InputMaybe<ComponentMetadataGeneralPageMetadataFiltersInput>;
+  not?: InputMaybe<NetworksBlogFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<NetworksBlogFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  slug?: InputMaybe<StringFilterInput>;
+  tags?: InputMaybe<NetworksBlogTagFiltersInput>;
+  title?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type NetworksBlogInput = {
+  author?: InputMaybe<Scalars['ID']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  excerpt?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['ID']['input']>;
+  metadata?: InputMaybe<ComponentMetadataGeneralPageMetadataInput>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  tags?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type NetworksBlogRelationResponseCollection = {
+  __typename?: 'NetworksBlogRelationResponseCollection';
+  data: Array<NetworksBlogEntity>;
+};
+
+export type NetworksBlogTag = {
+  __typename?: 'NetworksBlogTag';
+  blogs?: Maybe<NetworksBlogRelationResponseCollection>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  tag?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type NetworksBlogTagBlogsArgs = {
+  filters?: InputMaybe<NetworksBlogFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type NetworksBlogTagEntity = {
+  __typename?: 'NetworksBlogTagEntity';
+  attributes?: Maybe<NetworksBlogTag>;
+  id?: Maybe<Scalars['ID']['output']>;
+};
+
+export type NetworksBlogTagEntityResponse = {
+  __typename?: 'NetworksBlogTagEntityResponse';
+  data?: Maybe<NetworksBlogTagEntity>;
+};
+
+export type NetworksBlogTagEntityResponseCollection = {
+  __typename?: 'NetworksBlogTagEntityResponseCollection';
+  data: Array<NetworksBlogTagEntity>;
+  meta: ResponseCollectionMeta;
+};
+
+export type NetworksBlogTagFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<NetworksBlogTagFiltersInput>>>;
+  blogs?: InputMaybe<NetworksBlogFiltersInput>;
+  createdAt?: InputMaybe<DateTimeFilterInput>;
+  id?: InputMaybe<IdFilterInput>;
+  not?: InputMaybe<NetworksBlogTagFiltersInput>;
+  or?: InputMaybe<Array<InputMaybe<NetworksBlogTagFiltersInput>>>;
+  publishedAt?: InputMaybe<DateTimeFilterInput>;
+  tag?: InputMaybe<StringFilterInput>;
+  updatedAt?: InputMaybe<DateTimeFilterInput>;
+};
+
+export type NetworksBlogTagInput = {
+  blogs?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  tag?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type NetworksBlogTagRelationResponseCollection = {
+  __typename?: 'NetworksBlogTagRelationResponseCollection';
+  data: Array<NetworksBlogTagEntity>;
 };
 
 export type OnboardingV5Version = {
@@ -2558,6 +2799,12 @@ export type Query = {
   i18NLocale?: Maybe<I18NLocaleEntityResponse>;
   i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>;
   me?: Maybe<UsersPermissionsMe>;
+  networkBlogAuthor?: Maybe<NetworkBlogAuthorEntityResponse>;
+  networkBlogAuthors?: Maybe<NetworkBlogAuthorEntityResponseCollection>;
+  networksBlog?: Maybe<NetworksBlogEntityResponse>;
+  networksBlogTag?: Maybe<NetworksBlogTagEntityResponse>;
+  networksBlogTags?: Maybe<NetworksBlogTagEntityResponseCollection>;
+  networksBlogs?: Maybe<NetworksBlogEntityResponseCollection>;
   onboardingV5Version?: Maybe<OnboardingV5VersionEntityResponse>;
   onboardingV5Versions?: Maybe<OnboardingV5VersionEntityResponseCollection>;
   productAddOn?: Maybe<ProductAddOnEntityResponse>;
@@ -2698,6 +2945,39 @@ export type QueryI18NLocaleArgs = {
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryNetworkBlogAuthorArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryNetworkBlogAuthorsArgs = {
+  filters?: InputMaybe<NetworkBlogAuthorFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryNetworksBlogArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryNetworksBlogTagArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type QueryNetworksBlogTagsArgs = {
+  filters?: InputMaybe<NetworksBlogTagFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type QueryNetworksBlogsArgs = {
+  filters?: InputMaybe<NetworksBlogFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 

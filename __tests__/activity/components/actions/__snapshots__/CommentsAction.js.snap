@@ -1,66 +1,169 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Comment action component renders correctly 1`] = `
-<withSpacer(IconButtonNextComponent)
-  disabled={false}
-  extra={
-    <Memo(EntityCounter)
-      countProperty="comments:count"
-      entity={
-        {
-          "attachment_guid": false,
-          "blurb": false,
-          "containerObj": undefined,
-          "container_guid": "activityguid0",
-          "custom_data": false,
-          "custom_type": false,
-          "description": "Congratulations! ",
-          "edited": "",
-          "guid": "activityguid0",
-          "mature": false,
-          "message": "Message",
-          "ownerObj": {
-            "guid": "824853017709780997",
-            "subtype": false,
-            "time_created": "1522036284",
-            "type": "user",
-          },
-          "owner_guid": "824853017709780997",
-          "parent_guid": "838106762591510528",
-          "perma_url": false,
-          "rowKey": "something0",
-          "thumbnail_src": false,
-          "time_created": "1522036284",
-          "title": "TITLE",
-          "type": "activity",
-          "wire_totals": {
-            "tokens": 1000000000000000000,
-          },
-        }
-      }
-    />
-  }
-  fill={true}
-  name="chat-off"
-  onPress={[Function]}
-  scale={true}
-  size="small"
+<View
   style={
     [
       {
-        "flex": 1,
-        "flexDirection": "column",
-      },
-      {
-        "margin": 4,
-      },
-      {
-        "paddingVertical": 12,
-      },
-      {
         "alignItems": "center",
+        "justifyContent": "center",
+        "position": "relative",
       },
+      undefined,
+      [
+        {
+          "flex": 1,
+          "flexDirection": "column",
+        },
+        {
+          "margin": 4,
+        },
+        {
+          "paddingVertical": 12,
+        },
+        {
+          "alignItems": "center",
+        },
+      ],
     ]
   }
-/>
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": false,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    hitSlop={6.666666666666666}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "justifyContent": "center",
+        },
+        {
+          "alignItems": "center",
+          "bottom": 0,
+          "justifyContent": "center",
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        },
+      ]
+    }
+  >
+    <View
+      collapsable={false}
+      style={
+        {
+          "transform": [
+            {
+              "scale": 1,
+            },
+          ],
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+            "justifyContent": "center",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "height": 20,
+              "justifyContent": "center",
+              "overflow": "hidden",
+              "width": 20,
+            }
+          }
+        >
+          <MaterialIcons
+            color="#AEB0B8"
+            name="speaker-notes-off"
+            size={20}
+            style={
+              {
+                "marginTop": 2,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            [
+              {
+                "flexDirection": "row",
+                "justifyContent": "center",
+              },
+              {
+                "marginLeft": 4,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#F2F2F2",
+                },
+                {
+                  "fontFamily": "Roboto_400Regular",
+                },
+                [
+                  [
+                    {
+                      "color": "#AEB0B8",
+                    },
+                    {
+                      "fontSize": 14,
+                    },
+                    {
+                      "fontFamily": "Roboto_500Medium",
+                      "fontWeight": "500",
+                    },
+                  ],
+                  undefined,
+                ],
+              ]
+            }
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
 `;

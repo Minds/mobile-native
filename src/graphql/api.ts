@@ -927,6 +927,7 @@ export type MultiTenantConfig = {
   colorScheme?: Maybe<MultiTenantColorScheme>;
   customHomePageDescription?: Maybe<Scalars['String']['output']>;
   customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
+  digestEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
@@ -943,6 +944,7 @@ export type MultiTenantConfigInput = {
   colorScheme?: InputMaybe<MultiTenantColorScheme>;
   customHomePageDescription?: InputMaybe<Scalars['String']['input']>;
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
@@ -1031,6 +1033,8 @@ export type Mutation = {
   setEmbeddedCommentsSettings: EmbeddedCommentsSettings;
   /** Sets onboarding state for the currently logged in user. */
   setOnboardingState: OnboardingState;
+  /** Set a permission intent. */
+  setPermissionIntent?: Maybe<PermissionIntent>;
   /** Sets a permission for that a role has */
   setRolePermission: Role;
   /** Set the stripe keys for the network */
@@ -1249,6 +1253,12 @@ export type MutationSetOnboardingStateArgs = {
   completed: Scalars['Boolean']['input'];
 };
 
+export type MutationSetPermissionIntentArgs = {
+  intentType: PermissionIntentTypeEnum;
+  membershipGuid?: InputMaybe<Scalars['String']['input']>;
+  permissionId: PermissionsEnum;
+};
+
 export type MutationSetRolePermissionArgs = {
   enabled?: InputMaybe<Scalars['Boolean']['input']>;
   permission: PermissionsEnum;
@@ -1409,6 +1419,19 @@ export type PaymentMethod = {
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
 };
+
+export type PermissionIntent = {
+  __typename?: 'PermissionIntent';
+  intentType: PermissionIntentTypeEnum;
+  membershipGuid?: Maybe<Scalars['String']['output']>;
+  permissionId: PermissionsEnum;
+};
+
+export enum PermissionIntentTypeEnum {
+  Hide = 'HIDE',
+  Upgrade = 'UPGRADE',
+  WarningMessage = 'WARNING_MESSAGE',
+}
 
 export enum PermissionsEnum {
   CanAssignPermissions = 'CAN_ASSIGN_PERMISSIONS',
@@ -1575,6 +1598,8 @@ export type Query = {
   onboardingStepProgress: Array<OnboardingStepProgressState>;
   /** Get a list of payment methods for the logged in user */
   paymentMethods: Array<PaymentMethod>;
+  /** Get permission intents. */
+  permissionIntents: Array<PermissionIntent>;
   personalApiKey?: Maybe<PersonalApiKey>;
   postHogPerson: PostHogPerson;
   postSubscription: PostSubscription;
@@ -1830,6 +1855,7 @@ export type QueryUsersByRoleArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   roleId?: InputMaybe<Scalars['Int']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type QuotaDetails = {
@@ -1994,6 +2020,8 @@ export type SiteMembership = {
   archived: Scalars['Boolean']['output'];
   groups?: Maybe<Array<GroupNode>>;
   id: Scalars['ID']['output'];
+  isExternal: Scalars['Boolean']['output'];
+  manageUrl?: Maybe<Scalars['String']['output']>;
   membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
   membershipDescription?: Maybe<Scalars['String']['output']>;
   membershipGuid: Scalars['String']['output'];
@@ -2001,6 +2029,7 @@ export type SiteMembership = {
   membershipPriceInCents: Scalars['Int']['output'];
   membershipPricingModel: SiteMembershipPricingModelEnum;
   priceCurrency: Scalars['String']['output'];
+  purchaseUrl?: Maybe<Scalars['String']['output']>;
   roles?: Maybe<Array<Role>>;
 };
 
@@ -2011,11 +2040,14 @@ export enum SiteMembershipBillingPeriodEnum {
 
 export type SiteMembershipInput = {
   groups?: InputMaybe<Array<Scalars['String']['input']>>;
+  isExternal?: InputMaybe<Scalars['Boolean']['input']>;
+  manageUrl?: InputMaybe<Scalars['String']['input']>;
   membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
   membershipDescription?: InputMaybe<Scalars['String']['input']>;
   membershipName: Scalars['String']['input'];
   membershipPriceInCents: Scalars['Int']['input'];
   membershipPricingModel: SiteMembershipPricingModelEnum;
+  purchaseUrl?: InputMaybe<Scalars['String']['input']>;
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
@@ -2036,9 +2068,11 @@ export type SiteMembershipSubscription = {
 
 export type SiteMembershipUpdateInput = {
   groups?: InputMaybe<Array<Scalars['String']['input']>>;
+  manageUrl?: InputMaybe<Scalars['String']['input']>;
   membershipDescription?: InputMaybe<Scalars['String']['input']>;
   membershipGuid: Scalars['String']['input'];
   membershipName: Scalars['String']['input'];
+  purchaseUrl?: InputMaybe<Scalars['String']['input']>;
   roles?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
@@ -2064,6 +2098,7 @@ export type Tenant = {
   ownerGuid?: Maybe<Scalars['String']['output']>;
   plan: TenantPlanEnum;
   rootUserGuid?: Maybe<Scalars['String']['output']>;
+  suspendedTimestamp?: Maybe<Scalars['Int']['output']>;
   trialStartTimestamp?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -5791,6 +5826,37 @@ export type RefreshRssFeedMutation = {
   };
 };
 
+export type GetSiteMembershipQueryVariables = Exact<{
+  membershipGuid: Scalars['String']['input'];
+}>;
+
+export type GetSiteMembershipQuery = {
+  __typename?: 'Query';
+  siteMembership: {
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipDescription?: string | null;
+    membershipPriceInCents: number;
+    priceCurrency: string;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    archived: boolean;
+    isExternal: boolean;
+    purchaseUrl?: string | null;
+    manageUrl?: string | null;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      guid: string;
+      name: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  };
+};
+
 export type CreateNewReportMutationVariables = Exact<{
   entityUrn: Scalars['String']['input'];
   reason: ReportReasonEnum;
@@ -8646,6 +8712,84 @@ useRefreshRssFeedMutation.fetcher = (
 ) =>
   gqlFetcher<RefreshRssFeedMutation, RefreshRssFeedMutationVariables>(
     RefreshRssFeedDocument,
+    variables,
+    options,
+  );
+export const GetSiteMembershipDocument = `
+    query GetSiteMembership($membershipGuid: String!) {
+  siteMembership(membershipGuid: $membershipGuid) {
+    id
+    membershipGuid
+    membershipName
+    membershipDescription
+    membershipPriceInCents
+    priceCurrency
+    membershipBillingPeriod
+    membershipPricingModel
+    archived
+    roles {
+      id
+      name
+    }
+    groups {
+      guid
+      name
+      membersCount
+      legacy
+    }
+    isExternal
+    purchaseUrl
+    manageUrl
+  }
+}
+    `;
+export const useGetSiteMembershipQuery = <
+  TData = GetSiteMembershipQuery,
+  TError = unknown,
+>(
+  variables: GetSiteMembershipQueryVariables,
+  options?: UseQueryOptions<GetSiteMembershipQuery, TError, TData>,
+) =>
+  useQuery<GetSiteMembershipQuery, TError, TData>(
+    ['GetSiteMembership', variables],
+    gqlFetcher<GetSiteMembershipQuery, GetSiteMembershipQueryVariables>(
+      GetSiteMembershipDocument,
+      variables,
+    ),
+    options,
+  );
+
+useGetSiteMembershipQuery.getKey = (
+  variables: GetSiteMembershipQueryVariables,
+) => ['GetSiteMembership', variables];
+export const useInfiniteGetSiteMembershipQuery = <
+  TData = GetSiteMembershipQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetSiteMembershipQueryVariables,
+  variables: GetSiteMembershipQueryVariables,
+  options?: UseInfiniteQueryOptions<GetSiteMembershipQuery, TError, TData>,
+) => {
+  return useInfiniteQuery<GetSiteMembershipQuery, TError, TData>(
+    ['GetSiteMembership.infinite', variables],
+    metaData =>
+      gqlFetcher<GetSiteMembershipQuery, GetSiteMembershipQueryVariables>(
+        GetSiteMembershipDocument,
+        { ...variables, ...(metaData.pageParam ?? {}) },
+      )(),
+    options,
+  );
+};
+
+useInfiniteGetSiteMembershipQuery.getKey = (
+  variables: GetSiteMembershipQueryVariables,
+) => ['GetSiteMembership.infinite', variables];
+useGetSiteMembershipQuery.fetcher = (
+  variables: GetSiteMembershipQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<GetSiteMembershipQuery, GetSiteMembershipQueryVariables>(
+    GetSiteMembershipDocument,
     variables,
     options,
   );

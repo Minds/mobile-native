@@ -1,0 +1,26 @@
+query GetSiteMembership($membershipGuid: String!) {
+  siteMembership(membershipGuid: $membershipGuid) {
+    id
+    membershipGuid
+    membershipName
+    membershipDescription
+    membershipPriceInCents
+    priceCurrency
+    membershipBillingPeriod
+    membershipPricingModel
+    archived
+    roles {
+      id
+      name
+    }
+    groups {
+      guid
+      name
+      membersCount
+      legacy
+    }
+    isExternal
+    purchaseUrl
+    manageUrl
+  }
+}

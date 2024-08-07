@@ -35,6 +35,7 @@ import CaptureFab from '~/capture/CaptureFab';
 import { EmptyMessage } from './EmptyMessage';
 import { copyReferrer } from '~/modules/affiliate/components/LinksMindsSheet';
 import TrendingList from './trending/TrendingList';
+import PermissionsService from '~/common/services/permissions.service';
 
 type Props = DiscoveryStackScreenProps<'Discovery'>;
 
@@ -315,7 +316,11 @@ const styles = ThemedStyles.create({
 });
 
 const emptyMessage = (tab: TDiscoveryV2Tabs) => (onPress?: () => void) => {
-  return <EmptyMessage {...emptyMessages[tab]} onPress={onPress} />;
+  const config = { ...emptyMessages[tab] };
+  if (tab === 'top' && PermissionsService.shouldHideCreatePost()) {
+    delete config.buttonText;
+  }
+  return <EmptyMessage {...config} onPress={onPress} />;
 };
 
 const emptyMessages: { [k in TDiscoveryV2Tabs]?: any } = {

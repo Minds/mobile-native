@@ -22,6 +22,7 @@ import Translate from '~/common/components/translate/Translate';
 import MText from '~/common/components/MText';
 import NavigationService from '~/navigation/NavigationService';
 import ShareAction from '~/newsfeed/activity/actions/ShareAction';
+import PermissionsService from '~/common/services/permissions.service';
 
 type PropsType = {
   comment: CommentModel;
@@ -126,6 +127,10 @@ export default observer(function Comment({
 
   const reply = React.useCallback(() => {
     // if we can't reply, open input and fill in owner username
+    if (!PermissionsService.canComment(true)) {
+      return;
+    }
+
     if (canReply && !can_reply) {
       return store.setShowInput(true, undefined, `@${username} `);
     }
@@ -143,6 +148,8 @@ export default observer(function Comment({
       entity: store.entity,
     });
   }, [navigation, comment, store.entity]);
+
+  console.log({ replies_count, hideReply });
 
   return (
     <View
@@ -206,7 +213,7 @@ export default observer(function Comment({
               touchableComponent={TouchableOpacity}
             />
             <ShareAction entity={comment} />
-            {canReply && <ReplyAction size={16} onPressReply={reply} />}
+            {!hideReply && <ReplyAction size={16} onPressReply={reply} />}
             <View style={theme.flexContainer} />
             {!isHeader && (
               <CommentBottomMenu
@@ -217,7 +224,7 @@ export default observer(function Comment({
               />
             )}
           </View>
-          {!!replies_count && !hideReply && (
+          {Boolean(replies_count) && !hideReply && (
             <TouchableOpacity onPress={viewReply} style={theme.marginBottom3x}>
               <MText style={[styles.viewReply, theme.colorLink]}>
                 {i18n.t('viewRepliesComments.other', {

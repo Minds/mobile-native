@@ -1,5 +1,4 @@
 import { View } from 'react-native';
-import PermissionsService from '~/common/services/permissions.service';
 import { B2, H3, Icon } from '~/common/ui';
 import Button from '~/common/components/Button';
 import { IconMapNameType } from '~/common/ui/icons/map';
@@ -32,7 +31,7 @@ export const EmptyMessage = ({
         <B2 color="secondary" top="S" bottom="L">
           {subtitle}
         </B2>
-        {PermissionsService.canCreatePost() && onPress && buttonText ? (
+        {onPress && buttonText ? (
           <Button
             text={buttonText}
             large

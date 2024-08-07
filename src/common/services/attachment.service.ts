@@ -50,7 +50,7 @@ class AttachmentService {
     };
 
     if (file.type.includes('video')) {
-      if (PermissionsService.canUploadVideo(true) === false) {
+      if (!PermissionsService.canUploadVideo(true)) {
         return;
       }
 
