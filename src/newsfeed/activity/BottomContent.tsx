@@ -9,6 +9,8 @@ import { pushCommentBottomSheet } from '~/comments/v2/CommentBottomSheet';
 import CommentsStore from '~/comments/v2/CommentsStore';
 import { useAnalytics } from '~/common/contexts/analytics.context';
 import { BoostCTA } from 'modules/boost';
+import { IS_TENANT } from '~/config/Config';
+import { Button } from '~/common/ui';
 
 type PropsType = {
   showOnlyContent?: boolean;
@@ -55,6 +57,11 @@ const BottomContent = (props: PropsType) => {
           entity={props.entity}
           hideSupermindLabel={props.hideTabs}
         />
+      )}
+      {IS_TENANT && entity.site_membership && (
+        <Button stretch mode="solid" horizontal="XL" vertical="L" type="action">
+          MEMBERS-ONLY
+        </Button>
       )}
       <Actions
         onPressComment={onPressComment}
