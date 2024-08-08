@@ -4,10 +4,17 @@ import { H3 } from '../ui';
 import i18nService from './i18n.service';
 import CenteredLoading from '../components/CenteredLoading';
 
-export function showUpgradeModal(id: string) {
+/**
+ * Display the upgrade modal
+ * @param id - The membership id, if it is not provided, a generic message will be displayed
+ * @returns
+ */
+export function showUpgradeModal(id?: string) {
   return pushBottomSheet({
     safe: true,
-    component: ref => <MemberShipModalContent id={id} modal={ref} />,
+    component: id
+      ? ref => <MemberShipModalContent id={id} modal={ref} />
+      : ref => <GenericMembershipModalContent modal={ref} />,
   });
 }
 
@@ -37,3 +44,12 @@ const MemberShipModalContent = ({ modal, id }) => {
     </>
   );
 };
+
+const GenericMembershipModalContent = ({ modal }) => (
+  <>
+    <H3 horizontal="XL" vertical="XL" align="center" font="regular">
+      Only members can access this post
+    </H3>
+    <BottomSheetButton text={i18nService.t('dismiss')} onPress={modal.close} />
+  </>
+);

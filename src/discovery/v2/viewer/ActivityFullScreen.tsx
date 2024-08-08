@@ -29,7 +29,6 @@ import ExplicitOverlay from '../../../common/components/explicit/ExplicitOverlay
 import LockV2 from '../../../wire/v2/lock/Lock';
 import { showNotification } from '../../../../AppMessages';
 import { AppStackParamList } from '../../../navigation/NavigationTypes';
-import ActivityMetrics from '../../../newsfeed/activity/metrics/ActivityMetrics';
 import { pushCommentBottomSheet } from '../../../comments/v2/CommentBottomSheet';
 import InteractionsBar from '../../../common/components/interactions/InteractionsBar';
 import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
@@ -42,6 +41,9 @@ import MutualSubscribers from '../../../channel/components/MutualSubscribers';
 import { pushInteractionsScreen } from '../../../common/components/interactions/pushInteractionsBottomSheet';
 import { GroupContextProvider } from '~/modules/groups/contexts/GroupContext';
 import { getMaxFeedWidth } from '~/styles/Style';
+import BottomContent from '~/newsfeed/activity/BottomContent';
+import { BoostCTA } from '~/modules/boost';
+import ActivityMetrics from '~/newsfeed/activity/metrics/ActivityMetrics';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -335,11 +337,13 @@ const ActivityFullScreen = observer((props: PropsType) => {
                       />
                     </>
                   )}
+                  <BoostCTA entity={entity} />
+                  <ActivityMetrics entity={entity} />
                 </TouchableOpacity>
                 {hasRemind && remind}
               </>
             )}
-            <ActivityMetrics entity={props.entity} fullDate />
+            <BottomContent entity={props.entity} hideActions />
           </ScrollView>
           {!store.contentFit && (
             <LinearGradient colors={gradientColors} style={styles.linear} />

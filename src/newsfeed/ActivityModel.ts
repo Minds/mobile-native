@@ -187,13 +187,18 @@ export default class ActivityModel extends BaseModel {
    */
   hasMedia(): boolean {
     const type = this.custom_type || this.subtype;
+
     switch (type) {
       case 'image':
       case 'video':
       case 'batch':
         return true;
     }
-    if (this.perma_url && this.thumbnail_src) {
+    if (
+      (this.perma_url && this.thumbnail_src) ||
+      this.paywall_thumbnail ||
+      this.hasSiteMembershipPaywallThumbnail
+    ) {
       return true;
     }
     return false;
