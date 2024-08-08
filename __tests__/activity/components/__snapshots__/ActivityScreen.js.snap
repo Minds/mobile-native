@@ -482,48 +482,48 @@ exports[`Activity screen component renders correctly  1`] = `
             </Text>
           </View>
           <View />
-        </View>
-        <View
-          style={
-            [
-              {
-                "flexDirection": "row",
-                "justifyContent": "space-between",
-              },
-              {
-                "padding": 8,
-              },
-              {
-                "paddingHorizontal": 16,
-              },
-            ]
-          }
-        >
-          <Text
+          <View
             style={
               [
                 {
-                  "color": "#F2F2F2",
+                  "flexDirection": "row",
+                  "justifyContent": "space-between",
                 },
                 {
-                  "fontFamily": "Roboto_400Regular",
+                  "padding": 8,
                 },
-                [
-                  {
-                    "color": "#b9bbc0",
-                  },
-                  {
-                    "fontSize": 14,
-                  },
-                  {
-                    "paddingVertical": 4,
-                  },
-                ],
+                {
+                  "paddingHorizontal": 16,
+                },
               ]
             }
           >
-            Mar 25 2018 · 20:51
-          </Text>
+            <Text
+              style={
+                [
+                  {
+                    "color": "#F2F2F2",
+                  },
+                  {
+                    "fontFamily": "Roboto_400Regular",
+                  },
+                  [
+                    {
+                      "color": "#b9bbc0",
+                    },
+                    {
+                      "fontSize": 14,
+                    },
+                    {
+                      "paddingVertical": 4,
+                    },
+                  ],
+                ]
+              }
+            >
+              Mar 25, 2018
+            </Text>
+          </View>
         </View>
       </View>
     </RCTScrollView>
