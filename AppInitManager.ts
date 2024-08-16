@@ -8,6 +8,7 @@ import pushService from './src/common/services/push.service';
 
 import {
   IS_ANDROID_OSS,
+  IS_IOS,
   IS_TENANT,
   IS_TENANT_PREVIEW,
 } from './src/config/Config';
@@ -31,7 +32,6 @@ import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { queryClient } from '~/services';
 import videoPlayerService from '~/common/services/video-player.service';
 import { updateCustomNavigation } from '~/modules/navigation/service/custom-navigation.service';
-import { requestTrackingPermission } from '~/modules/tracking-transparency/tracking-transparency.service';
 
 /**
  * App initialization manager
@@ -162,8 +162,16 @@ export class AppInitManager {
       setTimeout(async () => {
         const user = sessionService.getUser();
         updateService.checkUpdate(!user.canary);
-        requestTrackingPermission();
       }, 5000);
+    }
+
+    if (IS_IOS) {
+      setTimeout(() => {
+        const {
+          requestTrackingPermission,
+        } = require('~/modules/tracking-transparency/tracking-transparency.service');
+        requestTrackingPermission();
+      }, 3000);
     }
 
     // if the navigator is ready, handle initial navigation (this is needed when the user lands on the welcome screen)
