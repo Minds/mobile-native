@@ -1,9 +1,9 @@
 import { GluegunToolbox } from 'gluegun'
 import { command, heading, p, warning } from '../tools/pretty'
-import { generateToken } from '../tools/jwt'
 import { request } from 'graphql-request'
 import nodeFetch from 'node-fetch'
 import { spinnerAction } from '../tools/spinner'
+import { getTenantConfig } from '../tools/tenant-config'
 
 module.exports = {
   name: 'setup-tenant',
@@ -49,37 +49,6 @@ module.exports = {
   },
 }
 
-const query: string = `
-query GetMobileConfig($tenantId: Int!) {
-  appReadyMobileConfig(tenantId: $tenantId) {
-    APP_NAME
-    TENANT_ID
-    APP_HOST
-    APP_SPLASH_RESIZE
-    ACCENT_COLOR_LIGHT
-    ACCENT_COLOR_DARK
-    WELCOME_LOGO
-    THEME
-    API_URL
-    APP_SLUG
-    APP_SCHEME
-    EAS_PROJECT_ID
-    APP_IOS_BUNDLE
-    APP_ANDROID_PACKAGE
-    APP_TRACKING_MESSAGE_ENABLED
-    APP_TRACKING_MESSAGE
-    assets {
-      key
-      value
-    }
-    __typename
-  }
-}
-`
-
-const graphqlURL: string =
-  process.env.GRAPHQL_URL || 'https://www.minds.com/api/graphql'
-
 /**
  * Generate tenant config
  *
@@ -98,19 +67,8 @@ async function setupTenant(
     'Fetching tenant configuration',
 
     async () => {
-      const data = isMinds
-        ? require('../tenant.json')
-        : (
-            await request<any>(
-              graphqlURL,
-              query,
-              { tenantId: parseInt(id, 10) },
-              {
-                cookie: 'staging=1;',
-                Token: generateToken({ TENANT_ID: id }),
-              }
-            )
-          ).appReadyMobileConfig
+      const data = isMinds ? require('../tenant.json') : getTenantConfig(id)
+
       // generate tenant json
 
       if (!isMinds) {

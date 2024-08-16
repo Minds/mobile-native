@@ -78,6 +78,32 @@ export const icons = {
   warning: yellow(bold('⚠')),
 }
 
+const formatValue = (value: any, indentLevel: number): string => {
+  if (typeof value === 'object' && value !== null) {
+    return formatObject(value, indentLevel + 1)
+  }
+  return white(value as any)
+}
+
+const formatObject = (obj: any, indentLevel: number): string => {
+  const currentIndent = INDENT.repeat(indentLevel)
+  const nextIndent = INDENT.repeat(indentLevel + 1)
+
+  return (
+    gray(currentIndent + '{\n') +
+    Object.entries(obj)
+      .map(([key, value]) => {
+        return gray(nextIndent + key + ': ') + formatValue(value, indentLevel)
+      })
+      .join(',\n') +
+    gray('\n' + currentIndent + '}')
+  )
+}
+
+export const prettyJson = (json: any): string => {
+  return formatObject(json, 1)
+}
+
 /** Format displayed messages for prompts */
 export const format = {
   /** Format boolean values for human on prompts  */
