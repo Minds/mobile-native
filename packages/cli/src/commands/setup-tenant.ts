@@ -67,9 +67,9 @@ async function setupTenant(
     'Fetching tenant configuration',
 
     async () => {
-      const data = isMinds ? require('../tenant.json') : getTenantConfig(id)
-
-      // generate tenant json
+      const data = isMinds
+        ? require('../tenant.json')
+        : await getTenantConfig(id)
 
       if (!isMinds) {
         data.POSTHOG_API_KEY = 'phc_Vm1E7gX6he2WNulsVc4G6sh5IAiYSLku1McMKM0oADP'

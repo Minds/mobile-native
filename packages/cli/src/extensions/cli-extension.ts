@@ -4,7 +4,6 @@ import { GluegunToolbox } from 'gluegun'
 // to your commands
 module.exports = (toolbox: GluegunToolbox) => {
   toolbox.verifyMobileFolder = () => {
-    toolbox.print.info('called foo extension')
     return (
       toolbox.filesystem.exists('tenant.json') === 'file' &&
       toolbox.filesystem.exists('releases.json') === 'file'
