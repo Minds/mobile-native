@@ -11,10 +11,10 @@ module.exports = {
     const { parameters } = toolbox
 
     // the param is returned as a number
-    const tenantID = `${parameters.first}`
+    let tenantID = `${parameters.first}`
 
     if (!tenantID) {
-      warning('Please specify the ID of the network: ')
+      warning('Please specify the ID of the network or the URL of the site: ')
       p()
       command('mobile setup-tenant', '<network-id>', [
         'mobile setup-tenant 1',
@@ -23,15 +23,39 @@ module.exports = {
       return
     }
 
-    const result = await spinnerAction('Getting tenant config', () => {
-      return getTenantConfig(tenantID)
-    })
+    const isURL = toolbox.validUrl(tenantID)
 
-    heading(`Tenant ${tenantID} configuration:`)
+    try {
+      if (isURL) {
+        const result = await spinnerAction(
+          'Getting tenant ID from the site',
+          async () => {
+            const config = await toolbox.http
+              .create({ baseURL: tenantID })
+              .get<{ tenant_id: string }>('api/v1/minds/config')
+            return config.data.tenant_id
+          }
+        )
+        if (typeof result === 'number' && isFinite(result)) {
+          tenantID = `${result}`
+        } else {
+          warning('Unable to get the tenant ID from the site')
+        }
+      }
 
-    toolbox.print.info(prettyJson(result))
-    p()
-    p('Network link:' + link(result.API_URL))
-    p()
+      const result = await spinnerAction('Getting tenant config', () => {
+        return getTenantConfig(tenantID)
+      })
+
+      heading(`Tenant ${tenantID} configuration:`)
+
+      toolbox.print.info(prettyJson(result))
+      p()
+      p('Network link:' + link(result.API_URL))
+      p()
+    } catch (error) {
+      warning(error.message)
+      return
+    }
   },
 }

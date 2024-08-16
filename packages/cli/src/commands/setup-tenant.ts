@@ -36,7 +36,7 @@ module.exports = {
     try {
       await setupTenant(tenantID, preview, toolbox)
     } catch (error) {
-      toolbox.print.error(error)
+      warning(error.message)
       process.exit(1)
     }
     p()

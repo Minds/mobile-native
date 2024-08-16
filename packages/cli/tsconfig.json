@@ -2,6 +2,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": false,
     "experimentalDecorators": true,
+    "skipLibCheck": true,
     "lib": [
       "es2015",
       "scripthost",
@@ -22,6 +23,6 @@
     "declaration": true,
     "declarationDir": "build/types"
   },
-  "include": ["../../**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "build"]
 }

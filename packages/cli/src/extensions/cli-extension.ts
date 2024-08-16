@@ -9,6 +9,14 @@ module.exports = (toolbox: GluegunToolbox) => {
       toolbox.filesystem.exists('releases.json') === 'file'
     )
   }
+  toolbox.validUrl = (url: string) => {
+    try {
+      new URL(url)
+      return true
+    } catch (err) {
+      return false
+    }
+  }
 
   // enable this if you want to read configuration in from
   // the current folder's package.json (in a "mobile" property),
