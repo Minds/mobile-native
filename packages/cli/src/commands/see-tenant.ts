@@ -1,5 +1,5 @@
 import { GluegunToolbox } from 'gluegun'
-import { p, command, warning, heading, prettyJson } from '../tools/pretty'
+import { p, command, warning, heading, prettyJson, link } from '../tools/pretty'
 import { spinnerAction } from '../tools/spinner'
 import { getTenantConfig } from '../tools/tenant-config'
 
@@ -30,5 +30,8 @@ module.exports = {
     heading(`Tenant ${tenantID} configuration:`)
 
     toolbox.print.info(prettyJson(result))
+    p()
+    p('Network link:' + link(result.API_URL))
+    p()
   },
 }
