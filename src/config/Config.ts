@@ -32,6 +32,7 @@ export const CUSTOM_API_URL = DEV_MODE.getApiURL();
 
 // Enabled Features for the app
 export const IS_TENANT = Tenant.APP_NAME !== 'Minds';
+
 /**
  * Is a tenant preview app (packaged to be used with the mobile preview app)
  */
@@ -47,6 +48,8 @@ export const PRO_PLUS_SUBSCRIPTION_ENABLED = !IS_IOS && !IS_TENANT;
 export const BOOSTS_ENABLED = !IS_TENANT;
 export const BLOCK_USER_ENABLED = true;
 export const CHAT_ENABLED = !IS_TENANT;
+export const TRACKING_TRANSPARENCY_ENABLED =
+  Tenant.APP_TRACKING_MESSAGE_ENABLED;
 
 // Theme
 export const TENANT_THEME = Tenant.THEME === 'light' ? 0 : 1;

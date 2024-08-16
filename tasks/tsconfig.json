@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "allowJs": true,
+    "target": "ES6",
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "outDir": "./dist",
+    "paths": {
+      "~/*": ["../src/*"]
+    }
+  },
+  "include": ["./**/*", "../packages/cli/src/tools/jwt.ts"],
+  "exclude": ["node_modules"]
+}

@@ -19,7 +19,7 @@ eas_build_production_android_tenant:
         exit 1
       fi
     - echo "Building tenant $TENANT_ID..."
-    - node tasks/setup-tenant.js $TENANT_ID
+    - mobile setup-tenant $TENANT_ID
     - npx eas-cli build --platform android --profile production --json --non-interactive --auto-submit --no-wait
   rules:
     - if: $BUILD_MODE == "PRODUCTION_TENANT"
@@ -40,7 +40,7 @@ eas_build_production_ios_tenant:
     - yarn add sharp --ignore-engines
   script:
     - echo "Building tenant $TENANT_ID..."
-    - node tasks/setup-tenant.js $TENANT_ID
+    - mobile setup-tenant $TENANT_ID
     - npx eas-cli build --platform ios --profile production --json --non-interactive --auto-submit --no-wait
   rules:
     - if: $BUILD_MODE == "PRODUCTION_TENANT"
