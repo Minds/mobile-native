@@ -48,6 +48,66 @@ if (IS_OSS) {
   permissions.push('android.permission.REQUEST_INSTALL_PACKAGES');
 }
 
+/**
+ * Plugins
+ */
+const plugins: any = [
+  'react-native-iap',
+  'expo-updates',
+  'expo-localization',
+  './node_modules/react-native-notifications/app.plugin.js',
+  [
+    '@sentry/react-native/expo',
+    {
+      organization: 'minds-inc',
+      project: 'mobile',
+    },
+  ],
+  [
+    'expo-build-properties',
+    {
+      android: {
+        compileSdkVersion: 34,
+        targetSdkVersion: 34,
+        buildToolsVersion: '34.0.0',
+        kotlinVersion: '1.8.0',
+      },
+      ios: {
+        deploymentTarget: '13.4',
+        flipper: false,
+      },
+    },
+  ],
+  [
+    'expo-media-library',
+    {
+      photosPermission: 'This lets you share photos from your library',
+      savePhotosPermission: 'This lets you save photos to your camera roll',
+      isAccessMediaLocationEnabled: true,
+    },
+  ],
+  [
+    'react-native-vision-camera',
+    {
+      cameraPermissionText: cameraMessage,
+      enableMicrophonePermission: true,
+      microphonePermissionText: micMessage,
+    },
+  ],
+  './plugins/withAndroidMainApplicationAttributes.js',
+];
+// Add tracking-transparency plugin if enabled
+if (Tenant.APP_TRACKING_MESSAGE_ENABLED) {
+  plugins.push([
+    'expo-tracking-transparency',
+    {
+      userTrackingPermission:
+        Tenant.APP_TRACKING_MESSAGE ||
+        'Allow this app to collect app-related data that can be used fro tracking you or your device.',
+    },
+  ]);
+}
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name,
@@ -59,51 +119,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   runtimeVersion: {
     policy: 'appVersion',
   },
-  plugins: [
-    'react-native-iap',
-    'expo-updates',
-    'expo-localization',
-    './node_modules/react-native-notifications/app.plugin.js',
-    [
-      '@sentry/react-native/expo',
-      {
-        organization: 'minds-inc',
-        project: 'mobile',
-      },
-    ],
-    [
-      'expo-build-properties',
-      {
-        android: {
-          compileSdkVersion: 34,
-          targetSdkVersion: 34,
-          buildToolsVersion: '34.0.0',
-          kotlinVersion: '1.8.0',
-        },
-        ios: {
-          deploymentTarget: '13.4',
-          flipper: false,
-        },
-      },
-    ],
-    [
-      'expo-media-library',
-      {
-        photosPermission: 'This lets you share photos from your library',
-        savePhotosPermission: 'This lets you save photos to your camera roll',
-        isAccessMediaLocationEnabled: true,
-      },
-    ],
-    [
-      'react-native-vision-camera',
-      {
-        cameraPermissionText: cameraMessage,
-        enableMicrophonePermission: true,
-        microphonePermissionText: micMessage,
-      },
-    ],
-    './plugins/withAndroidMainApplicationAttributes.js',
-  ],
+  plugins,
   android: {
     package: Tenant.APP_ANDROID_PACKAGE,
     adaptiveIcon: Tenant.ADAPTIVE_ICON
