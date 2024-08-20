@@ -3,6 +3,13 @@ import delay from '../helpers/delay';
 import api from './api.service';
 import { storages } from './storage/storages.service';
 import { isTokenExpired } from './TokenExpiredError';
+import { PermissionIntentTypeEnum, PermissionsEnum } from '~/graphql/api';
+
+export type PermissionIntent = {
+  intent_type: PermissionIntentTypeEnum;
+  membership_guid?: string;
+  permission_id: PermissionsEnum;
+};
 
 /**
  * Minds Service
@@ -52,6 +59,18 @@ export class MindsConfigService {
         settings.permissions = undefined;
       }
 
+      if (settings.permission_intents) {
+        settings.permission_intents = settings.permission_intents.reduce(
+          (acc, cur) => {
+            acc[cur.permission_id] = cur;
+            return acc;
+          },
+          {},
+        );
+      } else {
+        settings.permission_intents = undefined;
+      }
+
       // nsfw enabled by default
       settings.nsfw_enabled = settings.nsfw_enabled ?? true;
 
@@ -79,12 +98,22 @@ export class MindsConfigService {
    * @param permission
    * @returns
    */
-  hasPermission(permission: string) {
+  hasPermission(permission: PermissionsEnum) {
     const settings = this.getSettings();
 
     return settings?.permissions !== undefined
       ? Boolean(settings.permissions[permission])
       : true; // default to true if permissions are not loaded
+  }
+
+  getPermissionIntent(
+    permission: PermissionsEnum,
+  ): PermissionIntent | undefined {
+    const settings = this.getSettings();
+
+    return settings?.permission_intents !== undefined
+      ? settings.permission_intents[permission]
+      : undefined;
   }
 
   /**

@@ -29,7 +29,7 @@ import permissionsService from '~/common/services/permissions.service';
  * Chat rooms list screen
  */
 export default function ChatsListScreen({ navigation }) {
-  const canCreateChat = permissionsService.canCreateChatRoom();
+  const hideCreateChat = permissionsService.shouldHideCreateChatRoom();
   return (
     <Screen safe>
       <ScreenHeader
@@ -47,13 +47,15 @@ export default function ChatsListScreen({ navigation }) {
         }
       />
       <ChatList />
-      {canCreateChat && (
+      {!hideCreateChat && (
         <ChatNewButton
           onPress={() => {
-            analyticsService.trackClick(
-              'data-minds-chat-room-list-new-chat-button',
-            );
-            navigation.push('ChatNew');
+            if (permissionsService.canCreateChatRoom(true)) {
+              analyticsService.trackClick(
+                'data-minds-chat-room-list-new-chat-button',
+              );
+              navigation.push('ChatNew');
+            }
           }}
         />
       )}
@@ -119,20 +121,28 @@ function ChatList() {
 const Empty = () => (
   <Spacer horizontal="XL" top="L">
     <H3>Say hello to chats!</H3>
-    <B2 vertical="M">
-      Start a direct conversation with a friend, stranger, or group of people.
-    </B2>
-    <Button
-      onPress={() => {
-        analyticsService.trackClick(
-          'data-minds-chat-no-chats-empty-list-button',
-        );
-        NavigationService.push('ChatNew');
-      }}
-      align="start"
-      type="action">
-      New chat
-    </Button>
+    {!permissionsService.shouldHideCreateChatRoom() && (
+      <>
+        <B2 vertical="M">
+          Start a direct conversation with a friend, stranger, or group of
+          people.
+        </B2>
+        <Button
+          onPress={() => {
+            if (!permissionsService.canCreateChatRoom(true)) {
+              return;
+            }
+            analyticsService.trackClick(
+              'data-minds-chat-no-chats-empty-list-button',
+            );
+            NavigationService.push('ChatNew');
+          }}
+          align="start"
+          type="action">
+          New chat
+        </Button>
+      </>
+    )}
   </Spacer>
 );
 

@@ -12,6 +12,7 @@ import {
   BottomSheetMenuItem,
   BottomSheetMenuItemProps,
 } from '../../common/components/bottom-sheet';
+import PermissionsService from '~/common/services/permissions.service';
 
 type PropsType = {
   store: CommentsStore;
@@ -64,8 +65,12 @@ export default observer(function CommentInputBottomMenu({
       iconType: 'material',
     };
 
+    const shouldHideVideoUpload = PermissionsService.shouldHideUploadVideo();
+
     const openGallery: BottomSheetMenuItemProps = {
-      title: i18n.t('capture.attach'),
+      title: i18n.t(
+        shouldHideVideoUpload ? 'capture.attachPhoto' : 'capture.attach',
+      ),
       onPress: () => {
         const fn = () => {
           close();

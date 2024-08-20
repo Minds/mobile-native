@@ -425,9 +425,13 @@ const ChannelScreen = observer((props: PropsType) => {
     <Empty
       title={i18n.t('channel.createFirstPostTitle')}
       subtitle={i18n.t('channel.createFirstPostSubTitle')}>
-      {store.filter !== 'blogs' && PermissionsService.canCreatePost() && (
+      {store.filter !== 'blogs' && !PermissionsService.shouldHideCreatePost() && (
         <Button
-          onPress={() => props.navigation.navigate('Compose')}
+          onPress={() => {
+            if (PermissionsService.canCreatePost(true)) {
+              props.navigation.navigate('Compose');
+            }
+          }}
           text={i18n.t('channel.createFirstPostAction')}
           large
           action

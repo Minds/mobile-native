@@ -537,11 +537,12 @@ export default function (props) {
      * On media selected from gallery
      */
     async onMediaFromGallery(media: PickedMedia | PickedMedia[]) {
-      const canUploadVideo = PermissionsService.canUploadVideo();
       if (Array.isArray(media)) {
         media.forEach(mediaItem => {
-          if (!canUploadVideo && mediaItem.type?.startsWith('video')) {
-            showError(i18n.t('composer.create.mediaVideoError'));
+          if (
+            mediaItem.type?.startsWith('video') &&
+            !PermissionsService.canUploadVideo(true)
+          ) {
             return;
           }
 
@@ -559,8 +560,10 @@ export default function (props) {
           showError(i18n.t('capture.mediaPortraitError'));
           return;
         }
-        if (!canUploadVideo && media.type?.startsWith('video')) {
-          showError(i18n.t('composer.create.mediaVideoError'));
+        if (
+          media.type?.startsWith('video') &&
+          !PermissionsService.canUploadVideo(true)
+        ) {
           return;
         }
         this.attachments.attachMedia(

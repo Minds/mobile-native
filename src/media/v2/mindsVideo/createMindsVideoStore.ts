@@ -19,8 +19,7 @@ import SettingsStore from '~/settings/SettingsStore';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import { IS_IOS } from '~/config/Config';
 import { Orientation } from '~/services';
-import { showNotification } from 'AppMessages';
-import i18n from '~/common/services/i18n.service';
+import { showUpgradeModal } from '~/common/services/upgrade-modal.service';
 
 export type Source = {
   src: string;
@@ -286,22 +285,18 @@ const createMindsVideoStore = ({
      * Play the current video and activate the player
      */
     async play(sound?: boolean, isManualPlay?: boolean) {
-      // check site membership
+      // check site membership (only on tenant apps)
       if (
         this.entity?.site_membership &&
         !this.entity.site_membership_unlocked
       ) {
         if (isManualPlay) {
-          showNotification(
-            i18n.t('membership.joinWeb', { membership: 'membership' }),
-            'info',
-            5000,
-          );
+          showUpgradeModal();
         }
         return;
       }
 
-      // check pay walled content
+      // check minds pay walled content
       if (this.entity && this.entity.paywall) {
         await this.entity.unlockOrPay();
         if (this.entity.paywall) {

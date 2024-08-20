@@ -42,13 +42,12 @@ export default observer(function ({ entity, hideCount }: PropsTypes) {
   const { newsfeed } = useLegacyStores();
   const analytics = useAnalytics();
 
+  const shouldShow = !(
+    PermissionsService.shouldHideInteract() &&
+    PermissionsService.shouldHideCreatePost()
+  );
+
   const showDropdown = useCallback(() => {
-    const canPost = PermissionsService.canCreatePost();
-    const canInteract = PermissionsService.canInteract();
-    if (!canPost && !canInteract) {
-      showNotification(i18n.t('permissions.notAllowed.interact'));
-      return;
-    }
     pushRemindActionSheet({
       entity,
       newsfeed,
@@ -56,7 +55,7 @@ export default observer(function ({ entity, hideCount }: PropsTypes) {
     });
   }, [entity, newsfeed, analytics]);
 
-  return (
+  return shouldShow ? (
     <IconButtonNext
       testID="Remind activity button"
       style={actionsContainerStyle}
@@ -73,7 +72,7 @@ export default observer(function ({ entity, hideCount }: PropsTypes) {
         ) : null
       }
     />
-  );
+  ) : null;
 });
 
 const pushRemindActionSheet = async ({
@@ -144,8 +143,8 @@ const pushRemindActionSheet = async ({
     });
   };
 
-  const canPost = PermissionsService.canCreatePost();
-  const canInteract = PermissionsService.canInteract();
+  const shouldHideInteract = PermissionsService.shouldHideInteract();
+  const shouldHideCreatePost = PermissionsService.shouldHideCreatePost();
 
   const reminded = await entity.hasReminded();
 
@@ -154,32 +153,40 @@ const pushRemindActionSheet = async ({
     component: ref => (
       <>
         <>
-          {canInteract && reminded ? (
+          {!shouldHideInteract ? (
+            reminded ? (
+              <BottomSheetMenuItem
+                onPress={async () => {
+                  await ref.close();
+                  if (PermissionsService.canInteract(true)) {
+                    undo();
+                  }
+                }}
+                title={i18n.t('undoRemind')}
+                iconName="undo"
+                iconType="material"
+              />
+            ) : (
+              <BottomSheetMenuItem
+                onPress={async () => {
+                  await ref.close();
+                  if (PermissionsService.canInteract(true)) {
+                    remind();
+                  }
+                }}
+                title={i18n.t('capture.remind')}
+                iconName="repeat"
+                iconType="material"
+              />
+            )
+          ) : null}
+          {!shouldHideCreatePost && (
             <BottomSheetMenuItem
               onPress={async () => {
                 await ref.close();
-                undo();
-              }}
-              title={i18n.t('undoRemind')}
-              iconName="undo"
-              iconType="material"
-            />
-          ) : (
-            <BottomSheetMenuItem
-              onPress={async () => {
-                await ref.close();
-                remind();
-              }}
-              title={i18n.t('capture.remind')}
-              iconName="repeat"
-              iconType="material"
-            />
-          )}
-          {canPost && (
-            <BottomSheetMenuItem
-              onPress={async () => {
-                await ref.close();
-                quote();
+                if (PermissionsService.canCreatePost(true)) {
+                  quote();
+                }
               }}
               title={i18n.t('quote')}
               iconName="edit"
@@ -187,15 +194,17 @@ const pushRemindActionSheet = async ({
             />
           )}
 
-          <BottomSheetMenuItem
-            onPress={async () => {
-              await ref.close();
-              shareToGroup();
-            }}
-            title={i18n.t('groupShare')}
-            iconName="account-multiple"
-            iconType="material-community"
-          />
+          {!shouldHideCreatePost && (
+            <BottomSheetMenuItem
+              onPress={async () => {
+                await ref.close();
+                shareToGroup();
+              }}
+              title={i18n.t('groupShare')}
+              iconName="account-multiple"
+              iconType="material-community"
+            />
+          )}
         </>
 
         <BottomSheetButton text={i18n.t('cancel')} onPress={ref.close} />

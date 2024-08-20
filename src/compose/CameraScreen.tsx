@@ -91,8 +91,7 @@ export default withErrorBoundaryScreen(
      * sets mode to video
      */
     const setModeVideo = useCallback(() => {
-      if (!PermissionsService.canUploadVideo()) {
-        showNotification(i18n.t('composer.create.mediaVideoError'));
+      if (!PermissionsService.canUploadVideo(true)) {
         return;
       }
       setMode('video');
@@ -396,6 +395,7 @@ const useBottomBarStyle = () => {
 
 const CameraScreenBottomBar = ({ mode, onSetPhotoPress, onSetVideoPress }) => {
   const containerStyle = useBottomBarStyle();
+  const shouldShowVideo = !PermissionsService.shouldHideUploadVideo();
 
   return (
     <View style={containerStyle}>
@@ -404,9 +404,11 @@ const CameraScreenBottomBar = ({ mode, onSetPhotoPress, onSetVideoPress }) => {
           {i18nService.t('capture.photo').toUpperCase()}
         </TabButton>
 
-        <TabButton onPress={onSetVideoPress} active={mode === 'video'}>
-          {i18nService.t('capture.video').toUpperCase()}
-        </TabButton>
+        {shouldShowVideo && (
+          <TabButton onPress={onSetVideoPress} active={mode === 'video'}>
+            {i18nService.t('capture.video').toUpperCase()}
+          </TabButton>
+        )}
       </View>
     </View>
   );

@@ -1,50 +1,50 @@
-import 'react-native';
 import React from 'react';
-import { Text, TouchableOpacity } from 'react-native';
-import { shallow } from 'enzyme';
+import { render, screen, fireEvent } from '@testing-library/react-native';
+import '@testing-library/jest-native/extend-expect';
 
 import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
-
 import CommentsAction from '../../../../src/newsfeed/activity/actions/CommentsAction';
-import IconButtonNext from '../../../../src/common/ui/icons';
+import { InteractionManager } from 'react-native';
+
+InteractionManager.runAfterInteractions = jest
+  .fn()
+  .mockImplementation(fn => fn());
 
 describe('Comment action component', () => {
-  let screen, navigatorStore, navigation;
-  beforeEach(() => {
-    navigation = {
-      push: jest.fn(),
-      state: { routeName: 'some' },
-      dangerouslyGetState: jest.fn(),
-    };
-    let activityResponse = activitiesServiceFaker().load(1);
-    screen = shallow(
-      <CommentsAction
-        entity={activityResponse.activities[0]}
-        navigation={navigation}
-      />,
-    );
+  let activityResponse;
 
-    //jest.runAllTimers();
+  beforeEach(() => {
+    activityResponse = activitiesServiceFaker().load(1);
   });
 
   it('renders correctly', () => {
-    screen.update();
-    expect(screen).toMatchSnapshot();
+    const { toJSON } = render(
+      <CommentsAction entity={activityResponse.activities[0]} />,
+    );
+    expect(toJSON()).toMatchSnapshot();
   });
 
   it('should have a comment button', () => {
-    screen.update();
-
-    expect(screen.find('withSpacer(IconButtonNextComponent)')).toHaveLength(1);
+    render(
+      <CommentsAction
+        testID="comment-button"
+        entity={activityResponse.activities[0]}
+      />,
+    );
+    expect(screen.getByTestId('comment-button')).toBeTruthy();
   });
 
-  it('should navigate a thumb on press ', () => {
-    navigation.dangerouslyGetState.mockReturnValue({ routes: null });
+  it('should execute on press', async () => {
+    const onPressComment = jest.fn();
+    render(
+      <CommentsAction
+        testID="comment-button"
+        entity={activityResponse.activities[0]}
+        onPressComment={onPressComment}
+      />,
+    );
 
-    screen.update();
-    let touchables = screen.find('withSpacer(IconButtonNextComponent)');
-    touchables.at(0).props().onPress();
-    expect(navigation.push).toHaveBeenCalled();
-    expect(screen.find('withSpacer(IconButtonNextComponent)')).toHaveLength(1);
+    await fireEvent.press(screen.getByTestId('comment-button'));
+    expect(onPressComment).toHaveBeenCalled();
   });
 });

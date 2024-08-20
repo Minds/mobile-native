@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ActivityMetrics from './metrics/ActivityMetrics';
 import Actions from './Actions';
 import Scheduled from './banners/Scheduled';
 import Pending from './banners/Pending';
@@ -8,12 +7,15 @@ import type ActivityModel from '../ActivityModel';
 import { pushCommentBottomSheet } from '~/comments/v2/CommentBottomSheet';
 import CommentsStore from '~/comments/v2/CommentsStore';
 import { useAnalytics } from '~/common/contexts/analytics.context';
-import { BoostCTA } from 'modules/boost';
+import { IS_TENANT } from '~/config/Config';
+import { Button } from '~/common/ui';
+import { showUpgradeModal } from '~/common/services/upgrade-modal.service';
 
 type PropsType = {
   showOnlyContent?: boolean;
   entity: ActivityModel;
   hideTabs?: boolean;
+  hideActions?: boolean;
   hideMetrics?: boolean;
 };
 
@@ -49,18 +51,24 @@ const BottomContent = (props: PropsType) => {
 
   return (
     <>
-      <BoostCTA entity={props.entity} />
-      {!props.hideMetrics && (
-        <ActivityMetrics
+      {IS_TENANT && entity.site_membership && (
+        <Button
+          stretch
+          mode="solid"
+          horizontal="XL"
+          vertical="L"
+          type="action"
+          onPress={showUpgradeModal}>
+          MEMBERS-ONLY
+        </Button>
+      )}
+      {!props.hideActions && (
+        <Actions
+          onPressComment={onPressComment}
           entity={props.entity}
-          hideSupermindLabel={props.hideTabs}
+          hideTabs={props.hideTabs}
         />
       )}
-      <Actions
-        onPressComment={onPressComment}
-        entity={props.entity}
-        hideTabs={props.hideTabs}
-      />
       {entity.isOwner() && (
         <Scheduled
           isScheduled={entity.isScheduled()}

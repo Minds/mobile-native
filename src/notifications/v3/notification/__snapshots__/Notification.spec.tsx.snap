@@ -1074,6 +1074,48 @@ exports[`Notification Boost accepted 1`] = `
             }
           />
         </View>
+        <View
+          style={
+            [
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              {
+                "padding": 8,
+              },
+              {
+                "paddingHorizontal": 16,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#F2F2F2",
+                },
+                {
+                  "fontFamily": "Roboto_400Regular",
+                },
+                [
+                  {
+                    "color": "#b9bbc0",
+                  },
+                  {
+                    "fontSize": 14,
+                  },
+                  {
+                    "paddingVertical": 4,
+                  },
+                ],
+              ]
+            }
+          >
+            Invalid date
+          </Text>
+        </View>
       </View>
     </View>
   </View>
@@ -1378,6 +1420,48 @@ exports[`Notification Boost complete 1`] = `
             }
           />
         </View>
+        <View
+          style={
+            [
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              {
+                "padding": 8,
+              },
+              {
+                "paddingHorizontal": 16,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#F2F2F2",
+                },
+                {
+                  "fontFamily": "Roboto_400Regular",
+                },
+                [
+                  {
+                    "color": "#b9bbc0",
+                  },
+                  {
+                    "fontSize": 14,
+                  },
+                  {
+                    "paddingVertical": 4,
+                  },
+                ],
+              ]
+            }
+          >
+            Invalid date
+          </Text>
+        </View>
       </View>
     </View>
   </View>
@@ -1681,6 +1765,48 @@ exports[`Notification Boost rejected 1`] = `
               ]
             }
           />
+        </View>
+        <View
+          style={
+            [
+              {
+                "flexDirection": "row",
+                "justifyContent": "space-between",
+              },
+              {
+                "padding": 8,
+              },
+              {
+                "paddingHorizontal": 16,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": "#F2F2F2",
+                },
+                {
+                  "fontFamily": "Roboto_400Regular",
+                },
+                [
+                  {
+                    "color": "#b9bbc0",
+                  },
+                  {
+                    "fontSize": 14,
+                  },
+                  {
+                    "paddingVertical": 4,
+                  },
+                ],
+              ]
+            }
+          >
+            Invalid date
+          </Text>
         </View>
       </View>
     </View>

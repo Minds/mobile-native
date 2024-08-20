@@ -30,7 +30,7 @@ import PermissionsService from '~/common/services/permissions.service';
 type PropsType = {
   entity: ActivityModel;
   hideCount?: boolean;
-  onPressComment?: () => void;
+  onPressComment: () => void;
   hideTabs?: boolean;
 };
 
