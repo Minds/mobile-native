@@ -1,3 +1,4 @@
+import { print } from 'gluegun'
 export declare const INDENT = '   '
 export declare const p: (m?: string) => void
 export declare const heading: (m?: string) => void
@@ -57,15 +58,16 @@ export declare const prettyPrompt: {
     boolean: (value: string) => string | Promise<string>
   }
 }
-export declare const startSpinner: (m?: string) => import('ora').Ora
+declare type Spinner = ReturnType<typeof print.spin>
+export declare const startSpinner: (m?: string) => Spinner
 export declare const stopSpinner: (m: string, symbol: string) => void
 export declare const stopLastSpinner: (symbol: string) => void
 export declare const clearSpinners: () => void
 export declare const spinner: {
-  readonly start: (m?: string) => import('ora').Ora
-  readonly stop: (m: string, symbol: string) => void
-  readonly stopLast: (symbol: string) => void
-  readonly clear: () => void
+  start: (m?: string) => Spinner
+  stop: (m: string, symbol: string) => void
+  stopLast: (symbol: string) => void
+  clear: () => void
 }
 export declare const link: (m?: string) => string
 export declare const em: (m?: string) => string
@@ -77,3 +79,4 @@ export declare const theme: {
   link: (m?: string) => string
   ir: (m?: string) => string
 }
+export {}
