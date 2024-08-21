@@ -68,7 +68,7 @@ async function setupTenant(
 
     async () => {
       const data = isMinds
-        ? require('../tenant.json')
+        ? require('../../../../tenant.json')
         : await getTenantConfig(id)
 
       if (!isMinds) {
