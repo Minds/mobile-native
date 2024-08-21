@@ -116,15 +116,6 @@ const NewsfeedScreenCmp = observer(({ navigation }: NewsfeedScreenProps) => {
     );
   }, [navigation, newsfeed, onTabPress]);
 
-  // delay the load of the portrait feed data
-  // we load the data here given that the flashlist is rendering it twice at the first render
-  useEffect(() => {
-    const t = setTimeout(() => {
-      portrait.load();
-    }, 1500);
-    return () => clearTimeout(t);
-  }, [portrait]);
-
   useModelEvent(
     ActivityModel,
     'newPost',

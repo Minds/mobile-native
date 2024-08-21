@@ -1,7 +1,7 @@
 import { request } from 'graphql-request'
 import { generateToken } from './jwt'
 
-export const tenantQuery: string = `
+const tenantMobileQuery: string = `
 query GetMobileConfig($tenantId: Int!) {
   appReadyMobileConfig(tenantId: $tenantId) {
     APP_NAME
@@ -28,18 +28,58 @@ query GetMobileConfig($tenantId: Int!) {
   }
 }
 `
+
+// we query the tenant config to get the loggedInLandingPageIdMobile, maybe we should move this to the mobile config query
+const tenantQuery: string = `
+query GetMultiTenantConfig {
+  multiTenantConfig {
+    siteName
+    siteEmail
+    colorScheme
+    primaryColor
+    canEnableFederation
+    federationDisabled
+    replyEmail
+    boostEnabled
+    customHomePageEnabled
+    customHomePageDescription
+    walledGardenEnabled
+    digestEmailEnabled
+    welcomeEmailEnabled
+    loggedInLandingPageIdMobile
+    nsfwEnabled
+  }
+}
+`
+
 export async function getTenantConfig(id: string) {
   const graphqlURL: string =
     process.env.GRAPHQL_URL || 'https://www.minds.com/api/graphql'
-  return (
+
+  const headers = {
+    cookie: 'staging=1;',
+    Token: generateToken({ TENANT_ID: id }),
+  }
+
+  const mobileConfig = (
     await request<any>(
       graphqlURL,
-      tenantQuery,
+      tenantMobileQuery,
       { tenantId: parseInt(id, 10) },
-      {
-        cookie: 'staging=1;',
-        Token: generateToken({ TENANT_ID: id }),
-      }
+      headers
     )
   ).appReadyMobileConfig
+
+  const config = (
+    await request<any>(
+      mobileConfig.API_URL + 'api/graphql',
+      tenantQuery,
+      {},
+      headers
+    )
+  ).multiTenantConfig
+
+  mobileConfig.APP_LANDING_PAGE_LOGGED_IN = config.loggedInLandingPageIdMobile
+
+  return mobileConfig
 }

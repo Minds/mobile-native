@@ -146,6 +146,8 @@ function generateTenantJSON(
     data.APP_IOS_BUNDLE = previewerTenant.APP_IOS_BUNDLE
     data.APP_ANDROID_PACKAGE = previewerTenant.APP_ANDROID_PACKAGE
     data.APP_IOS_BUNDLE = previewerTenant.APP_IOS_BUNDLE
+    // disable app tracking for previews
+    data.APP_TRACKING_MESSAGE_ENABLED = false
   }
 
   const light_background: string = data.BACKGROUND_COLOR_LIGHT || '#FFFFFF'
@@ -172,6 +174,7 @@ function generateTenantJSON(
     API_URL: data.API_URL,
     APP_TRACKING_MESSAGE_ENABLED: data.APP_TRACKING_MESSAGE_ENABLED,
     APP_TRACKING_MESSAGE: data.APP_TRACKING_MESSAGE,
+    APP_LANDING_PAGE_LOGGED_IN: data.APP_LANDING_PAGE_LOGGED_IN || 'newsfeed',
     EAS_PROJECT_ID: data.EAS_PROJECT_ID,
     POSTHOG_API_KEY: data.POSTHOG_API_KEY,
   }
