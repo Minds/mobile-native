@@ -50,6 +50,7 @@ export const BLOCK_USER_ENABLED = true;
 export const CHAT_ENABLED = !IS_TENANT;
 export const TRACKING_TRANSPARENCY_ENABLED =
   Tenant.APP_TRACKING_MESSAGE_ENABLED;
+export const LANDING_PAGE_LOGGED_IN = Tenant.APP_LANDING_PAGE_LOGGED_IN;
 
 // Theme
 export const TENANT_THEME = Tenant.THEME === 'light' ? 0 : 1;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   createBottomTabNavigator,
   BottomTabNavigationOptions,
@@ -29,6 +29,8 @@ import {
   useCustomNavigationTabs,
 } from '~/modules/navigation/service/custom-navigation.service';
 import { usePrefetchChatRoomList } from '~/modules/chat/hooks/useChatRoomListQuery';
+import { useStores } from '~/common/hooks/use-stores';
+import { getLandingPage } from '~/services/landingPage';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -43,11 +45,19 @@ export type TabParamList = {
   CaptureTab: {};
 };
 
-const routeMap = {
+type TabScreenType = keyof TabParamList;
+
+const screenRouteMap: Partial<Record<TabScreenType, string>> = {
   Newsfeed: 'newsfeed',
   Discovery: 'explore',
   ChatListStack: 'chat',
 };
+
+const routeScreenMap: Record<string, TabScreenType> = Object.fromEntries(
+  Object.entries(screenRouteMap).map(
+    ([key, value]) => [value, key] as [string, TabScreenType],
+  ),
+);
 
 const { width } = Dimensions.get('screen');
 const shadowOpt = {
@@ -172,9 +182,18 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
  */
 const Tabs = observer(function () {
   const theme = ThemedStyles.style;
+  const portrait = useStores().portrait;
 
   // prefetch chat rooms
   usePrefetchChatRoomList();
+
+  // delay the load of the portrait feed data
+  useEffect(() => {
+    const t = setTimeout(() => {
+      portrait.load();
+    }, 1500);
+    return () => clearTimeout(t);
+  }, [portrait]);
 
   const menuConf = useCustomNavigationTabs();
   const navMap: { [key: string]: CustomNavigationItem } | undefined =
@@ -202,7 +221,9 @@ const Tabs = observer(function () {
           <MIcon
             size={28}
             active={focused}
-            name={navMap[routeMap[route.name]].iconId.replace('_', '-') as any}
+            name={
+              navMap[screenRouteMap[route.name]].iconId.replace('_', '-') as any
+            }
             style={
               focused
                 ? ThemedStyles.style.colorPrimaryText
@@ -223,12 +244,22 @@ const Tabs = observer(function () {
     },
   });
 
+  // get the initial page, fallback to newsfeed in case it is not set
+  let initialRoute = routeScreenMap[getLandingPage()] || 'Newsfeed';
+  // if the initial page is not visible, fallback to newsfeed
+  if (
+    (initialRoute === 'Groups' && !groupsVisible) ||
+    (initialRoute === 'ChatListStack' && !chatVisible)
+  ) {
+    initialRoute = 'Newsfeed';
+  }
+
   return (
     <View style={theme.flexContainer}>
       {/* <Topbar navigation={navigation} /> */}
       <Tab.Navigator
         detachInactiveScreens={Platform.OS === 'android'}
-        initialRouteName="Newsfeed"
+        initialRouteName={initialRoute}
         tabBar={tabBar}
         screenOptions={tabOptions}>
         <Tab.Screen

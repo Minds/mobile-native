@@ -203,7 +203,10 @@ export type AppReadyMobileConfig = {
   APP_SCHEME?: Maybe<Scalars['String']['output']>;
   APP_SLUG?: Maybe<Scalars['String']['output']>;
   APP_SPLASH_RESIZE: Scalars['String']['output'];
+  APP_TRACKING_MESSAGE?: Maybe<Scalars['String']['output']>;
+  APP_TRACKING_MESSAGE_ENABLED?: Maybe<Scalars['Boolean']['output']>;
   EAS_PROJECT_ID?: Maybe<Scalars['String']['output']>;
+  IS_NON_PROFIT?: Maybe<Scalars['Boolean']['output']>;
   TENANT_ID: Scalars['Int']['output'];
   THEME: Scalars['String']['output'];
   WELCOME_LOGO: Scalars['String']['output'];
@@ -889,6 +892,8 @@ export type KeyValueType = {
 
 export type MobileConfig = {
   __typename?: 'MobileConfig';
+  appTrackingMessage?: Maybe<Scalars['String']['output']>;
+  appTrackingMessageEnabled?: Maybe<Scalars['Boolean']['output']>;
   id: Scalars['ID']['output'];
   previewQRCode: Scalars['String']['output'];
   previewStatus: MobilePreviewStatusEnum;
@@ -929,7 +934,10 @@ export type MultiTenantConfig = {
   customHomePageEnabled?: Maybe<Scalars['Boolean']['output']>;
   digestEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
   federationDisabled?: Maybe<Scalars['Boolean']['output']>;
+  isNonProfit?: Maybe<Scalars['Boolean']['output']>;
   lastCacheTimestamp?: Maybe<Scalars['Int']['output']>;
+  loggedInLandingPageIdMobile?: Maybe<Scalars['String']['output']>;
+  loggedInLandingPageIdWeb?: Maybe<Scalars['String']['output']>;
   nsfwEnabled?: Maybe<Scalars['Boolean']['output']>;
   primaryColor?: Maybe<Scalars['String']['output']>;
   replyEmail?: Maybe<Scalars['String']['output']>;
@@ -937,6 +945,7 @@ export type MultiTenantConfig = {
   siteName?: Maybe<Scalars['String']['output']>;
   updatedTimestamp?: Maybe<Scalars['Int']['output']>;
   walledGardenEnabled?: Maybe<Scalars['Boolean']['output']>;
+  welcomeEmailEnabled?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type MultiTenantConfigInput = {
@@ -946,12 +955,16 @@ export type MultiTenantConfigInput = {
   customHomePageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   digestEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   federationDisabled?: InputMaybe<Scalars['Boolean']['input']>;
+  isNonProfit?: InputMaybe<Scalars['Boolean']['input']>;
+  loggedInLandingPageIdMobile?: InputMaybe<Scalars['String']['input']>;
+  loggedInLandingPageIdWeb?: InputMaybe<Scalars['String']['input']>;
   nsfwEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   primaryColor?: InputMaybe<Scalars['String']['input']>;
   replyEmail?: InputMaybe<Scalars['String']['input']>;
   siteEmail?: InputMaybe<Scalars['String']['input']>;
   siteName?: InputMaybe<Scalars['String']['input']>;
   walledGardenEnabled?: InputMaybe<Scalars['Boolean']['input']>;
+  welcomeEmailEnabled?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type MultiTenantDomain = {
@@ -1197,6 +1210,8 @@ export type MutationLeaveChatRoomArgs = {
 };
 
 export type MutationMobileConfigArgs = {
+  appTrackingMessage?: InputMaybe<Scalars['String']['input']>;
+  appTrackingMessageEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   mobilePreviewStatus?: InputMaybe<MobilePreviewStatusEnum>;
   mobileSplashScreenType?: InputMaybe<MobileSplashScreenTypeEnum>;
   mobileWelcomeScreenLogoType?: InputMaybe<MobileWelcomeScreenLogoTypeEnum>;
