@@ -119,7 +119,7 @@ export const prettyPrompt = {
 type Spinner = ReturnType<typeof print.spin>
 const spinners: { [key: string]: Spinner } = {}
 
-export const startSpinner = (m = '') => {
+export const startSpinner = (m = ''): Spinner => {
   let spinner = spinners[m]
   if (!spinner) {
     spinner = print.spin({ prefixText: INDENT, text: gray(m) })
@@ -152,7 +152,12 @@ export const clearSpinners = () => {
   })
 }
 
-export const spinner = {
+export const spinner: {
+  start: (m?: string) => Spinner
+  stop: (m: string, symbol: string) => void
+  stopLast: (symbol: string) => void
+  clear: () => void
+} = {
   start: startSpinner,
   stop: stopSpinner,
   stopLast: stopLastSpinner,
