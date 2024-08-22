@@ -251,7 +251,6 @@ const Tabs = observer(function () {
   let initialRoute = routeScreenMap[getLandingPage()] || 'Newsfeed';
   // if the initial page is not visible, fallback to newsfeed
 
-  console.log('initialRoute', initialRoute);
   if (
     (initialRoute === 'Groups' && !groupsVisible) ||
     (initialRoute === 'ChatListStack' && !chatVisible)
