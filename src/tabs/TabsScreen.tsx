@@ -51,6 +51,7 @@ const screenRouteMap: Partial<Record<TabScreenType, string>> = {
   Newsfeed: 'newsfeed',
   Discovery: 'explore',
   ChatListStack: 'chat',
+  Groups: 'groups',
 };
 
 const routeScreenMap: Record<string, TabScreenType> = Object.fromEntries(
@@ -215,7 +216,9 @@ const Tabs = observer(function () {
       if (
         menuConf &&
         navMap &&
-        ['Newsfeed', 'ChatListStack', 'Discovery'].includes(route.name)
+        ['Newsfeed', 'ChatListStack', 'Discovery', 'Groups'].includes(
+          route.name,
+        )
       ) {
         return (
           <MIcon
@@ -247,6 +250,7 @@ const Tabs = observer(function () {
   // get the initial page, fallback to newsfeed in case it is not set
   let initialRoute = routeScreenMap[getLandingPage()] || 'Newsfeed';
   // if the initial page is not visible, fallback to newsfeed
+
   if (
     (initialRoute === 'Groups' && !groupsVisible) ||
     (initialRoute === 'ChatListStack' && !chatVisible)
