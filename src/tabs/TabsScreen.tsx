@@ -7,7 +7,6 @@ import {
 import { View, Platform, Dimensions } from 'react-native';
 import MIcon from '@expo/vector-icons/MaterialIcons';
 import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
-import { Icon } from '~ui/icons';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
 import { observer } from 'mobx-react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -20,7 +19,6 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import NotificationsStack from '../navigation/NotificationsStack';
-import { IconMapNameType } from '~/common/ui/icons/map';
 import withModalProvider from '~/navigation/withModalProvide';
 import { useUnreadMessages } from '~/modules/chat/hooks/useUnreadMessages';
 import { useIncrementUnreadOnNewMessage } from '~/modules/chat/hooks/useIncrementUnreadOnNewMessage';
@@ -213,19 +211,17 @@ const Tabs = observer(function () {
         return <NotificationIcon active={focused} />;
       }
 
-      if (
-        menuConf &&
-        navMap &&
-        ['Newsfeed', 'ChatListStack', 'Discovery', 'Groups'].includes(
-          route.name,
-        )
-      ) {
+      if (menuConf && navMap) {
+        const mappedItem = navMap[screenRouteMap[route.name]];
+        const item =
+          mappedItem || menuConf.find(menu => menu.name === route.name);
+
         return (
           <MIcon
             size={28}
             active={focused}
             name={
-              navMap[screenRouteMap[route.name]].iconId.replace('_', '-') as any
+              item ? (item.iconId.replace('_', '-') as any) : 'question-mark'
             }
             style={
               focused
@@ -235,22 +231,99 @@ const Tabs = observer(function () {
           />
         );
       }
-
-      return (
-        <Icon
-          size="large"
-          active={focused}
-          name={iconFromRoute[route.name]}
-          activeColor="PrimaryText"
-        />
-      );
     },
   });
 
+  /**
+   * Tabs
+   */
+  const tabs = menuConf
+    ?.filter(item => item.visibleMobile)
+    .map(item => {
+      switch (item.id) {
+        /**
+         * Core tabs
+         */
+        case 'newsfeed':
+          return (
+            <Tab.Screen
+              key="newsfeed"
+              name="Newsfeed"
+              component={NewsfeedStack}
+              options={newsfeedOptions}
+            />
+          );
+        case 'chat':
+          return (
+            <Tab.Screen
+              key="chat"
+              name="ChatListStack"
+              getComponent={() => require('~/modules/chat').ChatsListStack}
+              options={chatOptions}
+            />
+          );
+        case 'groups':
+          return (
+            <Tab.Screen
+              key="groups"
+              name="Groups"
+              getComponent={() =>
+                require('~/modules/groups/GroupsStack.tsx').GroupsStack
+              }
+              options={groupsOptions}
+            />
+          );
+        case 'explore':
+          return (
+            <Tab.Screen
+              key="explore"
+              name="Discovery"
+              getComponent={() =>
+                require('~/navigation/DiscoveryStack').default
+              }
+              options={discoveryOptions}
+            />
+          );
+        default:
+          /**
+           * Custom tabs
+           */
+          if (item.type === 'CUSTOM_LINK' && item.url?.startsWith('tab#')) {
+            /**
+             * Check if the url is a screen mapping
+             */
+            for (const prefix in screenMappings) {
+              if (item.url.startsWith(prefix)) {
+                const { component, getParams } = screenMappings[prefix];
+                return (
+                  <Tab.Screen
+                    key={item.id}
+                    // @ts-ignore - Check how to fix types for dynamic routes
+                    name={item.name}
+                    getComponent={component}
+                    initialParams={getParams(item.url)}
+                  />
+                );
+              }
+            }
+            return (
+              <Tab.Screen
+                key={item.id}
+                // @ts-ignore - Check how to fix types for dynamic routes
+                name={item.name}
+                getComponent={() => require('~/tabs/WebViewTab').default}
+                initialParams={{ url: item.url.substring(4), title: item.name }}
+              />
+            );
+          }
+          return null;
+      }
+    });
+
   // get the initial page, fallback to newsfeed in case it is not set
   let initialRoute = routeScreenMap[getLandingPage()] || 'Newsfeed';
-  // if the initial page is not visible, fallback to newsfeed
 
+  // if the initial page is not visible, fallback to newsfeed
   if (
     (initialRoute === 'Groups' && !groupsVisible) ||
     (initialRoute === 'ChatListStack' && !chatVisible)
@@ -266,32 +339,7 @@ const Tabs = observer(function () {
         initialRouteName={initialRoute}
         tabBar={tabBar}
         screenOptions={tabOptions}>
-        <Tab.Screen
-          name="Newsfeed"
-          component={NewsfeedStack}
-          options={{ tabBarTestID: 'Tabs:Newsfeed' }}
-        />
-        <Tab.Screen
-          name="Discovery"
-          getComponent={() => require('~/navigation/DiscoveryStack').default}
-          options={discoveryOptions}
-        />
-        {groupsVisible && (
-          <Tab.Screen
-            name="Groups"
-            getComponent={() =>
-              require('~/modules/groups/GroupsStack.tsx').GroupsStack
-            }
-            options={moreOptions}
-          />
-        )}
-        {chatVisible && (
-          <Tab.Screen
-            name="ChatListStack"
-            getComponent={() => require('~/modules/chat').ChatsListStack}
-            options={discoveryOptions}
-          />
-        )}
+        {tabs}
         <Tab.Screen
           name="Notifications"
           component={NotificationsStack}
@@ -350,21 +398,38 @@ const notificationOptions = {
   tabBarTestID: 'Notifications tab button',
   lazy: true,
 };
-const moreOptions = { tabBarTestID: 'Tabs:More' };
-const discoveryOptions = { tabBarTestID: 'Discovery tab button' };
+const newsfeedOptions = { tabBarTestID: 'Tabs:Newsfeed' };
+const groupsOptions = { tabBarTestID: 'Tabs:Groups' };
+const discoveryOptions = { tabBarTestID: 'Tabs:Explore' };
+const chatOptions = { tabBarTestID: 'Tabs:Chat' };
 const focusedState = { selected: true };
 const tabBar = props => <TabBar {...props} />;
 
-const iconFromRoute: Record<string, IconMapNameType> = {
-  Newsfeed: 'home',
-  User: 'user',
-  ChatListStack: 'chat-solid',
-  Groups: 'group',
-  Discovery: 'hashtag',
-  Performance: 'dev',
-  MindsPlus: 'queue',
+const screenMappings = {
+  'tab#/channel/': {
+    component: () => require('~/channel/v2/ChannelScreen').default,
+    getParams: (url: string) => ({
+      username: url.substring(13),
+      hideBack: true,
+    }),
+  },
+  'tab#/groups/': {
+    component: () =>
+      require('~/modules/groups/screens/GroupScreen').GroupScreen,
+    getParams: (url: string) => ({ guid: url.substring(12), hideBack: true }),
+  },
+  'tab#/chat/rooms/': {
+    component: () => require('~/modules/chat/screens/ChatScreen').default,
+    getParams: (url: string) => ({
+      roomGuid: url.substring(16),
+      hideBack: true,
+    }),
+  },
 };
 
+/**
+ * Export
+ */
 export default Tabs;
 
 export const withModal = withModalProvider(Tabs);
