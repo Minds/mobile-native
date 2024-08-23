@@ -26,6 +26,7 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { SUPERMIND_ENABLED, WIRE_ENABLED } from '~/config/Config';
 import PostSubscription from './buttons/PostSubscription';
 import { useCreateChatRoom } from '~/modules/chat/hooks/useCreateChatRoom';
+import PermissionsService from '~/common/services/permissions.service';
 
 export type ButtonsType =
   | 'edit'
@@ -147,14 +148,15 @@ const ChannelButtons = withErrorBoundary(
             style={ThemedStyles.style.marginLeft2x}
           />
         )}
-        {shouldShow('chat') && (
-          <ChatButton
-            raisedIcons={props.raisedIcons}
-            iconColor={props.iconColor}
-            iconReverseColor={props.iconReverseColor}
-            guid={props.store.channel.guid}
-          />
-        )}
+        {shouldShow('chat') &&
+          !PermissionsService.shouldHideCreateChatRoom() && (
+            <ChatButton
+              raisedIcons={props.raisedIcons}
+              iconColor={props.iconColor}
+              iconReverseColor={props.iconReverseColor}
+              guid={props.store.channel.guid}
+            />
+          )}
         {shouldShow('more') && (
           <SmallCircleButton
             raised={props.raisedIcons}
@@ -189,7 +191,9 @@ const ChatButton = ({ raisedIcons, iconColor, iconReverseColor, guid }) => {
       name="chat"
       type="ion"
       onPress={() => {
-        createChatRoom([guid]);
+        if (PermissionsService.canCreateChatRoom(true)) {
+          createChatRoom([guid]);
+        }
       }}
       disabled={isLoading}
       color={iconColor}
