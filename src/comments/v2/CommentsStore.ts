@@ -405,7 +405,7 @@ export default class CommentsStore {
    * Post comment
    */
   post = async () => {
-    if (!PermissionsService.canComment(true)) {
+    if (!this.edit && !PermissionsService.canComment(true)) {
       return;
     }
     if (this.attachment.uploading) {
