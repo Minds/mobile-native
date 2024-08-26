@@ -5,6 +5,7 @@ import {
   GetNavigationItemsDocument,
   GetNavigationItemsQuery,
   GetNavigationItemsQueryVariables,
+  NavigationItemTypeEnum,
 } from '~/graphql/api';
 import { filterNavigationItems } from './helpers';
 
@@ -84,6 +85,11 @@ export const useCustomNavigationTabs = () => {
 
   // hide main tab items
   return nav
-    ?.filter(item => tabsIds.includes(item.id))
+    ?.filter(
+      item =>
+        tabsIds.includes(item.id) ||
+        (item.type === NavigationItemTypeEnum.CustomLink &&
+          item.url?.startsWith('tab#')),
+    )
     .map(item => ({ ...item, iconId: item.iconId.replace('_', '-') }));
 };
