@@ -14,6 +14,7 @@ import { actionsContainerStyle, actionsContainerWrapper } from './styles';
 import { useActivityContext } from '../contexts/Activity.context';
 import PermissionsService from '~/common/services/permissions.service';
 import ThemedStyles from '~/styles/ThemedStyles';
+import { IS_TENANT } from '~/config/Config';
 
 export interface ThumbProps {
   direction: 'up' | 'down';
@@ -39,7 +40,7 @@ const ThumbAction = ({
   const analytics = useAnalytics();
 
   const toggleThumb = async () => {
-    if (!entity.can(FLAG_VOTE, true)) {
+    if (!PermissionsService.canInteract(true)) {
       return;
     }
 
@@ -52,14 +53,20 @@ const ThumbAction = ({
     });
   };
 
+  if (PermissionsService.shouldHideInteract()) {
+    return null;
+  }
+
+  const disabled = !canInteract && !IS_TENANT;
+
   return (
     <Touchable
       style={
-        canInteract
-          ? actionsContainerStyle
-          : [actionsContainerStyle, ThemedStyles.style.opacity50]
+        disabled
+          ? [actionsContainerStyle, ThemedStyles.style.opacity50]
+          : actionsContainerStyle
       }
-      disabled={!canInteract}
+      disabled={disabled}
       onPress={toggleThumb}
       testID={`Thumb ${direction} activity button`}>
       <View style={actionsContainerWrapper}>

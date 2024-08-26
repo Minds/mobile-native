@@ -10,7 +10,7 @@ update_production_tenant:
   before_script:
     - apk add --no-cache bash git
     - yarn install --cache-folder ../.yarn
-    - yarn add sharp --ignore-engines
+    - yarn add sharp --ignore-engines -W
   script:
     - |
       if [ -z "$TENANT_ID" ]; then

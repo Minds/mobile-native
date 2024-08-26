@@ -9,7 +9,7 @@ eas_build_production_android_tenant:
       - ../yarn
   before_script:
     - yarn install --cache-folder ../yarn
-    - yarn add sharp --ignore-engines
+    - yarn add sharp --ignore-engines -W
     - wget -q -O - "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - cp .secure_files/google-services.json .
   script:
@@ -37,7 +37,7 @@ eas_build_production_ios_tenant:
   before_script:
     - apk add --no-cache bash git
     - yarn install --cache-folder ../yarn
-    - yarn add sharp --ignore-engines
+    - yarn add sharp --ignore-engines -W
   script:
     - echo "Building tenant $TENANT_ID..."
     - mobile setup-tenant $TENANT_ID

@@ -198,7 +198,9 @@ const pushRemindActionSheet = async ({
             <BottomSheetMenuItem
               onPress={async () => {
                 await ref.close();
-                shareToGroup();
+                if (PermissionsService.canCreatePost(true)) {
+                  shareToGroup();
+                }
               }}
               title={i18n.t('groupShare')}
               iconName="account-multiple"
