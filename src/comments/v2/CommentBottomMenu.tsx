@@ -127,17 +127,16 @@ export default function CommentBottomMenu({
     };
 
     if (comment.isOwner()) {
-      PermissionsService.canComment() &&
-        actions.push({
-          title: i18n.t('edit'),
-          iconName: 'edit',
-          iconType: 'material',
-          onPress: () => {
-            close();
-            // we delay showing the input to prevent the keyboard to be hidden
-            setTimeout(() => store.setShowInput(true, comment), 300);
-          },
-        });
+      actions.push({
+        title: i18n.t('edit'),
+        iconName: 'edit',
+        iconType: 'material',
+        onPress: () => {
+          close();
+          // we delay showing the input to prevent the keyboard to be hidden
+          setTimeout(() => store.setShowInput(true, comment), 300);
+        },
+      });
 
       actions.push(deleteOpt);
 

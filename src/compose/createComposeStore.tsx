@@ -604,7 +604,7 @@ export default function (props) {
      * Submit post
      */
     async submit() {
-      if (!PermissionsService.canCreatePost(true)) {
+      if (!this.isEdit && !PermissionsService.canCreatePost(true)) {
         return;
       }
 
