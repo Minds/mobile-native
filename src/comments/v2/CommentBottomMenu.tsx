@@ -23,7 +23,6 @@ import {
 } from '../../common/components/bottom-sheet';
 import NavigationService from '~/navigation/NavigationService';
 import { useGroupContext } from '~/modules/groups/contexts/GroupContext';
-import PermissionsService from '~/common/services/permissions.service';
 
 type PropsType = {
   comment: CommentModel;
