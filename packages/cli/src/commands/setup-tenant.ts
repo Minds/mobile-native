@@ -60,7 +60,7 @@ async function setupTenant(
   preview: boolean,
   toolbox: GluegunToolbox
 ): Promise<void> {
-  heading('Setting up network ' + typeof id)
+  heading('Setting up network ' + id)
   const isMinds: boolean = id.trim() === '0'
 
   const config = await spinnerAction(
@@ -77,6 +77,7 @@ async function setupTenant(
       return data
     }
   )
+  p('   Tenant: ' + config.APP_NAME)
   await spinnerAction('Generating tenant.json', async () => {
     generateTenantJSON(config, preview, toolbox)
   })
