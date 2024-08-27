@@ -1,5 +1,10 @@
 import React, { useCallback, useMemo } from 'react';
-import { RefreshControl, View, ViewToken } from 'react-native';
+import {
+  RefreshControl,
+  useWindowDimensions,
+  View,
+  ViewToken,
+} from 'react-native';
 import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import { FlashList, FlashListProps } from '@shopify/flash-list';
@@ -17,7 +22,6 @@ import CenteredLoading from '~/common/components/CenteredLoading';
 import ErrorBoundary from './ErrorBoundary';
 import { IS_IOS } from '~/config/Config';
 import ThemedStyles from '~/styles/ThemedStyles';
-import { useDimensions } from '@react-native-community/hooks';
 
 type PlaceholderType =
   | React.ComponentType<any>
@@ -60,7 +64,7 @@ function FeedList<T extends BaseModel>(
     ...other
   } = props;
 
-  const { height } = useDimensions().window;
+  const { height } = useWindowDimensions();
 
   const navigation = useNavigation();
 

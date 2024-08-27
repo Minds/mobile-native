@@ -1,8 +1,7 @@
-import { useDimensions } from '@react-native-community/hooks';
 import { ResizeMode } from 'expo-av';
 import { observer } from 'mobx-react';
 import React, { useState } from 'react';
-import { Platform } from 'react-native';
+import { Platform, useWindowDimensions } from 'react-native';
 import MindsVideo from '../media/v2/mindsVideo/MindsVideo';
 import ImagePreview from './ImagePreview';
 
@@ -23,7 +22,7 @@ export default observer(function MediaPreviewFullScreen({
   mediaToConfirm,
   entity,
 }: PropsType) {
-  const { width } = useDimensions().window;
+  const { width } = useWindowDimensions();
   const [videoSize, setVideoSize] = useState<VideoSizeType>(null);
 
   const onVideoLoaded = React.useCallback(e => {

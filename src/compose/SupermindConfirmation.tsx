@@ -1,7 +1,10 @@
-import { useDimensions } from '@react-native-community/hooks';
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { InteractionManager, Keyboard } from 'react-native';
+import {
+  InteractionManager,
+  Keyboard,
+  useWindowDimensions,
+} from 'react-native';
 import FitScrollView from '~/common/components/FitScrollView';
 import SmartImage from '~/common/components/SmartImage';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
@@ -30,7 +33,7 @@ export default function SupermindConfirmation() {
     example: i18n.t('supermind.confirm.twitter.example'),
     confirm: i18n.t('confirm'),
   };
-  const { width } = useDimensions().screen;
+  const { width } = useWindowDimensions();
   const imageStyle = useMemoStyle(
     [
       'marginHorizontal2x',

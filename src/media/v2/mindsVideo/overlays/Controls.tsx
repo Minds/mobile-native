@@ -50,19 +50,14 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
         <View style={styles.overlayContainer}>
           <View
             style={[theme.positionAbsolute, theme.centered, theme.marginTop2x]}>
-            <View style={[theme.centered, styles.playContainer]}>
-              <Icon
-                onPress={() =>
-                  localStore.paused
-                    ? localStore.play(Boolean(localStore.volume), true)
-                    : localStore.pause()
-                }
-                style={[styles.videoIcon, styles.textShadow]}
-                name={localStore.paused ? 'play' : 'pause'}
-                size={playSize - 25}
-                color={controlColor}
-              />
-            </View>
+            <PlayButton
+              paused={localStore.paused}
+              onPress={() =>
+                localStore.paused
+                  ? localStore.play(Boolean(localStore.volume), true)
+                  : localStore.pause()
+              }
+            />
           </View>
           {localStore.duration > 0 && localStore.showFullControls && (
             <View style={styles.controlBarContainer}>
@@ -110,5 +105,23 @@ const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
     </View>
   ) : null;
 });
+
+export const PlayButton = ({
+  onPress,
+  paused,
+}: {
+  onPress?: () => void;
+  paused: boolean;
+}) => (
+  <View style={[ThemedStyles.style.centered, styles.playContainer]}>
+    <Icon
+      onPress={onPress}
+      style={[styles.videoIcon, styles.textShadow]}
+      name={paused ? 'play' : 'pause'}
+      size={playSize - 25}
+      color={controlColor}
+    />
+  </View>
+);
 
 export default Controls;

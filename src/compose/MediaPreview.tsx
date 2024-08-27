@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, useWindowDimensions } from 'react-native';
 import Icon from '@expo/vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
 import { Image } from 'expo-image';
@@ -8,7 +8,6 @@ import { observer } from 'mobx-react';
 import ThemedStyles from '../styles/ThemedStyles';
 import MindsVideo from '../media/v2/mindsVideo/MindsVideo';
 import { ResizeMode } from 'expo-av';
-import { useDimensions } from '@react-native-community/hooks';
 
 type PropsType = {
   store: any;
@@ -18,7 +17,7 @@ type PropsType = {
  * Media Preview component with support for up to 4 images/videos
  */
 export default observer(function MediaPreview({ store }: PropsType) {
-  const { width, height } = useDimensions().window;
+  const { width, height } = useWindowDimensions();
 
   if (!store.attachments.hasAttachment) {
     return null;

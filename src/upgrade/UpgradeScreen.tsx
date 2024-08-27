@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useDimensions } from '@react-native-community/hooks';
 
 import ThemedStyles from '../styles/ThemedStyles';
 import FitScrollView from '../common/components/FitScrollView';
@@ -13,6 +12,7 @@ import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
 import UpgradeStripeTokens from './UpgradeStripeTokens';
 import UpgradeInAppPurchasesTokens from './UpgradeInAppPurchasesTokens';
 import { withIAPContext } from 'react-native-iap';
+import { useWindowDimensions } from 'react-native';
 
 type PropsType = {
   route: UpgradeScreenRouteProp;
@@ -23,7 +23,7 @@ const UpgradeScreen = observer(({ route }: PropsType) => {
   const localStore = useLocalStore(createUpgradeStore);
   const theme = ThemedStyles.style;
   const insets = useSafeAreaInsets();
-  const { height } = useDimensions().window;
+  const { height } = useWindowDimensions();
   const { onComplete, pro } = route.params;
 
   useEffect(() => {
