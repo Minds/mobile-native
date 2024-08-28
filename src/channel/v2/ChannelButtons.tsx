@@ -148,7 +148,7 @@ const ChannelButtons = withErrorBoundary(
             style={sp.styles.style.marginLeft2x}
           />
         )}
-        {shouldShow('chat') && (
+        {shouldShow('chat') && !sp.permissions.shouldHideCreateChatRoom() && (
           <ChatButton
             raisedIcons={props.raisedIcons}
             iconColor={props.iconColor}
@@ -190,7 +190,9 @@ const ChatButton = ({ raisedIcons, iconColor, iconReverseColor, guid }) => {
       name="chat"
       type="ion"
       onPress={() => {
-        createChatRoom([guid]);
+        if (sp.permissions.canCreateChatRoom(true)) {
+          createChatRoom([guid]);
+        }
       }}
       disabled={isLoading}
       color={iconColor}

@@ -55,6 +55,7 @@
     "types": ["jest"]
   },
   "exclude": [
+    "./packages/cli",
     "node_modules",
     "babel.config.js",
     "metro.config.js",

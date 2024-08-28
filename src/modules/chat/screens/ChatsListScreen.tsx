@@ -27,7 +27,7 @@ import { useStyle } from '~/styles/hooks';
  * Chat rooms list screen
  */
 export default function ChatsListScreen({ navigation }) {
-  const canCreateChat = serviceProvider.permissions.canCreateChatRoom();
+  const hideCreateChat = serviceProvider.permissions.shouldHideCreateChatRoom();
   return (
     <Screen safe>
       <ScreenHeader
@@ -45,13 +45,15 @@ export default function ChatsListScreen({ navigation }) {
         }
       />
       <ChatList />
-      {canCreateChat && (
+      {!hideCreateChat && (
         <ChatNewButton
           onPress={() => {
-            serviceProvider
-              .resolve('analytics')
-              .trackClick('data-minds-chat-room-list-new-chat-button');
-            navigation.push('ChatNew');
+            if (serviceProvider.permissions.canCreateChatRoom(true)) {
+              serviceProvider
+                .resolve('analytics')
+                .trackClick('data-minds-chat-room-list-new-chat-button');
+              navigation.push('ChatNew');
+            }
           }}
         />
       )}
@@ -117,20 +119,28 @@ function ChatList() {
 const Empty = () => (
   <Spacer horizontal="XL" top="L">
     <H3>Say hello to chats!</H3>
-    <B2 vertical="M">
-      Start a direct conversation with a friend, stranger, or group of people.
-    </B2>
-    <Button
-      onPress={() => {
-        serviceProvider
-          .resolve('analytics')
-          .trackClick('data-minds-chat-no-chats-empty-list-button');
-        serviceProvider.navigation.push('ChatNew');
-      }}
-      align="start"
-      type="action">
-      New chat
-    </Button>
+    {!serviceProvider.permissions.shouldHideCreateChatRoom() && (
+      <>
+        <B2 vertical="M">
+          Start a direct conversation with a friend, stranger, or group of
+          people.
+        </B2>
+        <Button
+          onPress={() => {
+            if (!serviceProvider.permissions.canCreateChatRoom(true)) {
+              return;
+            }
+            serviceProvider
+              .resolve('analytics')
+              .trackClick('data-minds-chat-no-chats-empty-list-button');
+            serviceProvider.navigation.push('ChatNew');
+          }}
+          align="start"
+          type="action">
+          New chat
+        </Button>
+      </>
+    )}
   </Spacer>
 );
 

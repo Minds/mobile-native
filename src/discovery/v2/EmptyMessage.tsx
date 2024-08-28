@@ -32,7 +32,7 @@ export const EmptyMessage = ({
         <B2 color="secondary" top="S" bottom="L">
           {subtitle}
         </B2>
-        {sp.permissions.canCreatePost() && onPress && buttonText ? (
+        {onPress && buttonText ? (
           <Button
             text={buttonText}
             large

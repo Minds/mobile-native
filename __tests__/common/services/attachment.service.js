@@ -6,8 +6,10 @@ import { AttachmentService } from '~/common/services/attachment.service';
 import { PermissionsService } from '~/common/services/permissions.service';
 
 // jest.mock('~/capture/CaptureService');
+jest.mock('~/common/services/permissions.service');
 jest.mock('~/common/services/api.service');
 jest.mock('~/common/services/image-picker.service');
+jest.mock('~/common/services/upgrade-modal.service', () => ({}));
 
 /**
  * Tests

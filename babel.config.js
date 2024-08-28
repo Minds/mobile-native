@@ -21,7 +21,6 @@ module.exports = {
         allowDeclareFields: true,
       },
     ],
-    ['react-native-reanimated/plugin'],
     [
       'module-resolver',
       {
@@ -44,5 +43,6 @@ module.exports = {
         },
       },
     ],
+    ['react-native-reanimated/plugin'],
   ],
 };

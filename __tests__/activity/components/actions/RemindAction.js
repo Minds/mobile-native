@@ -13,6 +13,7 @@ jest.mock('~/services/serviceProvider');
 // mock services
 sp.mockService('styles');
 sp.mockService('i18n');
+sp.mockService('permissions');
 
 jest.mock('~/../AppStores');
 jest.mock('~/common/hooks/use-stores.tsx');

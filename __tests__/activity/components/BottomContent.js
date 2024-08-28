@@ -1,10 +1,9 @@
 import 'react-native';
 import React from 'react';
 import BottomContent from '~/newsfeed/activity/BottomContent';
-import Actions from '../../../src/newsfeed/activity/Actions';
+import Actions from '~/newsfeed/activity/Actions';
 import Scheduled from '~/newsfeed/activity/banners/Scheduled';
 import Pending from '~/newsfeed/activity/banners/Pending';
-import ActivityMetrics from '~/newsfeed/activity/metrics/ActivityMetrics';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 import { shallow } from 'enzyme';
@@ -29,7 +28,6 @@ describe('BottomContent component', () => {
     expect(screen).toMatchSnapshot();
   });
   it('should have the expectedComponents', async () => {
-    expect(screen.find(ActivityMetrics)).toHaveLength(1);
     expect(screen.find(Actions)).toHaveLength(1);
     expect(screen.find(Scheduled)).toHaveLength(1);
     expect(screen.find(Pending)).toHaveLength(1);

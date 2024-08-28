@@ -125,17 +125,16 @@ export default function CommentBottomMenu({
     };
 
     if (comment.isOwner()) {
-      sp.permissions.canComment() &&
-        actions.push({
-          title: i18n.t('edit'),
-          iconName: 'edit',
-          iconType: 'material',
-          onPress: () => {
-            close();
-            // we delay showing the input to prevent the keyboard to be hidden
-            setTimeout(() => store.setShowInput(true, comment), 300);
-          },
-        });
+      actions.push({
+        title: i18n.t('edit'),
+        iconName: 'edit',
+        iconType: 'material',
+        onPress: () => {
+          close();
+          // we delay showing the input to prevent the keyboard to be hidden
+          setTimeout(() => store.setShowInput(true, comment), 300);
+        },
+      });
 
       actions.push(deleteOpt);
 
@@ -183,7 +182,7 @@ export default function CommentBottomMenu({
       });
     }
     return actions;
-  }, [close, comment, entity, onTranslate, store, group]);
+  }, [i18n, comment, close, onTranslate, store, entity, group]);
 
   return (
     <TouchableOpacity onPress={show} hitSlop={hitSlop}>

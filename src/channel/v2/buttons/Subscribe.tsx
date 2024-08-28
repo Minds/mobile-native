@@ -66,7 +66,9 @@ const Subscribe = (props: SubscribeProps) => {
         mini && (
           <Icon
             name={channel.subscribed ? 'check' : 'plus'}
-            color="PrimaryText"
+            color={
+              serviceProvider.styles.theme ? 'PrimaryBackground' : 'PrimaryText'
+            }
             size="small"
             horizontal="S"
           />

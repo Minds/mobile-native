@@ -395,7 +395,7 @@ export default class CommentsStore {
    * Post comment
    */
   post = async () => {
-    if (!sp.permissions.canComment(true)) {
+    if (!this.edit && !sp.permissions.canComment(true)) {
       return;
     }
     if (this.attachment.uploading) {
@@ -599,7 +599,7 @@ export default class CommentsStore {
    * Attach a video
    */
   async video() {
-    if (!sp.permissions.canUploadVideo()) {
+    if (!sp.permissions.canUploadVideo(true)) {
       showNotification(sp.i18n.t('composer.create.mediaVideoError'));
       return;
     }
@@ -638,7 +638,10 @@ export default class CommentsStore {
   onAttachedMedia = async media => {
     const attachment = this.attachment;
 
-    if (media.type.startsWith('video') && !sp.permissions.canUploadVideo()) {
+    if (
+      media.type.startsWith('video') &&
+      !sp.permissions.canUploadVideo(true)
+    ) {
       showNotification(sp.i18n.t('composer.create.mediaVideoError'));
       return;
     }
@@ -679,7 +682,10 @@ export default class CommentsStore {
    */
   async gallery(fn?: () => void) {
     try {
-      const response = await sp.resolve('attachment').gallery('All', false);
+      const shouldHideVideos = sp.permissions.shouldHideUploadVideo();
+      const response = await sp
+        .resolve('attachment')
+        .gallery(shouldHideVideos ? 'Images' : 'All', false);
 
       if (fn) fn();
 
@@ -688,7 +694,10 @@ export default class CommentsStore {
 
       const media = Array.isArray(response) ? response[0] : response;
 
-      if (media.mime.startsWith('video') && !sp.permissions.canUploadVideo()) {
+      if (
+        media.mime.startsWith('video') &&
+        !sp.permissions.canUploadVideo(true)
+      ) {
         showNotification(sp.i18n.t('composer.create.mediaVideoError'));
         return;
       }

@@ -65,8 +65,12 @@ export default observer(function CommentInputBottomMenu({
       iconType: 'material',
     };
 
+    const shouldHideVideoUpload = sp.permissions.shouldHideUploadVideo();
+
     const openGallery: BottomSheetMenuItemProps = {
-      title: i18n.t('capture.attach'),
+      title: i18n.t(
+        shouldHideVideoUpload ? 'capture.attachPhoto' : 'capture.attach',
+      ),
       onPress: () => {
         const fn = () => {
           close();

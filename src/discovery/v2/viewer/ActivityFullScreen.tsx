@@ -39,6 +39,8 @@ import { GroupContextProvider } from '~/modules/groups/contexts/GroupContext';
 import { getMaxFeedWidth } from '~/styles/Style';
 import sp from '~/services/serviceProvider';
 import { useStyle } from '~/styles/hooks';
+import { BoostCTA } from '~/modules/boost';
+import BottomContent from '~/newsfeed/activity/BottomContent';
 
 type ActivityRoute = RouteProp<AppStackParamList, 'Activity'>;
 
@@ -161,7 +163,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
     if (route.params?.focusedCommentUrn || route.params?.scrollToBottom) {
       openComments();
     }
-  }, [route.params]);
+  }, [route.params, openComments]);
 
   useEffect(() => {
     const user = sp.session.getUser();
@@ -332,11 +334,13 @@ const ActivityFullScreen = observer((props: PropsType) => {
                       />
                     </>
                   )}
+                  <BoostCTA entity={entity} />
+                  <ActivityMetrics entity={entity} />
                 </TouchableOpacity>
                 {hasRemind && remind}
               </>
             )}
-            <ActivityMetrics entity={props.entity} fullDate />
+            <BottomContent entity={props.entity} hideActions />
           </ScrollView>
           {!store.contentFit && (
             <LinearGradient colors={gradientColors} style={styles.linear} />

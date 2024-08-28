@@ -12,7 +12,7 @@ submit_production:
     - yarn install --cache-folder .yarn
   script:
     - echo "Getting config for tenant ${TENANT_ID}"
-    - node tasks/setup-tenant.js ${TENANT_ID}
+    - mobile setup-tenant ${TENANT_ID}
     - npx eas-cli submit --profile production --non-interactive --json
   rules:
     - if: $BUILD_MODE == "production"

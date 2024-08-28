@@ -10,7 +10,7 @@ const config = {
   ],
   preset: 'jest-expo',
   setupFiles: ['<rootDir>/setupTests.js'],
-  testPathIgnorePatterns: ['/node_modules/', '.yarn'],
+  testPathIgnorePatterns: ['/node_modules/', '.yarn', '/packages/cli'],
   // transformIgnorePatterns: [
   //   'node_modules/(?!react-native|react-native-gesture-handler|react-navigation)/',
   //   'jest-runner',

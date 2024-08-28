@@ -86,12 +86,12 @@ export default withErrorBoundaryScreen(
      * sets mode to video
      */
     const setModeVideo = useCallback(() => {
-      if (!sp.permissions.canUploadVideo()) {
+      if (!sp.permissions.canUploadVideo(true)) {
         showNotification(i18n.t('composer.create.mediaVideoError'));
         return;
       }
       setMode('video');
-    }, []);
+    }, [i18n]);
 
     useEffect(() => {
       !IS_IOS && Orientation.unlock();
@@ -169,7 +169,7 @@ export default withErrorBoundaryScreen(
       }
 
       setMediaToConfirm(media);
-    }, [mode, portraitMode]);
+    }, [i18n, mode, portraitMode]);
 
     /**
      * called when edit icon is pressed. opens the rnPhotoEditor and handles callback
@@ -223,7 +223,7 @@ export default withErrorBoundaryScreen(
         sp.log.exception('[MediaView] runDownload', e);
       }
       setDownloading(false);
-    }, [mediaToConfirm]);
+    }, [i18n, mediaToConfirm.uri]);
 
     /**
      * called when retake button is pressed. Resets current image to null
@@ -391,6 +391,8 @@ const useBottomBarStyle = () => {
 const CameraScreenBottomBar = ({ mode, onSetPhotoPress, onSetVideoPress }) => {
   const containerStyle = useBottomBarStyle();
   const i18n = sp.i18n;
+  const shouldShowVideo = !sp.permissions.shouldHideUploadVideo();
+
   return (
     <View style={containerStyle}>
       <View style={styles.tabs}>
@@ -398,9 +400,11 @@ const CameraScreenBottomBar = ({ mode, onSetPhotoPress, onSetVideoPress }) => {
           {i18n.t('capture.photo').toUpperCase()}
         </TabButton>
 
-        <TabButton onPress={onSetVideoPress} active={mode === 'video'}>
-          {i18n.t('capture.video').toUpperCase()}
-        </TabButton>
+        {shouldShowVideo && (
+          <TabButton onPress={onSetVideoPress} active={mode === 'video'}>
+            {i18n.t('capture.video').toUpperCase()}
+          </TabButton>
+        )}
       </View>
     </View>
   );

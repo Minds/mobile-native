@@ -338,5 +338,10 @@ const emptyMessage = (tab: TDiscoveryV2Tabs) => (onPress?: () => void) => {
         'There are no groups to recommend for you yet. Check back later for personalized recommendations.',
     },
   };
-  return <EmptyMessage {...emptyMessages[tab]} onPress={onPress} />;
+
+  const config = { ...emptyMessages[tab] };
+  if (tab === 'top' && sp.permissions.shouldHideCreatePost()) {
+    delete config.buttonText;
+  }
+  return <EmptyMessage {...config} onPress={onPress} />;
 };

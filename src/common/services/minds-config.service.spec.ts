@@ -2,12 +2,22 @@ import { ApiService } from './api.service';
 import { ApiResponse } from './ApiResponse';
 import { MindsConfigService } from './minds-config.service';
 import { Storages } from '~/common/services/storage/storages.service';
+import { TokenExpiredError } from './TokenExpiredError';
+
+type SettingsResponse = ApiResponse & {
+  permissions: string[];
+  LoggedIn: boolean;
+};
 
 jest.mock('../helpers/delay', () =>
   jest.fn().mockImplementation(_ => new Promise<void>(resolve => resolve())),
 );
 jest.mock('./api.service');
 jest.mock('~/common/services/storage/storages.service');
+
+jest.mock('./session.service', () => ({
+  userLoggedIn: true,
+}));
 
 // @ts-ignore
 const apiService = new ApiService();
@@ -23,7 +33,11 @@ describe('MindsConfigService', () => {
   });
 
   it('should fetch minds config and update settings', async () => {
-    const mockSettings: ApiResponse & { permissions: string[] } = {
+    const mockSettings: ApiResponse & {
+      permissions: string[];
+      LoggedIn: boolean;
+    } = {
+      LoggedIn: true,
       permissions: ['permission1', 'permission2'],
       status: 'success',
     };
@@ -49,6 +63,74 @@ describe('MindsConfigService', () => {
         permission2: true,
       },
     });
+  });
+
+  it('should refresh the session if necessary and update settings', async () => {
+    const mockSettings: SettingsResponse = {
+      LoggedIn: false,
+      permissions: [],
+      status: 'success',
+    };
+    const mockSettingsTrue: SettingsResponse = {
+      LoggedIn: true,
+      permissions: ['permission1', 'permission2'],
+      status: 'success',
+    };
+    mockedApiService.get.mockResolvedValueOnce(mockSettings);
+    // @ts-ignore
+    mockedApiService.get.mockResolvedValueOnce({ guid: '123' });
+    mockedApiService.get.mockResolvedValueOnce(mockSettingsTrue);
+
+    await service.update(3);
+
+    expect(mockedApiService.get).toHaveBeenCalledWith('api/v1/minds/config');
+    expect(mockedApiService.get).toHaveBeenCalledWith('api/v1/channel/me');
+    expect(mockedApiService.get).toHaveBeenCalledWith('api/v1/minds/config');
+
+    expect(service.settings).toEqual({
+      ...mockSettingsTrue,
+      permissions: {
+        permission1: true,
+        permission2: true,
+      },
+    });
+  });
+
+  it('should throw if refresh token is expired', async () => {
+    const mockSettings: SettingsResponse = {
+      LoggedIn: false,
+      permissions: [],
+      status: 'success',
+    };
+
+    const mockError = new TokenExpiredError();
+
+    mockedApiService.get.mockResolvedValueOnce(mockSettings);
+    mockedApiService.get.mockRejectedValueOnce(mockError);
+
+    await expect(service.update(3)).rejects.toThrow(mockError);
+
+    expect(mockedApiService.get).toHaveBeenCalledWith('api/v1/minds/config');
+    expect(mockedApiService.get).toHaveBeenCalledWith('api/v1/channel/me');
+    expect(mockedApiService.get).toHaveBeenCalledTimes(2);
+  });
+
+  it('should throw if refresh token fails', async () => {
+    const mockSettings: SettingsResponse = {
+      LoggedIn: false,
+      permissions: [],
+      status: 'success',
+    };
+    const mockError = { response: { status: 401 } };
+
+    mockedApiService.get.mockResolvedValueOnce(mockSettings);
+    mockedApiService.get.mockRejectedValueOnce(mockError);
+
+    await expect(service.update(3)).rejects.toBe(mockError);
+
+    expect(mockedApiService.get).toHaveBeenCalledWith('api/v1/minds/config');
+    expect(mockedApiService.get).toHaveBeenCalledWith('api/v1/channel/me');
+    expect(mockedApiService.get).toHaveBeenCalledTimes(2);
   });
 
   it('should retry on error', async () => {

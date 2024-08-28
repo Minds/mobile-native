@@ -35,6 +35,9 @@ import { useFeedStore } from '~/common/contexts/feed-store.context';
 import FadeView from '~/common/components/FadeView';
 import { withActivityContext } from './contexts/Activity.context';
 import undoable from './hocs/undoable';
+import { BoostCTA } from '~/modules/boost';
+import ActivityMetrics from './metrics/ActivityMetrics';
+import { showUpgradeModal } from '~/common/services/upgrade-modal.service';
 const FONT_THRESHOLD = 300;
 import sp from '~/services/serviceProvider';
 import { useMemoStyle } from '~/styles/hooks';
@@ -116,13 +119,6 @@ export default class Activity extends Component<ActivityProps> {
    * Nav to activity full screen
    */
   navToActivity = () => {
-    if (this.props.entity.hasSiteMembershipPaywallThumbnail) {
-      showNotification(
-        'This post is for members only. Please view it in a web browser to proceed.',
-      );
-      return;
-    }
-
     if (!this.props.navigation || this.props.entity.remind_deleted) {
       return;
     }
@@ -328,6 +324,18 @@ export default class Activity extends Component<ActivityProps> {
     }
   }
 
+  onPressMedia = () => {
+    if (
+      this.props.entity.site_membership &&
+      !this.props.entity.site_membership_unlocked
+    ) {
+      // show upgrade modal
+      showUpgradeModal();
+      return;
+    }
+    this.navToActivity();
+  };
+
   /**
    * Render
    */
@@ -403,7 +411,7 @@ export default class Activity extends Component<ActivityProps> {
         <MediaView
           ref={this.setMediaViewRef}
           entity={entity}
-          onPress={this.navToActivity}
+          onPress={this.onPressMedia}
           autoHeight={this.props.autoHeight}
           onVideoOverlayPress={
             this.props.maxContentHeight ? this.navToActivity : undefined
@@ -448,6 +456,13 @@ export default class Activity extends Component<ActivityProps> {
                 </MaxHeightFadeView>
               ) : (
                 content
+              )}
+              <BoostCTA entity={entity} />
+              {!this.props.hideMetrics && (
+                <ActivityMetrics
+                  entity={entity}
+                  hideSupermindLabel={this.props.hideTabs}
+                />
               )}
             </Pressable>
             <BottomContent

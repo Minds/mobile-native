@@ -17,10 +17,12 @@ type CaptureFabProps = {
 };
 
 const CaptureFab = ({ navigation, group, testID }: CaptureFabProps) => {
-  if (!sp.permissions.canComment()) {
+  if (!sp.permissions.shouldHideCreatePost()) {
     return null;
   }
+
   const pushComposeCreate = () =>
+    sp.permissions.canCreatePost(true) &&
     pushComposeCreateScreen({
       onItemPress: async key => {
         navigation.goBack();
@@ -29,9 +31,11 @@ const CaptureFab = ({ navigation, group, testID }: CaptureFabProps) => {
     });
 
   const handleComposePress = () => {
-    navigation.push('Compose', {
-      group: group,
-    });
+    if (sp.permissions.canCreatePost(true)) {
+      navigation.push('Compose', {
+        group: group,
+      });
+    }
   };
 
   return (

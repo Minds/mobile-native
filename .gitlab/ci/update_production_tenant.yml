@@ -10,7 +10,7 @@ update_production_tenant:
   before_script:
     - apk add --no-cache bash git
     - yarn install --cache-folder ../.yarn
-    - yarn add sharp --ignore-engines
+    - yarn add sharp --ignore-engines -W
   script:
     - |
       if [ -z "$TENANT_ID" ]; then
@@ -18,7 +18,7 @@ update_production_tenant:
         exit 1
       fi
     - echo "Building tenant $TENANT_ID..."
-    - node tasks/setup-tenant.js $TENANT_ID
+    - mobile setup-tenant $TENANT_ID
     - npx eas-cli update --branch production --message "$MESSAGE" --json --non-interactive
   rules:
     - if: $BUILD_MODE == "UPDATE_PRODUCTION_TENANT"

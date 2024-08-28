@@ -12,6 +12,8 @@ import BlogActionSheet from './BlogActionSheet';
 import MText from '../common/components/MText';
 import MPressable from '~/common/components/MPressable';
 import sp from '~/services/serviceProvider';
+import CommentsStore from '~/comments/v2/CommentsStore';
+import { pushCommentBottomSheet } from '~/comments/v2/CommentBottomSheet';
 
 type PropsType = {
   entity: BlogModel;
@@ -68,6 +70,14 @@ export default class BlogCard extends PureComponent<PropsType> {
       </View>
     );
   }
+
+  onPressComment = () => {
+    const store = new CommentsStore(this.props.entity);
+
+    pushCommentBottomSheet({
+      commentsStore: store,
+    });
+  };
 
   /**
    * Render Card
@@ -127,7 +137,9 @@ export default class BlogCard extends PureComponent<PropsType> {
               </View>
             </View>
           </View>
-          {!this.props.hideTabs && <Actions entity={blog} />}
+          {!this.props.hideTabs && (
+            <Actions onPressComment={this.onPressComment} entity={blog} />
+          )}
         </MPressable>
       </View>
     );

@@ -51,9 +51,10 @@ export const mapModels = (
           edge.node.edges = entities
             .map(entity => {
               try {
-                return entity.id.startsWith('user')
-                  ? UserModel.create(JSON.parse(entity.legacy))
-                  : GroupModel.create(JSON.parse(entity.legacy));
+                const jsonEntity = JSON.parse(entity.legacy);
+                return jsonEntity.type === 'user'
+                  ? UserModel.create(jsonEntity)
+                  : GroupModel.create(jsonEntity);
               } catch (error) {
                 // to avoid errors in the case we add unsupported entities on the backend in the future
                 console.log('Error parsing publisher', entity);

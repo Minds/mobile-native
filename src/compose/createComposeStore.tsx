@@ -475,11 +475,12 @@ export default function (props) {
      * On media selected from gallery
      */
     async onMediaFromGallery(media: PickedMedia | PickedMedia[]) {
-      const canUploadVideo = sp.permissions.canUploadVideo();
       if (Array.isArray(media)) {
         media.forEach(mediaItem => {
-          if (!canUploadVideo && mediaItem.type?.startsWith('video')) {
-            showError(sp.i18n.t('composer.create.mediaVideoError'));
+          if (
+            mediaItem.type?.startsWith('video') &&
+            !sp.permissions.canUploadVideo(true)
+          ) {
             return;
           }
 
@@ -496,8 +497,10 @@ export default function (props) {
           showError(sp.i18n.t('capture.mediaPortraitError'));
           return;
         }
-        if (!canUploadVideo && media.type?.startsWith('video')) {
-          showError(sp.i18n.t('composer.create.mediaVideoError'));
+        if (
+          media.type?.startsWith('video') &&
+          !sp.permissions.canUploadVideo(true)
+        ) {
           return;
         }
         this.attachments.attachMedia(
@@ -536,7 +539,7 @@ export default function (props) {
      * Submit post
      */
     async submit() {
-      if (!sp.permissions.canCreatePost(true)) {
+      if (!this.isEdit && !sp.permissions.canCreatePost(true)) {
         return;
       }
 

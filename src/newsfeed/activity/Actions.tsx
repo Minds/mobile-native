@@ -30,7 +30,7 @@ import { useMemoStyle } from '~/styles/hooks';
 type PropsType = {
   entity: ActivityModel;
   hideCount?: boolean;
-  onPressComment?: () => void;
+  onPressComment: () => void;
   hideTabs?: boolean;
 };
 

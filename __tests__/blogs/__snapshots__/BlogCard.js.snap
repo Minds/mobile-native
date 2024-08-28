@@ -336,7 +336,7 @@ exports[`blog card component should renders correctly 1`] = `
               ]
             }
           >
-            Apr 27 2018 · 14:17
+            Apr 27 2018 · 11:17
           </Text>
           <View
             style={
@@ -550,6 +550,7 @@ exports[`blog card component should renders correctly 1`] = `
           "wire_threshold": "",
         }
       }
+      onPressComment={[Function]}
     />
   </View>
 </View>

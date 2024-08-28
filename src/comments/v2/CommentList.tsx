@@ -99,6 +99,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
   }, [navigation, props.store, provider, scrollToFocusedComment]);
 
   const canComment = sp.permissions.canComment();
+  const hideComment = sp.permissions.shouldHideComment();
 
   const renderItem = React.useCallback(
     (row: any): React.ReactElement => {
@@ -111,11 +112,11 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         <Comment
           comment={comment}
           store={props.store}
-          hideReply={!canComment}
+          hideReply={hideComment}
         />
       );
     },
-    [props.store, canComment],
+    [props.store, hideComment],
   );
 
   const Header = React.useCallback(() => {
@@ -132,10 +133,13 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
           </View>
         )}
 
-        {props.store.entity.allow_comments && (
+        {props.store.entity.allow_comments && !hideComment && (
           <TouchableOpacity
-            onPress={() => props.store.setShowInput(true)}
-            disabled={!canComment}
+            onPress={() => {
+              if (sp.permissions.canComment(true)) {
+                props.store.setShowInput(true);
+              }
+            }}
             style={
               canComment
                 ? styles.touchableStyles
@@ -153,7 +157,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
         <LoadMore store={props.store} next={true} />
       </>
     );
-  }, [canComment, placeHolder, props.store, user]);
+  }, [hideComment, canComment, placeHolder, props.store, user]);
 
   const Footer = React.useCallback(() => {
     return <LoadMore store={props.store} />;

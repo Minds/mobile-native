@@ -24,6 +24,7 @@ export const IS_REVIEW = ENV === 'review';
 // developer mode controller
 // Enabled Features for the app
 export const IS_TENANT = Tenant.APP_NAME !== 'Minds';
+
 /**
  * Is a tenant preview app (packaged to be used with the mobile preview app)
  */
@@ -38,6 +39,9 @@ export const WIRE_ENABLED = !IS_TENANT && !IS_IOS;
 export const PRO_PLUS_SUBSCRIPTION_ENABLED = !IS_IOS && !IS_TENANT;
 export const BOOSTS_ENABLED = !IS_TENANT;
 export const CHAT_ENABLED = !IS_TENANT;
+export const TRACKING_TRANSPARENCY_ENABLED =
+  Tenant.APP_TRACKING_MESSAGE_ENABLED;
+export const LANDING_PAGE_LOGGED_IN = Tenant.APP_LANDING_PAGE_LOGGED_IN;
 
 // Theme
 export const TENANT_THEME = Tenant.THEME === 'light' ? 0 : 1;

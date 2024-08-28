@@ -12,6 +12,7 @@ import BottomContent from '../newsfeed/activity/BottomContent';
 
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import sp from '~/services/serviceProvider';
+import { BoostCTA } from '~/modules/boost';
 
 interface ImageGalleryScreenProps {
   route: any;
@@ -87,6 +88,7 @@ function ImageGalleryScreen({
           transform: [{ translateY: !controlsVisible ? 100 : 0 }],
         }}
         style={theme.bgPrimaryBackground}>
+        <BoostCTA entity={entity} />
         <BottomContent hideMetrics entity={entity} />
       </MotiView>
     </ModalFullScreen>
