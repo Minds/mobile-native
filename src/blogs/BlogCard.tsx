@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { useCallback, useRef } from 'react';
 
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 
@@ -25,36 +25,39 @@ type PropsType = {
 /**
  * Blog Card
  */
-export default class BlogCard extends PureComponent<PropsType> {
+const BlogCard: React.FC<PropsType> = ({
+  entity,
+  navigation,
+  showOnlyContent,
+  hideTabs,
+}) => {
   /**
    * Navigate to blog
    */
-  navToBlog = () => {
-    const blog = BlogModel.checkOrCreate(this.props.entity);
-    if (!this.props.navigation || !blog.can(FLAG_VIEW, true)) {
+  const navToBlog = () => {
+    const blog = BlogModel.checkOrCreate(entity);
+    if (!navigation || !blog.can(FLAG_VIEW, true)) {
       return;
     }
-    return this.props.navigation.push('BlogView', { blog });
+    return navigation.push('BlogView', { blog });
   };
 
   /**
    * Trim and remove new line char
    * @param {string} title
    */
-  cleanTitle(title) {
+  const cleanTitle = (title: string) => {
     if (!title) {
       return '';
     }
     return title.trim().replace(/\n/gm, ' ');
-  }
+  };
 
-  renderOnlyContent(image, title) {
+  const renderOnlyContent = (image: any, title: string) => {
     const theme = sp.styles.style;
     return (
       <View>
-        <TouchableOpacity
-          onPress={this.navToBlog}
-          style={theme.bgPrimaryBackground}>
+        <TouchableOpacity onPress={navToBlog} style={theme.bgPrimaryBackground}>
           <Image source={image} style={styles.banner} contentFit="cover" />
           <View style={theme.padding2x}>
             <View style={theme.fullWidth}>
@@ -69,82 +72,74 @@ export default class BlogCard extends PureComponent<PropsType> {
         </TouchableOpacity>
       </View>
     );
-  }
-
-  onPressComment = () => {
-    const store = new CommentsStore(this.props.entity);
-
-    pushCommentBottomSheet({
-      commentsStore: store,
-    });
   };
+
+  const commentsStoreRef = useRef<CommentsStore | null>(null);
+
+  const onPressComment = useCallback(() => {
+    if (!commentsStoreRef.current) {
+      commentsStoreRef.current = new CommentsStore(entity);
+    }
+    pushCommentBottomSheet({
+      commentsStore: commentsStoreRef.current,
+    });
+  }, [entity]);
 
   /**
    * Render Card
    */
-  render() {
-    const blog = BlogModel.checkOrCreate(this.props.entity);
-    const channel = this.props.entity.ownerObj;
-    const image = blog.getBannerSource?.();
-    const title = this.cleanTitle(blog.title);
-    const theme = sp.styles.style;
-    const showOnlyContent = this.props.showOnlyContent;
+  const blog = BlogModel.checkOrCreate(entity);
+  const channel = entity.ownerObj;
+  const image = blog.getBannerSource?.();
+  const title = cleanTitle(blog.title);
+  const theme = sp.styles.style;
 
-    if (showOnlyContent) {
-      return this.renderOnlyContent(image, title);
-    }
+  if (showOnlyContent) {
+    // render only content
+    return renderOnlyContent(image, title);
+  }
 
-    return (
-      <View style={theme.bgPrimaryBackground}>
-        <MPressable onPress={this.navToBlog}>
-          <Image source={image} style={styles.banner} contentFit="cover" />
-          <View style={theme.padding2x}>
-            <View style={theme.fullWidth}>
+  return (
+    <View style={theme.bgPrimaryBackground}>
+      <MPressable onPress={navToBlog}>
+        <Image source={image} style={styles.banner} contentFit="cover" />
+        <View style={theme.padding2x}>
+          <View style={theme.fullWidth}>
+            <MText
+              style={[theme.fontXL, theme.fontMedium, theme.flexContainer]}
+              numberOfLines={2}
+              ellipsizeMode="tail">
+              {title}
+            </MText>
+            <View
+              style={[
+                theme.marginBottom2x,
+                theme.marginTop3x,
+                theme.rowJustifyCenter,
+                theme.alignCenter,
+              ]}>
+              {channel && <Avatar rounded source={channel.getAvatarSource()} />}
               <MText
-                style={[theme.fontXL, theme.fontMedium, theme.flexContainer]}
-                numberOfLines={2}
-                ellipsizeMode="tail">
-                {title}
+                style={[theme.fontL, theme.paddingLeft2x, theme.flexContainer]}
+                numberOfLines={1}>
+                {blog.ownerObj && blog.ownerObj.username}
               </MText>
-              <View
-                style={[
-                  theme.marginBottom2x,
-                  theme.marginTop3x,
-                  theme.rowJustifyCenter,
-                  theme.alignCenter,
-                ]}>
-                {channel && (
-                  <Avatar rounded source={channel.getAvatarSource()} />
-                )}
-                <MText
-                  style={[
-                    theme.fontL,
-                    theme.paddingLeft2x,
-                    theme.flexContainer,
-                  ]}
-                  numberOfLines={1}>
-                  {blog.ownerObj && blog.ownerObj.username}
-                </MText>
-                <MText style={[theme.fontXS, theme.paddingLeft]}>
-                  {sp.i18n.date(parseInt(blog.time_created, 10) * 1000)}
-                </MText>
-                <View style={theme.paddingLeft}>
-                  <BlogActionSheet
-                    entity={blog}
-                    navigation={this.props.navigation}
-                  />
-                </View>
+              <MText style={[theme.fontXS, theme.paddingLeft]}>
+                {sp.i18n.date(parseInt(blog.time_created, 10) * 1000)}
+              </MText>
+              <View style={theme.paddingLeft}>
+                <BlogActionSheet entity={blog} navigation={navigation} />
               </View>
             </View>
           </View>
-          {!this.props.hideTabs && (
-            <Actions onPressComment={this.onPressComment} entity={blog} />
-          )}
-        </MPressable>
-      </View>
-    );
-  }
-}
+        </View>
+        {!hideTabs && <Actions onPressComment={onPressComment} entity={blog} />}
+      </MPressable>
+    </View>
+  );
+};
+
+export default BlogCard;
 
 const styles = StyleSheet.create({
   banner: {
