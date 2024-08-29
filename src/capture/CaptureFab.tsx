@@ -17,7 +17,7 @@ type CaptureFabProps = {
 };
 
 const CaptureFab = ({ navigation, group, testID }: CaptureFabProps) => {
-  if (!sp.permissions.shouldHideCreatePost()) {
+  if (sp.permissions.shouldHideCreatePost()) {
     return null;
   }
 
