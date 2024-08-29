@@ -15,7 +15,8 @@ class ServiceRegistration<T> {
 export class InjectionContainer<Services extends { [key: string]: any }> {
   private singletons = new Map<keyof Services, any>();
   private registrations = new Map<keyof Services, ServiceRegistration<any>>();
-  private resolutionStack: Array<keyof Services> = []; // Step 1: Maintain a call stack
+  private resolutionStack = new Set<keyof Services>();
+  private lazyProxies = new Map<keyof Services, Services[keyof Services]>();
 
   register<K extends keyof Services>(
     identifier: K,
@@ -23,7 +24,7 @@ export class InjectionContainer<Services extends { [key: string]: any }> {
     lifetime: Lifetime = Lifetime.Singleton,
   ): void {
     this.registrations.set(
-      identifier as string,
+      identifier,
       new ServiceRegistration<Services[K]>(factory, lifetime),
     );
   }
@@ -31,21 +32,21 @@ export class InjectionContainer<Services extends { [key: string]: any }> {
   resolve<K extends keyof Services>(identifier: K, arg?: any): Services[K] {
     // development circular dependency detection
     if (__DEV__) {
-      if (this.resolutionStack.includes(identifier)) {
+      if (this.resolutionStack.has(identifier)) {
         throw new Error(
-          `Circular dependency detected: ${this.resolutionStack.join(
-            ' -> ',
-          )} -> ${String(identifier)}`,
+          `Circular dependency detected: ${Array.from(
+            this.resolutionStack,
+          ).join(' -> ')} -> ${String(identifier)}`,
         );
       }
-      this.resolutionStack.push(identifier);
+      this.resolutionStack.add(identifier);
     }
 
     // we first check for singletons (for performance reasons)
     const singleton = this.singletons.get(identifier as string);
     if (singleton) {
       if (__DEV__) {
-        this.resolutionStack.pop();
+        this.resolutionStack.delete(identifier);
       }
       return singleton;
     }
@@ -58,11 +59,11 @@ export class InjectionContainer<Services extends { [key: string]: any }> {
     const instance = registration.factory(arg);
 
     if (registration.lifetime === Lifetime.Singleton) {
-      this.singletons.set(identifier as string, instance);
+      this.singletons.set(identifier, instance);
     }
 
     if (__DEV__) {
-      this.resolutionStack.pop();
+      this.resolutionStack.delete(identifier);
     }
     // console.log('DI resolved', identifier);
     return instance;
@@ -77,24 +78,30 @@ export class InjectionContainer<Services extends { [key: string]: any }> {
    * @param identifier String
    */
   resolveLazy<K extends keyof Services>(identifier: K): Services[K] {
-    return new Proxy(
-      {},
-      {
-        get: (_, prop) => {
-          const service = this.resolve(identifier);
-          if (service && prop in service) {
-            if (typeof service[prop] === 'function') {
-              return service[prop].bind(service);
-            } else {
-              return service[prop];
-            }
-          } else {
-            throw new Error(
-              'Property not found on service: ' + prop.toString(),
-            );
-          }
-        },
-      },
-    ) as Services[K];
+    if (!this.lazyProxies.has(identifier)) {
+      this.lazyProxies.set(
+        identifier,
+        new Proxy(
+          {},
+          {
+            get: (_, prop) => {
+              const service = this.resolve(identifier);
+              if (service && prop in service) {
+                if (typeof service[prop] === 'function') {
+                  return service[prop].bind(service);
+                } else {
+                  return service[prop];
+                }
+              } else {
+                throw new Error(
+                  'Property not found on service: ' + prop.toString(),
+                );
+              }
+            },
+          },
+        ) as Services[K],
+      );
+    }
+    return this.lazyProxies.get(identifier) as Services[K];
   }
 }
