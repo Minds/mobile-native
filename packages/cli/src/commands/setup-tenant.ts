@@ -172,6 +172,7 @@ function generateTenantJSON(
     ADAPTIVE_COLOR: data.THEME === 'light' ? light_background : dark_background,
     THEME: data.THEME || 'light', // the backend returns empty when no theme is selected (we default light)
     TENANT_ID: data.TENANT_ID,
+    IS_NON_PROFIT: data.IS_NON_PROFIT || false,
     API_URL: data.API_URL,
     APP_TRACKING_MESSAGE_ENABLED: data.APP_TRACKING_MESSAGE_ENABLED,
     APP_TRACKING_MESSAGE: data.APP_TRACKING_MESSAGE,
