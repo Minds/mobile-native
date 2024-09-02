@@ -16,6 +16,7 @@ sp.mockService('i18n');
 
 jest.mock('@react-navigation/core');
 jest.mock('@gorhom/bottom-sheet');
+jest.mock('react-native-modern-datepicker', () => ({}));
 jest.mock('react-native-reanimated', () =>
   require('react-native-reanimated/mock'),
 );

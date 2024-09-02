@@ -9,6 +9,7 @@ import SupermindSettingsScreen from './SupermindSettingsScreen';
 import sp from '~/services/serviceProvider';
 
 jest.mock('~/services/serviceProvider');
+jest.mock('react-native-modern-datepicker', () => ({}));
 
 // mock services
 sp.mockService('styles');

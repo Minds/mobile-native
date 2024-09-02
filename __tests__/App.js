@@ -17,6 +17,7 @@ jest.mock('react-native-safe-area-context');
 jest.mock('@react-navigation/native-stack');
 jest.mock('react-native-exception-handler');
 jest.mock('react-native-share-menu');
+jest.mock('react-native-modern-datepicker', () => ({}));
 jest.mock('@gorhom/bottom-sheet', () => {
   const react = require('react-native');
 

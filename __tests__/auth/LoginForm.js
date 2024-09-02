@@ -17,6 +17,7 @@ sp.mockService('i18n');
 const authService = sp.mockService('auth');
 
 jest.mock('@gorhom/bottom-sheet');
+jest.mock('react-native-modern-datepicker', () => ({}));
 
 getStores.mockReturnValue({
   user: {

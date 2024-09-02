@@ -1,6 +1,6 @@
 import React, { useCallback, useRef } from 'react';
 
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 import { Avatar } from 'react-native-elements';
 import { Image } from 'expo-image';
@@ -57,7 +57,10 @@ const BlogCard: React.FC<PropsType> = ({
     const theme = sp.styles.style;
     return (
       <View>
-        <TouchableOpacity onPress={navToBlog} style={theme.bgPrimaryBackground}>
+        <MPressable
+          onPress={navToBlog}
+          style={theme.bgPrimaryBackground}
+          testID="blogPressable">
           <Image source={image} style={styles.banner} contentFit="cover" />
           <View style={theme.padding2x}>
             <View style={theme.fullWidth}>
@@ -69,7 +72,7 @@ const BlogCard: React.FC<PropsType> = ({
               </MText>
             </View>
           </View>
-        </TouchableOpacity>
+        </MPressable>
       </View>
     );
   };
@@ -101,7 +104,7 @@ const BlogCard: React.FC<PropsType> = ({
 
   return (
     <View style={theme.bgPrimaryBackground}>
-      <MPressable onPress={navToBlog}>
+      <MPressable onPress={navToBlog} testID="blogPressable">
         <Image source={image} style={styles.banner} contentFit="cover" />
         <View style={theme.padding2x}>
           <View style={theme.fullWidth}>
