@@ -31,7 +31,6 @@ import ZoomGesture from './ZoomGesture';
 import ZoomIndicator from './ZoomIndicator';
 import PressableScale from '~/common/components/PressableScale';
 import { showNotification } from 'AppMessages';
-import useIsPortrait from '~/common/hooks/useIsPortrait';
 import sp from '~/services/serviceProvider';
 import { useStyle } from '~/styles/hooks';
 
@@ -166,9 +165,6 @@ export default observer(function (props: PropsType) {
   );
 
   const orientationStyle = useCameraStyle(insets);
-  const isPortrait = useIsPortrait();
-
-  console.log('isPortrait', isPortrait);
 
   return (
     <View style={theme.flexContainer}>
@@ -190,6 +186,7 @@ export default observer(function (props: PropsType) {
                 device={device}
                 format={format}
                 fps={30}
+                outputOrientation="device"
                 lowLightBoost={
                   device.supportsLowLightBoost && store.lowLightBoost
                 }
@@ -199,7 +196,6 @@ export default observer(function (props: PropsType) {
                 onInitialized={store.isReady}
                 onError={e => console.log(e)}
                 enableZoomGesture={false}
-                orientation={isPortrait ? 'portrait' : 'landscape-left'}
                 animatedProps={cameraAnimatedProps}
                 photo={props.mode === 'photo'}
                 video={props.mode !== 'photo'}
