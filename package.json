@@ -239,6 +239,9 @@
     "color-convert": "2.0.1",
     "react-native-gesture-handler": "~2.16.1"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "husky": {
     "hooks": {
       "pre-commit": "sh .githooks/pre-commit && pretty-quick --staged"
