@@ -18,6 +18,7 @@
   "TENANT_ID": null,
   "APP_TRACKING_MESSAGE_ENABLED": false,
   "APP_TRACKING_MESSAGE": "",
+  "IS_NON_PROFIT": false,
   "API_URL": "https://www.minds.com/",
   "APP_LANDING_PAGE_LOGGED_IN": "newsfeed",
   "EAS_PROJECT_ID": "7a92bc49-6d7e-468f-af13-0a9aff39fc0e",
