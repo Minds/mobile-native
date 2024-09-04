@@ -350,6 +350,14 @@ const RootStack = observer(function () {
               getComponent={() => require('~/report/ReportScreen').default}
             />
             <RootStackNav.Screen
+              name="TenantMemberships"
+              options={{ title: 'Memberships', headerShown: true }}
+              getComponent={() =>
+                require('~/modules/site-membership/screens/TenantMembershipsScreen')
+                  .default
+              }
+            />
+            <RootStackNav.Screen
               name="Capture"
               getComponent={() => require('~/compose/CameraScreen').default}
               options={TransitionPresets.RevealFromBottomAndroid}

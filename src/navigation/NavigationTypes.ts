@@ -132,6 +132,7 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
+  TenantMemberships: {};
   CustomPages: { page: string; title: string };
   ChangeEmail: {};
   Report: {};

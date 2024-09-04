@@ -1601,6 +1601,8 @@ export type Query = {
   invite: Invite;
   invites: InviteConnection;
   listPersonalApiKeys: Array<PersonalApiKey>;
+  /** Gets the lowest price site membership for an activity. */
+  lowestPriceSiteMembershipForActivity?: Maybe<SiteMembership>;
   mobileConfig: MobileConfig;
   /** Gets multi-tenant config for the calling tenant. */
   multiTenantConfig?: Maybe<MultiTenantConfig>;
@@ -1635,6 +1637,7 @@ export type Query = {
   /** Returns a paginated list of popular content */
   tenantAdminAnalyticsTable: AnalyticsTableConnection;
   tenantAssets: AssetConnection;
+  tenantBilling: TenantBillingType;
   tenantQuotaUsage: QuotaDetails;
   tenants: Array<Tenant>;
   totalRoomInviteRequests: Scalars['Int']['output'];
@@ -1781,6 +1784,11 @@ export type QueryInvitesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   first: Scalars['Int']['input'];
   search?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type QueryLowestPriceSiteMembershipForActivityArgs = {
+  activityGuid: Scalars['String']['input'];
+  externalOnly?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type QueryNewsfeedArgs = {
@@ -2115,6 +2123,18 @@ export type Tenant = {
   rootUserGuid?: Maybe<Scalars['String']['output']>;
   suspendedTimestamp?: Maybe<Scalars['Int']['output']>;
   trialStartTimestamp?: Maybe<Scalars['Int']['output']>;
+};
+
+export type TenantBillingType = {
+  __typename?: 'TenantBillingType';
+  isActive: Scalars['Boolean']['output'];
+  manageBillingUrl?: Maybe<Scalars['String']['output']>;
+  nextBillingAmountCents: Scalars['Int']['output'];
+  nextBillingDate?: Maybe<Scalars['DateTime']['output']>;
+  period: CheckoutTimePeriodEnum;
+  plan: TenantPlanEnum;
+  previousBillingAmountCents: Scalars['Int']['output'];
+  previousBillingDate?: Maybe<Scalars['DateTime']['output']>;
 };
 
 export type TenantInput = {
@@ -5841,6 +5861,27 @@ export type RefreshRssFeedMutation = {
   };
 };
 
+export type GetSiteMembershipForActivityQueryVariables = Exact<{
+  activityGuid: Scalars['String']['input'];
+  externalOnly: Scalars['Boolean']['input'];
+}>;
+
+export type GetSiteMembershipForActivityQuery = {
+  __typename?: 'Query';
+  lowestPriceSiteMembershipForActivity?: {
+    __typename?: 'SiteMembership';
+    membershipGuid: string;
+    isExternal: boolean;
+    purchaseUrl?: string | null;
+    membershipName: string;
+    membershipDescription?: string | null;
+    membershipPriceInCents: number;
+    priceCurrency: string;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+  } | null;
+};
+
 export type GetSiteMembershipQueryVariables = Exact<{
   membershipGuid: Scalars['String']['input'];
 }>;
@@ -5870,6 +5911,45 @@ export type GetSiteMembershipQuery = {
       legacy: string;
     }> | null;
   };
+};
+
+export type GetSiteMembershipsAndSubscriptionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type GetSiteMembershipsAndSubscriptionsQuery = {
+  __typename?: 'Query';
+  siteMemberships: Array<{
+    __typename?: 'SiteMembership';
+    id: string;
+    membershipGuid: string;
+    membershipName: string;
+    membershipDescription?: string | null;
+    membershipPriceInCents: number;
+    priceCurrency: string;
+    membershipBillingPeriod: SiteMembershipBillingPeriodEnum;
+    membershipPricingModel: SiteMembershipPricingModelEnum;
+    isExternal: boolean;
+    purchaseUrl?: string | null;
+    manageUrl?: string | null;
+    roles?: Array<{ __typename?: 'Role'; id: number; name: string }> | null;
+    groups?: Array<{
+      __typename?: 'GroupNode';
+      guid: string;
+      name: string;
+      membersCount: number;
+      legacy: string;
+    }> | null;
+  }>;
+  siteMembershipSubscriptions: Array<{
+    __typename?: 'SiteMembershipSubscription';
+    membershipGuid: string;
+    membershipSubscriptionId: number;
+    autoRenew: boolean;
+    isManual: boolean;
+    validFromTimestamp?: number | null;
+    validToTimestamp?: number | null;
+  }>;
 };
 
 export type CreateNewReportMutationVariables = Exact<{
@@ -8730,6 +8810,80 @@ useRefreshRssFeedMutation.fetcher = (
     variables,
     options,
   );
+export const GetSiteMembershipForActivityDocument = `
+    query GetSiteMembershipForActivity($activityGuid: String!, $externalOnly: Boolean!) {
+  lowestPriceSiteMembershipForActivity(
+    activityGuid: $activityGuid
+    externalOnly: $externalOnly
+  ) {
+    membershipGuid
+    isExternal
+    purchaseUrl
+    membershipName
+    membershipDescription
+    membershipPriceInCents
+    priceCurrency
+    membershipBillingPeriod
+    membershipPricingModel
+  }
+}
+    `;
+export const useGetSiteMembershipForActivityQuery = <
+  TData = GetSiteMembershipForActivityQuery,
+  TError = unknown,
+>(
+  variables: GetSiteMembershipForActivityQueryVariables,
+  options?: UseQueryOptions<GetSiteMembershipForActivityQuery, TError, TData>,
+) =>
+  useQuery<GetSiteMembershipForActivityQuery, TError, TData>(
+    ['GetSiteMembershipForActivity', variables],
+    gqlFetcher<
+      GetSiteMembershipForActivityQuery,
+      GetSiteMembershipForActivityQueryVariables
+    >(GetSiteMembershipForActivityDocument, variables),
+    options,
+  );
+
+useGetSiteMembershipForActivityQuery.getKey = (
+  variables: GetSiteMembershipForActivityQueryVariables,
+) => ['GetSiteMembershipForActivity', variables];
+export const useInfiniteGetSiteMembershipForActivityQuery = <
+  TData = GetSiteMembershipForActivityQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetSiteMembershipForActivityQueryVariables,
+  variables: GetSiteMembershipForActivityQueryVariables,
+  options?: UseInfiniteQueryOptions<
+    GetSiteMembershipForActivityQuery,
+    TError,
+    TData
+  >,
+) => {
+  return useInfiniteQuery<GetSiteMembershipForActivityQuery, TError, TData>(
+    ['GetSiteMembershipForActivity.infinite', variables],
+    metaData =>
+      gqlFetcher<
+        GetSiteMembershipForActivityQuery,
+        GetSiteMembershipForActivityQueryVariables
+      >(GetSiteMembershipForActivityDocument, {
+        ...variables,
+        ...(metaData.pageParam ?? {}),
+      })(),
+    options,
+  );
+};
+
+useInfiniteGetSiteMembershipForActivityQuery.getKey = (
+  variables: GetSiteMembershipForActivityQueryVariables,
+) => ['GetSiteMembershipForActivity.infinite', variables];
+useGetSiteMembershipForActivityQuery.fetcher = (
+  variables: GetSiteMembershipForActivityQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    GetSiteMembershipForActivityQuery,
+    GetSiteMembershipForActivityQueryVariables
+  >(GetSiteMembershipForActivityDocument, variables, options);
 export const GetSiteMembershipDocument = `
     query GetSiteMembership($membershipGuid: String!) {
   siteMembership(membershipGuid: $membershipGuid) {
@@ -8808,6 +8962,115 @@ useGetSiteMembershipQuery.fetcher = (
     variables,
     options,
   );
+export const GetSiteMembershipsAndSubscriptionsDocument = `
+    query GetSiteMembershipsAndSubscriptions {
+  siteMemberships {
+    id
+    membershipGuid
+    membershipName
+    membershipDescription
+    membershipPriceInCents
+    priceCurrency
+    membershipBillingPeriod
+    membershipPricingModel
+    roles {
+      id
+      name
+    }
+    groups {
+      guid
+      name
+      membersCount
+      legacy
+    }
+    isExternal
+    purchaseUrl
+    manageUrl
+  }
+  siteMembershipSubscriptions {
+    membershipGuid
+    membershipSubscriptionId
+    autoRenew
+    isManual
+    validFromTimestamp
+    validToTimestamp
+  }
+}
+    `;
+export const useGetSiteMembershipsAndSubscriptionsQuery = <
+  TData = GetSiteMembershipsAndSubscriptionsQuery,
+  TError = unknown,
+>(
+  variables?: GetSiteMembershipsAndSubscriptionsQueryVariables,
+  options?: UseQueryOptions<
+    GetSiteMembershipsAndSubscriptionsQuery,
+    TError,
+    TData
+  >,
+) =>
+  useQuery<GetSiteMembershipsAndSubscriptionsQuery, TError, TData>(
+    variables === undefined
+      ? ['GetSiteMembershipsAndSubscriptions']
+      : ['GetSiteMembershipsAndSubscriptions', variables],
+    gqlFetcher<
+      GetSiteMembershipsAndSubscriptionsQuery,
+      GetSiteMembershipsAndSubscriptionsQueryVariables
+    >(GetSiteMembershipsAndSubscriptionsDocument, variables),
+    options,
+  );
+
+useGetSiteMembershipsAndSubscriptionsQuery.getKey = (
+  variables?: GetSiteMembershipsAndSubscriptionsQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetSiteMembershipsAndSubscriptions']
+    : ['GetSiteMembershipsAndSubscriptions', variables];
+export const useInfiniteGetSiteMembershipsAndSubscriptionsQuery = <
+  TData = GetSiteMembershipsAndSubscriptionsQuery,
+  TError = unknown,
+>(
+  pageParamKey: keyof GetSiteMembershipsAndSubscriptionsQueryVariables,
+  variables?: GetSiteMembershipsAndSubscriptionsQueryVariables,
+  options?: UseInfiniteQueryOptions<
+    GetSiteMembershipsAndSubscriptionsQuery,
+    TError,
+    TData
+  >,
+) => {
+  return useInfiniteQuery<
+    GetSiteMembershipsAndSubscriptionsQuery,
+    TError,
+    TData
+  >(
+    variables === undefined
+      ? ['GetSiteMembershipsAndSubscriptions.infinite']
+      : ['GetSiteMembershipsAndSubscriptions.infinite', variables],
+    metaData =>
+      gqlFetcher<
+        GetSiteMembershipsAndSubscriptionsQuery,
+        GetSiteMembershipsAndSubscriptionsQueryVariables
+      >(GetSiteMembershipsAndSubscriptionsDocument, {
+        ...variables,
+        ...(metaData.pageParam ?? {}),
+      })(),
+    options,
+  );
+};
+
+useInfiniteGetSiteMembershipsAndSubscriptionsQuery.getKey = (
+  variables?: GetSiteMembershipsAndSubscriptionsQueryVariables,
+) =>
+  variables === undefined
+    ? ['GetSiteMembershipsAndSubscriptions.infinite']
+    : ['GetSiteMembershipsAndSubscriptions.infinite', variables];
+useGetSiteMembershipsAndSubscriptionsQuery.fetcher = (
+  variables?: GetSiteMembershipsAndSubscriptionsQueryVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    GetSiteMembershipsAndSubscriptionsQuery,
+    GetSiteMembershipsAndSubscriptionsQueryVariables
+  >(GetSiteMembershipsAndSubscriptionsDocument, variables, options);
 export const CreateNewReportDocument = `
     mutation CreateNewReport($entityUrn: String!, $reason: ReportReasonEnum!, $illegalSubReason: IllegalSubReasonEnum, $nsfwSubReason: NsfwSubReasonEnum, $securitySubReason: SecuritySubReasonEnum) {
   createNewReport(

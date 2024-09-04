@@ -1,0 +1,19 @@
+query GetSiteMembershipForActivity(
+  $activityGuid: String!
+  $externalOnly: Boolean!
+) {
+  lowestPriceSiteMembershipForActivity(
+    activityGuid: $activityGuid
+    externalOnly: $externalOnly
+  ) {
+    membershipGuid
+    isExternal
+    purchaseUrl
+    membershipName
+    membershipDescription
+    membershipPriceInCents
+    priceCurrency
+    membershipBillingPeriod
+    membershipPricingModel
+  }
+}

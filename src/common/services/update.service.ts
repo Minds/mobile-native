@@ -11,7 +11,7 @@ import { storages } from './storage/storages.service';
 import { compareVersions } from '../helpers/compareVersions';
 
 /**
- * Update service
+ * App Update service
  */
 class UpdateService {
   @observable progress = 0;
