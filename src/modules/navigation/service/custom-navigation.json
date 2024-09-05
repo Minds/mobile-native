@@ -5,21 +5,11 @@
     "type": "CORE",
     "action": null,
     "iconId": "home",
-    "order": 0,
-    "url": null,
-    "visible": true,
-    "path": "/newsfeed"
-  },
-  {
-    "id": "channel",
-    "name": "",
-    "type": "CORE",
-    "action": null,
-    "iconId": "",
     "order": 1,
     "url": null,
     "visible": true,
-    "path": null
+    "visibleMobile": true,
+    "path": "/newsfeed"
   },
   {
     "id": "explore",
@@ -30,7 +20,20 @@
     "order": 2,
     "url": null,
     "visible": true,
+    "visibleMobile": true,
     "path": "/discovery"
+  },
+  {
+    "id": "boost",
+    "name": "Boost",
+    "type": "CORE",
+    "action": null,
+    "iconId": "trending_up",
+    "order": 3,
+    "url": null,
+    "visible": true,
+    "visibleMobile": false,
+    "path": "/boost/boost-console"
   },
   {
     "id": "groups",
@@ -38,9 +41,10 @@
     "type": "CORE",
     "action": null,
     "iconId": "group",
-    "order": 3,
+    "order": 4,
     "url": null,
     "visible": true,
+    "visibleMobile": true,
     "path": "/groups"
   },
   {
@@ -49,9 +53,10 @@
     "type": "CORE",
     "action": null,
     "iconId": "chat_bubble",
-    "order": 4,
+    "order": 5,
     "url": null,
     "visible": true,
+    "visibleMobile": true,
     "path": "/chat/rooms"
   },
   {
@@ -60,9 +65,10 @@
     "type": "CORE",
     "action": null,
     "iconId": "verified",
-    "order": 5,
+    "order": 6,
     "url": null,
     "visible": true,
+    "visibleMobile": false,
     "path": "/memberships"
   },
   {
@@ -71,20 +77,22 @@
     "type": "CORE",
     "action": null,
     "iconId": "dashboard",
-    "order": 6,
+    "order": 7,
     "url": null,
     "visible": true,
+    "visibleMobile": false,
     "path": "/network/admin"
   },
   {
-    "id": "clarin1716386678715",
-    "name": "Clarin",
-    "type": "CUSTOM_LINK",
+    "id": "channel",
+    "name": "",
+    "type": "CORE",
     "action": null,
-    "iconId": "article",
-    "order": 7,
-    "url": "https://www.clarin.com",
+    "iconId": "",
+    "order": 8,
+    "url": null,
     "visible": true,
+    "visibleMobile": true,
     "path": null
   }
 ]
