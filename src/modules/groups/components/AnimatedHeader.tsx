@@ -23,6 +23,7 @@ type Props = {
   animationHeaderPosition: SharedValue<number>;
   group: GroupModel;
   top: number;
+  hideBack?: boolean;
 };
 
 export default function AnimatedHeader({
@@ -30,6 +31,7 @@ export default function AnimatedHeader({
   animationHeaderPosition,
   group,
   top,
+  hideBack,
 }: Props) {
   const avatarStyle = useAnimatedStyle(() => {
     if (!animationHeaderHeight || !animationHeaderPosition) {
@@ -69,8 +71,8 @@ export default function AnimatedHeader({
   }, []);
 
   const titleStyle = useAnimatedStyle(() => {
-    if (!animationHeaderHeight || !animationHeaderPosition) {
-      return {};
+    if (!animationHeaderHeight || !animationHeaderPosition || hideBack) {
+      return { paddingTop: 8 };
     }
 
     return {
