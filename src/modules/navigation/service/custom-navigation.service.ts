@@ -83,6 +83,10 @@ export const useCustomNavigationMenu = () => {
 export const useCustomNavigationTabs = () => {
   const nav = useCustomNavigation();
 
+  if (!IS_TENANT) {
+    return mindsTabs;
+  }
+
   // hide main tab items
   return nav
     ?.filter(
@@ -93,3 +97,57 @@ export const useCustomNavigationTabs = () => {
     )
     .map(item => ({ ...item, iconId: item.iconId.replace('_', '-') }));
 };
+
+/**
+ * Tabs used for minds app
+ */
+const mindsTabs = [
+  {
+    id: 'newsfeed',
+    name: 'Newsfeed',
+    type: NavigationItemTypeEnum.Core,
+    action: null,
+    iconId: 'home',
+    order: 1,
+    url: null,
+    visible: true,
+    visibleMobile: true,
+    path: '/newsfeed',
+  },
+  {
+    id: 'explore',
+    name: 'Explore',
+    type: NavigationItemTypeEnum.Core,
+    action: null,
+    iconId: 'tag',
+    order: 2,
+    url: null,
+    visible: true,
+    visibleMobile: true,
+    path: '/discovery',
+  },
+  {
+    id: 'groups',
+    name: 'Groups',
+    type: NavigationItemTypeEnum.Core,
+    action: null,
+    iconId: 'group',
+    order: 4,
+    url: null,
+    visible: true,
+    visibleMobile: true,
+    path: '/groups',
+  },
+  {
+    id: 'chat',
+    name: 'Chat',
+    type: NavigationItemTypeEnum.Core,
+    action: null,
+    iconId: 'chat_bubble',
+    order: 5,
+    url: null,
+    visible: true,
+    visibleMobile: true,
+    path: '/chat/rooms',
+  },
+];
