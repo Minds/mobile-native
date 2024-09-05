@@ -128,9 +128,26 @@ async function setupTenant(
         })
       })
     }
+  } else {
+    const GetNavigationItemsDocument = toolbox.filesystem.read(
+      './src/modules/navigation/gql/get-custom-navigation.api.graphql',
+      'utf8'
+    )
+
+    await spinnerAction('Fetching custom navigation', async () => {
+      const customNav = await request<{ customNavigationItems: Array<any> }>(
+        `https://www.minds.com/api/graphql`,
+        GetNavigationItemsDocument,
+        {}
+      )
+
+      toolbox.filesystem.write(
+        './src/modules/navigation/service/custom-navigation.json',
+        customNav.customNavigationItems
+      )
+    })
   }
 }
-
 function generateTenantJSON(
   data: any,
   preview: boolean,
