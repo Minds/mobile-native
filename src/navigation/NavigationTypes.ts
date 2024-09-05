@@ -241,6 +241,10 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  YoutubePlayer: {
+    videoId: string;
+    title?: string;
+  };
   Interactions: InteractionsScreenParams;
   BottomSheet: BottomSheetScreenParams;
   ChatStack: undefined;

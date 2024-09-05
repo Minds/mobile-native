@@ -1,4 +1,3 @@
-import { useDimensions } from '@react-native-community/hooks';
 import { RouteProp } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
@@ -9,6 +8,7 @@ import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
 import ThemedStyles from '~/styles/ThemedStyles';
 import ChooseBrowser from '../components/ChooseBrowser';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import { useWindowDimensions } from 'react-native';
 
 type ChooseBrowserModalScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -35,7 +35,7 @@ const ChooseBrowserModalScreen = ({ navigation, route }: PropsType) => {
     }
   }, [navigation, route.params]);
 
-  const { height } = useDimensions().window;
+  const { height } = useWindowDimensions();
 
   return (
     <ModalContainer

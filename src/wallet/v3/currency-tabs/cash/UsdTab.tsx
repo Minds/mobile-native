@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { observer } from 'mobx-react';
+import { useWindowDimensions } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
 } from '../../../../common/components/topbar-tabbar/TopBarButtonTabBar';
@@ -15,7 +16,6 @@ import i18n from '../../../../common/services/i18n.service';
 import TransactionsListCash from '../../../v2/TransactionList/TransactionsListCash';
 import PaidButton from './PaidButton';
 import { Tooltip } from 'react-native-elements';
-import { useDimensions } from '@react-native-community/hooks';
 import PaidInfo from './PaidInfo';
 import Earnings from '../Earnings';
 import { TokensTabStore } from '../tokens/createTokensTabStore';
@@ -42,7 +42,7 @@ const UsdTab = observer(
     usdTabStore,
   }: PropsType) => {
     const tooltipRef = useRef<any>();
-    const screen = useDimensions().screen;
+    const screen = useWindowDimensions();
     const theme = ThemedStyles.style;
 
     const options: Array<ButtonTabType<UsdOptions>> = [

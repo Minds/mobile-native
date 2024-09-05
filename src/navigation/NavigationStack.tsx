@@ -66,6 +66,14 @@ const AppStack = observer(() => {
           options={hideHeader}
         />
         <AppStackNav.Screen
+          name="YoutubePlayer"
+          getComponent={() =>
+            require('~/modules/youtube-player/screens/YoutubePlayerScreen')
+              .default
+          }
+          options={({ route }) => ({ title: route.params.title || 'Youtube' })}
+        />
+        <AppStackNav.Screen
           name="More"
           options={{
             gestureDirection: 'horizontal',

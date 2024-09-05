@@ -18,8 +18,10 @@ import MText from '../MText';
 import useRecycledState from '~/common/hooks/useRecycledState';
 import SmartImage from '../SmartImage';
 import { getMaxFeedWidth } from '~/styles/Style';
+import { PlayButton } from '~/media/v2/mindsVideo/overlays/Controls';
 
 type PropsType = {
+  showPlayIcon?: boolean;
   entity: ActivityModel;
   style?: ImageProps['style'];
   autoHeight?: boolean;
@@ -34,6 +36,7 @@ const { width: winWidth, height } = Dimensions.get('window');
 const width = IS_IPAD ? Math.min(getMaxFeedWidth(), winWidth) : winWidth;
 
 export default function MediaViewImage({
+  showPlayIcon,
   entity,
   style,
   autoHeight,
@@ -173,6 +176,11 @@ export default function MediaViewImage({
             locked={entity?.isLocked()}
             recyclingKey={entity.urn}
           />
+          {showPlayIcon && (
+            <View style={playIconStyle}>
+              <PlayButton paused />
+            </View>
+          )}
         </TouchableOpacity>
       </Pinchable>
     </Pressable>
@@ -185,4 +193,15 @@ const errorContainerStyle = ThemedStyles.combine(
   'bgSecondaryBackground',
   'centered',
   { height: 200 },
+);
+const playIconStyle = ThemedStyles.combine(
+  'absoluteFill',
+  'centered',
+  'marginTop2x',
+  {
+    alignSelf: 'center',
+    textShadowColor: 'rgba(0, 0, 0, 0.45)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 1,
+  },
 );

@@ -1,6 +1,5 @@
 import React, { useRef, useCallback, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { useDimensions } from '@react-native-community/hooks';
+import { View, StyleSheet, useWindowDimensions } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { observer, useLocalStore } from 'mobx-react';
@@ -141,7 +140,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   }));
   const route = useRoute<ActivityRoute>();
   const insets = useSafeAreaInsets();
-  const { height } = useDimensions().window;
+  const { height } = useWindowDimensions();
   const theme = ThemedStyles.style;
   const entity: ActivityModel = props.entity;
   const mediaRef = useRef<MediaView>(null);

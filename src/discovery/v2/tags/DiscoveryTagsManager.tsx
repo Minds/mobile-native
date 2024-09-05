@@ -4,7 +4,13 @@ import {
   BottomSheetModal,
   BottomSheetButton,
 } from '../../../common/components/bottom-sheet';
-import { View, StyleProp, ViewStyle, SectionListData } from 'react-native';
+import {
+  View,
+  StyleProp,
+  ViewStyle,
+  SectionListData,
+  useWindowDimensions,
+} from 'react-native';
 import { BottomSheetSectionList } from '@gorhom/bottom-sheet';
 import Icon from '@expo/vector-icons/Ionicons';
 
@@ -13,7 +19,6 @@ import ThemedStyles from '../../../styles/ThemedStyles';
 import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
 import { TDiscoveryTagsTag } from '../DiscoveryV2Store';
 import i18n from '../../../common/services/i18n.service';
-import { useDimensions } from '@react-native-community/hooks';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import FloatingInput from '../../../common/components/FloatingInput';
 import { Spacer } from '~/common/ui';
@@ -111,7 +116,7 @@ const DiscoveryTagsManager = (props: Props, ref) => {
   const theme = ThemedStyles.style;
   const discoveryV2 = useDiscoveryV2Store();
   const store = useLocalStore<StoreType>(createStore);
-  const { height } = useDimensions().window;
+  const { height } = useWindowDimensions();
 
   useEffect(() => {
     store.setTags(discoveryV2.tags.slice(), discoveryV2.trendingTags.slice());
