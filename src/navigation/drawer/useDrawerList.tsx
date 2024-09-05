@@ -32,6 +32,7 @@ type MenuItem = {
 export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
   const navigation = useNavigation<any>();
   const customNavigation = useCustomNavigationMenu();
+
   const channel = sessionService.getUser();
   let list: MenuItem[];
   if (!IS_TENANT) {
@@ -125,6 +126,9 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
       },
       settings: () => {
         navigation.navigate('Settings');
+      },
+      memberships: () => {
+        navigation.navigate('TenantMemberships');
       },
     };
 

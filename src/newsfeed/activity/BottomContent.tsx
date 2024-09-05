@@ -8,8 +8,7 @@ import { pushCommentBottomSheet } from '~/comments/v2/CommentBottomSheet';
 import CommentsStore from '~/comments/v2/CommentsStore';
 import { useAnalytics } from '~/common/contexts/analytics.context';
 import { IS_TENANT } from '~/config/Config';
-import { Button } from '~/common/ui';
-import { showUpgradeModal } from '~/common/services/upgrade-modal.service';
+import { ActivityMembershipJoinButton } from '~/modules/site-membership/components/ActivityMembershipJoinButton';
 
 type PropsType = {
   showOnlyContent?: boolean;
@@ -52,15 +51,10 @@ const BottomContent = (props: PropsType) => {
   return (
     <>
       {IS_TENANT && entity.site_membership && (
-        <Button
-          stretch
-          mode="solid"
-          horizontal="XL"
-          vertical="L"
-          type="action"
-          onPress={showUpgradeModal}>
-          MEMBERS-ONLY
-        </Button>
+        <ActivityMembershipJoinButton
+          title="MEMBERS-ONLY"
+          activityGuid={entity.guid}
+        />
       )}
       {!props.hideActions && (
         <Actions

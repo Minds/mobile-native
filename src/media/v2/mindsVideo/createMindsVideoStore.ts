@@ -19,7 +19,7 @@ import SettingsStore from '~/settings/SettingsStore';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import { IS_IOS } from '~/config/Config';
 import { Orientation } from '~/services';
-import { showUpgradeModal } from '~/common/services/upgrade-modal.service';
+import { showUpgradeModalForEntity } from '~/common/services/upgrade-modal.service';
 
 export type Source = {
   src: string;
@@ -291,7 +291,7 @@ const createMindsVideoStore = ({
         !this.entity.site_membership_unlocked
       ) {
         if (isManualPlay) {
-          showUpgradeModal();
+          showUpgradeModalForEntity(this.entity.guid);
         }
         return;
       }
