@@ -76,6 +76,25 @@ export const Topbar = observer((props: PropsType) => {
     <Animated.View style={[styles.shadow, animatedStyle]}>
       <View style={container}>
         <View style={styles.topbar}>
+          {!title && (
+            <View
+              style={[
+                styles.logoWrapper,
+                isChatIconHidden && styles.noMarginLeft,
+              ]}>
+              <PressableScale onPress={props.onLogoPress}>
+                <Image
+                  resizeMode="contain"
+                  source={
+                    ThemedStyles.theme
+                      ? assets.LOGO_HORIZONTAL_DARK
+                      : assets.LOGO_HORIZONTAL
+                  }
+                  style={styles.logo}
+                />
+              </PressableScale>
+            </View>
+          )}
           <View style={styles.topbarLeft}>
             {showBack && (
               <IconButton
@@ -105,23 +124,6 @@ export const Topbar = observer((props: PropsType) => {
                   onPress={handleChannelNav}
                   testID="Topbar:Avatar"
                 />
-                <View
-                  style={[
-                    styles.logoWrapper,
-                    isChatIconHidden && styles.noMarginLeft,
-                  ]}>
-                  <PressableScale onPress={props.onLogoPress}>
-                    <Image
-                      resizeMode="contain"
-                      source={
-                        ThemedStyles.theme
-                          ? assets.LOGO_HORIZONTAL_DARK
-                          : assets.LOGO_HORIZONTAL
-                      }
-                      style={styles.logo}
-                    />
-                  </PressableScale>
-                </View>
               </>
             )}
           </View>
@@ -140,15 +142,18 @@ export default Topbar;
 
 export const styles = StyleSheet.create({
   logo: {
-    marginLeft: 4,
-    marginTop: -10,
     height: 36,
     width: 105,
   },
   logoWrapper: {
     marginLeft: 28,
-    flexGrow: 1,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   shadow: {
     zIndex: 999,
