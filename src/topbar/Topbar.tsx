@@ -10,7 +10,7 @@ import PressableScale from '~/common/components/PressableScale';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import sessionService from '~/common/services/session.service';
 import SendIntentAndroid from 'react-native-send-intent';
-import { ANDROID_CHAT_APP, CHAT_ENABLED } from '~/config/Config';
+import { ANDROID_CHAT_APP, CHAT_ENABLED, IS_TENANT } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';
 import assets from '@assets';
 import { useFeature } from 'ExperimentsProvider';
@@ -144,6 +144,7 @@ export const styles = StyleSheet.create({
   logo: {
     height: 36,
     width: 105,
+    marginTop: IS_TENANT ? 0 : -14,
   },
   logoWrapper: {
     marginLeft: 28,
