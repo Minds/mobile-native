@@ -142,18 +142,18 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     // if can edit
     if (entity.isOwner()) {
       // Edit
-      PermissionsService.canComment() &&
-        options.push({
-          title: i18n.t('edit'),
-          iconName: 'edit',
-          iconType: 'material',
-          onPress: () => {
-            this.props.navigation.navigate('Compose', {
-              isEdit: true,
-              entity: this.props.entity,
-            });
-          },
-        });
+
+      options.push({
+        title: i18n.t('edit'),
+        iconName: 'edit',
+        iconType: 'material',
+        onPress: () => {
+          this.props.navigation.navigate('Compose', {
+            isEdit: true,
+            entity: this.props.entity,
+          });
+        },
+      });
 
       // Set / Remove explicit
       options.push({
