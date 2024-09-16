@@ -1,10 +1,14 @@
 import { useState } from 'react';
-import { Image as RNImage, StyleSheet, View } from 'react-native';
+import {
+  Image as RNImage,
+  StyleSheet,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 import { Image } from 'expo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Carousel from 'react-native-reanimated-carousel';
-import { useDimensions } from '@react-native-community/hooks';
 
 import { IS_IOS, IS_IPAD, STRAPI_URI } from '~/config/Config';
 import { H1, H3 } from '~/common/ui';
@@ -23,7 +27,7 @@ type OnboardingCarouselProps = {
 
 export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
   const [index, setIndex] = useState(0);
-  const { width, height } = useDimensions().screen;
+  const { width, height } = useWindowDimensions();
   const isPortrait = width < height;
   const insets = useSafeAreaInsets();
 

@@ -10,9 +10,10 @@ import { useNavigation } from '@react-navigation/native';
 type Props = {
   members: ChatMember[];
   extra?: React.ReactNode;
+  hideBack?: boolean;
 };
 
-function ChatHeader({ members, extra }: Props) {
+function ChatHeader({ members, extra, hideBack }: Props) {
   const query = useChatRoomContext();
   const navigation = useNavigation();
 
@@ -71,7 +72,7 @@ function ChatHeader({ members, extra }: Props) {
 
   return (
     <ScreenHeader
-      back={true}
+      back={!hideBack}
       border
       title={title}
       titleType="B1"

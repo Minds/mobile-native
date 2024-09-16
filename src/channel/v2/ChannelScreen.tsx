@@ -495,6 +495,7 @@ const ChannelScreen = observer((props: PropsType) => {
 
       <Animated.View style={topBarAnimatedViewStyle}>
         <ChannelTopBar
+          hideBack={props.route.params?.hideBack}
           withBg={topBarBackgroundVisible}
           backgroundColor={backgroundColor}
           textColor={textColor}

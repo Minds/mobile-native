@@ -1,6 +1,6 @@
-import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import type ActivityModel from '~/newsfeed/ActivityModel';
 
@@ -33,6 +33,7 @@ export default function EmbedLink({
   onImageLongPress,
   openLink,
 }: PropsType) {
+  const navigation = useNavigation<any>();
   let title =
     entity.link_title ||
     (entity.title && entity.title.length > MAX_TITLE_SIZE
@@ -56,18 +57,44 @@ export default function EmbedLink({
     );
   }
 
+  let youtubeVideoId,
+    navigateToYoutube,
+    isYoutubeVideo = false;
+
+  // check if it's a youtube video
+  if (entity.perma_url) {
+    let matches,
+      youtube =
+        /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/i;
+
+    if ((matches = youtube.exec(entity.perma_url)) !== null) {
+      if (matches[1]) {
+        youtubeVideoId = matches[1];
+        isYoutubeVideo = true;
+        navigateToYoutube = () =>
+          navigation.push('YoutubePlayer', {
+            videoId: youtubeVideoId,
+            title: entity.link_title,
+          });
+      }
+    }
+  }
+
   if (!small) {
     return (
       <View style={styles.smallContainerStyle}>
         {source.uri ? (
           <MediaViewImage
+            showPlayIcon={isYoutubeVideo}
             entity={entity}
-            onImagePress={onImagePress}
+            onImagePress={isYoutubeVideo ? navigateToYoutube : onImagePress}
             onImageLongPress={onImageLongPress}
             style={sp.styles.style.bgSecondaryBackground}
           />
         ) : null}
-        <TouchableOpacity style={sp.styles.style.padding4x} onPress={openLink}>
+        <TouchableOpacity
+          style={sp.styles.style.padding4x}
+          onPress={isYoutubeVideo ? navigateToYoutube : openLink}>
           <MText style={titleStyle}>{title}</MText>
           <MText style={domainStyle}>{domain(entity.perma_url)}</MText>
         </TouchableOpacity>
@@ -76,15 +103,25 @@ export default function EmbedLink({
   }
 
   return (
-    <View style={containerStyle}>
+    <View style={containerStyle} pointerEvents="box-only">
       <TouchableOpacity
-        onPress={onImagePress}
+        onPress={isYoutubeVideo ? navigateToYoutube : onImagePress}
         onLongPress={onImageLongPress}
         activeOpacity={1}
         testID="Posted Image">
         <SmartImage style={imageStyle} source={source} contentFit="cover" />
       </TouchableOpacity>
-      <TouchableOpacity style={titleContainerStyle} onPress={openLink}>
+      <TouchableOpacity
+        style={titleContainerStyle}
+        onPress={
+          isYoutubeVideo
+            ? () =>
+                navigation.push('YoutubePlayer', {
+                  videoId: youtubeVideoId,
+                  title: entity.link_title,
+                })
+            : openLink
+        }>
         <MText numberOfLines={2} style={titleStyle}>
           {title}
         </MText>

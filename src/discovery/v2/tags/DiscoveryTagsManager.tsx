@@ -1,22 +1,28 @@
 import React, { useEffect, useCallback, forwardRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import { View, StyleProp, ViewStyle, SectionListData } from 'react-native';
-import { BottomSheetSectionList } from '@gorhom/bottom-sheet';
-import { useDimensions } from '@react-native-community/hooks';
-import Icon from '@expo/vector-icons/Ionicons';
 
 import {
   BottomSheetModal,
   BottomSheetButton,
 } from '~/common/components/bottom-sheet';
+import {
+  View,
+  StyleProp,
+  ViewStyle,
+  SectionListData,
+  useWindowDimensions,
+} from 'react-native';
+import { BottomSheetSectionList } from '@gorhom/bottom-sheet';
+import Icon from '@expo/vector-icons/Ionicons';
+
 import { useDiscoveryV2Store } from '../useDiscoveryV2Store';
 
 import MenuSubtitle from '~/common/components/menus/MenuSubtitle';
 import { TDiscoveryTagsTag } from '../DiscoveryV2Store';
-import MenuItem from '~/common/components/menus/MenuItem';
-import FloatingInput from '~/common/components/FloatingInput';
 import { Spacer } from '~/common/ui';
 import { showNotification } from 'AppMessages';
+import MenuItem from '~/common/components/menus/MenuItem';
+import FloatingInput from '~/common/components/FloatingInput';
 import sp from '~/services/serviceProvider';
 
 interface Props {
@@ -112,7 +118,7 @@ const DiscoveryTagsManager = (props: Props, ref) => {
   const theme = sp.styles.style;
   const discoveryV2 = useDiscoveryV2Store();
   const store = useLocalStore<StoreType>(createStore);
-  const { height } = useDimensions().window;
+  const { height } = useWindowDimensions();
 
   useEffect(() => {
     store.setTags(discoveryV2.tags.slice(), discoveryV2.trendingTags.slice());

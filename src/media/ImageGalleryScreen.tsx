@@ -1,9 +1,8 @@
-import { useDimensions } from '@react-native-community/hooks';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Image } from 'expo-image';
 import { MotiView } from 'moti';
 import React, { useCallback, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 import Gallery, { RenderItemInfo } from 'react-native-awesome-gallery';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ModalFullScreen } from '../common/ui';
@@ -27,7 +26,7 @@ function ImageGalleryScreen({
   },
   navigation,
 }: ImageGalleryScreenProps) {
-  const { width, height } = useDimensions().window;
+  const { width, height } = useWindowDimensions();
   const { top } = useSafeAreaInsets();
   const theme = sp.styles.style;
   const images = entity.custom_data;

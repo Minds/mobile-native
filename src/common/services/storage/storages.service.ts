@@ -32,7 +32,7 @@ export class Storages {
 
   get session() {
     if (!this._session) {
-      this._session = createStorage('session');
+      this._session = createStorage('sessionStorage');
     }
     return this._session;
   }

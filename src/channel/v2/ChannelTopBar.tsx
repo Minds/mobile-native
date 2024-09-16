@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   TextInput,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import type { ChannelStoreType } from './createChannelStore';
@@ -35,6 +36,7 @@ type PropsType = {
   store: ChannelStoreType;
   hideButtons?: boolean;
   hideInput?: boolean;
+  hideBack?: boolean;
   /**
    * should the topbar have a background?
    **/
@@ -76,6 +78,7 @@ const ChannelTopBar = observer(
     hideButtons,
     hideInput,
     backgroundColor,
+    hideBack,
     textColor,
     withBg,
     onPress,
@@ -246,21 +249,25 @@ const ChannelTopBar = observer(
               )}
           </SafeAreaView>
         </Animated.View>
-        <SmallCircleButton
-          name="chevron-left"
-          raised={!withBg}
-          style={theme.colorIcon}
-          onPress={navigation.goBack}
-          color={
-            withBg
-              ? tinycolor(backgroundColor).setAlpha(0.15).toRgbString()
-              : tinycolor(sp.styles.getColor('PrimaryBackground'))
-                  .setAlpha(0.75)
-                  .toRgbString()
-          }
-          iconStyle={styles.iconStyle}
-          reverseColor={withBg ? textColor : undefined}
-        />
+        {!hideBack ? (
+          <SmallCircleButton
+            name="chevron-left"
+            raised={!withBg}
+            style={theme.colorIcon}
+            onPress={navigation.goBack}
+            color={
+              withBg
+                ? tinycolor(backgroundColor).setAlpha(0.15).toRgbString()
+                : tinycolor(sp.styles.getColor('PrimaryBackground'))
+                    .setAlpha(0.75)
+                    .toRgbString()
+            }
+            iconStyle={styles.iconStyle}
+            reverseColor={withBg ? textColor : undefined}
+          />
+        ) : (
+          <View />
+        )}
         {store && !hideButtons && (
           <ChannelButtons
             store={store}

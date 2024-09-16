@@ -2,8 +2,11 @@ import React, { useRef } from 'react';
 
 import type { WalletStoreType } from '../../../v2/createWalletStore';
 import { Tooltip } from 'react-native-elements';
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { useDimensions } from '@react-native-community/hooks';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from 'react-native';
 import BalanceInfo from './BalanceInfo';
 import OnchainButton from './OnchainButton';
 import TokenTabOptions from './TokenTabOptions';
@@ -25,7 +28,7 @@ const TokenTopBar = ({
 }: PropsType) => {
   const theme = sp.styles.style;
   const tooltipRef = useRef<any>();
-  const screen = useDimensions().screen;
+  const screen = useWindowDimensions();
   const tokens = (
     <>
       <Tooltip

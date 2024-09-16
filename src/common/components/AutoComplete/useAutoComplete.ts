@@ -1,6 +1,6 @@
-import { useKeyboard, useDimensions } from '@react-native-community/hooks';
+import { useKeyboard } from '@react-native-community/hooks';
 import { useState, useEffect, useCallback } from 'react';
-import { InteractionManager } from 'react-native';
+import { InteractionManager, useWindowDimensions } from 'react-native';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 import UserModel from '../../../channel/UserModel';
 import { AutoCompleteProps } from './AutoComplete';
@@ -17,7 +17,7 @@ const useAutoComplete = ({
   onTextInputFocus,
   onVisible,
 }: AutoCompleteProps) => {
-  const height = useDimensions().window.height;
+  const height = useWindowDimensions().height;
   const [query, setQuery] = useState('');
   const [visible, setVisible] = useState(false);
   const setVisibleDebounced = useDebouncedCallback(v => setVisible(v), 100, []);

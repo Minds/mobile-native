@@ -128,9 +128,26 @@ async function setupTenant(
         })
       })
     }
+  } else {
+    const GetNavigationItemsDocument = toolbox.filesystem.read(
+      './src/modules/navigation/gql/get-custom-navigation.api.graphql',
+      'utf8'
+    )
+
+    await spinnerAction('Fetching custom navigation', async () => {
+      const customNav = await request<{ customNavigationItems: Array<any> }>(
+        `https://www.minds.com/api/graphql`,
+        GetNavigationItemsDocument,
+        {}
+      )
+
+      toolbox.filesystem.write(
+        './src/modules/navigation/service/custom-navigation.json',
+        customNav.customNavigationItems
+      )
+    })
   }
 }
-
 function generateTenantJSON(
   data: any,
   preview: boolean,
@@ -172,6 +189,7 @@ function generateTenantJSON(
     ADAPTIVE_COLOR: data.THEME === 'light' ? light_background : dark_background,
     THEME: data.THEME || 'light', // the backend returns empty when no theme is selected (we default light)
     TENANT_ID: data.TENANT_ID,
+    IS_NON_PROFIT: data.IS_NON_PROFIT || false,
     API_URL: data.API_URL,
     APP_TRACKING_MESSAGE_ENABLED: data.APP_TRACKING_MESSAGE_ENABLED,
     APP_TRACKING_MESSAGE: data.APP_TRACKING_MESSAGE,
