@@ -238,7 +238,7 @@
     "color": "4.2.3",
     "escape-string-regexp": "4.0.0",
     "color-convert": "2.0.1",
-    "react-native-gesture-handler": "~2.16.1"
+    "react-native-gesture-handler": "~2.18.1"
   },
   "workspaces": [
     "packages/*"
