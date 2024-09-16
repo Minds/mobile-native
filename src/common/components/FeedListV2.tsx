@@ -1,9 +1,13 @@
 import React, { useCallback, useMemo } from 'react';
-import { RefreshControl, View, ViewToken } from 'react-native';
+import {
+  RefreshControl,
+  useWindowDimensions,
+  View,
+  ViewToken,
+} from 'react-native';
 import { observer } from 'mobx-react';
 import { useNavigation } from '@react-navigation/native';
 import { FlashList, FlashListProps } from '@shopify/flash-list';
-import { useDimensions } from '@react-native-community/hooks';
 
 import ActivityModel from '~/newsfeed/ActivityModel';
 import Activity from '~/newsfeed/activity/Activity';
@@ -60,7 +64,7 @@ function FeedList<T extends BaseModel>(
     ...other
   } = props;
 
-  const { height } = useDimensions().window;
+  const { height } = useWindowDimensions();
 
   const navigation = useNavigation();
 

@@ -1,29 +1,32 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import {
   Pressable,
   StyleSheet,
   ViewStyle,
   View,
-  ActivityIndicator,
-  Animated,
   PressableProps,
   StyleProp,
+  ActivityIndicator,
 } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+  withSpring,
+  runOnJS,
+  useAnimatedProps,
+  Layout,
+} from 'react-native-reanimated';
 import { withSpacer } from '~ui/layout/Spacer';
-
-import {
-  timingAnimation,
-  bounceAnimation,
-  getColor,
-  configureLayoutAnimation,
-  getFontRenderer,
-} from './helpers';
-import { frameThrower } from '~ui/helpers';
+import { getColor, configureLayoutAnimation, getFontRenderer } from './helpers';
 import { COMMON_BUTTON_STYLES, FLAT_BUTTON_STYLES } from './tokens';
 import { TRANSPARENCY, UNIT } from '~/styles/Tokens';
 import { Row, Spacer } from '../layout';
 import { ColorsNameType } from '~/styles/Colors';
 import sp from '~/services/serviceProvider';
+
+const AnimatedActivityIndicator =
+  Animated.createAnimatedComponent(ActivityIndicator);
 
 export type ButtonPropsType = {
   mode?: 'flat' | 'outline' | 'solid';
@@ -49,18 +52,9 @@ export type ButtonPropsType = {
   color?: 'link' | 'primary' | 'tertiary' | 'danger';
   overlayStyle?: StyleProp<ViewStyle>;
 };
-const shouldBreak = (num, disabled, state) => {
-  return (
-    disabled ||
-    state.loading === true ||
-    state.pressing === true ||
-    state.loading > num
-  );
-};
 
-/**
- * Base button component
- */
+const ANIMATION_CONFIG = { duration: 150 };
+
 export const ButtonComponent = ({
   mode = 'solid',
   type = 'base',
@@ -87,177 +81,144 @@ export const ButtonComponent = ({
 }: ButtonPropsType) => {
   const iconOnly = icon && !children;
 
-  const containerStyle = [
-    styles.container,
-    styles[mode],
-    styles[size],
-    styles[`${mode}_${type}`],
-    styles[`${mode}_${size}`],
-    iconOnly && styles.paddingLess,
-    disabled && styles[`${mode}_disabled`],
-    // props.containerStyle,
-  ];
+  const containerStyle = useMemo(
+    () => [
+      styles.container,
+      styles[mode],
+      styles[size],
+      styles[`${mode}_${type}`],
+      styles[`${mode}_${size}`],
+      iconOnly && styles.paddingLess,
+      disabled && styles[`${mode}_disabled`],
+    ],
+    [mode, size, type, iconOnly, disabled],
+  );
 
-  const overlayStyle: ViewStyle = StyleSheet.flatten([
-    styles.overlay,
-    styles[`${mode}_${type}__overlay`],
-    disabled && styles[`${mode}_disabled__overlay`],
-    props.overlayStyle,
-  ]);
+  const overlayStyle: ViewStyle = useMemo(
+    () =>
+      StyleSheet.flatten([
+        styles.overlay,
+        styles[`${mode}_${type}__overlay`],
+        disabled && styles[`${mode}_disabled__overlay`],
+        props.overlayStyle,
+      ]),
+    [mode, type, disabled, props.overlayStyle],
+  );
 
-  const scaleAnimation = useRef(new Animated.Value(0)).current;
-  const activeAnimation = useRef(new Animated.Value(0)).current;
-  const textAnimation = useRef(new Animated.Value(1)).current;
-  const stateRef = useRef({ state: 0, loading: false, pressing: false });
-  const [text, setText]: any = useState(children);
+  const scaleAnimation = useSharedValue(0);
+  const activeAnimation = useSharedValue(0);
+  const textAnimation = useSharedValue(1);
+  const textOpacity = useSharedValue(1);
+  const [isLoading, setIsLoading] = useState(loading);
+  const [text, setText] = useState(children);
   const Font = getFontRenderer(size);
-  const { textColor, spinnerColor } = color
-    ? {
-        textColor: color,
-        spinnerColor: color,
-      }
-    : getColor({
-        theme: sp.styles.theme,
-        mode,
-        darkContent,
-        disabled,
-        type,
-      });
-  const bounceType = spinner ? 'long' : 'short';
 
-  // Added for the LEGACY loading prop;
+  const { textColor, spinnerColor } = useMemo(
+    () =>
+      color
+        ? { textColor: color, spinnerColor: color }
+        : getColor({
+            theme: sp.styles.theme,
+            mode,
+            darkContent,
+            disabled,
+            type,
+          }),
+    [color, mode, darkContent, disabled, type],
+  );
+
+  const showSpinner = useCallback(() => {
+    'worklet';
+    scaleAnimation.value = withSpring(1);
+    textOpacity.value = withTiming(0, ANIMATION_CONFIG);
+  }, [scaleAnimation, textOpacity]);
+
+  const hideSpinner = useCallback(() => {
+    'worklet';
+    scaleAnimation.value = withTiming(0, ANIMATION_CONFIG);
+    textOpacity.value = withSpring(1);
+  }, [scaleAnimation, textOpacity]);
+
   useEffect(() => {
-    if (loading === false && stateRef.current.loading === true) {
-      hideSpinner();
-      return;
+    if (loading !== isLoading) {
+      setIsLoading(loading);
+      if (loading) {
+        showSpinner();
+      } else {
+        hideSpinner();
+      }
     }
-    if (loading === true && stateRef.current.loading === false) {
-      showSpinner();
-      return;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]);
+  }, [loading, isLoading, showSpinner, hideSpinner]);
 
-  // Sets-up text/onChange animation
+  const updateText = useCallback(() => {
+    textAnimation.value = withSpring(1);
+    configureLayoutAnimation();
+    setText(children);
+  }, [children, textAnimation]);
+
   useEffect(() => {
     if (!text || !shouldAnimateChanges || !children) {
       setText(children);
-
       return;
     }
-    if (typeof children === 'string') {
-      if (children === text) {
-        return;
-      }
-    }
-
-    timingAnimation(
-      textAnimation,
-      0.6,
-      () => {
-        bounceAnimation(textAnimation, 1, 'long_fast');
-        configureLayoutAnimation();
-        setText(children);
-      },
-      100,
-    );
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [children]);
-
-  const handlePressIn = () => {
-    if (shouldBreak(0, disabled, stateRef.current)) {
+    if (typeof children === 'string' && children === text) {
       return;
     }
-    stateRef.current.state = 1;
+
+    textAnimation.value = withTiming(0.6, ANIMATION_CONFIG, () => {
+      runOnJS(updateText)();
+    });
+  }, [children, shouldAnimateChanges, text, textAnimation, updateText]);
+
+  const showActive = useCallback(() => {
+    'worklet';
+    activeAnimation.value = withTiming(1);
+    textAnimation.value = withSpring(0.92);
+  }, [activeAnimation, textAnimation]);
+
+  const hideActive = useCallback(() => {
+    'worklet';
+    activeAnimation.value = withTiming(0, ANIMATION_CONFIG);
+    if (!isLoading) {
+      textAnimation.value = withSpring(1);
+    }
+  }, [activeAnimation, textAnimation, isLoading]);
+
+  const handlePressIn = useCallback(() => {
+    if (disabled || isLoading) return;
     showActive();
-  };
+  }, [disabled, isLoading, showActive]);
 
-  const handlePressOut = () => {
-    if (shouldBreak(1, disabled, stateRef.current)) {
-      return;
-    }
-    stateRef.current.state = 2;
+  const handlePressOut = useCallback(() => {
+    if (disabled || isLoading) return;
     hideActive();
-  };
+  }, [disabled, isLoading, hideActive]);
 
-  const handlePress = async () => {
-    if (shouldBreak(2, disabled, stateRef.current)) {
-      return;
-    }
-    stateRef.current.state = 3;
+  const handlePress = useCallback(async () => {
+    if (disabled || isLoading || !onPress) return;
     hideActive();
-    if (!onPress) {
-      return;
-    }
-    stateRef.current.pressing = true;
     if (spinner) {
       showSpinner();
     }
-
     try {
       await onPress();
     } catch (error) {
       console.log(error);
     }
-    hideSpinner();
-    frameThrower(4, () => {
-      stateRef.current.pressing = false;
-    });
-  };
-
-  const showSpinner = () => {
-    if (stateRef.current.loading === true) {
-      return;
+    if (spinner) {
+      hideSpinner();
     }
-    stateRef.current.loading = true;
-    bounceAnimation(scaleAnimation, 1, bounceType);
-    hideText();
-  };
+  }, [
+    disabled,
+    isLoading,
+    onPress,
+    spinner,
+    hideActive,
+    showSpinner,
+    hideSpinner,
+  ]);
 
-  const hideSpinner = () => {
-    if (stateRef.current.loading !== true) {
-      return;
-    }
-    timingAnimation(scaleAnimation, 0, clearState);
-    bounceAnimation(textAnimation, 1, bounceType);
-  };
-
-  const hideText = (callback = undefined) => {
-    timingAnimation(textAnimation, 0, callback);
-  };
-
-  const showActive = () => {
-    if (stateRef.current.state !== 1) {
-      return;
-    }
-
-    timingAnimation(activeAnimation, 1);
-    bounceAnimation(textAnimation, 0.92, bounceType);
-  };
-
-  const hideActive = () => {
-    // Avoid conditional on hide
-    timingAnimation(activeAnimation, 0, () => {
-      if (spinner) {
-        return;
-      }
-      clearState();
-    });
-    // Avoid early bouce out when the spinner is up
-    if (spinner && stateRef.current.loading === true) {
-      return;
-    }
-    bounceAnimation(textAnimation, 1, bounceType);
-  };
-
-  const clearState = () => {
-    stateRef.current.loading = false;
-    stateRef.current.state = 0;
-  };
-
-  const renderContent = () => {
-    let content;
+  const renderContent = useMemo(() => {
     const title = (
       <Font
         font={font}
@@ -274,9 +235,9 @@ export const ButtonComponent = ({
         : icon;
 
     if (iconOnly) {
-      content = iconComponent;
+      return iconComponent;
     } else if (icon) {
-      content = (
+      return (
         <Row align="centerStart">
           {!reversedIcon && icon ? (
             <Spacer right="XS">{iconComponent}</Spacer>
@@ -288,11 +249,26 @@ export const ButtonComponent = ({
         </Row>
       );
     } else {
-      content = title;
+      return title;
     }
+  }, [Font, font, textColor, fit, text, icon, iconOnly, reversedIcon]);
 
-    return content;
-  };
+  const animatedOverlayStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleAnimation.value }],
+  }));
+
+  const animatedActiveStyle = useAnimatedStyle(() => ({
+    opacity: activeAnimation.value,
+  }));
+
+  const animatedTextStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: textAnimation.value }],
+    opacity: textOpacity.value,
+  }));
+
+  const animatedSpinnerProps = useAnimatedProps(() => ({
+    color: spinnerColor,
+  }));
 
   return (
     <Pressable
@@ -302,34 +278,27 @@ export const ButtonComponent = ({
       style={stretch ? styles.stretch : styles[align]}
       accessibilityLabel={accessibilityLabel}
       testID={testID}
+      disabled={disabled || isLoading}
       {...pressableProps}>
-      {/** Main Wrapper */}
       <View style={containerStyle}>
-        {/** Border Overlay */}
         <View style={overlayStyle}>
-          {/** Activity Indicator */}
           {spinner && (
-            <Animated.View style={{ transform: [{ scale: scaleAnimation }] }}>
-              <ActivityIndicator
+            <Animated.View style={animatedOverlayStyle}>
+              <AnimatedActivityIndicator
+                animatedProps={animatedSpinnerProps}
                 size="small"
-                color={spinnerColor}
                 style={styles[`spinner_${size}`]}
               />
             </Animated.View>
           )}
         </View>
-        {/** Background Active */}
         <Animated.View
-          style={[{ opacity: activeAnimation }, styles[`active_${mode}`]]}
+          style={[animatedActiveStyle, styles[`active_${mode}`]]}
         />
         {darkContent && <View style={styles.darken} />}
         {lightContent && <View style={styles.lighten} />}
-        {/** Button Text */}
-        <Animated.View
-          style={{
-            transform: [{ scale: textAnimation }],
-          }}>
-          {renderContent()}
+        <Animated.View style={animatedTextStyle} layout={Layout.springify()}>
+          {renderContent}
         </Animated.View>
       </View>
     </Pressable>

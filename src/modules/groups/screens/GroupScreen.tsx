@@ -19,10 +19,9 @@ import {
   useGroupContext,
 } from '../contexts/GroupContext';
 import { useGroup } from '../hooks/useGroup';
-import SearchTopBar from '~/common/components/SearchTopBar';
+import SearchTopBar from '../../../common/components/SearchTopBar';
 import CaptureFab from '~/capture/CaptureFab';
 import FeedFilter from '~/common/components/FeedFilter';
-
 import ErrorLoading from '~/common/components/ErrorLoading';
 import { H4 } from '~/common/ui';
 import ScrollableTabComponent from '../components/ScrollableTabComponent';
@@ -83,7 +82,7 @@ export function GroupScreen({ route, navigation }) {
 
   return group ? (
     <GroupScreenContextProvider group={group}>
-      <GroupScreenView group={group} />
+      <GroupScreenView group={group} hideBack={route.params?.hideBack} />
       <PostToGroupButton navigation={navigation} />
     </GroupScreenContextProvider>
   ) : (
@@ -91,141 +90,145 @@ export function GroupScreen({ route, navigation }) {
   );
 }
 
-const GroupScreenView = observer(({ group }: { group: GroupModel }) => {
-  const initialTab = useRef(-1);
-  const i18n = sp.i18n;
-  // initial loading
-  if (initialTab.current === -1) {
-    initialTab.current = sp.storages.user?.getNumber('GroupTab') || 0;
-  }
+const GroupScreenView = observer(
+  ({ group, hideBack }: { group: GroupModel; hideBack?: boolean }) => {
+    const initialTab = useRef(-1);
 
-  const [index, setIndex] = useState(initialTab.current);
-
-  const animationHeaderPosition = useSharedValue(0);
-  const animationHeaderHeight = useSharedValue(0);
-  const scrollY = useSharedValue(0);
-  const { top } = useSafeAreaInsets();
-  const headerHeight = useHeaderHeight();
-
-  const groupContext = useGroupContext();
-
-  const onStartRefresh = async () => {
-    if (index === 0) {
-      groupContext?.feedStore?.feed.refresh();
-    } else if (index === 1) {
-      groupContext?.feedStore?.feedTop.refresh();
-    } else {
-      groupContext?.feedMembersStore?.refresh();
+    // initial loading
+    if (initialTab.current === -1) {
+      initialTab.current = sp.storages.user?.getNumber('GroupTab') || 0;
     }
-  };
 
-  const isRefreshing =
-    index === 0
-      ? groupContext?.feedStore?.feed.refreshing
-      : index === 1
-      ? groupContext?.feedStore?.feedTop.refreshing
-      : groupContext?.feedMembersStore?.members.refreshing;
+    const [index, setIndex] = useState(initialTab.current);
 
-  const renderScene = useCallback(
-    ({ route }: any) => {
-      if (!group.isMember && group.isPrivate) {
-        return (
-          <ScrollableTabComponent index={0}>
-            <H4 align="center" top="XL">
-              {i18n.t('group.closedMessage')}
-            </H4>
-          </ScrollableTabComponent>
-        );
+    const animationHeaderPosition = useSharedValue(0);
+    const animationHeaderHeight = useSharedValue(0);
+    const scrollY = useSharedValue(0);
+    const { top } = useSafeAreaInsets();
+    const headerHeight = useHeaderHeight();
+
+    const groupContext = useGroupContext();
+
+    const onStartRefresh = async () => {
+      if (index === 0) {
+        groupContext?.feedStore?.feed.refresh();
+      } else if (index === 1) {
+        groupContext?.feedStore?.feedTop.refresh();
+      } else {
+        groupContext?.feedMembersStore?.refresh();
       }
-      switch (route.key) {
-        case 'feed':
-          return <FeedScene route={route} group={group} />;
-        case 'top':
-          return <FeedScene route={route} group={group} top />;
-        case 'members':
-          return <MembersScene route={route} group={group} />;
-        default:
-          return null;
-      }
-    },
-    [group, i18n],
-  );
+    };
 
-  const renderHeader = useCallback(
-    () => (
-      <AnimatedHeader
-        top={top}
-        group={group}
-        animationHeaderPosition={animationHeaderPosition}
-        animationHeaderHeight={animationHeaderHeight}
-      />
-    ),
-    [animationHeaderHeight, animationHeaderPosition, group, top],
-  );
+    const isRefreshing =
+      index === 0
+        ? groupContext?.feedStore?.feed.refreshing
+        : index === 1
+        ? groupContext?.feedStore?.feedTop.refreshing
+        : groupContext?.feedMembersStore?.members.refreshing;
 
-  const onIndexChange = useCallback(idx => {
-    setIndex(idx);
-    sp.storages.user?.set('GroupTab', idx);
-  }, []);
+    const renderScene = useCallback(
+      ({ route }: any) => {
+        if (!group.isMember && group.isPrivate) {
+          return (
+            <ScrollableTabComponent index={0}>
+              <H4 align="center" top="XL">
+                {sp.i18n.t('group.closedMessage')}
+              </H4>
+            </ScrollableTabComponent>
+          );
+        }
+        switch (route.key) {
+          case 'feed':
+            return <FeedScene route={route} group={group} />;
+          case 'top':
+            return <FeedScene route={route} group={group} top />;
+          case 'members':
+            return <MembersScene route={route} group={group} />;
+          default:
+            return null;
+        }
+      },
+      [group],
+    );
 
-  const renderTabBar = useCallback(
-    props => (
+    const renderHeader = useCallback(
+      () => (
+        <AnimatedHeader
+          hideBack={hideBack}
+          top={top}
+          group={group}
+          animationHeaderPosition={animationHeaderPosition}
+          animationHeaderHeight={animationHeaderHeight}
+        />
+      ),
+      [animationHeaderHeight, animationHeaderPosition, group, top, hideBack],
+    );
+
+    const onIndexChange = useCallback(idx => {
+      setIndex(idx);
+      sp.storages.user?.set('GroupTab', idx);
+    }, []);
+
+    const renderTabBar = useCallback(
+      props => (
+        <>
+          <ScrollableAutoWidthTabBar {...props} />
+          {groupContext?.feedStore && index === 0 && (
+            <FeedFilter
+              store={groupContext?.feedStore}
+              hideLabel
+              hideBlogs
+              containerStyles={styles.filterStyle}
+            />
+          )}
+        </>
+      ),
+      [groupContext?.feedStore, index],
+    );
+
+    const minHeaderHeight = Platform.select({
+      default: headerHeight ? headerHeight : HEADER_HEIGHT + top,
+      android: headerHeight ? 0 : HEADER_HEIGHT + top,
+    });
+
+    const currentStore =
+      index === 2 ? groupContext?.feedMembersStore : groupContext?.feedStore;
+
+    return (
       <>
-        <ScrollableAutoWidthTabBar {...props} />
-        {groupContext?.feedStore && index === 0 && (
-          <FeedFilter
-            store={groupContext?.feedStore}
-            hideLabel
-            hideBlogs
-            containerStyles={styles.filterStyle}
-          />
-        )}
+        <TabView
+          onStartRefresh={onStartRefresh}
+          isRefreshing={isRefreshing}
+          navigationState={{ index, routes }}
+          renderScene={renderScene}
+          onIndexChange={onIndexChange}
+          renderTabBar={renderTabBar}
+          lazy
+          renderScrollHeader={renderHeader}
+          refreshHeight={top + HEADER_HEIGHT + 300}
+          minHeaderHeight={minHeaderHeight}
+          overridenShareAnimatedValue={scrollY}
+          animationHeaderPosition={animationHeaderPosition}
+          animationHeaderHeight={animationHeaderHeight}
+        />
+        <AnimatedTopHeader
+          hideBack={hideBack}
+          top={top}
+          group={group}
+          scrollY={scrollY}
+          animationHeaderHeight={animationHeaderHeight}
+          currentStore={currentStore}
+        />
+        <SearchTopBar
+          visible={currentStore?.showSearch}
+          placeholder="Search Group"
+          onClosePress={() => currentStore?.toggleSearch()}
+          onSubmitEditing={e => currentStore?.setSearch(e.nativeEvent.text)}
+        />
       </>
-    ),
-    [groupContext?.feedStore, index],
-  );
-
-  const minHeaderHeight = Platform.select({
-    default: headerHeight ? headerHeight : HEADER_HEIGHT + top,
-    android: headerHeight ? 0 : HEADER_HEIGHT + top,
-  });
-
-  const currentStore =
-    index === 2 ? groupContext?.feedMembersStore : groupContext?.feedStore;
-
-  return (
-    <>
-      <TabView
-        onStartRefresh={onStartRefresh}
-        isRefreshing={isRefreshing}
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={onIndexChange}
-        renderTabBar={renderTabBar}
-        lazy
-        renderScrollHeader={renderHeader}
-        refreshHeight={top + HEADER_HEIGHT + 300}
-        minHeaderHeight={minHeaderHeight}
-        overridenShareAnimatedValue={scrollY}
-        animationHeaderPosition={animationHeaderPosition}
-        animationHeaderHeight={animationHeaderHeight}
-      />
-      <AnimatedTopHeader
-        top={top}
-        group={group}
-        scrollY={scrollY}
-        animationHeaderHeight={animationHeaderHeight}
-        currentStore={currentStore}
-      />
-      <SearchTopBar
-        visible={currentStore?.showSearch}
-        placeholder="Search Group"
-        onClosePress={() => currentStore?.toggleSearch()}
-        onSubmitEditing={e => currentStore?.setSearch(e.nativeEvent.text)}
-      />
-    </>
-  );
-});
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   filterStyle: {

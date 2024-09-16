@@ -33,7 +33,7 @@ import sp from '~/services/serviceProvider';
  * This screen also handles chat requests
  */
 export default function ChatScreen({ navigation, route }) {
-  const { roomGuid, members, isRequest } = route.params || {};
+  const { roomGuid, members, isRequest, hideBack } = route.params || {};
   const [accepted, setAccepted] = React.useState(false);
   const refetchUnreadMessages = useRefetchUnreadMessages();
 
@@ -52,6 +52,7 @@ export default function ChatScreen({ navigation, route }) {
     <Screen safe>
       <ChatRoomProvider roomGuid={roomGuid}>
         <ChatScreenBody
+          hideBack={hideBack}
           members={members}
           navigation={navigation}
           roomGuid={roomGuid}
@@ -68,7 +69,13 @@ export default function ChatScreen({ navigation, route }) {
   );
 }
 
-const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
+const ChatScreenBody = ({
+  members,
+  navigation,
+  roomGuid,
+  isRequest,
+  hideBack,
+}) => {
   // track chat room view
   useChatroomViewAnalytic();
   const query = useChatRoomContext();
@@ -82,6 +89,7 @@ const ChatScreenBody = ({ members, navigation, roomGuid, isRequest }) => {
     <>
       <ChatHeader
         members={members}
+        hideBack={hideBack}
         extra={
           <View style={[theme.rowJustifyEnd, theme.gap3x]}>
             {isOwnerAndMultiUser && query.data && (

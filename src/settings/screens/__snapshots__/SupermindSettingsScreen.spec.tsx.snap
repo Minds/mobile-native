@@ -152,7 +152,7 @@ exports[`Supermind settings should load data and render correctly 1`] = `
             {
               "busy": undefined,
               "checked": undefined,
-              "disabled": undefined,
+              "disabled": false,
               "expanded": undefined,
               "selected": undefined,
             }
@@ -233,7 +233,6 @@ exports[`Supermind settings should load data and render correctly 1`] = `
               }
             >
               <View
-                collapsable={false}
                 style={
                   {
                     "transform": [
@@ -245,29 +244,37 @@ exports[`Supermind settings should load data and render correctly 1`] = `
                 }
               >
                 <ActivityIndicator
-                  color="#F2F2F2"
+                  animatedProps={
+                    {
+                      "color": "#F2F2F2",
+                    }
+                  }
                   size="small"
                 />
               </View>
             </View>
             <View
-              collapsable={false}
               style={
-                {
-                  "backgroundColor": "rgba(0, 0, 0, 0.05)",
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
+                [
+                  {
+                    "opacity": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(0, 0, 0, 0.05)",
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                ]
               }
             />
             <View
-              collapsable={false}
+              layout={BaseAnimationMock {}}
               style={
                 {
+                  "opacity": 1,
                   "transform": [
                     {
                       "scale": 1,
@@ -580,7 +587,7 @@ exports[`Supermind settings should load data and render correctly 2`] = `
             {
               "busy": undefined,
               "checked": undefined,
-              "disabled": undefined,
+              "disabled": false,
               "expanded": undefined,
               "selected": undefined,
             }
@@ -661,7 +668,6 @@ exports[`Supermind settings should load data and render correctly 2`] = `
               }
             >
               <View
-                collapsable={false}
                 style={
                   {
                     "transform": [
@@ -673,29 +679,37 @@ exports[`Supermind settings should load data and render correctly 2`] = `
                 }
               >
                 <ActivityIndicator
-                  color="#F2F2F2"
+                  animatedProps={
+                    {
+                      "color": "#F2F2F2",
+                    }
+                  }
                   size="small"
                 />
               </View>
             </View>
             <View
-              collapsable={false}
               style={
-                {
-                  "backgroundColor": "rgba(0, 0, 0, 0.05)",
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
+                [
+                  {
+                    "opacity": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(0, 0, 0, 0.05)",
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                ]
               }
             />
             <View
-              collapsable={false}
+              layout={BaseAnimationMock {}}
               style={
                 {
+                  "opacity": 1,
                   "transform": [
                     {
                       "scale": 1,
@@ -1403,7 +1417,7 @@ exports[`Supermind settings should update the store and submit 1`] = `
             {
               "busy": undefined,
               "checked": undefined,
-              "disabled": undefined,
+              "disabled": false,
               "expanded": undefined,
               "selected": undefined,
             }
@@ -1484,7 +1498,6 @@ exports[`Supermind settings should update the store and submit 1`] = `
               }
             >
               <View
-                collapsable={false}
                 style={
                   {
                     "transform": [
@@ -1496,29 +1509,37 @@ exports[`Supermind settings should update the store and submit 1`] = `
                 }
               >
                 <ActivityIndicator
-                  color="#F2F2F2"
+                  animatedProps={
+                    {
+                      "color": "#F2F2F2",
+                    }
+                  }
                   size="small"
                 />
               </View>
             </View>
             <View
-              collapsable={false}
               style={
-                {
-                  "backgroundColor": "rgba(0, 0, 0, 0.05)",
-                  "bottom": 0,
-                  "left": 0,
-                  "opacity": 0,
-                  "position": "absolute",
-                  "right": 0,
-                  "top": 0,
-                }
+                [
+                  {
+                    "opacity": 0,
+                  },
+                  {
+                    "backgroundColor": "rgba(0, 0, 0, 0.05)",
+                    "bottom": 0,
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                ]
               }
             />
             <View
-              collapsable={false}
+              layout={BaseAnimationMock {}}
               style={
                 {
+                  "opacity": 1,
                   "transform": [
                     {
                       "scale": 1,

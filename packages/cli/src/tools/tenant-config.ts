@@ -20,6 +20,7 @@ query GetMobileConfig($tenantId: Int!) {
     APP_ANDROID_PACKAGE
     APP_TRACKING_MESSAGE_ENABLED
     APP_TRACKING_MESSAGE
+    IS_NON_PROFIT
     assets {
       key
       value

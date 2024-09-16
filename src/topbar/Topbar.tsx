@@ -9,8 +9,7 @@ import useCurrentUser from '../common/hooks/useCurrentUser';
 import PressableScale from '~/common/components/PressableScale';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 import SendIntentAndroid from 'react-native-send-intent';
-
-import { ANDROID_CHAT_APP, CHAT_ENABLED } from '~/config/Config';
+import { ANDROID_CHAT_APP, CHAT_ENABLED, IS_TENANT } from '~/config/Config';
 import { useScrollContext } from '../common/contexts/scroll.context';
 import assets from '@assets';
 import { useFeature } from 'ExperimentsProvider';
@@ -77,6 +76,25 @@ export const Topbar = observer((props: PropsType) => {
     <Animated.View style={[styles.shadow, animatedStyle]}>
       <View style={container}>
         <View style={styles.topbar}>
+          {!title && (
+            <View
+              style={[
+                styles.logoWrapper,
+                isChatIconHidden && styles.noMarginLeft,
+              ]}>
+              <PressableScale onPress={props.onLogoPress}>
+                <Image
+                  resizeMode="contain"
+                  source={
+                    sp.styles.theme
+                      ? assets.LOGO_HORIZONTAL_DARK
+                      : assets.LOGO_HORIZONTAL
+                  }
+                  style={styles.logo}
+                />
+              </PressableScale>
+            </View>
+          )}
           <View style={styles.topbarLeft}>
             {showBack && (
               <IconButton
@@ -106,23 +124,6 @@ export const Topbar = observer((props: PropsType) => {
                   onPress={handleChannelNav}
                   testID="Topbar:Avatar"
                 />
-                <View
-                  style={[
-                    styles.logoWrapper,
-                    isChatIconHidden && styles.noMarginLeft,
-                  ]}>
-                  <PressableScale onPress={props.onLogoPress}>
-                    <Image
-                      resizeMode="contain"
-                      source={
-                        sp.styles.theme
-                          ? assets.LOGO_HORIZONTAL_DARK
-                          : assets.LOGO_HORIZONTAL
-                      }
-                      style={styles.logo}
-                    />
-                  </PressableScale>
-                </View>
               </>
             )}
           </View>
@@ -141,15 +142,19 @@ export default Topbar;
 
 export const styles = StyleSheet.create({
   logo: {
-    marginLeft: 4,
-    marginTop: -10,
     height: 36,
     width: 105,
+    marginTop: IS_TENANT ? 0 : -14,
   },
   logoWrapper: {
     marginLeft: 28,
-    flexGrow: 1,
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   shadow: {
     zIndex: 999,

@@ -1,5 +1,6 @@
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-import { useDimensions } from '@react-native-community/hooks';
+import { useWindowDimensions } from 'react-native';
+
 import { showNotification } from 'AppMessages';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -26,7 +27,7 @@ const gradients: any = ['bottom'];
 const Questions = observer(({ onSubmit, ...props }: PropsType) => {
   const [questions, setQuestions] = useState<IQuestion[]>([]);
   const { answer, loading: answering } = useAnswers(questions);
-  const height = useDimensions().window.height;
+  const height = useWindowDimensions().height;
   const containerHeight = useMemo(() => ({ height: height * 0.7 }), [height]);
 
   // #region effects

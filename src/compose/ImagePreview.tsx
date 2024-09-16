@@ -1,8 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { Dimensions } from 'react-native';
+import { Dimensions, useWindowDimensions } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
-import { useDimensions } from '@react-native-community/hooks';
 import { Image } from 'expo-image';
 
 import SmartImage from '../common/components/SmartImage';
@@ -13,7 +12,7 @@ import sp from '~/services/serviceProvider';
  * @param {Object} props
  */
 export default observer(function (props) {
-  let { width } = useDimensions().window;
+  let { width } = useWindowDimensions();
 
   // calculate the aspect ratio
   let aspectRatio = props.image.width / props.image.height;

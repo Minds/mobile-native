@@ -132,6 +132,7 @@ type TwoFactorConfirmationParams = {
 };
 
 export type RootStackParamList = {
+  TenantMemberships: {};
   CustomPages: { page: string; title: string };
   ChangeEmail: {};
   Report: {};
@@ -240,6 +241,10 @@ export type AuthStackParamList = {
 };
 
 export type AppStackParamList = {
+  YoutubePlayer: {
+    videoId: string;
+    title?: string;
+  };
   Interactions: InteractionsScreenParams;
   BottomSheet: BottomSheetScreenParams;
   ChatStack: undefined;

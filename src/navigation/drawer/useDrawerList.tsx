@@ -30,6 +30,7 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
   const customNavigation = useCustomNavigationMenu();
   const channel = sp.session.getUser();
   const i18n = sp.i18n;
+
   let list: MenuItem[];
   if (!IS_TENANT) {
     list = [
@@ -122,6 +123,9 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
       },
       settings: () => {
         navigation.navigate('Settings');
+      },
+      memberships: () => {
+        navigation.navigate('TenantMemberships');
       },
     };
 

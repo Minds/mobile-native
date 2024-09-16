@@ -24,10 +24,12 @@ type Props = {
   group: GroupModel;
   currentStore?: GroupMembersStoreType | GroupFeedStoreType;
   top: number;
+  hideBack?: boolean;
 };
 
 export default function AnimatedTopHeader({
   group,
+  hideBack,
   animationHeaderHeight,
   scrollY,
   currentStore,
@@ -60,6 +62,7 @@ export default function AnimatedTopHeader({
 
     return {
       flex: 1,
+      paddingLeft: hideBack ? 16 : 0,
       transform: [
         {
           translateY: interpolate(
@@ -77,14 +80,16 @@ export default function AnimatedTopHeader({
     <Animated.View style={[styles.container, topbarStyle]}>
       <View
         style={[styles.rowContainer, sp.styles.style.alignSelfCenterMaxWidth]}>
-        <SmallCircleButton
-          name="chevron-left"
-          raised={true}
-          onPress={navigation.goBack}
-          color={sp.styles.getColor('PrimaryBackground')}
-          iconStyle={styles.iconStyle}
-          reverseColor={sp.styles.getColor('PrimaryText')}
-        />
+        {!hideBack && (
+          <SmallCircleButton
+            name="chevron-left"
+            raised={true}
+            onPress={navigation.goBack}
+            color={sp.styles.getColor('PrimaryBackground')}
+            iconStyle={styles.iconStyle}
+            reverseColor={sp.styles.getColor('PrimaryText')}
+          />
+        )}
         <Animated.View style={titleStyle}>
           <H4 numberOfLines={1}>{group.name}</H4>
         </Animated.View>

@@ -26,7 +26,7 @@ describe('blog card component', () => {
     expect(toJSON()).toMatchSnapshot();
   });
 
-  it('should nav to blog', () => {
+  it('should nav to blog', async () => {
     const blogEntity = BlogModel.create(blogFakeFactory(1));
     blogEntity.can = () => true;
 

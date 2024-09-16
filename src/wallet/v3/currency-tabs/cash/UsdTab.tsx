@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { observer } from 'mobx-react';
-import { useDimensions } from '@react-native-community/hooks';
 import { Tooltip } from 'react-native-elements';
 
+import { useWindowDimensions } from 'react-native';
 import TopBarButtonTabBar, {
   ButtonTabType,
 } from '~/common/components/topbar-tabbar/TopBarButtonTabBar';
@@ -43,7 +43,7 @@ const UsdTab = observer(
     usdTabStore,
   }: PropsType) => {
     const tooltipRef = useRef<any>();
-    const screen = useDimensions().screen;
+    const screen = useWindowDimensions();
     const theme = sp.styles.style;
     const i18n = sp.i18n;
     const options: Array<ButtonTabType<UsdOptions>> = [

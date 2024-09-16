@@ -1,9 +1,8 @@
-import { useDimensions } from '@react-native-community/hooks';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import moment from 'moment-timezone';
 import React, { useRef } from 'react';
-import { View, TextStyle } from 'react-native';
+import { View, TextStyle, useWindowDimensions } from 'react-native';
 import * as Progress from 'react-native-progress';
 import Icon from '@expo/vector-icons/MaterialIcons';
 import {
@@ -35,7 +34,7 @@ export default withErrorBoundaryScreen(
   observer(function OnboardingScreen() {
     const i18n = sp.i18n;
     const theme = sp.styles.style;
-    const { width } = useDimensions().screen;
+    const { width } = useWindowDimensions();
     const navigation = useNavigation();
     // Do not render BottomSheet unless it is necessary
     const ref = React.useRef<any>(null);

@@ -45,6 +45,7 @@ export const LANDING_PAGE_LOGGED_IN = Tenant.APP_LANDING_PAGE_LOGGED_IN;
 
 // Theme
 export const TENANT_THEME = Tenant.THEME === 'light' ? 0 : 1;
+export const TENANT_IS_NON_PROFIT = Tenant.IS_NON_PROFIT;
 
 // Configurable light colors
 export const ACCENT_COLOR_LIGHT = Tenant.ACCENT_COLOR_LIGHT;

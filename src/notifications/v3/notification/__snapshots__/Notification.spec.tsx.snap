@@ -2036,7 +2036,7 @@ exports[`Notification Gift boost created 1`] = `
         {
           "busy": undefined,
           "checked": undefined,
-          "disabled": undefined,
+          "disabled": false,
           "expanded": undefined,
           "selected": undefined,
         }
@@ -2110,23 +2110,27 @@ exports[`Notification Gift boost created 1`] = `
           }
         />
         <View
-          collapsable={false}
           style={
-            {
-              "backgroundColor": "rgba(0, 0, 0, 0.05)",
-              "bottom": 0,
-              "left": 0,
-              "opacity": 0,
-              "position": "absolute",
-              "right": 0,
-              "top": 0,
-            }
+            [
+              {
+                "opacity": 0,
+              },
+              {
+                "backgroundColor": "rgba(0, 0, 0, 0.05)",
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+            ]
           }
         />
         <View
-          collapsable={false}
+          layout={BaseAnimationMock {}}
           style={
             {
+              "opacity": 1,
               "transform": [
                 {
                   "scale": 1,

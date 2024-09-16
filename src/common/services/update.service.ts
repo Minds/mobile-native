@@ -11,7 +11,7 @@ import type { LogService } from './log.service';
 import type { I18nService } from './i18n.service';
 
 /**
- * Update service
+ * App Update service
  */
 export class UpdateService {
   @observable progress = 0;

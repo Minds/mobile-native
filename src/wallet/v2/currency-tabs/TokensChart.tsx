@@ -1,8 +1,7 @@
-import { useDimensions } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import moment from 'moment';
 import React from 'react';
-import { View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import LineChart from '~/common/components/charts/LineChart';
 import MText from '~/common/components/MText';
@@ -20,7 +19,7 @@ type PropsType = {
  */
 const TokensChart = observer(({ timespan }: PropsType) => {
   const theme = sp.styles.style;
-  const { width } = useDimensions().window;
+  const { width } = useWindowDimensions();
   const i18n = sp.i18n;
 
   let dataError = false,
