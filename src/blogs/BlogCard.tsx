@@ -57,7 +57,10 @@ const BlogCard: React.FC<PropsType> = ({
     const theme = sp.styles.style;
     return (
       <View>
-        <TouchableOpacity onPress={navToBlog} style={theme.bgPrimaryBackground}>
+        <TouchableOpacity
+          onPress={navToBlog}
+          style={theme.bgPrimaryBackground}
+          testID="blogCardTouchable">
           <Image source={image} style={styles.banner} contentFit="cover" />
           <View style={theme.padding2x}>
             <View style={theme.fullWidth}>
@@ -101,7 +104,7 @@ const BlogCard: React.FC<PropsType> = ({
 
   return (
     <View style={theme.bgPrimaryBackground}>
-      <MPressable onPress={navToBlog}>
+      <MPressable onPress={navToBlog} testID="blogCardTouchable">
         <Image source={image} style={styles.banner} contentFit="cover" />
         <View style={theme.padding2x}>
           <View style={theme.fullWidth}>
