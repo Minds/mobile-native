@@ -223,7 +223,7 @@ export default withErrorBoundaryScreen(
         sp.log.exception('[MediaView] runDownload', e);
       }
       setDownloading(false);
-    }, [i18n, mediaToConfirm.uri]);
+    }, [i18n, mediaToConfirm]);
 
     /**
      * called when retake button is pressed. Resets current image to null

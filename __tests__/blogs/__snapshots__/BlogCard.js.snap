@@ -46,7 +46,7 @@ exports[`blog card component should render correctly 1`] = `
         },
       ]
     }
-    testID="blogCardTouchable"
+    testID="blogPressable"
   >
     <Image
       contentFit="cover"
