@@ -29,9 +29,13 @@ export default forwardRef((props: any, ref) => {
     },
   }));
 
-  const handleVisibilityChange = useCallback(
-    visible => {
-      if (!visible) {
+  /**
+   * Handle bottom sheet change
+   * Attention: We were using onVisibilityChange but it was not working as expected (it was triggered with false when the keyboard was open)
+   */
+  const handleChange = useCallback(
+    state => {
+      if (state === -1) {
         navigation.navigate('PosterOptions');
       }
     },
@@ -42,9 +46,11 @@ export default forwardRef((props: any, ref) => {
     <BottomSheet
       // @ts-ignore
       ref={sheetRef}
+      keyboardBlurBehavior="none"
       handleStyle={sp.styles.style.bgPrimaryBackground}
-      onVisibilityChange={handleVisibilityChange}
+      onChange={handleChange}
       enableContentPanningGesture
+      keyboardBehavior="interactive"
       snapPoints={SNAP_POINTS}>
       <PosterStackNavigator />
     </BottomSheet>
