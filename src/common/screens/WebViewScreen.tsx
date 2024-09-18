@@ -3,11 +3,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import type { WebViewNavigation, WebViewProps } from 'react-native-webview';
 import { MoreStackParamList } from '../../navigation/NavigationTypes';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../services/i18n.service';
+
 import { B1, Screen } from '../ui';
 import CenteredLoading from '../components/CenteredLoading';
 import { withErrorBoundaryScreen } from '../components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 type WebViewScreenRouteProp = RouteProp<MoreStackParamList, 'WebView'>;
 type WebViewScreenNavigationProp = StackNavigationProp<
@@ -54,14 +54,14 @@ function WebViewScreen({ route, navigation }: WebViewScreenProps) {
         source={source}
         scrollEnabled={true}
         mixedContentMode="compatibility"
-        style={ThemedStyles.style.bgSecondaryBackground}
+        style={sp.styles.style.bgSecondaryBackground}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
         onNavigationStateChange={handleNavigationStateChange}
         startInLoadingState={true}
         renderLoading={() => <CenteredLoading />}
-        renderError={() => <B1>{i18n.t('failedTryAgain')}</B1>}
+        renderError={() => <B1>{sp.i18n.t('failedTryAgain')}</B1>}
       />
     </Screen>
   );

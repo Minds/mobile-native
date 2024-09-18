@@ -9,7 +9,8 @@ import { dateFormat, timeFormat, useInfiniteQuery } from './utils';
 import { useTranslation } from '../locales';
 import { TFunction } from 'i18next';
 import { Image, View } from 'react-native';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
+
 import assets from '@assets';
 
 export const GiftTransationList = ({ guid }: { guid: string }) => {
@@ -125,7 +126,7 @@ const arrow: Record<string, IIcon> = {
   },
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   logo: [
     'bgWhite',
     'bcolorAvatarCircled',

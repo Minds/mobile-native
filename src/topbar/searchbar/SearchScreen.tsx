@@ -1,21 +1,21 @@
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import type { TextInput as TextInputType } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import { useLegacyStores, useStores } from '../../common/hooks/use-stores';
-import { useNavigation } from '@react-navigation/core';
-import SearchResultComponent from './SearchResultComponent';
 import { observer } from 'mobx-react';
+import { useNavigation } from '@react-navigation/core';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import TextInput from '../../common/components/TextInput';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+
+import { useLegacyStores, useStores } from '~/common/hooks/use-stores';
+import SearchResultComponent from './SearchResultComponent';
+import TextInput from '~/common/components/TextInput';
 import { Button, IconButton, Icon } from '~ui';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import sp from '~/services/serviceProvider';
 
 const SearchScreen = withErrorBoundaryScreen(
   observer(() => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const { user } = useLegacyStores();
     const localStore = useStores().searchBar;
     const inputRef = useRef<TextInputType>(null);
@@ -55,6 +55,8 @@ const SearchScreen = withErrorBoundaryScreen(
       localStore.searchDiscovery();
     };
 
+    const i18n = sp.i18n;
+
     return (
       <KeyboardAvoidingView
         behavior="padding"
@@ -70,7 +72,7 @@ const SearchScreen = withErrorBoundaryScreen(
             <TextInput
               ref={inputRef}
               placeholder={i18n.t('discovery.search')}
-              placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
+              placeholderTextColor={sp.styles.getColor('SecondaryText')}
               onChangeText={localStore.input}
               value={localStore.searchText}
               testID="searchInput"
@@ -109,7 +111,7 @@ const SearchScreen = withErrorBoundaryScreen(
   'SearchScreen',
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   height: {
     height: 200,
   },

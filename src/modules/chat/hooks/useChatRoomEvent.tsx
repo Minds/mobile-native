@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import socketService from '~/common/services/socket.service';
+
 import { ChatRoomEvent } from '../service/chat-socket-service';
+import sp from '~/services/serviceProvider';
 
 /**
  * Subscribes to a room event and unsubscribes on unmount
@@ -12,9 +13,9 @@ export function useChatRoomEvent(
   callback: (data: ChatRoomEvent) => void,
 ) {
   useEffect(() => {
-    socketService.chat?.on(roomGuid, callback);
+    sp.socket.chat?.on(roomGuid, callback);
     return () => {
-      socketService.chat?.off(roomGuid, callback);
+      sp.socket.chat?.off(roomGuid, callback);
     };
   }, [roomGuid, callback]);
 }

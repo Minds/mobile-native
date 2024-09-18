@@ -13,7 +13,7 @@ import {
   HairlineRow,
   Screen,
 } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useTranslation } from '../../locales';
 import { IPaymentType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
@@ -23,6 +23,7 @@ import BoostComposerHeader from '../components/BoostComposerHeader';
 import { GOOGLE_PLAY_STORE, IS_FROM_STORE } from '~/config/Config';
 import { BoostCashCards } from '../components/BoostCashCards';
 import { useGifts } from '~/common/hooks/useGifts';
+import sp from '~/services/serviceProvider';
 
 type BoostComposerScreenProps = BoostStackScreenProps<'BoostComposer'>;
 
@@ -129,7 +130,7 @@ function BoostComposerScreen({ navigation }: BoostComposerScreenProps) {
       <BoostComposerHeader />
       <FitScrollView>
         <TopbarTabbar
-          containerStyle={ThemedStyles.style.marginTop}
+          containerStyle={sp.styles.style.marginTop}
           tabs={tabs}
           onChange={handlePaymentTypeChange}
           current={paymentType}

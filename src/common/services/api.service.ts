@@ -1,6 +1,5 @@
 import Cancelable from 'promise-cancelable';
 import axios, { AxiosInstance, AxiosResponse, CancelTokenSource } from 'axios';
-import { NativeModules } from 'react-native';
 
 // ignore 401 for this URLs
 const EXCEPTIONS_401 = [
@@ -15,39 +14,26 @@ export const TWO_FACTOR_INVALID =
 
 export type TwoFactorType = 'sms' | 'email' | 'totp';
 
-import session from './session.service';
 import { isTokenExpired } from './TokenExpiredError';
-import {
-  IS_IOS,
-  APP_API_URI,
-  MINDS_CANARY,
-  MINDS_STAGING,
-  NETWORK_TIMEOUT,
-} from '../../config/Config';
+import { IS_IOS, APP_API_URI, NETWORK_TIMEOUT } from '../../config/Config';
 import { Version } from '../../config/Version';
-import logService from './log.service';
 import { observable, action } from 'mobx';
 import { UserError } from '../UserError';
-import i18n from './i18n.service';
-import NavigationService from '../../navigation/NavigationService';
 import CookieManager from '@react-native-cookies/cookies';
-import AuthService from '~/auth/AuthService';
-import referrerService from './referrer.service';
 import {
   TwoFactorError,
   isApiForbidden,
   NetworkError,
   ApiError,
-  FieldError,
 } from './ApiErrors';
-import sessionService from './session.service';
-
-export interface ApiResponse {
-  status: 'success' | 'error';
-  message?: string;
-  errors?: FieldError[];
-  errorId?: string;
-}
+import type { DevModeService } from '~/config/DevModeService';
+import type { SessionService } from './session.service';
+import type { LogService } from './log.service';
+import type { AuthService } from '~/auth/AuthService';
+import type { NavigationService } from '~/navigation/NavigationService';
+import type { I18nService } from './i18n.service';
+import type { ReferrerService } from './referrer.service';
+import { ApiResponse } from './ApiResponse';
 
 /**
  * Parameters array (new format)
@@ -68,6 +54,9 @@ export class ApiService {
   abortTags = new Map<any, CancelTokenSource>();
   @observable mustVerify = false;
   sessionIndex: number | null;
+  APP_API_URI: string;
+  STAGING: boolean;
+  CANARY: boolean;
 
   private twoFactorHandlerEnabled: boolean = true;
 
@@ -81,11 +70,29 @@ export class ApiService {
     this.mustVerify = value;
   }
 
-  constructor(sessionIndex: number | null = null, axiosInstance = null) {
+  constructor(
+    devModeService: DevModeService,
+    private session: SessionService,
+    private log: LogService,
+    private auth: AuthService,
+    private navigation: NavigationService,
+    private i18n: I18nService,
+    private referrerService: ReferrerService,
+    sessionIndex: number | null = null,
+    axiosInstance = null,
+  ) {
     this.sessionIndex = sessionIndex;
+    this.APP_API_URI = devModeService.isActive
+      ? devModeService.getApiURL() || APP_API_URI
+      : APP_API_URI;
 
-    if (MINDS_CANARY) {
-      CookieManager.set(APP_API_URI, {
+    this.STAGING = devModeService.isActive
+      ? devModeService.getStaging()
+      : false;
+    this.CANARY = devModeService.isActive ? devModeService.getCanary() : false;
+
+    if (this.CANARY) {
+      CookieManager.set(this.APP_API_URI, {
         name: 'canary',
         value: '1',
         path: '/',
@@ -94,11 +101,11 @@ export class ApiService {
       });
     } else {
       if (IS_IOS) {
-        CookieManager.clearByName(APP_API_URI, 'canary');
+        CookieManager.clearByName(this.APP_API_URI, 'canary');
       }
     }
-    if (MINDS_STAGING) {
-      CookieManager.set(APP_API_URI, {
+    if (this.STAGING) {
+      CookieManager.set(this.APP_API_URI, {
         name: 'staging',
         value: '1',
         path: '/',
@@ -107,14 +114,14 @@ export class ApiService {
       });
     } else {
       if (IS_IOS) {
-        CookieManager.clearByName(APP_API_URI, 'staging');
+        CookieManager.clearByName(this.APP_API_URI, 'staging');
       }
     }
 
     this.axios =
       axiosInstance ||
       axios.create({
-        baseURL: APP_API_URI,
+        baseURL: this.APP_API_URI,
       });
 
     this.axios.interceptors.request.use(config => {
@@ -174,7 +181,7 @@ export class ApiService {
             const hasRecovery =
               mfaType === 'totp' && data.password && data.username;
 
-            const state = NavigationService.getCurrentState();
+            const state = this.navigation.getCurrentState();
 
             if (
               state?.name === 'TwoFactorConfirmation' ||
@@ -186,9 +193,8 @@ export class ApiService {
             }
 
             try {
-              // console.log( NavigationService.navigate)
               const code = await new Promise<string>((resolve, reject) => {
-                NavigationService.navigate('TwoFactorConfirmation', {
+                this.navigation.navigate('TwoFactorConfirmation', {
                   onConfirm: async (confirmationCode?: string) => {
                     // if confirmation code was received successfully,
                     // resolve the promise and continue the original request
@@ -219,7 +225,7 @@ export class ApiService {
                   },
                 );
                 if (!recoveryResponse.matches) {
-                  throw new UserError(i18n.t('auth.recoveryFail'));
+                  throw new UserError(this.i18n.t('auth.recoveryFail'));
                 }
               } else {
                 originalReq.headers['X-MINDS-2FA-CODE'] = code;
@@ -246,31 +252,31 @@ export class ApiService {
             !originalReq._isRetry &&
             isNot401Exception(originalReq.url)
           ) {
-            logService.info(
+            this.log.info(
               `[ApiService] refreshing token for ${originalReq.url}`,
             );
             await this.tokenRefresh(() => {
               originalReq._isRetry = true;
-              logService.info(
-                '[ApiService] retrying request ' + originalReq.url,
-              );
+              this.log.info('[ApiService] retrying request ' + originalReq.url);
               this.axios.request(originalReq);
             });
 
-            logService.info(
+            this.log.info(
               `[ApiService] refreshed token for ${originalReq.url}`,
             );
 
             originalReq._isRetry = true;
-            logService.info('[ApiService] retrying request ' + originalReq.url);
+            this.log.info('[ApiService] retrying request ' + originalReq.url);
             return this.axios.request(originalReq);
           }
 
           // prompt the user if email verification is needed for this endpoint
           if (isApiForbidden(response) && response.data.must_verify) {
             this.setMustVerify(true);
-            throw new UserError(i18n.t('emailConfirm.confirm'), 'info', () =>
-              NavigationService.navigate('VerifyEmail'),
+            throw new UserError(
+              this.i18n.t('emailConfirm.confirm'),
+              'info',
+              () => this.navigation.navigate('VerifyEmail'),
             );
           }
 
@@ -290,20 +296,20 @@ export class ApiService {
 
   get accessToken() {
     return this.sessionIndex !== null
-      ? session.getAccessTokenFrom(this.sessionIndex)
-      : session.token;
+      ? this.session.getAccessTokenFrom(this.sessionIndex)
+      : this.session.token;
   }
 
   get refreshToken() {
     return this.sessionIndex !== null
-      ? session.getRefreshTokenFrom(this.sessionIndex)
-      : session.refreshToken;
+      ? this.session.getRefreshTokenFrom(this.sessionIndex)
+      : this.session.refreshToken;
   }
 
   get refreshAuthTokenPromise() {
     return this.sessionIndex !== null
-      ? session.refreshAuthTokenFrom(this.sessionIndex)
-      : session.refreshAuthToken();
+      ? this.session.refreshAuthTokenFrom(this.sessionIndex)
+      : this.session.refreshAuthToken();
   }
 
   /**
@@ -321,13 +327,14 @@ export class ApiService {
       if (
         (isTokenExpired(error) ||
           (error.response && error.response.status === 401)) &&
-        (this.accessToken || sessionService.sessionToken)
+        (this.accessToken || this.session.sessionToken)
       ) {
         if (this.sessionIndex !== null) {
-          session.setSessionExpiredFor(true, this.sessionIndex);
+          this.session.setSessionExpiredFor(true, this.sessionIndex);
         } else {
-          session.setSessionExpired(true);
-          AuthService.tryToRelog(onLogin);
+          this.session.setSessionExpired(true);
+
+          this.auth.tryToRelog(onLogin);
         }
       }
       throw error;
@@ -355,7 +362,7 @@ export class ApiService {
       throw apiError;
     }
     if (response.status >= 500) {
-      logService.info(
+      this.log.info(
         '[ApiService] server error',
         response.status,
         response.request?.url || url,
@@ -382,6 +389,7 @@ export class ApiService {
    * Clear cookies
    */
   clearCookies() {
+    const NativeModules = require('react-native').NativeModules;
     return new Promise(success => {
       NativeModules.Networking.clearCookies(d => {
         success(d);
@@ -402,12 +410,12 @@ export class ApiService {
       ...customHeaders,
     };
 
-    const sessionToken = sessionService.sessionToken;
-    if (sessionService.sessionToken) {
+    const sessionToken = this.session.sessionToken;
+    if (this.session.sessionToken) {
       headers['X-SESSION-TOKEN'] = sessionToken;
     }
 
-    const referrer = referrerService.get();
+    const referrer = this.referrerService.get();
     if (referrer) {
       headers.minds_referrer = referrer;
     }
@@ -437,10 +445,10 @@ export class ApiService {
       params.cb = Date.now(); //bust the cache every time
     }
 
-    if (MINDS_STAGING) {
+    if (this.STAGING) {
       params.staging = '1';
     }
-    if (MINDS_CANARY) {
+    if (this.CANARY) {
       params.canary = '1';
     }
 
@@ -606,7 +614,7 @@ export class ApiService {
       xhr.send(file);
     }).catch(error => {
       if (error.name !== 'CancelationError') {
-        logService.exception('[ApiService] upload', error);
+        this.log.exception('[ApiService] upload', error);
         throw error;
       }
     });
@@ -651,10 +659,10 @@ export class ApiService {
       if (progress) {
         xhr.upload.addEventListener('progress', progress);
       }
-      xhr.open('POST', APP_API_URI + this.buildUrl(url));
+      xhr.open('POST', this.APP_API_URI + this.buildUrl(url));
 
-      if (sessionService.sessionToken) {
-        xhr.setRequestHeader('X-SESSION-TOKEN', sessionService.sessionToken);
+      if (this.session.sessionToken) {
+        xhr.setRequestHeader('X-SESSION-TOKEN', this.session.sessionToken);
       } else {
         xhr.setRequestHeader('Authorization', `Bearer ${this.accessToken}`);
       }
@@ -703,45 +711,9 @@ export class ApiService {
       xhr.send(formData);
     }).catch(error => {
       if (error.name !== 'CancelationError') {
-        logService.exception('[ApiService] upload', error);
+        this.log.exception('[ApiService] upload', error);
         throw error;
       }
     });
   }
 }
-
-const apiService = new ApiService();
-
-export default apiService;
-
-export const gqlFetcher = <TData, TVariables>(
-  query: string,
-  variables?: TVariables,
-  options?: RequestInit['headers'],
-  signal?: AbortSignal,
-): (() => Promise<TData>) => {
-  return async () => {
-    const response = await apiService.post<{ data: TData }>(
-      'api/graphql',
-      JSON.stringify({
-        query,
-        variables,
-      }),
-      options
-        ? {
-            headers: {
-              ...options,
-            },
-          }
-        : undefined,
-      signal,
-    );
-
-    if (response.errors) {
-      const { message } = response.errors[0] || {};
-      throw new Error(message || 'Error…');
-    }
-
-    return response.data;
-  };
-};

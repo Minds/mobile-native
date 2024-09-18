@@ -5,12 +5,12 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
 } from 'react-native';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import api from '../../services/api.service';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+
 import { Column, Row, Spacer } from '../../ui';
 import SmartImage, { SmartImageProps } from '../SmartImage';
 import { IS_TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 const FIXED_HEIGHT = 220;
 const BORDER_RADIUS = 3;
@@ -47,7 +47,7 @@ export default function MediaViewMultiImage({
             ? image.blurhash
             : {
                 uri: image.src,
-                headers: api.buildHeaders(),
+                headers: sp.api.buildHeaders(),
               };
           return {
             source,
@@ -59,7 +59,7 @@ export default function MediaViewMultiImage({
         }
         const source = {
           uri: image.src,
-          headers: api.buildHeaders(),
+          headers: sp.api.buildHeaders(),
         };
         return {
           source,
@@ -113,7 +113,7 @@ const ImageItem = ({
   </TouchableOpacity>
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: {
     height: FIXED_HEIGHT,
   },

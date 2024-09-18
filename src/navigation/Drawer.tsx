@@ -1,6 +1,5 @@
 import React from 'react';
 
-import sessionService from '../common/services/session.service';
 import FitScrollView from '../common/components/FitScrollView';
 
 import {
@@ -21,12 +20,13 @@ import { IconMapNameType } from '~/common/ui/icons/map';
 import { useDrawerList } from './drawer/useDrawerList';
 import { useDrawerSmallList } from './drawer/useDrawerSmallList';
 import { useNavigation } from '@react-navigation/native';
+import serviceProvider from '~/services/serviceProvider';
 
 /**
  * Drawer menu
  */
 export default function Drawer(props) {
-  const channel = sessionService.getUser();
+  const channel = serviceProvider.session.getUser();
 
   const handleChannelNav = () => {
     props.navigation.push('Channel', { entity: channel });

@@ -1,9 +1,10 @@
 import React from 'react';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { Platform, StyleSheet, View } from 'react-native';
 import Icon from '@expo/vector-icons/AntDesign';
 import Modal, { ModalProps } from 'react-native-modal';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import sp from '~/services/serviceProvider';
 
 const styles = StyleSheet.create({
   closeButton: {
@@ -37,7 +38,7 @@ export default function ({
   onCloseButtonPress,
   ...rest
 }: Props) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const insets = useSafeAreaInsets();
   const paddingTop = Platform.OS === 'ios' ? { paddingTop: insets.top } : {};
   return (

@@ -1,8 +1,4 @@
-import NavigationService from '../../../../navigation/NavigationService';
-import walletService from '../../../../wallet/WalletService';
-import i18n from '../../../services/i18n.service';
-import logService from '../../../services/log.service';
-
+import sp from '~/services/serviceProvider';
 type ValidationSteps = 'inputNumber' | 'validateCode' | 'validationSucess';
 
 const createPhoneValidationStore = ({
@@ -73,7 +69,7 @@ const createPhoneValidationStore = ({
   },
   async join() {
     try {
-      let { secret } = await walletService.join(this.phone, false);
+      let { secret } = await sp.resolve('wallet').join(this.phone, false);
 
       this.isConfirming(secret);
     } catch (e) {
@@ -86,7 +82,7 @@ const createPhoneValidationStore = ({
   },
   joinAction() {
     if (!this.canJoin()) {
-      this.setError(i18n.t('onboarding.phoneNumberInvalid'));
+      this.setError(sp.i18n.t('onboarding.phoneNumberInvalid'));
       return null;
     }
     if (this.inProgress) {
@@ -99,15 +95,15 @@ const createPhoneValidationStore = ({
   },
   async confirm() {
     try {
-      await walletService.confirm(this.phone, this.code, this.secret);
+      await sp.resolve('wallet').confirm(this.phone, this.code, this.secret);
       this.isConfirmed();
       onConfirm && onConfirm(true);
-      NavigationService.goBack();
+      sp.navigation.goBack();
     } catch (e) {
       const error =
         e instanceof Error && e.message ? e.message : 'Unknown server error';
       this.setError(error);
-      logService.exception(e);
+      sp.log.exception(e);
       throw e;
     } finally {
       this.setInProgress(false);
@@ -115,11 +111,11 @@ const createPhoneValidationStore = ({
   },
   cancel() {
     onCancel && onCancel(false);
-    NavigationService.goBack();
+    sp.navigation.goBack();
   },
   confirmAction() {
     if (!this.canConfirm) {
-      this.setError(i18n.t('onboarding.confirmationCodeInvalid'));
+      this.setError(sp.i18n.t('onboarding.confirmationCodeInvalid'));
       return null;
     }
     if (this.inProgress) {

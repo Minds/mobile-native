@@ -3,8 +3,7 @@ import { observer } from 'mobx-react';
 import Icon from '@expo/vector-icons/MaterialIcons';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import type CommentsStore from './CommentsStore';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
+
 import { StyleProp, ViewStyle } from 'react-native';
 import {
   BottomSheetModal,
@@ -12,7 +11,7 @@ import {
   BottomSheetMenuItem,
   BottomSheetMenuItemProps,
 } from '../../common/components/bottom-sheet';
-import PermissionsService from '~/common/services/permissions.service';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   store: CommentsStore;
@@ -31,7 +30,8 @@ export default observer(function CommentInputBottomMenu({
   afterSelected,
   beforeSelect,
 }: PropsType) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
 
   const ref = React.useRef<any>();
   const close = React.useCallback(() => {
@@ -65,7 +65,7 @@ export default observer(function CommentInputBottomMenu({
       iconType: 'material',
     };
 
-    const shouldHideVideoUpload = PermissionsService.shouldHideUploadVideo();
+    const shouldHideVideoUpload = sp.permissions.shouldHideUploadVideo();
 
     const openGallery: BottomSheetMenuItemProps = {
       title: i18n.t(

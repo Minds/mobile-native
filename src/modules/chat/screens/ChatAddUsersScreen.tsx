@@ -7,9 +7,8 @@ import { UserSearchAndSelect } from '../components/UserSearchAndSelect';
 import { showNotification } from 'AppMessages';
 import { ChatStackScreenProps } from '../ChatConversationStack';
 import { useAddMembersToChatRoomMutation } from '~/graphql/api';
-import logService from '~/common/services/log.service';
-import i18nService from '~/common/services/i18n.service';
 import { getChatRoomInfoKey } from '../hooks/useChatRoomInfoQuery';
+import sp from '~/services/serviceProvider';
 
 const RoomIdContext = React.createContext<string>('');
 
@@ -57,9 +56,9 @@ const AddButton = ({ selectedUsers }) => {
       navigation.goBack();
     },
     onError: error => {
-      logService.exception('Error adding users chat room', error);
+      sp.log.exception('Error adding users chat room', error);
       showNotification(
-        error instanceof Error ? error.message : i18nService.t('errorMessage'),
+        error instanceof Error ? error.message : sp.i18n.t('errorMessage'),
       );
     },
   });

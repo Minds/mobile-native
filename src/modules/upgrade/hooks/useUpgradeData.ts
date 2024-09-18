@@ -5,7 +5,7 @@ import {
   useUpgradePageQuery,
 } from '~/graphql/strapi';
 import { UpgradeCardsMap, UpgradePageRowEntity } from '../types';
-import mindsConfigService from '~/common/services/minds-config.service';
+import sp from '~/services/serviceProvider';
 
 export function useUpgradeData() {
   const { isLoading, data, error } = useUpgradePageQuery();
@@ -96,7 +96,7 @@ function getPriceTextArray(displayText: string): string[] {
  */
 function getConfigPrices(): Record<Enum_Upgradepage_Cardid, number> {
   // Get the yearly prices and divide by 12 to ensure we grab the lowest  price per month
-  const config = mindsConfigService.getSettings().upgrades;
+  const config = sp.config.getSettings().upgrades;
 
   if (!config) {
     return {

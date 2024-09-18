@@ -1,5 +1,5 @@
 import { TYPES } from '~ui/typography/constants';
-import type { ThemedStylesStore } from '~styles/ThemedStyles';
+import type { ThemedStyles } from '~styles/ThemedStyles';
 import { FONT_FAMILY } from '~styles/Tokens';
 
 const regex = /^typo_(.+)_(.+)_(.+)_(.+)_(.+)/g;
@@ -22,7 +22,7 @@ const colorMap = {
  * Typography style generator
  * To be used by the Typography component
  */
-export default function typography(name: string, ts: ThemedStylesStore) {
+export default function typography(name: string, ts: ThemedStyles) {
   if (name.startsWith('typo_')) {
     regex.lastIndex = 0;
     const result = regex.exec(name);

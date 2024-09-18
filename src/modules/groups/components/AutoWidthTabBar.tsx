@@ -16,7 +16,7 @@ import {
   TabBar,
 } from 'react-native-tab-view';
 import { B1 } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 type State = NavigationState<Route>;
 interface Props extends SceneRendererProps {
@@ -163,18 +163,18 @@ export const ScrollableAutoWidthTabBar = ({
       style={[
         styles.tabbar,
         {
-          backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
-          borderColor: ThemedStyles.getColor('PrimaryBorder'),
+          backgroundColor: sp.styles.getColor('PrimaryBackground'),
+          borderColor: sp.styles.getColor('PrimaryBorder'),
           borderBottomWidth: StyleSheet.hairlineWidth,
         },
-        ThemedStyles.style.alignSelfCenterMaxWidth,
+        sp.styles.style.alignSelfCenterMaxWidth,
         style,
       ]}
       indicatorContainerStyle={styles.zIndex1}
       renderIndicator={({ position, navigationState }) => {
         const animatedStyle = [
           {
-            backgroundColor: ThemedStyles.getColor('Link'),
+            backgroundColor: sp.styles.getColor('Link'),
             zIndex: 10,
             width: contentWidth,
             opacity: indicatorFadeAnim,

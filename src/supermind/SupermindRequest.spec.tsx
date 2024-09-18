@@ -2,13 +2,23 @@ import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 
 import { useNavigation } from '~/../__mocks__/@react-navigation/native';
-
 import SupermindRequest from './SupermindRequest';
 import SupermindRequestModel from './SupermindRequestModel';
-
 import supermindRequestFaker from '~/../__mocks__/fake/supermind/SupermindRequestFaker';
 import { SupermindRequestStatus } from './types';
 import { Animated, LayoutAnimation } from 'react-native';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+// mock services
+sp.mockService('styles');
+sp.mockService('session');
+sp.mockService('i18n');
+sp.mockService('inFeedNotices');
+sp.mockService('analytics');
+sp.mockService('feed');
+sp.mockService('api');
+sp.mockService('translation');
 
 // mock dependencies
 jest.mock('@react-navigation/native');

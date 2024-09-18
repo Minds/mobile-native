@@ -1,9 +1,8 @@
-import apiService from './api.service';
-import sessionService from './session.service';
-import logService from './log.service';
 import { observable, action } from 'mobx';
-import { storages } from './storage/storages.service';
-import { BLOCK_USER_ENABLED } from '~/config/Config';
+import type { ApiService } from './api.service';
+import type { Storages } from './storage/storages.service';
+import type { SessionService } from './session.service';
+import { LogService } from './log.service';
 
 const key = 'blockedChannels';
 
@@ -11,19 +10,24 @@ const key = 'blockedChannels';
  * Block list service
  */
 export class BlockListService {
+  constructor(
+    private apiService: ApiService,
+    private storagesService: Storages,
+    private logService: LogService,
+    private sessionService: SessionService,
+  ) {}
+
   @observable blocked: Map<string, undefined> = new Map();
 
   init() {
-    if (BLOCK_USER_ENABLED) {
-      sessionService.onSession(async token => {
-        if (token) {
-          await this.loadFromStorage();
-          this.fetch();
-        } else {
-          this.prune();
-        }
-      });
-    }
+    this.sessionService.onSession(async token => {
+      if (token) {
+        await this.loadFromStorage();
+        this.fetch();
+      } else {
+        this.prune();
+      }
+    });
   }
 
   has(guid) {
@@ -31,7 +35,7 @@ export class BlockListService {
   }
 
   loadFromStorage() {
-    const guids = storages.user?.getArray<string>(key);
+    const guids = this.storagesService.user?.getObject<Array<string>>(key);
     if (guids) {
       guids.forEach(g => this.blocked.set(g, undefined));
     }
@@ -39,7 +43,7 @@ export class BlockListService {
 
   async fetch() {
     try {
-      const response = await apiService.get<any>('api/v1/block', {
+      const response = await this.apiService.get<any>('api/v1/block', {
         sync: 1,
         limit: 10000,
       });
@@ -49,15 +53,15 @@ export class BlockListService {
         response.guids.forEach(g => this.blocked.set(g, undefined));
       }
 
-      storages.user?.setArray(key, response.guids); // save to storage
+      this.storagesService.user?.setObject<Array<string>>(key, response.guids); // save to storage
     } catch (err) {
-      logService.exception('[BlockListService]', err);
+      this.logService.exception('[BlockListService]', err);
     }
   }
 
   prune() {
     this.blocked.clear();
-    storages.user?.setArray(key, []);
+    this.storagesService.user?.setObject(key, []);
   }
 
   getList() {
@@ -67,14 +71,18 @@ export class BlockListService {
   @action
   add(guid: string) {
     this.blocked.set(guid, undefined);
-    storages.user?.setArray(key, Array.from(this.blocked.keys()));
+    this.storagesService.user?.setObject<Array<string>>(
+      key,
+      Array.from(this.blocked.keys()),
+    );
   }
 
   @action
   remove(guid: string) {
     this.blocked.delete(guid);
-    storages.user?.setArray(key, Array.from(this.blocked.keys()));
+    this.storagesService.user?.setObject<Array<string>>(
+      key,
+      Array.from(this.blocked.keys()),
+    );
   }
 }
-
-export default new BlockListService();

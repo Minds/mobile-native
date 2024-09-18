@@ -1,14 +1,14 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import CenteredLoading from '../../../../common/components/CenteredLoading';
-import DatePickerInput from '../../../../common/components/controls/DatePickerInput';
-import MText from '../../../../common/components/MText';
-import i18n from '../../../../common/services/i18n.service';
-import ThemedStyles from '../../../../styles/ThemedStyles';
+import CenteredLoading from '~/common/components/CenteredLoading';
+import DatePickerInput from '~/common/components/controls/DatePickerInput';
+import MText from '~/common/components/MText';
+
 import { WalletStoreType } from '../../../v2/createWalletStore';
 import { TokensTabStore } from './createTokensTabStore';
 import MindsScores from './MindsScores';
 import Payout from './Payout';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -16,12 +16,12 @@ type PropsType = {
 };
 
 const TokensRewards = observer(({ walletStore, store }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const body =
     !store.rewards || !store.rewards.total ? (
       <MText style={[theme.fontXL, theme.centered, theme.padding5x]}>
-        {i18n.t('discovery.nothingToShow')}
+        {sp.i18n.t('discovery.nothingToShow')}
       </MText>
     ) : (
       <>

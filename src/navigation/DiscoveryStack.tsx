@@ -4,12 +4,13 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import { AppStackParamList } from './NavigationTypes';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { TDiscoveryV2Tabs } from '~/discovery/v2/DiscoveryV2Store';
 import { StackScreenProps } from '@react-navigation/stack';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { TabParamList } from '~/tabs/TabsScreen';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
+import sp from '~/services/serviceProvider';
 
 export type DiscoveryStackParamList = Pick<
   AppStackParamList,
@@ -34,7 +35,7 @@ const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 export default function () {
   return (
-    <DiscoveryStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+    <DiscoveryStack.Navigator screenOptions={sp.styles.defaultScreenOptions}>
       <DiscoveryStack.Screen
         name="Discovery"
         getComponent={() =>

@@ -1,10 +1,9 @@
 import { showNotification } from 'AppMessages';
 import { action, extendObservable } from 'mobx';
 import BaseModel from '~/common/BaseModel';
-import i18n from '~/common/services/i18n.service';
-import logService from '~/common/services/log.service';
-import UserModel from '../../../channel/UserModel';
-import ActivityModel from '../../../newsfeed/ActivityModel';
+
+import UserModel from '~/channel/UserModel';
+import ActivityModel from '~/newsfeed/ActivityModel';
 import { revokeBoost } from '../boost-console/boost-console.api';
 import {
   BoostPaymentMethod,
@@ -14,6 +13,7 @@ import {
   BoostTargetSuitability,
 } from '../boost-console/types/BoostConsoleBoost';
 import { BoostButtonText, BoostGoal } from '../boost-composer/boost.store';
+import sp from '~/services/serviceProvider';
 
 /**
  * User model
@@ -53,9 +53,9 @@ export default class BoostModel extends BaseModel {
     try {
       await revokeBoost(this.guid);
       this.boost_status = BoostStatus.REFUND_IN_PROGRESS;
-      showNotification(i18n.t('notification.boostRevoked'), 'success');
+      showNotification(sp.i18n.t('notification.boostRevoked'), 'success');
     } catch (err) {
-      logService.exception('[BaseModel]', err);
+      sp.log.exception('[BaseModel]', err);
       throw err;
     }
   }

@@ -1,7 +1,13 @@
 import 'react-native';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import Counter from '../../../../src/newsfeed/activity/actions/Counter';
+import Counter from '~/newsfeed/activity/actions/Counter';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 
 describe('Counter component', () => {
   let screen;

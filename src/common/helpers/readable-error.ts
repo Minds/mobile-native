@@ -1,4 +1,3 @@
-//@ts-nocheck
 export const ERRORS = {
   E_INVALID_STORAGE_PASSWORD:
     'You either failed entering your passwords too many times, or cancelled the operation.',

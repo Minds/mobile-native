@@ -6,65 +6,11 @@ import { IS_IOS } from '~/config/Config';
 import GradientButton from '../common/components/GradientButton';
 import MText from '../common/components/MText';
 import { useLegacyStores } from '../common/hooks/use-stores';
-import i18n from '../common/services/i18n.service';
-import openUrlService from '../common/services/open-url.service';
 import { DismissIdentifier } from '../common/stores/DismissalStore';
 import { B2, Column, H4, Icon, Row } from '../common/ui';
 import { IconMapNameType } from '../common/ui/icons/map';
-import ThemedStyles from '../styles/ThemedStyles';
 
-const onboardingTypes = {
-  producer: {
-    title: i18n.t('supermind.onboarding.producer.title'),
-    steps: [
-      {
-        title: i18n.t('supermind.onboarding.producer.steps.1.title'),
-        description: IS_IOS
-          ? i18n.t('supermind.onboarding.producer.steps.1.subtitle-iOS')
-          : i18n.t('supermind.onboarding.producer.steps.1.subtitle'),
-        icon: 'money',
-        link: {
-          title: i18n.t('supermind.onboarding.producer.steps.1.seeTerms'),
-          onPress: () => openUrlService.open('https://www.minds.com/p/terms'),
-        },
-      },
-      {
-        title: i18n.t('supermind.onboarding.producer.steps.2.title'),
-        description: i18n.t('supermind.onboarding.producer.steps.2.subtitle'),
-        icon: 'sms',
-      },
-      {
-        title: i18n.t('supermind.onboarding.producer.steps.3.title'),
-        description: i18n.t('supermind.onboarding.producer.steps.3.subtitle'),
-        icon: 'delete',
-      },
-    ],
-  },
-  consumer: {
-    title: IS_IOS
-      ? i18n.t('supermind.onboarding.consumer.title-iOS')
-      : i18n.t('supermind.onboarding.consumer.title'),
-    steps: [
-      {
-        title: i18n.t('supermind.onboarding.consumer.steps.1.title'),
-        description: IS_IOS
-          ? i18n.t('supermind.onboarding.consumer.steps.1.subtitle-iOS')
-          : i18n.t('supermind.onboarding.consumer.steps.1.subtitle'),
-        icon: 'money',
-      },
-      {
-        title: i18n.t('supermind.onboarding.consumer.steps.2.title'),
-        description: i18n.t('supermind.onboarding.consumer.steps.2.subtitle'),
-        icon: 'sms',
-      },
-      {
-        title: i18n.t('supermind.onboarding.consumer.steps.3.title'),
-        description: i18n.t('supermind.onboarding.consumer.steps.3.subtitle'),
-        icon: 'date-range',
-      },
-    ],
-  },
-};
+import sp from '../services/serviceProvider';
 
 type SupermindOnboardingType = 'consumer' | 'producer';
 
@@ -79,6 +25,7 @@ export default function SupermindOnboarding({
   style,
   onDismiss,
 }: SupermindOnboardingProps) {
+  const onboardingTypes = getOnboardingTypes();
   return (
     <FitScrollView style={style} contentContainerStyle={styles.container}>
       <H4 bottom="XL2" left="S">
@@ -102,7 +49,7 @@ export default function SupermindOnboarding({
           </Column>
         </Row>
       ))}
-      <View style={ThemedStyles.style.flexContainer} />
+      <View style={sp.styles.style.flexContainer} />
       <GradientButton
         testID="dismissButton"
         title="Continue"
@@ -139,7 +86,7 @@ const exit = {
   opacity: 0,
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['paddingHorizontal4x', 'paddingTop6x', 'paddingBottom6x'],
   overlay: ['absoluteFill', 'bgPrimaryBackground'],
   link: [
@@ -149,3 +96,60 @@ const styles = ThemedStyles.create({
     },
   ],
 });
+
+function getOnboardingTypes() {
+  const i18n = sp.i18n;
+  const openUrlService = sp.resolve('openURL');
+  return {
+    producer: {
+      title: i18n.t('supermind.onboarding.producer.title'),
+      steps: [
+        {
+          title: i18n.t('supermind.onboarding.producer.steps.1.title'),
+          description: IS_IOS
+            ? i18n.t('supermind.onboarding.producer.steps.1.subtitle-iOS')
+            : i18n.t('supermind.onboarding.producer.steps.1.subtitle'),
+          icon: 'money',
+          link: {
+            title: i18n.t('supermind.onboarding.producer.steps.1.seeTerms'),
+            onPress: () => openUrlService.open('https://www.minds.com/p/terms'),
+          },
+        },
+        {
+          title: i18n.t('supermind.onboarding.producer.steps.2.title'),
+          description: i18n.t('supermind.onboarding.producer.steps.2.subtitle'),
+          icon: 'sms',
+        },
+        {
+          title: i18n.t('supermind.onboarding.producer.steps.3.title'),
+          description: i18n.t('supermind.onboarding.producer.steps.3.subtitle'),
+          icon: 'delete',
+        },
+      ],
+    },
+    consumer: {
+      title: IS_IOS
+        ? i18n.t('supermind.onboarding.consumer.title-iOS')
+        : i18n.t('supermind.onboarding.consumer.title'),
+      steps: [
+        {
+          title: i18n.t('supermind.onboarding.consumer.steps.1.title'),
+          description: IS_IOS
+            ? i18n.t('supermind.onboarding.consumer.steps.1.subtitle-iOS')
+            : i18n.t('supermind.onboarding.consumer.steps.1.subtitle'),
+          icon: 'money',
+        },
+        {
+          title: i18n.t('supermind.onboarding.consumer.steps.2.title'),
+          description: i18n.t('supermind.onboarding.consumer.steps.2.subtitle'),
+          icon: 'sms',
+        },
+        {
+          title: i18n.t('supermind.onboarding.consumer.steps.3.title'),
+          description: i18n.t('supermind.onboarding.consumer.steps.3.subtitle'),
+          icon: 'date-range',
+        },
+      ],
+    },
+  };
+}

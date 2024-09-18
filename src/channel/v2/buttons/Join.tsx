@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import Button from '../../../common/components/Button';
-import i18n from '../../../common/services/i18n.service';
 import { ChannelButtonsPropsType } from '../ChannelButtons';
+import serviceProvider from '~/services/serviceProvider';
 
 type PropsType = {
   showSubscribe: boolean | undefined;
@@ -18,7 +18,7 @@ const Join = ({ navigation, ...props }: PropsType) => {
     }
   }, [navigation, props.store.channel, props.store.tiers]);
 
-  return <Button text={i18n.t('join')} onPress={join} xSmall />;
+  return <Button text={serviceProvider.i18n.t('join')} onPress={join} xSmall />;
 };
 
 export default Join;

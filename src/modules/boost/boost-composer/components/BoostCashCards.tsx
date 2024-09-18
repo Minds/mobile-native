@@ -1,9 +1,10 @@
 import { useQueries } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
-import apiService from '~/common/services/api.service';
-import { BoostCashCard, CardColor } from './BoostCashCard';
 import { useState } from 'react';
+
+import { BoostCashCard, CardColor } from './BoostCashCard';
 import { DEFAULT_DAILY_CASH_BUDGET } from '../boost.constants';
+import sp from '~/services/serviceProvider';
 
 type Product = {
   cardColor: CardColor;
@@ -82,7 +83,7 @@ const useCachedBoostInsights = (audience: string) => {
       queryKey: [cardColor, duration, amount],
       queryFn: async () => ({
         id: cardColor,
-        ...(await apiService.get<Data>('api/v3/boosts/insights/estimate', {
+        ...(await sp.api.get<Data>('api/v3/boosts/insights/estimate', {
           daily_bid: amount,
           duration,
           audience: audience === 'safe' ? 1 : 2,

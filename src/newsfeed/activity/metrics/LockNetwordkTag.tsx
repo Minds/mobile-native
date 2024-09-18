@@ -1,7 +1,7 @@
 import { View } from 'react-native';
 import MText from '~/common/components/MText';
 import ActivityModel from '~/newsfeed/ActivityModel';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 export const LockNetworkTag = ({ entity }: { entity: ActivityModel }) => {
   if (!entity.site_membership) {
@@ -20,7 +20,7 @@ export const LockNetworkTag = ({ entity }: { entity: ActivityModel }) => {
   );
 };
 
-const wrapperStyle = ThemedStyles.combine('bcolorIconActive', 'bgLink', {
+const wrapperStyle = sp.styles.combine('bcolorIconActive', 'bgLink', {
   borderWidth: 1,
   borderRadius: 3,
   paddingTop: 2,
@@ -30,7 +30,7 @@ const wrapperStyle = ThemedStyles.combine('bcolorIconActive', 'bgLink', {
   maxWidth: '45%',
 });
 
-const memberStyle = ThemedStyles.combine('colorButtonText', {
+const memberStyle = sp.styles.combine('colorButtonText', {
   fontFamily: 'Roboto_500',
   fontSize: 12,
   lineHeight: 14,
@@ -39,6 +39,6 @@ const memberStyle = ThemedStyles.combine('colorButtonText', {
 const styles = {
   wrapperStyle,
   memberStyle,
-  wrapperUnlockStyle: ThemedStyles.combine(...wrapperStyle, 'bgTransparent'),
-  memberUnlockStyle: ThemedStyles.combine(...memberStyle, 'colorPrimaryText'),
+  wrapperUnlockStyle: sp.styles.combine(...wrapperStyle, 'bgTransparent'),
+  memberUnlockStyle: sp.styles.combine(...memberStyle, 'colorPrimaryText'),
 };

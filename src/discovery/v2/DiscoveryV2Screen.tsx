@@ -5,14 +5,11 @@ import { useFocusEffect } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import { AnimatePresence } from 'moti';
 
-import i18n from '../../common/services/i18n.service';
-
-import ThemedStyles from '../../styles/ThemedStyles';
 import { useDiscoveryV2Store } from './useDiscoveryV2Store';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import TopbarTabbar from '../../common/components/topbar-tabbar/TopbarTabbar';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
-import { InjectItem } from '../../common/components/FeedList';
+import { InjectItem } from '../../common/components/FeedListInjectedItem';
 import InitialOnboardingButton from '../../onboarding/v2/InitialOnboardingButton';
 import DiscoveryTabContent from './DiscoveryTabContent';
 import Topbar from '~/topbar/Topbar';
@@ -35,7 +32,7 @@ import CaptureFab from '~/capture/CaptureFab';
 import { EmptyMessage } from './EmptyMessage';
 import { copyReferrer } from '~/modules/affiliate/components/LinksMindsSheet';
 import TrendingList from './trending/TrendingList';
-import PermissionsService from '~/common/services/permissions.service';
+import sp from '~/services/serviceProvider';
 
 type Props = DiscoveryStackScreenProps<'Discovery'>;
 
@@ -67,7 +64,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
     }
 
     const navigation = props.navigation;
-
+    const i18n = sp.i18n;
     const tabs = React.useMemo(
       () => {
         return [
@@ -102,7 +99,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
           />
         </Empty>
       ),
-      [navigation],
+      [i18n, navigation],
     );
 
     const header = (
@@ -290,7 +287,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
 
     return (
       <Screen safe onlyTopEdge={IS_IOS}>
-        <View style={ThemedStyles.style.flexContainer}>
+        <View style={sp.styles.style.flexContainer}>
           <Topbar
             title="Discovery"
             navigation={navigation}
@@ -306,7 +303,7 @@ export const DiscoveryV2Screen = withErrorBoundaryScreen(
   'DiscoveryV2Screen',
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
   header: ['bgPrimaryBackground', 'paddingTop', 'fullWidth', 'marginTopXXXL2'],
   bottomBorder: ['bcolorPrimaryBorder', 'borderBottom4x'],
@@ -316,34 +313,35 @@ const styles = ThemedStyles.create({
 });
 
 const emptyMessage = (tab: TDiscoveryV2Tabs) => (onPress?: () => void) => {
+  const emptyMessages: { [k in TDiscoveryV2Tabs]?: any } = {
+    top: {
+      title: 'Ignite the conversation',
+      subtitle: 'The top posts from across the network will appear here. ',
+      buttonText: sp.i18n.t('createAPost'),
+    },
+    'trending-tags': {
+      title: 'Explore topics that are heating up',
+      subtitle:
+        'The most frequently-used tags on the network will appear here.',
+    },
+    channels: {
+      icon: 'profile',
+      title: 'Get ready for exploration',
+      subtitle:
+        'There are no channels to recommend for you yet. Check back later for personalized recommendations.',
+      buttonText: 'Copy invite link',
+    },
+    groups: {
+      icon: 'group',
+      title: 'Be a pioneer in group exploration',
+      subtitle:
+        'There are no groups to recommend for you yet. Check back later for personalized recommendations.',
+    },
+  };
+
   const config = { ...emptyMessages[tab] };
-  if (tab === 'top' && PermissionsService.shouldHideCreatePost()) {
+  if (tab === 'top' && sp.permissions.shouldHideCreatePost()) {
     delete config.buttonText;
   }
   return <EmptyMessage {...config} onPress={onPress} />;
-};
-
-const emptyMessages: { [k in TDiscoveryV2Tabs]?: any } = {
-  top: {
-    title: 'Ignite the conversation',
-    subtitle: 'The top posts from across the network will appear here. ',
-    buttonText: i18n.t('createAPost'),
-  },
-  'trending-tags': {
-    title: 'Explore topics that are heating up',
-    subtitle: 'The most frequently-used tags on the network will appear here.',
-  },
-  channels: {
-    icon: 'profile',
-    title: 'Get ready for exploration',
-    subtitle:
-      'There are no channels to recommend for you yet. Check back later for personalized recommendations.',
-    buttonText: 'Copy invite link',
-  },
-  groups: {
-    icon: 'group',
-    title: 'Be a pioneer in group exploration',
-    subtitle:
-      'There are no groups to recommend for you yet. Check back later for personalized recommendations.',
-  },
 };

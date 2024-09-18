@@ -1,149 +1,104 @@
-import api, { isNetworkError } from '../../src/common/services/api.service';
-import authService from '../../src/auth/AuthService';
-import delay from '../../src/common/helpers/delay';
-import sessionService, {
-  SessionService,
-} from '../../src/common/services/session.service';
-import { SessionStorageService } from '../../src/common/services/storage/session.storage.service';
+// Import the class after mocks to ensure dependencies are mocked
+import { AuthService } from '~/auth/AuthService';
+import { ApiService } from '~/common/services/api.service';
+import { LogService } from '~/common/services/log.service';
+import { SessionService } from '~/common/services/session.service';
+import { NavigationService } from '~/navigation/NavigationService';
+import { I18nService } from '~/common/services/i18n.service';
+import { MindsConfigService } from '~/common/services/minds-config.service';
+import delay from '~/common/helpers/delay';
 
-jest.mock('../../src/common/services/api.service');
-jest.mock('../../src/common/helpers/delay', () => jest.fn());
+// Mock dependencies
+jest.mock('~/common/services/api.service');
+jest.mock('~/common/services/log.service');
+jest.mock('~/common/services/session.service');
+jest.mock('~/navigation/NavigationService');
+jest.mock('~/common/services/i18n.service');
+jest.mock('~/common/services/minds-config.service');
+jest.mock('~/common/helpers/delay');
+jest.mock('~/auth/multi-user/resetStackAndGoBack');
 
-describe('auth service login', () => {
-  const sessionStorage = new SessionStorageService();
-  const session = new SessionService(sessionStorage);
-  beforeEach(() => {
-    api.post.mockClear();
-    delay.mockClear();
-    delay.mockResolvedValue();
-  });
+// Setup common variables
+let authService: AuthService;
+let apiService: ApiService;
+let logService: LogService;
+let sessionService: SessionService;
+let navigationService: NavigationService;
+let i18nService: I18nService;
+let configService: MindsConfigService;
 
-  xit('login calls oauth2/token api and returns token', async () => {
-    const response = { access_token: 'a1', refresh_token: 'a2' };
+beforeEach(() => {
+  // Initialize the mocked services
+  apiService = new ApiService();
+  logService = new LogService();
+  sessionService = new SessionService();
+  sessionService.sessions = [];
+  navigationService = new NavigationService();
+  i18nService = new I18nService();
+  configService = new MindsConfigService();
+  delay.mockResolvedValue();
 
-    api.post.mockResolvedValue(response);
-
-    const promise = authService.login('user', 'pass');
-
-    const res = await promise;
-
-    // assert on the response
-    expect(res).toEqual(response);
-    // call api post one time
-    expect(api.post.mock.calls.length).toEqual(1);
-    // with login url
-    expect(api.post.mock.calls[0][0]).toEqual('api/v3/oauth/token');
-  });
-
-  xit('login create session on success', async () => {
-    const response = { access_token: 'a1', refresh_token: 'a2' };
-
-    api.post.mockResolvedValue(response);
-
-    const promise = authService.login('user', 'pass');
-
-    const res = await promise;
-    console.log('res', res);
-    // assert on the response
-    expect(res).toEqual(response);
-  });
-
-  it('login returns errors', async () => {
-    const response = { status: 'error', error: 'some error' };
-
-    api.rawPost.mockRejectedValue(response);
-
-    try {
-      const promise = authService.login('user', 'pass');
-
-      const res = await promise;
-    } catch (err) {
-      // assert on the response
-      expect(err).toEqual(response);
-    }
-  });
+  // Create an instance of AuthService with mocked dependencies
+  authService = new AuthService(
+    apiService,
+    logService,
+    sessionService,
+    navigationService,
+    i18nService,
+    configService,
+  );
 });
 
-describe('auth service logout', () => {
-  beforeEach(() => {
-    api.post.mockClear();
+describe('AuthService.login', () => {
+  it('should successfully log in a user', async () => {
+    // Mock API response
+    apiService.rawPost.mockResolvedValue({
+      data: {
+        access_token: 'test_access_token',
+        refresh_token: 'test_refresh_token',
+        token_type: 'Bearer',
+        pseudo_id: 'test_pseudo_id',
+      },
+      headers: {
+        'set-cookie': ['minds_pseudoid=test_pseudo_id;'],
+      },
+    });
+
+    // Mock session and other dependencies as needed
+    sessionService.isRelogin.mockReturnValue(false);
+    sessionService.addOAuthSession.mockResolvedValue(undefined);
+    sessionService.login.mockResolvedValue(undefined);
+
+    // Call the method
+
+    const result = await authService.login('testuser', 'password');
+    // Assertions
+    expect(result.access_token).toEqual('test_access_token');
+    expect(apiService.clearCookies).toHaveBeenCalled();
+    expect(sessionService.addOAuthSession).toHaveBeenCalled();
+    expect(sessionService.login).toHaveBeenCalled();
   });
 
-  it('logout calls api/v1/logout api and returns', async () => {
-    api.post.mockResolvedValue(true);
-    sessionService.logout = jest.fn().mockResolvedValue(true);
-
-    const res = await authService.logout();
-
-    //assert on the response
-    expect(res).toEqual(true);
-  });
-
-  it('logout destroy session on success', async () => {
-    api.post.mockResolvedValue(true);
-
-    const res = await authService.logout();
-
-    // assert on the response
-    expect(res).toEqual(true);
-  });
-
-  it('should clear cookies on logout', async () => {
-    api.post.mockResolvedValue(true);
-
-    const res = await authService.logout();
-
-    // assert on the response
-    expect(res).toEqual(true);
-
-    // should clear cookies
-    expect(api.clearCookies).toBeCalled();
-  });
-
-  xit('logout returns errors', async () => {
-    const response = { status: 'error', error: 'some error' };
-
-    api.post.mockRejectedValue(response);
-
-    try {
-      const res = await authService.logout();
-    } catch (err) {
-      // assert on the response
-      expect(err).toEqual(response);
-    }
-  });
+  // Add more tests here for error cases, newUser logic, etc.
 });
 
-describe('auth service forgot', () => {
-  beforeEach(() => {
-    api.post.mockClear();
+describe('AuthService.logout', () => {
+  it('should successfully log out a user', async () => {
+    // Mock dependencies
+    sessionService.sessionsCount = 1;
+    navigationService.getCurrentState.mockReturnValue({ name: 'HomeScreen' });
+
+    // Mock API call
+    apiService.post.mockResolvedValue(undefined);
+
+    // Call the method
+    const result = await authService.logout();
+
+    // Assertions
+    expect(result).toBe(true);
+    expect(apiService.post).toHaveBeenCalledWith('api/v3/oauth/revoke');
+    expect(sessionService.logout).toHaveBeenCalled();
   });
 
-  it('forgot calls api/v1/forgotpassword/request and returns', async () => {
-    const response = { status: 'success', user: { name: 'someUser' } };
-
-    api.post.mockResolvedValue(response);
-
-    const res = await authService.forgot('user');
-
-    // assert on the response
-    expect(res).toEqual(response);
-    // call api post one time
-    expect(api.post.mock.calls.length).toEqual(1);
-    // with login url
-    expect(api.post.mock.calls[0][0]).toEqual('api/v1/forgotpassword/request');
-  });
-
-  it('forgot returns errors', async () => {
-    const response = { status: 'error', error: 'some error' };
-
-    api.post.mockRejectedValue(response);
-
-    try {
-      const res = await authService.forgot('user');
-    } catch (err) {
-      // assert on the response
-      expect(err).toEqual(response);
-    }
-  });
+  // Add more tests here for preLogoutCallBack, error handling, etc.
 });

@@ -1,15 +1,14 @@
 import React from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import MText from '../common/components/MText';
-import i18n from '../common/services/i18n.service';
-import sessionService from '../common/services/session.service';
 import { APP_URI, TENANT } from '../config/Config';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import Input from './components/Input';
 import Networks from './components/Networks';
 import ReferralsList from './components/ReferralsList';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { Screen, ScreenHeader } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 
 interface ReferralsScreenProps {
   navigation: any;
@@ -17,12 +16,12 @@ interface ReferralsScreenProps {
 }
 
 const ReferralsScreen = ({ navigation, route }: ReferralsScreenProps) => {
-  const theme = ThemedStyles.style;
-  const user = sessionService.getUser();
+  const theme = sp.styles.style;
+  const user = sp.session.getUser();
   const { title } = route.params ?? {};
 
   const referralLink = `${APP_URI}register?referrer=${user.username}`;
-
+  const i18n = sp.i18n;
   return (
     <Screen safe>
       <ScreenHeader back title={title ?? i18n.t('settings.referrals')} />

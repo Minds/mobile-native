@@ -13,8 +13,8 @@ import Animated, {
 import MText from '~/common/components/MText';
 import PressableScale from '~/common/components/PressableScale';
 import { IS_IOS } from '~/config/Config';
-import ThemedStyles from '~/styles/ThemedStyles';
 import FILTERS, { PhotoFilter } from './filters';
+import sp from '~/services/serviceProvider';
 
 const { width, height } = Dimensions.get('window');
 const GALLERY_ITEM_WIDTH = 90;
@@ -253,7 +253,7 @@ export default function ImageFilterSlider({
   );
 
   return (
-    <View style={ThemedStyles.style.flexContainer}>
+    <View style={sp.styles.style.flexContainer}>
       {!IS_IOS && ( // on Android we show a placeholder because the filtered image sometimes takes a while to load
         <Image
           source={{
@@ -302,7 +302,7 @@ export default function ImageFilterSlider({
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   placeholder: {
     position: 'absolute',
     top: 0,

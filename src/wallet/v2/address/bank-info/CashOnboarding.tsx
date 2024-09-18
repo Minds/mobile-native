@@ -3,19 +3,18 @@ import { observer } from 'mobx-react';
 import { View } from 'react-native';
 import CountrySelector, {
   allowedCountries,
-} from '../../../../common/components/CountrySelector';
-import ThemedStyles from '../../../../styles/ThemedStyles';
-import SettingInput from '../../../../common/components/SettingInput';
-import i18n from '../../../../common/services/i18n.service';
+} from '~/common/components/CountrySelector';
+
+import SettingInput from '~/common/components/SettingInput';
 import { BankInfoStore } from './createBankInfoStore';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import DismissKeyboard from '../../../../common/components/DismissKeyboard';
+import DismissKeyboard from '~/common/components/DismissKeyboard';
 import PhoneInput from 'react-native-phone-number-input';
-import MText from '../../../../common/components/MText';
-import { B1 } from '../../../../common/ui';
-import MenuItemOption from '../../../../common/components/menus/MenuItemOption';
-import openUrlService from '../../../../common/services/open-url.service';
+import MText from '~/common/components/MText';
+import { B1 } from '~/common/ui';
+import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import { TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   localStore: BankInfoStore;
@@ -24,8 +23,8 @@ type PropsType = {
 
 const CashOnboarding = observer(
   ({ localStore, friendlyFormKeys }: PropsType) => {
-    const theme = ThemedStyles.style;
-
+    const theme = sp.styles.style;
+    const i18n = sp.i18n;
     return (
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="always"
@@ -167,9 +166,9 @@ const CashOnboarding = observer(
                   <MText
                     style={styles.link}
                     onPress={() =>
-                      openUrlService.open(
-                        'https://www.minds.com/p/monetization-terms',
-                      )
+                      sp
+                        .resolve('openURL')
+                        .open('https://www.minds.com/p/monetization-terms')
                     }>
                     {i18n.t('wallet.bank.mmt', { TENANT })}
                   </MText>
@@ -185,7 +184,7 @@ const CashOnboarding = observer(
   },
 );
 
-const phoneInputStyles = ThemedStyles.create({
+const phoneInputStyles = sp.styles.create({
   containerStyle: ['bgSecondaryBackground'],
   textContainerStyle: ['bgSecondaryBackground'],
   codeTextStyle: ['colorPrimaryText'],
@@ -193,7 +192,7 @@ const phoneInputStyles = ThemedStyles.create({
   flagButtonStyle: [{ justifyContent: 'flex-start', width: 20 }],
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   phoneContainer: ['marginVertical3x', 'paddingVertical3x', 'paddingLeft3x'],
   phoneInput: {
     flexBasis: 0,

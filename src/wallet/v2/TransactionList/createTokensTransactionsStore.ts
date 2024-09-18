@@ -1,7 +1,8 @@
 import moment from 'moment-timezone';
-import groupBy from '../../../common/helpers/groupBy';
-import type UserStore from '../../../auth/UserStore';
-import UserModel from '../../../channel/UserModel';
+
+import groupBy from '~/common/helpers/groupBy';
+import type UserStore from '~/auth/UserStore';
+import UserModel from '~/channel/UserModel';
 import {
   SectionListEntities,
   ExtendedEntity,
@@ -10,9 +11,9 @@ import {
   transactionTypes,
 } from './TransactionsListTypes';
 import type { WalletStoreType } from '../createWalletStore';
-import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
+import toFriendlyCrypto from '~/common/helpers/toFriendlyCrypto';
 import TokensStore from '../../tokens/TokensStore';
-import i18n from '../../../common/services/i18n.service';
+import sp from '~/services/serviceProvider';
 
 type ParamsType = {
   wallet: WalletStoreType;
@@ -20,6 +21,7 @@ type ParamsType = {
 };
 
 const createTokensTransactionsStore = ({ wallet, user }: ParamsType) => {
+  const i18n = sp.i18n;
   let runningTotal = 0,
     previousTxAmount = 0;
   const store = {

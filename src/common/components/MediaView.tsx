@@ -6,20 +6,16 @@ import { Alert, ImageURISource, View, ViewStyle } from 'react-native';
 import { ImageProps } from 'expo-image';
 
 import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
-import download from '../services/download.service';
-import logService from '../services/log.service';
-import i18n from '../services/i18n.service';
 import type ActivityModel from '../../newsfeed/ActivityModel';
 import { MindsVideoStoreType } from '../../media/v2/mindsVideo/createMindsVideoStore';
-import NavigationService from '../../navigation/NavigationService';
 import EmbedLink from './media-view/EmbedLink';
 import MediaViewImage from './media-view/MediaViewImage';
-import openUrlService from '../services/open-url.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import CommentModel from '../../comments/v2/CommentModel';
 import { showNotification } from '../../../AppMessages';
 import MediaViewMultiImage from './media-view/MediaViewMultiImage';
 import { copyToClipboard } from '../helpers/copyToClipboard';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity: ActivityModel | CommentModel;
@@ -97,7 +93,7 @@ export default class MediaView extends Component<PropsType> {
         }
 
         return (
-          <View style={[ThemedStyles.style.fullWidth, { aspectRatio }]}>
+          <View style={[sp.styles.style.fullWidth, { aspectRatio }]}>
             <MindsVideo
               entity={this.props.entity}
               ignoreDataSaver={this.props.ignoreDataSaver}
@@ -138,6 +134,7 @@ export default class MediaView extends Component<PropsType> {
     if (!source || !source.uri) {
       return;
     }
+    const i18n = sp.i18n;
     Alert.alert(
       i18n.t('downloadGallery'),
       i18n.t('wantToDownloadImage'),
@@ -153,12 +150,15 @@ export default class MediaView extends Component<PropsType> {
    * Download the media to the gallery
    */
   runDownload = async source => {
+    const i18n = sp.i18n;
     try {
-      await download.downloadToGallery(source.uri, this.props.entity);
+      await sp
+        .resolve('download')
+        .downloadToGallery(source.uri, this.props.entity);
       showNotification(i18n.t('imageAdded'), 'info', 3000);
     } catch (e) {
       showNotification(i18n.t('errorDownloading'), 'danger', 3000);
-      logService.exception('[MediaView] runDownload', e);
+      sp.log.exception('[MediaView] runDownload', e);
     }
   };
 
@@ -253,7 +253,7 @@ export default class MediaView extends Component<PropsType> {
   //   return (
   //     <View style={styles.licenseContainer}>
   //       <Icon
-  //         style={[styles.licenseIcon, ThemedStyles.style.colorIcon]}
+  //         style={[styles.licenseIcon,  sp.styles.style.colorIcon]}
   //         name="public"
   //         raised={false}
   //         reverse={false}
@@ -271,7 +271,7 @@ export default class MediaView extends Component<PropsType> {
    */
   openLink = () => {
     if (this.props.entity.perma_url) {
-      openUrlService.open(this.props.entity.perma_url);
+      sp.resolve('openURL').open(this.props.entity.perma_url);
     }
   };
 
@@ -294,7 +294,7 @@ export default class MediaView extends Component<PropsType> {
    * @param index - the index of image which was pressed
    */
   navToGallery = (index: number = 0) => {
-    NavigationService.navigate('ImageGallery', {
+    sp.navigation.navigate('ImageGallery', {
       entity: this.props.entity,
       initialIndex: index,
     });

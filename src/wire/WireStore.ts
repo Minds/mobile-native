@@ -1,10 +1,9 @@
 import { observable, action } from 'mobx';
 
-import wireService from './WireService';
-import i18n from '../common/services/i18n.service';
 import UserModel from '../channel/UserModel';
 
 import type { Currency } from './WireTypes';
+import serviceProvider from '~/services/serviceProvider';
 
 /**
  * Wire store
@@ -82,6 +81,7 @@ class WireStore {
 
   async loadUserRewards(): Promise<UserModel | null> {
     if (!this.owner || !this.owner.guid) return null;
+    const wireService = serviceProvider.resolve('wire');
     const owner = await wireService.userRewards(this.owner.guid);
     const { merchant, eth_wallet, wire_rewards, sums } = owner;
 
@@ -122,6 +122,7 @@ class WireStore {
   @action
   validate() {
     this.errors = [];
+    const i18n = serviceProvider.i18n;
 
     switch (this.currency) {
       case 'btc':
@@ -179,6 +180,7 @@ class WireStore {
       this.sending = true;
 
       if (this.guid && this.owner) {
+        const wireService = serviceProvider.resolve('wire');
         done = await wireService.send({
           amount: this.amount,
           guid: this.guid,

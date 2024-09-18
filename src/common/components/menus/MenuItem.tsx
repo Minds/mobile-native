@@ -7,14 +7,15 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { AvatarSource } from '../../../channel/UserModel';
-import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
+import { AvatarSource } from '~/channel/UserModel';
 import { B2, Column, Icon, IIconColor, IIconSize, Row } from '../../ui';
 import { IconMapNameType } from '../../ui/icons/map';
 import MPressable from '../MPressable';
 import MText from '../MText';
 import { TypographyPropsType } from '../../ui/typography/Typography';
-import { ColorsNameType } from '../../../styles/Colors';
+import { ColorsNameType } from '~/styles/Colors';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 export type MenuItemProps = {
   containerItemStyle?: StyleProp<ViewStyle>;
@@ -98,7 +99,7 @@ export default function ({
     }
     if (props.primaryColor) {
       stylesList.push({
-        color: ThemedStyles.getColor(props.primaryColor),
+        color: sp.styles.getColor(props.primaryColor),
       });
     }
 
@@ -218,7 +219,7 @@ export default function ({
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   avatar: [
     {
       height: 40,

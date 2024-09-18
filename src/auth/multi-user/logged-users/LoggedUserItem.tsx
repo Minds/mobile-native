@@ -1,12 +1,9 @@
 import React from 'react';
-import UserModel from '../../../channel/UserModel';
-import sessionService from '../../../common/services/session.service';
-import { Session } from '../../../common/services/storage/session.storage.service';
-import AuthService from '../../AuthService';
-import ChannelListItem from '../../../common/components/ChannelListItem';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import UserModel from '~/channel/UserModel';
+import { Session } from '~/common/services/storage/session.storage.service';
+import ChannelListItem from '~/common/components/ChannelListItem';
 import LoggedUserDetails from './LoggedUserDetails';
-import NavigationService from '../../../navigation/NavigationService';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   tokenData: Session;
@@ -14,16 +11,16 @@ type PropsType = {
 };
 
 const doLogin = async (index: number) => {
-  if (index === sessionService.activeIndex) {
+  if (index === sp.session.activeIndex) {
     return;
   }
-  if (sessionService.getSessionForIndex(index).sessionExpired) {
-    NavigationService.navigate('RelogScreen', {
+  if (sp.session.getSessionForIndex(index).sessionExpired) {
+    sp.navigation.navigate('RelogScreen', {
       sessionIndex: index,
-      onLogin: () => AuthService.loginWithIndex(index),
+      onLogin: () => sp.resolve('auth').loginWithIndex(index),
     });
   } else {
-    AuthService.loginWithIndex(index);
+    sp.resolve('auth').loginWithIndex(index);
   }
 };
 
@@ -37,7 +34,7 @@ const LoggedUserItem = ({ tokenData, index }: PropsType) => {
       (
         <LoggedUserDetails
           index={index}
-          isActive={index === sessionService.activeIndex}
+          isActive={index === sp.session.activeIndex}
           username={user.username}
           onSwitchPress={login}
         />
@@ -56,7 +53,7 @@ const LoggedUserItem = ({ tokenData, index }: PropsType) => {
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['bgPrimaryBackgroundHighlight', 'paddingLeft3x'],
   name: ['bold', 'fontXL'],
   username: ['fontMedium', 'fontM'],

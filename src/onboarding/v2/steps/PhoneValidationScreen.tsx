@@ -2,16 +2,16 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View } from 'react-native';
-import DismissKeyboard from '../../../common/components/DismissKeyboard';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import DismissKeyboard from '~/common/components/DismissKeyboard';
+
 import ModalContainer from './ModalContainer';
-import { useLegacyStores } from '../../../common/hooks/use-stores';
-import PhoneValidationComponent from '../../../common/components/phoneValidation/v2/PhoneValidationComponent';
-import { PhoneValidationProvider } from '../../../common/components/phoneValidation/v2/PhoneValidationProvider';
-import { RootStackParamList } from '../../../navigation/NavigationTypes';
-import MText from '../../../common/components/MText';
+import { useLegacyStores } from '~/common/hooks/use-stores';
+import PhoneValidationComponent from '~/common/components/phoneValidation/v2/PhoneValidationComponent';
+import { PhoneValidationProvider } from '~/common/components/phoneValidation/v2/PhoneValidationProvider';
+import { RootStackParamList } from '~/navigation/NavigationTypes';
+import MText from '~/common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 type PhoneValidationScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -20,7 +20,7 @@ type PhoneValidationScreenRouteProp = RouteProp<
 
 export default withErrorBoundaryScreen(
   observer(function PhoneValidationScreen() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const navigation = useNavigation();
     const route = useRoute<PhoneValidationScreenRouteProp>();
     // if onComplete means that it come from buy tokens or somthing like that
@@ -45,7 +45,7 @@ export default withErrorBoundaryScreen(
 
     return (
       <ModalContainer
-        title={i18n.t('wallet.phoneVerification')}
+        title={sp.i18n.t('wallet.phoneVerification')}
         contentContainer={styles.container}
         onPressBack={navigation.goBack}>
         <PhoneValidationProvider {...params}>
@@ -64,7 +64,7 @@ export default withErrorBoundaryScreen(
   'PhoneValidation',
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['alignSelfCenterMaxWidth'],
   description: ['colorSecondaryText', 'fontLM', 'centered', 'marginBottom5x'],
 });

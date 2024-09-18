@@ -1,11 +1,9 @@
 import React, { useCallback } from 'react';
 import ChannelListItem from '~/common/components/ChannelListItem';
-import UserModel from '../../../channel/UserModel';
-import Button from '../../../common/components/Button';
-import apiService from '../../../common/services/api.service';
-import blockListService from '../../../common/services/block-list.service';
-import i18n from '../../../common/services/i18n.service';
+import UserModel from '~/channel/UserModel';
+import Button from '~/common/components/Button';
 import { BlockedChannelsStore } from './createBlockedChannelsStore';
+import sp from '~/services/serviceProvider';
 
 export type Row = {
   index: number;
@@ -23,8 +21,8 @@ const BlockedChannel = ({ row, localStore }: PropsType) => {
 
   const unblock = useCallback(
     async (guid: string) => {
-      await blockListService.remove(guid);
-      await apiService.delete(`api/v1/block/${guid}`);
+      await sp.resolve('blockList').remove(guid);
+      await sp.api.delete(`api/v1/block/${guid}`);
       localStore.loadList(true);
     },
     [localStore],
@@ -37,7 +35,10 @@ const BlockedChannel = ({ row, localStore }: PropsType) => {
       //@ts-ignore
       testID={`blockedChannel${row.index}`}
       renderRight={() => (
-        <Button text={i18n.t('unblock')} onPress={() => unblock(user.guid)} />
+        <Button
+          text={sp.i18n.t('unblock')}
+          onPress={() => unblock(user.guid)}
+        />
       )}
     />
   );

@@ -4,11 +4,11 @@ import { pushBottomSheet } from '../common/components/bottom-sheet';
 import MenuItem from '../common/components/menus/MenuItem';
 import SupermindLabel from '../common/components/supermind/SupermindLabel';
 import { B2, Row, Screen, ScreenHeader, Spacer } from '../common/ui';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import type { ComposeCreateMode } from './createComposeStore';
 import { BOOST_POST_ENABLED, SUPERMIND_ENABLED } from '../config/Config';
-import i18nService from '../common/services/i18n.service';
 import { CaptureFabIcon } from '~/capture/CaptureFab';
+import sp from '~/services/serviceProvider';
 
 interface ComposeCreateScreenProps {
   selected?: ComposeCreateMode;
@@ -21,6 +21,29 @@ export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
   const navigateToCompose = (key: ComposeCreateMode) => {
     return onItemPress(key);
   };
+  const i18n = sp.i18n;
+
+  const texts = React.useMemo(
+    () => ({
+      post: {
+        title: i18n.t('composer.create.screen.post.title'),
+        subtitle: i18n.t('composer.create.screen.post.subtitle'),
+      },
+      monetizedPost: {
+        title: i18n.t('composer.create.screen.monetizedPost.title'),
+        subtitle: i18n.t('composer.create.screen.monetizedPost.subtitle'),
+      },
+      boost: {
+        title: i18n.t('composer.create.screen.boost.title'),
+        subtitle: i18n.t('composer.create.screen.boost.subtitle'),
+      },
+      supermind: {
+        title: <SupermindLabel font="B1" />,
+        subtitle: i18n.t('composer.create.screen.supermind.subtitle'),
+      },
+    }),
+    [i18n],
+  );
 
   return (
     <Screen>
@@ -32,7 +55,7 @@ export default function ComposeCreateScreen(props: ComposeCreateScreenProps) {
         iconColor={selected === 'post' ? 'Link' : undefined}
         borderless
         onPress={() => navigateToCompose('post')}
-        containerItemStyle={ThemedStyles.style.marginTop4x}
+        containerItemStyle={sp.styles.style.marginTop4x}
       />
       <MenuItem
         title={texts.monetizedPost.title}
@@ -93,23 +116,4 @@ export const pushComposeCreateScreen = (props?: ComposeCreateScreenProps) => {
       </View>
     ),
   });
-};
-
-const texts = {
-  post: {
-    title: i18nService.t('composer.create.screen.post.title'),
-    subtitle: i18nService.t('composer.create.screen.post.subtitle'),
-  },
-  monetizedPost: {
-    title: i18nService.t('composer.create.screen.monetizedPost.title'),
-    subtitle: i18nService.t('composer.create.screen.monetizedPost.subtitle'),
-  },
-  boost: {
-    title: i18nService.t('composer.create.screen.boost.title'),
-    subtitle: i18nService.t('composer.create.screen.boost.subtitle'),
-  },
-  supermind: {
-    title: <SupermindLabel font="B1" />,
-    subtitle: i18nService.t('composer.create.screen.supermind.subtitle'),
-  },
 };

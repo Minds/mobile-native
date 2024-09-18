@@ -5,12 +5,10 @@ import flattenDeep from 'lodash/flattenDeep';
 import React, { PropsWithChildren, PureComponent } from 'react';
 
 import { TextStyle } from 'react-native';
-import NavigationService from '~/navigation/NavigationService';
-import ThemedStyles from '../../styles/ThemedStyles';
 
-import openUrlService from '../services/open-url.service';
 import MText from './MText';
 import { regex } from '~/services';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   color?: string;
@@ -83,7 +81,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
       return (
         <MText
           key={i}
-          style={[this.props.style, ThemedStyles.style.colorLink]}
+          style={[this.props.style, sp.styles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
           }}>
@@ -101,7 +99,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
       return (
         <MText
           key={i}
-          style={[this.props.style, ThemedStyles.style.colorLink]}
+          style={[this.props.style, sp.styles.style.colorLink]}
           onPress={() => {
             this.navToURL(content);
           }}>
@@ -119,7 +117,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
       return (
         <MText
           key={i}
-          style={[this.props.style, ThemedStyles.style.colorLink]}
+          style={[this.props.style, sp.styles.style.colorLink]}
           onPress={() => {
             this.navToURL('https://' + content);
           }}>
@@ -137,7 +135,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
       return (
         <MText
           key={i}
-          style={[this.props.style, ThemedStyles.style.colorLink]}
+          style={[this.props.style, sp.styles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`#${content}`);
           }}>
@@ -152,7 +150,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
       return (
         <MText
           key={i}
-          style={[this.props.style, ThemedStyles.style.colorLink]}
+          style={[this.props.style, sp.styles.style.colorLink]}
           onPress={() => {
             this.navToDiscovery(`\$${content}`);
           }}>
@@ -170,7 +168,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
       return (
         <MText
           key={i}
-          style={[this.props.style, ThemedStyles.style.colorLink]}
+          style={[this.props.style, sp.styles.style.colorLink]}
           onPress={() => {
             this.navToChannel(content);
           }}>
@@ -184,7 +182,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
    * Navigate to discovery
    */
   navToDiscovery = q => {
-    if (this.props.navigation === NavigationService) {
+    if (this.props.navigation === sp.navigation) {
       this.props.navigation.navigate('App', {
         screen: 'DiscoverySearch',
         params: { query: q },
@@ -200,7 +198,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
    * Navigate to discovery
    */
   navToChannel = q => {
-    if (this.props.navigation === NavigationService) {
+    if (this.props.navigation === sp.navigation) {
       this.props.navigation.push('App', {
         screen: 'Channel',
         params: { username: q },
@@ -211,7 +209,7 @@ export default class Tags extends PureComponent<PropsWithChildren<PropsType>> {
   };
 
   navToURL = q => {
-    openUrlService.open(q);
+    sp.resolve('openURL').open(q);
   };
 
   /**

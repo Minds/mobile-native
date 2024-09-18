@@ -1,5 +1,4 @@
-import api from './../common/services/api.service';
-import commentStorageService from './CommentStorageService';
+import serviceProvider from '~/services/serviceProvider';
 
 const decodeUrn = urn => {
   let parts: Array<string> = urn.split(':');
@@ -25,7 +24,7 @@ type FocusedUrnObjectType = ReturnType<typeof decodeUrn>;
  * @param {string} parent_path
  */
 export async function getComment(entity_guid, guid, parent_path) {
-  let response: any = await api.get(
+  let response: any = await serviceProvider.api.get(
     `api/v2/comments/${entity_guid}/${guid}/${parent_path}`,
     {
       limit: 1,
@@ -103,8 +102,10 @@ export async function getComments(
 
   let response;
 
+  const commentStorageService = serviceProvider.resolve('commentsStorage');
+
   try {
-    response = await api.get(uri, opts);
+    response = await serviceProvider.api.get(uri, opts);
     commentStorageService.write(
       entity_guid,
       parent_path,
@@ -156,7 +157,7 @@ export async function getComments(
  * @param {object} comment
  */
 export function postComment(guid, comment) {
-  return api.post(`api/v1/comments/${guid}/`, comment);
+  return serviceProvider.api.post(`api/v1/comments/${guid}/`, comment);
 }
 
 /**
@@ -164,7 +165,7 @@ export function postComment(guid, comment) {
  * @param {string} guid
  */
 export function deleteComment(guid) {
-  return api.delete(`api/v1/comments/${guid}/`);
+  return serviceProvider.api.delete(`api/v1/comments/${guid}/`);
 }
 
 /**
@@ -173,7 +174,7 @@ export function deleteComment(guid) {
  * @param {any} comment
  */
 export function updateComment(guid, comment) {
-  return api.post(`api/v1/comments/update/${guid}`, comment);
+  return serviceProvider.api.post(`api/v1/comments/update/${guid}`, comment);
 }
 
 /**
@@ -182,7 +183,7 @@ export function updateComment(guid, comment) {
  * @param {boolean} state
  */
 export function toggleAllowComments(guid, state) {
-  return api.post(`api/v2/permissions/comments/${guid}`, {
+  return serviceProvider.api.post(`api/v2/permissions/comments/${guid}`, {
     allowed: state,
   });
 }

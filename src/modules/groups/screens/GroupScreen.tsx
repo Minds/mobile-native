@@ -21,13 +21,11 @@ import {
 import { useGroup } from '../hooks/useGroup';
 import SearchTopBar from '../../../common/components/SearchTopBar';
 import CaptureFab from '~/capture/CaptureFab';
-import { storages } from '~/common/services/storage/storages.service';
 import FeedFilter from '~/common/components/FeedFilter';
-import ThemedStyles from '~/styles/ThemedStyles';
 import ErrorLoading from '~/common/components/ErrorLoading';
-import i18n from '~/common/services/i18n.service';
 import { H4 } from '~/common/ui';
 import ScrollableTabComponent from '../components/ScrollableTabComponent';
+import sp from '~/services/serviceProvider';
 
 const HEADER_HEIGHT = 54;
 
@@ -48,7 +46,7 @@ const FeedScene = ({ route, top }: any) => {
 const MembersScene = ({ route, group }: any) => {
   return (
     <TabMemberList
-      style={ThemedStyles.style.flexContainer}
+      style={sp.styles.style.flexContainer}
       index={route.index}
       group={group}
     />
@@ -77,7 +75,7 @@ export function GroupScreen({ route, navigation }) {
     return (
       <ErrorLoading
         tryAgain={refetch}
-        message={i18n.t('groups.errorLoading')}
+        message={sp.i18n.t('groups.errorLoading')}
       />
     );
   }
@@ -98,7 +96,7 @@ const GroupScreenView = observer(
 
     // initial loading
     if (initialTab.current === -1) {
-      initialTab.current = storages.user?.getInt('GroupTab') || 0;
+      initialTab.current = sp.storages.user?.getNumber('GroupTab') || 0;
     }
 
     const [index, setIndex] = useState(initialTab.current);
@@ -134,7 +132,7 @@ const GroupScreenView = observer(
           return (
             <ScrollableTabComponent index={0}>
               <H4 align="center" top="XL">
-                {i18n.t('group.closedMessage')}
+                {sp.i18n.t('group.closedMessage')}
               </H4>
             </ScrollableTabComponent>
           );
@@ -168,7 +166,7 @@ const GroupScreenView = observer(
 
     const onIndexChange = useCallback(idx => {
       setIndex(idx);
-      storages.user?.setInt('GroupTab', idx);
+      sp.storages.user?.set('GroupTab', idx);
     }, []);
 
     const renderTabBar = useCallback(

@@ -1,21 +1,13 @@
 import { observable, action, runInAction } from 'mobx';
 
 import { MINDS_CDN_URI, GOOGLE_PLAY_STORE } from '../config/Config';
-import api from '../common/services/api.service';
 import BaseModel from '../common/BaseModel';
-import ChannelService from './ChannelService';
-import sessionService from '../common/services/session.service';
-import apiService from '../common/services/api.service';
-import logService from '../common/services/log.service';
 import { SupportTiersType } from '../wire/WireTypes';
-import settingsService from '../settings/SettingsService';
 import { UserError } from '../common/UserError';
-import i18n from '../common/services/i18n.service';
 import { showNotification } from '../../AppMessages';
 import { SocialProfile } from '../types/Common';
-import inFeedNoticesService from '~/common/services/in-feed.notices.service';
+import sp from '~/services/serviceProvider';
 
-//@ts-nocheck
 export const USER_MODE_OPEN = 0;
 export const USER_MODE_MODERATED = 1;
 export const USER_MODE_CLOSED = 2;
@@ -121,8 +113,10 @@ export default class UserModel extends BaseModel {
    */
   async confirmEmailCode() {
     try {
-      await apiService.post('api/v3/email/confirm');
+      await sp.api.post('api/v3/email/confirm');
       this.setEmailConfirmed(true);
+
+      const inFeedNoticesService = sp.resolve('inFeedNotices');
 
       // mark as completed without wait for the server
       inFeedNoticesService.markAsCompleted('verify-email');
@@ -139,8 +133,8 @@ export default class UserModel extends BaseModel {
    * Get the user icon time
    */
   getOwnerIcontime(): string {
-    if (sessionService.getUser().guid === this.guid) {
-      return sessionService.getUser().icontime;
+    if (sp.session.getUser().guid === this.guid) {
+      return sp.session.getUser().icontime;
     } else {
       return this.icontime;
     }
@@ -159,7 +153,9 @@ export default class UserModel extends BaseModel {
 
     try {
       const metadata = this.getClientMetadata();
-      await ChannelService.toggleSubscription(this.guid, value, metadata);
+      await sp
+        .resolve('channel')
+        .toggleSubscription(this.guid, value, metadata);
       UserModel.events.emit('toggleSubscription', {
         user: this,
         shouldUpdateFeed: false,
@@ -177,11 +173,11 @@ export default class UserModel extends BaseModel {
     value = value === null ? !this.blocked : value;
 
     try {
-      await ChannelService.toggleBlock(this.guid, value);
+      await sp.resolve('channel').toggleBlock(this.guid, value);
       this.blocked = value;
     } catch (err) {
       this.blocked = !value;
-      logService.exception('[ChannelStore] toggleBlock', err);
+      sp.log.exception('[ChannelStore] toggleBlock', err);
     }
   }
 
@@ -243,7 +239,7 @@ export default class UserModel extends BaseModel {
    * current user is owner of the channel
    */
   isOwner = () => {
-    return sessionService.getUser().guid === this.guid;
+    return sp.session.getUser().guid === this.guid;
   };
 
   /**
@@ -259,7 +255,7 @@ export default class UserModel extends BaseModel {
   shouldShowMaskNSFW(): boolean {
     return (
       this.isNSFW() &&
-      !sessionService.getUser().mature &&
+      !sp.session.getUser().mature &&
       !this.isOwner() &&
       !this.mature_visibility
     );
@@ -272,12 +268,12 @@ export default class UserModel extends BaseModel {
     if (this.carousels && this.carousels[0]) {
       return {
         uri: this.carousels[0].src + this.icontime,
-        headers: api.buildHeaders(),
+        headers: sp.api.buildHeaders(),
       };
     }
     return {
       uri: `${MINDS_CDN_URI}fs/v1/banners/${this.guid}/fat/${this.icontime}`,
-      headers: api.buildHeaders(),
+      headers: sp.api.buildHeaders(),
     };
   }
 
@@ -288,7 +284,7 @@ export default class UserModel extends BaseModel {
   getAvatarSource(size = 'medium'): AvatarSource {
     return {
       uri: `${MINDS_CDN_URI}icon/${this.guid}/${size}/${this.icontime}`,
-      headers: api.buildHeaders(),
+      headers: sp.api.buildHeaders(),
     };
   }
 
@@ -348,10 +344,10 @@ export default class UserModel extends BaseModel {
     }
     try {
       this.pending_subscribe = true;
-      await apiService.put(`api/v2/subscriptions/outgoing/${this.guid}`);
+      await sp.api.put(`api/v2/subscriptions/outgoing/${this.guid}`);
     } catch (err) {
       this.pending_subscribe = false;
-      logService.exception(err);
+      sp.log.exception(err);
     }
   }
 
@@ -364,10 +360,10 @@ export default class UserModel extends BaseModel {
     }
     try {
       this.pending_subscribe = false;
-      await apiService.delete(`api/v2/subscriptions/outgoing/${this.guid}`);
+      await sp.api.delete(`api/v2/subscriptions/outgoing/${this.guid}`);
     } catch (err) {
       this.pending_subscribe = true;
-      logService.exception(err);
+      sp.log.exception(err);
     }
   }
 
@@ -394,10 +390,10 @@ export default class UserModel extends BaseModel {
   @action
   async saveDisableAutoplayVideosSetting() {
     try {
-      await settingsService.submitSettings({
+      await sp.resolve('settingsApi').submitSettings({
         disable_autoplay_videos: this.disable_autoplay_videos,
       });
-      showNotification(i18n.t('settings.autoplay.saved'), 'info');
+      showNotification(sp.i18n.t('settings.autoplay.saved'), 'info');
     } catch (err) {
       this.disable_autoplay_videos = !this.disable_autoplay_videos;
       throw new UserError(err, 'danger');

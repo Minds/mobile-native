@@ -2,13 +2,13 @@ import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import { MoreStackParamList } from '../../navigation/NavigationTypes';
+
+import { MoreStackParamList } from '~/navigation/NavigationTypes';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import SaveButton from '../../common/components/SaveButton';
-import i18n from '../../common/services/i18n.service';
-import { showNotification } from '../../../AppMessages';
-import MText from '../../common/components/MText';
+import SaveButton from '~/common/components/SaveButton';
+import { showNotification } from '~/../AppMessages';
+import MText from '~/common/components/MText';
+import serviceProvider from '~/services/serviceProvider';
 
 type RecoveryCodesRouteProp = RouteProp<
   MoreStackParamList,
@@ -20,8 +20,8 @@ type PropsType = {
 };
 
 const RecoveryCodesScreen = observer(({ route }: PropsType) => {
-  const theme = ThemedStyles.style;
-
+  const theme = serviceProvider.styles.style;
+  const i18n = serviceProvider.i18n;
   const { store } = route.params ?? {};
 
   const navigation = useNavigation();
@@ -65,7 +65,7 @@ const RecoveryCodesScreen = observer(({ route }: PropsType) => {
             onPress={store?.copyRecoveryCode}>
             <Icon
               name="content-copy"
-              color={ThemedStyles.getColor('PrimaryText')}
+              color={serviceProvider.styles.getColor('PrimaryText')}
               size={14}
             />
             <MText style={[styles.smallTitle, theme.marginLeft]}>

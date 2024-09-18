@@ -1,16 +1,17 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { ColorValue, View } from 'react-native';
+import Icon from '@expo/vector-icons/Ionicons';
+import { AnimatePresence } from 'moti';
+
 import Tooltip from '../Tooltip';
 import PasswordValidator from './PasswordValidator';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import InputContainer, {
   InputContainerImperativeHandle,
   InputContainerPropsType,
 } from '../InputContainer';
-import i18n from '../../services/i18n.service';
-import Icon from '@expo/vector-icons/Ionicons';
-import { IS_IOS } from '../../../config/Config';
-import { AnimatePresence } from 'moti';
+import sp from '~/services/serviceProvider';
+import { IS_IOS } from '~/config/Config';
 
 type PropsType = {
   tooltipBackground?: ColorValue;
@@ -21,7 +22,7 @@ const PasswordInput = (
   { showValidator = false, tooltipBackground, ...props }: PropsType,
   ref: React.Ref<InputContainerImperativeHandle>,
 ): JSX.Element => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const inputRef = React.useRef<InputContainerImperativeHandle>(null);
 
   useImperativeHandle(
@@ -61,7 +62,7 @@ const PasswordInput = (
       </AnimatePresence>
       <InputContainer
         ref={inputRef}
-        placeholder={i18n.t('auth.password')}
+        placeholder={sp.i18n.t('auth.password')}
         secureTextEntry={!showPassword}
         multiline={false}
         {...props}
@@ -78,9 +79,9 @@ const PasswordInput = (
 
 export default forwardRef(PasswordInput);
 
-const validatorText = ThemedStyles.combine('colorPrimaryText');
+const validatorText = sp.styles.combine('colorPrimaryText');
 
-const iconStyle = ThemedStyles.combine(
+const iconStyle = sp.styles.combine(
   {
     position: 'absolute',
     right: 12,

@@ -1,11 +1,10 @@
 import { CardFieldInput } from '@stripe/stripe-react-native';
-import { showNotification } from '../../../../AppMessages';
-import { StripeCard } from '../../../wire/WireTypes';
-import api, { ApiResponse } from '../../services/api.service';
-import i18nService from '../../services/i18n.service';
-import logService from '../../services/log.service';
-import { initStripe } from '../../services/stripe.service';
+import { showNotification } from '~/../AppMessages';
+import { StripeCard } from '~/wire/WireTypes';
+
 import { confirm } from '../Confirm';
+import { ApiResponse } from '~/common/services/ApiResponse';
+import sp from '~/services/serviceProvider';
 
 interface StripeResponse extends ApiResponse {
   paymentmethods: Array<StripeCard>;
@@ -51,6 +50,7 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
   intentKey: '',
   intentId: '',
   async init() {
+    const initStripe = require('~/common/services/stripe.service').initStripe;
     await initStripe();
     await this.loadCards();
     this.getSetupIntent();
@@ -76,7 +76,7 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
   },
   async loadCards() {
     try {
-      const result: StripeResponse = await api.get<StripeResponse>(
+      const result: StripeResponse = await sp.api.get<StripeResponse>(
         'api/v2/payments/stripe/paymentmethods',
       );
 
@@ -117,13 +117,13 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
    */
   async getSetupIntent() {
     try {
-      const { intent }: IntentResponse = await api.put<IntentResponse>(
+      const { intent }: IntentResponse = await sp.api.put<IntentResponse>(
         'api/v2/payments/stripe/intents/setup',
       );
       this.intentKey = intent.client_secret;
       this.intentId = intent.id;
     } catch (err) {
-      showNotification(i18nService.t('cantReachServer'), 'danger');
+      showNotification(sp.i18n.t('cantReachServer'), 'danger');
     }
   },
   selectCard(cardId: string) {
@@ -133,7 +133,7 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
   },
   async saveCard(): Promise<any> {
     try {
-      await api.post<ApiResponse>(
+      await sp.api.post<ApiResponse>(
         'api/v2/payments/stripe/paymentmethods/apply',
         {
           intent_id: this.intentId,
@@ -143,7 +143,7 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
       this.setInProgress(false);
       this.loadCards();
     } catch (err) {
-      logService.exception('[Stripe saveCard]', err);
+      sp.log.exception('[Stripe saveCard]', err);
       this.setInProgress(false);
     }
   },
@@ -159,7 +159,7 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
     if (confirmed) {
       try {
         this.setInProgress(true);
-        await api.delete(
+        await sp.api.delete(
           'api/v2/payments/stripe/paymentmethods/' + this.cards[index].id,
         );
         this.cards.splice(index, 1);
@@ -167,7 +167,7 @@ const createCardSelectorStore = ({ onCardSelected, selectedCardId }) => ({
           this.current = this.cards.length - 1;
         }
       } catch (error) {
-        logService.exception('[Stripe removeCard]', error);
+        sp.log.exception('[Stripe removeCard]', error);
       } finally {
         this.setInProgress(false);
       }

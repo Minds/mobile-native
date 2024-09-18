@@ -10,13 +10,13 @@ import {
 } from 'react-native';
 
 import Icon from '@expo/vector-icons/SimpleLineIcons';
-import { GOOGLE_PLAY_STORE } from '../../../config/Config';
-import i18n from '../../services/i18n.service';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
-import type UserModel from '../../../channel/UserModel';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import GroupModel from '../../../groups/GroupModel';
+import { GOOGLE_PLAY_STORE } from '~/config/Config';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+import type UserModel from '~/channel/UserModel';
+
+import GroupModel from '~/groups/GroupModel';
 import MText from '../MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity: ActivityModel | UserModel | GroupModel;
@@ -76,12 +76,13 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
   render() {
     const { iconSize, hideText, fontStyle, containerStyle } = this.props;
 
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     if (this.props.entity.mature_visibility) {
       return null;
     }
 
+    const i18n = sp.i18n;
     const text =
       GOOGLE_PLAY_STORE || Platform.OS === 'ios'
         ? i18n.t('postCantBeShown')

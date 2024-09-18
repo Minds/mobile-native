@@ -6,9 +6,8 @@ import { Icon, IconButton, IconButtonNext } from '~ui/icons';
 import { confirm } from '../common/components/Confirm';
 import MText from '../common/components/MText';
 import SupermindLabel from '../common/components/supermind/SupermindLabel';
-import i18n from '../common/services/i18n.service';
 import { Button, H3, Row } from '../common/ui';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import { pushComposeCreateScreen } from './ComposeCreateScreen';
 import { ComposeCreateMode } from './createComposeStore';
 import type { ComposeStoreType } from './useComposeStore';
@@ -16,6 +15,7 @@ import BaseModel from '../common/BaseModel';
 import { ReplyType } from './SupermindComposeScreen';
 import delay from '~/common/helpers/delay';
 import { IS_TENANT, TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 interface ComposeTopBarProps {
   onPressBack: () => void;
@@ -27,11 +27,12 @@ interface ComposeTopBarProps {
  */
 export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
   const { store } = props;
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const isScheduled = useMemo(
     () => store.time_created && BaseModel.isScheduled(store.time_created),
     [store.time_created],
   );
+  const i18n = sp.i18n;
 
   const onPressPost = useCallback(async () => {
     if (store.attachments.uploading) {
@@ -79,7 +80,7 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
 
   const rightButton = props.store.posting ? (
     <View style={styles.dotIndicatorContainerStyle}>
-      <Circle size={28} color={ThemedStyles.getColor('Link')} />
+      <Circle size={28} color={sp.styles.getColor('Link')} />
     </View>
   ) : (
     <>
@@ -110,6 +111,13 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
       selected: store.createMode,
       onItemPress: async mode => store.setCreateMode(mode),
     });
+
+  const createModeMapping: Record<ComposeCreateMode, string | ReactNode> = {
+    boost: i18n.t('composer.create.boost'),
+    monetizedPost: i18n.t('composer.create.newPost'),
+    post: i18n.t('composer.create.newPost'),
+    supermind: <SupermindLabel font="H3" height={27} />,
+  };
 
   return (
     <Row vertical="S" left="XS" right="L" align="centerStart">
@@ -143,14 +151,7 @@ export default observer(function ComposeTopBar(props: ComposeTopBarProps) {
   );
 });
 
-const createModeMapping: Record<ComposeCreateMode, string | ReactNode> = {
-  boost: i18n.t('composer.create.boost'),
-  monetizedPost: i18n.t('composer.create.newPost'),
-  post: i18n.t('composer.create.newPost'),
-  supermind: <SupermindLabel font="H3" height={27} />,
-};
-
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   dotIndicatorContainerStyle: [
     'rowJustifyEnd',
     {

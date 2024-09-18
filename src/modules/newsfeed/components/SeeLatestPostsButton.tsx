@@ -1,10 +1,11 @@
 import React from 'react';
 import Animated, { FadeInUp } from 'react-native-reanimated';
-import i18nService from '~/common/services/i18n.service';
+
 import { Button, Icon } from '~/common/ui';
-import { useSeeLatestStyle } from '../../../newsfeed/SeeLatestButton';
+import { useSeeLatestStyle } from '~/newsfeed/SeeLatestButton';
 import useApiQuery from '~/services/hooks/useApiQuery';
 import { NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 interface SeeLatestPostsButtonProps {
   onPress: () => void;
@@ -41,7 +42,7 @@ const SeeLatestPostsButton = ({
         icon={color => <Icon name="arrow-up" color={color} size="small" />}
         onPress={onPress}
         shouldAnimateChanges={false}>
-        {i18nService.t('newsfeed.seeLatestTitle', {
+        {sp.i18n.t('newsfeed.seeLatestTitle', {
           count,
         })}
       </Button>

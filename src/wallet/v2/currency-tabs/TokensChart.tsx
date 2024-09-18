@@ -2,13 +2,12 @@ import { observer } from 'mobx-react';
 import moment from 'moment';
 import React from 'react';
 import { useWindowDimensions, View } from 'react-native';
-import CenteredLoading from '../../../common/components/CenteredLoading';
-import LineChart from '../../../common/components/charts/LineChart';
-import MText from '../../../common/components/MText';
-import useApiFetch from '../../../common/hooks/useApiFetch';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import CenteredLoading from '~/common/components/CenteredLoading';
+import LineChart from '~/common/components/charts/LineChart';
+import MText from '~/common/components/MText';
+import useApiFetch from '~/common/hooks/useApiFetch';
 
+import sp from '~/services/serviceProvider';
 export type ChartTimespanType = '7d' | '30d';
 
 type PropsType = {
@@ -19,8 +18,9 @@ type PropsType = {
  * Tokens chart component
  */
 const TokensChart = observer(({ timespan }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const { width } = useWindowDimensions();
+  const i18n = sp.i18n;
 
   let dataError = false,
     data;

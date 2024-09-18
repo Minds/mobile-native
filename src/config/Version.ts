@@ -1,6 +1,6 @@
-import DeviceInfo from 'react-native-device-info';
+import { nativeApplicationVersion, nativeBuildVersion } from 'expo-application';
 
 export const Version = {
-  VERSION: process.env.APP_VERSION || DeviceInfo.getVersion(),
-  BUILD: DeviceInfo.getBuildNumber(),
+  VERSION: process.env.APP_VERSION || nativeApplicationVersion || '',
+  BUILD: nativeBuildVersion,
 };

@@ -2,9 +2,9 @@ import Banner from './Banner';
 import updateExpoService from '../services/update.expo.service';
 import { useFocusEffect } from '@react-navigation/native';
 import { useState } from 'react';
-import i18nService from '../services/i18n.service';
 import { observer } from 'mobx-react';
 import useDebouncedCallback from '../hooks/useDebouncedCallback';
+import sp from '~/services/serviceProvider';
 
 export default observer(function UpdateBanner() {
   const { showNote, onReload } = useUpdates();
@@ -15,7 +15,7 @@ export default observer(function UpdateBanner() {
   return (
     <Banner
       actionText={'Update'}
-      text={i18nService.t('banners.update.title', {})}
+      text={sp.i18n.t('banners.update.title', {})}
       onAction={onReload}
     />
   );

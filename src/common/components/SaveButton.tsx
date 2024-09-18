@@ -1,7 +1,7 @@
 import React from 'react';
-import i18n from '../services/i18n.service';
 import { TextStyle } from 'react-native';
 import { Button, Spacer } from '~ui';
+import sp from '~/services/serviceProvider';
 
 type propsType = {
   onPress: () => void;
@@ -21,7 +21,7 @@ const SaveButton = ({ onPress, text, spinner, style, disabled }: propsType) => {
         mode="flat"
         type="action"
         size="small">
-        {text || i18n.t('save')}
+        {text || sp.i18n.t('save')}
       </Button>
     </Spacer>
   );

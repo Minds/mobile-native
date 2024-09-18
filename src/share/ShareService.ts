@@ -4,7 +4,7 @@ import { pushBottomSheet } from '../common/components/bottom-sheet';
 /**
  * Share service
  */
-class ShareService {
+export class ShareService {
   /**
    * Invite
    * @param {string} referrer guid
@@ -45,5 +45,3 @@ class ShareService {
     }, 30);
   }
 }
-
-export default new ShareService();

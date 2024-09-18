@@ -1,11 +1,12 @@
 import { View, Image } from 'react-native';
 import React from 'react';
-import ThemedStyles, { useIsDarkTheme } from '~/styles/ThemedStyles';
 import { B1 } from '~/common/ui';
 import { observer } from 'mobx-react';
 import { GetGiftCardByCodeQuery, GiftCardProductIdEnum } from '~/graphql/api';
 import { useTranslation } from '../locales';
 import assets from '@assets';
+import sp from '~/services/serviceProvider';
+import { useIsDarkTheme } from '~/styles/hooks';
 
 export default observer(function GiftCard({
   gift,
@@ -26,8 +27,8 @@ export default observer(function GiftCard({
         style={[
           styles.bar,
           isDark
-            ? ThemedStyles.style.bgWhite
-            : ThemedStyles.style.bgTertiaryBackground,
+            ? sp.styles.style.bgWhite
+            : sp.styles.style.bgTertiaryBackground,
         ]}>
         <TypeText type={gift.productId} />
         <B1 color="black">${gift.amount}</B1>
@@ -45,7 +46,7 @@ const TypeText = ({ type }: { type: GiftCardProductIdEnum }) => {
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   logo: {
     width: '40%',
   },

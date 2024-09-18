@@ -2,10 +2,11 @@ import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import Tags from '../Tags';
 import { TranslateStoreType } from './createTranslateStore';
 import { TranslatePropsType } from './Translate';
+import sp from '~/services/serviceProvider';
 
 interface PropsType extends TranslatePropsType {
   translateStore: TranslateStoreType;
@@ -31,7 +32,7 @@ const Translated = observer(({ translateStore, style }: PropsType) => {
     return null;
   }
 
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const data = translateStore.getDataFromTranslation();
 

@@ -1,9 +1,8 @@
 import { useLocalStore } from 'mobx-react';
 
 import UserModel from '~/channel/UserModel';
-import logService from '~/common/services/log.service';
 import OffsetListStore from '~/common/stores/OffsetListStore';
-import groupsService from '~/groups/GroupsService';
+import serviceProvider from '~/services/serviceProvider';
 
 export const useGroupMembersStore = group => {
   return useLocalStore(() => ({
@@ -35,7 +34,7 @@ export const useGroupMembersStore = group => {
         this.members.clearList();
         await this.loadMore();
       } catch (error) {
-        logService.exception(error);
+        serviceProvider.log.exception(error);
       }
       this.members.refreshing = false;
     },
@@ -47,13 +46,17 @@ export const useGroupMembersStore = group => {
       this.loading = true;
 
       const serviceFetch = this.search
-        ? groupsService.searchMembers(
-            this.group.guid,
-            this.members.offset,
-            21,
-            this.search,
-          )
-        : groupsService.loadMembers(this.group.guid, this.members.offset);
+        ? serviceProvider
+            .resolve('groups')
+            .searchMembers(
+              this.group.guid,
+              this.members.offset,
+              21,
+              this.search,
+            )
+        : serviceProvider
+            .resolve('groups')
+            .loadMembers(this.group.guid, this.members.offset);
 
       try {
         const data: any = await serviceFetch;
@@ -61,7 +64,7 @@ export const useGroupMembersStore = group => {
         data.offset = data['load-next'];
         this.members.setList(data);
       } catch (error) {
-        logService.exception(error);
+        serviceProvider.log.exception(error);
       } finally {
         this.loading = false;
       }
@@ -71,7 +74,9 @@ export const useGroupMembersStore = group => {
         return;
       }
 
-      const result: any = await groupsService.kick(this.group.guid, user.guid);
+      const result: any = await serviceProvider
+        .resolve('groups')
+        .kick(this.group.guid, user.guid);
       if (result.done) {
         this.members.remove(user);
       }
@@ -86,7 +91,9 @@ export const useGroupMembersStore = group => {
         return;
       }
 
-      const result: any = await groupsService.ban(this.group.guid, user.guid);
+      const result: any = await serviceProvider
+        .resolve('groups')
+        .ban(this.group.guid, user.guid);
       if (result.done) {
         this.members.remove(user);
       }
@@ -101,10 +108,9 @@ export const useGroupMembersStore = group => {
         return;
       }
 
-      const result: any = await groupsService.makeModerator(
-        this.group.guid,
-        user.guid,
-      );
+      const result: any = await serviceProvider
+        .resolve('groups')
+        .makeModerator(this.group.guid, user.guid);
       if (result.done) {
         user['is:moderator'] = true;
       }
@@ -119,10 +125,9 @@ export const useGroupMembersStore = group => {
         return;
       }
 
-      const result: any = await groupsService.revokeModerator(
-        this.group.guid,
-        user.guid,
-      );
+      const result: any = await serviceProvider
+        .resolve('groups')
+        .revokeModerator(this.group.guid, user.guid);
       if (result.done) {
         user['is:moderator'] = false;
       }
@@ -137,10 +142,9 @@ export const useGroupMembersStore = group => {
         return;
       }
 
-      const result: any = await groupsService.makeOwner(
-        this.group.guid,
-        user.guid,
-      );
+      const result: any = await serviceProvider
+        .resolve('groups')
+        .makeOwner(this.group.guid, user.guid);
       if (result.done) {
         user['is:owner'] = true;
       }
@@ -154,10 +158,9 @@ export const useGroupMembersStore = group => {
         return;
       }
 
-      const result: any = await groupsService.revokeOwner(
-        this.group.guid,
-        user.guid,
-      );
+      const result: any = await serviceProvider
+        .resolve('groups')
+        .revokeOwner(this.group.guid, user.guid);
       if (result.done) {
         user['is:owner'] = false;
       }

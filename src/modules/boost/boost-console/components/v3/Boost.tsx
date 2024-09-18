@@ -10,7 +10,7 @@ import MPressable from '~/common/components/MPressable';
 import { Avatar, B1, Column, Row } from '~/common/ui';
 import Activity from '~/newsfeed/activity/Activity';
 import ActivityModel from '~/newsfeed/ActivityModel';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useTranslation } from '../../../locales';
 import BoostModel from '../../../models/BoostModelV3';
 import {
@@ -22,6 +22,7 @@ import BoostActionBar from './BoostActionBar';
 import BoostHeader from './BoostHeader';
 import GroupModel from '~/groups/GroupModel';
 import abbrev from '~/common/helpers/abbrev';
+import sp from '~/services/serviceProvider';
 
 interface BoostProps {
   boost: BoostModel;
@@ -195,7 +196,7 @@ const GroupBody = ({ boost }: BoostProps) => {
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['flexContainer', 'borderHair', 'bcolorPrimaryBorder'],
 });
 

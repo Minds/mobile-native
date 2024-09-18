@@ -15,14 +15,13 @@ import {
   useInfiniteQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import sessionService from '~/common/services/session.service';
 import moment from 'moment';
 import { ChatMessage, ChatRoomEventType } from '../types';
 import delay from '~/common/helpers/delay';
-import logService from '~/common/services/log.service';
 import { showNotification } from 'AppMessages';
-import { gqlFetcher } from '~/common/services/api.service';
 import { useChatRoomEventByType } from './useChatRoomEventByType';
+import { gqlFetcher } from '~/common/services/gqlFetcher';
+import sp from '~/services/serviceProvider';
 
 const PAGE_SIZE = 12;
 
@@ -120,7 +119,7 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
    */
   const createMessageMutation = useCreateChatMessageMutation({
     onMutate: params => {
-      const me = sessionService.getUser();
+      const me = sp.session.getUser();
       const now = moment();
       const uuid = now.unix() + pendingMessages.current.length.toString();
 
@@ -154,7 +153,7 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
       return { newMessage };
     },
     onError: (err, _, context) => {
-      logService.exception('[useChatRoomMessagesQuery]', err);
+      sp.log.exception('[useChatRoomMessagesQuery]', err);
       // we remove the optimistic message
       if (pendingMessages.current.length > 0 && context) {
         pendingMessages.current = pendingMessages.current.filter(
@@ -164,7 +163,7 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
     },
     onSettled: async (data, err, _, context) => {
       if (err) {
-        logService.exception('[useChatRoomMessagesQuery]', err);
+        sp.log.exception('[useChatRoomMessagesQuery]', err);
         return;
       }
       await loadNewMessages();
@@ -182,7 +181,7 @@ export function useChatRoomMessagesQuery(roomGuid: string) {
         error instanceof Error ? error.message : 'Error deleting message',
       );
 
-      logService.exception('[useDeleteChatMessageMutation]', error);
+      sp.log.exception('[useDeleteChatMessageMutation]', error);
     },
     onSuccess: (data, context) => {
       showNotification('Message deleted');

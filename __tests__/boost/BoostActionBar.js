@@ -2,15 +2,21 @@ import 'react-native';
 import React from 'react';
 import { View } from 'react-native';
 import { shallow } from 'enzyme';
-import UserStore from '../../src/auth/UserStore';
-
+import UserStore from '~/auth/UserStore';
 import { activitiesServiceFaker } from '../../__mocks__/fake/ActivitiesFaker';
+import BoostActionBar from '~/modules/boost/boost-console/components/BoostActionBar';
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
-import BoostActionBar from '../../src/modules/boost/boost-console/components/BoostActionBar';
-import MText from '../../src/common/components/MText';
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
+
 // prevent double tap in touchable
-jest.mock('../../src/modules/boost/boost-composer/boost.store');
-jest.mock('../../src/auth/UserStore');
+jest.mock('~/modules/boost/boost-composer/boost.store');
+jest.mock('~/auth/UserStore');
 
 describe('Boost action bar component', () => {
   let screen, boost;

@@ -2,9 +2,9 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { View } from 'react-native';
 import TextInput from '../common/components/TextInput';
-import i18nService from '../common/services/i18n.service';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import { IS_IOS } from '../config/Config';
+import sp from '../services/serviceProvider';
 
 /**
  * Title input
@@ -16,8 +16,8 @@ export default observer(function TitleInput(props) {
       <TextInput
         autoFocus
         style={textInputStyle}
-        placeholder={i18nService.t('title')}
-        placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+        placeholder={sp.i18n.t('title')}
+        placeholderTextColor={sp.styles.getColor('TertiaryText')}
         onChangeText={props.store.setTitle}
         textAlignVertical="top"
         value={props.store.title}
@@ -30,12 +30,8 @@ export default observer(function TitleInput(props) {
   );
 });
 
-const textInputStyle = ThemedStyles.combine(
-  'colorPrimaryText',
-  'fontXXL',
-  'bold',
-);
-const container = ThemedStyles.combine(
+const textInputStyle = sp.styles.combine('colorPrimaryText', 'fontXXL', 'bold');
+const container = sp.styles.combine(
   'fullWidth',
   'marginBottom',
   IS_IOS ? 'marginTop' : 'marginBottom',

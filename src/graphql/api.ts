@@ -6,7 +6,7 @@ import {
   UseInfiniteQueryOptions,
   UseMutationOptions,
 } from '@tanstack/react-query';
-import { gqlFetcher } from '~/common/services/api.service';
+import { gqlFetcher } from '~/common/services/gqlFetcher';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {

@@ -2,26 +2,27 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import CenteredLoading from '../../common/components/CenteredLoading';
-import MText from '../../common/components/MText';
-import useApiFetch from '../../common/hooks/useApiFetch';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+import CenteredLoading from '~/common/components/CenteredLoading';
+import MText from '~/common/components/MText';
+import useApiFetch from '~/common/hooks/useApiFetch';
+
 import { Prospect, Referral, ReferralsEntity } from '../ReferralTypes';
 import ReferralRow from './ReferralRow';
+import sp from '~/services/serviceProvider';
 
 interface ReferralsListProps {
   navigation: any;
 }
 
 const ReferralsList = observer(({ navigation }: ReferralsListProps) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const _onUserPress = useCallback(
     (prospect: Prospect) => {
       navigation.push('Channel', { username: prospect.username });
     },
     [navigation],
   );
+  const i18n = sp.i18n;
   const [offset, setOffset] = useState('');
   const opts = {
     limit: 20,

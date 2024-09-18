@@ -5,24 +5,17 @@ import { View, ViewStyle } from 'react-native';
 import { Image } from 'expo-image';
 
 import MText from '~/common/components/MText';
-import {
-  DEV_MODE,
-  IS_IPAD,
-  IS_TENANT,
-  TENANT,
-  WELCOME_LOGO,
-} from '~/config/Config';
-import { HiddenTap } from '~/settings/screens/DevToolsScreen';
+import { IS_IPAD, IS_TENANT, TENANT, WELCOME_LOGO } from '~/config/Config';
 import { B1, Button, ButtonPropsType, Screen } from '~ui';
-import i18n from '../common/services/i18n.service';
 import { AuthStackParamList } from '../navigation/NavigationTypes';
-import ThemedStyles from '../styles/ThemedStyles';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { SpacingType } from '~/common/ui/helpers';
 import { UISpacingPropType } from '~/styles/Tokens';
 import { OnboardingCarousel } from '~/modules/onboarding/components/OnboardingCarousel';
 import assets from '@assets';
 import { useLoginWeb } from './oidc/Oidc';
+import sp from '~/services/serviceProvider';
+// import { HiddenTap } from '~/settings/screens/DevToolsScreen';
 
 type PropsType = {
   navigation: NavigationProp<any>;
@@ -39,6 +32,8 @@ function WelcomeScreen(props: PropsType) {
     error: oidcError,
     refetch,
   } = useLoginWeb();
+
+  const i18n = sp.i18n;
 
   const onOidcPress = useCallback(() => {
     props.navigation.navigate('OidcLogin', { loginUrl: oidcLoginUrl });
@@ -121,14 +116,14 @@ function WelcomeScreen(props: PropsType) {
         </View>
       </View>
 
-      {DEV_MODE.isActive && (
+      {sp.resolve('devMode').isActive && (
         <MText style={styles.devtoolsStyle} onPress={openDevtools}>
           Dev Options
         </MText>
       )}
-      <HiddenTap style={styles.devToggleStyle}>
+      {/* <HiddenTap style={styles.devToggleStyle}>
         <View />
-      </HiddenTap>
+      </HiddenTap> */}
     </Screen>
   );
 }
@@ -138,7 +133,7 @@ export default withErrorBoundaryScreen(
   'WelcomeScreen',
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   buttonContainer: {
     padding: 32,
     alignItems: 'center',

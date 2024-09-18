@@ -7,8 +7,9 @@ import { Button, Column, H4, Icon, Row } from '~/common/ui';
 import { IconMapNameType } from '~/common/ui/icons/map';
 import { useGetExplainerScreenQuery } from '~/graphql/strapi';
 import { useDismissMutation, useGetDismissalQuery } from '~/graphql/api';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import { MarkDown } from '~/common/components/MarkDown';
+import sp from '~/services/serviceProvider';
 
 type OnboardingType =
   | 'affiliates'
@@ -103,7 +104,7 @@ export const useExplainer = (key: string) => {
 const from = { opacity: 1 };
 const animate = { opacity: 1 };
 const exit = { opacity: 0 };
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['flexContainer', 'marginTop28x', 'padding6x'],
   overlay: ['absoluteFill', 'bgPrimaryBackground'],
   body: ['colorSecondaryText', 'fontM'],

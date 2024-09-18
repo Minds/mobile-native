@@ -1,11 +1,10 @@
 import React from 'react';
 import { ViewStyle } from 'react-native';
 import { default as RNSwitch } from '@nghinv/react-native-switch';
-
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 type Props = {
-  onChange?: (value: boolean) => void | null;
+  onChange?: (value: boolean) => any;
   value?: boolean;
   style?: ViewStyle;
 };
@@ -18,10 +17,10 @@ export default function Switch({ onChange, value, style }: Props) {
     <RNSwitch
       size={25}
       trackColor={{
-        true: ThemedStyles.getColor('Link'),
-        false: ThemedStyles.getColor('TertiaryBackground'),
+        true: sp.styles.getColor('Link'),
+        false: sp.styles.getColor('TertiaryBackground'),
       }}
-      thumbColor={ThemedStyles.getColor('SecondaryText')}
+      thumbColor={sp.styles.getColor('SecondaryText')}
       value={value}
       onChange={onChange}
       style={style}

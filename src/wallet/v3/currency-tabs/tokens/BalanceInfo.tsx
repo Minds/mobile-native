@@ -1,16 +1,17 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import MText from '../../../../common/components/MText';
-import i18n from '../../../../common/services/i18n.service';
-import ThemedStyles from '../../../../styles/ThemedStyles';
-import { WalletStoreType } from '../../../v2/createWalletStore';
+import MText from '~/common/components/MText';
+import serviceProvider from '~/services/serviceProvider';
+
+import { WalletStoreType } from '~/wallet/v2/createWalletStore';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   walletStore: WalletStoreType;
 };
 
 const BalanceInfo = ({ walletStore }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const offchain = walletStore.wallet.offchain.balance;
   const onchain = walletStore.wallet.onchain.balance;
   const viewPadding = [theme.paddingLeft3x, theme.paddingTop3x];
@@ -20,6 +21,7 @@ const BalanceInfo = ({ walletStore }: PropsType) => {
     theme.marginBottom,
   ];
   const earningStyle = [theme.bold, theme.fontLM, theme.marginBottom3x];
+  const i18n = serviceProvider.i18n;
   return (
     <View style={styles.container}>
       <ScrollView>

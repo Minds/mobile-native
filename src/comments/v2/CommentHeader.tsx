@@ -1,16 +1,15 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
 import { Image } from 'expo-image';
-
-import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
-import ThemedStyles from '../../styles/ThemedStyles';
-import type CommentModel from './CommentModel';
-import ChannelBadges from '../../channel/badges/ChannelBadges';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
-import i18n from '../../common/services/i18n.service';
-import MText from '../../common/components/MText';
-import NavigationService from '~/navigation/NavigationService';
+
+import withPreventDoubleTap from '~/common/components/PreventDoubleTap';
+
+import type CommentModel from './CommentModel';
+import ChannelBadges from '~/channel/badges/ChannelBadges';
+import MText from '~/common/components/MText';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity: CommentModel;
@@ -29,7 +28,7 @@ class CommentHeader extends PureComponent<PropsType> {
    * Navigate To channel
    */
   _navToChannel = () => {
-    NavigationService.push('App', {
+    sp.navigation.push('App', {
       screen: 'Channel',
       params: {
         guid: this.props.entity.ownerObj.guid,
@@ -42,7 +41,7 @@ class CommentHeader extends PureComponent<PropsType> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const channel = this.props.entity.ownerObj;
     const rightToolbar = this.props.rightToolbar || null;
 
@@ -51,7 +50,7 @@ class CommentHeader extends PureComponent<PropsType> {
     const name =
       channel.name && channel.name !== channel.username ? channel.name : '';
 
-    const date = i18n.date(
+    const date = sp.i18n.date(
       parseInt(this.props.entity.time_created, 10) * 1000,
       'friendly',
     );
@@ -91,10 +90,7 @@ class CommentHeader extends PureComponent<PropsType> {
                 </MText>
               </DebouncedTouchableOpacity>
               <MText
-                style={[
-                  styles.groupName,
-                  ThemedStyles.style.colorSecondaryText,
-                ]}
+                style={[styles.groupName, sp.styles.style.colorSecondaryText]}
                 lineBreakMode="tail"
                 numberOfLines={1}>
                 {date}

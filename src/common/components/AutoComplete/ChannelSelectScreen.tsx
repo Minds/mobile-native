@@ -1,13 +1,12 @@
 import { RouteProp } from '@react-navigation/core';
 import React, { useCallback, useState } from 'react';
-import UserModel from '../../../channel/UserModel';
-import NavigationService from '../../../navigation/NavigationService';
-import { RootStackParamList } from '../../../navigation/NavigationTypes';
-import i18nService from '../../services/i18n.service';
+import UserModel from '~/channel/UserModel';
+import { RootStackParamList } from '~/navigation/NavigationTypes';
 import { ModalFullScreen } from '../../ui';
 import InputContainer from '../InputContainer';
 import AutoComplete from './AutoComplete';
 import { withErrorBoundaryScreen } from '../ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 type ChannelSelectScreenRoute = RouteProp<
   RootStackParamList,
@@ -20,19 +19,19 @@ interface ChannelSelectScreenProps {
 
 function ChannelSelectScreen({ route }: ChannelSelectScreenProps) {
   const [username, setUsername] = useState(route?.params?.username || '');
-
+  const i18n = sp.i18n;
   const onSelect = useCallback(
     (channel: UserModel) => {
-      NavigationService.goBack();
+      sp.navigation.goBack();
       route?.params?.onSelect(channel);
     },
     [route],
   );
 
   return (
-    <ModalFullScreen back title={i18nService.t('channelSelect.title')}>
+    <ModalFullScreen back title={i18n.t('channelSelect.title')}>
       <InputContainer
-        placeholder={i18nService.t('auth.username')}
+        placeholder={i18n.t('auth.username')}
         onChangeText={setUsername}
         value={username}
         autofocus

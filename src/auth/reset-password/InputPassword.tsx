@@ -1,16 +1,16 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
-import i18n from '~/common/services/i18n.service';
 import { ResetPasswordStore } from './createLocalStore';
 import { containerStyle, textStyle } from './EmailSended';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { styles } from './InputUser';
 import { Button } from '~/common/ui';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
 import { DARK_THEME } from '../../styles/Colors';
 import MText from '~/common/components/MText';
 import { IS_IPAD } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   store: ResetPasswordStore;
@@ -18,6 +18,7 @@ type PropsType = {
 };
 
 const InputPassword = observer(({ store, onFinish }: PropsType) => {
+  const i18n = sp.i18n;
   const resetPassword = React.useCallback(async () => {
     const success = await store.resetPassword();
     if (success !== false) {
@@ -54,6 +55,6 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
   );
 });
 
-const wrapperStyle = ThemedStyles.combine('marginVertical6x');
+const wrapperStyle = sp.styles.combine('marginVertical6x');
 
 export default InputPassword;

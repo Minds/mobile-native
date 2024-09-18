@@ -2,10 +2,10 @@ import React from 'react';
 import { B1, Screen, ScreenHeader } from '~/common/ui';
 import ChatListItem from '../components/ChatListItem';
 import { ChatRoom } from '../types';
-import NavigationService from '~/navigation/NavigationService';
 
 import { useChatRequestListQuery } from '../hooks/useChatRequestListQuery';
 import ChatRoomList from '../components/ChatRoomList';
+import serviceProvider from '~/services/serviceProvider';
 
 /**
  * Chat requests list screen
@@ -44,7 +44,7 @@ const renderItem = ({ item }: { item: ChatRoom }) => (
   <ChatListItem
     chat={item}
     onPress={() => {
-      NavigationService.push('ChatStack', {
+      serviceProvider.navigation.push('ChatStack', {
         screen: 'Chat',
         params: {
           roomGuid: item.node.guid,

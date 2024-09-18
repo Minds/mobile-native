@@ -1,6 +1,12 @@
 import 'react-native';
 import React from 'react';
 import TopbarTabbar from '../../../../src/common/components/topbar-tabbar/TopbarTabbar';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';

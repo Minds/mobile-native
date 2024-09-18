@@ -1,7 +1,8 @@
 import React, { FC, PropsWithChildren } from 'react';
 import { View, StyleSheet } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import MText from './MText';
+import sp from '~/services/serviceProvider';
 
 type propsType = {
   label: string;
@@ -16,7 +17,7 @@ const LabeledComponent: FC<PropsWithChildren<propsType>> = ({
   wrapperStyle,
   labelStyle,
 }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const labelStyles = [theme.colorSecondaryText, styles.label, labelStyle];
   const wrapperStyles = [styles.wrapper, wrapperStyle];

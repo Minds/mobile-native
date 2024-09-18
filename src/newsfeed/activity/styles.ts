@@ -1,8 +1,7 @@
-import ThemedStyles from '../../styles/ThemedStyles';
-
+import sp from '~/services/serviceProvider';
 const CONTAINER_MIN_HEIGHT = 150;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['alignSelfCenterMaxWidth'],
   bodyContainer: {
     minHeight: CONTAINER_MIN_HEIGHT,
@@ -56,23 +55,23 @@ const styles = ThemedStyles.create({
   yellowBanner: [{ backgroundColor: '#ffecb3' }, 'padding'], //TODO: move colors to pallette or select others
 });
 
-const shortTextStyle = ThemedStyles.combine(
+const shortTextStyle = sp.styles.combine(
   styles.message,
   'fontXL',
   'colorPrimaryText',
   'fontMedium',
 );
 
-const textStyle = ThemedStyles.combine(styles.message, 'fontL');
+const textStyle = sp.styles.combine(styles.message, 'fontL');
 
-const remindBlockContainerStyle = ThemedStyles.combine(
+const remindBlockContainerStyle = sp.styles.combine(
   'bgTertiaryBackground',
   'margin2x',
   'borderRadius2x',
   'padding2x',
 );
 
-const remindContainerStyle = ThemedStyles.combine(
+const remindContainerStyle = sp.styles.combine(
   styles.remind,
   'alignSelfCenterMaxWidth',
   'margin3x',
@@ -82,25 +81,25 @@ const remindContainerStyle = ThemedStyles.combine(
   'bcolorPrimaryBorder',
 );
 
-const containerStyle = ThemedStyles.combine(
+const containerStyle = sp.styles.combine(
   styles.container,
   'borderBottom6x',
   'bcolorBaseBackground',
   'bgPrimaryBackground',
 );
 
-const borderLessContainerStyle = ThemedStyles.combine(
+const borderLessContainerStyle = sp.styles.combine(
   styles.container,
   'bgPrimaryBackground',
 );
 
-const onlyContentContainerStyle = ThemedStyles.combine(
+const onlyContentContainerStyle = sp.styles.combine(
   styles.container,
   'borderHair',
   'bcolorBaseBackground',
   'bgPrimaryBackground',
 );
-const remindedContainerStyle = ThemedStyles.combine(
+const remindedContainerStyle = sp.styles.combine(
   styles.container,
   'bgPrimaryBackground',
 );

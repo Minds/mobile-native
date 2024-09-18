@@ -1,20 +1,20 @@
 import React from 'react';
 import { Skeleton } from 'moti/skeleton';
-import ThemedStyles from '~/styles/ThemedStyles';
-import { withSpacer } from '../ui';
 
+import { withSpacer } from '../ui';
+import sp from '~/services/serviceProvider';
 // placeholder gradient colors
 const PrimaryColor = 'Separator';
 const SecondaryColor = 'PrimaryBackgroundHighlight';
 
 function getColors() {
   return [
-    ThemedStyles.getColor(PrimaryColor),
-    ThemedStyles.getColor(SecondaryColor),
-    ThemedStyles.getColor(PrimaryColor),
-    ThemedStyles.getColor(SecondaryColor),
-    ThemedStyles.getColor(PrimaryColor),
-    ThemedStyles.getColor(SecondaryColor),
+    sp.styles.getColor(PrimaryColor),
+    sp.styles.getColor(SecondaryColor),
+    sp.styles.getColor(PrimaryColor),
+    sp.styles.getColor(SecondaryColor),
+    sp.styles.getColor(PrimaryColor),
+    sp.styles.getColor(SecondaryColor),
   ];
 }
 

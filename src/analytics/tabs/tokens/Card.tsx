@@ -5,17 +5,15 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import { Row } from '~/common/ui';
 import MText from '~/common/components/MText';
 import { useStores } from '~/common/hooks/use-stores';
-import i18n from '~/common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import MindsTokens, {
-  format,
-} from '../../../wallet/v3/currency-tabs/MindsTokens';
+
+import MindsTokens, { format } from '~/wallet/v3/currency-tabs/MindsTokens';
 import {
   CardType,
   MetricsComparative,
   TokensMetrics,
 } from '../../AnalyticsTypes';
 import { TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   metrics: TokensMetrics;
@@ -23,7 +21,7 @@ type PropsType = {
 };
 
 const Card = ({ metrics, type }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   return (
     <View style={styles.container}>
       <View style={theme.rowJustifySpaceBetween}>
@@ -54,11 +52,11 @@ const Card = ({ metrics, type }: PropsType) => {
 };
 
 const Title = ({ type }: { type: CardType }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   return (
     <View style={theme.rowJustifyStart}>
       <MText style={styles.title}>
-        {i18n.t(`analytics.tokens.labels.${type}`)}
+        {sp.i18n.t(`analytics.tokens.labels.${type}`)}
       </MText>
       <Tooltip
         skipAndroidStatusBar={true}
@@ -66,10 +64,10 @@ const Title = ({ type }: { type: CardType }) => {
         containerStyle={theme.borderRadius}
         width={200}
         height={100}
-        backgroundColor={ThemedStyles.getColor('Link')}
+        backgroundColor={sp.styles.getColor('Link')}
         popover={
           <MText style={theme.colorWhite}>
-            {i18n.t(`analytics.tokens.tooltips.${type}`, { TENANT })}
+            {sp.i18n.t(`analytics.tokens.tooltips.${type}`, { TENANT })}
           </MText>
         }>
         <Icon
@@ -90,7 +88,7 @@ const Comparative = ({
   comparative: MetricsComparative;
   total: string;
 }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   if (parseFloat(comparative?.total_diff ?? '0') === 0) {
     return null;
@@ -140,7 +138,7 @@ const AmountInfo = ({ metrics }: { metrics: TokensMetrics }) => {
           {metrics.format === 'points' && (
             <MText style={styles.amountTextSecondary}>
               {' '}
-              {i18n.t('points')}
+              {sp.i18n.t('points')}
             </MText>
           )}
         </MText>
@@ -166,7 +164,7 @@ const EmissionBreakDown = ({ content = [] }: any) => (
   </>
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   bodyContainer: ['rowJustifyStart', 'marginTop2x', 'marginBottom3x'],
   container: [
     'bcolorPrimaryBorder',

@@ -1,3 +1,1 @@
-import storeRatingService from './store-rating.service';
-
-export { storeRatingService };
+export { StoreRatingService } from './store-rating.service';

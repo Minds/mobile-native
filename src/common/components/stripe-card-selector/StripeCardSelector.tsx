@@ -2,9 +2,8 @@ import { CardField, useStripe } from '@stripe/stripe-react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
 import { showNotification } from '~/../AppMessages';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { StripeCard } from '~/wire/WireTypes';
-import i18n from '../../services/i18n.service';
 import { Row, Icon, IconButton } from '../../ui';
 import { BottomSheetButton, pushBottomSheet } from '../bottom-sheet';
 import createCardSelectorStore, {
@@ -14,6 +13,7 @@ import createCardSelectorStore, {
 import InputBase from '../InputBase';
 import { StyleProp, ViewStyle } from 'react-native';
 import MenuItem from '../menus/MenuItem';
+import sp from '~/services/serviceProvider';
 
 type StripeCardSelectorProps = {
   selectedCardId?: string;
@@ -32,6 +32,7 @@ const StripeCardSelector = observer(
     creditLabel,
     ...inputSelectorProps
   }: StripeCardSelectorProps) => {
+    const i18n = sp.i18n;
     const store = useLocalStore(createCardSelectorStore, {
       onCardSelected,
       selectedCardId,
@@ -60,6 +61,7 @@ const StripeCardSelector = observer(
 );
 
 const pushCardSelectorBottomSheet = (store, creditLabel) => {
+  const i18n = sp.i18n;
   return pushBottomSheet({
     safe: true,
     component: bottomSheetRef => (
@@ -73,7 +75,7 @@ const pushCardSelectorBottomSheet = (store, creditLabel) => {
               bottomSheetRef.close();
             }}
             titleStyle={
-              store.isGiftCards() ? ThemedStyles.style.colorLink : undefined
+              store.isGiftCards() ? sp.styles.style.colorLink : undefined
             }
           />
         ) : null}
@@ -83,7 +85,7 @@ const pushCardSelectorBottomSheet = (store, creditLabel) => {
             title={selectValueExtractor(card)}
             titleStyle={
               !store.isGiftCards() && index === store.current
-                ? ThemedStyles.style.colorLink
+                ? sp.styles.style.colorLink
                 : undefined
             }
             onPress={() => {
@@ -93,7 +95,7 @@ const pushCardSelectorBottomSheet = (store, creditLabel) => {
             icon={
               <IconButton
                 name="close"
-                style={ThemedStyles.style.colorPrimaryText}
+                style={sp.styles.style.colorPrimaryText}
                 onPress={() => store.removeCard(index)}
               />
             }
@@ -115,6 +117,7 @@ const pushCardSelectorBottomSheet = (store, creditLabel) => {
 };
 
 const pushNewCardBottomSheet = store => {
+  const i18n = sp.i18n;
   return pushBottomSheet({
     safe: true,
     snapPoints: ['90%'],
@@ -156,11 +159,11 @@ const pushNewCardBottomSheet = store => {
               cardStyle={{
                 ...cardStyle,
                 ...{
-                  textColor: ThemedStyles.getColor('PrimaryText'),
-                  textErrorColor: ThemedStyles.getColor('Alert'),
-                  placeholderColor: ThemedStyles.getColor('SecondaryText'),
-                  backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
-                  borderColor: ThemedStyles.getColor('SecondaryBackground'),
+                  textColor: sp.styles.getColor('PrimaryText'),
+                  textErrorColor: sp.styles.getColor('Alert'),
+                  placeholderColor: sp.styles.getColor('SecondaryText'),
+                  backgroundColor: sp.styles.getColor('TertiaryBackground'),
+                  borderColor: sp.styles.getColor('SecondaryBackground'),
                 },
               }}
               style={styles.cardContainer}
@@ -192,7 +195,7 @@ const cardStyle = {
   fontSize: 14,
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['rowJustifySpaceBetween', 'padding2x'],
   cardContainer: [{ width: '90%', height: 200 }],
 });

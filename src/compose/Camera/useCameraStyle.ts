@@ -1,5 +1,5 @@
 import { EdgeInsets } from 'react-native-safe-area-context';
-import { portrait, useOrientationStyles } from '../../styles/ThemedStyles';
+import { portrait, useOrientationStyles } from '~/styles/hooks';
 
 /**
  * Orientation based styling

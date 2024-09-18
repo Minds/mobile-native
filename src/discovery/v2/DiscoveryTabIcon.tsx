@@ -5,7 +5,7 @@ import { View, StyleSheet, ViewStyle } from 'react-native';
 
 import { IIconSize, Icon } from '~ui/icons';
 import { useDiscoveryV2Store } from './useDiscoveryV2Store';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   size?: IIconSize;
@@ -29,8 +29,8 @@ const DiscoveryTabIcon = observer((props: PropsType) => {
           style={[
             style,
             active
-              ? ThemedStyles.style.colorPrimaryText
-              : ThemedStyles.style.colorIcon,
+              ? sp.styles.style.colorPrimaryText
+              : sp.styles.style.colorIcon,
           ]}
         />
       ) : (
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     width: 5,
     height: 5,
     borderRadius: 5,
-    backgroundColor: ThemedStyles.style.colorLink.color,
+    backgroundColor: sp.styles.style.colorLink.color,
   },
 });
 

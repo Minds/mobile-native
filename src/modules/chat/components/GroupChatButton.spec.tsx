@@ -4,6 +4,12 @@ import GroupChatButton from './GroupChatButton';
 import { useCreateGroupChatRoom } from '../hooks/useCreateGroupChatRoom';
 import { useCreateGroupChatRoomLegacy } from '../hooks/useCreateGroupChatRoomLegacy';
 import GroupModel from '~/groups/GroupModel';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+// mock services
+sp.mockService('styles');
+sp.mockService('analytics');
 
 jest.mock('../hooks/useCreateGroupChatRoom');
 jest.mock('../hooks/useCreateGroupChatRoomLegacy');

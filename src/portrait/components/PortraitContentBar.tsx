@@ -5,14 +5,14 @@ import { View, FlatList } from 'react-native';
 import Placeholder from '~/common/components/Placeholder';
 import PressableScale from '~/common/components/PressableScale';
 import { useStores } from '~/common/hooks/use-stores';
-import i18nService from '~/common/services/i18n.service';
 import { B3, Icon, Row } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { AVATAR_SIZE } from '~/styles/Tokens';
 
 import { PortraitBarBoostItem } from '../models/PortraitBarBoostItem';
 import PortraitBarItem from '../models/PortraitBarItem';
 import PortraitContentBarItem from './PortraitContentBarItem';
+import sp from '~/services/serviceProvider';
 
 /**
  * Header component
@@ -27,7 +27,7 @@ const Header = () => {
           <Icon size={'huge'} name="plus" color="PrimaryText" />
         </View>
       </PressableScale>
-      <B3 top="XS">{i18nService.t('newMoment')}</B3>
+      <B3 top="XS">{sp.i18n.t('newMoment')}</B3>
     </View>
   );
 };
@@ -108,7 +108,7 @@ const PortraitContentBar = observer(() => {
 
 const keyExtractor = (item, _) => item.user.guid;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   bar: {
     minHeight: 90,
   },

@@ -1,6 +1,13 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import React from 'react';
 import SupermindOnboarding from './SupermindOnboarding';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
+sp.mockService('openURL');
 
 describe('SupermindOnboarding', () => {
   test('render consumer onboarding correctly', () => {

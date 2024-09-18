@@ -1,4 +1,3 @@
-//@ts-nocheck
 export default function noExponents(num) {
   const data = String(num).split(/[eE]/);
 

@@ -1,22 +1,21 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback } from 'react';
-import i18nService from '~/common/services/i18n.service';
-import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
+import serviceProvider from '~/services/serviceProvider';
 
 /**
  * Verify Uniqueness Notice
  */
 function VerifyUniquenessNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
-
+  const i18n = serviceProvider.i18n;
   // on button press
   const onPress = useCallback(() => {
     navigation.navigate('VerifyUniqueness');
   }, [navigation]);
-
+  const inFeedNoticesService = serviceProvider.resolve('inFeedNotices');
   if (!inFeedNoticesService.visible(name)) {
     return null;
   }
@@ -24,9 +23,9 @@ function VerifyUniquenessNotice({ name }: NoticeProps) {
   return (
     <InFeedNotice
       name={name}
-      title={i18nService.t('inFeedNotices.uniquenessTitle')}
-      description={i18nService.t('inFeedNotices.uniquenessDescription')}
-      btnText={i18nService.t('onboarding.verifyUniqueness')}
+      title={i18n.t('inFeedNotices.uniquenessTitle')}
+      description={i18n.t('inFeedNotices.uniquenessDescription')}
+      btnText={i18n.t('onboarding.verifyUniqueness')}
       iconName="info-outline"
       onPress={onPress}
     />

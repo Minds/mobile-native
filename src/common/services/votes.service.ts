@@ -1,6 +1,4 @@
-//@ts-nocheck
-import api from './../../common/services/api.service';
-
+import sp from '~/services/serviceProvider';
 /**
  * Vote an activity
  * @param {string} guid
@@ -8,7 +6,7 @@ import api from './../../common/services/api.service';
  * @param {*} data extra data
  */
 export async function vote(guid, direction, data) {
-  const response = await api.put(
+  const response = await sp.api.put(
     'api/v1/votes/' + guid + '/' + direction,
     data,
   );

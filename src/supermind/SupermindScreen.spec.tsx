@@ -1,8 +1,13 @@
 import { render, screen } from '@testing-library/react-native';
 import * as React from 'react';
 import supermindRequestFaker from '../../__mocks__/fake/supermind/SupermindRequestFaker';
-import apiService from '../common/services/api.service';
 import SupermindScreen from './SupermindScreen';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+// mock services
+sp.mockService('styles');
+const apiService = sp.mockService('api');
 
 jest.mock('../common/services/api.service');
 jest.mock('./SupermindRequest', () => () => 'SupermindRequest');

@@ -1,13 +1,12 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import BaseNotice from '~/common/components/in-feed-notices/notices/BaseNotice';
-import sessionService from '~/common/services/session.service';
-import NavigationService from '~/navigation/NavigationService';
 import { useTranslation } from '../../../locales';
 import { pushAudienceSelector } from '../../../../../compose/ComposeAudienceSelector';
+import sp from '~/services/serviceProvider';
 
 const BoostChannelPrompt = () => {
-  const user = sessionService.getUser();
+  const user = sp.session.getUser();
   const { t } = useTranslation();
 
   return (
@@ -28,7 +27,7 @@ const BoostChannelPrompt = () => {
               return;
             }
 
-            NavigationService.navigate('BoostScreenV2', {
+            sp.navigation.navigate('BoostScreenV2', {
               entity: audience.group,
               boostType: 'group',
             });
@@ -38,7 +37,7 @@ const BoostChannelPrompt = () => {
       }}
       iconName="boost"
       onSecondaryPress={() =>
-        NavigationService.navigate('BoostScreenV2', {
+        sp.navigation.navigate('BoostScreenV2', {
           entity: user,
           boostType: 'channel',
         })

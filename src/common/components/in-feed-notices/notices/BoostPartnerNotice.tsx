@@ -1,18 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-
-import i18n from '~/common/services/i18n.service';
-// import openUrlService from '~/common/services/open-url.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
+import sp from '~/services/serviceProvider';
 
 /**
  * Boost partner notice
  */
 function BoostPartnerNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
-
+  const i18n = sp.i18n;
   // on button press
   const onPress = () => {
     navigation.navigate('More', {

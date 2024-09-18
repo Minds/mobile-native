@@ -1,17 +1,15 @@
 import sortBy from 'lodash/sortBy';
 import moment from 'moment';
 import UserModel from '~/channel/UserModel';
-import logService from '~/common/services/log.service';
-import sessionService from '~/common/services/session.service';
 import FeedStore from '~/common/stores/FeedStore';
 import { IS_TENANT, MINDS_GUID } from '~/config/Config';
 import type ActivityModel from '~/newsfeed/ActivityModel';
 
 import { PortraitBarBoostItem } from './models/PortraitBarBoostItem';
 import PortraitBarItem from './models/PortraitBarItem';
-import portraitContentService from './portrait-content.service';
 import postProcessPortraitEntities from './utils/post-process-portrait-entities';
 import injectBoosts from './utils/inject-boosts';
+import sp from '~/services/serviceProvider';
 
 const portraitEndpoint = 'api/v2/feeds/subscribed/activities';
 
@@ -56,7 +54,7 @@ function createPortraitStore() {
     },
     async load() {
       this.listenSubscriptions();
-      const user = sessionService.getUser();
+      const user = sp.session.getUser();
       feedStore.clear();
 
       try {
@@ -67,7 +65,7 @@ function createPortraitStore() {
             moment().subtract(1, 'days').hour(0).minutes(0).seconds(0).unix() *
             1000,
         });
-        const seenList = await portraitContentService.getSeen();
+        const seenList = await sp.resolve('portraitContent').getSeen();
         // =====================| 1. LOAD DATA FROM CACHE |=====================>
         // only if there is no data yet
         if (!this.items.length) {
@@ -109,7 +107,7 @@ function createPortraitStore() {
           boosts: true,
         });
       } catch (err) {
-        logService.exception(err);
+        sp.log.exception(err);
       } finally {
         this.loading = false;
       }

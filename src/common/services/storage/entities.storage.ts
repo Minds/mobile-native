@@ -1,9 +1,9 @@
-import logService from '../log.service';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
-import type BlogModel from '../../../blogs/BlogModel';
-import type UserModel from '../../../channel/UserModel';
-import { storages } from './storages.service';
-import sessionService from '../session.service';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+import type BlogModel from '~/blogs/BlogModel';
+import type UserModel from '~/channel/UserModel';
+import type { SessionService } from '../session.service';
+import type { Storages } from './storages.service';
+import type { LogService } from '../log.service';
 
 type storageEntity = ActivityModel | BlogModel | UserModel;
 
@@ -11,6 +11,12 @@ type storageEntity = ActivityModel | BlogModel | UserModel;
  * Feeds Storage
  */
 export class EntitiesStorage {
+  constructor(
+    private session: SessionService,
+    private storages: Storages,
+    private log: LogService,
+  ) {}
+
   /**
    * Clean properties to save storage space and improve write/read speed
    * @param {Object} entity
@@ -21,7 +27,7 @@ export class EntitiesStorage {
       Array.isArray(entity['thumbs:up:user_guids'])
     ) {
       entity['thumbs:up:user_guids'] = entity['thumbs:up:user_guids'].filter(
-        (guid: string): boolean => guid === sessionService.guid,
+        (guid: string): boolean => guid === this.session.guid,
       );
     }
 
@@ -31,7 +37,7 @@ export class EntitiesStorage {
     ) {
       entity['thumbs:down:user_guids'] = entity[
         'thumbs:down:user_guids'
-      ].filter((guid: string): boolean => guid === sessionService.guid);
+      ].filter((guid: string): boolean => guid === this.session.guid);
     }
 
     if (entity.ownerObj) {
@@ -53,19 +59,21 @@ export class EntitiesStorage {
 
     // Save only if the update time doesn't exist or if it's different
     if (time_updated) {
-      const last_update = storages.userCache?.getInt(`${entity.urn}-tu`);
+      const last_update = this.storages.userCache?.getNumber(
+        `${entity.urn}-tu`,
+      );
       if (last_update && last_update === time_updated) {
         return;
       }
     }
 
     try {
-      storages.userCache?.setMap(entity.urn, entity);
+      this.storages.userCache?.setObject(entity.urn, entity);
       if (time_updated) {
-        storages.userCache?.setInt(`${entity.urn}-tu`, time_updated);
+        this.storages.userCache?.set(`${entity.urn}-tu`, time_updated);
       }
     } catch (err) {
-      logService.exception('[EntitiesStorage]', err);
+      this.log.exception('[EntitiesStorage]', err);
     }
   }
 
@@ -75,9 +83,9 @@ export class EntitiesStorage {
    */
   read(urn) {
     try {
-      return storages.userCache?.getMap<Object>(urn) || null;
+      return this.storages.userCache?.getObject<Object>(urn) || null;
     } catch (err) {
-      logService.exception('[EntitiesStorage]', err);
+      this.log.exception('[EntitiesStorage]', err);
       return null;
     }
   }
@@ -90,7 +98,7 @@ export class EntitiesStorage {
     try {
       const entities: Array<storageEntity> = [];
       urns.forEach(urn => {
-        const entity = storages.userCache?.getMap<storageEntity>(urn);
+        const entity = this.storages.userCache?.getObject<storageEntity>(urn);
         if (entity) {
           entities.push(entity);
         }
@@ -98,7 +106,7 @@ export class EntitiesStorage {
 
       return entities;
     } catch (err) {
-      logService.exception('[EntitiesStorage]', err);
+      this.log.exception('[EntitiesStorage]', err);
       return [];
     }
   }
@@ -108,7 +116,7 @@ export class EntitiesStorage {
    * @param {string} urn
    */
   remove(urn) {
-    storages.userCache?.removeItem(urn);
+    this.storages.userCache?.delete(urn);
   }
 
   /**
@@ -119,8 +127,6 @@ export class EntitiesStorage {
     urns.forEach(urn => this.remove(urn));
   }
 }
-
-export default new EntitiesStorage();
 
 /**
  * In order to save storage space and optimize write/read speed, we remove some unused or not critical properties

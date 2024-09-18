@@ -3,16 +3,16 @@ import React from 'react';
 import TopbarTabbar, {
   TabType,
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
-import i18n from '~/common/services/i18n.service';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useBoostConsoleStore } from '../contexts/boost-store.context';
+import sp from '~/services/serviceProvider';
 
 interface BoostTabBarProps {}
 
 function BoostTabBar({}: BoostTabBarProps) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const boostConsoleStore = useBoostConsoleStore();
-
+  const i18n = sp.i18n;
   const tabs: Array<TabType<string>> = [
     {
       id: 'peer',

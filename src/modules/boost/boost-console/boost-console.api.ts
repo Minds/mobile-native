@@ -1,9 +1,8 @@
-import api, { ApiResponse } from '~/common/services/api.service';
+import { ApiResponse } from '~/common/services/ApiResponse';
 import { isNetworkError } from '~/common/services/ApiErrors';
-import i18n from '~/common/services/i18n.service';
-import logService from '~/common/services/log.service';
 import BoostModelV3 from '../models/BoostModelV3';
 import { BoostConsoleBoost, BoostStatus } from './types/BoostConsoleBoost';
+import sp from '~/services/serviceProvider';
 
 type BoostsResponse = {
   boosts: BoostConsoleBoost[];
@@ -21,10 +20,13 @@ export async function getBoosts(offset, filter, peer_filter) {
       filter = 'newsfeed';
     }
 
-    const data: any = await api.get(`api/v2/boost/${filter}/${peer_filter}`, {
-      offset: offset,
-      limit: 15,
-    });
+    const data: any = await sp.api.get(
+      `api/v2/boost/${filter}/${peer_filter}`,
+      {
+        offset: offset,
+        limit: 15,
+      },
+    );
 
     return {
       entities: data.boosts || [],
@@ -32,9 +34,9 @@ export async function getBoosts(offset, filter, peer_filter) {
     };
   } catch (err) {
     if (!isNetworkError(err)) {
-      logService.exception('[BoostConsoleService]', err);
+      sp.log.exception('[BoostConsoleService]', err);
     }
-    throw new Error(i18n.t('boosts.errorGet'));
+    throw new Error(sp.i18n.t('boosts.errorGet'));
   }
 }
 
@@ -44,7 +46,7 @@ export async function getBoostsV3(
   status?: BoostStatus,
 ) {
   try {
-    const data = await api.get<BoostsResponse>('api/v3/boosts/', {
+    const data = await sp.api.get<BoostsResponse>('api/v3/boosts/', {
       offset: offset,
       limit: 15,
       status,
@@ -57,28 +59,28 @@ export async function getBoostsV3(
     };
   } catch (err) {
     if (!isNetworkError(err)) {
-      logService.exception('[BoostConsoleService]', err);
+      sp.log.exception('[BoostConsoleService]', err);
     }
-    throw new Error(i18n.t('boosts.errorGet'));
+    throw new Error(sp.i18n.t('boosts.errorGet'));
   }
 }
 
 export function revokeBoost(guid) {
-  return api.post(`api/v3/boosts/${guid}/cancel`);
+  return sp.api.post(`api/v3/boosts/${guid}/cancel`);
 }
 
 export function rejectBoost(guid) {
-  return api.post(`api/v3/boosts/${guid}/reject`);
+  return sp.api.post(`api/v3/boosts/${guid}/reject`);
 }
 
 export function acceptBoost(guid) {
-  return api.post(`api/v3/boosts/${guid}/approve`);
+  return sp.api.post(`api/v3/boosts/${guid}/approve`);
 }
 
 export async function getSingleBoost(
   guid: string,
 ): Promise<BoostModelV3 | null> {
-  const { boost } = await api.get<SingleBoostsResponse>(
+  const { boost } = await sp.api.get<SingleBoostsResponse>(
     `api/v3/boosts/${guid}`,
   );
 

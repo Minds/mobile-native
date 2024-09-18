@@ -1,5 +1,5 @@
 import useApiFetch from '../../common/hooks/useApiFetch';
-import { ApiResponse } from '../../common/services/api.service';
+import { ApiResponse } from '~/common/services/ApiResponse';
 
 type UniqueOnchainType = {
   unique: boolean;

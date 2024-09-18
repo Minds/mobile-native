@@ -1,12 +1,13 @@
 import { useCallback, useState } from 'react';
 import { View } from 'react-native';
+import { observer } from 'mobx-react';
 
 import { Button, H4, Icon, ScreenSection } from '~/common/ui';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import Header from './Header';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useSurveyData } from '../hooks';
-import { observer } from 'mobx-react';
+import sp from '~/services/serviceProvider';
 
 type Survey = {
   title: string | undefined;
@@ -32,7 +33,7 @@ type SurveyComponentProps = SurveyViewProps & {
 };
 
 const SurveyComponent = ({ onPressContinue, data }: SurveyComponentProps) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const [selection, setSelection] = useState<string>();
 
   const {
@@ -101,7 +102,7 @@ export const SurveyView = observer(({ onPressContinue }: SurveyViewProps) => {
   return <SurveyComponent data={data} onPressContinue={onPressContinue} />;
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   rounded: {
     width: 30,
     height: 30,

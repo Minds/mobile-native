@@ -1,8 +1,7 @@
 import React, { forwardRef, useCallback, useState } from 'react';
 import { ScrollView, ScrollViewProps } from 'react-native';
 import { useLayout } from '@react-native-community/hooks';
-import ThemedStyles from '~/styles/ThemedStyles';
-
+import sp from '~/services/serviceProvider';
 /**
  * Scroll view that disable the scroll if content fits on it
  */
@@ -24,7 +23,7 @@ function FitScrollView(
       onLayout={onLayout}
       onContentSizeChange={onSizeChange}
       scrollEnabled={shouldScroll}
-      style={props.style || ThemedStyles.style.flexContainer}
+      style={props.style || sp.styles.style.flexContainer}
       {...props}
     />
   );

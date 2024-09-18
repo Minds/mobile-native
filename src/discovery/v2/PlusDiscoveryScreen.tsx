@@ -6,8 +6,7 @@ import { IS_IOS, IS_IPAD } from '~/config/Config';
 import Banner from '~/common/components/Banner';
 import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
 import useCurrentUser from '~/common/hooks/useCurrentUser';
-import i18n from '~/common/services/i18n.service';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { Screen, ScreenHeader } from '~ui/screen';
 import { TDiscoveryV2Tabs } from './DiscoveryV2Store';
 import { DiscoveryTagsList } from './tags/DiscoveryTagsList';
@@ -15,12 +14,13 @@ import { DiscoveryTrendsList } from './trends/DiscoveryTrendsList';
 import { useMindsPlusV2Store } from './useDiscoveryV2Store';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
 import CaptureFab from '~/capture/CaptureFab';
+import sp from '~/services/serviceProvider';
 
 /**
  * Discovery Feed Screen
  */
 const PlusDiscoveryScreen = observer(() => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const navigation = useNavigation();
   const route = useRoute<any>();
   const store = useMindsPlusV2Store();
@@ -37,6 +37,7 @@ const PlusDiscoveryScreen = observer(() => {
       pro: false,
     });
   }, [navigation, user]);
+  const i18n = sp.i18n;
 
   return (
     <Screen safe onlyTopEdge={IS_IOS}>

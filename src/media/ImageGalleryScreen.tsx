@@ -5,12 +5,12 @@ import React, { useCallback, useState } from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
 import Gallery, { RenderItemInfo } from 'react-native-awesome-gallery';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import api from '../common/services/api.service';
 import { ModalFullScreen } from '../common/ui';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import BottomContent from '../newsfeed/activity/BottomContent';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 import { BoostCTA } from '~/modules/boost';
 
 interface ImageGalleryScreenProps {
@@ -28,7 +28,7 @@ function ImageGalleryScreen({
 }: ImageGalleryScreenProps) {
   const { width, height } = useWindowDimensions();
   const { top } = useSafeAreaInsets();
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const images = entity.custom_data;
   const [controlsVisible, setControlsVisible] = useState(false);
 
@@ -56,7 +56,7 @@ function ImageGalleryScreen({
           contentFit="contain"
           source={{
             uri: item.src,
-            headers: api.buildHeaders(),
+            headers: sp.api.buildHeaders(),
           }}
         />
       );

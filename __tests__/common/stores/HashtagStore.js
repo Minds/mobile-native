@@ -1,6 +1,11 @@
 import { toJS } from 'mobx';
 
-import HashtagStore from '../../../src/common/stores/HashtagStore';
+import HashtagStore from '~/common/stores/HashtagStore';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+// mock services
+sp.mockService('hashtag');
 
 /**
  * Tests
@@ -12,7 +17,7 @@ describe('Hashtag store', () => {
     store = new HashtagStore();
   });
 
-  it('it should add the tag as suggested if it doesn\'t exist', () => {
+  it("it should add the tag as suggested if it doesn't exist", () => {
     const fakeTags = [
       {
         value: 'Minds',

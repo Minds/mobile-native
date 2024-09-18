@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-
 import { TouchableOpacity, Platform } from 'react-native';
-
+import { TouchableOpacity as TouchableGesture } from 'react-native-gesture-handler';
 import { observer } from 'mobx-react';
 
-import withPreventDoubleTap from '../common/components/PreventDoubleTap';
-import i18n from '../common/services/i18n.service';
-import ThemedStyles from '../styles/ThemedStyles';
-import { TouchableOpacity as TouchableGesture } from 'react-native-gesture-handler';
-import MText from '../common/components/MText';
+import withPreventDoubleTap from '~/common/components/PreventDoubleTap';
 
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 // prevent double tap in touchable
 const TouchableOpacityCustom = withPreventDoubleTap(
   // @ts-ignore
@@ -44,7 +41,7 @@ export default class ReplyAction extends Component<{
         style={containerStyle}
         onPress={this.toggleExpand}
         testID="ReplyCommentButton">
-        <MText style={fontStyle}>{i18n.t('reply')}</MText>
+        <MText style={fontStyle}>{sp.i18n.t('reply')}</MText>
       </TouchableOpacityCustom>
     );
   }
@@ -57,13 +54,13 @@ export default class ReplyAction extends Component<{
   };
 }
 
-const containerStyle = ThemedStyles.combine(
+const containerStyle = sp.styles.combine(
   'paddingRight2x',
   'rowJustifyStart',
   'marginLeft3x',
 );
 
-const fontStyle = ThemedStyles.combine(
+const fontStyle = sp.styles.combine(
   'colorPrimaryText',
   'marginRight',
   'fontMedium',

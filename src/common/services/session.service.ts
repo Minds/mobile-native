@@ -7,18 +7,20 @@ import {
   OAuthSession,
   CookieSession,
 } from './storage/session.storage.service';
-import AuthService from '../../auth/AuthService';
 import { getStores } from '../../../AppStores';
-import logService from './log.service';
 import type UserModel from '../../channel/UserModel';
-import { createUserStore } from './storage/storages.service';
-import SettingsStore from '../../settings/SettingsStore';
+
 import { ApiService } from './api.service';
-import analyticsService from './analytics.service';
 import { TokenExpiredError } from './TokenExpiredError';
 import { IS_TENANT } from '../../config/Config';
 import CookieManager from '@react-native-cookies/cookies';
 import { APP_API_URI } from '~/config/Config';
+import type { AnalyticsService } from './analytics.service';
+import type { Storages } from './storage/storages.service';
+import type { LogService } from './log.service';
+import type { AuthService } from '~/auth/AuthService';
+import type { SettingsService } from '~/settings/SettingsService';
+import sp from '~/services/serviceProvider';
 
 const atob = (text: string) => Buffer.from(text, 'base64');
 
@@ -64,11 +66,6 @@ export class SessionService {
   guid: string | null = null;
 
   /**
-   * Session storage service
-   */
-  sessionStorage: SessionStorageService;
-
-  /**
    * Initial screen
    */
   initialScreen = '';
@@ -86,9 +83,14 @@ export class SessionService {
    * Constructor
    * @param {object} sessionStorage
    */
-  constructor(sessionStorage: SessionStorageService) {
-    this.sessionStorage = sessionStorage;
-  }
+  constructor(
+    private sessionStorage: SessionStorageService,
+    private analytics: AnalyticsService,
+    private storages: Storages,
+    private log: LogService,
+    private settings: SettingsService,
+    private auth: AuthService,
+  ) {}
 
   /**
    * returns session count
@@ -148,7 +150,7 @@ export class SessionService {
       const { user, pseudoId } = session;
 
       // set the analytics pseudo id (if not tenant)
-      analyticsService.setUserId(IS_TENANT ? user.guid : pseudoId);
+      this.analytics.setUserId(IS_TENANT ? user.guid : pseudoId);
 
       let access_token: string;
 
@@ -175,12 +177,12 @@ export class SessionService {
       await this.loadUser(user);
 
       if (this.guid) {
-        createUserStore(this.guid);
-        SettingsStore.loadUserSettings();
+        this.storages.initStores(this.guid);
+        this.settings.loadUserSettings();
       }
 
       for (let i = 0; i < this.sessions.length; i++) {
-        this.apiServiceInstances.push(new ApiService(i));
+        this.apiServiceInstances.push(sp.resolve('apiNoActiveSession', i));
       }
 
       this.setReady();
@@ -190,14 +192,14 @@ export class SessionService {
     } catch (e) {
       this.setToken(null);
       this.setRefreshToken(null);
-      logService.exception('[SessionService] error getting tokens', e);
+      this.log.exception('[SessionService] error getting tokens', e);
       return null;
     }
   }
 
   tokenCanRefresh(refreshToken?: RefreshToken) {
     if (this.switchingAccount) {
-      logService.info(
+      this.log.info(
         '[sessionService] unable to refresh token when switching account',
       );
       return false;
@@ -219,8 +221,8 @@ export class SessionService {
 
   async refreshAuthToken() {
     if (this.tokenCanRefresh()) {
-      logService.info('[SessionService] refreshing token...');
-      const tokens = await AuthService.refreshToken();
+      this.log.info('[SessionService] refreshing token...');
+      const tokens = await this.auth.refreshToken();
       if ((this.sessions?.length ?? 0) > 0) {
         tokens.pseudo_id = this.sessions[this.activeIndex]?.pseudoId;
         this.sessions[this.activeIndex] = this.buildOAuthSessionData(tokens);
@@ -229,9 +231,9 @@ export class SessionService {
       this.setToken(tokens.access_token);
       // persist sessions array
       this.persistSessionsArray();
-      logService.info('[SessionService] token refreshed!');
+      this.log.info('[SessionService] token refreshed!');
     } else {
-      logService.info("[SessionService] can't refreshing token");
+      this.log.info("[SessionService] can't refreshing token");
       throw new TokenExpiredError('Session Expired');
     }
   }
@@ -260,8 +262,8 @@ export class SessionService {
 
     const { refreshToken, accessToken } = session;
     if (this.tokenCanRefresh(refreshToken)) {
-      logService.info('[SessionService] refreshing token from');
-      const tokens = await AuthService.refreshToken(
+      this.log.info('[SessionService] refreshing token from');
+      const tokens = await this.auth.refreshToken(
         refreshToken.refresh_token,
         accessToken.access_token,
       );
@@ -271,9 +273,9 @@ export class SessionService {
         this.sessions[index].user,
       );
       this.persistSessionsArray();
-      logService.info('[SessionService] token refreshed!');
+      this.log.info('[SessionService] token refreshed!');
     } else {
-      logService.info("[SessionService] can't refreshing token");
+      this.log.info("[SessionService] can't refreshing token");
       throw new TokenExpiredError('Session Expired');
     }
   }
@@ -388,8 +390,8 @@ export class SessionService {
   async login() {
     // create user data storage
     if (this.guid) {
-      createUserStore(this.guid);
-      SettingsStore.loadUserSettings();
+      this.storages.initStores(this.guid);
+      this.settings.loadUserSettings();
     }
 
     this.setLoggedIn(true);
@@ -422,7 +424,9 @@ export class SessionService {
 
     // set the active index which will be logged
     this.setActiveIndex(this.sessions.length - 1);
-    this.apiServiceInstances.push(new ApiService(this.activeIndex));
+    this.apiServiceInstances.push(
+      sp.resolve('apiNoActiveSession', this.activeIndex),
+    );
 
     // save all data into session storage
     this.persistSessionsArray();
@@ -449,19 +453,21 @@ export class SessionService {
       sessions.push(sessionData);
       this.setSessions(sessions);
 
-      analyticsService.setUserId(
+      this.analytics.setUserId(
         IS_TENANT ? sessionData.user.guid : sessionData.pseudoId,
       );
 
       // set the active index which will be logged
       this.setActiveIndex(this.sessions.length - 1);
-      this.apiServiceInstances.push(new ApiService(this.activeIndex));
+      this.apiServiceInstances.push(
+        sp.resolve('apiNoActiveSession', this.activeIndex),
+      );
 
       // save all data into session storage
       this.persistSessionsArray();
       this.persistActiveIndex();
     } catch (err) {
-      logService.exception('[SessionService addSession]', err);
+      this.log.exception('[SessionService addSession]', err);
     }
   }
 
@@ -487,9 +493,7 @@ export class SessionService {
     this.accessTokenExpires = session.accessToken.access_token_expires;
     this.refreshTokenExpires = session.refreshToken.refresh_token_expires;
 
-    analyticsService.setUserId(
-      IS_TENANT ? session.user.guid : session.pseudoId,
-    );
+    this.analytics.setUserId(IS_TENANT ? session.user.guid : session.pseudoId);
 
     // persist index
     this.persistActiveIndex();
@@ -669,7 +673,7 @@ export class SessionService {
         try {
           await fn(...args);
         } catch (error) {
-          logService.exception('[SessionService]', error);
+          this.log.exception('[SessionService]', error);
         }
       },
       { fireImmediately: true },
@@ -689,7 +693,7 @@ export class SessionService {
           try {
             await fn(token);
           } catch (error) {
-            logService.exception('[SessionService]', error);
+            this.log.exception('[SessionService]', error);
           }
         }
       },
@@ -710,19 +714,12 @@ export class SessionService {
           try {
             await fn(token);
           } catch (error) {
-            logService.exception('[SessionService]', error);
+            this.log.exception('[SessionService]', error);
           }
         }
       },
       { fireImmediately: false },
     );
-  }
-
-  /**
-   * Clear messenger keys
-   */
-  clearMessengerKeys() {
-    return this.sessionStorage.clearPrivateKey();
   }
 
   setRecoveryCodeUsed(used: boolean) {
@@ -741,5 +738,3 @@ export class SessionService {
     return session.refreshToken.refresh_token;
   }
 }
-
-export default new SessionService(new SessionStorageService());

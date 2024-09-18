@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import UserModel from '../../../channel/UserModel';
-import NavigationService from '../../../navigation/NavigationService';
 import GradientButton from '../GradientButton';
+import sp from '~/services/serviceProvider';
 
 type Props = {
   entity?: UserModel;
@@ -11,7 +11,7 @@ type Props = {
 
 export default function SupermindButton({ entity, style }: Props) {
   const handlePress = useCallback(() => {
-    NavigationService.navigate('Compose', {
+    sp.navigation.navigate('Compose', {
       openSupermindModal: true,
       supermindTargetChannel: entity,
       allowedMode: 'video',

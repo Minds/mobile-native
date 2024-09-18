@@ -2,8 +2,8 @@ import React from 'react';
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import FadeView from '../common/components/FadeView';
 import MText from '../common/components/MText';
-import i18n from '../common/services/i18n.service';
-import ThemedStyles from '../styles/ThemedStyles';
+
+import sp from '../services/serviceProvider';
 
 type PropsType = {
   pro: boolean | undefined;
@@ -11,17 +11,18 @@ type PropsType = {
 
 const Header = ({ pro }: PropsType) => {
   const texts = pro ? 'pro' : 'plus';
+  const i18n = sp.i18n;
   return (
     <ImageBackground
       style={styles.banner}
       source={require('../assets/plus-image.png')}
       resizeMode="cover">
-      {ThemedStyles.theme === 1 && (
+      {sp.styles.theme === 1 && (
         <FadeView
-          style={ThemedStyles.style.positionAbsoluteBottom}
+          style={sp.styles.style.positionAbsoluteBottom}
           fades={['bottom']}
           fadeLength={200}
-          backgroundColor={ThemedStyles.getColor('SecondaryBackground')}
+          backgroundColor={sp.styles.getColor('SecondaryBackground')}
         />
       )}
       <View style={styles.textContainer}>

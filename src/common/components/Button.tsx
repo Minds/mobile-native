@@ -9,9 +9,9 @@ import {
   View,
 } from 'react-native';
 import { Flow } from 'react-native-animated-spinkit';
-
-import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
 import MText from './MText';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 export interface ButtonPropsType extends TouchableOpacityProps {
   text?: string;
@@ -40,7 +40,7 @@ export interface ButtonPropsType extends TouchableOpacityProps {
  * Custom Button component
  */
 const Button: FC<ButtonPropsType> = props => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const {
     onPress,
@@ -65,20 +65,18 @@ const Button: FC<ButtonPropsType> = props => {
     ...extraProps
   } = props;
 
-  let background = ThemedStyles.getColor(
-    active ? 'Active' : 'PrimaryBackground',
-  );
+  let background = sp.styles.getColor(active ? 'Active' : 'PrimaryBackground');
   let mainColor =
-    color || (transparent ? '#FFFFFF' : ThemedStyles.getColor('PrimaryText'));
+    color || (transparent ? '#FFFFFF' : sp.styles.getColor('PrimaryText'));
 
   if (inverted !== undefined) {
     background = mainColor;
-    mainColor = ThemedStyles.getColor('PrimaryBackground');
+    mainColor = sp.styles.getColor('PrimaryBackground');
   }
 
   if (primary) {
-    background = ThemedStyles.getColor('Link');
-    mainColor = ThemedStyles.getColor('PrimaryBackground');
+    background = sp.styles.getColor('Link');
+    mainColor = sp.styles.getColor('PrimaryBackground');
   }
 
   const padding = {
@@ -97,7 +95,7 @@ const Button: FC<ButtonPropsType> = props => {
     ? {
         backgroundColor: 'rgba(0,0,0,0.40)',
         borderColor: action
-          ? ThemedStyles.getColor('Link')
+          ? sp.styles.getColor('Link')
           : Platform.select({
               android: 'rgba(255,255,255,0.40)',
               ios: 'rgba(255,255,255,0.60)',

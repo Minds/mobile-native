@@ -1,26 +1,30 @@
-//@ts-nocheck
 import difference from 'lodash/difference';
 
-import apiService from './api.service';
 import { isAbort, isApiForbidden } from './ApiErrors';
 import GroupModel from '../../groups/GroupModel';
 import UserModel from '../../channel/UserModel';
 import BlogModel from '../../blogs/BlogModel';
 import ActivityModel from '../../newsfeed/ActivityModel';
-import entitiesStorage from './storage/entities.storage';
 
 // types
 import type { FeedRecordType } from './feeds.service';
 import type BaseModel from '../BaseModel';
+import type { ApiService } from './api.service';
+import type { EntitiesStorage } from './storage/entities.storage';
+
+type EntityType = ActivityModel | BlogModel | UserModel | GroupModel;
 
 /**
  * Entities services
  */
-class EntitiesService {
+export class EntitiesService {
   /**
    * Constructor
    */
-  constructor() {
+  constructor(
+    private api: ApiService,
+    private entitiesStorage: EntitiesStorage,
+  ) {
     // delete the cache when activities are deleted
     ActivityModel.events.on('deleteEntity', activity =>
       this.deleteFromCache(activity.urn),
@@ -32,7 +36,7 @@ class EntitiesService {
    * @param {string} urn
    */
   deleteFromCache(urn: string) {
-    entitiesStorage.remove(urn);
+    this.entitiesStorage.remove(urn);
   }
 
   /**
@@ -40,7 +44,7 @@ class EntitiesService {
    * @param {Array<string>} urn
    */
   deleteManyFromCache(urns: Array<string>) {
-    entitiesStorage.removeMany(urns);
+    this.entitiesStorage.removeMany(urns);
   }
 
   /**
@@ -58,9 +62,9 @@ class EntitiesService {
       return [];
     }
 
-    let urnsToFetch = [];
-    const urnsToResync = [];
-    const entities = [];
+    let urnsToFetch: Array<string> = [];
+    const urnsToResync: Array<string> = [];
+    const entities: Array<EntityType> = [];
     const entitiesMap = new Map();
 
     for (const feedItem of feed) {
@@ -81,7 +85,7 @@ class EntitiesService {
 
     // if we have urnsToFetch we try to load from the storage first
     if (urnsToFetch.length > 0) {
-      const localEntities = entitiesStorage
+      const localEntities = this.entitiesStorage
         .readMany(urnsToFetch)
         .filter(e => e !== null);
       if (localEntities.length > 0) {
@@ -156,14 +160,14 @@ class EntitiesService {
     urn: string,
     defaultEntity: BaseModel | null = null,
     asActivities: boolean = false,
-  ): BaseModel {
+  ): Promise<EntityType | null> {
     if (!urn.startsWith('urn:')) {
       // not a urn, so treat as a guid
       urn = `urn:activity:${urn}`; // and assume activity
     }
 
     // from sql storage
-    let entity = entitiesStorage.read(urn);
+    let entity: any = this.entitiesStorage.read(urn);
 
     if (entity) {
       entity = this.mapToModel(entity);
@@ -217,15 +221,15 @@ class EntitiesService {
     abortTag: any,
     asActivities: boolean = false,
     transform?: (entity: any) => void,
-  ): Promise<void> {
+  ) {
     try {
-      const response: any = await apiService.get(
+      const response: any = await this.api.get<{ entities: Array<EntityType> }>(
         'api/v2/entities/',
         { urns, as_activities: asActivities ? 1 : 0 },
         abortTag,
       );
 
-      const entities = [];
+      const entities: Array<EntityType> = [];
 
       for (const entity of response.entities) {
         if (transform) {
@@ -238,17 +242,6 @@ class EntitiesService {
     } catch (err) {
       // if the server response is a 403
       if (isApiForbidden(err)) {
-        // if the entity exists in the cache, remove the permissions to force the UI update
-        urns.forEach((urn: string) => {
-          const cache = this.entities.get(urn);
-
-          if (cache) {
-            // remove permissions
-            cache.entity.setPermissions({ permissions: [] });
-            // if the entity is attached to a list we remove if from the list
-            cache.entity.removeFromList();
-          }
-        });
         // remove it from memory and local storage
         this.deleteManyFromCache(urns);
         return;
@@ -258,14 +251,14 @@ class EntitiesService {
   }
 
   save(entity: any) {
-    entitiesStorage.save(entity);
+    this.entitiesStorage.save(entity);
   }
 
   /**
    * Map object to model
    * @param {Object} entity
    */
-  mapToModel(entity: Object): BaseModel {
+  mapToModel(entity: any): EntityType {
     switch (entity.type) {
       case 'activity':
         return ActivityModel.create(entity);
@@ -285,5 +278,3 @@ class EntitiesService {
     return ActivityModel.create(entity);
   }
 }
-
-export default new EntitiesService();

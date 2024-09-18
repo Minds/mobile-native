@@ -2,7 +2,7 @@ import map from 'lodash/map';
 import groupBy from 'lodash/groupBy';
 import sortBy from 'lodash/sortBy';
 import { extendObservable } from 'mobx';
-import { InjectItem } from '~/common/components/FeedList';
+import { InjectItem } from '~/common/components/FeedListInjectedItem';
 import PortraitBarItem from '../models/PortraitBarItem';
 import injectBoosts from './inject-boosts';
 import ActivityModel from '../../newsfeed/ActivityModel';

@@ -1,20 +1,28 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 import autobind from '../../helpers/autobind';
-import i18n from '../../services/i18n.service';
 import CheckButton from '../bottom-sheet/CheckButton';
 import SectionTitle from '../bottom-sheet/SectionTitle';
+import sp from '~/services/serviceProvider';
+
 type PropsType = {
   value: Array<number>;
   onChange: (value: Array<number>) => void;
 };
-export default class NsfwToggle extends Component<PropsType> {
+type StateType = {
+  active: boolean;
+};
+
+export default class NsfwToggle extends Component<PropsType, StateType> {
+  reasons: Array<{ value: number; label: string }>;
+
   constructor(props) {
     super(props);
 
     this.state = {
       active: Boolean(props.value && props.value.length),
     };
+
+    const i18n = sp.i18n;
 
     this.reasons = [
       { value: 1, label: i18n.t('nsfw.1') },
@@ -54,6 +62,7 @@ export default class NsfwToggle extends Component<PropsType> {
   }
 
   render() {
+    const i18n = sp.i18n;
     return (
       <React.Fragment>
         <SectionTitle>{i18n.t('nsfw.button')}</SectionTitle>

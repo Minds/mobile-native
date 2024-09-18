@@ -11,7 +11,7 @@ exports[`Activity screen component renders correctly  1`] = `
         "flex": 1,
       },
       {
-        "backgroundColor": undefined,
+        "backgroundColor": "#010100",
       },
       {
         "alignSelf": "center",
@@ -33,7 +33,7 @@ exports[`Activity screen component renders correctly  1`] = `
       style={
         [
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "#010100",
           },
           {
             "paddingTop": -10,
@@ -168,13 +168,7 @@ exports[`Activity screen component renders correctly  1`] = `
                 recyclingKey="824853017709780997"
                 source={
                   {
-                    "headers": {
-                      "App-Version": "3.8.0",
-                      "Cache-Control": "no-cache, no-store, must-revalidate",
-                      "Content-Type": "application/json",
-                      "Pragma": "no-cache",
-                      "no-cache": "1",
-                    },
+                    "headers": undefined,
                     "uri": "https://cdn.minds.com/icon/824853017709780997/medium/undefined",
                   }
                 }
@@ -530,8 +524,8 @@ exports[`Activity screen component renders correctly  1`] = `
     <ExpoLinearGradient
       colors={
         [
-          "undefined00",
-          "undefinedFF",
+          "#3b3b00ff00",
+          "#3b3b00ffFF",
         ]
       }
       style={
@@ -547,7 +541,7 @@ exports[`Activity screen component renders correctly  1`] = `
   <View
     style={
       {
-        "backgroundColor": undefined,
+        "backgroundColor": "#010100",
         "paddingBottom": -10,
       }
     }
@@ -560,7 +554,7 @@ exports[`Activity screen component renders correctly  1`] = `
             "justifyContent": "flex-start",
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "#010100",
           },
           {
             "paddingLeft": 8,

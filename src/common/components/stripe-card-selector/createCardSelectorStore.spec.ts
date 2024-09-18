@@ -1,8 +1,14 @@
-import mindsConfigService from '~/common/services/minds-config.service';
 import createCardSelectorStore from './createCardSelectorStore';
 
-jest.mock('~/common/services/minds-config.service');
-jest.mock('~/common/services/analytics.service');
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+const mindsConfigService = sp.mockService('config');
+sp.mockService('analytics');
+sp.mockService('api');
+sp.mockService('i18n');
 
 describe('createCardSelectorStore', () => {
   let store;

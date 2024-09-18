@@ -1,12 +1,10 @@
-//@ts-nocheck
-import settingsStore from '../../settings/SettingsStore';
-// import { withScope, captureException } from '@sentry/react-native/dist/js/sdk';
+import { captureException, withScope } from '@sentry/react-native';
 import shouldReportToSentry from '../helpers/errors';
 
 /**
  * Log service
  */
-class LogService {
+export class LogService {
   log(...args) {
     if (__DEV__) {
       console.log(...args);
@@ -18,22 +16,16 @@ class LogService {
     if (__DEV__) {
       console.info(...args);
     }
-    if (!settingsStore.appLog) {
-      return;
-    }
-    // deviceLog.info(...args);
   }
 
   warn(...args) {
-    if (!settingsStore.appLog) {
-      return;
+    if (__DEV__) {
+      console.warn(...args);
     }
-    // deviceLog.warn(...args);
   }
 
   error(...args) {
     console.error(...args);
-    // deviceLog.error(...args);
   }
 
   exception(prepend, error?: any) {
@@ -53,16 +45,14 @@ class LogService {
       process.env.JEST_WORKER_ID === undefined &&
       !__DEV__
     ) {
-      // if (prepend) {
-      //   withScope(scope => {
-      //     scope.setExtra('where', prepend);
-      //     captureException(error);
-      //   });
-      // } else {
-      //   captureException(error);
-      // }
+      if (prepend) {
+        withScope(scope => {
+          scope.setExtra('where', prepend);
+          captureException(error);
+        });
+      } else {
+        captureException(error);
+      }
     }
   }
 }
-
-export default new LogService();

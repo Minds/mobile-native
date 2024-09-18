@@ -2,14 +2,14 @@ import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import { MoreStackParamList } from '../../navigation/NavigationTypes';
-import InputContainer from '../../common/components/InputContainer';
-import CenteredLoading from '../../common/components/CenteredLoading';
-import i18n from '../../common/services/i18n.service';
-import { showNotification } from '../../../AppMessages';
-import MText from '../../common/components/MText';
+
+import { MoreStackParamList } from '~/navigation/NavigationTypes';
+import InputContainer from '~/common/components/InputContainer';
+import CenteredLoading from '~/common/components/CenteredLoading';
+import { showNotification } from '~/../AppMessages';
+import MText from '~/common/components/MText';
 import { TENANT } from '~/config/Config';
+import serviceProvider from '~/services/serviceProvider';
 
 type DisableTFARouteProp = RouteProp<MoreStackParamList, 'DisableTFA'>;
 
@@ -18,7 +18,8 @@ type PropsType = {
 };
 
 const DisableTFA = observer(({ route }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = serviceProvider.styles.style;
+  const i18n = serviceProvider.i18n;
   const { store, password } = route.params;
   const navigation = useNavigation();
 

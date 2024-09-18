@@ -4,13 +4,13 @@ const config = {
   automock: false,
   cacheDirectory: '.jest/cache',
   testRegex: [
-    './__tests__/.*.js$',
+    './__tests__/.*.[tj]sx?$',
     './src/.*\\.spec\\.[tj]sx?$',
     './preview/.*\\.spec\\.[tj]sx?$',
   ],
   preset: 'jest-expo',
   setupFiles: ['<rootDir>/setupTests.js'],
-  testPathIgnorePatterns: ['/node_modules/', '.yarn'],
+  testPathIgnorePatterns: ['/node_modules/', '.yarn', '/packages/cli'],
   // transformIgnorePatterns: [
   //   'node_modules/(?!react-native|react-native-gesture-handler|react-navigation)/',
   //   'jest-runner',

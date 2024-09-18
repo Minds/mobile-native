@@ -3,17 +3,16 @@ import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import AnimatedHeight from '~/common/components/animations/AnimatedHeight';
 import channelAvatarUrl from '~/common/helpers/channel-avatar-url';
-import i18n from '~/common/services/i18n.service';
 import { Avatar, IconNext, Spacer } from '~/common/ui';
 import type { SpacerPropType } from '~/common/ui/layout';
-import NavigationService from '~/navigation/NavigationService';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useMutualSubscribers } from './useMutualSubscribers';
 import UserModel from '../UserModel';
 import {
   Typography,
   TypographyType,
 } from '../../common/ui/typography/Typography';
+import sp from '~/services/serviceProvider';
 
 type MutualSubscribersProps = {
   channel: UserModel;
@@ -39,7 +38,6 @@ function MutualSubscribers({
   const { result } = useMutualSubscribers(channel.guid);
   const count = result?.count;
   const users = result?.users.slice(0, limit) || [];
-
   if (!count) {
     return <NobodyInCommon />;
   }
@@ -84,6 +82,7 @@ const NobodyInCommon = () => {
 };
 
 const Description = ({ fontType, users, total, limit, onPress, user }) => {
+  const i18n = sp.i18n;
   const text =
     total > limit
       ? i18n.t(
@@ -136,7 +135,7 @@ const Description = ({ fontType, users, total, limit, onPress, user }) => {
 const ChannelUsername = ({ user, fontType }) => {
   const onPress = useCallback(
     () =>
-      NavigationService.push('App', {
+      sp.navigation.push('App', {
         screen: 'Channel',
         params: {
           guid: user.guid,
@@ -155,7 +154,7 @@ const ChannelUsername = ({ user, fontType }) => {
 const ChannelAvatar = ({ user }) => {
   const onAvatarPress = useCallback(
     () =>
-      NavigationService.push('App', {
+      sp.navigation.push('App', {
         screen: 'Channel',
         params: {
           guid: user.guid,
@@ -177,7 +176,7 @@ const ChannelAvatar = ({ user }) => {
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     'flexContainer',
     'rowJustifyStart',
@@ -192,7 +191,7 @@ const styles = ThemedStyles.create({
     {
       marginRight: -15,
       borderRadius: 100,
-      borderColor: ThemedStyles.getColor('PrimaryBackground'), // TODO: find a better solution
+      borderColor: sp.styles.getColor('PrimaryBackground'), // TODO: find a better solution
     },
   ],
 });

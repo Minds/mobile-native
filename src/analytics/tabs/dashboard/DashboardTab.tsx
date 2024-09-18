@@ -9,8 +9,6 @@ import Select from '~/common/components/controls/Select';
 import MText from '~/common/components/MText';
 import Selector from '~/common/components/SelectorV2';
 import useApiFetch from '~/common/hooks/useApiFetch';
-import i18n from '~/common/services/i18n.service';
-import ThemedStyles from '~/styles/ThemedStyles';
 import {
   Dashboard,
   FiltersEntity,
@@ -19,6 +17,7 @@ import {
   TimespansEntity,
 } from '../../AnalyticsTypes';
 import { getMaxFeedWidth } from '~/styles/Style';
+import serviceProvider from '~/services/serviceProvider';
 
 interface DashboardTabProps {
   url: string;
@@ -29,8 +28,9 @@ const valueExtractor = item => item.label;
 const keyExtractor = item => item.id;
 
 const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
+  const i18n = serviceProvider.i18n;
   const width = getMaxFeedWidth();
-  const theme = ThemedStyles.style;
+  const theme = serviceProvider.styles.style;
   const [filters, setFilters] = useState<{ [k: string]: FiltersEntity }>({});
   const [timespan, setTimespan] = useState<TimespansEntity | undefined>();
   const [metric, setMetric] = useState<MetricsEntity | undefined>();
@@ -166,7 +166,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
                 onPress={() => show(timeSpanKey)}>
                 <MIcon
                   name={'date-range'}
-                  color={ThemedStyles.getColor('Icon')}
+                  color={serviceProvider.styles.getColor('Icon')}
                   size={18}
                 />
                 <MText style={styles.timeSpanLabel}>{timeSpanLabel}</MText>
@@ -193,7 +193,7 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
                     </MText>
                     <MIcon
                       name={'filter-alt'}
-                      color={ThemedStyles.getColor('Icon')}
+                      color={serviceProvider.styles.getColor('Icon')}
                       size={18}
                     />
                   </TouchableOpacity>
@@ -218,18 +218,21 @@ const DashboardTab = observer(({ url, defaultMetric }: DashboardTabProps) => {
   );
 });
 const width = Dimensions.get('window').width;
-export const activityIndicatorStyle = ThemedStyles.combine('positionAbsolute', {
-  top: 200,
-});
-export const errorStyle = ThemedStyles.combine(
+export const activityIndicatorStyle = serviceProvider.styles.combine(
+  'positionAbsolute',
+  {
+    top: 200,
+  },
+);
+export const errorStyle = serviceProvider.styles.combine(
   'colorSecondaryText',
   'textCenter',
   'fontL',
   'marginVertical4x',
 );
-const styles = ThemedStyles.create({
+const styles = serviceProvider.styles.create({
   mainContainer: [
-    { width: width - ThemedStyles.style.padding3x.padding * 2 },
+    { width: width - serviceProvider.styles.style.padding3x.padding * 2 },
     'justifyCenter',
     'paddingTop3x',
     'alignSelfCenterMaxWidth',

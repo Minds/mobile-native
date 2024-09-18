@@ -7,18 +7,18 @@ import {
 import AccordionSet, {
   AccordionDataType,
   RenderFunction,
-} from '../../../common/components/AccordionSet';
+} from '~/common/components/AccordionSet';
 import MindsTokens, { format } from './MindsTokens';
 import { Earnings } from '../../v2/WalletTypes';
 import AccordionContent, { AccordionContentData } from './AccordionContent';
 import AccordionHeader from './AccordionHeader';
-import CenteredLoading from '../../../common/components/CenteredLoading';
-import capitalize from '../../../common/helpers/capitalize';
-import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
+import CenteredLoading from '~/common/components/CenteredLoading';
+import capitalize from '~/common/helpers/capitalize';
+import toFriendlyCrypto from '~/common/helpers/toFriendlyCrypto';
 import { TokensTabStore } from './tokens/createTokensTabStore';
 import AccordionHeaderTitle from './AccordionHeaderTitle';
-import i18n from '../../../common/services/i18n.service';
 import { Spacer } from '~ui';
+import serviceProvider from '~/services/serviceProvider';
 
 type PropsType = {
   localStore: TokensTabStore;
@@ -26,22 +26,25 @@ type PropsType = {
   currencyType: EarningsCurrencyType;
 };
 
-const friendlyLabel = {
-  wire: i18n.t('wallet.wire'),
-  'wire-all': i18n.t('wallet.wireAll'),
-  partner: i18n.t('wallet.partner'),
-  plus: i18n.t('wallet.plus'),
-  wire_referral: i18n.t('wallet.wireReferral'),
-  boost_partner: i18n.t('wallet.boostPartner'),
+export const getFriendlyLabel = (id: string): string => {
+  const friendlyLabel = {
+    wire: 'wallet.wire',
+    'wire-all': 'wallet.wireAll',
+    partner: 'wallet.partner',
+    plus: 'wallet.plus',
+    wire_referral: 'wallet.wireReferral',
+    boost_partner: 'wallet.boostPartner',
+  };
+  return friendlyLabel[id]
+    ? serviceProvider.i18n.t(friendlyLabel[id])
+    : capitalize(id);
 };
-export const getFriendlyLabel = (id: string): string =>
-  friendlyLabel[id] ?? capitalize(id);
 
 const getProcessedData = (
   earning: Earnings,
   currencyType: EarningsCurrencyType,
-): AccordionContentData[] =>
-  earning.items.map(data => {
+): AccordionContentData[] => {
+  return earning.items.map(data => {
     const isTokens = !currencyType || currencyType === 'tokens';
     const value = isTokens
       ? toFriendlyCrypto(data.amount_tokens)
@@ -54,6 +57,7 @@ const getProcessedData = (
       }`,
     };
   });
+};
 
 const renderHeader = (content: AccordionDataType, index, isActive) => (
   <AccordionHeader

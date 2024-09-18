@@ -5,9 +5,7 @@ import { View, Alert } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
 
 import { APP_URI } from '../config/Config';
-import shareService from '../share/ShareService';
-import i18n from '../common/services/i18n.service';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import type BlogModel from './BlogModel';
 import {
   BottomSheetMenuItem,
@@ -16,6 +14,7 @@ import {
   BottomSheetMenuItemProps,
 } from '../common/components/bottom-sheet';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity: BlogModel;
@@ -60,6 +59,7 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
   getOptions() {
     let options: Array<BottomSheetMenuItemProps> = [];
     const entity = this.props.entity;
+    const i18n = sp.i18n;
 
     // if is not the owner
     if (!entity.isOwner()) {
@@ -86,7 +86,7 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
       iconType: 'ionicon',
       onPress: () => {
         this.hideActionSheet();
-        shareService.share(
+        sp.resolve('share').share(
           this.cleanTitle(this.props.entity.title),
           APP_URI + 'newsfeed/' + this.props.entity.guid,
         );
@@ -100,6 +100,7 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
    * Show an error message
    */
   showError() {
+    const i18n = sp.i18n;
     Alert.alert(
       i18n.t('sorry'),
       i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
@@ -123,8 +124,8 @@ export default class BlogActionSheet extends Component<PropsType, StateType> {
    * Render Header
    */
   render() {
-    const theme = ThemedStyles.style;
-
+    const theme = sp.styles.style;
+    const i18n = sp.i18n;
     return (
       <View>
         <Icon

@@ -1,7 +1,6 @@
 import { Platform } from 'react-native';
-import blockListService from '~/common/services/block-list.service';
 import type ActivityModel from '~/newsfeed/ActivityModel';
-
+import sp from '~/services/serviceProvider';
 /**
  * Remove blocked channel's boosts and sets boosted to true
  * @param {Array<ActivityModel>} boosts
@@ -20,6 +19,6 @@ export function cleanBoosts(
     entity.boosted = true;
     return entity.type === 'user'
       ? false
-      : !blockListService.has(entity.ownerObj?.guid);
+      : !sp.resolve('blockList').has(entity.ownerObj?.guid);
   });
 }

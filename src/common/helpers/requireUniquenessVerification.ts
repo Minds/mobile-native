@@ -1,8 +1,8 @@
-import NavigationService from '~/navigation/NavigationService';
+import sp from '~/services/serviceProvider';
 
 export default function requireUniquenessVerification() {
   return new Promise<boolean>((resolve, reject) => {
-    NavigationService.navigate('PhoneValidation', {
+    sp.navigation.navigate('PhoneValidation', {
       onConfirm: resolve,
       onCancel: reject,
     });

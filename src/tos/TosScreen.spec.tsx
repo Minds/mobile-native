@@ -1,7 +1,12 @@
 import * as React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react-native';
 import TosScreen from './TosScreen';
-import apiService from '~/common/services/api.service';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+// mock services
+sp.mockService('styles');
+const apiService = sp.mockService('api');
 
 jest.mock('~/common/services/api.service');
 jest.mock('~/common/hooks/use-stores', () => ({

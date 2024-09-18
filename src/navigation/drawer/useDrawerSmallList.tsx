@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import i18n from '~/common/services/i18n.service';
 import { IS_TENANT, TENANT } from '~/config/Config';
 import { navigateToHelp } from '~/settings/SettingsScreen';
+import sp from '~/services/serviceProvider';
 
 export const useDrawerSmallList = () => {
   const navigation = useNavigation<any>();
+  const i18n = sp.i18n;
   return !IS_TENANT
     ? [
         {

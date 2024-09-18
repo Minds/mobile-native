@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import MonthPickerInput from '../../../common/components/MonthPickerInput';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import {
   EarningsCurrencyType,
   WalletStoreType,
@@ -10,6 +10,7 @@ import {
 import moment from 'moment';
 import EarningsOverview from './EarningsOverview';
 import { TokensTabStore } from './tokens/createTokensTabStore';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -18,7 +19,7 @@ type PropsType = {
 };
 
 const Earnings = observer(({ walletStore, currencyType, store }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   return (
     <>

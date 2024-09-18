@@ -1,7 +1,7 @@
 import React from 'react';
-import i18n from '~/common/services/i18n.service';
 import { RadioButton } from '../bottom-sheet';
 import DateRangePicker, { DateRangePickerPropsType } from './DateRangePicker';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   filtered: boolean;
@@ -15,7 +15,7 @@ export default function DateRangeFilter(props: PropsType) {
     ({ text }) => (
       <RadioButton
         selected={filtered}
-        title={i18n.t('range', { range: ': ' + text })}
+        title={sp.i18n.t('range', { range: ': ' + text })}
       />
     ),
     [filtered],
@@ -24,7 +24,7 @@ export default function DateRangeFilter(props: PropsType) {
     <>
       <RadioButton
         selected={!filtered}
-        title={i18n.t('discovery.filters.all')}
+        title={sp.i18n.t('discovery.filters.all')}
         onPress={props.clear}
       />
       <DateRangePicker {...rest} inputComponent={Component} />

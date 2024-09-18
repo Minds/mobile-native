@@ -1,4 +1,3 @@
-//@ts-nocheck
 const THOUSAND_SEP = ',';
 const DECIMAL_SEP = '.';
 

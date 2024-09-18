@@ -1,6 +1,6 @@
 import type UserModel from '../../../channel/UserModel';
-import logService from '../log.service';
-import { storages } from './storages.service';
+import type { LogService } from '../log.service';
+import type { Storages } from './storages.service';
 
 const KEY = 'SESSIONS_DATA';
 const INDEX_KEY = 'SESSIONS_ACTIVE_INDEX';
@@ -51,18 +51,24 @@ export type SessionsData = {
  * Session service
  */
 export class SessionStorageService {
+  constructor(
+    private storagesService: Storages,
+    private logService: LogService,
+  ) {}
   /**
    * Get tokens of the current user
    */
   getAll(): SessionsData | null {
     try {
-      const sessionData = storages.session.getMap<SessionsData>(KEY);
-      const activeIndex = storages.session.getInt(INDEX_KEY) || 0;
+      const sessionData =
+        this.storagesService.session.getObject<SessionsData>(KEY);
+      const activeIndex =
+        this.storagesService.session.getNumber(INDEX_KEY) || 0;
       //  the active index was moved outside the session data
       if (sessionData) {
         sessionData.activeIndex = activeIndex;
       }
-      return sessionData;
+      return sessionData || null;
     } catch (err) {
       return null;
     }
@@ -73,10 +79,10 @@ export class SessionStorageService {
    */
   save(sessionsData: SessionsData) {
     try {
-      storages.session.setMap(KEY, sessionsData);
-      storages.session.setInt(INDEX_KEY, sessionsData.activeIndex);
+      this.storagesService.session.setObject(KEY, sessionsData);
+      this.storagesService.session.set(INDEX_KEY, sessionsData.activeIndex);
     } catch (err) {
-      logService.exception('[SessionStorage] save', err);
+      this.logService.exception('[SessionStorage] save', err);
     }
   }
 
@@ -85,11 +91,11 @@ export class SessionStorageService {
    */
   saveSessions(sessions: Sessions) {
     try {
-      storages.session.setMap(KEY, {
+      this.storagesService.session.setObject(KEY, {
         tokensData: sessions,
       });
     } catch (err) {
-      logService.exception('[SessionStorage] save', err);
+      this.logService.exception('[SessionStorage] save', err);
     }
   }
 
@@ -97,7 +103,7 @@ export class SessionStorageService {
    * Save the active
    */
   saveActiveIndex(index: number) {
-    storages.session.setInt(INDEX_KEY, index);
+    this.storagesService.session.set(INDEX_KEY, index);
   }
 
   /**
@@ -105,7 +111,7 @@ export class SessionStorageService {
    * @param {string} token
    */
   setAccessToken(token, expires) {
-    storages.session.setMap('access_token', {
+    this.storagesService.session.setObject('access_token', {
       access_token: token,
       access_token_expires: expires,
     });
@@ -116,7 +122,7 @@ export class SessionStorageService {
    * @param {object} user
    */
   setUser(user) {
-    storages.session.setMap('user', user);
+    this.storagesService.session.setObject('user', user);
   }
 
   /**
@@ -125,40 +131,16 @@ export class SessionStorageService {
    * @param {string} guid
    */
   setRefreshToken(token, expires) {
-    storages.session.setMap('refresh_token', {
+    this.storagesService.session.setObject('refresh_token', {
       refresh_token: token,
       refresh_token_expires: expires,
     });
   }
 
   /**
-   * Deprecated
-   * Get messenger private key of the current user
-   */
-  getPrivateKey(): Promise<string | null | undefined> {
-    return storages.session.getStringAsync('private_key');
-  }
-
-  /**
-   * Deprecated
-   * Set private key
-   * @param {string} privateKey
-   */
-  setPrivateKey(privateKey: string) {
-    storages.session.setString('private_key', privateKey);
-  }
-
-  /**
-   * Clear messenger private keys
-   */
-  clearPrivateKey() {
-    storages.session.removeItem('private_key');
-  }
-
-  /**
    * Clear all session data (logout)
    */
-  async clear() {
-    await storages.session.clearStore();
+  clear() {
+    this.storagesService.session.clearAll();
   }
 }

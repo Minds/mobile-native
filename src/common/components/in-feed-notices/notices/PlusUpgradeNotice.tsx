@@ -2,18 +2,18 @@ import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import React, { useCallback } from 'react';
 import useCurrentUser from '~/common/hooks/useCurrentUser';
-import i18n from '~/common/services/i18n.service';
-import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
+import serviceProvider from '~/services/serviceProvider';
 
 /**
  * Upgrade to Minds plus Notice
  */
 function PlusUpgradeNotice({ name }: NoticeProps) {
+  const i18n = serviceProvider.i18n;
   const navigation = useNavigation();
   const user = useCurrentUser()!;
-
+  const inFeedNoticesService = serviceProvider.resolve('inFeedNotices');
   const description = i18n.t('inFeedNotices.plusUpgrade.description');
 
   const onPress = useCallback(() => {

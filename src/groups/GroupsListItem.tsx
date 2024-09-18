@@ -5,11 +5,11 @@ import * as entities from 'entities';
 
 import MenuItem from '../common/components/menus/MenuItem';
 import abbrev from '../common/helpers/abbrev';
-import i18n from '../common/services/i18n.service';
 import { B2, Icon, Row } from '../common/ui';
 import GroupModel from './GroupModel';
 import capitalize from '~/common/helpers/capitalize';
 import SubscribeButton from '~/modules/groups/components/SubscribeButton';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   group: GroupModel;
@@ -36,6 +36,8 @@ const GroupsListItem = observer((props: PropsType) => {
   if (!group) {
     return null;
   }
+
+  const i18n = sp.i18n;
 
   return (
     <MenuItem
@@ -73,7 +75,7 @@ const GroupsListItem = observer((props: PropsType) => {
 const BoostedGroupLabel = () => (
   <Row top="XS" align="centerStart">
     <Icon name="boost" size="tiny" right="XS" color="Link" />
-    <B2 color="link">{i18n.t('boosts.boostedGroup')}</B2>
+    <B2 color="link">{sp.i18n.t('boosts.boostedGroup')}</B2>
   </Row>
 );
 

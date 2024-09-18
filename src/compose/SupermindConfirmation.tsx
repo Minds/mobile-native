@@ -8,10 +8,10 @@ import {
 import FitScrollView from '~/common/components/FitScrollView';
 import SmartImage from '~/common/components/SmartImage';
 import MenuItemOption from '~/common/components/menus/MenuItemOption';
-import i18n from '~/common/services/i18n.service';
 import { B1, B2, Button, Column, H3, Screen, ScreenHeader } from '~/common/ui';
-import ThemedStyles, { useMemoStyle } from '~/styles/ThemedStyles';
 import { UNIT } from '~/styles/Tokens';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 export interface SupermindConfirmationRouteParams {
   requiresTwitter?: boolean;
@@ -20,6 +20,7 @@ export interface SupermindConfirmationRouteParams {
 }
 
 export default function SupermindConfirmation() {
+  const i18n = sp.i18n;
   const route = useRoute();
   const params = route.params as SupermindConfirmationRouteParams;
   const texts = {
@@ -82,7 +83,7 @@ export default function SupermindConfirmation() {
                 selected
                 title={texts.twitter.title}
                 subtitle={texts.twitter.subtitle}
-                titleStyle={ThemedStyles.style.marginBottom2x}
+                titleStyle={sp.styles.style.marginBottom2x}
                 disabled
                 mode="checkbox"
                 borderless

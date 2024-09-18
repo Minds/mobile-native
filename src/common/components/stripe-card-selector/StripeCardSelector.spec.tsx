@@ -1,7 +1,14 @@
 import { render, screen } from '@testing-library/react-native';
 import * as React from 'react';
 import StripeCardSelector from './StripeCardSelector';
-import mindsConfigService from '~/common/services/minds-config.service';
+
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+const mindsConfigService = sp.mockService('config');
+sp.mockService('i18n');
 
 jest.mock('../InputSelectorV2', () => () => null);
 jest.mock('~/common/services/minds-config.service');

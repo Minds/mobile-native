@@ -16,14 +16,14 @@ import {
   Spacer,
 } from '~/common/ui';
 import GradientBorderView from '~/common/components/GradientBorderView';
-import ThemedStyles from '~/styles/ThemedStyles';
-import NavigationService from '~/navigation/NavigationService';
-import openUrlService from '~/common/services/open-url.service';
+
 import { GOOGLE_PLAY_STORE } from '~/config/Config';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { useUpgradeData } from '../hooks/useUpgradeData';
 import { Bullets, UpgradeCardsMap } from '../types';
 import iconMap from '../util/iconMap';
+import sp from '~/services/serviceProvider';
+import { openLinkInInAppBrowser } from '~/common/services/inapp-browser.service';
 
 export default function UpgradeOptionsScreen() {
   const { isLoading, options } = useUpgradeData();
@@ -60,9 +60,7 @@ const UpgradeHero = ({ data }: { data: UpgradeCardsMap['hero'] }) => (
       {!GOOGLE_PLAY_STORE && (
         <PressableLine
           onPress={() =>
-            openUrlService.openLinkInInAppBrowser(
-              'https://www.minds.com/about/upgrades',
-            )
+            openLinkInInAppBrowser('https://www.minds.com/about/upgrades')
           }>
           <Row align="centerBoth" top="L">
             <B1 align="center" style={styles.fontStyle} right="S">
@@ -119,8 +117,8 @@ const MindsPlusSection = ({ data }: { data: UpgradeCardsMap['plus'] }) => (
       top="XL2"
       align="center"
       onPress={() => {
-        NavigationService.navigate('UpgradeScreen', {
-          onComplete: () => NavigationService.goBack(),
+        sp.navigation.navigate('UpgradeScreen', {
+          onComplete: () => sp.navigation.goBack(),
         });
       }}>
       Get Minds+
@@ -140,9 +138,9 @@ const MindsProSection = ({ data }: { data: UpgradeCardsMap['pro'] }) => (
       align="center"
       type="action"
       onPress={() => {
-        NavigationService.navigate('UpgradeScreen', {
+        sp.navigation.navigate('UpgradeScreen', {
           pro: true,
-          onComplete: () => NavigationService.goBack(),
+          onComplete: () => sp.navigation.goBack(),
         });
       }}>
       Get Minds Pro
@@ -159,9 +157,7 @@ const ServerSection = ({ data }: { data: UpgradeCardsMap['networks'] }) => (
     {!GOOGLE_PLAY_STORE && (
       <PressableLine
         onPress={() =>
-          openUrlService.openLinkInInAppBrowser(
-            'https://www.minds.com/about/networks',
-          )
+          openLinkInInAppBrowser('https://www.minds.com/about/networks')
         }>
         <Button
           size="large"
@@ -231,7 +227,7 @@ const end = { x: 1, y: 0 };
 const startVertical = { x: 0, y: 0 };
 const endVertical = { x: 0, y: 1 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   gradientBorderView: ['border', 'bcolorPrimaryBorder'],
   icons: ['marginRight3x'],
   bulletText: { flexShrink: 1 },

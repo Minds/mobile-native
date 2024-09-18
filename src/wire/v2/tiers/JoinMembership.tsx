@@ -1,29 +1,26 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { Platform, View } from 'react-native';
-import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
-import capitalize from '../../../common/helpers/capitalize';
+import capitalize from '~/common/helpers/capitalize';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../navigation/NavigationTypes';
-import i18n from '../../../common/services/i18n.service';
-import { UserError } from '../../../common/UserError';
-import supportTiersService from '../../../common/services/support-tiers.service';
+import { RootStackParamList } from '~/navigation/NavigationTypes';
+import { UserError } from '~/common/UserError';
 import type { SupportTiersType } from '../../WireTypes';
-import UserModel from '../../../channel/UserModel';
+import UserModel from '~/channel/UserModel';
 import { Flow } from 'react-native-animated-spinkit';
-import Selector from '../../../common/components/SelectorV2';
-import MenuItem, {
-  MenuItemProps,
-} from '../../../common/components/menus/MenuItem';
-import { showNotification } from '../../../../AppMessages';
+import Selector from '~/common/components/SelectorV2';
+import MenuItem, { MenuItemProps } from '~/common/components/menus/MenuItem';
+import { showNotification } from '~/../AppMessages';
 import WireStore from '../../WireStore';
-import MText from '../../../common/components/MText';
+import MText from '~/common/components/MText';
 import { Button } from '~ui';
 import Switch from '~/common/components/controls/Switch';
-import StripeCardSelector from '../../../common/components/stripe-card-selector/StripeCardSelector';
+import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import { confirm } from '~/common/components/Confirm';
 import { IS_FROM_STORE } from '~/config/Config';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 const isIos = Platform.OS === 'ios';
 
@@ -76,7 +73,9 @@ const createJoinMembershipStore = ({ tiers }) => ({
     }
     this.setLoadingData(true);
     try {
-      const response = await supportTiersService.getAllFromGuid(this.user.guid);
+      const response = await sp
+        .resolve('supportTiers')
+        .getAllFromGuid(this.user.guid);
       this.list = response as Array<SupportTiersType>;
 
       if (!this.currentTier && this.list[0]) {
@@ -103,11 +102,12 @@ const createJoinMembershipStore = ({ tiers }) => ({
 });
 
 const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
   const { tiers } = route.params ?? {};
   const selectorRef = useRef<any>(null);
   const { onComplete } = route.params;
+  const i18n = sp.i18n;
   /**
    * TODO
    * Get amounts
@@ -357,7 +357,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
           </View>
         </>
       ) : (
-        <Flow color={ThemedStyles.getColor('TertiaryText')} />
+        <Flow color={sp.styles.getColor('TertiaryText')} />
       )}
       <Selector
         ref={selectorRef}
@@ -373,7 +373,7 @@ const JoinMembershipScreen = observer(({ route, navigation }: PropsType) => {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   alreadyAMemberText: ['fontL', 'colorAlert'],
   alreadyAMemberWrapper: ['padding4x', 'marginTop2x'],
   stripeCardSelectorWrapper: ['marginTop6x', 'marginHorizontal3x'],

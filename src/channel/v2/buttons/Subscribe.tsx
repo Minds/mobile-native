@@ -1,10 +1,9 @@
 import React, { useCallback } from 'react';
-import i18n from '../../../common/services/i18n.service';
 import UserModel from '../../UserModel';
 import { observer } from 'mobx-react';
 import { Alert } from 'react-native';
 import { Button, ButtonPropsType, Icon } from '~ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+import serviceProvider from '~/services/serviceProvider';
 
 export interface SubscribeProps {
   channel: UserModel;
@@ -32,7 +31,7 @@ const HITSLOP = {
 
 const Subscribe = (props: SubscribeProps) => {
   const { channel, mini, onSubscribed } = props;
-
+  const i18n = serviceProvider.i18n;
   const subscriptionText =
     props.text ??
     (channel.subscribed
@@ -67,7 +66,9 @@ const Subscribe = (props: SubscribeProps) => {
         mini && (
           <Icon
             name={channel.subscribed ? 'check' : 'plus'}
-            color={ThemedStyles.theme ? 'PrimaryBackground' : 'PrimaryText'}
+            color={
+              serviceProvider.styles.theme ? 'PrimaryBackground' : 'PrimaryText'
+            }
             size="small"
             horizontal="S"
           />

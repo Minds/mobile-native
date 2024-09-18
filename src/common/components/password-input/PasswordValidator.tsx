@@ -1,22 +1,17 @@
-//@ts-nocheck
 import React from 'react';
 import Icon from '@expo/vector-icons/Ionicons';
 import { View } from 'react-native';
-import ThemedStyle from '../../../styles/ThemedStyles';
 import validatePassword from '../../helpers/validatePassword';
-import i18n from '../../services/i18n.service';
 import MText from '../MText';
+import sp from '~/services/serviceProvider';
 
 const checked = value => {
+  const theme = sp.styles.style;
   return (
     <Icon
       size={25}
       name="checkmark-sharp"
-      style={
-        value
-          ? ThemedStyle.style.colorGreen
-          : ThemedStyle.style.colorTransparent
-      }
+      style={value ? theme.colorGreen : theme.colorTransparent}
     />
   );
 };
@@ -26,7 +21,8 @@ const checked = value => {
  * @param {Object} props
  */
 export default function (props) {
-  const theme = ThemedStyle.style;
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
 
   const val = validatePassword(props.password);
 

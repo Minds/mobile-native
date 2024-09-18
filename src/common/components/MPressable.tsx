@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Platform, Pressable, StyleSheet } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 /**
  * A Pressable-extended component to have more control over
@@ -15,8 +15,7 @@ const MPressable = ({ ...props }) => {
         android: {
           android_ripple: {
             color:
-              props.underlayColor ??
-              ThemedStyles.getColor('TertiaryBackground'),
+              props.underlayColor ?? sp.styles.getColor('TertiaryBackground'),
           },
         },
         default: {
@@ -27,7 +26,7 @@ const MPressable = ({ ...props }) => {
             {
               backgroundColor: pressed
                 ? props.underlayColor ??
-                  ThemedStyles.getColor('SecondaryBackground')
+                  sp.styles.getColor('SecondaryBackground')
                 : props.style
                 ? StyleSheet.flatten(props.style).backgroundColor
                 : undefined,

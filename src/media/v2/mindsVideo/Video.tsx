@@ -3,8 +3,9 @@ import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
 import type CommentModel from '../../../comments/v2/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import { MindsVideoStoreType } from './createMindsVideoStore';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -17,7 +18,7 @@ type PropsType = {
 
 const ExpoVideo = observer(
   ({ localStore, resizeMode, onReadyForDisplay, video }: PropsType) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const playbackObject = useRef<Video>(null);
 
     useEffect(() => {

@@ -2,9 +2,8 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { ActivityIndicator, StyleProp, View, ViewStyle } from 'react-native';
 
-import SegmentedButton from '../../../../common/components/SegmentedButton';
-import i18n from '../../../../common/services/i18n.service';
-import ThemedStyles from '../../../../styles/ThemedStyles';
+import SegmentedButton from '~/common/components/SegmentedButton';
+
 import { WalletStoreType } from '../../../v2/createWalletStore';
 import {
   UniqueOnChainStoreType,
@@ -12,6 +11,7 @@ import {
 } from '../../useUniqueOnchain';
 import { B2, Icon, Row } from '~ui';
 import { ONCHAIN_ENABLED } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
@@ -27,7 +27,7 @@ const OnchainButton = observer((props: PropsType) => {
   const hasReceiver =
     props.walletStore.wallet.receiver &&
     props.walletStore.wallet.receiver.address;
-
+  const i18n = sp.i18n;
   const isConnected = isWalletConnected(props.onchainStore);
 
   const children: any = {};
@@ -58,14 +58,14 @@ const OnchainButton = observer((props: PropsType) => {
 
   return props.onchainStore.loading ? (
     <View style={styles.loader}>
-      <ActivityIndicator color={ThemedStyles.getColor('Link')} size="small" />
+      <ActivityIndicator color={sp.styles.getColor('Link')} size="small" />
     </View>
   ) : (
     <SegmentedButton {...children} onPress={props.onPress} />
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   loader: {
     minHeight: 39,
     minWidth: 206,

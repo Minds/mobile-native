@@ -3,7 +3,7 @@ import React from 'react';
 import { View, StyleSheet, ViewStyle } from 'react-native';
 import { IIconSize, Icon } from '~ui/icons';
 import { useStores } from '../../../common/hooks/use-stores';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   size?: IIconSize;
@@ -34,7 +34,7 @@ const NotificationsTabIcon = observer((props: PropsType) => {
         <View
           style={[
             styles.unread,
-            { borderColor: ThemedStyles.getColor('SecondaryBackground') },
+            { borderColor: sp.styles.getColor('SecondaryBackground') },
           ]}
         />
       ) : undefined}

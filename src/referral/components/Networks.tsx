@@ -2,10 +2,10 @@ import React from 'react';
 import { Linking, View } from 'react-native';
 import IonIcon from '@expo/vector-icons/Ionicons';
 import { IS_IOS, TENANT } from '~/config/Config';
-import MText from '../../common/components/MText';
-import Touchable from '../../common/components/Touchable';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+import MText from '~/common/components/MText';
+import Touchable from '~/common/components/Touchable';
+
+import sp from '~/services/serviceProvider';
 
 interface NetworksProps {
   referralLink: string;
@@ -21,9 +21,9 @@ type NetworkItem = {
 };
 
 const Networks = ({ referralLink }: NetworksProps) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
-  const message = i18n.t('referrals.joinMeOnMinds', { TENANT });
+  const message = sp.i18n.t('referrals.joinMeOnMinds', { TENANT });
 
   const networks = (
     [
@@ -74,7 +74,7 @@ const Networks = ({ referralLink }: NetworksProps) => {
 
   return (
     <>
-      <MText>{i18n.t('referrals.moreWaysToShare')}</MText>
+      <MText>{sp.i18n.t('referrals.moreWaysToShare')}</MText>
       <View style={[theme.rowJustifyStart, theme.marginTop2x]}>{networks}</View>
     </>
   );

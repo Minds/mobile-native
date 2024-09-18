@@ -1,5 +1,5 @@
 import { CommonActions } from '@react-navigation/native';
-import navigationService from '../../navigation/NavigationService';
+import serviceProvider from '~/services/serviceProvider';
 
 /**
  * set the App route as the root of the stack and the current screen as the second and active screen
@@ -13,10 +13,10 @@ import navigationService from '../../navigation/NavigationService';
  */
 export const resetStackAndGoBack = () => {
   setTimeout(() => {
-    navigationService.goBack();
+    serviceProvider.navigation.goBack();
   }, 300);
 
-  navigationService.dispatch(state => {
+  serviceProvider.navigation.dispatch(state => {
     return CommonActions.reset({
       routes: [{ name: 'App' }, state.routes[state.routes.length - 1]],
       index: 1,

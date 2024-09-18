@@ -1,5 +1,5 @@
-import api from './../common/services/api.service';
-import type { ApiResponse } from './../common/services/api.service';
+import type { ApiService } from './../common/services/api.service';
+import type { ApiResponse } from '~/common/services/ApiResponse';
 import { getStores } from '../../AppStores';
 
 interface BlogApiResponse extends ApiResponse {
@@ -14,7 +14,9 @@ interface BlogListApiResponse extends ApiResponse {
 /**
  * Blogs Service
  */
-class BlogsService {
+export class BlogsService {
+  constructor(private api: ApiService) {}
+
   /**
    * Load Blogs
    */
@@ -25,7 +27,7 @@ class BlogsService {
           (getStores().hashtag.all ? '/all' : '')
         : 'api/v1/blog/' + filter;
 
-    const data = await api.get<BlogListApiResponse>(endpoint, {
+    const data = await this.api.get<BlogListApiResponse>(endpoint, {
       limit: 12,
       offset: offset,
     });
@@ -40,8 +42,6 @@ class BlogsService {
    * @param {string} guid
    */
   loadEntity(guid) {
-    return api.get<BlogApiResponse>('api/v1/blog/' + guid);
+    return this.api.get<BlogApiResponse>('api/v1/blog/' + guid);
   }
 }
-
-export default new BlogsService();

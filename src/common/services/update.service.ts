@@ -1,29 +1,36 @@
 import { action, observable } from 'mobx';
 import moment from 'moment-timezone';
 import { Alert } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+import { nativeApplicationVersion } from 'expo-application';
 import * as UpdateAPK from 'rn-update-apk';
-import { showNotification } from '../../../AppMessages';
-import navigationService from '../../navigation/NavigationService';
-import i18n from './i18n.service';
-import logService from './log.service';
-import { storages } from './storage/storages.service';
+
 import { compareVersions } from '../helpers/compareVersions';
+import type { Storages } from './storage/storages.service';
+import type { NavigationService } from '~/navigation/NavigationService';
+import type { LogService } from './log.service';
+import type { I18nService } from './i18n.service';
 
 /**
  * App Update service
  */
-class UpdateService {
+export class UpdateService {
   @observable progress = 0;
   @observable version = '';
   @observable downloading = false;
+
+  constructor(
+    private storages: Storages,
+    private navigation: NavigationService,
+    private log: LogService,
+    private i18n: I18nService,
+  ) {}
 
   /**
    * Check if it has to ignore the update
    */
   async rememberTomorrow() {
     try {
-      const ignoreDate = storages.app.getString('@mindsUpdateDate');
+      const ignoreDate = this.storages.app.getString('@mindsUpdateDate');
       if (ignoreDate) {
         const now = moment();
         if (ignoreDate === now.format('YYYY-MM-DD')) return true;
@@ -40,18 +47,18 @@ class UpdateService {
   async checkUpdate(stable = true, requireConfirmation = true) {
     if (this.downloading) return;
 
-    logService.info('[UpdateService] Checking for updates...');
+    this.log.info('[UpdateService] Checking for updates...');
 
     const last = await this.getLastVersion(stable);
 
     if (last) {
       try {
-        if (this.needUpdate(DeviceInfo.getVersion(), last.version)) {
+        if (this.needUpdate(nativeApplicationVersion, last.version)) {
           if (await this.rememberTomorrow()) return;
 
           const doUpdate = () => {
             // goto update screen
-            navigationService.navigate('Update', { href: last.href });
+            this.navigation.navigate('Update', { href: last.href });
             this.version = last.version;
             this.updateApk(last.href);
           };
@@ -61,21 +68,21 @@ class UpdateService {
           }
 
           Alert.alert(
-            i18n.t('updateAvailable') + ' v' + last.version,
-            i18n.t('wantToUpdate'),
+            this.i18n.t('updateAvailable') + ' v' + last.version,
+            this.i18n.t('wantToUpdate'),
             [
-              { text: i18n.t('no'), style: 'cancel' },
+              { text: this.i18n.t('no'), style: 'cancel' },
               {
-                text: i18n.t('rememberTomorrow'),
+                text: this.i18n.t('rememberTomorrow'),
                 onPress: () => {
-                  storages.app.setString(
+                  this.storages.app.set(
                     '@mindsUpdateDate',
                     moment().format('YYYY-MM-DD'),
                   );
                 },
               },
               {
-                text: i18n.t('yes'),
+                text: this.i18n.t('yes'),
                 onPress: doUpdate,
               },
             ],
@@ -83,7 +90,7 @@ class UpdateService {
           );
         }
       } catch (e) {
-        logService.exception('[UpdateService]', e);
+        this.log.exception('[UpdateService]', e);
       }
     }
   }
@@ -141,7 +148,7 @@ class UpdateService {
       }
       data = await response.json();
     } catch (e) {
-      logService.exception('[UpdateService]', e);
+      this.log.exception('[UpdateService]', e);
       return false;
     }
 
@@ -178,14 +185,13 @@ class UpdateService {
       },
 
       onError: err => {
-        showNotification(i18n.t('update.failed'), 'danger');
-        logService.exception(err);
-        navigationService.goBack();
+        const showNotification = require('~/../AppMessages').showNotification;
+        showNotification(this.i18n.t('update.failed'), 'danger');
+        this.log.exception(err);
+        this.navigation.goBack();
       },
     });
 
     updater.downloadApk({ apkUrl: url });
   }
 }
-
-export default new UpdateService();

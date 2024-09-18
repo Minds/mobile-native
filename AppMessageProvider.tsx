@@ -6,16 +6,19 @@ import {
   ToastProvider,
 } from '@msantang78/react-native-styled-toast';
 import { registerToast } from 'AppMessages';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 export default function AppMessageProvider({ children }) {
+  const themedStyles = sp.styles;
+  const themeValue = themedStyles.theme;
+
   const theme = React.useMemo(() => {
-    const bg = ThemedStyles.getColor('PrimaryBorder');
+    const bg = themedStyles.getColor('PrimaryBorder');
 
     return {
       space: [0, 4, 8, 12, 16, 20, 24, 32, 40, 48],
       colors: {
-        text: ThemedStyles.getColor('PrimaryText'),
+        text: themedStyles.getColor('PrimaryText'),
         background: bg,
         border: bg,
         muted: bg,
@@ -24,7 +27,8 @@ export default function AppMessageProvider({ children }) {
         info: '#00FFFF',
       },
     };
-  }, [ThemedStyles.theme]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [themeValue]);
   return (
     <ThemeProvider theme={theme}>
       {/* @ts-ignore TODO: Add children type to the fork*/}

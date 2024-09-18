@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import MText from '../MText';
+import sp from '~/services/serviceProvider';
 
 interface SelectProps {
   label: string;
@@ -10,7 +10,7 @@ interface SelectProps {
 }
 
 const Select = ({ label, onPress }: SelectProps) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   return (
     <TouchableOpacity

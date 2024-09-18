@@ -5,16 +5,13 @@ import Modal from 'react-native-modal';
 import { toJS } from 'mobx';
 import { Image } from 'expo-image';
 
-import api from '../services/api.service';
-import type { ApiResponse } from '../services/api.service';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../services/i18n.service';
+import type { ApiResponse } from '../services/ApiResponse';
+
 import { Icon } from 'react-native-elements';
-import i18nService from '../services/i18n.service';
 import InputContainer from './InputContainer';
 import MText from './MText';
-import logService from '../services/log.service';
 import CenteredLoading from './CenteredLoading';
+import sp from '~/services/serviceProvider';
 
 interface CaptchaResponse extends ApiResponse {
   base64_image: string;
@@ -31,7 +28,8 @@ type PropsType = {
  */
 const Captcha = observer(
   forwardRef((props: PropsType, ref: any) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
+    const i18n = sp.i18n;
 
     const store = useLocalStore(() => ({
       show: false,
@@ -67,7 +65,7 @@ const Captcha = observer(
       async load() {
         try {
           this.setError(false);
-          const response: CaptchaResponse = await api.get('api/v2/captcha');
+          const response: CaptchaResponse = await sp.api.get('api/v2/captcha');
           if (response && response.base64_image) {
             store.captchaImage.uri = response.base64_image;
             store.jwtToken = response.jwt_token;
@@ -75,7 +73,7 @@ const Captcha = observer(
             this.setError(true);
           }
         } catch (err) {
-          logService.exception(err);
+          sp.log.exception(err);
           this.setError(true);
         }
       },
@@ -97,7 +95,7 @@ const Captcha = observer(
         avoidKeyboard={true}
         onBackdropPress={store.hideModal}
         isVisible={store.show}
-        backdropColor={ThemedStyles.getColor('Black')}
+        backdropColor={sp.styles.getColor('Black')}
         backdropOpacity={0.9}
         useNativeDriver={true}
         style={styles.modalContainer}
@@ -108,14 +106,14 @@ const Captcha = observer(
         <View style={styles.modal}>
           <View style={styles.header}>
             <MText onPress={store.hideModal} style={styles.textClose}>
-              {i18nService.t('close')}
+              {i18n.t('close')}
             </MText>
             <MText style={styles.textVerification}>
-              {i18nService.t('verification')}
+              {i18n.t('verification')}
             </MText>
             {!store.error ? (
               <MText onPress={store.send} style={styles.textSend}>
-                {i18nService.t('verify')}
+                {i18n.t('verify')}
               </MText>
             ) : (
               <View />
@@ -128,7 +126,7 @@ const Captcha = observer(
                 <Icon
                   name="reload"
                   type="material-community"
-                  underlayColor={ThemedStyles.getColor('PrimaryBackground')}
+                  underlayColor={sp.styles.getColor('PrimaryBackground')}
                   size={45}
                   iconStyle={theme.colorIcon}
                   onPress={store.load}
@@ -163,7 +161,7 @@ const Captcha = observer(
 
 export default Captcha;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   modalContainer: ['fullWidth', 'margin0x', 'justifyEnd'],
   textVerification: [
     'fontXL',

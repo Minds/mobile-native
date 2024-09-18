@@ -10,29 +10,23 @@ import {
   SafeAreaView,
   useSafeAreaInsets,
 } from 'react-native-safe-area-context';
+import { useBackHandler } from '@react-native-community/hooks';
+
 import ActivityIndicator from '~/common/components/ActivityIndicator';
 import Button from '~/common/components/Button';
 import MText from '~/common/components/MText';
 import useIsPortrait from '~/common/hooks/useIsPortrait';
-import attachmentService from '~/common/services/attachment.service';
-import downloadService from '~/common/services/download.service';
-import i18nService from '~/common/services/i18n.service';
-import logService from '~/common/services/log.service';
 import { IconButtonNext } from '~/common/ui/icons';
-import NavigationService from '~/navigation/NavigationService';
 import FloatingBackButton from '../common/components/FloatingBackButton';
-import i18n from '../common/services/i18n.service';
-import ThemedStyles, { useMemoStyle, useStyle } from '../styles/ThemedStyles';
 import Camera from './Camera/Camera';
 import PermissionsCheck from './PermissionsCheck';
 import ImageFilterSlider from './ImageFilterSlider/ImageFilterSlider';
 import MediaPreviewFullScreen from './MediaPreviewFullScreen';
-import { useBackHandler } from '@react-native-community/hooks';
 import { Orientation } from '~/services';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import PermissionsService from '~/common/services/permissions.service';
 import { IS_IOS } from '~/config/Config';
-
+import sp from '~/services/serviceProvider';
+import { useMemoStyle, useStyle } from '~/styles/hooks';
 // TODO: move this and all its instances accross the app to somewhere common
 /**
  * Display an error message to the user.
@@ -48,6 +42,7 @@ const showError = message => {
  */
 export default withErrorBoundaryScreen(
   observer(function (props) {
+    const i18n = sp.i18n;
     // #region states & variables
     const {
       portrait: portraitMode,
@@ -69,7 +64,7 @@ export default withErrorBoundaryScreen(
      */
     const [downloading, setDownloading] = useState(false);
     const portrait = useIsPortrait();
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     // #endregion
 
     // #region methods
@@ -91,11 +86,12 @@ export default withErrorBoundaryScreen(
      * sets mode to video
      */
     const setModeVideo = useCallback(() => {
-      if (!PermissionsService.canUploadVideo(true)) {
+      if (!sp.permissions.canUploadVideo(true)) {
+        showNotification(i18n.t('composer.create.mediaVideoError'));
         return;
       }
       setMode('video');
-    }, []);
+    }, [i18n]);
 
     useEffect(() => {
       !IS_IOS && Orientation.unlock();
@@ -140,7 +136,7 @@ export default withErrorBoundaryScreen(
           onMediaConfirmed(extractedImage || mediaToConfirm);
         }
 
-        NavigationService.navigate('Compose', {
+        sp.navigation.navigate('Compose', {
           media: extractedImage || mediaToConfirm,
           portrait: portraitMode,
         });
@@ -154,10 +150,9 @@ export default withErrorBoundaryScreen(
      * called after gallery selection is completed. Handles gallery selection
      */
     const handleGallerySelection = useCallback(async () => {
-      const media = await attachmentService.gallery(
-        mode === 'photo' ? 'Images' : 'Videos',
-        false,
-      );
+      const media = await sp
+        .resolve('attachment')
+        .gallery(mode === 'photo' ? 'Images' : 'Videos', false);
 
       if (!media) {
         return;
@@ -174,7 +169,7 @@ export default withErrorBoundaryScreen(
       }
 
       setMediaToConfirm(media);
-    }, [mode, portraitMode]);
+    }, [i18n, mode, portraitMode]);
 
     /**
      * called when edit icon is pressed. opens the rnPhotoEditor and handles callback
@@ -207,7 +202,7 @@ export default withErrorBoundaryScreen(
           },
         });
       } catch (err) {
-        logService.exception(err);
+        sp.log.exception(err);
       }
     }, [mediaToConfirm]);
 
@@ -217,7 +212,7 @@ export default withErrorBoundaryScreen(
     const runDownload = useCallback(async () => {
       try {
         setDownloading(true);
-        await downloadService.downloadToGallery(
+        await sp.resolve('download').downloadToGallery(
           mediaToConfirm.uri,
           undefined,
           `minds/${Date.now()}`, // is this good?
@@ -225,10 +220,10 @@ export default withErrorBoundaryScreen(
         showNotification(i18n.t('imageAdded'), 'info', 3000);
       } catch (e: any) {
         showNotification(i18n.t('errorDownloading'), 'danger', 3000);
-        logService.exception('[MediaView] runDownload', e);
+        sp.log.exception('[MediaView] runDownload', e);
       }
       setDownloading(false);
-    }, [mediaToConfirm]);
+    }, [i18n, mediaToConfirm]);
 
     /**
      * called when retake button is pressed. Resets current image to null
@@ -256,7 +251,7 @@ export default withErrorBoundaryScreen(
         media.width = h;
       }
       // we try to reduce the size of the image
-      attachmentService
+      sp.resolve('attachment')
         .processMedia(media)
         .then(processedMedia => {
           setMediaToConfirm(processedMedia);
@@ -277,8 +272,8 @@ export default withErrorBoundaryScreen(
 
       return () => {
         return changeNavigationBarColor(
-          ThemedStyles.style.bgSecondaryBackground.backgroundColor,
-          !ThemedStyles.theme,
+          sp.styles.style.bgSecondaryBackground.backgroundColor,
+          !sp.styles.theme,
           true,
         );
       };
@@ -366,7 +361,7 @@ export default withErrorBoundaryScreen(
 );
 
 const TabButton = ({ onPress, active, children }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const textStyle = useMemoStyle(
     [
       'fontXL',
@@ -395,18 +390,19 @@ const useBottomBarStyle = () => {
 
 const CameraScreenBottomBar = ({ mode, onSetPhotoPress, onSetVideoPress }) => {
   const containerStyle = useBottomBarStyle();
-  const shouldShowVideo = !PermissionsService.shouldHideUploadVideo();
+  const i18n = sp.i18n;
+  const shouldShowVideo = !sp.permissions.shouldHideUploadVideo();
 
   return (
     <View style={containerStyle}>
       <View style={styles.tabs}>
         <TabButton onPress={onSetPhotoPress} active={mode === 'photo'}>
-          {i18nService.t('capture.photo').toUpperCase()}
+          {i18n.t('capture.photo').toUpperCase()}
         </TabButton>
 
         {shouldShowVideo && (
           <TabButton onPress={onSetVideoPress} active={mode === 'video'}>
-            {i18nService.t('capture.video').toUpperCase()}
+            {i18n.t('capture.video').toUpperCase()}
           </TabButton>
         )}
       </View>
@@ -415,15 +411,15 @@ const CameraScreenBottomBar = ({ mode, onSetPhotoPress, onSetVideoPress }) => {
 };
 
 const BottomBarMediaConfirm = ({ mode, onRetake, onConfirm, extracting }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const containerStyle = useBottomBarStyle();
-
+  const i18n = sp.i18n;
   return (
     <View style={containerStyle}>
       <View style={styles.tabs}>
         <Button
           onPress={onRetake}
-          text={i18nService.t('capture.retake')}
+          text={i18n.t('capture.retake')}
           transparent
           small
         />
@@ -431,13 +427,13 @@ const BottomBarMediaConfirm = ({ mode, onRetake, onConfirm, extracting }) => {
           onPress={onConfirm}
           text={
             mode === 'photo'
-              ? i18nService.t('capture.usePhoto')
-              : i18nService.t('capture.useVideo')
+              ? i18n.t('capture.usePhoto')
+              : i18n.t('capture.useVideo')
           }
           small
           action
           containerStyle={theme.bgLink}
-          textColor={ThemedStyles.getColor('White')}
+          textColor={sp.styles.getColor('White')}
           loading={extracting}
         />
       </View>
@@ -449,7 +445,7 @@ const DownloadIconButton = ({ downloading, onDownload }) => {
   return (
     <>
       {downloading ? (
-        <View style={ThemedStyles.style.paddingRight7x}>
+        <View style={sp.styles.style.paddingRight7x}>
           <ActivityIndicator size="large" color="#fff" />
         </View>
       ) : (
@@ -470,7 +466,7 @@ const EditIconButton = ({ onPress }) => (
   <IconButtonNext name="edit" size="large" onPress={onPress} light shadow />
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     'flexContainer',
     { backgroundColor: '#000', height: '100%', width: '100%' },

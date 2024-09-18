@@ -2,14 +2,13 @@ import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import Icon from '@expo/vector-icons/SimpleLineIcons';
 import { Button } from '../common/ui';
-import ThemedStyles from '../styles/ThemedStyles';
-
+import sp from '~/services/serviceProvider';
 /**
  * Title toggle
  * @param {Object} props
  */
 function TitleToggle(props) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const onPress = useCallback(() => {
     props.store.toggleTitle();

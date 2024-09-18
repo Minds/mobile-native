@@ -1,8 +1,8 @@
 import React from 'react';
 import { Icon } from 'react-native-elements';
-import ThemedStyles from '../../styles/ThemedStyles';
 
 import type { StyleProp, ViewStyle } from 'react-native';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   name: string;
@@ -24,16 +24,15 @@ const SmallCircleButton = ({ raised = true, testID, ...props }: PropsType) => {
       testID={testID}
       disabled={props.disabled}
       disabledStyle={{
-        backgroundColor:
-          props.color || ThemedStyles.getColor('PrimaryBackground'),
+        backgroundColor: props.color || sp.styles.getColor('PrimaryBackground'),
       }}
       raised={raised}
       reverse
       hitSlop={hitSlop}
       name={props.name}
       type={props.type || 'material-community'}
-      color={props.color || ThemedStyles.getColor('PrimaryBackground')}
-      reverseColor={props.reverseColor || ThemedStyles.getColor('PrimaryText')}
+      color={props.color || sp.styles.getColor('PrimaryBackground')}
+      reverseColor={props.reverseColor || sp.styles.getColor('PrimaryText')}
       size={props.size || 18}
       onPress={props.onPress}
       containerStyle={props.style}

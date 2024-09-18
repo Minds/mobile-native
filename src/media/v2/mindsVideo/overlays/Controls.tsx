@@ -2,13 +2,14 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import type { MindsVideoStoreType } from '../createMindsVideoStore';
 import Icon from '@expo/vector-icons/Ionicons';
-import type ActivityModel from '../../../../newsfeed/ActivityModel';
-import type CommentModel from '../../../../comments/v2/CommentModel';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+import type CommentModel from '~/comments/v2/CommentModel';
 import { View, TouchableWithoutFeedback } from 'react-native';
-import ThemedStyles from '../../../../styles/ThemedStyles';
-import withPreventDoubleTap from '../../../../common/components/PreventDoubleTap';
+
+import withPreventDoubleTap from '~/common/components/PreventDoubleTap';
 import ProgressBar from '../ProgressBar';
 import { styles, iconSize, playSize } from './styles';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
@@ -24,7 +25,7 @@ const hitSlop = { top: 20, bottom: 20, right: 20, left: 20 };
 const controlColor = '#F7F7F7';
 
 const Controls = observer(({ localStore, entity, hideOverlay }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const mustShow = Boolean(
     !hideOverlay &&
@@ -113,7 +114,7 @@ export const PlayButton = ({
   onPress?: () => void;
   paused: boolean;
 }) => (
-  <View style={[ThemedStyles.style.centered, styles.playContainer]}>
+  <View style={[sp.styles.style.centered, styles.playContainer]}>
     <Icon
       onPress={onPress}
       style={[styles.videoIcon, styles.textShadow]}

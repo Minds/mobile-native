@@ -9,6 +9,13 @@ import {
 import { ChatRoomProvider } from '../contexts/ChatRoomContext';
 import { useChatRoomInfoQuery } from '../hooks/useChatRoomInfoQuery';
 
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+
 jest.mock('../hooks/useChatRoomInfoQuery');
 
 describe('ChatHeader', () => {

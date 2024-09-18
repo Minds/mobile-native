@@ -1,22 +1,23 @@
+import React, { ReactNode, useCallback } from 'react';
+import { Keyboard, View } from 'react-native';
 import {
   useBottomSheet,
   useBottomSheetDynamicSnapPoints,
 } from '@gorhom/bottom-sheet';
+import { observer } from 'mobx-react';
+import { useIsFocused } from '@react-navigation/native';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { StackNavigationProp } from '@react-navigation/stack';
-import React, { ReactNode, useCallback } from 'react';
-import { Keyboard, View } from 'react-native';
-import NavigationService from '../../../navigation/NavigationService';
-import { RootStackParamList } from '../../../navigation/NavigationTypes';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import { BottomSheet, BottomSheetProps } from './';
 import { useBackHandler } from '@react-native-community/hooks';
+
+import { RootStackParamList } from '~/navigation/NavigationTypes';
+
+import { BottomSheet, BottomSheetProps } from './';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Handle from '../bottom-sheet/Handle';
 import MText from '../MText';
-import { observer } from 'mobx-react';
-import { useIsFocused } from '@react-navigation/native';
 import delay from '~/common/helpers/delay';
+import sp from '~/services/serviceProvider';
 
 type BottomSheetScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -107,7 +108,7 @@ const BottomSheetInnerContainer = ({
     return new Promise(async resolve => {
       bottomSheet.close();
       await delay(100);
-      NavigationService.goBack();
+      sp.navigation.goBack();
       await delay(100);
       resolve(true);
     });
@@ -142,7 +143,7 @@ const BottomSheetInnerContainerSafe = observer(
       return new Promise(async resolve => {
         bottomSheet.close();
         await delay(100);
-        NavigationService.goBack();
+        sp.navigation.goBack();
         await delay(100);
         resolve(true);
       });
@@ -161,10 +162,10 @@ const BottomSheetInnerContainerSafe = observer(
 
 export const pushBottomSheet = (params: BottomSheetScreenParams) => {
   Keyboard.dismiss();
-  NavigationService.push('BottomSheet', params);
+  sp.navigation.push('BottomSheet', params);
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['flexContainer', 'bgPrimaryBackgroundHighlight'],
   navbarContainer: ['padding2x', 'alignCenter', 'bgPrimaryBackgroundHighlight'],
   titleStyle: ['fontXL', 'marginLeft2x', 'marginBottom', 'bold'],

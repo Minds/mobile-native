@@ -2,7 +2,6 @@ import moment from 'moment-timezone';
 
 import BaseModel from '~/common/BaseModel';
 import abbrev from '~/common/helpers/abbrev';
-import apiService from '~/common/services/api.service';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import { showNotification } from '~/../AppMessages';
 import {
@@ -10,10 +9,9 @@ import {
   SupermindRequestReplyType,
   SupermindRequestStatus,
 } from './types';
-import i18nService from '~/common/services/i18n.service';
 import { action, observable } from 'mobx';
 import UserModel from '~/channel/UserModel';
-import NavigationService from '~/navigation/NavigationService';
+import sp from '~/services/serviceProvider';
 
 /**
  * Supermind request model
@@ -96,7 +94,7 @@ export default class SupermindRequestModel extends BaseModel {
    */
   viewReply() {
     if (this.reply_activity_guid) {
-      NavigationService.navigate('Activity', {
+      sp.navigation.navigate('Activity', {
         guid: this.reply_activity_guid,
       });
     }
@@ -111,10 +109,10 @@ export default class SupermindRequestModel extends BaseModel {
   async revoke() {
     try {
       this.isLoading = 2;
-      await apiService.delete(`api/v3/supermind/${this.guid}`);
-      showNotification(i18nService.t('supermind.revoked'));
+      await sp.api.delete(`api/v3/supermind/${this.guid}`);
+      showNotification(sp.i18n.t('supermind.revoked'));
     } catch (error) {
-      showNotification(i18nService.t('errorMessage'));
+      showNotification(sp.i18n.t('errorMessage'));
     } finally {
       this.isLoading = 0;
     }
@@ -124,11 +122,11 @@ export default class SupermindRequestModel extends BaseModel {
   async reject() {
     try {
       this.isLoading = 1;
-      await apiService.post(`api/v3/supermind/${this.guid}/reject`);
+      await sp.api.post(`api/v3/supermind/${this.guid}/reject`);
       this.status = SupermindRequestStatus.REJECTED;
-      showNotification(i18nService.t('supermind.rejected'));
+      showNotification(sp.i18n.t('supermind.rejected'));
     } catch (error) {
-      showNotification(i18nService.t('errorMessage'));
+      showNotification(sp.i18n.t('errorMessage'));
     } finally {
       this.isLoading = 0;
     }

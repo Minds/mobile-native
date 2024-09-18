@@ -1,10 +1,10 @@
 import { renderHook, act } from '@testing-library/react-hooks';
+import sp from '~/services/serviceProvider';
 import useApiFetch from './useApiFetch';
-import apiService from '../services/api.service';
 
-jest.mock('../services/api.service');
+jest.mock('~/services/serviceProvider');
 
-const mockedApi = apiService as jest.Mocked<typeof apiService>;
+const mockedApi = sp.mockService('api');
 
 describe('useApiFetch', () => {
   beforeEach(() => {

@@ -9,29 +9,19 @@ import {
 } from '../CommentsService';
 
 import CommentModel from './CommentModel';
-import socket from '../../common/services/socket.service';
-import session from '../../common/services/session.service';
-import AttachmentStore from '../../common/stores/AttachmentStore';
-import attachmentService from '../../common/services/attachment.service';
-import { toggleExplicit } from '../../newsfeed/NewsfeedService';
-import RichEmbedStore from '../../common/stores/RichEmbedStore';
-import logService from '../../common/services/log.service';
-import NavigationService from '../../navigation/NavigationService';
-import type ActivityModel from '../../newsfeed/ActivityModel';
-import type BlogModel from '../../blogs/BlogModel';
-import type GroupModel from '../../groups/GroupModel';
-import { showNotification } from '../../../AppMessages';
-import i18n from '../../common/services/i18n.service';
+
+import AttachmentStore from '~/common/stores/AttachmentStore';
+import RichEmbedStore from '~/common/stores/RichEmbedStore';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+import type BlogModel from '~/blogs/BlogModel';
+import type GroupModel from '~/groups/GroupModel';
+import { showNotification } from '~/../AppMessages';
 import { isNetworkError } from '~/common/services/ApiErrors';
-import { storeRatingService } from 'modules/store-rating';
-import analyticsService, {
-  EventContext,
-} from '../../common/services/analytics.service';
-import PermissionsService from '~/common/services/permissions.service';
+import { EventContext } from '~/common/services/analytics.service';
 import getNetworkError from '~/common/helpers/getNetworkError';
+import sp from '~/services/serviceProvider';
 
 const COMMENTS_PAGE_SIZE = 12;
-
 /**
  * Comments Store
  */
@@ -169,7 +159,7 @@ export default class CommentsStore {
    * Get focused urn
    */
   getFocusedCommentUrn() {
-    const params = NavigationService.getCurrentState().params;
+    const params = sp.navigation.getCurrentState().params;
 
     let value = null;
 
@@ -229,7 +219,7 @@ export default class CommentsStore {
         this.setErrorLoadingNext(true);
       }
       if (!isNetworkError(err)) {
-        logService.exception('[CommentsStore] loadComments', err);
+        sp.log.exception('[CommentsStore] loadComments', err);
       }
     } finally {
       runInAction(() => {
@@ -269,11 +259,11 @@ export default class CommentsStore {
    * Listen for socket
    */
   listen() {
-    socket.join(this.socketRoomName);
-    socket.subscribe('comment', this.commentSocket);
-    socket.subscribe('reply', this.replySocket);
-    socket.subscribe('vote', this.voteSocket);
-    socket.subscribe('vote:cancel', this.voteCancelSocket);
+    sp.socket.join(this.socketRoomName);
+    sp.socket.subscribe('comment', this.commentSocket);
+    sp.socket.subscribe('reply', this.replySocket);
+    sp.socket.subscribe('vote', this.voteSocket);
+    sp.socket.subscribe('vote:cancel', this.voteCancelSocket);
   }
 
   @action
@@ -287,7 +277,7 @@ export default class CommentsStore {
 
   @action
   voteSocket = (guid, owner_guid, direction) => {
-    if (owner_guid === session.guid) {
+    if (owner_guid === sp.session.guid) {
       return;
     }
     let key = 'thumbs:' + direction + ':count';
@@ -300,7 +290,7 @@ export default class CommentsStore {
 
   @action
   voteCancelSocket = (guid, owner_guid, direction) => {
-    if (owner_guid === session.guid) {
+    if (owner_guid === sp.session.guid) {
       return;
     }
     let key = 'thumbs:' + direction + ':count';
@@ -315,11 +305,11 @@ export default class CommentsStore {
    * Stop listen for socket
    */
   unlisten() {
-    socket.leave(this.socketRoomName);
-    socket.unsubscribe('comment', this.commentSocket);
-    socket.unsubscribe('reply', this.replySocket);
-    socket.unsubscribe('vote', this.voteSocket);
-    socket.unsubscribe('vote:cancel', this.voteCancelSocket);
+    sp.socket.leave(this.socketRoomName);
+    sp.socket.unsubscribe('comment', this.commentSocket);
+    sp.socket.unsubscribe('reply', this.replySocket);
+    sp.socket.unsubscribe('vote', this.voteSocket);
+    sp.socket.unsubscribe('vote:cancel', this.voteCancelSocket);
   }
 
   /**
@@ -327,7 +317,7 @@ export default class CommentsStore {
    */
   @action
   commentSocket = async (parent_guid, owner_guid, guid) => {
-    if (owner_guid === session.guid) {
+    if (owner_guid === sp.session.guid) {
       return;
     }
 
@@ -337,7 +327,7 @@ export default class CommentsStore {
         this.comments.unshift(CommentModel.create(comment));
       }
     } catch (err) {
-      logService.exception('[CommentsStore] commentSocket', err);
+      sp.log.exception('[CommentsStore] commentSocket', err);
     }
   };
 
@@ -405,11 +395,11 @@ export default class CommentsStore {
    * Post comment
    */
   post = async () => {
-    if (!this.edit && !PermissionsService.canComment(true)) {
+    if (!this.edit && !sp.permissions.canComment(true)) {
       return;
     }
     if (this.attachment.uploading) {
-      showNotification(i18n.t('uploading'), 'info', 3000);
+      showNotification(sp.i18n.t('uploading'), 'info', 3000);
       return;
     }
 
@@ -419,7 +409,7 @@ export default class CommentsStore {
     };
 
     if (comment.comment === '' && !this.attachment.hasAttachment) {
-      showNotification(i18n.t('messenger.typeYourMessage'), 'info', 3000);
+      showNotification(sp.i18n.t('messenger.typeYourMessage'), 'info', 3000);
       return;
     }
 
@@ -451,8 +441,8 @@ export default class CommentsStore {
       this.setShowInput(false);
       this.embed.clearRichEmbedAction();
       this.attachment.clear();
-      storeRatingService.track('comment', true);
-      analyticsService.trackClick('comment', this.analyticContexts);
+      sp.resolve('storeRating').track('comment', true);
+      sp.resolve('analytics').trackClick('comment', this.analyticContexts);
 
       if (this.entity.incrementCommentsCounter) {
         this.entity.incrementCommentsCounter();
@@ -462,7 +452,7 @@ export default class CommentsStore {
       }
     } catch (err) {
       const message = getNetworkError(err);
-      logService.exception('[CommentsStore] post', err);
+      sp.log.exception('[CommentsStore] post', err);
       showNotification(message || 'Error sending comment');
     } finally {
       this.saving = false;
@@ -541,7 +531,7 @@ export default class CommentsStore {
       this.edit = undefined;
       this.setShowInput(false);
     } catch (err) {
-      logService.exception('[CommentsStore] updateComment', err);
+      sp.log.exception('[CommentsStore] updateComment', err);
       showNotification(
         'Oops there was an error updating the comment\nPlease try again.',
       );
@@ -609,14 +599,15 @@ export default class CommentsStore {
    * Attach a video
    */
   async video() {
-    if (!PermissionsService.canUploadVideo(true)) {
+    if (!sp.permissions.canUploadVideo(true)) {
+      showNotification(sp.i18n.t('composer.create.mediaVideoError'));
       return;
     }
     try {
-      const media = await attachmentService.video();
+      const media = await sp.resolve('attachment').video();
       if (media) this.onAttachedMedia(media);
     } catch (e) {
-      logService.exception(e);
+      sp.log.exception(e);
       if (e instanceof Error) {
         showNotification(e.message);
       }
@@ -628,13 +619,13 @@ export default class CommentsStore {
    */
   async photo(fn?: () => void) {
     try {
-      const media = await attachmentService.photo();
+      const media = await sp.resolve('attachment').photo();
 
       if (fn) fn();
 
       if (media) this.onAttachedMedia(media);
     } catch (e) {
-      logService.exception(e);
+      sp.log.exception(e);
       if (e instanceof Error) {
         showNotification(e.message);
       }
@@ -649,8 +640,9 @@ export default class CommentsStore {
 
     if (
       media.type.startsWith('video') &&
-      !PermissionsService.canUploadVideo(true)
+      !sp.permissions.canUploadVideo(true)
     ) {
+      showNotification(sp.i18n.t('composer.create.mediaVideoError'));
       return;
     }
 
@@ -658,7 +650,7 @@ export default class CommentsStore {
       await attachment.attachMedia(media);
     } catch (err) {
       const message = getNetworkError(err);
-      logService.exception('[CommentsStore] onAttachedMedia', err);
+      sp.log.exception('[CommentsStore] onAttachedMedia', err);
       showNotification(message || 'Oops caught upload error.');
     }
   };
@@ -671,16 +663,16 @@ export default class CommentsStore {
       let media;
       switch (i) {
         case 1:
-          media = await attachmentService.gallery('Images', false);
+          media = await sp.resolve('attachment').gallery('Images', false);
           break;
         case 2:
-          media = await attachmentService.gallery('Videos', false);
+          media = await sp.resolve('attachment').gallery('Videos', false);
           break;
       }
 
       if (media) this.onAttachedMedia({ ...media, type: media.mimme });
     } catch (err) {
-      logService.exception('[CommentsStore] selectMediaType', err);
+      sp.log.exception('[CommentsStore] selectMediaType', err);
       showNotification('Oops there was an error selecting the media.');
     }
   };
@@ -690,11 +682,10 @@ export default class CommentsStore {
    */
   async gallery(fn?: () => void) {
     try {
-      const shouldHideVideos = PermissionsService.shouldHideUploadVideo();
-      const response = await attachmentService.gallery(
-        shouldHideVideos ? 'Images' : 'All',
-        false,
-      );
+      const shouldHideVideos = sp.permissions.shouldHideUploadVideo();
+      const response = await sp
+        .resolve('attachment')
+        .gallery(shouldHideVideos ? 'Images' : 'All', false);
 
       if (fn) fn();
 
@@ -705,14 +696,15 @@ export default class CommentsStore {
 
       if (
         media.mime.startsWith('video') &&
-        !PermissionsService.canUploadVideo(true)
+        !sp.permissions.canUploadVideo(true)
       ) {
+        showNotification(sp.i18n.t('composer.create.mediaVideoError'));
         return;
       }
 
       await this.attachment.attachMedia({ ...media, type: media.mime });
     } catch (err) {
-      logService.exception('[CommentsStore] gallery', err);
+      sp.log.exception('[CommentsStore] gallery', err);
     }
   }
 
@@ -726,7 +718,9 @@ export default class CommentsStore {
     if (index >= 0) {
       let comment = this.comments[index];
       let value = !comment.mature;
-      return toggleExplicit(guid, value)
+      return sp
+        .resolve('newsfeed')
+        .toggleExplicit(guid, value)
         .then(
           action(() => {
             comment.mature = value;
@@ -737,7 +731,7 @@ export default class CommentsStore {
           action(err => {
             comment.mature = !value;
             this.comments[index] = comment;
-            logService.exception('[CommentsStore] commentToggleExplicit', err);
+            sp.log.exception('[CommentsStore] commentToggleExplicit', err);
           }),
         );
     }

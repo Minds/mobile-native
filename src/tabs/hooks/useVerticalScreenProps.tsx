@@ -1,15 +1,14 @@
 import { invert } from 'lodash';
-import openUrlService from '~/common/services/open-url.service';
-import sessionService from '~/common/services/session.service';
+
 import { IS_TENANT } from '~/config/Config';
 import { NavigationItemTypeEnum } from '~/graphql/api';
 import { GroupsStack } from '~/modules/groups/GroupsStack';
 import { CustomNavigationItems } from '~/modules/navigation/service/custom-navigation.service';
 import DiscoveryStack from '~/navigation/DiscoveryStack';
-
 import MoreStack from '~/navigation/MoreStack';
 import NewsfeedStack from '~/navigation/NewsfeedStack';
 import NotificationsStack from '~/navigation/NotificationsStack';
+import sp from '~/services/serviceProvider';
 
 export type GroupStackParamList = {
   Groups: {};
@@ -39,7 +38,7 @@ export function useVerticalScreenProps(
     },
     Profile: {
       getComponent: () => require('~/channel/v2/ChannelScreen').default,
-      initialParams: { entity: sessionService.getUser() },
+      initialParams: { entity: sp.session.getUser() },
     },
     Boosts: {
       getComponent: () => require('modules/boost').BoostConsoleScreen,
@@ -102,7 +101,7 @@ export function useVerticalScreenProps(
         options: { title: item.name },
         listeners: {
           drawerItemPress: e => {
-            item.url && openUrlService.open(item.url);
+            item.url && sp.resolve('openURL').open(item.url);
             e.preventDefault();
           },
         },

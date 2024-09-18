@@ -4,6 +4,12 @@ import UserModel from '~/channel/UserModel';
 import generateFakeUser from '../../../../__mocks__/fake/channel/UserFactory';
 import Recommendation from './Recommendation';
 import ChannelRecommendationItem from './components/ChannelRecommendationItem';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 
 const mockEntity = generateFakeUser();
 

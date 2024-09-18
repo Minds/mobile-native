@@ -2,22 +2,21 @@ import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 
-import i18n from '~/common/services/i18n.service';
 // import openUrlService from '~/common/services/open-url.service';
-import sessionService from '~/common/services/session.service';
 import InFeedNotice from './BaseNotice';
 import { NoticeProps } from '.';
 import { TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 /**
  * Boost channel notice
  */
 function BoostChannelNotice({ name }: NoticeProps) {
   const navigation = useNavigation();
-
+  const i18n = sp.i18n;
   // on button press
   const onPress = () => {
-    const channel = sessionService.getUser();
+    const channel = sp.session.getUser();
     if (channel) {
       navigation.navigate('BoostScreenV2', {
         entity: channel,

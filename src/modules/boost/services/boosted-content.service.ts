@@ -1,15 +1,20 @@
-import FeedsService from '~/common/services/feeds.service';
-import logService from '~/common/services/log.service';
-import sessionService from '~/common/services/session.service';
 import BoostedActivityModel from '~/newsfeed/BoostedActivityModel';
 import { cleanBoosts } from '../utils/clean-boosts';
 import { BOOSTS_DELAY } from '~/config/Config';
+import type { FeedsService } from '~/common/services/feeds.service';
+import type { SessionService } from '~/common/services/session.service';
+import type { LogService } from '~/common/services/log.service';
 
 /**
  * Boosted content service
  */
-class BoostedContentService {
-  constructor(private servedByGuid?: string, private source?: string) {}
+export class BoostedContentService {
+  constructor(
+    private session: SessionService,
+    private log: LogService,
+    private servedByGuid?: string,
+    private source?: string,
+  ) {}
   /**
    * Offset
    * @var {number}
@@ -38,20 +43,22 @@ class BoostedContentService {
    */
   load = async (): Promise<any> => {
     this.init();
-    if (!sessionService.userLoggedIn || sessionService.switchingAccount) {
+    if (!this.session.userLoggedIn || this.session.switchingAccount) {
       return;
     }
     try {
       const done = await this.feedsService!.setOffset(0).fetchLocal();
 
       if (!done) {
+        console.log('ACA !done');
         await this.update();
       } else {
+        console.log('ACA done');
         this.boosts = cleanBoosts(await this.feedsService!.getEntities());
         await this.update();
       }
     } catch (err) {
-      logService.exception('[BoostedContentService]', err);
+      this.log.exception('[BoostedContentService]', err);
     }
   };
 
@@ -60,9 +67,10 @@ class BoostedContentService {
    */
   init() {
     if (!this.feedsService) {
-      this.feedsService = new FeedsService();
+      const sp = require('~/services/serviceProvider').default;
+      this.feedsService = sp.resolve('feed');
       this.feedsService
-        .setLimit(24)
+        ?.setLimit(24)
         .setOffset(0)
         .setPaginated(false)
         .setEndpoint('api/v3/boosts/feed')
@@ -134,7 +142,3 @@ class BoostedContentService {
     return this.getMediaBoost();
   }
 }
-
-export { BoostedContentService };
-
-export default new BoostedContentService();

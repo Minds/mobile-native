@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Edge, SafeAreaView } from 'react-native-safe-area-context';
 import FitScrollView from '~/common/components/FitScrollView';
 import LoadingOverlay from '~/common/components/LoadingOverlay';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 export type ScreenPropType = {
   safe?: boolean;
@@ -35,7 +35,7 @@ export const Screen = ({
         style={[styles[background], hasMaxWidth && styles.maxWidth]}>
         <FitScrollView
           showsVerticalScrollIndicator={false}
-          style={ThemedStyles.style.flexContainer}>
+          style={sp.styles.style.flexContainer}>
           {children}
         </FitScrollView>
         {loading && <LoadingOverlay />}
@@ -52,7 +52,7 @@ export const Screen = ({
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   primary: ['flexContainer', 'bgPrimaryBackground'],
   secondary: ['flexContainer', 'bgSecondaryBackground'],
   tertiary: ['flexContainer', 'bgTertiaryBackground'],

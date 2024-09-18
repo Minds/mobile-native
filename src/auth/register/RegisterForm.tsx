@@ -4,28 +4,25 @@ import { ScrollView, View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import { CheckBox } from 'react-native-elements';
 import debounce from 'lodash/debounce';
+import { useNavigation } from '@react-navigation/core';
+
 import InputContainer, {
   InputContainerImperativeHandle,
-} from '../../common/components/InputContainer';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
-import validatePassword from '../../common/helpers/validatePassword';
-import { showNotification } from '../../../AppMessages';
-import validatorService from '../../common/services/validator.service';
-import Captcha from '../../common/components/Captcha';
-import authService, { registerParams } from '../AuthService';
-import apiService from '../../common/services/api.service';
-import delay from '../../common/helpers/delay';
-import logService from '../../common/services/log.service';
-import PasswordInput from '../../common/components/password-input/PasswordInput';
-import MText from '../../common/components/MText';
-import { BottomSheetButton } from '../../common/components/bottom-sheet';
-import { useNavigation } from '@react-navigation/core';
+} from '~/common/components/InputContainer';
+import validatePassword from '~/common/helpers/validatePassword';
+import { showNotification } from '~/../AppMessages';
+import validatorService from '~/common/services/validator.service';
+import Captcha from '~/common/components/Captcha';
+import type { registerParams } from '../AuthService';
+import delay from '~/common/helpers/delay';
+import PasswordInput from '~/common/components/password-input/PasswordInput';
+import MText from '~/common/components/MText';
+import { BottomSheetButton } from '~/common/components/bottom-sheet';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
 import { IS_IPAD, IS_TENANT, APP_URI, TENANT } from '~/config/Config';
-import openUrlService from '~/common/services/open-url.service';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   // called after registration is finished
@@ -41,7 +38,8 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
   const scrollViewRef = useRef<ScrollView>();
   const emailRef = useRef<InputContainerImperativeHandle>(null);
   const passwordRef = useRef<InputContainerImperativeHandle>(null);
-
+  const i18n = sp.i18n;
+  const openUrlService = sp.resolve('openURL');
   const store = useLocalStore(() => ({
     focused: false,
     error: {},
@@ -57,7 +55,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     usernameTaken: false,
     captcha: '',
     validateUser: debounce(async (username: string) => {
-      const response = await apiService.get<any>('api/v3/register/validate', {
+      const response = await sp.api.get<any>('api/v3/register/validate', {
         username,
       });
       store.usernameTaken = !response.valid;
@@ -92,8 +90,9 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         if (store.friendlyCaptchaEnabled) {
           params.friendly_captcha_enabled = true;
         }
+        const authService = sp.resolve('auth');
         await authService.register(params);
-        await apiService.clearCookies();
+        await sp.api.clearCookies();
         await delay(100);
 
         try {
@@ -105,13 +104,13 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
             await authService.login(store.username, store.password, true);
           } catch (error) {
             showNotification(i18n.t('auth.failedToLoginNewAccount'));
-            logService.exception(error);
+            sp.log.exception(error);
           }
         }
       } catch (err: any) {
         if (err instanceof Error) {
           showNotification(err.message, 'warning', 3000);
-          logService.exception(err);
+          sp.log.exception(err);
         }
         friendlyCaptchaRef.current?.reset();
       } finally {
@@ -205,7 +204,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     },
   }));
 
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const passValidation = validatePassword(store.password);
 
@@ -213,7 +212,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
     <View>
       <InputContainer
         placeholder={i18n.t('auth.username')}
-        selectionColor={ThemedStyles.getColor('Link', 1)}
+        selectionColor={sp.styles.getColor('Link', 1)}
         onChangeText={store.setUsername}
         onSubmitEditing={emailRef.current?.focus}
         value={store.username}
@@ -232,7 +231,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       <InputContainer
         ref={emailRef}
         placeholder={i18n.t('auth.email')}
-        selectionColor={ThemedStyles.getColor('Link')}
+        selectionColor={sp.styles.getColor('Link')}
         onChangeText={store.setEmail}
         onSubmitEditing={passwordRef.current?.focus}
         value={store.email}
@@ -258,8 +257,8 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       />
       <PasswordInput
         ref={passwordRef}
-        selectionColor={ThemedStyles.getColor('Link')}
-        tooltipBackground={ThemedStyles.getColor('TertiaryBackground')}
+        selectionColor={sp.styles.getColor('Link')}
+        tooltipBackground={sp.styles.getColor('TertiaryBackground')}
         showValidator={
           Boolean(store.password) && store.focused && !passValidation.all
         }
@@ -295,7 +294,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           {inputs}
           <View style={[theme.paddingHorizontal4x, theme.paddingVertical2x]}>
             <CheckBox
-              checkedColor={ThemedStyles.getColor('Link')}
+              checkedColor={sp.styles.getColor('Link')}
               containerStyle={styles.checkboxTerm}
               title={
                 <MText style={styles.checkboxText}>
@@ -327,7 +326,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
               onPress={store.togglePolicies}
             />
             <CheckBox
-              checkedColor={ThemedStyles.getColor('Link')}
+              checkedColor={sp.styles.getColor('Link')}
               containerStyle={styles.checkboxTerm}
               title={
                 <MText style={styles.checkboxText}>
@@ -351,7 +350,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
 
             {!IS_TENANT && (
               <CheckBox
-                checkedColor={ThemedStyles.getColor('Link')}
+                checkedColor={sp.styles.getColor('Link')}
                 containerStyle={styles.checkboxPromotions}
                 title={
                   <MText style={styles.checkboxText}>
@@ -386,7 +385,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
 
 export default RegisterForm;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   checkboxPromotions: ['checkbox', 'paddingLeft', 'margin0x'],
   checkboxTerm: ['checkbox', 'paddingLeft', 'margin0x', 'paddingBottom0x'],
   checkboxText: ['colorPrimaryText', 'fontL', 'paddingLeft2x'],

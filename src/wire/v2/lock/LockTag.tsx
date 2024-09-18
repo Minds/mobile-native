@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
 import MText from '../../../common/components/MText';
-import i18n from '../../../common/services/i18n.service';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   type: 'members' | 'paywall' | 'plus';
@@ -12,7 +12,7 @@ const LockTag = ({ type }: PropsType) => {
   const lockIcon = <Icon name="lock" color="#FFFFFF" />;
 
   const text =
-    type !== 'paywall' ? i18n.t(`wire.lock.${type}`).toUpperCase() : false;
+    type !== 'paywall' ? sp.i18n.t(`wire.lock.${type}`).toUpperCase() : false;
 
   return (
     <View style={styles.wrapper}>

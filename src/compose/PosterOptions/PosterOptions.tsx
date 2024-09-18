@@ -1,8 +1,7 @@
 import React, { FC, useCallback } from 'react';
 import { View } from 'react-native';
 import moment from 'moment';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
+
 import {
   getAccessText,
   getLicenseText,
@@ -13,7 +12,7 @@ import { useComposeContext } from '~/compose/useComposeStore';
 import { observer } from 'mobx-react';
 import MenuItem from '../../common/components/menus/MenuItem';
 import { PosterStackScreenProps } from './PosterStackNavigator';
-import mindsConfigService from '~/common/services/minds-config.service';
+import sp from '~/services/serviceProvider';
 
 export function useNavCallback(screen, store, navigation) {
   return useCallback(() => {
@@ -32,7 +31,7 @@ const PosterOptions: FC<PropsType> = props => {
   const license = store.attachments.license;
   const accessId = store.accessId;
   const bottomSheet = useBottomSheet();
-  const nsfwEnabled = mindsConfigService.getSettings()?.nsfw_enabled ?? true;
+  const nsfwEnabled = sp.config.getSettings()?.nsfw_enabled ?? true;
 
   const onTagPress = useNavCallback('TagSelector', store, props.navigation);
   const onNsfwPress = useNavCallback('NsfwSelector', store, props.navigation);
@@ -55,6 +54,8 @@ const PosterOptions: FC<PropsType> = props => {
 
   const showSchedule =
     (store.isEdit ? time_created > Date.now() : true) && !store.portraitMode;
+
+  const i18n = sp.i18n;
 
   return (
     <View style={styles.container}>
@@ -114,6 +115,6 @@ const PosterOptions: FC<PropsType> = props => {
 
 export default observer(PosterOptions);
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['flexContainer', 'bgPrimaryBackground', 'fullHeight'],
 });

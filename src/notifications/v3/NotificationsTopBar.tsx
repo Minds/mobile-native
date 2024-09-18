@@ -5,8 +5,8 @@ import TopBarButtonTabBar, {
 } from '../../common/components/topbar-tabbar/TopBarButtonTabBar';
 import { StyleSheet } from 'react-native';
 import { NotificationsStore } from './createNotificationsStore';
-import i18n from '~/common/services/i18n.service';
 import { runInAction } from 'mobx';
+import sp from '../../services/serviceProvider';
 
 type PropsType = {
   store: NotificationsStore;
@@ -21,56 +21,60 @@ export type NotificationsTabOptions =
   | 'votes'
   | 'reminds';
 
-const options: Array<ButtonTabType<NotificationsTabOptions>> = [
-  {
-    id: 'all',
-    icon: {
-      name: 'list',
-      type: 'material',
-      subtitle: i18n.t('notification.filters.all'),
+function getOptions() {
+  const i18n = sp.i18n;
+  const options: Array<ButtonTabType<NotificationsTabOptions>> = [
+    {
+      id: 'all',
+      icon: {
+        name: 'list',
+        type: 'material',
+        subtitle: i18n.t('notification.filters.all'),
+      },
     },
-  },
-  {
-    id: 'tags',
-    icon: {
-      name: 'tags',
-      type: 'material',
-      subtitle: i18n.t('notification.filters.tags'),
+    {
+      id: 'tags',
+      icon: {
+        name: 'tags',
+        type: 'material',
+        subtitle: i18n.t('notification.filters.tags'),
+      },
     },
-  },
-  {
-    id: 'comments',
-    icon: {
-      name: 'chat-solid',
-      type: 'material',
-      subtitle: i18n.t('notification.filters.comments'),
+    {
+      id: 'comments',
+      icon: {
+        name: 'chat-solid',
+        type: 'material',
+        subtitle: i18n.t('notification.filters.comments'),
+      },
     },
-  },
-  {
-    id: 'subscriptions',
-    icon: {
-      name: 'subscriptions',
-      type: 'material',
-      subtitle: i18n.t('notification.filters.subscriptions'),
+    {
+      id: 'subscriptions',
+      icon: {
+        name: 'subscriptions',
+        type: 'material',
+        subtitle: i18n.t('notification.filters.subscriptions'),
+      },
     },
-  },
-  {
-    id: 'votes',
-    icon: {
-      name: 'thumb-up',
-      type: 'material',
-      subtitle: i18n.t('notification.filters.votes'),
+    {
+      id: 'votes',
+      icon: {
+        name: 'thumb-up',
+        type: 'material',
+        subtitle: i18n.t('notification.filters.votes'),
+      },
     },
-  },
-  {
-    id: 'reminds',
-    icon: {
-      name: 'remind',
-      type: 'material',
-      subtitle: i18n.t('notification.filters.reminds'),
+    {
+      id: 'reminds',
+      icon: {
+        name: 'remind',
+        type: 'material',
+        subtitle: i18n.t('notification.filters.reminds'),
+      },
     },
-  },
-];
+  ];
+  return options;
+}
 
 const NotificationsTopBar = observer(({ store, refresh }: PropsType) => {
   const localStore = useLocalStore(() => ({
@@ -97,7 +101,7 @@ const NotificationsTopBar = observer(({ store, refresh }: PropsType) => {
 
   return (
     <TopBarButtonTabBar
-      tabs={options}
+      tabs={getOptions()}
       current={localStore.option}
       onChange={onChange}
       buttonCmp={'Touchable'}

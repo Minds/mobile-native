@@ -1,6 +1,5 @@
-import ThemedStyles from './src/styles/ThemedStyles';
 import { ToastConfig } from '@msantang78/react-native-styled-toast/dist/Toast';
-
+import sp from '~/services/serviceProvider';
 let toast: undefined | ((config: ToastConfig) => void);
 
 export function registerToast(t) {
@@ -57,7 +56,7 @@ export const showNotification = (
 ) => {
   if (toast) {
     toast({
-      closeIconColor: ThemedStyles.getColor('SecondaryText'),
+      closeIconColor: sp.styles.getColor('SecondaryText'),
       message,
       onPress,
       hideAccent: true,

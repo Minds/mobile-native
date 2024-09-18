@@ -1,0 +1,13 @@
+diff --git a/node_modules/@bigbee.dev/react-native-measure-text-size/android/src/main/java/com/reactnativemeasuretextsize/CustomLineHeightSpan.kt b/node_modules/@bigbee.dev/react-native-measure-text-size/android/src/main/java/com/reactnativemeasuretextsize/CustomLineHeightSpan.kt
+index a4f2b6a..4e8727f 100644
+--- a/node_modules/@bigbee.dev/react-native-measure-text-size/android/src/main/java/com/reactnativemeasuretextsize/CustomLineHeightSpan.kt
++++ b/node_modules/@bigbee.dev/react-native-measure-text-size/android/src/main/java/com/reactnativemeasuretextsize/CustomLineHeightSpan.kt
+@@ -2,7 +2,7 @@ package com.reactnativemeasuretextsize
+ 
+ import android.graphics.Paint.FontMetricsInt
+ import android.text.style.LineHeightSpan
+-import com.facebook.react.views.text.ReactSpan
++import com.facebook.react.views.text.internal.span.ReactSpan
+ import kotlin.math.ceil
+ import kotlin.math.floor
+ import kotlin.math.min

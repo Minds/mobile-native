@@ -2,13 +2,13 @@ import React from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
 import { useBottomSheetModal } from '@gorhom/bottom-sheet';
 
-import i18n from '~/common/services/i18n.service';
 import NsfwToggle from '~/common/components/nsfw/NsfwToggle';
 import { IS_FROM_STORE } from '~/config/Config';
 import DateRangeFilter from '~/common/components/controls/DateRangeFilter';
 import { SectionTitle, RadioButton } from '~/common/components/bottom-sheet';
 import { Spacer } from '~ui';
 import BaseFeedFilter from '~/common/components/feed-filters/BaseFeedFilter';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   hideLabel?: boolean;
@@ -49,7 +49,7 @@ const FeedFilter = (props: PropsType) => {
       filters
         .filter(filter => !(props.hideBlogs && filter === 'blogs'))
         .map(filter => ({
-          title: i18n.t(`discovery.filters.${filter}`),
+          title: sp.i18n.t(`discovery.filters.${filter}`),
           onPress: () => {
             dismiss();
             // we need to delay due to a bug on the bottomsheet that opens it again if rendered too fast
@@ -64,7 +64,7 @@ const FeedFilter = (props: PropsType) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [dismiss, props.store, props.store.filter],
   );
-
+  const i18n = sp.i18n;
   return (
     <BaseFeedFilter
       title={i18n.t('filter') + ' ' + i18n.t('feed')}

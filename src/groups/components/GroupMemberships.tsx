@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
-import Divider from '../../common/components/Divider';
-import AnimatedHeight from '../../common/components/animations/AnimatedHeight';
-import useApiFetch from '../../common/hooks/useApiFetch';
-import { Button, H4, Spacer } from '../../common/ui';
+import Divider from '~/common/components/Divider';
+import AnimatedHeight from '~/common/components/animations/AnimatedHeight';
+import useApiFetch from '~/common/hooks/useApiFetch';
+import { Button, H4, Spacer } from '~/common/ui';
 import GroupModel from '../GroupModel';
 import GroupsListItem from '../GroupsListItem';
-import i18nService from '../../common/services/i18n.service';
+import sp from '~/services/serviceProvider';
 
 export default function GroupMemberships() {
   const navigation = useNavigation();
@@ -14,7 +14,7 @@ export default function GroupMemberships() {
   if (!memberships?.length) {
     return null;
   }
-
+  const i18nService = sp.i18n;
   return (
     <AnimatedHeight>
       <H4 horizontal="L" vertical="L">

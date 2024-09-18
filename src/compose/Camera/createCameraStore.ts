@@ -1,8 +1,8 @@
 import { RefObject } from 'react';
 import { Platform } from 'react-native';
 import { Timeout } from '~/types/Common';
-import mindsConfigService from '../../common/services/minds-config.service';
 import { Camera } from 'react-native-vision-camera';
+import sp from '~/services/serviceProvider';
 
 type FocusPoint = {
   x: number;
@@ -16,7 +16,7 @@ type CameraType = 'front' | 'back';
 
 const createCameraStore = p => {
   const store = {
-    videoLimit: mindsConfigService.getSettings().max_video_length ?? 5700,
+    videoLimit: sp.config.getSettings().max_video_length ?? 5700,
     cameraType: <CameraType>'back',
     flashMode: <FlashType>'off',
     hdr: <boolean>false,

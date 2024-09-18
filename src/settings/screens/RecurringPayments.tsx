@@ -1,20 +1,22 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import ThemedStyles from '../../styles/ThemedStyles';
-import paymentService from '../../common/services/payment.service';
-import type { SubscriptionType } from '../../common/services/payment.service';
-import CenteredLoading from '../../common/components/CenteredLoading';
 import { ScrollView, View } from 'react-native';
-import i18n from '../../common/services/i18n.service';
-import MenuItem from '../../common/components/menus/MenuItem';
-import Button from '../../common/components/Button';
-import capitalize from '../../common/helpers/capitalize';
-import MText from '../../common/components/MText';
+
+import type { SubscriptionType } from '~/common/services/payment.service';
+import CenteredLoading from '~/common/components/CenteredLoading';
+import MenuItem from '~/common/components/menus/MenuItem';
+import Button from '~/common/components/Button';
+import capitalize from '~/common/helpers/capitalize';
+import MText from '~/common/components/MText';
+import { useService } from '~/services/hooks/useService';
+import sp from '~/services/serviceProvider';
 
 const RecurringPayments = () => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const [subscriptions, setSubscriptions] = useState<SubscriptionType[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const paymentService = useService('payment');
 
   useEffect(() => {
     async function getSubscriptions() {
@@ -22,7 +24,7 @@ const RecurringPayments = () => {
       setLoading(false);
     }
     getSubscriptions();
-  }, [setSubscriptions, setLoading]);
+  }, [setSubscriptions, setLoading, paymentService]);
 
   const cancel = useCallback(
     async id => {
@@ -31,7 +33,7 @@ const RecurringPayments = () => {
       setSubscriptions(await paymentService.subscriptions());
       setLoading(false);
     },
-    [setLoading],
+    [paymentService],
   );
 
   const getTitle = (subscription: SubscriptionType) => {
@@ -73,7 +75,7 @@ const RecurringPayments = () => {
       <View
         style={[theme.flexContainer, theme.centered, theme.paddingBottom7x]}>
         <MText style={[theme.fontXL, theme.colorSecondaryText]}>
-          {i18n.t('settings.subscriptionListEmpty')}
+          {sp.i18n.t('settings.subscriptionListEmpty')}
         </MText>
       </View>
     );
@@ -82,7 +84,7 @@ const RecurringPayments = () => {
   return (
     <ScrollView style={[theme.flexContainer]}>
       <MText style={[theme.fontM, theme.padding2x, theme.colorSecondaryText]}>
-        {i18n.t('settings.recurringPaymentsDescription')}
+        {sp.i18n.t('settings.recurringPaymentsDescription')}
       </MText>
       {subscriptions.slice().map((subscription: SubscriptionType) => {
         return (
@@ -91,7 +93,7 @@ const RecurringPayments = () => {
             title={getTitle(subscription)}
             icon={
               <Button
-                text={i18n.t('cancel')}
+                text={sp.i18n.t('cancel')}
                 onPress={() => cancel(subscription.id)}
               />
             }

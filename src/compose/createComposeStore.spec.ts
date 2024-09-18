@@ -1,47 +1,38 @@
 // @ts-nocheck
-import apiService from '../common/services/api.service';
-import NavigationService from '../navigation/NavigationService';
 import createComposeStore from './createComposeStore';
 import { SupermindRequestParam } from './SupermindComposeScreen';
 import { confirm } from '../common/components/Confirm';
-import api from '../common/services/api.service';
 import { confirmSupermindReply } from './SupermindConfirmation';
-import PermissionsService from '~/common/services/permissions.service';
+import sp from '~/services/serviceProvider';
 
-jest.mock('../common/services/permissions.service');
-jest.mock('../navigation/NavigationService');
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
+sp.mockService('supportTiers');
+const configService = sp.mockService('config');
+sp.mockService('analytics');
+sp.mockService('attachment');
+sp.mockService('log');
+sp.mockService('richEmbed');
+const NavigationService = sp.mockService('navigation');
+const mockedApi = sp.mockService('api');
+const PermissionsService = sp.mockService('permissions');
+
 jest.mock('../common/components/Confirm');
 jest.mock('./SupermindConfirmation');
-jest.mock('../common/services/api.service', () => ({
-  post: jest.fn(),
-  rawPost: jest.fn(),
-  get: jest.fn(),
-  put: jest.fn(),
-  upload: jest.fn(),
-  delete: jest.fn(),
-  clearCookies: jest.fn(),
-  buildAuthorizationHeader: jest.fn(),
 
-  isApiError: jest.fn(),
-  isNetworkError: jest.fn(),
-  isAbort: jest.fn(),
-}));
-
-const mockedApi = api as jest.Mocked<typeof apiService>;
 const mockedConfirm = confirm as jest.Mock<typeof confirm>;
 const mockedConfirmSupermindReply = confirmSupermindReply as jest.Mock<
   typeof confirmSupermindReply
 >;
 
-jest.mock('../common/services/minds-config.service', () => ({
-  settings: {
-    plus: {
-      support_tier_urn: '',
-    },
+configService.settings = {
+  plus: {
+    support_tier_urn: '',
   },
-}));
-
-jest.mock('../common/services/analytics.service');
+};
 
 const mockedNavigation = {
   setParams: jest.fn(),
@@ -148,7 +139,7 @@ describe('createComposeStore', () => {
 
   it('should submit a supermind', async () => {
     const fakeReq = await createASupermind();
-    expect(apiService.put).toHaveBeenCalledWith(
+    expect(mockedApi.put).toHaveBeenCalledWith(
       expect.any(String),
       expect.objectContaining({
         supermind_request: {
@@ -160,10 +151,10 @@ describe('createComposeStore', () => {
     );
   });
 
-  it('should not monetize if a supermind is active', () => {
+  it('should not monetize if a supermind is active', async () => {
     store.saveMembsershipMonetize({ urn: 'fake-urn' });
-    createASupermind();
-    expect(apiService.put).toHaveBeenCalledWith(
+    await createASupermind();
+    expect(mockedApi.put).toHaveBeenCalledWith(
       expect.any(String),
       expect.not.objectContaining({
         paywall: true,
@@ -187,7 +178,7 @@ describe('createComposeStore', () => {
     });
     store.onScreenFocused();
     await createASupermind();
-    expect(apiService.put).toHaveBeenCalledWith(
+    expect(mockedApi.put).toHaveBeenCalledWith(
       expect.any(String),
       expect.objectContaining({
         supermind_reply_guid: supermindGuid,
@@ -211,7 +202,7 @@ describe('createComposeStore', () => {
     });
     store.onScreenFocused();
     await createASupermind();
-    expect(apiService.put).not.toHaveBeenCalled();
+    expect(mockedApi.put).not.toHaveBeenCalled();
   });
 
   const createASupermind = async () => {

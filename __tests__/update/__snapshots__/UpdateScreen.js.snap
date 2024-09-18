@@ -74,7 +74,7 @@ exports[`Update Screen Component renders correctly 1`] = `
           ]
         }
       >
-        Updating to v
+        Updating to v1.0.0
       </Text>
       <View
         animated={true}
@@ -87,7 +87,7 @@ exports[`Update Screen Component renders correctly 1`] = `
         indeterminate={false}
         indeterminateAnimationDuration={1000}
         onLayout={[Function]}
-        progress={0}
+        progress={NaN}
         style={
           [
             {
@@ -114,10 +114,10 @@ exports[`Update Screen Component renders correctly 1`] = `
                   "translateX": 0,
                 },
                 {
-                  "translateX": 1,
+                  "translateX": NaN,
                 },
                 {
-                  "scaleX": 0.0001,
+                  "scaleX": NaN,
                 },
               ],
             }
@@ -156,7 +156,6 @@ exports[`Update Screen Component renders correctly 1`] = `
       >
         Downloading
          
-        0
         %
       </Text>
     </View>

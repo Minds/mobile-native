@@ -5,22 +5,19 @@ import { Flow } from 'react-native-animated-spinkit';
 import { Image } from 'expo-image';
 
 import Icon from '@expo/vector-icons/MaterialIcons';
-
-import Button from '../../../common/components/Button';
-import InputContainer from '../../../common/components/InputContainer';
-import useCurrentUser from '../../../common/hooks/useCurrentUser';
-import i18n from '../../../common/services/i18n.service';
-import NavigationService from '../../../navigation/NavigationService';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import ModalContainer from './ModalContainer';
-import withPreventDoubleTap from '../../../common/components/PreventDoubleTap';
-import createChannelStore from '../../../channel/v2/createChannelStore';
-import DismissKeyboard from '../../../common/components/DismissKeyboard';
-import { showNotification } from '../../../../AppMessages';
-import sessionService from '../../../common/services/session.service';
-import MText from '../../../common/components/MText';
-import { Button as Btn } from '~/common/ui';
 import { useKeyboard } from '@react-native-community/hooks';
+
+import Button from '~/common/components/Button';
+import InputContainer from '~/common/components/InputContainer';
+import useCurrentUser from '~/common/hooks/useCurrentUser';
+
+import ModalContainer from './ModalContainer';
+import withPreventDoubleTap from '~/common/components/PreventDoubleTap';
+import createChannelStore from '~/channel/v2/createChannelStore';
+import DismissKeyboard from '~/common/components/DismissKeyboard';
+import { showNotification } from '~/../AppMessages';
+import MText from '~/common/components/MText';
+import { Button as Btn } from '~/common/ui';
 import { IS_IOS } from '~/config/Config';
 import {
   BottomSheetButton,
@@ -28,6 +25,8 @@ import {
   BottomSheetMenuItem,
 } from '~/common/components/bottom-sheet';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
+
 const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
 
 /**
@@ -35,7 +34,8 @@ const TouchableCustom = withPreventDoubleTap(TouchableOpacity);
  */
 export default withErrorBoundaryScreen(
   observer(function SetupChannelScreen() {
-    const theme = ThemedStyles.style;
+    const i18n = sp.i18n;
+    const theme = sp.styles.style;
     const user = useCurrentUser();
     // Do not render BottomSheet unless it is necessary
     const ref = React.useRef<any>(null);
@@ -80,27 +80,26 @@ export default withErrorBoundaryScreen(
         } finally {
           store.saving = false;
         }
-        NavigationService.goBack();
+        sp.navigation.goBack();
       },
     }));
 
-    const onAvatarPress = React.useCallback(
-      IS_IOS
-        ? store.showPicker
-        : async () => {
-            await channelStore.upload('avatar', false, () =>
-              store.hidePicker(),
-            );
-            await sessionService.loadUser();
-          },
-      [channelStore, store],
-    );
+    const onAvatarPress = React.useCallback(() => {
+      if (IS_IOS) {
+        store.showPicker();
+      } else {
+        (async () => {
+          await channelStore.upload('avatar', false, () => store.hidePicker());
+          await sp.session.loadUser();
+        })();
+      }
+    }, [channelStore, store]);
 
     return (
       <ModalContainer
         title={i18n.t('onboarding.setupChannel')}
         contentContainer={theme.alignSelfCenterMaxWidth}
-        onPressBack={NavigationService.goBack}
+        onPressBack={sp.navigation.goBack}
         leftButton={
           keyboard.keyboardShown ? (
             <Btn type="action" mode="flat" size="small" onPress={store.save}>
@@ -173,7 +172,7 @@ export default withErrorBoundaryScreen(
                 </View>
                 {channelStore.uploading && channelStore.avatarProgress ? (
                   <View style={[styles.tapOverlayView, theme.centered]}>
-                    <Flow color={ThemedStyles.getColor('Link')} />
+                    <Flow color={sp.styles.getColor('Link')} />
                   </View>
                 ) : null}
               </TouchableCustom>
@@ -203,7 +202,7 @@ export default withErrorBoundaryScreen(
                 await channelStore.upload('avatar', true, () =>
                   store.hidePicker(),
                 );
-                await sessionService.loadUser();
+                await sp.session.loadUser();
               }}
               title={i18n.t('takePhoto')}
               iconName="camera"
@@ -214,7 +213,7 @@ export default withErrorBoundaryScreen(
                 await channelStore.upload('avatar', false, () =>
                   store.hidePicker(),
                 );
-                await sessionService.loadUser();
+                await sp.session.loadUser();
               }}
               title={i18n.t('uploadPhoto')}
               iconName="image"

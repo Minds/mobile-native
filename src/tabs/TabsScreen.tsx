@@ -6,7 +6,6 @@ import {
 } from '@react-navigation/bottom-tabs';
 import { View, Platform, Dimensions } from 'react-native';
 import MIcon from '@expo/vector-icons/MaterialIcons';
-import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import NotificationIcon from '../notifications/v3/notifications-tab-icon/NotificationsTabIcon';
 import { observer } from 'mobx-react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -22,13 +21,15 @@ import NotificationsStack from '../navigation/NotificationsStack';
 import withModalProvider from '~/navigation/withModalProvide';
 import { useUnreadMessages } from '~/modules/chat/hooks/useUnreadMessages';
 import { useIncrementUnreadOnNewMessage } from '~/modules/chat/hooks/useIncrementUnreadOnNewMessage';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 import {
   CustomNavigationItem,
   useCustomNavigationTabs,
 } from '~/modules/navigation/service/custom-navigation.service';
-import { usePrefetchChatRoomList } from '~/modules/chat/hooks/useChatRoomListQuery';
-import { useStores } from '~/common/hooks/use-stores';
 import { getLandingPage } from '~/services/landingPage';
+import { useStores } from '~/common/hooks/use-stores';
+import { usePrefetchChatRoomList } from '~/modules/chat/hooks/useChatRoomListQuery';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -180,7 +181,7 @@ const TabBar = ({ state, descriptors, navigation, disableTabIndicator }) => {
  * @param {Object} props
  */
 const Tabs = observer(function () {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const portrait = useStores().portrait;
 
   // prefetch chat rooms
@@ -225,8 +226,8 @@ const Tabs = observer(function () {
             }
             style={
               focused
-                ? ThemedStyles.style.colorPrimaryText
-                : ThemedStyles.style.colorIcon
+                ? sp.styles.style.colorPrimaryText
+                : sp.styles.style.colorIcon
             }
           />
         );
@@ -350,7 +351,7 @@ const Tabs = observer(function () {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   unread: [
     {
       width: 8,

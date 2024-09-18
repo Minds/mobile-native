@@ -3,19 +3,16 @@ import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import ThemedStyles from '../../../styles/ThemedStyles';
-import i18n from '../../../common/services/i18n.service';
-import NavigationService from '../../../navigation/NavigationService';
 import MenuItem from '../../../common/components/menus/MenuItem';
 import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
 import { useNavCallback } from '../PosterOptions';
 import Wrapper from './common/Wrapper';
 import { useNavigation } from '@react-navigation/core';
-import mindsService from '../../../common/services/minds-config.service';
 import MText from '../../../common/components/MText';
 import { StackScreenProps } from '@react-navigation/stack';
 import { PosterStackParamList } from '../PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
+import sp from '~/services/serviceProvider';
 
 interface PropsType
   extends StackScreenProps<PosterStackParamList, 'MonetizeSelector'> {}
@@ -25,7 +22,7 @@ type IconItemPropsType = {
 };
 
 const IconItem = ({ isActive }: IconItemPropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   return (
     <View style={theme.rowJustifyStart}>
       {isActive && (
@@ -38,10 +35,10 @@ const IconItem = ({ isActive }: IconItemPropsType) => {
 
 const MonetizeScreen = observer(({}: PropsType) => {
   const navigation = useNavigation();
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const store = useComposeContext();
 
-  const support_tier_urn = mindsService.settings.plus.support_tier_urn;
+  const support_tier_urn = sp.config.settings.plus.support_tier_urn;
 
   // const isCustomSelected =
   //   store.wire_threshold &&
@@ -62,6 +59,7 @@ const MonetizeScreen = observer(({}: PropsType) => {
   const isActive = Boolean(
     store.wire_threshold && store.wire_threshold.support_tier,
   );
+  const i18n = sp.i18n;
 
   return (
     <Wrapper store={store}>
@@ -92,7 +90,7 @@ const MonetizeScreen = observer(({}: PropsType) => {
         />
         <MenuItem
           onPress={() =>
-            NavigationService.navigate('MembershipMonetize', {
+            sp.navigation.navigate('MembershipMonetize', {
               store,
               useForSelection: true,
             })

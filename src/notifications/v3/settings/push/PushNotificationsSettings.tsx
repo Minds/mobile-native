@@ -1,22 +1,23 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { ScrollView, View } from 'react-native';
-import i18n from '../../../../common/services/i18n.service';
-import { useStores } from '../../../../common/hooks/use-stores';
+import { useStores } from '~/common/hooks/use-stores';
 import {
   containerStyle,
   titleStyle,
 } from '../email/EmailNotificationsSettings';
-import MText from '../../../../common/components/MText';
+import MText from '~/common/components/MText';
 import Empty from '~/common/components/Empty';
 import { Button } from '~/common/ui';
 import CenteredLoading from '~/common/components/CenteredLoading';
-import MenuItemToggle from '../../../../common/components/menus/MenuItemToggle';
+import MenuItemToggle from '~/common/components/menus/MenuItemToggle';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {};
 
 const PushNotificationsSettings = ({}: PropsType) => {
   const { notifications } = useStores();
+  const i18n = sp.i18n;
 
   React.useEffect(() => {
     if (notifications.pushNotificationsSettings === null) {

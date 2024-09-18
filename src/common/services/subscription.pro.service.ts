@@ -1,5 +1,5 @@
 import moment from 'moment';
-import api from './api.service';
+import type { ApiService } from './api.service';
 
 type Pro = {
   expires: number;
@@ -7,11 +7,13 @@ type Pro = {
   isActive?: boolean;
   status: 'success' | 'error';
 };
-class SubscriptionProService {
+export class SubscriptionProService {
   cachedResponse: Pro | undefined;
 
+  constructor(private api: ApiService) {}
+
   async isActive(): Promise<boolean> {
-    const result: Pro = await api.get('api/v2/pro');
+    const result: Pro = await this.api.get('api/v2/pro');
 
     if (result?.isActive === undefined || result?.status !== 'success') {
       throw new Error('Unable to check your Pro status');
@@ -36,7 +38,7 @@ class SubscriptionProService {
   }
 
   async disable(): Promise<boolean> {
-    await api.delete('api/v2/pro');
+    await this.api.delete('api/v2/pro');
     return true;
   }
 
@@ -51,5 +53,3 @@ class SubscriptionProService {
       .format('h:mma [on] MMM Do, YYYY');
   }
 }
-
-export default new SubscriptionProService();

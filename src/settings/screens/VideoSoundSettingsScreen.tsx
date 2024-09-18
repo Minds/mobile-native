@@ -1,15 +1,15 @@
 import React from 'react';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
 import { CheckBox } from 'react-native-elements';
 import { observer } from 'mobx-react';
-import MText from '../../common/components/MText';
+
+import MText from '~/common/components/MText';
 import { Screen } from '~/common/ui';
-import videoPlayerService from '~/common/services/video-player.service';
+import sp from '~/services/serviceProvider';
 
 const VideoSoundSettingsScreen = observer(() => {
-  const theme = ThemedStyles.style;
-
+  const theme = sp.styles.style;
+  const videoPlayerService = sp.resolve('videoPlayer');
+  const i18n = sp.i18n;
   return (
     <Screen>
       <MText

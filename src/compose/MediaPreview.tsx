@@ -5,9 +5,10 @@ import * as Progress from 'react-native-progress';
 import { Image } from 'expo-image';
 
 import { observer } from 'mobx-react';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import MindsVideo from '../media/v2/mindsVideo/MindsVideo';
 import { ResizeMode } from 'expo-av';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   store: any;
@@ -23,7 +24,7 @@ export default observer(function MediaPreview({ store }: PropsType) {
     return null;
   }
 
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   switch (store.attachments.length) {
     case 1:
@@ -198,7 +199,7 @@ const MediaPresentation = observer(
           <Progress.Bar
             indeterminate={true}
             progress={attachment.progress}
-            color={ThemedStyles.getColor('Green')}
+            color={sp.styles.getColor('Green')}
             width={null}
             borderWidth={0}
             borderRadius={0}
@@ -227,7 +228,7 @@ const MediaPresentation = observer(
           <Progress.Bar
             indeterminate={true}
             progress={attachment.progress}
-            color={ThemedStyles.getColor('Green')}
+            color={sp.styles.getColor('Green')}
             width={null}
             borderWidth={0}
             borderRadius={0}
@@ -240,7 +241,7 @@ const MediaPresentation = observer(
   },
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   icon: ['colorIcon'],
   progress: {
     position: 'absolute',

@@ -1,7 +1,7 @@
 import type UserModel from '../../channel/UserModel';
 import type UserStore from '../../auth/UserStore';
 import { userItem } from './SearchBar.service';
-import NavigationService from '../../navigation/NavigationService';
+import sp from '../../services/serviceProvider';
 
 const createSearchResultStore = () => {
   const store = {
@@ -56,7 +56,7 @@ const createSearchResultStore = () => {
     },
     searchDiscovery() {
       this.search = this.searchText;
-      NavigationService.navigate('Discovery', {
+      sp.navigation.navigate('Discovery', {
         screen: 'DiscoverySearch',
         params: { query: this.search },
       });

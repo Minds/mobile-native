@@ -1,9 +1,9 @@
 import { ImageURISource } from 'react-native';
 import { decorate, observable } from 'mobx';
 import { MINDS_ASSETS_CDN_URI } from '../config/Config';
-import api from '../common/services/api.service';
 import { LICENSES } from '../common/services/list-options.service';
 import ActivityModel from '../newsfeed/ActivityModel';
+import serviceProvider from '~/services/serviceProvider';
 
 /**
  * User model
@@ -22,7 +22,7 @@ export default class BlogModel extends ActivityModel {
         ? this.thumbnail_src
         : `${MINDS_ASSETS_CDN_URI}front/dist/assets/logos/placeholder-bulb.jpg`;
 
-    return { uri, headers: api.buildHeaders() };
+    return { uri, headers: serviceProvider.api.buildHeaders() };
   }
 
   /**

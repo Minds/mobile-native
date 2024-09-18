@@ -4,9 +4,9 @@ import {
   pushBottomSheet,
 } from '~/common/components/bottom-sheet';
 import { ChatMember } from '../types';
-import NavigationService from '~/navigation/NavigationService';
 import { ChatRoomTypeEnum } from '~/graphql/api';
 import { ChatRoomMembersContextType } from '../contexts/ChatRoomMembersContext';
+import sp from '~/services/serviceProvider';
 
 export const showMemberMenu = (
   member: ChatMember,
@@ -24,7 +24,7 @@ export const showMemberMenu = (
       <>
         <BottomSheetMenuItem
           onPress={async () => {
-            NavigationService.push('Channel', {
+            sp.navigation.push('Channel', {
               guid: member.node.guid,
             });
             await ref.close();

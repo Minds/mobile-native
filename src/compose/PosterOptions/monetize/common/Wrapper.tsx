@@ -1,9 +1,8 @@
 import React, { useCallback } from 'react';
 import TopBar from '../../../TopBar';
-import ThemedStyles from '../../../../styles/ThemedStyles';
+
 import { View } from 'react-native';
-import i18n from '../../../../common/services/i18n.service';
-import NavigationService from '../../../../navigation/NavigationService';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   store: any;
@@ -20,22 +19,22 @@ const Wrapper = ({
   doneText,
   onPressRight,
 }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const rightText =
-    hideDone === true ? null : doneText ? doneText : i18n.t('done');
+    hideDone === true ? null : doneText ? doneText : sp.i18n.t('done');
 
   const onPressRightCallBack = useCallback(() => {
     onPressRight && onPressRight();
-    NavigationService.goBack();
+    sp.navigation.goBack();
   }, [onPressRight]);
 
   return (
     <View style={[theme.flexContainer, theme.bgPrimaryBackground]}>
       <TopBar
-        leftText={i18n.t('monetize.title')}
+        leftText={sp.i18n.t('monetize.title')}
         rightText={rightText}
         onPressRight={onPressRightCallBack}
-        onPressBack={NavigationService.goBack}
+        onPressBack={sp.navigation.goBack}
         store={store}
         backIconName="chevron-left"
         backIconSize="large"

@@ -1,7 +1,6 @@
 import { observable, action, computed } from 'mobx';
-import apiService from '../../../../common/services/api.service';
-import i18n, { LocaleType } from '../../../../common/services/i18n.service';
-import logService from '../../../../common/services/log.service';
+import { LocaleType } from '~/common/services/i18n.service';
+import sp from '~/services/serviceProvider';
 
 type NotificationGroupType = keyof LocaleType['notificationSettings'];
 
@@ -19,7 +18,9 @@ export default class PushNotificationsSettingModel {
 
   @computed
   get notificationGroup() {
-    let translation = i18n.t(`notificationSettings.${this.notification_group}`);
+    let translation = sp.i18n.t(
+      `notificationSettings.${this.notification_group}`,
+    );
     if (
       translation.includes('missing') &&
       translation.includes('translation')
@@ -36,13 +37,13 @@ export default class PushNotificationsSettingModel {
 
   async toggle() {
     try {
-      await apiService.post(
+      await sp.api.post(
         `api/v3/notifications/push/settings/${this.notification_group}`,
         { enabled: this.enabled },
       );
     } catch (err) {
       this._toggleEnabled();
-      logService.exception('[NotificationsSettingModel] toggleEnabled', err);
+      sp.log.exception('[NotificationsSettingModel] toggleEnabled', err);
     }
   }
 

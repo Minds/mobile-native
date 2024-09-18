@@ -3,9 +3,7 @@ import { observer } from 'mobx-react';
 
 import isObject from 'lodash/isObject';
 
-import ThemedStyles from '~/styles/ThemedStyles';
 import type ActivityModel from '~/newsfeed/ActivityModel';
-import i18n from '~/common/services/i18n.service';
 import abbrev from '~/common/helpers/abbrev';
 import LockTag from '~/wire/v2/lock/LockTag';
 import type { SupportTiersType } from '~/wire/WireTypes';
@@ -14,6 +12,7 @@ import MText from '~/common/components/MText';
 import SupermindLabel from '~/common/components/supermind/SupermindLabel';
 import { IS_TENANT } from '~/config/Config';
 import { LockNetworkTag } from './LockNetwordkTag';
+import sp from '~/services/serviceProvider';
 
 type ActivityMetricsProps = {
   entity: ActivityModel;
@@ -26,6 +25,7 @@ type ActivityMetricsProps = {
  */
 const ActivityMetrics = observer(
   ({ entity, fullDate, hideSupermindLabel }: ActivityMetricsProps) => {
+    const i18n = sp.i18n;
     const support_tier: SupportTiersType | null =
       entity.wire_threshold &&
       isObject(entity.wire_threshold) &&
@@ -64,13 +64,13 @@ const ActivityMetrics = observer(
   },
 );
 
-const containerStyle = ThemedStyles.combine(
+const containerStyle = sp.styles.combine(
   'rowJustifySpaceBetween',
   'padding2x',
   'paddingHorizontal4x',
 );
 
-const textStyle = ThemedStyles.combine(
+const textStyle = sp.styles.combine(
   'colorSecondaryText',
   'fontM',
   'paddingVertical',

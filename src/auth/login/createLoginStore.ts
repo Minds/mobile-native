@@ -1,15 +1,12 @@
-import i18n from '../../common/services/i18n.service';
-import AuthService from '../AuthService';
 import { LayoutAnimation } from 'react-native';
-import logService from '../../common/services/log.service';
 import { showNotification } from '../../../AppMessages';
-import NavigationService from '~/navigation/NavigationService';
+import sp from '~/services/serviceProvider';
 
 const createLoginStore = ({ props }) => ({
   username: '',
   password: '',
   msg: '',
-  language: i18n.getCurrentLocale(),
+  language: sp.i18n.getCurrentLocale(),
   inProgress: false,
   showErrors: false,
   setUsername(value) {
@@ -46,7 +43,9 @@ const createLoginStore = ({ props }) => ({
 
     this.initLogin();
     // is two factor auth
-    return AuthService.login(this.username, this.password)
+    return sp
+      .resolve('auth')
+      .login(this.username, this.password)
       .then(() => {
         props.onLogin && props.onLogin();
       })
@@ -57,12 +56,12 @@ const createLoginStore = ({ props }) => ({
           errJson.error === 'invalid_grant' ||
           errJson.error === 'invalid_client'
         ) {
-          this.setError(i18n.t('auth.invalidGrant'));
+          this.setError(sp.i18n.t('auth.invalidGrant'));
           return;
         }
 
         if (errJson.message?.includes('user could not be found')) {
-          this.setError(i18n.t('auth.loginFail'));
+          this.setError(sp.i18n.t('auth.loginFail'));
           return;
         }
 
@@ -76,11 +75,11 @@ const createLoginStore = ({ props }) => ({
           this.setError(errJson.message || 'Unknown error');
         }
 
-        logService.exception('[LoginStore]', errJson);
+        sp.log.exception('[LoginStore]', errJson);
       });
   },
   onForgotPress() {
-    NavigationService.navigate('ResetPassword');
+    sp.navigation.navigate('ResetPassword');
   },
 });
 

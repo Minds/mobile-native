@@ -3,7 +3,13 @@ import { render, screen, fireEvent } from '@testing-library/react-native';
 import '@testing-library/jest-native/extend-expect';
 
 import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
-import CommentsAction from '../../../../src/newsfeed/activity/actions/CommentsAction';
+import CommentsAction from '~/newsfeed/activity/actions/CommentsAction';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 import { InteractionManager } from 'react-native';
 
 InteractionManager.runAfterInteractions = jest

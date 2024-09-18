@@ -2,16 +2,25 @@ import { Animated, NativeModules, LayoutAnimation } from 'react-native';
 import React from 'react';
 import { render, fireEvent, screen } from '@testing-library/react-native';
 import RegisterForm from '../../src/auth/register/RegisterForm';
-import authService from '../../src/auth/AuthService';
 import { showNotification } from '../../AppMessages';
 import { useNavigation } from '@react-navigation/core';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+jest.mock('react-native-modern-datepicker', () => ({}));
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
+sp.mockService('log');
+sp.mockService('openURL');
+const authService = sp.mockService('auth');
 
 NativeModules.Networking.clearCookies = jest.fn();
+jest.mock('react-native-safe-area-context');
 jest.mock('@react-navigation/core');
-jest.mock('../../src/auth/AuthService');
 jest.mock('../../src/auth/UserStore');
 jest.mock('../../src/common/components/Captcha');
-jest.mock('react-native-safe-area-context');
 jest.mock('../../AppMessages', () => ({ showNotification: jest.fn() }));
 
 //TODO: remove after refactor button component

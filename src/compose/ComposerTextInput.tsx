@@ -1,11 +1,12 @@
 import React from 'react';
 import { TextInput as TextInputType } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
-import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import Tags from '../common/components/Tags';
 import TextInput from '../common/components/TextInput';
 import { ComposeStoreType } from './useComposeStore';
 import onImageInput from '~/common/helpers/onImageInput';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 export const ComposerTextInput = observer(
   React.forwardRef<
@@ -50,7 +51,7 @@ export const ComposerTextInput = observer(
         ref={ref}
         scrollEnabled={false}
         placeholder={placeholder}
-        placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+        placeholderTextColor={sp.styles.getColor('TertiaryText')}
         onChangeText={store.setText}
         keyboardType={'default'}
         textAlignVertical="top"
@@ -72,8 +73,8 @@ const InputText = observer(({ store, navigation }) => (
     selectable={true}
     style={
       store.attachments.hasAttachment || store.text.length > 85
-        ? ThemedStyles.style.fontXL
-        : ThemedStyles.style.fontXXL
+        ? sp.styles.style.fontXL
+        : sp.styles.style.fontXXL
     }>
     {store.text}
   </Tags>

@@ -6,8 +6,9 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import ModalHeader from './ModalHeader';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   title: string;
@@ -17,7 +18,7 @@ type PropsType = {
 };
 
 const ModalScreen = ({ children, testID, ...props }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const insets = useSafeAreaInsets();
   const cleanTop = insets.top
     ? { marginTop: insets.top + 50 }

@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import i18n from '../common/services/i18n.service';
-import ThemedStyles from '../styles/ThemedStyles';
+import { observer } from 'mobx-react';
+
 import { UpgradeStoreType } from './createUpgradeStore';
 import MText from '../common/components/MText';
 import Switch from '~/common/components/controls/Switch';
-import { observer } from 'mobx-react';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   store: UpgradeStoreType;
@@ -13,7 +13,7 @@ type PropsType = {
 };
 
 const PaymentMethod = ({ store, cashName }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const switchTextStyle = [styles.switchText, theme.colorPrimaryText];
   return (
     <View
@@ -23,7 +23,7 @@ const PaymentMethod = ({ store, cashName }: PropsType) => {
         theme.bcolorPrimaryBorder,
         theme.borderTopHair,
       ]}>
-      <MText style={switchTextStyle}>{cashName || i18n.t('usd')}</MText>
+      <MText style={switchTextStyle}>{cashName || sp.i18n.t('usd')}</MText>
       <Switch
         value={store.method === 'tokens'}
         onChange={store.toogleMethod}

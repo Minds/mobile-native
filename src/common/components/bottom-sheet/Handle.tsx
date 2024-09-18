@@ -1,6 +1,7 @@
 import { View } from 'react-native';
-import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
 import React, { FC, PropsWithChildren } from 'react';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 interface HandleProps {
   showHandleBar?: boolean;
@@ -19,7 +20,7 @@ const Handle: FC<PropsWithChildren<HandleProps>> = ({
       [style],
     )}>
     {showHandleBar && (
-      <View style={ThemedStyles.style.alignCenter}>
+      <View style={sp.styles.style.alignCenter}>
         <View style={styles.handleBar} />
       </View>
     )}
@@ -30,7 +31,7 @@ const Handle: FC<PropsWithChildren<HandleProps>> = ({
 
 export default Handle;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     {
       borderTopLeftRadius: 18,

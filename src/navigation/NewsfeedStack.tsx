@@ -4,10 +4,10 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import { AppStackParamList } from './NavigationTypes';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { NewsfeedScreen } from '~/modules/newsfeed';
 import TopNewsfeedScreen from '~/newsfeed/TopNewsfeedScreen';
-import i18n from '~/common/services/i18n.service';
+import sp from '~/services/serviceProvider';
 
 type NewsfeedStackParamList = Pick<
   AppStackParamList,
@@ -27,7 +27,7 @@ const hideHeader: NativeStackNavigationOptions = { headerShown: false };
 
 export default function () {
   return (
-    <NewsfeedStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+    <NewsfeedStack.Navigator screenOptions={sp.styles.defaultScreenOptions}>
       <NewsfeedStack.Screen
         name="MainFeed"
         component={NewsfeedScreen}
@@ -76,7 +76,7 @@ export default function () {
         getComponent={() =>
           require('~/settings/screens/BoostSettingsScreen').default
         }
-        options={{ title: i18n.t('settings.accountOptions.8') }}
+        options={{ title: sp.i18n.t('settings.accountOptions.8') }}
       />
       <NewsfeedStack.Screen
         name="Onboarding"

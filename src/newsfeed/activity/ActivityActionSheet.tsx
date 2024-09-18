@@ -6,21 +6,15 @@ import {
   withSafeAreaInsets,
 } from 'react-native-safe-area-context';
 import * as Clipboard from 'expo-clipboard';
+import SendIntentAndroid from 'react-native-send-intent';
 
 import { IconButtonNext } from '~ui/icons';
 import {
   ANDROID_CHAT_APP,
-  BLOCK_USER_ENABLED,
   BOOSTS_ENABLED,
   IS_IOS,
   APP_URI,
 } from '../../config/Config';
-import { isFollowing } from '../NewsfeedService';
-import shareService from '../../share/ShareService';
-import i18n from '../../common/services/i18n.service';
-import translationService from '../../common/services/translation.service';
-import sessionService from '../../common/services/session.service';
-import NavigationService from '../../navigation/NavigationService';
 import type ActivityModel from '../ActivityModel';
 import { showNotification } from '../../../AppMessages';
 import {
@@ -30,13 +24,11 @@ import {
 } from '../../common/components/bottom-sheet';
 import { withChannelContext } from '~/channel/v2/ChannelContext';
 import type UserModel from '~/channel/UserModel';
-import SendIntentAndroid from 'react-native-send-intent';
-import logService from '~/common/services/log.service';
 import { isApiError } from '~/common/services/ApiErrors';
 import { GroupContext } from '~/modules/groups/contexts/GroupContext';
 import { copyToClipboardOptions } from '~/common/helpers/copyToClipboard';
-import openUrlService from '../../common/services/open-url.service';
-import PermissionsService from '~/common/services/permissions.service';
+import serviceProvider from '~/services/serviceProvider';
+import { openLinkInInAppBrowser } from '~/common/services/inapp-browser.service';
 
 type PropsType = {
   entity: ActivityModel;
@@ -80,9 +72,9 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
    */
   showActionSheet = async () => {
     if (this.props.entity['is:following'] === undefined) {
-      this.props.entity['is:following'] = await isFollowing(
-        this.props.entity.guid,
-      );
+      this.props.entity['is:following'] = await serviceProvider
+        .resolve('newsfeed')
+        .isFollowing(this.props.entity.guid);
     }
 
     this.setState({ options: this.getOptions() }, () => {
@@ -102,17 +94,20 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       testID?: string;
       onPress: () => Promise<void> | void;
     }> = [];
-
+    const i18n = serviceProvider.i18n;
     const entity = this.props.entity;
     const isReminded = entity.remind_users && entity.remind_users.length;
 
     const remindedByMe =
       entity.remind_users &&
       entity.remind_users.some(
-        user => user.guid === sessionService.getUser().guid,
+        user => user.guid === serviceProvider.session.getUser().guid,
       );
 
-    if (remindedByMe || (isReminded && sessionService.getUser().isAdmin())) {
+    if (
+      remindedByMe ||
+      (isReminded && serviceProvider.session.getUser().isAdmin())
+    ) {
       options.push({
         title: i18n.t('undoRemind'),
         iconName: 'undo',
@@ -134,8 +129,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         title: i18n.t('viewOnExternal', { external: externalData.source }),
         iconName: 'language',
         iconType: 'material',
-        onPress: () =>
-          openUrlService.openLinkInInAppBrowser(entity.canonical_url),
+        onPress: () => openLinkInInAppBrowser(entity.canonical_url),
       });
     }
 
@@ -216,7 +210,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
           },
         });
       }
-      if (BOOSTS_ENABLED && PermissionsService.canBoost()) {
+      if (BOOSTS_ENABLED && serviceProvider.permissions.canBoost()) {
         options.push({
           title: 'Boost',
           iconName: 'trending-up',
@@ -230,7 +224,10 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       }
     }
 
-    if (!!this.props.onTranslate && translationService.isTranslatable(entity)) {
+    if (
+      !!this.props.onTranslate &&
+      serviceProvider.resolve('translation').isTranslatable(entity)
+    ) {
       // Translate
       options.push({
         title: i18n.t('translate.translate'),
@@ -258,41 +255,39 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
       });
 
       // Block / Unblock
-      if (BLOCK_USER_ENABLED) {
-        const blocked = this.props.channel
-          ? this.props.channel.blocked
-          : this.state.userBlocked;
-        options.push({
-          title: blocked ? i18n.t('channel.unblock') : i18n.t('channel.block'),
-          iconName: 'remove-circle-outline',
-          iconType: 'ionicon',
-          onPress: async () => {
-            if (this.props.channel) {
-              return this.props.channel?.toggleBlock();
-            }
+      const blocked = this.props.channel
+        ? this.props.channel.blocked
+        : this.state.userBlocked;
+      options.push({
+        title: blocked ? i18n.t('channel.unblock') : i18n.t('channel.block'),
+        iconName: 'remove-circle-outline',
+        iconType: 'ionicon',
+        onPress: async () => {
+          if (this.props.channel) {
+            return this.props.channel?.toggleBlock();
+          }
 
-            if (!this.state.userBlocked) {
-              try {
-                await this.props.entity.blockOwner();
-                this.setState({
-                  userBlocked: true,
-                });
-              } catch (err) {
-                this.showError();
-              }
-            } else {
-              try {
-                await this.props.entity.unblockOwner();
-                this.setState({
-                  userBlocked: false,
-                });
-              } catch (err) {
-                this.showError();
-              }
+          if (!this.state.userBlocked) {
+            try {
+              await this.props.entity.blockOwner();
+              this.setState({
+                userBlocked: true,
+              });
+            } catch (err) {
+              this.showError();
             }
-          },
-        });
-      }
+          } else {
+            try {
+              await this.props.entity.unblockOwner();
+              this.setState({
+                userBlocked: false,
+              });
+            } catch (err) {
+              this.showError();
+            }
+          }
+        },
+      });
     }
     // Copy URL
     options.push(
@@ -335,7 +330,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     if (
       !isReminded &&
       (entity.isOwner() ||
-        sessionService.getUser().isAdmin() ||
+        serviceProvider.session.getUser().isAdmin() ||
         (group && (group['is:owner'] || group['is:moderator'])))
     ) {
       options.push({
@@ -383,7 +378,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
     try {
       await this.props.entity.deleteEntity();
 
-      const state = NavigationService.getCurrentState();
+      const state = serviceProvider.navigation.getCurrentState();
 
       if (state && state.name === 'Activity') {
         this.props.navigation.goBack();
@@ -415,7 +410,7 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         Linking.openURL('market://details?id=com.minds.chat');
       }
     } catch (error) {
-      logService.exception(error);
+      serviceProvider.log.exception(error);
       console.log(error);
     }
   };
@@ -425,7 +420,10 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
    */
   showError(message?: string) {
     showNotification(
-      message || i18n.t('errorMessage') + '\n' + i18n.t('activity.tryAgain'),
+      message ||
+        serviceProvider.i18n.t('errorMessage') +
+          '\n' +
+          serviceProvider.i18n.t('activity.tryAgain'),
       'danger',
       2000,
     );
@@ -435,15 +433,17 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
    * Share the link to the post
    */
   share = () => {
-    shareService.share(
-      this.props.entity.text,
-      APP_URI + 'newsfeed/' + this.props.entity.guid,
-    );
+    serviceProvider
+      .resolve('share')
+      .share(
+        this.props.entity.text,
+        APP_URI + 'newsfeed/' + this.props.entity.guid,
+      );
   };
 
   copyToClipboard = () => {
     Clipboard.setStringAsync(APP_URI + 'newsfeed/' + this.props.entity.guid);
-    showNotification(i18n.t('copied'));
+    showNotification(serviceProvider.i18n.t('copied'));
   };
 
   /**
@@ -480,7 +480,7 @@ const pushActionSheet = ({ options }: { options: any[] }) =>
             />
           ))}
           <BottomSheetButton
-            text={i18n.t('cancel')}
+            text={serviceProvider.i18n.t('cancel')}
             onPress={() => ref.close()}
           />
         </>
@@ -498,12 +498,12 @@ export const pushShareSheet = ({ onSendTo, onShare }) =>
             await ref.close();
             onSendTo();
           }}
-          title={i18n.t('sendTo')}
+          title={serviceProvider.i18n.t('sendTo')}
           iconName="repeat"
           iconType="material"
         />
         <BottomSheetMenuItem
-          title={i18n.t('share')}
+          title={serviceProvider.i18n.t('share')}
           onPress={async () => {
             await ref.close();
             onShare();
@@ -512,7 +512,10 @@ export const pushShareSheet = ({ onSendTo, onShare }) =>
           iconType="material"
         />
 
-        <BottomSheetButton text={i18n.t('cancel')} onPress={ref.close} />
+        <BottomSheetButton
+          text={serviceProvider.i18n.t('cancel')}
+          onPress={ref.close}
+        />
       </>
     ),
   });

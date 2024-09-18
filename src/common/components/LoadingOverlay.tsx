@@ -1,17 +1,17 @@
 import { View } from 'react-native';
 import React from 'react';
 import { Flow } from 'react-native-animated-spinkit';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 export default function LoadingOverlay() {
   return (
     <View style={styles.loading}>
-      <Flow color={ThemedStyles.getColor('White')} />
+      <Flow color={sp.styles.getColor('White')} />
     </View>
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   loading: [
     'positionAbsolute',
     'centered',

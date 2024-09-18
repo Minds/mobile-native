@@ -7,10 +7,10 @@ import OffsetList from '~/common/components/OffsetList';
 import TopbarTabbar, {
   TabType,
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
-import i18n from '~/common/services/i18n.service';
+
 import { IconButton, Screen, ScreenHeader } from '~/common/ui';
 import { GOOGLE_PLAY_STORE, IS_IOS, IS_IPAD } from '~/config/Config';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import {
   SupermindOnboardingOverlay,
   useSupermindOnboarding,
@@ -35,7 +35,7 @@ import {
 import { FeedListV2 } from '~/common/components/FeedListV2';
 import useFeedStore from '~/common/hooks/useFeedStore';
 import PendingSupermindNotice from '~/common/components/in-feed-notices/notices/PendingSupermindNotice';
-import inFeedNoticesService from '~/common/services/in-feed.notices.service';
+import sp from '~/services/serviceProvider';
 
 type TabModeType = 'inbound' | 'outbound' | 'feed';
 type SupermindConsoleScreenRouteProp = RouteProp<
@@ -68,7 +68,7 @@ function SupermindConsoleScreen({
   navigation,
   route,
 }: SupermindConsoleScreenProps) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const [mode, setMode] = React.useState<TabModeType>(
     route.params?.tab ?? 'feed',
   );
@@ -92,8 +92,7 @@ function SupermindConsoleScreen({
   // initial load of the feed & notices
   useEffect(() => {
     feedStore.fetchRemoteOrLocal();
-
-    inFeedNoticesService.load();
+    sp.resolve('inFeedNotices').load();
   }, [feedStore]);
 
   const switchToAllIfPendingEmpty = useCallback(
@@ -136,6 +135,7 @@ function SupermindConsoleScreen({
   const filterParam = filterValues[filter]
     ? `?status=${filterValues[filter]}`
     : '';
+  const i18n = sp.i18n;
 
   const tabs: Array<TabType<TabModeType>> = React.useMemo(
     () => [
@@ -152,7 +152,7 @@ function SupermindConsoleScreen({
         title: i18n.t('outbound'),
       },
     ],
-    [],
+    [i18n],
   );
 
   return (
@@ -193,7 +193,8 @@ function SupermindConsoleScreen({
         <FeedListV2
           feedStore={feedStore}
           ListHeaderComponent={
-            inFeedNoticesService.getNotice('supermind-pending')?.should_show ? (
+            sp.resolve('inFeedNotices').getNotice('supermind-pending')
+              ?.should_show ? (
               <PendingSupermindNotice
                 name="supermind-pending"
                 onPress={() => setMode('inbound')}
@@ -210,7 +211,7 @@ function SupermindConsoleScreen({
               <StripeConnectButton background="secondary" top="M" bottom="L" />
             )
           }
-          contentContainerStyle={ThemedStyles.style.paddingTop2x}
+          contentContainerStyle={sp.styles.style.paddingTop2x}
           map={mapRequests}
           fetchEndpoint={
             mode === 'inbound'
@@ -265,7 +266,7 @@ const renderSupermindOutbound = row => (
 );
 const mapRequests = items => SupermindRequestModel.createMany(items);
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   onboardingOverlay: {
     marginTop: IS_IOS ? 125 : 70,
   },

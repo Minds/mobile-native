@@ -1,6 +1,7 @@
 import { observable, action, extendObservable } from 'mobx';
-import MetadataService from '../services/metadata.service';
 import ViewStore from './ViewStore';
+import sp from '~/services/serviceProvider';
+import type { MetadataService } from '../services/metadata.service';
 
 type ListEntity<T> = {
   _list: OffsetListStore<T>;
@@ -76,7 +77,7 @@ export default class OffsetListStore<T> {
     }
 
     if (includeMetadata) {
-      this.metadataService = new MetadataService();
+      this.metadataService = sp.resolve('metadata');
     }
   }
 

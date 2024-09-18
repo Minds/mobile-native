@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { ChartData, LineChart as RNLineChart } from 'react-native-chart-kit';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 interface LineChartProps {
   data: ChartData;
@@ -24,8 +24,8 @@ const LineChart = ({ data, width, style }: LineChartProps) => {
       yAxisInterval={data.labels.length % 20 ? 5 : 1}
       chartConfig={{
         decimalPlaces: 2,
-        color: () => ThemedStyles.getColor('Link'),
-        labelColor: () => ThemedStyles.getColor('SecondaryText'),
+        color: () => sp.styles.getColor('Link'),
+        labelColor: () => sp.styles.getColor('SecondaryText'),
         style: {
           borderRadius: 16,
         },
@@ -37,21 +37,21 @@ const LineChart = ({ data, width, style }: LineChartProps) => {
           r: '3',
         },
         propsForBackgroundLines: {
-          stroke: ThemedStyles.getColor('SecondaryText'),
+          stroke: sp.styles.getColor('SecondaryText'),
           strokeDasharray: undefined,
           strokeWidth: StyleSheet.hairlineWidth,
         },
-        scrollableDotFill: ThemedStyles.getColor('PrimaryText'),
+        scrollableDotFill: sp.styles.getColor('PrimaryText'),
         scrollableDotRadius: 4,
         scrollableInfoViewStyle: {
           justifyContent: 'center',
           height: 80,
           padding: 0,
-          backgroundColor: ThemedStyles.getColor('TertiaryBackground'),
+          backgroundColor: sp.styles.getColor('TertiaryBackground'),
           borderRadius: 2,
         },
         scrollableInfoTextStyle: {
-          color: ThemedStyles.getColor('PrimaryText'),
+          color: sp.styles.getColor('PrimaryText'),
           padding: 0,
           fontSize: 14,
           textAlign: 'center',

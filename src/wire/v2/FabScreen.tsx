@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { observer, useLocalStore } from 'mobx-react';
 import { View, StyleSheet, ScrollView, Alert, Platform } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderComponent from '../../common/components/HeaderComponent';
 import UserNamesComponent from '../../common/components/UserNamesComponent';
@@ -10,15 +10,12 @@ import HeaderTabsComponent from '../../common/components/HeaderTabsComponent';
 import TokensForm from './TokensForm';
 import UsdForm from './UsdForm';
 import WireStore from '../WireStore';
-import i18n from '../../common/services/i18n.service';
-import logService from '../../common/services/log.service';
-import api from '../../common/services/api.service';
 import toFriendlyCrypto from '../../common/helpers/toFriendlyCrypto';
-import { storages } from '../../common/services/storage/storages.service';
 import MText from '../../common/components/MText';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import { confirm } from '~/common/components/Confirm';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 const isIos = Platform.OS === 'ios';
 
@@ -47,12 +44,12 @@ const createFabScreenStore = () => {
       this.loaded = true;
     },
     getLastAmount() {
-      const lastAmount = storages.user?.getString(lastAmountStorageKey);
+      const lastAmount = sp.storages.user?.getString(lastAmountStorageKey);
       this.amount = lastAmount ? parseFloat(lastAmount) : 0;
       this.wire.setAmount(this.amount);
     },
     async setLastAmount(amount: string) {
-      storages.user?.setString(lastAmountStorageKey, amount);
+      sp.storages.user?.set(lastAmountStorageKey, amount);
     },
     setCard(card: any) {
       this.card = card;
@@ -72,6 +69,7 @@ const createFabScreenStore = () => {
       }
     },
     async confirmSend() {
+      const i18n = sp.i18n;
       if (
         Number(this.wire.amount) === 0 ||
         Number.isNaN(Number(this.wire.amount))
@@ -131,21 +129,23 @@ const createFabScreenStore = () => {
         }
       } catch (e) {
         if (!e || (e instanceof Error && e.message !== 'E_CANCELLED')) {
-          logService.error(e);
+          sp.log.error(e);
 
           Alert.alert(
-            i18n.t('wire.errorSendingWire'),
+            sp.i18n.t('wire.errorSendingWire'),
             e && e instanceof Error && e.message
               ? e.message
               : 'Unknown internal error',
-            [{ text: i18n.t('ok') }],
+            [{ text: sp.i18n.t('ok') }],
             { cancelable: false },
           );
         }
       }
     },
     async getWalletBalance() {
-      const response: any = await api.get('api/v2/blockchain/wallet/balance');
+      const response: any = await sp.api.get(
+        'api/v2/blockchain/wallet/balance',
+      );
       if (response && response.addresses) {
         this.walletBalance = toFriendlyCrypto(response.balance);
       }
@@ -182,8 +182,8 @@ const FabScreen = observer(({ route, navigation }) => {
     }
   }, [store, owner, route, navigation]);
 
-  const theme = ThemedStyles.style;
-
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
   const insets = useSafeAreaInsets();
   const cleanTop = insets.top ? { marginTop: insets.top } : null;
 

@@ -1,12 +1,12 @@
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
-import React from 'react';
-import { useStores } from '~/common/hooks/use-stores';
 
-import i18nService from '~/common/services/i18n.service';
+import { useStores } from '~/common/hooks/use-stores';
 import { B2, PressableLine, Spacer } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import useStripeAccount from '~/wallet/hooks/useStripeAccount';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   borderTop?: boolean;
@@ -23,6 +23,7 @@ function AddBankInformation({ borderTop = false }: PropsType) {
   if (!stripe.loaded || stripe.hasBank) {
     return null;
   }
+  const i18n = sp.i18n;
   return (
     <PressableLine
       style={borderTop ? borderTopStyle : borderBottomStyle}
@@ -31,9 +32,9 @@ function AddBankInformation({ borderTop = false }: PropsType) {
       }>
       <Spacer space="L">
         <B2 color="link" font="medium">
-          {i18nService.t('supermind.addBank')}
+          {i18n.t('supermind.addBank')}
         </B2>
-        <B2>{i18nService.t('supermind.addBankDetail')}</B2>
+        <B2>{i18n.t('supermind.addBankDetail')}</B2>
       </Spacer>
     </PressableLine>
   );
@@ -41,11 +42,11 @@ function AddBankInformation({ borderTop = false }: PropsType) {
 
 export default observer(AddBankInformation);
 
-export const borderBottomStyle = ThemedStyles.combine(
+export const borderBottomStyle = sp.styles.combine(
   'bcolorPrimaryBorder',
   'borderBottomHair',
 );
-export const borderTopStyle = ThemedStyles.combine(
+export const borderTopStyle = sp.styles.combine(
   'bcolorPrimaryBorder',
   'borderTopHair',
 );

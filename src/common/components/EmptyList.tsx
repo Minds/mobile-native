@@ -1,24 +1,24 @@
 import React from 'react';
 import { View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18nService from '../services/i18n.service';
-import MText from './MText';
 
-const EmptyList = ({ text }: { text: string }) => {
+import MText from './MText';
+import sp from '~/services/serviceProvider';
+
+const EmptyList = ({ text }: { text?: string }) => {
   return (
     <View style={containerStyle}>
-      <MText style={textStyle}>{text || i18nService.t('emptyList')}</MText>
+      <MText style={textStyle}>{text || sp.i18n.t('emptyList')}</MText>
     </View>
   );
 };
 
-const textStyle = ThemedStyles.combine(
+const textStyle = sp.styles.combine(
   'fontXL',
   'textCenter',
   'colorSecondaryText',
 );
 
-const containerStyle = ThemedStyles.combine(
+const containerStyle = sp.styles.combine(
   {
     justifyContent: 'center',
   },

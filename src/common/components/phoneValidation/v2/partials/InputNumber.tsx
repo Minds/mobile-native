@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import usePhoneValidationStore from '../usePhoneValidationStore';
-import ThemedStyles from '../../../../../styles/ThemedStyles';
-import i18n from '../../../../services/i18n.service';
+
 import Button from '../../../Button';
 import MText from '../../../MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {};
 
@@ -22,7 +22,7 @@ const InputNumber = observer(({}: PropsType) => {
   const [textInputFocused, setTextInputFocused] = useState(false);
   const textInputProps: TextInputProps = useMemo(
     () => ({
-      selectionColor: ThemedStyles.getColor('Link'),
+      selectionColor: sp.styles.getColor('Link'),
       ref: textInputRef,
       onFocus: () => setTextInputFocused(true),
       onBlur: () => setTextInputFocused(false),
@@ -48,7 +48,9 @@ const InputNumber = observer(({}: PropsType) => {
         activeOpacity={1}
         style={styles.mainContainer}
         onPress={textInputFocused ? undefined : onContainerPress}>
-        <MText style={styles.label}>{i18n.t('onboarding.phoneNumber')}</MText>
+        <MText style={styles.label}>
+          {sp.i18n.t('onboarding.phoneNumber')}
+        </MText>
         {Boolean(store?.error) && (
           <MText style={styles.error}>{store?.error}</MText>
         )}
@@ -64,7 +66,7 @@ const InputNumber = observer(({}: PropsType) => {
         />
       </TouchableOpacity>
       <Button
-        text={i18n.t('onboarding.send')}
+        text={sp.i18n.t('onboarding.send')}
         containerStyle={styles.buttonContainer}
         onPress={store?.joinAction}
       />
@@ -72,7 +74,7 @@ const InputNumber = observer(({}: PropsType) => {
   );
 });
 
-const phoneInputStyles = ThemedStyles.create({
+const phoneInputStyles = sp.styles.create({
   containerStyle: ['bgPrimaryBackgroundHighlight'],
   textContainerStyle: ['bgPrimaryBackgroundHighlight'],
   codeTextStyle: ['colorPrimaryText'],
@@ -80,7 +82,7 @@ const phoneInputStyles = ThemedStyles.create({
   flagButtonStyle: [{ justifyContent: 'flex-start', width: 20 }],
 });
 
-export const styles = ThemedStyles.create({
+export const styles = sp.styles.create({
   label: ['colorSecondaryText', 'fontL'],
   mainContainer: [
     'bgPrimaryBackgroundHighlight',

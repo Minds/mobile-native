@@ -9,9 +9,9 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import ThemedStyles from '../../styles/ThemedStyles';
 import MText from './MText';
 import type { HashtagStore } from '../stores/HashtagStore';
+import sp from '~/services/serviceProvider';
 
 interface PropsType {
   tagStyle?: StyleProp<ViewStyle>;
@@ -48,7 +48,7 @@ export default class TagSelect extends Component<PropsType> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     let tags = this.props.tags;
     if (!this.props.disableSort) {

@@ -10,11 +10,12 @@ import {
   Platform,
 } from 'react-native';
 import SettingInput from '../../../common/components/SettingInput';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import QRCode from 'react-native-qrcode-svg';
 import LabeledComponent from '../../../common/components/LabeledComponent';
 import MText from '../../../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 export type ReceiverAddressScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -36,7 +37,7 @@ type PropsType = {
 };
 
 const ReceiverAddressScreen = ({ route }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const { walletStore } = route.params;
   const receiver = walletStore.wallet.receiver;
 

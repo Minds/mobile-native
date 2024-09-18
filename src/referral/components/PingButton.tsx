@@ -2,11 +2,11 @@ import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import MIcon from '@expo/vector-icons/MaterialIcons';
-import { showNotification } from '../../../AppMessages';
-import ActivityIndicator from '../../common/components/ActivityIndicator';
-import { useApiCall } from '../../common/hooks/useApiFetch';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+import { showNotification } from '~/../AppMessages';
+import ActivityIndicator from '~/common/components/ActivityIndicator';
+import { useApiCall } from '~/common/hooks/useApiFetch';
+
+import sp from '~/services/serviceProvider';
 
 interface PingButtonProps {
   prospectId: string;
@@ -16,7 +16,7 @@ interface PingButtonProps {
 
 const PingButton = observer(
   ({ prospectId, pingable, username }: PingButtonProps) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     const { post, result, loading } = useApiCall(
       `api/v2/referrals/${prospectId}`,
@@ -27,7 +27,7 @@ const PingButton = observer(
         post().then(data => {
           if (data?.done) {
             showNotification(
-              i18n.t('referrals.pinged', { username }),
+              sp.i18n.t('referrals.pinged', { username }),
               'success',
               3000,
             );
@@ -53,7 +53,7 @@ const PingButton = observer(
         {loading ? (
           <ActivityIndicator
             size={'small'}
-            color={ThemedStyles.getColor('Link')}
+            color={sp.styles.getColor('Link')}
           />
         ) : (
           <MIcon

@@ -65,7 +65,7 @@ const config: CodegenConfig = {
       config: {
         namedClient: 'default',
         fetcher: {
-          func: '~/common/services/api.service#gqlFetcher',
+          func: '~/common/services/gqlFetcher#gqlFetcher',
           isReactHook: false,
         },
         addInfiniteQuery: true,

@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
-import { format } from '../MindsTokens';
-import { Container, Info, Row, Title, RowRight } from '../AccordionContent';
-import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import useCurrentUser from '../../../../common/hooks/useCurrentUser';
-import NavigationService from '../../../../navigation/NavigationService';
 import { observer, useLocalStore } from 'mobx-react';
 import { useIsFocused } from '@react-navigation/native';
+import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+
+import { format } from '../MindsTokens';
+import { Container, Info, Row, Title, RowRight } from '../AccordionContent';
+import useCurrentUser from '~/common/hooks/useCurrentUser';
 import TimeMultiplier from './multipliers/TimeMultiplier';
 import { Reward } from './createTokensTabStore';
 import { B3 } from '~ui';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   liquidityPositions: any;
@@ -97,7 +98,7 @@ const LiquiditySummary = observer(
             <B3
               top="S"
               color="link"
-              onPress={() => NavigationService.navigate('BoostSettingsScreen')}>
+              onPress={() => sp.navigation.navigate('BoostSettingsScreen')}>
               {user?.liquidity_spot_opt_out ? 'Opt-in to' : 'Opt-out of'}{' '}
               showing in liquidity spot
             </B3>

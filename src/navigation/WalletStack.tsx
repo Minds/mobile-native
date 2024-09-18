@@ -1,13 +1,13 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import ThemedStyles from '~/styles/ThemedStyles';
 import { WalletStackParamList } from './NavigationTypes';
+import sp from '~/services/serviceProvider';
 
 const WalletStack = createNativeStackNavigator<WalletStackParamList>();
 export default function () {
   return (
-    <WalletStack.Navigator screenOptions={ThemedStyles.defaultScreenOptions}>
+    <WalletStack.Navigator screenOptions={sp.styles.defaultScreenOptions}>
       <WalletStack.Screen
         name="Wallet"
         getComponent={() => require('~/wallet/v3/WalletScreen').default}

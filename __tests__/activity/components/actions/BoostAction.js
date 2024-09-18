@@ -7,14 +7,19 @@ import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFak
 import renderer from 'react-test-renderer';
 import BoostAction from '../../../../src/newsfeed/activity/actions/BoostAction';
 import IconButtonNext from '../../../../src/common/ui/icons';
+import sp from '~/services/serviceProvider';
 
-jest.mock('~/common/services/analytics.service');
+jest.mock('~/services/serviceProvider');
 
+// mock services
+sp.mockService('styles');
+const permissions = sp.mockService('permissions');
 // prevent double tap in touchable
 
 describe('Boost action component', () => {
   let screen;
   beforeEach(() => {
+    permissions.canBoost.mockReturnValue(true);
     const navigation = { navigate: jest.fn() };
     let activityResponse = activitiesServiceFaker().load(1);
     screen = renderer.create(

@@ -1,22 +1,23 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import type { FabScreenStore } from './FabScreen';
 import LabeledComponent from '../../common/components/LabeledComponent';
 import { CheckBox } from 'react-native-elements';
 import MindsSwitch from '../../common/components/MindsSwitch';
-import i18nService from '../../common/services/i18n.service';
 import InputContainer from '../../common/components/InputContainer';
 import { ONCHAIN_ENABLED } from '../../config/Config';
 import MText from '../../common/components/MText';
+import sp from '~/services/serviceProvider';
 
 type propsType = {
   store: FabScreenStore;
 };
 
 const TokensForm = observer(({ store }: propsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
 
   useEffect(() => {
     store.getLastAmount();
@@ -45,17 +46,15 @@ const TokensForm = observer(({ store }: propsType) => {
           wrapperStyle={theme.marginBottom4x}>
           {ONCHAIN_ENABLED ? (
             <MindsSwitch
-              leftText={i18nService.t('blockchain.offchain')}
-              rightText={i18nService.t('blockchain.onchain')}
+              leftText={i18n.t('blockchain.offchain')}
+              rightText={i18n.t('blockchain.onchain')}
               initialValue={true}
               rightValue={false}
               leftValue={true}
               onSelectedValueChange={v => store.wire.setTokenType(v)}
             />
           ) : (
-            <MText style={styles.type}>
-              {i18nService.t('blockchain.offchain')}
-            </MText>
+            <MText style={styles.type}>{i18n.t('blockchain.offchain')}</MText>
           )}
         </LabeledComponent>
 
@@ -93,7 +92,7 @@ const TokensForm = observer(({ store }: propsType) => {
   );
 });
 
-export const styles = ThemedStyles.create({
+export const styles = sp.styles.create({
   type: ['fontL', 'fontMedium'],
   inputContainer: [
     'bgPrimaryBackgroundHighlight',

@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import analyticsService from '~/common/services/analytics.service';
 import { useChatRoomContext } from '../contexts/ChatRoomContext';
-
+import sp from '~/services/serviceProvider';
 /**
  * Hook to track chat room view and set global properties for analytics
  */
 export function useChatroomViewAnalytic() {
   const context = useChatRoomContext();
+  const analyticsService = sp.resolve('analytics');
   useEffect(() => {
     const chatRoom = context.data?.chatRoom;
     if (!chatRoom) return;
@@ -35,5 +35,5 @@ export function useChatroomViewAnalytic() {
         'chat_last_message_created_timestamp',
       );
     };
-  }, [context]);
+  }, [analyticsService, context]);
 }

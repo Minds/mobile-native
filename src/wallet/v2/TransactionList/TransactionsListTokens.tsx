@@ -3,13 +3,14 @@ import { observer, useLocalStore } from 'mobx-react';
 import { SectionList } from 'react-native';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import { useLegacyStores } from '../../../common/hooks/use-stores';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import { PropsType } from './TransactionsListTypes';
 import Item from './components/Item';
 import createTokensTransactionsStore from './createTokensTransactionsStore';
 import Empty from './components/Empty';
 import Header from '../../v3/transaction-list/components/Header';
 import { B2 } from '~ui';
+import sp from '~/services/serviceProvider';
 
 const TransactionsListTokens = observer(
   ({ navigation, currency, wallet }: PropsType) => {
@@ -18,7 +19,7 @@ const TransactionsListTokens = observer(
       wallet,
       user,
     });
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     const renderItem = useCallback(
       ({ item }) => (

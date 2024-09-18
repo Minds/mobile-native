@@ -2,7 +2,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { B3, B1, Icon, Row } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 const colorMap = {
   gray: ['#1C1D1F77', '#1C1D1F77', '#8A8E9648'],
@@ -75,7 +75,7 @@ const Check = ({ checked }: { checked?: boolean }) => {
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   touchable: [
     'marginTop6x',
     'marginHorizontal4x',

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
 import type ActivityModel from '../../newsfeed/ActivityModel';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import IconMa from '@expo/vector-icons/MaterialIcons';
 import { Platform, StyleSheet, View } from 'react-native';
-import i18nService from '../services/i18n.service';
 import MText from './MText';
+import sp from '~/services/serviceProvider';
 
 // types
 type PropsType = {
@@ -21,7 +21,7 @@ export default class Pinned extends Component<PropsType> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     if (!this.props.entity.pinned) return null;
 
     return (
@@ -29,7 +29,7 @@ export default class Pinned extends Component<PropsType> {
         <IconMa name="push-pin" size={15} style={pinnedIconStyle} />
 
         <MText style={theme.colorSecondaryText}>
-          {i18nService.t('pinnedPost')}{' '}
+          {sp.i18n.t('pinnedPost')}{' '}
         </MText>
       </View>
     );
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const pinnedContainer = ThemedStyles.combine(
+const pinnedContainer = sp.styles.combine(
   'paddingVertical2x',
   'paddingHorizontal4x',
   'borderBottomHair',
@@ -51,7 +51,4 @@ const pinnedContainer = ThemedStyles.combine(
   'rowJustifyStart',
 );
 
-const pinnedIconStyle = ThemedStyles.combine(
-  'colorIconActive',
-  styles.pinnedIcon,
-);
+const pinnedIconStyle = sp.styles.combine('colorIconActive', styles.pinnedIcon);

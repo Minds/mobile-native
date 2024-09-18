@@ -4,19 +4,20 @@ import TopbarTabbar, {
   TabType,
 } from '~/common/components/topbar-tabbar/TopbarTabbar';
 import { HairlineRow, Row } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useTranslation } from '../../../locales';
 import { useBoostConsoleStore } from '../../contexts/boost-store.context';
 import FeedFilter from './FeedFilter';
 import BoostLatestPostPrompt from './BoostLatestPostPrompt';
 import BoostChannelPrompt from './BoostChannelPrompt';
 import { IS_TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 interface BoostTabBarProps {}
 
 function BoostTabBar({}: BoostTabBarProps) {
   const { t } = useTranslation();
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const boostConsoleStore = useBoostConsoleStore();
 
   const tabs: Array<TabType<string>> = [
@@ -52,7 +53,7 @@ function BoostTabBar({}: BoostTabBarProps) {
         />
 
         {boostConsoleStore.filter !== 'explore' && (
-          <FeedFilter containerStyles={ThemedStyles.style.marginRight2x} />
+          <FeedFilter containerStyles={sp.styles.style.marginRight2x} />
         )}
       </Row>
 
@@ -62,7 +63,7 @@ function BoostTabBar({}: BoostTabBarProps) {
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   tabbar: { borderBottomWidth: 0, flex: 1 },
 });
 

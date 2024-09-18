@@ -3,12 +3,12 @@ import Icon from '@expo/vector-icons/Feather';
 import { observer } from 'mobx-react';
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import type CommentsStore from './CommentsStore';
-import i18n from '../../common/services/i18n.service';
 import { useRoute } from '@react-navigation/native';
 import { useBottomSheet } from '@gorhom/bottom-sheet';
-import MText from '../../common/components/MText';
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
 export default observer(function CommentListHeader(props: {
   store: CommentsStore;
@@ -16,10 +16,10 @@ export default observer(function CommentListHeader(props: {
 }) {
   const route = useRoute<any>();
 
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const bottomSheet = useBottomSheet();
 
-  const { title = i18n.t('comments.comments') } = route.params ?? {};
+  const { title = sp.i18n.t('comments.comments') } = route.params ?? {};
 
   const titleStyles = [theme.fontMedium, theme.paddingLeft3x];
 

@@ -1,17 +1,17 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
 import { View, StyleSheet } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
+import type ActivityModel from '~/newsfeed/ActivityModel';
+
 import { SupportTiersType } from '../../WireTypes';
-import mindsService from '../../../common/services/minds-config.service';
-import Button from '../../../common/components/Button';
-import i18n from '../../../common/services/i18n.service';
-import type { LockType } from '../../../types/Common';
-import currency from '../../../common/helpers/currency';
-import BlogModel from '../../../blogs/BlogModel';
-import MText from '../../../common/components/MText';
+import Button from '~/common/components/Button';
+import type { LockType } from '~/types/Common';
+import currency from '~/common/helpers/currency';
+import BlogModel from '~/blogs/BlogModel';
+import MText from '~/common/components/MText';
 import { IS_IOS } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity: ActivityModel | BlogModel;
@@ -21,7 +21,7 @@ type PropsType = {
 export const getLockType = (support_tier: SupportTiersType): LockType => {
   let type: LockType = support_tier.public ? 'members' : 'paywall';
 
-  if (mindsService.settings.plus.support_tier_urn === support_tier.urn) {
+  if (sp.config.settings.plus.support_tier_urn === support_tier.urn) {
     type = 'plus';
   }
 
@@ -63,7 +63,7 @@ const Lock = observer(({ entity }: PropsType) => {
     return null;
   }
 
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const wire_threshold = entity.wire_threshold;
   const support_tier: SupportTiersType | null =
     wire_threshold && 'support_tier' in wire_threshold
@@ -93,7 +93,7 @@ const Lock = observer(({ entity }: PropsType) => {
   const button = entity.hasVideo() ? null : (
     <Button
       onPress={unlock}
-      text={i18n.t('unlockPost')}
+      text={sp.i18n.t('unlockPost')}
       containerStyle={theme.paddingVertical2x}
     />
   );

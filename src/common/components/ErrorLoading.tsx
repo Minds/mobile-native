@@ -1,22 +1,16 @@
-//@ts-nocheck
 import React, { Component } from 'react';
-
 import { StyleSheet, View } from 'react-native';
-
 import { observer } from 'mobx-react';
 
-import connectivityService from '../services/connectivity.service';
-
-import i18n from '../services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
 import MText from './MText';
 import { B1, ButtonComponent } from '../ui';
+import sp from '~/services/serviceProvider';
 
 // types
 type Props = {
   message: any;
   inverted?: boolean;
-  tryAgain: Function;
+  tryAgain: () => any;
 };
 
 /**
@@ -28,7 +22,7 @@ export default class ErrorLoading extends Component<Props> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     return (
       <View
         style={[
@@ -42,14 +36,14 @@ export default class ErrorLoading extends Component<Props> {
         <B1 font="bold" bottom="XL" align="center">
           {this.props.message}
           {'. '}
-          {!connectivityService.isConnected && (
+          {!sp.resolve('connectivity').isConnected && (
             <MText style={[theme.fontM, theme.colorSecondaryText]}>
-              {i18n.t('noInternet')}
+              {sp.i18n.t('noInternet')}
             </MText>
           )}
         </B1>
         <ButtonComponent onPress={this.props.tryAgain} align="center">
-          {i18n.t('tryAgain')}
+          {sp.i18n.t('tryAgain')}
         </ButtonComponent>
       </View>
     );

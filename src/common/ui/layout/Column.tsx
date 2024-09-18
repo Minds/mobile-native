@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
 import { Spacer } from '~ui/layout';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import { ColumnPropType } from './types';
+import sp from '~/services/serviceProvider';
 
 export const Column = ({
   align,
@@ -24,7 +25,7 @@ export const Column = ({
   return <Spacer containerStyle={style} {...more} />;
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: {
     flexDirection: 'column',
   },

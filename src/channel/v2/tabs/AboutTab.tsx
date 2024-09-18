@@ -3,9 +3,8 @@ import { observer, useLocalStore } from 'mobx-react';
 import { ChannelStoreType } from '../createChannelStore';
 import { View } from 'react-native';
 import moment from 'moment-timezone';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import LabeledComponent from '../../../common/components/LabeledComponent';
-import i18n from '../../../common/services/i18n.service';
 import ChannelBadges from '../../badges/ChannelBadges';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import abbrev from '../../../common/helpers/abbrev';
@@ -14,6 +13,7 @@ import Tags from '../../../common/components/Tags';
 import { useIsFocused } from '@react-navigation/core';
 import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
 import MText from '../../../common/components/MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   store: ChannelStoreType;
@@ -21,7 +21,7 @@ type PropsType = {
 };
 
 const AboutTab = observer(({ store, navigation }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const localStore = useLocalStore(() => ({
     groupCount: 0,
     loaded: false,
@@ -58,7 +58,7 @@ const AboutTab = observer(({ store, navigation }: PropsType) => {
   const margin = theme.marginVertical3x;
   const hasBadges =
     channel.pro || channel.plus || channel.verified || channel.founder;
-
+  const i18n = sp.i18n;
   return (
     <View style={[theme.paddingLeft4x, theme.paddingTop2x]}>
       {channel?.briefdescription !== '' && (

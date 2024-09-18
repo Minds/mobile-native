@@ -6,6 +6,13 @@ import UserModel from '~/channel/UserModel';
 import generateFakeUser from '../../../../__mocks__/fake/channel/UserFactory';
 import { ChannelRecommendationItem } from '~/modules/recommendation';
 
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('analytics');
+
 const mockEntity = generateFakeUser();
 
 jest.mock('~/common/hooks/useApiFetch', () => () => ({

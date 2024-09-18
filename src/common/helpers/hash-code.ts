@@ -1,4 +1,3 @@
-//@ts-nocheck
 export const MAX_HASH_LENGTH = 8;
 
 function dths(number, padding = 0) {

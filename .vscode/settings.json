@@ -23,5 +23,6 @@
     "/node_modules": true
   },
   "cSpell.words": ["bcolor"],
-  "i18n-ally.localesPaths": ["locales"]
+  "i18n-ally.localesPaths": ["locales"],
+  "jest.jestCommandLine": "yarn test"
 }

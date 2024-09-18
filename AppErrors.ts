@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { Alert } from 'react-native';
 
 import {
@@ -18,7 +17,7 @@ if (process.env.JEST_WORKER_ID === undefined) {
     ignoreErrors: [
       'Non-Error exception captured with keys: code, domain, localizedDescription', // ignore initial error of sdk
     ],
-    beforeSend(event, hint) {
+    beforeSend(event, hint: any) {
       if (hint.originalException) {
         if (!shouldReportToSentry(hint.originalException)) {
           return null;
@@ -81,7 +80,7 @@ setJSExceptionHandler(jsErrorHandler, true);
 setNativeExceptionHandler(
   exceptionString => {
     Sentry.captureException(new Error(exceptionString), {
-      logger: 'NativeExceptionHandler',
+      extra: { logger: 'NativeExceptionHandler' },
     });
     console.log('NativeExceptionHandler', exceptionString);
   },

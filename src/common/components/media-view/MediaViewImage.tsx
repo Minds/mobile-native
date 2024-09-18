@@ -3,21 +3,16 @@ import React from 'react';
 import { View, TouchableOpacity, Dimensions, Pressable } from 'react-native';
 import Pinchable from 'react-native-pinchable';
 
-import {
-  APP_API_URI,
-  DATA_SAVER_THUMB_RES,
-  IS_IPAD,
-} from '../../../config/Config';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
-import ThemedStyles, { useMemoStyle } from '../../../styles/ThemedStyles';
+import { APP_API_URI, DATA_SAVER_THUMB_RES, IS_IPAD } from '~/config/Config';
+import type ActivityModel from '~/newsfeed/ActivityModel';
 import domain from '../../helpers/domain';
 import mediaProxyUrl from '../../helpers/media-proxy-url';
-import i18n from '../../services/i18n.service';
-
 import MText from '../MText';
 import useRecycledState from '~/common/hooks/useRecycledState';
 import SmartImage from '../SmartImage';
 import { getMaxFeedWidth } from '~/styles/Style';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 import { PlayButton } from '~/media/v2/mindsVideo/overlays/Controls';
 
 type PropsType = {
@@ -135,13 +130,13 @@ export default function MediaViewImage({
   };
 
   if (imageLoadFailed) {
-    let text = <MText style={errorTextStyle}>{i18n.t('errorMedia')}</MText>;
+    let text = <MText style={errorTextStyle}>{sp.i18n.t('errorMedia')}</MText>;
 
     if (entity.perma_url) {
       text = (
         <MText style={errorTextStyle}>
           The media from{' '}
-          <MText style={ThemedStyles.style.fontMedium}>
+          <MText style={sp.styles.style.fontMedium}>
             {domain(entity.perma_url)}
           </MText>{' '}
           could not be loaded.
@@ -187,14 +182,14 @@ export default function MediaViewImage({
   );
 }
 
-const errorTextStyle = ThemedStyles.combine('fontS', 'colorTertiaryText');
-const errorContainerStyle = ThemedStyles.combine(
+const errorTextStyle = sp.styles.combine('fontS', 'colorTertiaryText');
+const errorContainerStyle = sp.styles.combine(
   'padding4x',
   'bgSecondaryBackground',
   'centered',
   { height: 200 },
 );
-const playIconStyle = ThemedStyles.combine(
+const playIconStyle = sp.styles.combine(
   'absoluteFill',
   'centered',
   'marginTop2x',

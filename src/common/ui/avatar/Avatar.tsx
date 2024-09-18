@@ -2,7 +2,6 @@ import React from 'react';
 import { View } from 'react-native';
 import { Image } from 'expo-image';
 import PressableScale from '~/common/components/PressableScale';
-import ThemedStyles, { useMemoStyle } from '~/styles/ThemedStyles';
 import { IconCircled } from '~ui/icons';
 import { withSpacer } from '~ui/layout';
 import {
@@ -12,6 +11,8 @@ import {
   UNIT,
 } from '~styles/Tokens';
 import { isObservable, toJS } from 'mobx';
+import { useMemoStyle } from '~/styles/hooks';
+import sp from '~/services/serviceProvider';
 
 export const Avatar = withSpacer(
   ({
@@ -83,7 +84,7 @@ export const Avatar = withSpacer(
   },
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   active: [
     { borderWidth: UNIT.XXS, borderRadius: AVATAR_SIZE.large },
     'bcolorAvatarActive',
@@ -95,13 +96,13 @@ const styles = ThemedStyles.create({
   white: {
     borderWidth: UNIT.XXS,
     borderRadius: AVATAR_SIZE.large,
-    borderColor: ThemedStyles.getColor('White'),
+    borderColor: sp.styles.getColor('White'),
   },
   primary: [
     {
       borderWidth: UNIT.XXS,
       borderRadius: AVATAR_SIZE.large,
-      borderColor: ThemedStyles.getColor('PrimaryBackground'),
+      borderColor: sp.styles.getColor('PrimaryBackground'),
     },
   ],
   transparent: { borderColor: 'transparent', borderWidth: UNIT.XXS },

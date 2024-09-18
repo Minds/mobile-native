@@ -6,7 +6,6 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from 'react-native-reanimated';
-import i18nService from '~/common/services/i18n.service';
 import { Button, Icon } from '~/common/ui';
 import { IS_IOS, NEWSFEED_NEW_POST_POLL_INTERVAL } from '~/config/Config';
 import {
@@ -15,6 +14,7 @@ import {
 } from '~/common/contexts/scroll.context';
 import useApiFetch from '../common/hooks/useApiFetch';
 import { Timeout } from '../types/Common';
+import sp from '~/services/serviceProvider';
 
 interface SeeLatestButtonProps {
   onPress?: () => Promise<void>;
@@ -51,7 +51,7 @@ const SeeLatestButton = ({ onPress, countEndpoint }: SeeLatestButtonProps) => {
         icon={color => <Icon name="arrow-up" color={color} size="small" />}
         onPress={handleOnPress}
         shouldAnimateChanges={false}>
-        {i18nService.t('newsfeed.seeLatestTitle', {
+        {sp.i18n.t('newsfeed.seeLatestTitle', {
           count,
         })}
       </Button>

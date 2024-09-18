@@ -1,5 +1,5 @@
 import React from 'react';
-import ThemedStyles from '../../../../styles/ThemedStyles';
+
 import { ContributionMetric } from '../../../v2/createWalletStore';
 import { format } from '../MindsTokens';
 import { Container, Info, Row, RowRight, Title } from '../AccordionContent';
@@ -7,6 +7,7 @@ import ActivityMultiplier from './multipliers/ActivityMultiplier';
 import { SummaryLabel } from './LiquiditySummary';
 import { Reward } from './createTokensTabStore';
 import capitalize from '../../../../common/helpers/capitalize';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   contributionScores: ContributionMetric[];
@@ -30,7 +31,7 @@ const ContributionScores = ({ metric }: { metric: ContributionMetric }) => {
 };
 
 const EngagementSummary = ({ contributionScores, reward }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const metrics = contributionScores.map(metric => (
     <ContributionScores key={metric.id} metric={metric} />
   ));

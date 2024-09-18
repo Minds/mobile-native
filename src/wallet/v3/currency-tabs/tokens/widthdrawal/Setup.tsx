@@ -2,13 +2,13 @@ import React, { useCallback } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import MText from '~/common/components/MText';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import type UserModel from '~/channel/UserModel';
-import i18n from '~/common/services/i18n.service';
 import MenuItem from '~/common/components/menus/MenuItem';
 import { AppStackScreenProps } from '~/navigation/NavigationTypes';
 import { WalletStoreType } from '~/wallet/v2/createWalletStore';
 import requireUniquenessVerification from '~/common/helpers/requireUniquenessVerification';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   user: UserModel;
@@ -18,8 +18,8 @@ type PropsType = {
 
 //TODO: Remove BottomOptions logic and replace it with new Bottomsheets
 const Setup = ({ user, walletStore, navigation }: PropsType) => {
-  const theme = ThemedStyles.style;
-
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
   const onComplete = useCallback(
     (success: any) => {
       if (success) {
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const titleStyle = ThemedStyles.combine(
+const titleStyle = sp.styles.combine(
   {
     paddingVertical: 15,
     fontSize: 17,

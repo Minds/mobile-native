@@ -10,12 +10,12 @@ import {
   TextStyle,
 } from 'react-native';
 
-import Tags from '../../../common/components/Tags';
-import i18n from '../../services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
+import Tags from '~/common/components/Tags';
+
+import type ActivityModel from '~/newsfeed/ActivityModel';
 import { LinearGradient } from 'expo-linear-gradient';
 import MText from '../MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -48,7 +48,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
   constructor(props) {
     super(props);
 
-    const backgroundColor = ThemedStyles.getColor('PrimaryBackground');
+    const backgroundColor = sp.styles.getColor('PrimaryBackground');
     const startColor = backgroundColor + '00';
     const endColor = backgroundColor + 'FF';
     this.gradientColors = [startColor, endColor];
@@ -58,7 +58,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
    * Render
    */
   render() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const entity = this.props.entity;
 
     const tempTitle = entity.title || entity.link_title;
@@ -172,7 +172,7 @@ export default class ExplicitText extends Component<PropsType, StateType> {
    * Returns more or less button
    */
   getMoreLess() {
-    const msg = this.state.more ? i18n.t('showLess') : i18n.t('readMore');
+    const msg = this.state.more ? sp.i18n.t('showLess') : sp.i18n.t('readMore');
     return (
       <MText style={readmoreStyle} onPress={this.toggleReadMore}>
         {msg}
@@ -224,4 +224,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const readmoreStyle = ThemedStyles.combine('colorLink', 'paddingTop');
+const readmoreStyle = sp.styles.combine('colorLink', 'paddingTop');

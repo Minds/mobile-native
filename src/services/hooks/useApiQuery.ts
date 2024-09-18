@@ -1,5 +1,5 @@
 import { QueryKey, QueryOptions, useQuery } from '@tanstack/react-query';
-import apiService from '~/common/services/api.service';
+import serviceProvider from '../serviceProvider';
 
 export default function useApiQuery<T>(
   queryKey: QueryKey,
@@ -10,7 +10,7 @@ export default function useApiQuery<T>(
 ) {
   return useQuery<T>({
     queryKey,
-    queryFn: () => apiService[method](url, params),
+    queryFn: () => serviceProvider.api[method](url, params),
     ...options,
   });
 }

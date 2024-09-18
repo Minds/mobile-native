@@ -2,9 +2,10 @@ import { observer } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
 import { B2, Button, Column } from '../../../common/ui';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import Activity, { ActivityProps } from '../Activity';
 import { useAnalytics } from '../../../common/contexts/analytics.context';
+import sp from '~/services/serviceProvider';
 
 /**
  * provides undoable functionality to the activity and handles the size and ui.
@@ -69,7 +70,7 @@ export default function undoable() {
     );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     'bgPrimaryBackground',
     'rowJustifySpaceBetween',

@@ -67,13 +67,7 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
           onProgress={[Function]}
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "http://fake.com0",
             }
           }
@@ -152,13 +146,7 @@ exports[`MediaViewMultiImage should render 2 images correctly 1`] = `
           onProgress={[Function]}
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "http://fake.com1",
             }
           }
@@ -251,13 +239,7 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           onProgress={[Function]}
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "http://fake.com0",
             }
           }
@@ -336,13 +318,7 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           onProgress={[Function]}
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "http://fake.com1",
             }
           }
@@ -418,13 +394,7 @@ exports[`MediaViewMultiImage should render 3 images correctly 1`] = `
           onProgress={[Function]}
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "http://fake.com2",
             }
           }
@@ -517,13 +487,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onProgress={[Function]}
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "http://fake.com0",
             }
           }
@@ -599,13 +563,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onProgress={[Function]}
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "http://fake.com2",
             }
           }
@@ -684,13 +642,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onProgress={[Function]}
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "http://fake.com1",
             }
           }
@@ -766,13 +718,7 @@ exports[`MediaViewMultiImage should render 4 images correctly 1`] = `
           onProgress={[Function]}
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "http://fake.com3",
             }
           }

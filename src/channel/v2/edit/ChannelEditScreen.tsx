@@ -1,24 +1,25 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef } from 'react';
-import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
-import { observer, useLocalStore } from 'mobx-react';
 import { ImageBackground, Platform, View } from 'react-native';
-import SmallCircleButton from '../../../common/components/SmallCircleButton';
 import * as Progress from 'react-native-progress';
-import LabeledComponent from '../../../common/components/LabeledComponent';
-import i18n from '../../../common/services/i18n.service';
-import { ChannelStoreType } from '../createChannelStore';
-import SaveButton from '../../../common/components/SaveButton';
-import LocationAutoSuggest from '../../../common/components/LocationAutoSuggest';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Icon from '@expo/vector-icons/MaterialIcons';
 import { NavigationProp } from '@react-navigation/native';
-import InputContainer from '~/common/components/InputContainer';
+import { observer, useLocalStore } from 'mobx-react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
+import SmallCircleButton from '~/common/components/SmallCircleButton';
+import LabeledComponent from '~/common/components/LabeledComponent';
+import { ChannelStoreType } from '../createChannelStore';
+import SaveButton from '~/common/components/SaveButton';
+import LocationAutoSuggest from '~/common/components/LocationAutoSuggest';
+import InputContainer from '~/common/components/InputContainer';
 import useDebouncedCallback from '~/common/hooks/useDebouncedCallback';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { B1, Button, Row } from '~/common/ui';
 import FloatingInput from '~/common/components/FloatingInput';
 import { KeyVal, buildKeyVal } from '~/channel/SocialProfileMeta';
+import sp from '~/services/serviceProvider';
+import { useStyle } from '~/styles/hooks';
 
 type PropsType = {
   route: any;
@@ -150,7 +151,7 @@ const LinkChip = ({ link, onPress }) => (
       name="close"
       size={22}
       onPress={onPress}
-      style={ThemedStyles.style.colorPrimaryText}
+      style={sp.styles.style.colorPrimaryText}
     />
   </View>
 );
@@ -186,7 +187,7 @@ const Banner = observer(({ route }: PropsType) => {
 
 const Bio = observer(({ store }: PropsType) => (
   <InputContainer
-    placeholder={i18n.t('channel.edit.bio')}
+    placeholder={sp.i18n.t('channel.edit.bio')}
     onChangeText={store.setBriefDescription}
     value={store.briefDescription}
     testID="displayNameInput"
@@ -197,12 +198,12 @@ const Bio = observer(({ store }: PropsType) => (
 
 const About = observer(
   ({ store, onFocusLocation }: PropsType & { onFocusLocation: () => void }) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     return (
       <>
         <InputContainer
-          placeholder={i18n.t('channel.edit.displayName')}
+          placeholder={sp.i18n.t('channel.edit.displayName')}
           onChangeText={store.setDisplayName}
           value={store.displayName}
           testID="displayNameInput"
@@ -210,7 +211,7 @@ const About = observer(
         />
 
         <InputContainer
-          placeholder={i18n.t('channel.edit.dob')}
+          placeholder={sp.i18n.t('channel.edit.dob')}
           onChangeText={store.setDob}
           value={store.dob}
           testID="dobInput"
@@ -234,7 +235,7 @@ const About = observer(
 
 const ChannelEditScreen = (props: PropsType) => {
   const { navigation, route } = props;
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const insets = useSafeAreaInsets();
   const store = useLocalStore(createEditChannelStore);
 
@@ -267,7 +268,7 @@ const ChannelEditScreen = (props: PropsType) => {
     () =>
       navigation.setOptions({
         headerRight: () => <SaveButton onPress={save} />,
-        title: i18n.t('channel.editChannel'),
+        title: sp.i18n.t('channel.editChannel'),
         headerLeft:
           Platform.OS === 'ios'
             ? () => (
@@ -320,7 +321,7 @@ const ChannelEditScreen = (props: PropsType) => {
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   scroll: ['flexContainer', 'bgPrimaryBackground'],
   container: ['flexContainer', 'paddingTop3x'],
   contentContainerStyle: ['paddingBottom10x'],

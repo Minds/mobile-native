@@ -1,26 +1,28 @@
 import moment from 'moment';
-import { storages } from './storage/storages.service';
+import type { Storages } from './storage/storages.service';
 
 const VALUE_KEY = 'referrer';
 const TIMESTAMP_KEY = 'referrer_ts';
 
-class ReferrerService {
+export class ReferrerService {
+  constructor(private storages: Storages) {}
+
   public set(referrer: string): void {
-    storages.app.setString(VALUE_KEY, referrer);
-    storages.app.setInt(TIMESTAMP_KEY, Date.now());
+    this.storages.app.set(VALUE_KEY, referrer);
+    this.storages.app.set(TIMESTAMP_KEY, Date.now());
   }
 
   public clear(): void {
-    storages.app.setString(VALUE_KEY, '');
-    storages.app.setInt(TIMESTAMP_KEY, 0);
+    this.storages.app.set(VALUE_KEY, '');
+    this.storages.app.set(TIMESTAMP_KEY, 0);
   }
 
   /**
    * returns the referrer while also handling the expiration
    */
   public get(): string | undefined {
-    const referrer = storages.app.getString(VALUE_KEY);
-    const referrerTimestamp = storages.app.getInt(TIMESTAMP_KEY);
+    const referrer = this.storages.app.getString(VALUE_KEY);
+    const referrerTimestamp = this.storages.app.getNumber(TIMESTAMP_KEY);
 
     if (
       referrer &&
@@ -34,7 +36,3 @@ class ReferrerService {
     return referrer || undefined;
   }
 }
-
-const referrerService = new ReferrerService();
-
-export default referrerService;

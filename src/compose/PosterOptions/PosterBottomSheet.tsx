@@ -6,9 +6,9 @@ import React, {
   useRef,
 } from 'react';
 import { BottomSheet } from '~/common/components/bottom-sheet';
-import ThemedStyles from '~/styles/ThemedStyles';
-import PosterStackNavigator from './PosterStackNavigator';
 
+import PosterStackNavigator from './PosterStackNavigator';
+import sp from '~/services/serviceProvider';
 const SNAP_POINTS = ['90%'];
 
 /**
@@ -42,7 +42,7 @@ export default forwardRef((props: any, ref) => {
     <BottomSheet
       // @ts-ignore
       ref={sheetRef}
-      handleStyle={ThemedStyles.style.bgPrimaryBackground}
+      handleStyle={sp.styles.style.bgPrimaryBackground}
       onVisibilityChange={handleVisibilityChange}
       enableContentPanningGesture
       snapPoints={SNAP_POINTS}>

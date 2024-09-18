@@ -1,9 +1,14 @@
 import 'react-native';
 import React from 'react';
 import { shallow } from 'enzyme';
-import Button from '../../../src/common/components/Button';
-
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
+import Button from '~/common/components/Button';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';

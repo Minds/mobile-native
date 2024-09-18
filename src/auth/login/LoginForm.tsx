@@ -1,22 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 
 import { View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
 import createLoginStore from './createLoginStore';
 import { Image } from 'expo-image';
 
 import UserModel from '../../channel/UserModel';
-import sessionService from '../../common/services/session.service';
 import InputContainer, {
   InputContainerImperativeHandle,
 } from '../../common/components/InputContainer';
-import i18n from '../../common/services/i18n.service';
 import MText from '../../common/components/MText';
 import { IS_IOS, IS_IPAD } from '../../config/Config';
 import { Button, Row, B1 } from '~ui';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   onLogin?: Function;
@@ -33,15 +31,15 @@ export default observer(function LoginForm(props: PropsType) {
   const passwordRef = useRef<InputContainerImperativeHandle>(null);
   const usernameRef = useRef<InputContainerImperativeHandle>(null);
 
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const user = React.useMemo(() => {
     const u =
       props.sessionIndex !== undefined
         ? UserModel.checkOrCreate(
-            sessionService.getSessionForIndex(props.sessionIndex).user,
+            sp.session.getSessionForIndex(props.sessionIndex).user,
           )
-        : sessionService.getUser();
+        : sp.session.getUser();
 
     if (props.relogin && !localStore.username) {
       localStore.username = u.username;
@@ -69,9 +67,9 @@ export default observer(function LoginForm(props: PropsType) {
   ) : (
     <InputContainer
       ref={usernameRef}
-      placeholder={i18n.t('auth.username')}
+      placeholder={sp.i18n.t('auth.username')}
       onChangeText={localStore.setUsername}
-      selectionColor={ThemedStyles.getColor('Link')}
+      selectionColor={sp.styles.getColor('Link')}
       autoComplete="username"
       textContentType="username"
       value={localStore.username}
@@ -80,12 +78,12 @@ export default observer(function LoginForm(props: PropsType) {
       noBottomBorder
       onSubmitEditing={passwordRef.current?.focus}
       keyboardType="default"
-      returnKeyLabel={i18n.t('auth.nextLabel')}
+      returnKeyLabel={sp.i18n.t('auth.nextLabel')}
       returnKeyType="next"
       maxLength={50}
       error={
         localStore.showErrors && !localStore.username
-          ? i18n.t('auth.fieldRequired')
+          ? sp.i18n.t('auth.fieldRequired')
           : undefined
       }
       autoFocus={false} // true breaks the user/password autofill
@@ -99,20 +97,20 @@ export default observer(function LoginForm(props: PropsType) {
         <View style={theme.marginBottom4x}>
           <PasswordInput
             ref={passwordRef}
-            placeholder={i18n.t('auth.password')}
-            selectionColor={ThemedStyles.getColor('Link')}
+            placeholder={sp.i18n.t('auth.password')}
+            selectionColor={sp.styles.getColor('Link')}
             autoComplete="password"
             textContentType="password"
             onChangeText={localStore.setPassword}
             value={localStore.password}
             testID="userPasswordInput"
-            returnKeyLabel={i18n.t('auth.submitLabel')}
+            returnKeyLabel={sp.i18n.t('auth.submitLabel')}
             returnKeyType="send"
             autoFocus={props.relogin}
             onSubmitEditing={localStore.onLoginPress}
             error={
               localStore.showErrors && !localStore.password
-                ? i18n.t('auth.fieldRequired')
+                ? sp.i18n.t('auth.fieldRequired')
                 : undefined
             }
           />
@@ -125,17 +123,17 @@ export default observer(function LoginForm(props: PropsType) {
           top="XXL"
           containerStyle={IS_IPAD ? styles.buttonIpad : styles.button}
           onPress={localStore.onLoginPress}>
-          {i18n.t('auth.login')}
+          {sp.i18n.t('auth.login')}
         </Button>
         <Row top="L2" align="centerBoth">
-          <B1 onPress={localStore.onForgotPress}>{i18n.t('auth.forgot')}</B1>
+          <B1 onPress={localStore.onForgotPress}>{sp.i18n.t('auth.forgot')}</B1>
         </Row>
       </DismissKeyboard>
     </View>
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   name: ['bold', 'fontXL'],
   username: ['fontMedium', 'fontM'],
   forgotText: ['colorPrimaryText', 'fontL', 'textCenter'],

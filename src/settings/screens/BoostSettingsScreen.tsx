@@ -1,18 +1,16 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
 import { observer, useLocalStore } from 'mobx-react';
-import sessionService from '../../common/services/session.service';
-import { Tooltip } from 'react-native-elements';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import { UserError } from '../../common/UserError';
-import { showNotification } from '../../../AppMessages';
-import settingsService from '../SettingsService';
-import CenteredLoading from '../../common/components/CenteredLoading';
-import MText from '../../common/components/MText';
-import MenuItemOption from '../../common/components/menus/MenuItemOption';
+import { Tooltip } from 'react-native-elements';
+
+import { UserError } from '~/common/UserError';
+import { showNotification } from '~/../AppMessages';
+import CenteredLoading from '~/common/components/CenteredLoading';
+import MText from '~/common/components/MText';
+import MenuItemOption from '~/common/components/menus/MenuItemOption';
 import { Screen } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 
 /****** Boost Settings *****
  *  disabled_boost === true => viewBoostedContent = false
@@ -44,8 +42,10 @@ export enum BoostPartnerSuitability {
 }
 
 const BoostSettingsScreen = observer(() => {
-  const theme = ThemedStyles.style;
-  const user = sessionService.getUser();
+  const theme = sp.styles.style;
+  const user = sp.session.getUser();
+  const i18n = sp.i18n;
+  const settingsService = sp.resolve('settingsApi');
 
   const localStore = useLocalStore(() => ({
     loading: true,
@@ -234,7 +234,8 @@ const BoostSettingsScreen = observer(() => {
 });
 
 const Item = observer(({ item }: { item: ItemType }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
   return (
     <View style={theme.marginBottom7x}>
       <View
@@ -252,7 +253,7 @@ const Item = observer(({ item }: { item: ItemType }) => {
           containerStyle={theme.borderRadius}
           width={item.tooltip.width}
           height={item.tooltip.height}
-          backgroundColor={ThemedStyles.getColor('Link')}
+          backgroundColor={sp.styles.getColor('Link')}
           popover={
             <MText style={theme.colorWhite}>
               {i18n.t(`settings.boost.${item.id}Tooltip`)}
@@ -261,7 +262,7 @@ const Item = observer(({ item }: { item: ItemType }) => {
           <Icon
             name="information-variant"
             size={15}
-            color={ThemedStyles.getColor('TertiaryText')}
+            color={sp.styles.getColor('TertiaryText')}
           />
         </Tooltip>
         {item.browserOnly && (

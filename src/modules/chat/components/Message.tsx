@@ -3,23 +3,18 @@ import { View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import { Image } from 'expo-image';
 
-import ThemedStyles from '~/styles/ThemedStyles';
 import { Avatar, B1, B2 } from '~/common/ui';
 import { ChatMessage } from '../types';
-import i18n from '~/common/services/i18n.service';
-import sessionService from '~/common/services/session.service';
 import {
   ChatRoomMessagesContextType,
   useChatRoomMessageContext,
 } from '../contexts/ChatRoomMessageContext';
 import domain from '~/common/helpers/domain';
-import openUrlService from '~/common/services/open-url.service';
-import NavigationService from '~/navigation/NavigationService';
-import analyticsService from '~/common/services/analytics.service';
 import {
   ChatRoomContextType,
   useChatRoomContext,
 } from '../contexts/ChatRoomContext';
+import sp from '~/services/serviceProvider';
 
 type Props = {
   message: ChatMessage;
@@ -41,8 +36,10 @@ function Message({ message, onLongPress }: Props) {
         onLongPress(message, context, roomContext);
       }
     : undefined;
+  const i18n = sp.i18n;
 
-  const isMe = sender.guid === sessionService.getUser().guid;
+  const user = sp.session.getUser();
+  const isMe = sender.guid === user.guid;
 
   return !isMe ? (
     <View style={styles.container}>
@@ -50,7 +47,7 @@ function Message({ message, onLongPress }: Props) {
         <Avatar
           size="tiny"
           onPress={() => {
-            NavigationService.push('Channel', { guid: sender.guid });
+            sp.navigation.push('Channel', { guid: sender.guid });
           }}
           source={{
             uri: message.node.sender.node.iconUrl,
@@ -104,16 +101,19 @@ const RichEmbed = ({
   message: ChatMessage;
   onLongPress?: () => void;
 }) => {
-  const isMe = message.node.sender.node.guid === sessionService.getUser().guid;
+  const user = sp.session.getUser();
+  const isMe = message.node.sender.node.guid === user.guid;
   return (
     <TouchableOpacity
       activeOpacity={0.7}
       onLongPress={onLongPress}
       onPress={() => {
-        analyticsService.trackClick('data-minds-chat-room-message-rich-embed');
+        sp.resolve('analytics').trackClick(
+          'data-minds-chat-room-message-rich-embed',
+        );
         const url =
           message.node.richEmbed?.url || message.node.richEmbed?.canonicalUrl;
-        url && openUrlService.open(url);
+        url && sp.resolve('openURL').open(url);
       }}
       style={isMe ? styles.richBubbleRight : styles.richBubble}>
       <B1 color={isMe ? 'primaryDark' : 'primary'} horizontal="L" vertical="M">
@@ -146,7 +146,7 @@ const RichEmbed = ({
 
 export default React.memo(Message);
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   richBubble: [
     'borderRadius15x',
     'bgSecondaryBackground',

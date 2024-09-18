@@ -1,17 +1,15 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import { WalletStoreType } from '../createWalletStore';
-import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
-import MenuItem, {
-  MenuItemProps,
-} from '../../../common/components/menus/MenuItem';
-import { WalletScreenNavigationProp } from '../../v3/WalletScreen';
-import i18n from '../../../common/services/i18n.service';
-import TokensChart from './TokensChart';
 import { useNavigation } from '@react-navigation/core';
 
+import { WalletStoreType } from '../createWalletStore';
+import MenuSubtitle from '~/common/components/menus/MenuSubtitle';
+import MenuItem, { MenuItemProps } from '~/common/components/menus/MenuItem';
+import { WalletScreenNavigationProp } from '../../v3/WalletScreen';
+import TokensChart from './TokensChart';
 import { B1, B2, Row, Column } from '~ui';
 import { ONCHAIN_ENABLED } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -22,7 +20,7 @@ const TokensOverview = observer(({ walletStore }: PropsType) => {
   const navigation = useNavigation();
 
   const walletActions: MenuItemProps[] = [];
-
+  const i18n = sp.i18n;
   if (ONCHAIN_ENABLED) {
     walletActions.unshift({
       title: i18n.t('wallet.transferToOnchain'),

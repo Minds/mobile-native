@@ -1,17 +1,18 @@
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { View, SectionList, SectionListData } from 'react-native';
-import { ComponentsStyle } from '../../../styles/Components';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import DiscoveryV2Store, { TDiscoveryTagsTag } from '../DiscoveryV2Store';
-import i18n from '../../../common/services/i18n.service';
-import MenuItem from '../../../common/components/menus/MenuItem';
-import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
-import DiscoveryTagsManager from './DiscoveryTagsManager';
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
-import MText from '../../../common/components/MText';
+
+import { ComponentsStyle } from '~/styles/Components';
+
+import DiscoveryV2Store, { TDiscoveryTagsTag } from '../DiscoveryV2Store';
+import MenuItem from '~/common/components/menus/MenuItem';
+import { withErrorBoundary } from '~/common/components/ErrorBoundary';
+import DiscoveryTagsManager from './DiscoveryTagsManager';
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
 interface Props {
   type: 'your' | 'trending';
@@ -35,7 +36,7 @@ export const DiscoveryTagsList = withErrorBoundary(
     ({ plus, store, type, showManageTags = true, style, header }: Props) => {
       const navigation = useNavigation<StackNavigationProp<any>>();
       const ref = React.useRef<BottomSheetModal>();
-
+      const i18n = sp.i18n;
       useEffect(() => {
         store.loadTags(plus);
       }, [store, plus]);
@@ -95,13 +96,13 @@ export const DiscoveryTagsList = withErrorBoundary(
         return (
           <View
             style={[
-              ThemedStyles.style.rowJustifyStart,
-              ThemedStyles.style.padding4x,
+              sp.styles.style.rowJustifyStart,
+              sp.styles.style.padding4x,
             ]}>
-            <View style={ThemedStyles.style.flexContainer} />
+            <View style={sp.styles.style.flexContainer} />
             <MText
               onPress={() => ref.current?.present()}
-              style={ThemedStyles.style.colorSecondaryText}>
+              style={sp.styles.style.colorSecondaryText}>
               Manage Tags
             </MText>
             <DiscoveryTagsManager ref={ref} />
@@ -157,7 +158,7 @@ export const DiscoveryTagsList = withErrorBoundary(
   ),
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['flexContainer'],
   centered: {
     alignSelf: 'center',

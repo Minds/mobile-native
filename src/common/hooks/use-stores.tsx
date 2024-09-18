@@ -10,12 +10,11 @@ import createSearchResultStore, {
 import createPortraitStore, {
   PortraitStoreType,
 } from '~/portrait/portrait.store';
-import sessionService from '../services/session.service';
-import logService from '../services/log.service';
 import createChatStore, { ChatStoreType } from '~/chat/createChatStore';
 import createNotificationsStore, {
   NotificationsStore,
 } from '~/notifications/v3/createNotificationsStore';
+import sp from '~/services/serviceProvider';
 
 export const storesContext = React.createContext<StoresType | null>(null);
 
@@ -33,10 +32,10 @@ export const StoresProvider = ({ children }) => {
   };
 
   React.useEffect(() => {
-    return sessionService.onLogout(() => {
+    return sp.session.onLogout(() => {
       for (const id in stores) {
         if (stores[id].reset) {
-          logService.info(`Reseting store ${id}`);
+          sp.log.info(`Reseting store ${id}`);
           stores[id].reset();
         }
       }

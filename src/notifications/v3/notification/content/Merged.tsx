@@ -1,9 +1,9 @@
 import React from 'react';
-import MText from '../../../../common/components/MText';
-import i18n from '../../../../common/services/i18n.service';
+import MText from '~/common/components/MText';
 import type NotificationModel from '../NotificationModel';
 import { bodyTextImportantStyle, bodyTextStyle } from '../styles';
 import { NotificationRouter } from '../useNotificationRouter';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   notification: NotificationModel;
@@ -14,6 +14,7 @@ const Merged = ({ notification, router }: PropsType) => {
   if (!notification.hasMerged) {
     return null;
   }
+  const i18n = sp.i18n;
 
   return (
     <MText style={bodyTextStyle}>

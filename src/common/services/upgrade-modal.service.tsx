@@ -7,8 +7,8 @@ import {
 } from '~/graphql/api';
 import { BottomSheetButton, pushBottomSheet } from '../components/bottom-sheet';
 import { H3 } from '../ui';
-import i18nService from './i18n.service';
 import CenteredLoading from '../components/CenteredLoading';
+import sp from '~/services/serviceProvider';
 import { TENANT_IS_NON_PROFIT } from '~/config/Config';
 import { Linking } from 'react-native';
 
@@ -93,7 +93,7 @@ const GenericMembershipModalContent = ({ modal }) => (
     <H3 horizontal="XL" vertical="XL" align="center" font="regular">
       Only members can access this post
     </H3>
-    <BottomSheetButton text={i18nService.t('dismiss')} onPress={modal.close} />
+    <BottomSheetButton text={sp.i18n.t('dismiss')} onPress={modal.close} />
   </>
 );
 
@@ -115,7 +115,7 @@ const MembershipDetails = ({
       membership?.purchaseUrl ? (
         <MembershipJoinButton membership={membership} onPress={onPress} />
       ) : (
-        <BottomSheetButton text={i18nService.t('dismiss')} onPress={onPress} />
+        <BottomSheetButton text={sp.i18n.t('dismiss')} onPress={onPress} />
       )}
     </>
   );
@@ -133,7 +133,7 @@ export const MembershipJoinButton = ({
   }
   return (
     <BottomSheetButton
-      text={i18nService.t('membership.join')}
+      text={sp.i18n.t('membership.join')}
       onPress={() => {
         onPress?.();
         handleExternalMembership(membership);

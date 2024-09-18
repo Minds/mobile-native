@@ -1,10 +1,11 @@
-//@ts-nocheck
-import api from './api.service';
+import type { ApiService } from './api.service';
 
 /**
  * Hashtag service
  */
-class HashtagService {
+export class HashtagService {
+  constructor(private api: ApiService) {}
+
   /**
    * Max hashtags
    */
@@ -13,7 +14,12 @@ class HashtagService {
    * Get suggested hastags
    */
   async getSuggested() {
-    const response = await api.get('api/v2/hashtags/suggested', { limit: 24 });
+    const response = await this.api.get<{ tags: Array<string> }>(
+      'api/v2/hashtags/suggested',
+      {
+        limit: 24,
+      },
+    );
     return response.tags;
   }
 
@@ -22,7 +28,7 @@ class HashtagService {
    * @param {string} hashtag
    */
   delete(hashtag) {
-    return api.delete(`api/v2/hashtags/user/${hashtag}`);
+    return this.api.delete(`api/v2/hashtags/user/${hashtag}`);
   }
 
   /**
@@ -30,7 +36,7 @@ class HashtagService {
    * @param {string} hashtag
    */
   add(hashtag) {
-    return api.post(`api/v2/hashtags/user/${hashtag}`);
+    return this.api.post(`api/v2/hashtags/user/${hashtag}`);
   }
 
   /**
@@ -44,7 +50,7 @@ class HashtagService {
   slice(input) {
     try {
       const regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
-      let matches = [];
+      let matches: Array<string> = [];
       let match;
       while ((match = regex.exec(input))) {
         matches.push(match[1]);
@@ -55,5 +61,3 @@ class HashtagService {
     }
   }
 }
-
-export default new HashtagService();

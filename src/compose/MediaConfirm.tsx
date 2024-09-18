@@ -3,21 +3,21 @@ import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
 import ImagePreview from './ImagePreview';
 import { useSafeArea } from 'react-native-safe-area-context';
 import MindsVideoV2 from '../media/v2/mindsVideo/MindsVideo';
 import { ResizeMode } from 'expo-av';
 import MText from '../common/components/MText';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 /**
  * Media confirm screen
  * @param {Object} props
  */
 export default observer(function (props) {
-  const theme = ThemedStyles.style;
-
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
   const insets = useSafeArea();
   const cleanTop = useMemo(
     () => ({ paddingTop: insets.top || 0 }),
@@ -90,7 +90,7 @@ export default observer(function (props) {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['flexContainer', 'bgSecondaryBackground'],
   mediaContainer: ['flexContainer', 'justifyEnd'],
   leftText: [

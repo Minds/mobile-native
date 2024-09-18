@@ -1,31 +1,25 @@
 import React from 'react';
+import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import TopbarTabbar from '../../../common/components/topbar-tabbar/TopbarTabbar';
 import { Icon } from 'react-native-elements';
-import SearchView from '../../../common/components/SearchView';
-import testID from '../../../common/helpers/testID';
-import i18n from '../../../common/services/i18n.service';
+import { observer } from 'mobx-react';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
+
+import TopbarTabbar from '~/common/components/topbar-tabbar/TopbarTabbar';
+import testID from '~/common/helpers/testID';
+import SearchView from '~/common/components/SearchView';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import { View } from 'react-native';
-import { observer } from 'mobx-react';
-import FeedFilter from '../../../common/components/FeedFilter';
+
+import FeedFilter from '~/common/components/FeedFilter';
 import { DiscoveryV2SearchStoreAlgorithm } from './DiscoveryV2SearchStore';
 import { DiscoveryStackParamList } from '~/navigation/DiscoveryStack';
+import sp from '~/services/serviceProvider';
 
 type NavigationType = StackNavigationProp<
   DiscoveryStackParamList,
   'DiscoverySearch'
 >;
-
-const tabs: { id: DiscoveryV2SearchStoreAlgorithm; title: string }[] = [
-  { id: 'top', title: 'Top' },
-  { id: 'latest', title: 'Latest' },
-  { id: 'channels', title: i18n.t('discovery.channels') },
-  { id: 'groups', title: i18n.t('discovery.filters.groups') },
-];
 
 export const DiscoverySearchHeader = observer(() => {
   const store = useDiscoveryV2SearchStore();
@@ -37,6 +31,14 @@ export const DiscoverySearchHeader = observer(() => {
     store.reset();
     navigation.goBack();
   }, [navigation, store]);
+  const i18n = sp.i18n;
+
+  const tabs: { id: DiscoveryV2SearchStoreAlgorithm; title: string }[] = [
+    { id: 'top', title: 'Top' },
+    { id: 'latest', title: 'Latest' },
+    { id: 'channels', title: i18n.t('discovery.channels') },
+    { id: 'groups', title: i18n.t('discovery.filters.groups') },
+  ];
 
   const shouldRenderFilter = ['top', 'latest'].includes(store.algorithm);
 
@@ -45,7 +47,7 @@ export const DiscoverySearchHeader = observer(() => {
       <View style={styles.secondaryContainer}>
         <View style={styles.iconContainer}>
           <Icon
-            color={ThemedStyles.getColor('Icon')}
+            color={sp.styles.getColor('Icon')}
             size={32}
             name="chevron-left"
             type="material-community"
@@ -75,7 +77,7 @@ export const DiscoverySearchHeader = observer(() => {
             nsfw
             store={store}
             containerStyles={styles.feedFilterContainer}
-            textStyle={ThemedStyles.style.colorSecondaryText}
+            textStyle={sp.styles.style.colorSecondaryText}
           />
         )}
       </View>
@@ -91,7 +93,7 @@ const shadow = {
   shadowRadius: 2,
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   mainContainer: ['bgPrimaryBackground', shadow],
   secondaryContainer: ['rowJustifyStart', 'alignCenter'],
   iconContainer: ['padding2x'],

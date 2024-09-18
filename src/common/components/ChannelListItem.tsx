@@ -3,12 +3,12 @@ import { Keyboard, TextStyle, View, ViewStyle } from 'react-native';
 import { Image } from 'expo-image';
 
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../Permissions';
-import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import type UserModel from '../../channel/UserModel';
 import Subscribe from '../../channel/v2/buttons/Subscribe';
 import MText from './MText';
 import MPressable from './MPressable';
-import NavigationService from '~/navigation/NavigationService';
+import sp from '~/services/serviceProvider';
+import { useStyle } from '~/styles/hooks';
 
 export type ChannelListItemProps = {
   onPress?: (channel: UserModel) => void;
@@ -32,7 +32,7 @@ export type ChannelListItemProps = {
 const ChannelListItem = (props: ChannelListItemProps) => {
   const containerStyle = useStyle(
     styles.container,
-    props.borderless ? null : ThemedStyles.style.borderBottom,
+    props.borderless ? null : sp.styles.style.borderBottom,
     props.containerStyles || {},
   );
   const nameStyles = useStyle(props.nameStyles || {}, styles.name);
@@ -52,7 +52,7 @@ const ChannelListItem = (props: ChannelListItemProps) => {
         return;
       }
 
-      if (props.navigation === NavigationService) {
+      if (props.navigation === sp.navigation) {
         props.navigation.push('App', {
           screen: 'Channel',
           params: {
@@ -117,7 +117,7 @@ const bodyStyle = {
   marginLeft: 8,
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     {
       flexDirection: 'row',

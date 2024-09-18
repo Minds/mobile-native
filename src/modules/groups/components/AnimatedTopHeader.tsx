@@ -11,11 +11,12 @@ import Animated, {
 import SmallCircleButton from '~/common/components/SmallCircleButton';
 import { H4 } from '~/common/ui';
 import type GroupModel from '~/groups/GroupModel';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { GroupMembersStoreType } from '../hooks/useGroupMembersStore';
 import { GroupFeedStoreType } from '../hooks/useGroupFeedStore';
 import GroupMoreMenu from './GroupMoreMenu';
 import GroupChatButton from '~/modules/chat/components/GroupChatButton';
+import sp from '~/services/serviceProvider';
 
 type Props = {
   animationHeaderHeight: SharedValue<number>;
@@ -36,7 +37,7 @@ export default function AnimatedTopHeader({
 }: Props) {
   const navigation = useNavigation();
   const menuRef = useRef<any>();
-  const bgColor = ThemedStyles.getColor('PrimaryBackground');
+  const bgColor = sp.styles.getColor('PrimaryBackground');
 
   const topbarStyle = useAnimatedStyle(() => {
     if (!animationHeaderHeight || !scrollY) {
@@ -78,18 +79,15 @@ export default function AnimatedTopHeader({
   return (
     <Animated.View style={[styles.container, topbarStyle]}>
       <View
-        style={[
-          styles.rowContainer,
-          ThemedStyles.style.alignSelfCenterMaxWidth,
-        ]}>
+        style={[styles.rowContainer, sp.styles.style.alignSelfCenterMaxWidth]}>
         {!hideBack && (
           <SmallCircleButton
             name="chevron-left"
             raised={true}
             onPress={navigation.goBack}
-            color={ThemedStyles.getColor('PrimaryBackground')}
+            color={sp.styles.getColor('PrimaryBackground')}
             iconStyle={styles.iconStyle}
-            reverseColor={ThemedStyles.getColor('PrimaryText')}
+            reverseColor={sp.styles.getColor('PrimaryText')}
           />
         )}
         <Animated.View style={titleStyle}>
@@ -103,9 +101,9 @@ export default function AnimatedTopHeader({
           type="material"
           raised={true}
           onPress={() => menuRef.current?.present()}
-          color={ThemedStyles.getColor('PrimaryBackground')}
+          color={sp.styles.getColor('PrimaryBackground')}
           iconStyle={styles.iconStyle}
-          reverseColor={ThemedStyles.getColor('PrimaryText')}
+          reverseColor={sp.styles.getColor('PrimaryText')}
         />
         <GroupMoreMenu
           ref={menuRef}
@@ -117,7 +115,7 @@ export default function AnimatedTopHeader({
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: {
     overflow: 'hidden',
     position: 'absolute',

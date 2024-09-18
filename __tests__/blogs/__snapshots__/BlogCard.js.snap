@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`blog card component should renders correctly 1`] = `
+exports[`blog card component should render correctly 1`] = `
 <View
   style={
     {
@@ -46,18 +46,13 @@ exports[`blog card component should renders correctly 1`] = `
         },
       ]
     }
+    testID="blogPressable"
   >
     <Image
       contentFit="cover"
       source={
         {
-          "headers": {
-            "App-Version": "3.8.0",
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            "Content-Type": "application/json",
-            "Pragma": "no-cache",
-            "no-cache": "1",
-          },
+          "headers": undefined,
           "uri": "https://www.minds.com/fs/v1/banners/836607056186159104/1524838665",
         }
       }
@@ -132,7 +127,6 @@ exports[`blog card component should renders correctly 1`] = `
           }
         >
           <View
-            height={26}
             style={
               {
                 "backgroundColor": "transparent",
@@ -183,7 +177,6 @@ exports[`blog card component should renders correctly 1`] = `
                 },
               }
             }
-            width={26}
           >
             <View
               accessibilityIgnoresInvertColors={true}
@@ -344,7 +337,7 @@ exports[`blog card component should renders correctly 1`] = `
               ]
             }
           >
-            Apr 27 2018 · 07:17
+            Apr 27 2018 · 14:17
           </Text>
           <View
             style={
@@ -558,6 +551,7 @@ exports[`blog card component should renders correctly 1`] = `
           "wire_threshold": "",
         }
       }
+      onPressComment={[Function]}
     />
   </View>
 </View>

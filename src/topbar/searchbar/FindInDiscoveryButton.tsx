@@ -1,8 +1,9 @@
 import React from 'react';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { TouchableOpacity } from 'react-native';
 import { SearchResultStoreType } from './createSearchResultStore';
 import MText from '../../common/components/MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   showBorder?: boolean;
@@ -10,7 +11,7 @@ type PropsType = {
 };
 
 const FindInDiscoveryButton = ({ showBorder, localStore }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const borders = showBorder
     ? [theme.borderTopHair, theme.bcolorPrimaryBorder]
     : [];
