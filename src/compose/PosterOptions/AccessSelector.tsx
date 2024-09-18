@@ -41,8 +41,8 @@ export default observer(function () {
         rightText={i18n.t('done')}
         backIconName="chevron-left"
         backIconSize="large"
-        onPressRight={navigation.goBack}
-        onPressBack={navigation.goBack}
+        onPressRight={() => navigation.goBack()}
+        onPressBack={() => navigation.goBack()}
         store={store}
       />
       <ScrollView>
