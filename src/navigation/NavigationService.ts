@@ -8,7 +8,7 @@ import type { AnalyticsService } from '~/common/services/analytics.service';
 export class NavigationService {
   constructor(
     private analytics: AnalyticsService,
-    private navigationRef = createNavigationContainerRef(),
+    public navigationRef = createNavigationContainerRef(),
   ) {}
 
   getTopLevelNavigator() {
