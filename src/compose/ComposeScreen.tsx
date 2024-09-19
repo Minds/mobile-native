@@ -250,6 +250,7 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
       </SafeAreaView>
       {showBottomBar && (
         <KeyboardAvoidingView
+          keyboardVerticalOffset={IS_IOS ? 0 : 30}
           behavior="padding"
           style={styles.bottomBarContainer}>
           <BottomBar
