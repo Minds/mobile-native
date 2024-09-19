@@ -114,6 +114,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   scheme: Tenant.APP_SCHEME,
   slug: Tenant.APP_SLUG || 'minds',
   version: APP_VERSION,
+  backgroundColor: is_dark
+    ? Tenant.BACKGROUND_COLOR_DARK
+    : Tenant.BACKGROUND_COLOR_LIGHT,
   icon: './assets/images/icon.png',
   orientation: 'portrait',
   runtimeVersion: {
