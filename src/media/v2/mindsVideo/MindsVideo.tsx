@@ -2,18 +2,18 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { ResizeMode, VideoReadyForDisplayEvent } from 'expo-av';
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleProp,
   TouchableWithoutFeedback,
   View,
   ViewStyle,
 } from 'react-native';
-import RetryableImage from '~/common/components/RetryableImage';
 import type CommentModel from '~/comments/v2/CommentModel';
 import getVideoThumb from '~/common/helpers/get-video-thumbnail';
 import { DATA_SAVER_THUMB_RES } from '~/config/Config';
 import type ActivityModel from '~/newsfeed/ActivityModel';
+import { Image } from 'expo-image';
 
 import createMindsVideoStore from './createMindsVideoStore';
 import Controls from './overlays/Controls';
@@ -28,7 +28,7 @@ type PropsType = {
   autoplay?: boolean;
   repeat?: boolean;
   resizeMode?: ResizeMode;
-  video?: { uri: string; headers?: any };
+  video?: { uri: string; headers?: Record<string, string> };
   containerStyle?: StyleProp<ViewStyle>;
   onStoreCreated?: Function;
   onReadyForDisplay?: (event: VideoReadyForDisplayEvent) => void;
@@ -55,14 +55,6 @@ const MindsVideo = observer((props: PropsType) => {
   });
 
   const onStoreCreated = props.onStoreCreated;
-
-  const [posterSource, setPosterSource] = useState(
-    props.entity
-      ? dataSaverEnabled
-        ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
-        : getVideoThumb(props.entity)
-      : null,
-  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -92,11 +84,6 @@ const MindsVideo = observer((props: PropsType) => {
       localStore.clear();
       localStore.setEntity(props.entity);
       localStore.preload();
-      setPosterSource(
-        dataSaverEnabled
-          ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
-          : getVideoThumb(props.entity),
-      );
     }
   }, [localStore, props.entity]);
 
@@ -136,9 +123,9 @@ const MindsVideo = observer((props: PropsType) => {
       style={[theme.flexContainer, props.containerStyle]}>
       <View style={containerStyle}>
         {localStore.showThumbnail && (
-          <RetryableImage
-            style={theme.positionAbsolute}
-            source={posterSource}
+          <VideoThumbnail
+            entity={props.entity}
+            dataSaverEnabled={dataSaverEnabled}
           />
         )}
         <ExpoVideo
@@ -159,5 +146,22 @@ const MindsVideo = observer((props: PropsType) => {
 });
 
 const containerStyle = sp.styles.combine('flexContainer', 'bgBlack');
+
+const VideoThumbnail = ({ entity, dataSaverEnabled }) => {
+  const theme = sp.styles.style;
+  return (
+    <Image
+      key={entity?.guid}
+      style={theme.positionAbsolute}
+      source={
+        entity
+          ? dataSaverEnabled
+            ? getVideoThumb(entity, DATA_SAVER_THUMB_RES)
+            : getVideoThumb(entity)
+          : null
+      }
+    />
+  );
+};
 
 export default MindsVideo;
