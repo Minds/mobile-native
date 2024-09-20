@@ -45,7 +45,6 @@ const createMindsVideoStore = ({
     error: false,
     inProgress: false,
     showFullControls: false,
-    showThumbnail: true,
     loaded: false,
     video: null as AVPlaybackSourceObject | null,
     showOverlay: false,
@@ -66,7 +65,6 @@ const createMindsVideoStore = ({
       this.sources = null;
       this.source = 0;
       this.paused = true;
-      this.showThumbnail = true;
       this.currentTime = 0;
       this.currentSeek = null;
       this.duration = 0;
@@ -123,9 +121,6 @@ const createMindsVideoStore = ({
     },
     setShowOverlay(showOverlay: boolean) {
       this.showOverlay = showOverlay;
-    },
-    setShowThumbnail(showThumbnail: boolean) {
-      this.showThumbnail = showThumbnail;
     },
     /**
      * Sets and pre load the video
