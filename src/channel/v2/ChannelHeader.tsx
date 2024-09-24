@@ -9,7 +9,7 @@ import {
 import IconM from '@expo/vector-icons/MaterialIcons';
 import IconMC from '@expo/vector-icons/MaterialCommunityIcons';
 import { observer } from 'mobx-react';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 import assets from '@assets';
 
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
@@ -223,10 +223,10 @@ const ChannelHeader = withErrorBoundary(
            **/}
           {props.store && channel && !props.hideImages && (
             <View style={styles.avatarContainer}>
-              <Image
+              <TurboImage
                 style={styles.avatar}
                 source={channel.getAvatarSource()}
-                contentFit="cover"
+                resizeMode="cover"
               />
             </View>
           )}
@@ -399,10 +399,10 @@ const SocialLinks = observer(({ channel }: { channel: UserModel }) => {
                       }
                     />
                   ) : (
-                    <Image
+                    <TurboImage
                       source={link.icon}
                       style={styles.iconImage}
-                      tintColor="#FFFFFF"
+                      tint="#FFFFFF"
                     />
                   )}
                 </View>

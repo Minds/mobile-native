@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 import PressableScale from '~/common/components/PressableScale';
 import { IconCircled } from '~ui/icons';
 import { withSpacer } from '~ui/layout';
@@ -50,13 +50,13 @@ export const Avatar = withSpacer(
 
     if (subAvatarSource) {
       subAvatar = (
-        <Image
+        <TurboImage
           source={
             isObservable(subAvatarSource)
               ? toJS(subAvatarSource)
               : subAvatarSource
           }
-          recyclingKey={recyclingKey}
+          rounded
           style={subAvatarStyle}
         />
       );
@@ -64,10 +64,10 @@ export const Avatar = withSpacer(
 
     const avatar = (
       <View style={border && styles[border]}>
-        <Image
+        <TurboImage
           testID={testID}
           source={isObservable(source) ? toJS(source) : source}
-          recyclingKey={recyclingKey}
+          rounded
           style={styles[size]}
         />
         {iconView}

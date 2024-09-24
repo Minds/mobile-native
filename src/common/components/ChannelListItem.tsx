@@ -1,6 +1,6 @@
 import React from 'react';
 import { Keyboard, TextStyle, View, ViewStyle } from 'react-native';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import { FLAG_SUBSCRIBE, FLAG_VIEW } from '../Permissions';
 import type UserModel from '../../channel/UserModel';
@@ -94,7 +94,7 @@ const ChannelListItem = (props: ChannelListItemProps) => {
 
   return (
     <MPressable style={containerStyle} {...otherProps} onPress={_onPress}>
-      <Image
+      <TurboImage
         source={props.channel.getAvatarSource('medium')}
         style={styles.avatar}
       />

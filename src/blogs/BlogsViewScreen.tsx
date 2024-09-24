@@ -162,7 +162,7 @@ export class BlogsViewScreen extends Component<PropsType> {
     return (
       <ScrollView stickyHeaderIndices={[1]}>
         <>
-          <SmartImage source={image} contentFit="cover" style={styles.image} />
+          <SmartImage source={image} resizeMode="cover" style={styles.image} />
           <MText style={styles.title}>{blog.title}</MText>
           <SafeAreaView style={styles.header}>
             <SmallCircleButton

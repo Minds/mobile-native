@@ -1,5 +1,6 @@
-import { ImageURISource } from 'react-native';
 import { decorate, observable } from 'mobx';
+import { Source } from 'react-native-turbo-image';
+
 import { MINDS_ASSETS_CDN_URI } from '../config/Config';
 import { LICENSES } from '../common/services/list-options.service';
 import ActivityModel from '../newsfeed/ActivityModel';
@@ -15,7 +16,7 @@ export default class BlogModel extends ActivityModel {
   /**
    * Get banner source
    */
-  getBannerSource(): ImageURISource {
+  getBannerSource(): Source {
     const uri =
       this.thumbnail_src &&
       this.thumbnail_src !== 'https://cdn.minds.com/thumbProxy?src=&c=2708'

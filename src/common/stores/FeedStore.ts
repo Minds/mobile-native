@@ -1,5 +1,5 @@
 import { observable, action, runInAction } from 'mobx';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import ViewStore from './ViewStore';
 import type ActivityModel from '../../newsfeed/ActivityModel';
@@ -216,7 +216,7 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
           })
           .filter(s => s);
         if (images.length) {
-          Image.prefetch(images);
+          TurboImage.prefetch(images);
         }
       }
     }

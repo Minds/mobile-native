@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import SmartImage from '~/common/components/SmartImage';
 import { MINDS_CDN_URI } from '~/config/Config';
@@ -52,7 +52,7 @@ export default class GroupCard extends Component<Props> {
 
     return (
       <View>
-        <SmartImage source={iurl} style={styles.banner} contentFit="cover" />
+        <SmartImage source={iurl} style={styles.banner} resizeMode="cover" />
         <View style={styles.headertextcontainer}>
           <View style={styles.countercontainer}>
             <View style={[theme.columnAlignCenter, theme.flexContainer]}>

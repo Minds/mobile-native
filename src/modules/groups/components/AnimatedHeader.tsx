@@ -1,5 +1,5 @@
 import { View, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useMemo } from 'react';
 import * as entities from 'entities';
 import Animated, {
   Extrapolation,
@@ -7,7 +7,7 @@ import Animated, {
   interpolate,
   useAnimatedStyle,
 } from 'react-native-reanimated';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import GroupModel from '~/groups/GroupModel';
 import { MINDS_CDN_URI } from '~/config/Config';
@@ -94,13 +94,13 @@ export default function AnimatedHeader({
   return (
     <View style={sp.styles.style.bgPrimaryBackground}>
       <Animated.View style={bannerStyle}>
-        <Image style={styles.banner} source={getBanner(group)} />
+        <TurboImage style={styles.banner} source={useBanner(group)} />
       </Animated.View>
       <View style={[styles.headerContainer, { marginTop: top + 150 }]}>
         <Animated.View style={[styles.avatar, avatarStyle]}>
-          <Image
-            source={getAvatar(group)}
-            contentFit="cover"
+          <TurboImage
+            source={useAvatar(group)}
+            resizeMode="cover"
             style={StyleSheet.absoluteFillObject}
           />
         </Animated.View>
@@ -118,11 +118,21 @@ export default function AnimatedHeader({
   );
 }
 
-function getAvatar(group: GroupModel) {
-  return `${MINDS_CDN_URI}fs/v1/avatars/${group.guid}/large/${group.icontime}`;
+function useAvatar(group: GroupModel) {
+  return useMemo(
+    () => ({
+      uri: `${MINDS_CDN_URI}fs/v1/avatars/${group.guid}/large/${group.icontime}`,
+    }),
+    [group],
+  );
 }
-function getBanner(group: GroupModel) {
-  return `${MINDS_CDN_URI}fs/v1/banners/${group.guid}/fat/${group.icontime}`;
+function useBanner(group: GroupModel) {
+  return useMemo(
+    () => ({
+      uri: `${MINDS_CDN_URI}fs/v1/banners/${group.guid}/fat/${group.icontime}`,
+    }),
+    [group],
+  );
 }
 
 const styles = sp.styles.create({

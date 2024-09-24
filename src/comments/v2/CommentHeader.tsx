@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 import withPreventDoubleTap from '~/common/components/PreventDoubleTap';
@@ -60,7 +60,7 @@ class CommentHeader extends PureComponent<PropsType> {
         <View style={styles.container}>
           {this.props.leftToolbar}
           <DebouncedTouchableOpacity onPress={this._navToChannel}>
-            <Image source={avatarSrc} style={styles.avatar} />
+            <TurboImage source={avatarSrc} style={styles.avatar} />
           </DebouncedTouchableOpacity>
           <View style={styles.body}>
             <View style={styles.nameContainer}>

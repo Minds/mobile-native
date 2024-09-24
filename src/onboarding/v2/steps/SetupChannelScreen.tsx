@@ -2,7 +2,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Flow } from 'react-native-animated-spinkit';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import Icon from '@expo/vector-icons/MaterialIcons';
 import { useKeyboard } from '@react-native-community/hooks';
@@ -144,7 +144,7 @@ export default withErrorBoundaryScreen(
                 disabled={channelStore.uploading}
                 testID="selectAvatar">
                 {hasAvatar && avatar && (
-                  <Image source={avatar} style={styles.avatar} />
+                  <TurboImage source={avatar} style={styles.avatar} />
                 )}
 
                 <View

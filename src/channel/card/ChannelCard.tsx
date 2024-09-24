@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import MText from '../../common/components/MText';
 import SmartImage from '../../common/components/SmartImage';
@@ -30,7 +30,7 @@ export default class ChannelCard extends Component<PropsType> {
 
     return (
       <View>
-        <SmartImage source={iurl} style={styles.banner} contentFit="cover" />
+        <SmartImage source={iurl} style={styles.banner} resizeMode="cover" />
         <View style={styles.headertextcontainer}>
           <View style={styles.namecontainer}>
             <View style={styles.namecol}>
@@ -39,7 +39,7 @@ export default class ChannelCard extends Component<PropsType> {
             </View>
           </View>
         </View>
-        <Image source={avatar} style={styles.avatar} />
+        <TurboImage source={avatar} style={styles.avatar} />
       </View>
     );
   }

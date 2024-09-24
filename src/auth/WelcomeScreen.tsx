@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { NavigationProp, RouteProp } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import { View, ViewStyle } from 'react-native';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import MText from '~/common/components/MText';
 import { IS_IPAD, IS_TENANT, TENANT, WELCOME_LOGO } from '~/config/Config';
@@ -56,8 +56,8 @@ function WelcomeScreen(props: PropsType) {
     <Screen safe hasMaxWidth={false}>
       <View style={styles.container}>
         {IS_TENANT ? (
-          <Image
-            contentFit="contain"
+          <TurboImage
+            resizeMode="contain"
             source={
               WELCOME_LOGO === 'square'
                 ? assets.LOGO_SQUARED

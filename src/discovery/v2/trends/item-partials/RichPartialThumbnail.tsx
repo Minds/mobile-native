@@ -21,7 +21,7 @@ const RichPartialThumbnail = ({ entity, isHero }: PropsType) => {
     <SmartImage
       source={image}
       style={[styles.thumbnail, isHero ? styles.heroThumbnail : null]}
-      contentFit="cover"
+      resizeMode="cover"
     />
   );
 };

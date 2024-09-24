@@ -16,7 +16,7 @@ import useNotificationRouter from './useNotificationRouter';
 import Merged from './content/Merged';
 import type Notification from './NotificationModel';
 import MText from '~/common/components/MText';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import sp from '~/services/serviceProvider';
 
@@ -66,7 +66,7 @@ const NotificationItem = observer(
             {
               //@ts-ignore
               <DebouncedTouchableOpacity onPress={navToFromChannel}>
-                <Image source={avatarSrc} style={styles.avatar} />
+                <TurboImage source={avatarSrc} style={styles.avatar} />
               </DebouncedTouchableOpacity>
             }
             {

@@ -20,7 +20,7 @@ type PropsType = {
   entity: ActivityModel;
   style?: ImageProps['style'];
   ignoreDataSaver?: boolean;
-  mode?: ImageProps['contentFit'];
+  mode?: SmartImageProps['resizeMode'];
   /**
    * @param {number} index - the index of the image
    */
@@ -109,7 +109,7 @@ const ImageItem = ({
     style={styles.image}
     activeOpacity={1}
     testID={'image-' + smartImageProps.source?.uri}>
-    <SmartImage {...smartImageProps} contentFit="cover" style={styles.image} />
+    <SmartImage {...smartImageProps} resizeMode="cover" style={styles.image} />
   </TouchableOpacity>
 );
 

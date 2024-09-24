@@ -1,4 +1,4 @@
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 import React, { useCallback, useEffect, useRef } from 'react';
 import {
   Dimensions,
@@ -189,7 +189,7 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           )}
           <View style={theme.rowJustifyStart}>
             <View style={useStyle('paddingHorizontal2x', 'paddingTop')}>
-              <Image source={avatar} style={styles.wrappedAvatar} />
+              <TurboImage source={avatar} style={styles.wrappedAvatar} />
             </View>
             <View style={useStyle('flexContainer', 'marginRight2x')}>
               {!store.noText && (

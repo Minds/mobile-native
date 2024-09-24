@@ -7,8 +7,8 @@ import {
   Platform,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { Image } from 'expo-image';
 
+import TurboImage from 'react-native-turbo-image';
 import withPreventDoubleTap from '~/common/components/PreventDoubleTap';
 
 import type ActivityModel from '../ActivityModel';
@@ -253,11 +253,11 @@ class OwnerBlock extends PureComponent<PropsType> {
               groupEmphasized ? this._navToGroup : this._onNavToChannelPress
             }>
             {blurAvatar ? (
-              <Image
+              <TurboImage
                 source={this.avatarSrc}
                 style={styles.avatar}
-                recyclingKey={channel.guid}
-                blurRadius={IS_IOS ? 12 : 7}
+                // recyclingKey={channel.guid}
+                blur={IS_IOS ? 12 : 7}
               />
             ) : (
               this.avatar

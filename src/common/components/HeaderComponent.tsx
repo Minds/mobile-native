@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import { ChannelStoreType } from '../../channel/v2/createChannelStore';
 import UserStore from '../../auth/UserStore';
 import type UserModel from '../../channel/UserModel';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import sp from '~/services/serviceProvider';
 
@@ -37,10 +37,10 @@ const HeaderComponent: FunctionComponent<propsType> = observer(
         source={channel.getBannerSource()}
         resizeMode="cover">
         <View style={[styles.avatarContainer, theme.bcolorPrimaryBackground]}>
-          <Image
+          <TurboImage
             style={[styles.avatar, theme.bcolorPrimaryBorder]}
             source={channel.getAvatarSource()}
-            contentFit="cover"
+            resizeMode="cover"
           />
         </View>
         {children}

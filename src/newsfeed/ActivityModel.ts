@@ -1,6 +1,6 @@
 import { runInAction, action, observable, decorate } from 'mobx';
 import { FlatList, Alert, Platform } from 'react-native';
-import { Image, ImageSource } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 import debounce from 'lodash/debounce';
 
 import BaseModel from '../common/BaseModel';
@@ -15,6 +15,7 @@ import { showNotification } from '../../AppMessages';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
 import { BoostButtonText } from '../modules/boost/boost-composer/boost.store';
 import sp from '~/services/serviceProvider';
+import { Source } from 'react-native-turbo-image';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -241,7 +242,7 @@ export default class ActivityModel extends BaseModel {
    * {uri: 'http...'}
    * @param {string} size
    */
-  getThumbSource(size: ThumbSize = 'medium'): ImageSource {
+  getThumbSource(size: ThumbSize = 'medium'): Source {
     // for gif use always the same size to take advantage of the cache (they are not resized)
     if (this.isGif()) {
       size = 'xlarge';
@@ -269,7 +270,11 @@ export default class ActivityModel extends BaseModel {
     }
 
     if (this.thumbnails && this.thumbnails[size]) {
-      return { uri: this.thumbnails[size], headers: sp.api.buildHeaders() };
+      return {
+        uri: this.thumbnails[size],
+        headers: sp.api.buildHeaders(),
+        cacheKey: `thumb${this.guid}`,
+      };
     }
 
     // fallback to old behavior
@@ -303,7 +308,7 @@ export default class ActivityModel extends BaseModel {
    */
   preloadThumb(size: ThumbSize = 'medium') {
     const uri = this.getThumbSource(size)?.uri;
-    uri && Image.prefetch(uri);
+    uri && TurboImage.prefetch([{ uri }]);
   }
 
   shouldBeBlured(): boolean {

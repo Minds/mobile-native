@@ -1,5 +1,5 @@
 import { StackNavigationProp } from '@react-navigation/stack';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 import { MotiView } from 'moti';
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, useWindowDimensions } from 'react-native';
@@ -51,9 +51,9 @@ function ImageGalleryScreen({
         height: item.height,
       });
       return (
-        <Image
+        <TurboImage
           style={StyleSheet.absoluteFillObject}
-          contentFit="contain"
+          resizeMode="contain"
           source={{
             uri: item.src,
             headers: sp.api.buildHeaders(),

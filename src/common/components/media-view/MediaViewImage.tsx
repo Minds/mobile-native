@@ -1,12 +1,11 @@
-import { ImageProps, ImageStyle } from 'expo-image';
 import React from 'react';
 import { View, TouchableOpacity, Dimensions, Pressable } from 'react-native';
 import Pinchable from 'react-native-pinchable';
+import { TurboImageProps } from 'react-native-turbo-image';
 
-import { APP_API_URI, DATA_SAVER_THUMB_RES, IS_IPAD } from '~/config/Config';
+import { APP_API_URI, IS_IPAD } from '~/config/Config';
 import type ActivityModel from '~/newsfeed/ActivityModel';
 import domain from '../../helpers/domain';
-import mediaProxyUrl from '../../helpers/media-proxy-url';
 import MText from '../MText';
 import useRecycledState from '~/common/hooks/useRecycledState';
 import SmartImage from '../SmartImage';
@@ -18,10 +17,10 @@ import { PlayButton } from '~/media/v2/mindsVideo/overlays/Controls';
 type PropsType = {
   showPlayIcon?: boolean;
   entity: ActivityModel;
-  style?: ImageProps['style'];
+  style?: TurboImageProps['style'];
   autoHeight?: boolean;
   ignoreDataSaver?: boolean;
-  mode?: ImageProps['contentFit'];
+  mode?: TurboImageProps['resizeMode'];
   onImageDoublePress?: () => void;
   onImagePress?: () => void;
   onImageLongPress?: () => void;
@@ -45,11 +44,14 @@ export default function MediaViewImage({
   const source = React.useMemo(
     () => {
       return entity.hasSiteMembershipPaywallThumbnail
-        ? `${APP_API_URI}api/v3/payments/site-memberships/paywalled-entities/thumbnail/${entity.guid}`
+        ? {
+            uri: `${APP_API_URI}api/v3/payments/site-memberships/paywalled-entities/thumbnail/${entity.guid}`,
+            cacheKey: `thumb${entity.guid}`,
+          }
         : entity.site_membership && entity.custom_data?.[0]?.blurhash
-        ? entity.custom_data?.[0]?.blurhash
+        ? { uri: '' }
         : entity.thumbnail_src
-        ? entity.thumbnail_src
+        ? { uri: entity.thumbnail_src, cacheKey: `thumb${entity.guid}` }
         : entity.getThumbSource('xlarge');
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,19 +60,6 @@ export default function MediaViewImage({
       //@ts-ignore
       entity.attachment_guid,
     ],
-  );
-  const thumbnail = React.useMemo(
-    () =>
-      entity.isGif()
-        ? undefined
-        : {
-            ...source,
-            uri: mediaProxyUrl(
-              entity.getThumbSource('medium').uri, // convert from medium size to save some backend resources
-              DATA_SAVER_THUMB_RES,
-            ),
-          },
-    [entity, source],
   );
 
   let aspectRatio = 1.5;
@@ -109,7 +98,7 @@ export default function MediaViewImage({
   }
 
   const imageStyle = useMemoStyle(
-    ['fullWidth', { aspectRatio }, style as ImageStyle],
+    ['fullWidth', { aspectRatio }, style as any],
     [aspectRatio, style],
   );
 
@@ -148,7 +137,7 @@ export default function MediaViewImage({
   }
   const blurhash = entity?.custom_data?.[0]?.blurhash || entity?.blurhash;
 
-  const placeholder = blurhash ? { blurhash, width: 9, height: 9 } : thumbnail;
+  const placeholder = blurhash ? { blurhash } : undefined;
 
   // Wrapped in a pressable to avoid the press event after zooming on android (Pinchable bug)
   return (
@@ -161,15 +150,15 @@ export default function MediaViewImage({
           activeOpacity={1}
           testID="Posted Image">
           <SmartImage
-            contentFit={mode}
+            resizeMode={mode}
             style={imageStyle}
             source={source}
-            onLoad={onLoadImage}
+            onCompletion={onLoadImage}
             onError={imageError}
             ignoreDataSaver={ignoreDataSaver || Boolean(entity?.paywall)}
             placeholder={placeholder}
             locked={entity?.isLocked()}
-            recyclingKey={entity.urn}
+            // recyclingKey={entity.urn}
           />
           {showPlayIcon && (
             <View style={playIconStyle}>

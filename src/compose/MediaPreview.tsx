@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, useWindowDimensions } from 'react-native';
 import Icon from '@expo/vector-icons/Ionicons';
 import * as Progress from 'react-native-progress';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import { observer } from 'mobx-react';
 
@@ -194,7 +194,11 @@ const MediaPresentation = observer(
             <Icon name="close-outline" size={26} style={styles.icon} />
           </TouchableOpacity>
         )}
-        <Image source={mediaSource} style={styles.image} contentFit="cover" />
+        <TurboImage
+          source={mediaSource}
+          style={styles.image}
+          resizeMode="cover"
+        />
         {attachment.uploading && (
           <Progress.Bar
             indeterminate={true}

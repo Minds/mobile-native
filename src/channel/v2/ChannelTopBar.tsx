@@ -20,7 +20,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import MText from '~/common/components/MText';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 import { isLight } from './ChannelScreen';
 import Subscribe from './buttons/Subscribe';
 import { Spacer } from '~/common/ui';
@@ -221,11 +221,11 @@ const ChannelTopBar = observer(
         style={containerStyle}>
         <Animated.View style={topBarInnerWrapperStyle}>
           {BLURRED_BANNER_BACKGROUND && (
-            <Image
-              blurRadius={90}
+            <TurboImage
+              blur={90}
               style={theme.positionAbsolute}
               source={store?.channel?.getBannerSource()!}
-              contentFit="cover"
+              resizeMode="cover"
             />
           )}
           <SafeAreaView style={styles.nameWrapper}>

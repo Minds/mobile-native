@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { View, StyleSheet } from 'react-native';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import { observer } from 'mobx-react';
 import SmartImage from '../common/components/SmartImage';
@@ -36,16 +36,20 @@ export default class ImageCard extends Component<Props> {
   render() {
     const entity = this.props.entity;
 
-    const image = { uri: entity.thumbnail_src };
-
     return (
       <View>
-        <SmartImage source={image} style={styles.banner} contentFit="cover" />
+        {entity.thumbnail_src && (
+          <SmartImage
+            source={{ uri: entity.thumbnail_src }}
+            style={styles.banner}
+            resizeMode="cover"
+          />
+        )}
         <View style={styles.headertextcontainer}>
           <View style={styles.namecontainer}>
             <View style={styles.namecol}>
               <View style={styles.ownerContainer}>
-                <Image source={this.getAvatar()} style={styles.avatar} />
+                <TurboImage source={this.getAvatar()} style={styles.avatar} />
                 <MText style={styles.username}>
                   {entity.ownerObj.username.toUpperCase()}
                 </MText>

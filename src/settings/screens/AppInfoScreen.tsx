@@ -1,7 +1,7 @@
 import React from 'react';
 import { Platform, View } from 'react-native';
 import { osVersion, deviceName, brand } from 'expo-device';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import { Version } from '~/config/Version';
 import MText from '~/common/components/MText';
@@ -27,8 +27,8 @@ export default function AppInfoScreen() {
 
   return (
     <Screen>
-      <Image
-        contentFit="cover"
+      <TurboImage
+        resizeMode="cover"
         style={[styles.logo, theme.marginTop18x]}
         source={logo}
       />

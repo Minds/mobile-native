@@ -3,7 +3,6 @@ import React, { useCallback, useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 
 import { Avatar } from 'react-native-elements';
-import { Image } from 'expo-image';
 
 import { FLAG_VIEW } from '../common/Permissions';
 import Actions from '../newsfeed/activity/Actions';
@@ -14,6 +13,7 @@ import MPressable from '~/common/components/MPressable';
 import sp from '~/services/serviceProvider';
 import CommentsStore from '~/comments/v2/CommentsStore';
 import { pushCommentBottomSheet } from '~/comments/v2/CommentBottomSheet';
+import TurboImage from 'react-native-turbo-image';
 
 type PropsType = {
   entity: BlogModel;
@@ -61,7 +61,7 @@ const BlogCard: React.FC<PropsType> = ({
           onPress={navToBlog}
           style={theme.bgPrimaryBackground}
           testID="blogPressable">
-          <Image source={image} style={styles.banner} contentFit="cover" />
+          <TurboImage source={image} style={styles.banner} resizeMode="cover" />
           <View style={theme.padding2x}>
             <View style={theme.fullWidth}>
               <MText

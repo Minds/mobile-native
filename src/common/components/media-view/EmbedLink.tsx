@@ -109,7 +109,7 @@ export default function EmbedLink({
         onLongPress={onImageLongPress}
         activeOpacity={1}
         testID="Posted Image">
-        <SmartImage style={imageStyle} source={source} contentFit="cover" />
+        <SmartImage style={imageStyle} source={source} resizeMode="cover" />
       </TouchableOpacity>
       <TouchableOpacity
         style={titleContainerStyle}

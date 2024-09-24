@@ -25,7 +25,6 @@ const thumbSize = PixelRatio.getPixelSizeForLayoutSize(imgSize);
 export default observer(function (props) {
   const theme = sp.styles.style;
   const source = { uri: mediaProxyUrl(props.meta.thumbnail, thumbSize) };
-  const thumbnail = { uri: mediaProxyUrl(props.meta.thumbnail, 30) };
 
   return (
     <View
@@ -52,8 +51,7 @@ export default observer(function (props) {
         <SmartImage
           style={[styles.thumbnail, theme.bgTertiaryBackground]}
           source={source}
-          placeholder={thumbnail}
-          contentFit="cover"
+          resizeMode="cover"
         />
         <View style={[styles.metaContainer, theme.padding]}>
           <MText numberOfLines={1} style={[theme.fontXL, theme.padding]}>

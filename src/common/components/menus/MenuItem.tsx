@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo } from 'react';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 import {
   StyleProp,
   TextStyle,
@@ -179,7 +179,7 @@ export default function ({
 
   return (
     <MPressable {...props} onPress={onPress} style={containerStyle}>
-      {avatar && <Image source={avatar} style={avatarStyle} />}
+      {avatar && <TurboImage source={avatar} style={avatarStyle} rounded />}
       {leftIcon && <View style={styles.leftIcon}>{leftIcon}</View>}
       {reversedIcon && shouldRenderIcon && (
         <View style={styles.leftIcon}>{rightIcon}</View>

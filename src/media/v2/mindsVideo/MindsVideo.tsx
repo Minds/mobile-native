@@ -135,12 +135,12 @@ const MindsVideo = observer((props: PropsType) => {
       onPress={localStore.openControlOverlay}
       style={[theme.flexContainer, props.containerStyle]}>
       <View style={containerStyle}>
-        {localStore.showThumbnail && (
+        {/* {localStore.showThumbnail && posterSource && (
           <RetryableImage
             style={theme.positionAbsolute}
             source={posterSource}
           />
-        )}
+        )} */}
         <ExpoVideo
           entity={props.entity}
           localStore={localStore}

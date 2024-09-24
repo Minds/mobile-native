@@ -2,7 +2,7 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { Dimensions, useWindowDimensions } from 'react-native';
 import ImageZoom from 'react-native-image-pan-zoom';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import SmartImage from '../common/components/SmartImage';
 import sp from '~/services/serviceProvider';
@@ -70,7 +70,7 @@ export default observer(function (props) {
             props.style,
             sp.styles.style.bgTertiaryBackground,
           ]}
-          contentFit="contain"
+          resizeMode="contain"
         />
       </ImageZoom>
     );

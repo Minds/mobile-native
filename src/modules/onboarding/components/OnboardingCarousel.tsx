@@ -5,7 +5,7 @@ import {
   View,
   useWindowDimensions,
 } from 'react-native';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Carousel from 'react-native-reanimated-carousel';
@@ -86,7 +86,7 @@ const renderItem =
         <Text align="center" bottom="XL2" horizontal="XXL">
           {item.title}
         </Text>
-        <Image source={image} style={imageSize} />
+        <TurboImage source={image} style={imageSize} />
       </View>
     );
   };

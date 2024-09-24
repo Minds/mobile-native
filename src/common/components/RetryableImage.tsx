@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from 'react';
-import { Image, ImageProps } from 'expo-image';
+import TurboImage, { TurboImageProps } from 'react-native-turbo-image';
 
 /**
  * A fast image wrapper that add retry functionality
  * @param {Object} props
  */
-export default function (props: ImageProps & { retry?: number }) {
+export default function (
+  props: TurboImageProps & { retry?: number; onError?: (error: Error) => void },
+) {
   const { onError, ...otherProps } = props;
   const [retries, setRetries] = useState(0);
 
@@ -21,5 +23,5 @@ export default function (props: ImageProps & { retry?: number }) {
     [props.retry, retries, onError],
   );
 
-  return <Image key={retries} onError={errorHandler} {...otherProps} />;
+  return <TurboImage key={retries} onFailure={errorHandler} {...otherProps} />;
 }

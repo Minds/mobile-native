@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import Modal from 'react-native-modal';
 import { toJS } from 'mobx';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import type { ApiResponse } from '../services/ApiResponse';
 
@@ -122,7 +122,7 @@ const Captcha = observer(
           {store.captchaImage.uri !== '' && !store.error && (
             <>
               <View style={styles.imageContainer}>
-                <Image source={src} style={styles.image} />
+                <TurboImage source={src} style={styles.image} />
                 <Icon
                   name="reload"
                   type="material-community"

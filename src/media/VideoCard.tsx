@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { observer } from 'mobx-react';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import { MINDS_CDN_URI } from '../config/Config';
 import MindsVideo from './v2/mindsVideo/MindsVideo';
@@ -43,7 +43,7 @@ export default class VideoCard extends Component<{ entity: ActivityModel }> {
           <View style={styles.namecontainer}>
             <View style={styles.namecol}>
               <View style={styles.ownerContainer}>
-                <Image source={this.getAvatar()} style={styles.avatar} />
+                <TurboImage source={this.getAvatar()} style={styles.avatar} />
                 <MText style={styles.username}>
                   {entity.ownerObj.username.toUpperCase()}
                 </MText>

@@ -16757,6 +16757,11 @@ react-native-tab-view@^3.5.1, react-native-tab-view@^3.5.2:
   dependencies:
     use-latest-callback "^0.1.5"
 
+react-native-turbo-image@^1.19.0:
+  version "1.19.0"
+  resolved "https://registry.yarnpkg.com/react-native-turbo-image/-/react-native-turbo-image-1.19.0.tgz#cb2a728a166dc2ae5c7fe53b114e3a5321e11c48"
+  integrity sha512-xN4J2UaVAE3sMO2r4t0Tqatmtk2y5k5BkvW31NRm0XW5VX1toiLMlvQE3RQVE6/k4E3q+8R+gl2j2egjeSprUA==
+
 react-native-url-polyfill@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/react-native-url-polyfill/-/react-native-url-polyfill-2.0.0.tgz#db714520a2985cff1d50ab2e66279b9f91ffd589"

@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from 'react';
 import { View } from 'react-native';
 import { observer, useLocalStore } from 'mobx-react';
 import createLoginStore from './createLoginStore';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import UserModel from '../../channel/UserModel';
 import InputContainer, {
@@ -56,7 +56,10 @@ export default observer(function LoginForm(props: PropsType) {
 
   const usernameInput = props.relogin ? (
     <View style={styles.container}>
-      <Image source={user.getAvatarSource('medium')} style={styles.avatar} />
+      <TurboImage
+        source={user.getAvatarSource('medium')}
+        style={styles.avatar}
+      />
       <View style={styles.nameContainer}>
         <MText style={styles.name}>{user.name}</MText>
         <MText style={styles.username} testID={`username${user.username}`}>

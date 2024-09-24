@@ -1,9 +1,8 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { Image, ImageProps } from 'expo-image';
+import TurboImage, { TurboImageProps } from 'react-native-turbo-image';
 import { autorun } from 'mobx';
-import ProgressCircle from 'react-native-progress/CircleSnail';
 import Icon from '@expo/vector-icons/Ionicons';
 
 import sp from '~/services/serviceProvider';
@@ -17,7 +16,7 @@ export type SmartImageProps = {
   imageVisible?: boolean;
   thumbBlurRadius?: number;
   locked?: boolean;
-} & ImageProps;
+} & TurboImageProps;
 
 /**
  * Expo image wrapper with retry and connectivity awareness
@@ -61,13 +60,14 @@ const SmartImage = observer(function (props: SmartImageProps) {
 
   return (
     <View style={props.style}>
-      <Image
-        {...otherProps}
-        onError={store.setError}
-        source={store.imageVisible ? props.source : undefined}
-        onLoadEnd={store.onLoadEnd}
-        onProgress={store.onProgress}
-      />
+      {store.imageVisible && (
+        <TurboImage
+          {...otherProps}
+          onFailure={store.setError}
+          source={props.source}
+          onCompletion={store.onLoadEnd}
+        />
+      )}
 
       {store.showOverlay && (
         <View style={absoluteCenter}>
@@ -88,15 +88,7 @@ const DownloadButton = ({ store }) => {
       onPress={store.progress === undefined ? store.onDownload : undefined}
       style={useStyle('positionAbsolute', 'centered')}>
       <View style={styles.downloadButton}>
-        {typeof store.progress === 'number' ? (
-          <ProgressCircle
-            progress={store.progress}
-            color="white"
-            indeterminate={store.imageVisible && store.progress === 0}
-          />
-        ) : (
-          <Icon name="arrow-down" style={theme.colorWhite} size={30} />
-        )}
+        <Icon name="arrow-down" style={theme.colorWhite} size={30} />
       </View>
     </TouchableOpacity>
   );
@@ -107,7 +99,6 @@ const createSmartImageStore = props => {
   return {
     error: false,
     retries: 0,
-    progress: undefined,
     imageVisible: props.ignoreDataSaver ? true : !dataSaverEnabled,
     /**
      * whether to show the overlay.
@@ -119,13 +110,12 @@ const createSmartImageStore = props => {
     showImage(show: boolean = true) {
       this.imageVisible = show;
     },
-    setError({ error }) {
+    setError(error) {
       // workaround for the SDWebImage error with caching (the image is loaded correctly so we ignore)
       if (error === 'Operation cancelled by user during querying the cache') {
         return;
       }
       this.error = true;
-      this.progress = undefined;
 
       if (props.onError) {
         props.onError(error);
@@ -136,24 +126,12 @@ const createSmartImageStore = props => {
       if (!props.blurred && !props.locked) {
         this.showOverlay = false;
       }
-      this.progress = undefined;
       if (props.onLoadEnd) {
         props.onLoadEnd();
       }
     },
-    onProgress(e) {
-      const p = e.loaded / e.total;
-      if (p) {
-        // @ts-ignore
-        this.progress = p;
-      }
-    },
     onDownload() {
       this.imageVisible = true;
-      if (this.progress === undefined) {
-        // @ts-ignore
-        this.progress = 0;
-      }
     },
     clearError() {
       this.error = false;

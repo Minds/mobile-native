@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React, { useCallback } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import UserModel from '~/channel/UserModel';
 import MText from '~/common/components/MText';
@@ -36,7 +36,7 @@ const ReferralRow = ({ referral, onPress }: ReferralRowProps) => {
         activeOpacity={0.7}
         onPress={_onPress}
         style={[styles.firstColumn, theme.rowJustifyStart, theme.alignCenter]}>
-        <Image
+        <TurboImage
           source={_getAvatarSource(referral)}
           style={[styles.avatar, theme.marginRight2x]}
         />

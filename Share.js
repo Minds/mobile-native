@@ -1,4 +1,4 @@
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { ShareMenuReactView } from 'react-native-share-menu';
@@ -13,8 +13,8 @@ const Share = () => {
 
   return (
     <View style={styles.container}>
-      <Image
-        contentFit="cover"
+      <TurboImage
+        resizeMode="cover"
         style={styles.logo}
         source={assets.LOGO_HORIZONTAL}
       />

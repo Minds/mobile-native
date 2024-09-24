@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { BottomSheetFlatList, TouchableOpacity } from '@gorhom/bottom-sheet';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 import { observable } from 'mobx';
 import { observer } from 'mobx-react';
 import { StyleSheet, View } from 'react-native';
@@ -145,7 +145,7 @@ const CommentList: React.FC<PropsType> = (props: PropsType) => {
                 ? styles.touchableStyles
                 : [styles.touchableStyles, styles.disabled]
             }>
-            <Image source={user.getAvatarSource()} style={styles.avatar} />
+            <TurboImage source={user.getAvatarSource()} style={styles.avatar} />
             <MText style={styles.reply}>
               {sp.i18n.t(
                 props.store.parent ? 'activity.typeReply' : placeHolder,

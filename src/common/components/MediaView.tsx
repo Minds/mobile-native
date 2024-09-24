@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 
 import { Alert, ImageURISource, View, ViewStyle } from 'react-native';
 
-import { ImageProps } from 'expo-image';
+import { TurboImageProps } from 'react-native-turbo-image';
 
 import MindsVideo from '../../media/v2/mindsVideo/MindsVideo';
 import type ActivityModel from '../../newsfeed/ActivityModel';
@@ -20,7 +20,7 @@ import sp from '~/services/serviceProvider';
 type PropsType = {
   entity: ActivityModel | CommentModel;
   navigation?: any;
-  imageStyle?: ImageProps['style'];
+  imageStyle?: TurboImageProps['style'];
   containerStyle?: ViewStyle | Array<ViewStyle>;
   autoHeight?: boolean;
   onPress?: () => void;

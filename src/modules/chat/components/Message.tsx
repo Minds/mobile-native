@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
-import { Image } from 'expo-image';
+import TurboImage from 'react-native-turbo-image';
 
 import { Avatar, B1, B2 } from '~/common/ui';
 import { ChatMessage } from '../types';
@@ -119,11 +119,13 @@ const RichEmbed = ({
       <B1 color={isMe ? 'primaryDark' : 'primary'} horizontal="L" vertical="M">
         {message.node.plainText}
       </B1>
-      <Image
-        source={message.node.richEmbed?.thumbnailSrc}
-        contentFit="cover"
-        style={styles.image}
-      />
+      {message.node.richEmbed?.thumbnailSrc && (
+        <TurboImage
+          source={{ uri: message.node.richEmbed?.thumbnailSrc }}
+          resizeMode="cover"
+          style={styles.image}
+        />
+      )}
       <B2
         horizontal="L"
         top="M"
