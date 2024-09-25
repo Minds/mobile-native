@@ -43,10 +43,10 @@ eas_build_preview:
     # we run yarn again to apply the patch
     # - yarn install --cache-folder ../yarn
     - export NODE_OPTIONS="--max_old_space_size=4096"
-    - npx eas-cli update --branch "$TENANT_ID" --message "preview" --json --non-interactive || exit_code=$?
+    - bunx eas-cli update --branch "$TENANT_ID" --message "preview" --json --non-interactive || exit_code=$?
     - echo "Exit code ${exit_code}"
     - if [ $exit_code -ne 0 ]; then bun ts-node tasks/callbuild-webhook failed; fi;
-    - npx eas-cli channel:create $TENANT_ID --json --non-interactive || true
+    - bunx eas-cli channel:create $TENANT_ID --json --non-interactive || true
     - bun ts-node tasks/callbuild-webhook
     - echo "Demo link mindspreview://preview/$TENANT_ID"
     - echo "Demo QR https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=mindspreview://preview/$TENANT_ID"
