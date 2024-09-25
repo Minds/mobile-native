@@ -1,5 +1,2 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 sh .githooks/pre-commit
-yarn pretty-quick --staged
+# bun pretty-quick --staged

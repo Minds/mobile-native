@@ -24,28 +24,30 @@ eas_build_preview_zip:
 # Preview trigger from the backend
 eas_build_preview:
   stage: build
-  image: node:alpine
+  image: 'oven/bun:alpine'
   tags: [minds-ci]
   cache:
-    key: ${CI_COMMIT_REF_SLUG}
+    key:
+      files:
+        - bun.lockb
     paths:
-      - ../yarn
+      - node_modules/
   before_script:
     - apk add --no-cache bash git
-    - yarn install --cache-folder ../yarn
+    - bun install
   script:
     - echo "Building preview for tenant $TENANT_ID..."
     - mobile setup-tenant $TENANT_ID --preview || exit_code=$?
     - echo "Exit code ${exit_code}"
-    - if [ $exit_code -ne 0 ]; then yarn ts-node tasks/callbuild-webhook failed; fi;
+    - if [ $exit_code -ne 0 ]; then bun ts-node tasks/callbuild-webhook failed; fi;
     # we run yarn again to apply the patch
-    - yarn install --cache-folder ../yarn
+    # - yarn install --cache-folder ../yarn
     - export NODE_OPTIONS="--max_old_space_size=4096"
     - npx eas-cli update --branch "$TENANT_ID" --message "preview" --json --non-interactive || exit_code=$?
     - echo "Exit code ${exit_code}"
-    - if [ $exit_code -ne 0 ]; then yarn ts-node tasks/callbuild-webhook failed; fi;
+    - if [ $exit_code -ne 0 ]; then bun ts-node tasks/callbuild-webhook failed; fi;
     - npx eas-cli channel:create $TENANT_ID --json --non-interactive || true
-    - yarn ts-node tasks/callbuild-webhook
+    - bun ts-node tasks/callbuild-webhook
     - echo "Demo link mindspreview://preview/$TENANT_ID"
     - echo "Demo QR https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=mindspreview://preview/$TENANT_ID"
   rules:

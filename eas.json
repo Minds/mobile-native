@@ -5,6 +5,7 @@
   },
   "build": {
     "production": {
+      "bun": "1.1.29",
       "ios": {
         "image": "macos-ventura-13.6-xcode-15.2"
       },
