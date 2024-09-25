@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 
 /* tslint:disable */
 // check if we're running in dev mode
