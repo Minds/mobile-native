@@ -18,16 +18,17 @@ index 8258478..89f8126 100644
    ) {
      callback.onFailure(UpdatesDisabledException("Updates.fetchUpdateAsync() is not supported when expo-updates is not enabled."))
 diff --git a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/EnabledUpdatesController.kt b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/EnabledUpdatesController.kt
-index f3cdd54..7473b2f 100644
+index f3cdd54..0ea2485 100644
 --- a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/EnabledUpdatesController.kt
 +++ b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/EnabledUpdatesController.kt
-@@ -214,15 +214,22 @@ class EnabledUpdatesController(
+@@ -214,15 +214,25 @@ class EnabledUpdatesController(
      callback.onSuccess(stateMachine.context)
    }
  
 -  override fun checkForUpdate(callback: IUpdatesController.ModuleCallback<IUpdatesController.CheckForUpdateResult>) {
 -    val procedure = CheckForUpdateProcedure(context, updatesConfiguration, databaseHolder, logger, fileDownloader, selectionPolicy, launchedUpdate) {
 +  override fun checkForUpdate(channel: String?, callback: IUpdatesController.ModuleCallback<IUpdatesController.CheckForUpdateResult>) {
++
 +    val updateConfigurationToUse = if (channel == null) updatesConfiguration else UpdatesConfiguration(context, mapOf("requestHeaders" to hashMapOf(
 +      "expo-channel-name" to channel
 +    )))
@@ -41,9 +42,11 @@ index f3cdd54..7473b2f 100644
 -  override fun fetchUpdate(callback: IUpdatesController.ModuleCallback<IUpdatesController.FetchUpdateResult>) {
 -    val procedure = FetchUpdateProcedure(context, updatesConfiguration, databaseHolder, updatesDirectory, fileDownloader, selectionPolicy, launchedUpdate) {
 +  override fun fetchUpdate(channel: String?, callback: IUpdatesController.ModuleCallback<IUpdatesController.FetchUpdateResult>) {
++
 +    val updateConfigurationToUse = if (channel == null) updatesConfiguration else UpdatesConfiguration(context, mapOf("requestHeaders" to hashMapOf(
 +      "expo-channel-name" to channel
 +    )))
++
 +    val procedure = FetchUpdateProcedure(context, updateConfigurationToUse, databaseHolder, updatesDirectory, fileDownloader, selectionPolicy, launchedUpdate) {
        callback.onSuccess(it)
      }
@@ -115,6 +118,21 @@ index f4248ea..5e30c02 100644
          object : IUpdatesController.ModuleCallback<IUpdatesController.FetchUpdateResult> {
            override fun onSuccess(result: IUpdatesController.FetchUpdateResult) {
              when (result) {
+diff --git a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/loader/FileDownloader.kt b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/loader/FileDownloader.kt
+index b1c25b0..484ff1d 100644
+--- a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/loader/FileDownloader.kt
++++ b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/loader/FileDownloader.kt
+@@ -739,6 +739,10 @@ class FileDownloader(context: Context, private val configuration: UpdatesConfigu
+         extraHeaders.put("Expo-Embedded-Update-ID", it.id.toString().lowercase())
+       }
+ 
++      if (configuration.requestHeaders != null && configuration.requestHeaders["expo-channel-name"] != null) {
++        extraHeaders.put("expo-channel-name", configuration.requestHeaders["expo-channel-name"])
++      }
++
+       database.updateDao().loadRecentUpdateIdsWithFailedLaunch().let {
+         if (it.isNotEmpty()) {
+           extraHeaders.put(
 diff --git a/node_modules/expo-updates/build/ExpoUpdates.web.d.ts.map b/node_modules/expo-updates/build/ExpoUpdates.web.d.ts.map
 index fa02636..30546e1 100644
 --- a/node_modules/expo-updates/build/ExpoUpdates.web.d.ts.map
@@ -551,6 +569,41 @@ index 0000000..173feeb
 @@ -0,0 +1 @@
 +{"root":["./src/assetsverify.ts","./src/assetsverifyasync.ts","./src/assetsverifytypes.ts","./src/cli.ts","./src/configurecodesigning.ts","./src/configurecodesigningasync.ts","./src/generatecodesigning.ts","./src/generatecodesigningasync.ts","./src/generatefingerprint.ts","./src/resolveruntimeversion.ts","./src/syncconfigurationtonative.ts","./src/syncconfigurationtonativeasync.ts","./src/utils/args.ts","./src/utils/dir.ts","./src/utils/errors.ts","./src/utils/log.ts","./src/utils/modifyconfigasync.ts"],"errors":true,"version":"5.6.2"}
 \ No newline at end of file
+diff --git a/node_modules/expo-updates/ios/EXUpdates/AppController.swift b/node_modules/expo-updates/ios/EXUpdates/AppController.swift
+index 3409926..006b6ff 100644
+--- a/node_modules/expo-updates/ios/EXUpdates/AppController.swift
++++ b/node_modules/expo-updates/ios/EXUpdates/AppController.swift
+@@ -102,10 +102,12 @@ public protocol InternalAppControllerInterface: AppControllerInterface {
+     error errorBlockArg: @escaping (_ error: Exception) -> Void
+   )
+   func checkForUpdate(
++    channel: String?,
+     success successBlockArg: @escaping (_ checkForUpdateResult: CheckForUpdateResult) -> Void,
+     error errorBlockArg: @escaping (_ error: Exception) -> Void
+   )
+   func fetchUpdate(
++    channel: String?,
+     success successBlockArg: @escaping (_ fetchUpdateResult: FetchUpdateResult) -> Void,
+     error errorBlockArg: @escaping (_ error: Exception) -> Void
+   )
+diff --git a/node_modules/expo-updates/ios/EXUpdates/DevLauncherAppController.swift b/node_modules/expo-updates/ios/EXUpdates/DevLauncherAppController.swift
+index 5a511c8..295dae5 100644
+--- a/node_modules/expo-updates/ios/EXUpdates/DevLauncherAppController.swift
++++ b/node_modules/expo-updates/ios/EXUpdates/DevLauncherAppController.swift
+@@ -331,11 +331,11 @@ public final class DevLauncherAppController: NSObject, InternalAppControllerInte
+     }
+   }
+ 
+-  public func checkForUpdate(success successBlockArg: @escaping (CheckForUpdateResult) -> Void, error errorBlockArg: @escaping (ExpoModulesCore.Exception) -> Void) {
++  public func checkForUpdate(channel: String?, success successBlockArg: @escaping (CheckForUpdateResult) -> Void, error errorBlockArg: @escaping (ExpoModulesCore.Exception) -> Void) {
+     errorBlockArg(NotAvailableInDevClientException("Updates.checkForUpdateAsync()"))
+   }
+ 
+-  public func fetchUpdate(success successBlockArg: @escaping (FetchUpdateResult) -> Void, error errorBlockArg: @escaping (ExpoModulesCore.Exception) -> Void) {
++  public func fetchUpdate(channel: String?, success successBlockArg: @escaping (FetchUpdateResult) -> Void, error errorBlockArg: @escaping (ExpoModulesCore.Exception) -> Void) {
+     errorBlockArg(NotAvailableInDevClientException("Updates.fetchUpdateAsync()"))
+   }
+ 
 diff --git a/node_modules/expo-updates/ios/EXUpdates/DisabledAppController.swift b/node_modules/expo-updates/ios/EXUpdates/DisabledAppController.swift
 index f31a376..b797559 100644
 --- a/node_modules/expo-updates/ios/EXUpdates/DisabledAppController.swift
@@ -572,10 +625,10 @@ index f31a376..b797559 100644
      error errorBlockArg: @escaping (ExpoModulesCore.Exception) -> Void
    ) {
 diff --git a/node_modules/expo-updates/ios/EXUpdates/EnabledAppController.swift b/node_modules/expo-updates/ios/EXUpdates/EnabledAppController.swift
-index 125b4ca..8373420 100644
+index 125b4ca..a707567 100644
 --- a/node_modules/expo-updates/ios/EXUpdates/EnabledAppController.swift
 +++ b/node_modules/expo-updates/ios/EXUpdates/EnabledAppController.swift
-@@ -252,12 +252,26 @@ public class EnabledAppController: UpdatesStateChangeDelegate, InternalAppContro
+@@ -252,12 +252,33 @@ public class EnabledAppController: UpdatesStateChangeDelegate, InternalAppContro
    }
  
    public func checkForUpdate(
@@ -587,11 +640,18 @@ index 125b4ca..8373420 100644
 +
 +    if let channel = channel {
 +      // Allow to override the channel name in the request headers, used for minds preview app
-+      updatesConfiguration = UpdatesConfiguration(
-+        config: self.config.config,
-+        database: self.config.database,
-+        directory: self.config.directory,
-+        requestHeaders: ["expo-channel-name": channel]
++      var mutableRequestHeaders = updatesConfiguration.requestHeaders
++      mutableRequestHeaders["expo-channel-name"] = channel
++      updatesConfiguration = UpdatesConfig(
++        scopeKey: updatesConfiguration.scopeKey,
++        updateUrl: updatesConfiguration.updateUrl,
++        requestHeaders: mutableRequestHeaders,
++        launchWaitMs: updatesConfiguration.launchWaitMs,
++        checkOnLaunch: updatesConfiguration.checkOnLaunch,
++        codeSigningConfiguration: updatesConfiguration.codeSigningConfiguration,
++        runtimeVersion: updatesConfiguration.runtimeVersion,
++        hasEmbeddedUpdate: updatesConfiguration.hasEmbeddedUpdate,
++        enableExpoUpdatesProtocolV0CompatibilityMode: updatesConfiguration.enableExpoUpdatesProtocolV0CompatibilityMode
 +      )
 +    }
 +
@@ -603,7 +663,7 @@ index 125b4ca..8373420 100644
        selectionPolicy: self.selectionPolicy,
        logger: self.logger
      ) {
-@@ -271,12 +285,26 @@ public class EnabledAppController: UpdatesStateChangeDelegate, InternalAppContro
+@@ -271,12 +292,33 @@ public class EnabledAppController: UpdatesStateChangeDelegate, InternalAppContro
    }
  
    public func fetchUpdate(
@@ -615,11 +675,18 @@ index 125b4ca..8373420 100644
 +
 +    if let channel = channel {
 +      // Allow to override the channel name in the request headers, used for minds preview app
-+      updatesConfiguration = UpdatesConfiguration(
-+        config: self.config.config,
-+        database: self.config.database,
-+        directory: self.config.directory,
-+        requestHeaders: ["expo-channel-name": channel]
++      var mutableRequestHeaders = updatesConfiguration.requestHeaders
++      mutableRequestHeaders["expo-channel-name"] = channel
++      updatesConfiguration = UpdatesConfig(
++        scopeKey: updatesConfiguration.scopeKey,
++        updateUrl: updatesConfiguration.updateUrl,
++        requestHeaders: mutableRequestHeaders,
++        launchWaitMs: updatesConfiguration.launchWaitMs,
++        checkOnLaunch: updatesConfiguration.checkOnLaunch,
++        codeSigningConfiguration: updatesConfiguration.codeSigningConfiguration,
++        runtimeVersion: updatesConfiguration.runtimeVersion,
++        hasEmbeddedUpdate: updatesConfiguration.hasEmbeddedUpdate,
++        enableExpoUpdatesProtocolV0CompatibilityMode: updatesConfiguration.enableExpoUpdatesProtocolV0CompatibilityMode
 +      )
 +    }
 +
@@ -631,6 +698,32 @@ index 125b4ca..8373420 100644
        selectionPolicy: self.selectionPolicy,
        controllerQueue: self.controllerQueue,
        updatesDirectory: self.updatesDirectoryInternal,
+diff --git a/node_modules/expo-updates/ios/EXUpdates/UpdatesModule.swift b/node_modules/expo-updates/ios/EXUpdates/UpdatesModule.swift
+index 7d8c621..d35d831 100644
+--- a/node_modules/expo-updates/ios/EXUpdates/UpdatesModule.swift
++++ b/node_modules/expo-updates/ios/EXUpdates/UpdatesModule.swift
+@@ -85,8 +85,8 @@ public final class UpdatesModule: Module {
+       }
+     }
+ 
+-    AsyncFunction("checkForUpdateAsync") { (promise: Promise) in
+-      AppController.sharedInstance.checkForUpdate { checkForUpdateResult in
++    AsyncFunction("checkForUpdateAsync") { (channel: String?, promise: Promise) in
++     AppController.sharedInstance.checkForUpdate(channel: channel) { checkForUpdateResult in
+         switch checkForUpdateResult {
+         case .noUpdateAvailable(let reason):
+           promise.resolve([
+@@ -152,8 +152,8 @@ public final class UpdatesModule: Module {
+       }
+     }
+ 
+-    AsyncFunction("fetchUpdateAsync") { (promise: Promise) in
+-      AppController.sharedInstance.fetchUpdate { fetchUpdateResult in
++   AsyncFunction("fetchUpdateAsync") { (channel: String?, promise: Promise) in
++      AppController.sharedInstance.fetchUpdate(channel: channel) { fetchUpdateResult in
+         switch fetchUpdateResult {
+         case .success(let manifest):
+           promise.resolve([
 diff --git a/node_modules/expo-updates/plugin/tsconfig.tsbuildinfo b/node_modules/expo-updates/plugin/tsconfig.tsbuildinfo
 new file mode 100644
 index 0000000..18de100
