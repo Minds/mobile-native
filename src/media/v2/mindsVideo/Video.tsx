@@ -1,4 +1,9 @@
-import { ResizeMode, Video, VideoReadyForDisplayEvent } from 'expo-av';
+import {
+  ResizeMode,
+  Video,
+  VideoProps,
+  VideoReadyForDisplayEvent,
+} from 'expo-av';
 import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
 import type CommentModel from '../../../comments/v2/CommentModel';
@@ -8,6 +13,7 @@ import { MindsVideoStoreType } from './createMindsVideoStore';
 import sp from '~/services/serviceProvider';
 
 type PropsType = {
+  posterSource?: VideoProps['posterSource'];
   entity?: ActivityModel | CommentModel;
   localStore: MindsVideoStoreType;
   video?: { uri: string; headers?: any };
@@ -17,7 +23,13 @@ type PropsType = {
 };
 
 const ExpoVideo = observer(
-  ({ localStore, resizeMode, onReadyForDisplay, video }: PropsType) => {
+  ({
+    localStore,
+    resizeMode,
+    onReadyForDisplay,
+    video,
+    posterSource,
+  }: PropsType) => {
     const theme = sp.styles.style;
     const playbackObject = useRef<Video>(null);
 
@@ -39,6 +51,7 @@ const ExpoVideo = observer(
 
     return (
       <Video
+        posterSource={posterSource}
         onPlaybackStatusUpdate={localStore.updatePlaybackCallback}
         onLoadStart={localStore.onLoadStart}
         onLoad={localStore.onVideoLoad}
@@ -48,6 +61,7 @@ const ExpoVideo = observer(
         useNativeControls={false}
         style={theme.flexContainer}
         ref={playbackObject}
+        usePoster={Boolean(posterSource)}
         volume={1}
         onReadyForDisplay={onReadyForDisplay}
       />
