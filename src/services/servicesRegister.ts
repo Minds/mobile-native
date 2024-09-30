@@ -65,9 +65,7 @@ import sp from '~/services/serviceProvider';
 // navigation
 sp.register(
   'navigation',
-  () => {
-    return new NavigationService(sp.resolveLazy('analytics'));
-  },
+  () => new NavigationService(sp.resolveLazy('analytics')),
   Lifetime.Singleton,
 );
 

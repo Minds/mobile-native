@@ -58,8 +58,8 @@ export default observer(function () {
       <TopBar
         leftText="NSFW"
         rightText={i18n.t('done')}
-        onPressRight={navigation.goBack}
-        onPressBack={navigation.goBack}
+        onPressRight={() => navigation.goBack()}
+        onPressBack={() => navigation.goBack()}
         backIconName="chevron-left"
         backIconSize="large"
         store={store}

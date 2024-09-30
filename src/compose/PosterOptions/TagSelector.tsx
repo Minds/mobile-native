@@ -89,8 +89,8 @@ export default observer(function ({}: PropsType) {
       <TopBar
         leftText="Tags"
         rightText={sp.i18n.t('done')}
-        onPressRight={sp.navigation.goBack}
-        onPressBack={sp.navigation.goBack}
+        onPressRight={() => sp.navigation.goBack()}
+        onPressBack={() => sp.navigation.goBack()}
         backIconName="chevron-left"
         backIconSize="large"
         store={store}
