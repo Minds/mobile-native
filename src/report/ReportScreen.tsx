@@ -18,6 +18,7 @@ import {
 import { IS_TENANT } from '~/config/Config';
 import UserModel from '~/channel/UserModel';
 import sp from '~/services/serviceProvider';
+import { ReasonIndex } from './types';
 
 type PropsType = {
   route: any;
@@ -175,8 +176,7 @@ function getReasons() {
   const settings = sp.config.getSettings();
 
   settings.report_reasons.forEach(r => {
-    //@ts-ignore we ignore the type validation because it depends on the server response
-    r.label = i18n.t(`reports.reasons.${r.value}.label`, {
+    r.label = sp.i18n.t(`reports.reasons.${r.value as ReasonIndex}.label`, {
       defaultValue: r.label,
     });
     if (r.reasons && r.reasons.length) {
