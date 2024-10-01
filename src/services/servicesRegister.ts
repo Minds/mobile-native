@@ -392,7 +392,7 @@ sp.register(
 // search bar service
 sp.register('searchBar', () => {
   const Service = require('~/topbar/searchbar/SearchBar.service.tsx')
-    .SearchService as typeof SearchBarService;
+    .SearchBarService as typeof SearchBarService;
   return new Service(sp.resolve('api'), sp.resolve('storages'));
 });
 
