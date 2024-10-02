@@ -56,17 +56,26 @@ export class InjectionContainer<Services extends { [key: string]: any }> {
       throw new Error(`Service not registered: ${identifier as string}`);
     }
 
-    const instance = registration.factory(arg);
+    try {
+      const instance = registration.factory(arg);
+      if (registration.lifetime === Lifetime.Singleton) {
+        this.singletons.set(identifier, instance);
+      }
 
-    if (registration.lifetime === Lifetime.Singleton) {
-      this.singletons.set(identifier, instance);
+      if (__DEV__) {
+        this.resolutionStack.delete(identifier);
+      }
+      return instance;
+    } catch (error) {
+      if (__DEV__) {
+        console.log(
+          'InjectionContainer: Failed to instantiate the service ' +
+            (identifier as string),
+          error,
+        );
+      }
+      throw error;
     }
-
-    if (__DEV__) {
-      this.resolutionStack.delete(identifier);
-    }
-    // console.log('DI resolved', identifier);
-    return instance;
   }
 
   /**
