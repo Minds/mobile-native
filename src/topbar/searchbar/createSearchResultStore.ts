@@ -1,6 +1,6 @@
 import type UserModel from '../../channel/UserModel';
 import type UserStore from '../../auth/UserStore';
-import { userItem } from './SearchBar.service';
+import type { userItem } from './SearchBar.service';
 import sp from '../../services/serviceProvider';
 
 const createSearchResultStore = () => {
@@ -38,10 +38,17 @@ const createSearchResultStore = () => {
         this.suggested = [];
         return;
       }
-      if (this.shouldShowSuggested && this.user) {
+      if (this.shouldShowSuggested) {
         this.loading = true;
-        this.suggested = await this.user.getSuggestedSearch(search);
-        this.loading = false;
+        try {
+          this.suggested = await sp
+            .resolve('searchBar')
+            .getSuggestedSearch(search);
+        } catch (error) {
+          sp.log.exception(error);
+        } finally {
+          this.loading = false;
+        }
       }
     },
     searchBarItemTap(item) {
