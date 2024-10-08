@@ -8,9 +8,8 @@ import ThemedStyles from '../../styles/ThemedStyles';
 import { styles } from './InputUser';
 import { Button } from '~/common/ui';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
-import { DARK_THEME } from '../../styles/Colors';
 import MText from '~/common/components/MText';
-import { IS_IPAD } from '~/config/Config';
+import { IS_IPAD, IS_TENANT } from '~/config/Config';
 
 type PropsType = {
   store: ResetPasswordStore;
@@ -36,7 +35,10 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
           onFocus={store.focus}
           onBlur={store.blur}
           value={store.password}
-          tooltipBackground={DARK_THEME.TertiaryBackground}
+          tooltipBackground={ThemedStyles.getColor(
+            'TertiaryBackground',
+            IS_TENANT ? undefined : 1,
+          )}
           onChangeText={store.setPassword}
         />
       </View>
