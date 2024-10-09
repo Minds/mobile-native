@@ -41,8 +41,8 @@ const CaptureFab = ({ navigation, group, testID }: CaptureFabProps) => {
   return (
     <View style={styles.container}>
       <CaptureFabIcon
-        onLongPress={IS_TENANT ? undefined : handleComposePress}
-        onPress={IS_TENANT ? handleComposePress : pushComposeCreate}
+        onLongPress={IS_TENANT || group ? undefined : handleComposePress}
+        onPress={IS_TENANT || group ? handleComposePress : pushComposeCreate}
         testID={testID}
       />
     </View>
