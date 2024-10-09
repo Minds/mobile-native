@@ -48,8 +48,8 @@ export default class ExplicitOverlay extends PureComponent<PropsType> {
   };
 
   getLocalizedReasons() {
-    //@ts-ignore
-    const reasons = this.props.entity.nsfw?.map(i => i18n.t(`nsfw.${i}`));
+    //@ts-ignore we ignore the type error on the localization
+    const reasons = this.props.entity.nsfw?.map(i => sp.i18n.t(`nsfw.${i}`));
 
     if (!reasons) {
       return '';
