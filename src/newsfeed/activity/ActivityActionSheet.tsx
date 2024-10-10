@@ -149,22 +149,6 @@ class ActivityActionSheet extends PureComponent<PropsType, StateType> {
         },
       });
 
-      // Set / Remove explicit
-      options.push({
-        title: !entity.mature
-          ? i18n.t('setExplicit')
-          : i18n.t('removeExplicit'),
-        iconName: 'explicit',
-        iconType: 'material',
-        onPress: async () => {
-          try {
-            await this.props.entity.toggleExplicit();
-          } catch (err) {
-            this.showError();
-          }
-        },
-      });
-
       if (
         !entity.dontPin &&
         (this.props.channel || entity.containerObj?.type === 'group')
