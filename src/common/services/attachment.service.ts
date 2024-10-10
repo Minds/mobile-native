@@ -135,7 +135,7 @@ export class AttachmentService {
     return new Cancelable(async (resolve, reject, onCancel) => {
       try {
         const response = await this.api.put<S3Response>(
-          'this.api/v2/media/upload/prepare/video',
+          'api/v2/media/upload/prepare/video',
         );
 
         // upload file to s3

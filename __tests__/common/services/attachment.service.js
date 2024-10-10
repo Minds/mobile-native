@@ -158,4 +158,44 @@ describe('Attachment service', () => {
     const res = await service.gallery();
     expect(res).toEqual(null);
   });
+
+  it('should upload to S3 successfully', async () => {
+    const file = {
+      uri: 'file://video.mp4',
+      type: 'video/mp4',
+      name: 'video.mp4',
+    };
+    const progressMock = jest.fn();
+    const s3Response = {
+      lease: {
+        presigned_url: 'https://s3.example.com/upload',
+        media_type: 'video',
+        guid: '1234-5678-9012',
+      },
+    };
+    const completeResponse = { status: 'success' };
+
+    api.put.mockImplementation(url => {
+      if (url === 'api/v2/media/upload/prepare/video') {
+        return Promise.resolve(s3Response);
+      } else if (url.startsWith('api/v2/media/upload/complete')) {
+        return Promise.resolve(completeResponse);
+      }
+    });
+
+    api.uploadToS3.mockResolvedValue(true);
+
+    const result = await service.uploadToS3(file, progressMock);
+
+    expect(api.put).toHaveBeenCalledWith('api/v2/media/upload/prepare/video');
+    expect(api.uploadToS3).toHaveBeenCalledWith(
+      s3Response.lease,
+      file,
+      progressMock,
+    );
+    expect(api.put).toHaveBeenCalledWith(
+      'api/v2/media/upload/complete/video/1234-5678-9012',
+    );
+    expect(result).toEqual({ guid: '1234-5678-9012' });
+  });
 });

@@ -575,7 +575,7 @@ export class ApiService {
   }
 
   /**
-   * Upload file to s3, differences with generic upload are headers and formData (wich is not necessary)
+   * Upload file to s3, differences with generic upload are headers and formData (which are not necessary)
    * @param {any} lease
    * @param {any} file
    * @param {function} progress
