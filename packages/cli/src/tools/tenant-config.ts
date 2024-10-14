@@ -9,6 +9,7 @@ query GetMobileConfig($tenantId: Int!) {
     APP_HOST
     APP_SPLASH_RESIZE
     ACCENT_COLOR_LIGHT
+    PRODUCTION_APP_VERSION
     ACCENT_COLOR_DARK
     WELCOME_LOGO
     THEME
@@ -52,15 +53,18 @@ query GetMultiTenantConfig {
   }
 }
 `
+function getHeaders(tenantId: string) {
+  return {
+    cookie: 'staging=1;',
+    Token: generateToken({ TENANT_ID: tenantId }),
+  }
+}
 
 export async function getTenantConfig(id: string) {
   const graphqlURL: string =
     process.env.GRAPHQL_URL || 'https://www.minds.com/api/graphql'
 
-  const headers = {
-    cookie: 'staging=1;',
-    Token: generateToken({ TENANT_ID: id }),
-  }
+  const headers = getHeaders(id)
 
   const mobileConfig = (
     await request<any>(
@@ -83,4 +87,38 @@ export async function getTenantConfig(id: string) {
   mobileConfig.APP_LANDING_PAGE_LOGGED_IN = config.loggedInLandingPageIdMobile
 
   return mobileConfig
+}
+
+export async function setMobileProductionAppVersion(
+  tenantId: string,
+  productionAppVersion: string
+) {
+  const graphqlURL: string =
+    process.env.GRAPHQL_URL || 'https://www.minds.com/api/graphql'
+
+  const headers = getHeaders(tenantId)
+
+  const mutation = `
+  mutation SetMobileProductionAppVersion {
+    mobileProductionAppVersion(tenantId: ${tenantId}, productionAppVersion: "${productionAppVersion}")
+  }
+  `
+
+  const response = await request(graphqlURL, mutation, {}, headers)
+  return response
+}
+
+export async function clearAllMobileAppVersions() {
+  const graphqlURL: string =
+    process.env.GRAPHQL_URL || 'https://www.minds.com/api/graphql'
+
+  const headers = getHeaders('1')
+
+  const mutation = `
+  mutation  ClearAllMobileAppVersions {
+    clearAllMobileAppVersions
+  }
+  `
+
+  return await request(graphqlURL, mutation, {}, headers)
 }
