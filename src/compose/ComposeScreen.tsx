@@ -76,7 +76,7 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
   const placeholder = store.attachments.hasAttachment
     ? i18n.t('description')
     : i18n.t('capture.placeholder');
-  const showBottomBar = !optionsRef.current || !optionsRef.current.opened;
+
   const channel = sp.session.getUser();
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
@@ -231,6 +231,19 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           scrollViewRef={scrollViewRef}
         />
 
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={IS_IOS ? 0 : 30}
+          behavior="padding"
+          style={styles.bottomBarContainer}>
+          <BottomBar
+            store={store}
+            onHashtag={handleHashtagPress}
+            onMoney={handleMoneyPress}
+            onOptions={handleOptionsPress}
+            onSupermind={handleSupermindPress}
+          />
+        </KeyboardAvoidingView>
+
         <PosterBottomSheet ref={optionsRef} />
 
         <BottomSheet
@@ -248,20 +261,6 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           />
         </BottomSheet>
       </SafeAreaView>
-      {showBottomBar && (
-        <KeyboardAvoidingView
-          keyboardVerticalOffset={IS_IOS ? 0 : 30}
-          behavior="padding"
-          style={styles.bottomBarContainer}>
-          <BottomBar
-            store={store}
-            onHashtag={handleHashtagPress}
-            onMoney={handleMoneyPress}
-            onOptions={handleOptionsPress}
-            onSupermind={handleSupermindPress}
-          />
-        </KeyboardAvoidingView>
-      )}
     </ComposeContext.Provider>
   );
 };
