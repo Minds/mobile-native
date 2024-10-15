@@ -18,7 +18,7 @@ const commandImp: GluegunCommand = {
     )
     p()
     command('see-tenant         ', 'Shows the tenant configuration', [
-      'mobile see-tenant 10',
+      'mobile see 10',
       'mobile see-tenant https://mynetwork.com',
     ])
     p()

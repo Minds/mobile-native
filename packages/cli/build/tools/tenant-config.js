@@ -133,14 +133,23 @@ var __generator =
     }
   }
 Object.defineProperty(exports, '__esModule', { value: true })
-exports.getTenantConfig = void 0
+exports.clearAllMobileAppVersions =
+  exports.setMobileProductionAppVersion =
+  exports.getTenantConfig =
+    void 0
 var graphql_request_1 = require('graphql-request')
 var jwt_1 = require('./jwt')
 var tenantMobileQuery =
-  '\nquery GetMobileConfig($tenantId: Int!) {\n  appReadyMobileConfig(tenantId: $tenantId) {\n    APP_NAME\n    TENANT_ID\n    APP_HOST\n    APP_SPLASH_RESIZE\n    ACCENT_COLOR_LIGHT\n    ACCENT_COLOR_DARK\n    WELCOME_LOGO\n    THEME\n    API_URL\n    APP_SLUG\n    APP_SCHEME\n    EAS_PROJECT_ID\n    APP_IOS_BUNDLE\n    APP_ANDROID_PACKAGE\n    APP_TRACKING_MESSAGE_ENABLED\n    APP_TRACKING_MESSAGE\n    IS_NON_PROFIT\n    assets {\n      key\n      value\n    }\n    __typename\n  }\n}\n'
+  '\nquery GetMobileConfig($tenantId: Int!) {\n  appReadyMobileConfig(tenantId: $tenantId) {\n    APP_NAME\n    TENANT_ID\n    APP_HOST\n    APP_SPLASH_RESIZE\n    ACCENT_COLOR_LIGHT\n    PRODUCTION_APP_VERSION\n    ACCENT_COLOR_DARK\n    WELCOME_LOGO\n    THEME\n    API_URL\n    APP_SLUG\n    APP_SCHEME\n    EAS_PROJECT_ID\n    APP_IOS_BUNDLE\n    APP_ANDROID_PACKAGE\n    APP_TRACKING_MESSAGE_ENABLED\n    APP_TRACKING_MESSAGE\n    IS_NON_PROFIT\n    assets {\n      key\n      value\n    }\n    __typename\n  }\n}\n'
 // we query the tenant config to get the loggedInLandingPageIdMobile, maybe we should move this to the mobile config query
 var tenantQuery =
   '\nquery GetMultiTenantConfig {\n  multiTenantConfig {\n    siteName\n    siteEmail\n    colorScheme\n    primaryColor\n    canEnableFederation\n    federationDisabled\n    replyEmail\n    boostEnabled\n    customHomePageEnabled\n    customHomePageDescription\n    walledGardenEnabled\n    digestEmailEnabled\n    welcomeEmailEnabled\n    loggedInLandingPageIdMobile\n    nsfwEnabled\n  }\n}\n'
+function getHeaders(tenantId) {
+  return {
+    cookie: 'staging=1;',
+    Token: (0, jwt_1.generateToken)({ TENANT_ID: tenantId }),
+  }
+}
 function getTenantConfig(id) {
   return __awaiter(this, void 0, void 0, function () {
     var graphqlURL, headers, mobileConfig, config
@@ -149,10 +158,7 @@ function getTenantConfig(id) {
         case 0:
           graphqlURL =
             process.env.GRAPHQL_URL || 'https://www.minds.com/api/graphql'
-          headers = {
-            cookie: 'staging=1;',
-            Token: (0, jwt_1.generateToken)({ TENANT_ID: id }),
-          }
+          headers = getHeaders(id)
           return [
             4 /*yield*/,
             (0, graphql_request_1.request)(
@@ -183,4 +189,51 @@ function getTenantConfig(id) {
   })
 }
 exports.getTenantConfig = getTenantConfig
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGVuYW50LWNvbmZpZy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy90b29scy90ZW5hbnQtY29uZmlnLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLG1EQUF5QztBQUN6Qyw2QkFBcUM7QUFFckMsSUFBTSxpQkFBaUIsR0FBVywyZUEyQmpDLENBQUE7QUFFRCwwSEFBMEg7QUFDMUgsSUFBTSxXQUFXLEdBQVcsMFlBb0IzQixDQUFBO0FBRUQsU0FBc0IsZUFBZSxDQUFDLEVBQVU7Ozs7OztvQkFDeEMsVUFBVSxHQUNkLE9BQU8sQ0FBQyxHQUFHLENBQUMsV0FBVyxJQUFJLG1DQUFtQyxDQUFBO29CQUUxRCxPQUFPLEdBQUc7d0JBQ2QsTUFBTSxFQUFFLFlBQVk7d0JBQ3BCLEtBQUssRUFBRSxJQUFBLG1CQUFhLEVBQUMsRUFBRSxTQUFTLEVBQUUsRUFBRSxFQUFFLENBQUM7cUJBQ3hDLENBQUE7b0JBR0MscUJBQU0sSUFBQSx5QkFBTyxFQUNYLFVBQVUsRUFDVixpQkFBaUIsRUFDakIsRUFBRSxRQUFRLEVBQUUsUUFBUSxDQUFDLEVBQUUsRUFBRSxFQUFFLENBQUMsRUFBRSxFQUM5QixPQUFPLENBQ1IsRUFBQTs7b0JBTkcsWUFBWSxHQUFHLENBQ25CLFNBS0MsQ0FDRixDQUFDLG9CQUFvQjtvQkFHcEIscUJBQU0sSUFBQSx5QkFBTyxFQUNYLFlBQVksQ0FBQyxPQUFPLEdBQUcsYUFBYSxFQUNwQyxXQUFXLEVBQ1gsRUFBRSxFQUNGLE9BQU8sQ0FDUixFQUFBOztvQkFORyxNQUFNLEdBQUcsQ0FDYixTQUtDLENBQ0YsQ0FBQyxpQkFBaUI7b0JBRW5CLFlBQVksQ0FBQywwQkFBMEIsR0FBRyxNQUFNLENBQUMsMkJBQTJCLENBQUE7b0JBRTVFLHNCQUFPLFlBQVksRUFBQTs7OztDQUNwQjtBQTlCRCwwQ0E4QkMifQ==
+function setMobileProductionAppVersion(tenantId, productionAppVersion) {
+  return __awaiter(this, void 0, void 0, function () {
+    var graphqlURL, headers, mutation, response
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          graphqlURL =
+            process.env.GRAPHQL_URL || 'https://www.minds.com/api/graphql'
+          headers = getHeaders(tenantId)
+          mutation =
+            '\n  mutation SetMobileProductionAppVersion {\n    mobileProductionAppVersion(tenantId: '
+              .concat(tenantId, ', productionAppVersion: "')
+              .concat(productionAppVersion, '")\n  }\n  ')
+          return [
+            4 /*yield*/,
+            (0, graphql_request_1.request)(graphqlURL, mutation, {}, headers),
+          ]
+        case 1:
+          response = _a.sent()
+          return [2 /*return*/, response]
+      }
+    })
+  })
+}
+exports.setMobileProductionAppVersion = setMobileProductionAppVersion
+function clearAllMobileAppVersions() {
+  return __awaiter(this, void 0, void 0, function () {
+    var graphqlURL, headers, mutation
+    return __generator(this, function (_a) {
+      switch (_a.label) {
+        case 0:
+          graphqlURL =
+            process.env.GRAPHQL_URL || 'https://www.minds.com/api/graphql'
+          headers = getHeaders('1')
+          mutation =
+            '\n  mutation  ClearAllMobileAppVersions {\n    clearAllMobileAppVersions\n  }\n  '
+          return [
+            4 /*yield*/,
+            (0, graphql_request_1.request)(graphqlURL, mutation, {}, headers),
+          ]
+        case 1:
+          return [2 /*return*/, _a.sent()]
+      }
+    })
+  })
+}
+exports.clearAllMobileAppVersions = clearAllMobileAppVersions
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoidGVuYW50LWNvbmZpZy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy90b29scy90ZW5hbnQtY29uZmlnLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLG1EQUF5QztBQUN6Qyw2QkFBcUM7QUFFckMsSUFBTSxpQkFBaUIsR0FBVyx1Z0JBNEJqQyxDQUFBO0FBRUQsMEhBQTBIO0FBQzFILElBQU0sV0FBVyxHQUFXLDBZQW9CM0IsQ0FBQTtBQUNELFNBQVMsVUFBVSxDQUFDLFFBQWdCO0lBQ2xDLE9BQU87UUFDTCxNQUFNLEVBQUUsWUFBWTtRQUNwQixLQUFLLEVBQUUsSUFBQSxtQkFBYSxFQUFDLEVBQUUsU0FBUyxFQUFFLFFBQVEsRUFBRSxDQUFDO0tBQzlDLENBQUE7QUFDSCxDQUFDO0FBRUQsU0FBc0IsZUFBZSxDQUFDLEVBQVU7Ozs7OztvQkFDeEMsVUFBVSxHQUNkLE9BQU8sQ0FBQyxHQUFHLENBQUMsV0FBVyxJQUFJLG1DQUFtQyxDQUFBO29CQUUxRCxPQUFPLEdBQUcsVUFBVSxDQUFDLEVBQUUsQ0FBQyxDQUFDO29CQUc3QixxQkFBTSxJQUFBLHlCQUFPLEVBQ1gsVUFBVSxFQUNWLGlCQUFpQixFQUNqQixFQUFFLFFBQVEsRUFBRSxRQUFRLENBQUMsRUFBRSxFQUFFLEVBQUUsQ0FBQyxFQUFFLEVBQzlCLE9BQU8sQ0FDUixFQUFBOztvQkFORyxZQUFZLEdBQUcsQ0FDbkIsU0FLQyxDQUNGLENBQUMsb0JBQW9CO29CQUdwQixxQkFBTSxJQUFBLHlCQUFPLEVBQ1gsWUFBWSxDQUFDLE9BQU8sR0FBRyxhQUFhLEVBQ3BDLFdBQVcsRUFDWCxFQUFFLEVBQ0YsT0FBTyxDQUNSLEVBQUE7O29CQU5HLE1BQU0sR0FBRyxDQUNiLFNBS0MsQ0FDRixDQUFDLGlCQUFpQjtvQkFFbkIsWUFBWSxDQUFDLDBCQUEwQixHQUFHLE1BQU0sQ0FBQywyQkFBMkIsQ0FBQTtvQkFFNUUsc0JBQU8sWUFBWSxFQUFBOzs7O0NBQ3BCO0FBM0JELDBDQTJCQztBQUVELFNBQXNCLDZCQUE2QixDQUNqRCxRQUFnQixFQUNoQixvQkFBNEI7Ozs7OztvQkFFdEIsVUFBVSxHQUNkLE9BQU8sQ0FBQyxHQUFHLENBQUMsV0FBVyxJQUFJLG1DQUFtQyxDQUFBO29CQUUxRCxPQUFPLEdBQUcsVUFBVSxDQUFDLFFBQVEsQ0FBQyxDQUFDO29CQUUvQixRQUFRLEdBQUcsaUdBRXdCLFFBQVEsdUNBQTRCLG9CQUFvQixpQkFFaEcsQ0FBQTtvQkFFZ0IscUJBQU0sSUFBQSx5QkFBTyxFQUFDLFVBQVUsRUFBRSxRQUFRLEVBQUUsRUFBRSxFQUFFLE9BQU8sQ0FBQyxFQUFBOztvQkFBM0QsUUFBUSxHQUFHLFNBQWdEO29CQUNqRSxzQkFBTyxRQUFRLEVBQUE7Ozs7Q0FDaEI7QUFqQkQsc0VBaUJDO0FBRUQsU0FBc0IseUJBQXlCOzs7Ozs7b0JBQ3ZDLFVBQVUsR0FDZCxPQUFPLENBQUMsR0FBRyxDQUFDLFdBQVcsSUFBSSxtQ0FBbUMsQ0FBQTtvQkFFMUQsT0FBTyxHQUFHLFVBQVUsQ0FBQyxHQUFHLENBQUMsQ0FBQztvQkFFMUIsUUFBUSxHQUFHLG1GQUloQixDQUFBO29CQUVNLHFCQUFNLElBQUEseUJBQU8sRUFBQyxVQUFVLEVBQUUsUUFBUSxFQUFFLEVBQUUsRUFBRSxPQUFPLENBQUMsRUFBQTt3QkFBdkQsc0JBQU8sU0FBZ0QsRUFBQTs7OztDQUN4RDtBQWJELDhEQWFDIn0=

@@ -134,34 +134,54 @@ var __generator =
   }
 Object.defineProperty(exports, '__esModule', { value: true })
 var pretty_1 = require('../tools/pretty')
-var commandImp = {
-  name: 'mobile',
-  alias: ['help'],
+var spinner_1 = require('../tools/spinner')
+var tenant_config_1 = require('../tools/tenant-config')
+module.exports = {
+  name: 'clear-tenants',
+  alias: ['clear'],
+  description: 'Clear custom versions for all tenant',
   run: function (toolbox) {
     return __awaiter(void 0, void 0, void 0, function () {
+      var error_1
       return __generator(this, function (_a) {
-        ;(0, pretty_1.p)()
-        ;(0,
-        pretty_1.heading)('Welcome to Minds Mobile CLI '.concat(toolbox.meta.version(), '!'))
-        ;(0, pretty_1.p)()
-        ;(0, pretty_1.heading)('Commands')
-        ;(0, pretty_1.p)()
-        ;(0,
-        pretty_1.command)('setup-tenant       ', 'Fetches the tenant configuration and assets for production or a preview', ['mobile setup-tenant 10', 'mobile setup-tenant 10 --preview'])
-        ;(0, pretty_1.p)()
-        ;(0,
-        pretty_1.command)('see-tenant         ', 'Shows the tenant configuration', ['mobile see 10', 'mobile see-tenant https://mynetwork.com'])
-        ;(0, pretty_1.p)()
-        ;(0,
-        pretty_1.command)('setup-previewer    ', 'Prepares the previewer app for building', ['mobile see-tenant 10'])
-        ;(0, pretty_1.p)()
-        ;(0,
-        pretty_1.direction)('If you find any issue please report it to: '.concat((0, pretty_1.link)('https://gitlab.com/minds/mobile-native/-/issues')))
-        ;(0, pretty_1.p)()
-        return [2 /*return*/]
+        switch (_a.label) {
+          case 0:
+            ;(0, pretty_1.heading)('Custom version reset')
+            _a.label = 1
+          case 1:
+            _a.trys.push([1, 3, , 4])
+            return [
+              4 /*yield*/,
+              (0, spinner_1.spinnerAction)(
+                'Clearing custom versions',
+                function () {
+                  return __awaiter(void 0, void 0, void 0, function () {
+                    return __generator(this, function (_a) {
+                      return [
+                        2 /*return*/,
+                        (0, tenant_config_1.clearAllMobileAppVersions)(),
+                      ]
+                    })
+                  })
+                }
+              ),
+            ]
+          case 2:
+            _a.sent()
+            ;(0, pretty_1.p)()
+            ;(0, pretty_1.p)('Custom versions cleared for all tenants')
+            return [3 /*break*/, 4]
+          case 3:
+            error_1 = _a.sent()
+            ;(0, pretty_1.warning)(error_1.message)
+            process.exit(1)
+            return [3 /*break*/, 4]
+          case 4:
+            process.exit(0)
+            return [2 /*return*/]
+        }
       })
     })
   },
 }
-module.exports = commandImp
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibW9iaWxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vc3JjL2NvbW1hbmRzL21vYmlsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUNBLDBDQUFzRTtBQUV0RSxJQUFNLFVBQVUsR0FBbUI7SUFDakMsSUFBSSxFQUFFLFFBQVE7SUFDZCxLQUFLLEVBQUUsQ0FBQyxNQUFNLENBQUM7SUFDZixHQUFHLEVBQUUsVUFBTyxPQUFPOztZQUNqQixJQUFBLFVBQUMsR0FBRSxDQUFBO1lBRUgsSUFBQSxnQkFBTyxFQUFDLHNDQUErQixPQUFPLENBQUMsSUFBSSxDQUFDLE9BQU8sRUFBRSxNQUFHLENBQUMsQ0FBQTtZQUNqRSxJQUFBLFVBQUMsR0FBRSxDQUFBO1lBQ0gsSUFBQSxnQkFBTyxFQUFDLFVBQVUsQ0FBQyxDQUFBO1lBQ25CLElBQUEsVUFBQyxHQUFFLENBQUE7WUFDSCxJQUFBLGdCQUFPLEVBQ0wscUJBQXFCLEVBQ3JCLHlFQUF5RSxFQUN6RSxDQUFDLHdCQUF3QixFQUFFLGtDQUFrQyxDQUFDLENBQy9ELENBQUE7WUFDRCxJQUFBLFVBQUMsR0FBRSxDQUFBO1lBQ0gsSUFBQSxnQkFBTyxFQUFDLHFCQUFxQixFQUFFLGdDQUFnQyxFQUFFO2dCQUMvRCxlQUFlO2dCQUNmLHlDQUF5QzthQUMxQyxDQUFDLENBQUE7WUFDRixJQUFBLFVBQUMsR0FBRSxDQUFBO1lBQ0gsSUFBQSxnQkFBTyxFQUFDLHFCQUFxQixFQUFFLHlDQUF5QyxFQUFFO2dCQUN4RSxzQkFBc0I7YUFDdkIsQ0FBQyxDQUFBO1lBQ0YsSUFBQSxVQUFDLEdBQUUsQ0FBQTtZQUNILElBQUEsa0JBQVMsRUFDUCxxREFBOEMsSUFBQSxhQUFJLEVBQ2hELGlEQUFpRCxDQUNsRCxDQUFFLENBQ0osQ0FBQTtZQUNELElBQUEsVUFBQyxHQUFFLENBQUE7OztTQUNKO0NBQ0YsQ0FBQTtBQUVELE1BQU0sQ0FBQyxPQUFPLEdBQUcsVUFBVSxDQUFBIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY2xlYXItdGVuYW50cy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uL3NyYy9jb21tYW5kcy9jbGVhci10ZW5hbnRzLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQ0EsMENBQXFEO0FBQ3JELDRDQUFnRDtBQUNoRCx3REFBa0U7QUFFbEUsTUFBTSxDQUFDLE9BQU8sR0FBRztJQUNmLElBQUksRUFBRSxlQUFlO0lBQ3JCLEtBQUssRUFBRSxDQUFDLE9BQU8sQ0FBQztJQUNoQixXQUFXLEVBQUUsc0NBQXNDO0lBQ25ELEdBQUcsRUFBRSxVQUFPLE9BQXVCOzs7OztvQkFDakMsSUFBQSxnQkFBTyxFQUFDLHNCQUFzQixDQUFDLENBQUE7Ozs7b0JBRzdCLHFCQUFNLElBQUEsdUJBQWEsRUFBQywwQkFBMEIsRUFBRTs0QkFDOUMsc0JBQUEsSUFBQSx5Q0FBeUIsR0FBRSxFQUFBO2lDQUFBLENBQzVCLEVBQUE7O29CQUZELFNBRUMsQ0FBQTtvQkFFRCxJQUFBLFVBQUMsR0FBRSxDQUFBO29CQUNILElBQUEsVUFBQyxFQUFDLHlDQUF5QyxDQUFDLENBQUE7Ozs7b0JBRTVDLElBQUEsZ0JBQU8sRUFBQyxPQUFLLENBQUMsT0FBTyxDQUFDLENBQUE7b0JBQ3RCLE9BQU8sQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDLENBQUE7OztvQkFFakIsT0FBTyxDQUFDLElBQUksQ0FBQyxDQUFDLENBQUMsQ0FBQTs7OztTQUNoQjtDQUNGLENBQUEifQ==
