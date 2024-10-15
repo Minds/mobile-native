@@ -36,10 +36,7 @@ const InputPassword = observer(({ store, onFinish }: PropsType) => {
           onFocus={store.focus}
           onBlur={store.blur}
           value={store.password}
-          tooltipBackground={sp.styles.getColor(
-            'TertiaryBackground',
-            IS_TENANT ? undefined : 1,
-          )}
+          tooltipBackground={sp.styles.getColor('TertiaryBackground')}
           onChangeText={store.setPassword}
         />
       </View>
