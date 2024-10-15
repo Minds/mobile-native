@@ -8,7 +8,7 @@ import { styles } from './InputUser';
 import { Button } from '~/common/ui';
 import PasswordInput from '~/common/components/password-input/PasswordInput';
 import MText from '~/common/components/MText';
-import { IS_IPAD, IS_TENANT } from '~/config/Config';
+import { IS_IPAD } from '~/config/Config';
 import sp from '~/services/serviceProvider';
 
 type PropsType = {
