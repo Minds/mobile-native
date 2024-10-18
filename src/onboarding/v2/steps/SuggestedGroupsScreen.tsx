@@ -35,7 +35,7 @@ export default withErrorBoundaryScreen(
       <ModalContainer
         title={i18n.t('onboarding.joinGroup')}
         contentContainer={theme.alignSelfCenterMaxWidth}
-        onPressBack={sp.navigation.goBack}>
+        onPressBack={() => sp.navigation.goBack()}>
         <View style={[theme.flexContainer, theme.paddingHorizontal2x]}>
           <MText
             style={[

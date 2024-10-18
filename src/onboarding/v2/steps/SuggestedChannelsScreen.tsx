@@ -46,7 +46,7 @@ export default withErrorBoundaryScreen(
           theme.bgPrimaryBackgroundHighlight,
           theme.alignSelfCenterMaxWidth,
         ]}
-        onPressBack={sp.navigation.goBack}>
+        onPressBack={() => sp.navigation.goBack()}>
         <ScrollView style={theme.flexContainer}>
           {empty}
           {loadingPlaceholder}

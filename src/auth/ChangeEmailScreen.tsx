@@ -74,7 +74,7 @@ const ChangeEmailScreen = () => {
   return (
     <>
       <CodeConfirmScreen
-        onBack={sp.navigation.goBack}
+        onBack={() => sp.navigation.goBack()}
         title={'Change email'}
         description={sp.i18n.t('auth.mistypedEmail')}
         keyboardType={'email-address'}
