@@ -88,7 +88,7 @@ sp.register(
   () => {
     const Service = require('~/common/services/i18n.service')
       .I18nService as typeof I18nService;
-    return new Service(sp.resolve('storages'));
+    return new Service(sp.resolve('storages'), sp.resolveLazy('api'));
   },
   Lifetime.Singleton,
 );
