@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 
 import Message from './Message';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StatusBar, StyleSheet } from 'react-native';
 import ChatInput from './ChatInput';
 import { showMessageMenu } from './MessageMenu';
 import {
@@ -40,10 +40,13 @@ function MessageFlatList({ isRequest }: Props) {
     [send],
   );
 
+  const statusBarHeight = StatusBar.currentHeight || 0;
+
   return (
     <KeyboardAvoidingView
       behavior="padding"
       enabled
+      keyboardVerticalOffset={statusBarHeight}
       style={sp.styles.style.flexContainer}>
       <FlatList
         ref={listRef}
