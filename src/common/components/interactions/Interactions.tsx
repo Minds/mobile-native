@@ -132,30 +132,12 @@ const Interactions = (props: InteractionsProps) => {
   ) {
     dataField = 'users';
   }
-  const placeholderCount = useMemo(() => {
-    const LIMIT = 24;
-
-    switch (store.interaction) {
-      case 'upVotes':
-        return Math.min(entity['thumbs:up:count'], LIMIT);
-      case 'downVotes':
-        return Math.min(entity['thumbs:down:count'], LIMIT);
-      case 'reminds':
-        // @ts-ignore
-        return entity.reminds ? Math.min(entity.reminds, LIMIT) : undefined;
-      case 'quotes':
-        // @ts-ignore
-        return entity.quotes ? Math.min(entity.quotes, LIMIT) : undefined;
-      default:
-        return 24;
-    }
-  }, [entity, store.interaction]);
+  const placeholderCount = 3;
 
   // =====================| METHODS |=====================>
   useEffect(() => {
     store.setInteraction(interaction);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [interaction]);
+  }, [interaction, store]);
 
   // =====================| RENDERS |=====================>
   const footer = (
