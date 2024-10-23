@@ -99,7 +99,7 @@ export default withErrorBoundaryScreen(
       <ModalContainer
         title={i18n.t('onboarding.setupChannel')}
         contentContainer={theme.alignSelfCenterMaxWidth}
-        onPressBack={sp.navigation.goBack}
+        onPressBack={() => sp.navigation.goBack()}
         leftButton={
           keyboard.keyboardShown ? (
             <Btn type="action" mode="flat" size="small" onPress={store.save}>

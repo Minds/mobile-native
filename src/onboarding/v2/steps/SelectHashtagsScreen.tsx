@@ -71,7 +71,7 @@ export default withErrorBoundaryScreen(
       <ModalContainer
         title="Hashtags"
         contentContainer={theme.alignSelfCenterMaxWidth}
-        onPressBack={sp.navigation.goBack}>
+        onPressBack={() => sp.navigation.goBack()}>
         <View style={[theme.flexContainer, theme.paddingHorizontal4x]}>
           <ScrollView contentContainerStyle={theme.paddingBottom7x}>
             <MText

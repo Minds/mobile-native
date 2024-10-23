@@ -192,7 +192,7 @@ const ResourcesScreen = ({}: PropsType) => {
                 <MenuItem
                   key={`${item.id}.${option.id}`}
                   // @ts-ignore
-                  title={i18n.t(`settings.${item.id}.${option.id}`)}
+                  title={sp.i18n.t(`settings.${item.id}.${option.id}`)}
                   onPress={option.onPress}
                   noBorderTop={i > 0}
                 />
