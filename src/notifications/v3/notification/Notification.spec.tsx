@@ -5,6 +5,7 @@ import UserModel from '~/channel/UserModel';
 import NotificationItem from './Notification';
 import NotificationModel, { NotificationType } from './NotificationModel';
 import { hasVariation } from '~/../ExperimentsProvider';
+import { fakeOne } from '__mocks__/fake/ActivitiesFaker';
 
 jest.mock('~/services/serviceProvider');
 
@@ -13,6 +14,7 @@ jest.mock('~/../ExperimentsProvider');
 sp.mockService('i18n');
 sp.mockService('api');
 sp.mockService('analytics');
+sp.mockService('translation');
 const sessionService = sp.mockService('session');
 
 const mockedHasVariation = hasVariation as jest.Mock<boolean>;
@@ -323,7 +325,7 @@ const createFakeNotification = ({ type, ...rest }: any) =>
       updated_timestamp: 1664301294,
       twitter_required: false,
       reply_type: 0,
-      entity: null,
+      entity: type.startsWith('boost') ? fakeOne(null) : null,
       receiver_entity: null,
     },
     from: {

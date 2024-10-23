@@ -1044,11 +1044,93 @@ exports[`Notification Boost accepted 1`] = `
             style={
               [
                 {
-                  "padding": 1,
+                  "paddingHorizontal": 16,
+                },
+                {
+                  "paddingVertical": 12,
                 },
               ]
             }
-          />
+          >
+            <View
+              style={null}
+            >
+              <Text
+                selectable={true}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      [
+                        {
+                          "fontFamily": "Roboto_400Regular",
+                          "fontSize": 16,
+                          "lineHeight": 24,
+                        },
+                        {
+                          "fontSize": 18,
+                        },
+                        {
+                          "color": "#F2F2F2",
+                        },
+                        {
+                          "fontFamily": "Roboto_500Medium",
+                          "fontWeight": "500",
+                        },
+                      ],
+                      {
+                        "marginBottom": 4,
+                      },
+                      {
+                        "fontFamily": "Roboto_900Black",
+                        "fontWeight": "700",
+                      },
+                    ],
+                  ]
+                }
+              >
+                TITLE
+              </Text>
+              <Text
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      {
+                        "fontFamily": "Roboto_400Regular",
+                        "fontSize": 16,
+                        "lineHeight": 24,
+                      },
+                      {
+                        "fontSize": 18,
+                      },
+                      {
+                        "color": "#F2F2F2",
+                      },
+                      {
+                        "fontFamily": "Roboto_500Medium",
+                        "fontWeight": "500",
+                      },
+                    ],
+                  ]
+                }
+              >
+                Message
+              </Text>
+            </View>
+            <View />
+          </View>
         </View>
         <View
           style={
@@ -1089,7 +1171,7 @@ exports[`Notification Boost accepted 1`] = `
               ]
             }
           >
-            Invalid date
+            Mar 25, 2018
           </Text>
         </View>
       </View>
@@ -1384,11 +1466,93 @@ exports[`Notification Boost complete 1`] = `
             style={
               [
                 {
-                  "padding": 1,
+                  "paddingHorizontal": 16,
+                },
+                {
+                  "paddingVertical": 12,
                 },
               ]
             }
-          />
+          >
+            <View
+              style={null}
+            >
+              <Text
+                selectable={true}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      [
+                        {
+                          "fontFamily": "Roboto_400Regular",
+                          "fontSize": 16,
+                          "lineHeight": 24,
+                        },
+                        {
+                          "fontSize": 18,
+                        },
+                        {
+                          "color": "#F2F2F2",
+                        },
+                        {
+                          "fontFamily": "Roboto_500Medium",
+                          "fontWeight": "500",
+                        },
+                      ],
+                      {
+                        "marginBottom": 4,
+                      },
+                      {
+                        "fontFamily": "Roboto_900Black",
+                        "fontWeight": "700",
+                      },
+                    ],
+                  ]
+                }
+              >
+                TITLE
+              </Text>
+              <Text
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      {
+                        "fontFamily": "Roboto_400Regular",
+                        "fontSize": 16,
+                        "lineHeight": 24,
+                      },
+                      {
+                        "fontSize": 18,
+                      },
+                      {
+                        "color": "#F2F2F2",
+                      },
+                      {
+                        "fontFamily": "Roboto_500Medium",
+                        "fontWeight": "500",
+                      },
+                    ],
+                  ]
+                }
+              >
+                Message
+              </Text>
+            </View>
+            <View />
+          </View>
         </View>
         <View
           style={
@@ -1429,7 +1593,7 @@ exports[`Notification Boost complete 1`] = `
               ]
             }
           >
-            Invalid date
+            Mar 25, 2018
           </Text>
         </View>
       </View>
@@ -1724,11 +1888,93 @@ exports[`Notification Boost rejected 1`] = `
             style={
               [
                 {
-                  "padding": 1,
+                  "paddingHorizontal": 16,
+                },
+                {
+                  "paddingVertical": 12,
                 },
               ]
             }
-          />
+          >
+            <View
+              style={null}
+            >
+              <Text
+                selectable={true}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      [
+                        {
+                          "fontFamily": "Roboto_400Regular",
+                          "fontSize": 16,
+                          "lineHeight": 24,
+                        },
+                        {
+                          "fontSize": 18,
+                        },
+                        {
+                          "color": "#F2F2F2",
+                        },
+                        {
+                          "fontFamily": "Roboto_500Medium",
+                          "fontWeight": "500",
+                        },
+                      ],
+                      {
+                        "marginBottom": 4,
+                      },
+                      {
+                        "fontFamily": "Roboto_900Black",
+                        "fontWeight": "700",
+                      },
+                    ],
+                  ]
+                }
+              >
+                TITLE
+              </Text>
+              <Text
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      {
+                        "fontFamily": "Roboto_400Regular",
+                        "fontSize": 16,
+                        "lineHeight": 24,
+                      },
+                      {
+                        "fontSize": 18,
+                      },
+                      {
+                        "color": "#F2F2F2",
+                      },
+                      {
+                        "fontFamily": "Roboto_500Medium",
+                        "fontWeight": "500",
+                      },
+                    ],
+                  ]
+                }
+              >
+                Message
+              </Text>
+            </View>
+            <View />
+          </View>
         </View>
         <View
           style={
@@ -1769,7 +2015,7 @@ exports[`Notification Boost rejected 1`] = `
               ]
             }
           >
-            Invalid date
+            Mar 25, 2018
           </Text>
         </View>
       </View>
