@@ -10,14 +10,12 @@ export class HashtagStore {
   @observable hashtag = '';
   @observable suggested: { value: string; selected: boolean }[] = [];
 
-  constructor(private hashtagService = sp.resolve('hashtag')) {}
-
   /**
    * Load suggested tags
    */
   async loadSuggested() {
     this.setLoading(true);
-    const tags = await this.hashtagService.getSuggested();
+    const tags = await sp.resolve('hashtag').getSuggested();
     this.setLoading(false);
     this.setSuggested(tags);
   }
@@ -78,11 +76,12 @@ export class HashtagStore {
   async select(tag) {
     tag.selected = true;
     try {
-      const result = await this.hashtagService.add(tag.value);
+      const result = await sp.resolve('hashtag').add(tag.value);
       if (result.status !== 'success') {
         tag.selected = false;
       }
     } catch (e) {
+      console.log('Error selecting tag', e);
       tag.selected = false;
     }
   }
@@ -106,7 +105,7 @@ export class HashtagStore {
     tag.selected = false;
 
     try {
-      const result = await this.hashtagService.delete(tag.value);
+      const result = await sp.resolve('hashtag').delete(tag.value);
       if (result.status !== 'success') {
         tag.selected = true;
       }
