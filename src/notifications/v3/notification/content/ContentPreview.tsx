@@ -122,7 +122,11 @@ const renderContent = (notification: NotificationModel, navigation: any) => {
   } else {
     return (
       <Activity
-        entity={ActivityModel.create(notification.entity)}
+        entity={ActivityModel.create(
+          notification.type.startsWith('boost_')
+            ? notification.entity.entity
+            : notification.entity,
+        )}
         navigation={navigation}
         autoHeight={false}
         showOnlyContent={true}
