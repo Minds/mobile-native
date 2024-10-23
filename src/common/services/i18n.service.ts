@@ -11,6 +11,7 @@ import { action, observable } from 'mobx';
 import enLocale from '../../../locales/en.json';
 import i18next from 'utils/locales';
 import type { Storages } from './storage/storages.service';
+import type { ApiService } from './api.service';
 
 // get all possible key paths
 type DeepKeys<T> = T extends object
@@ -122,7 +123,7 @@ export class I18nService {
   bestLocale = 'en';
   dateFormat?: DateFormat;
 
-  constructor(private storages: Storages) {
+  constructor(private storages: Storages, private api: ApiService) {
     if (process.env.JEST_WORKER_ID === undefined) {
       this.init();
     }
@@ -349,9 +350,7 @@ export class I18nService {
    * Send locale to the backend
    */
   setLocaleBackend() {
-    // test fails if we use import
-    const api = require('./api.service').default;
-    api.post('api/v1/settings', {
+    this.api.post('api/v1/settings', {
       language: this.locale,
     });
   }
