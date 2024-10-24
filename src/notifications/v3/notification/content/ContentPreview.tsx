@@ -18,6 +18,8 @@ import {
 import useNotificationRouter from '../useNotificationRouter';
 import GroupsListItem from '~/groups/GroupsListItem';
 import sp from '~/services/serviceProvider';
+import UserModel from '~/channel/UserModel';
+import ChannelListItem from '~/common/components/ChannelListItem';
 
 type PropsType = {
   notification: NotificationModel;
@@ -120,13 +122,15 @@ const renderContent = (notification: NotificationModel, navigation: any) => {
       />
     );
   } else {
-    return (
+    const entity = notification.type.startsWith('boost_')
+      ? notification.entity.entity
+      : notification.entity;
+
+    return entity.type === 'user' ? (
+      <ChannelListItem channel={UserModel.create(entity)} />
+    ) : (
       <Activity
-        entity={ActivityModel.create(
-          notification.type.startsWith('boost_')
-            ? notification.entity.entity
-            : notification.entity,
-        )}
+        entity={ActivityModel.create(entity)}
         navigation={navigation}
         autoHeight={false}
         showOnlyContent={true}
