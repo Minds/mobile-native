@@ -1,7 +1,7 @@
 import { showNotification } from 'AppMessages';
 import { action, computed, observable } from 'mobx';
-import i18n from '../services/i18n.service';
 import AttachmentStore, { Media } from './AttachmentStore';
+import sp from '~/services/serviceProvider';
 
 const DEFAULT_LICENSE = 'all-rights-reserved';
 
@@ -78,7 +78,7 @@ export default class MultiAttachmentStore {
   ): Promise<AttachmentStore | false> {
     if (this.attachments.length === this.max) {
       if (media.type.startsWith('image')) {
-        showNotification(i18n.t('capture.max4Images'));
+        showNotification(sp.i18n.t('capture.max4Images'));
       }
       return false;
     }
@@ -91,7 +91,7 @@ export default class MultiAttachmentStore {
           attachment.type.startsWith('video'),
         ))
     ) {
-      showNotification(i18n.t('capture.onlyMultiImage'));
+      showNotification(sp.i18n.t('capture.onlyMultiImage'));
       return false;
     }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import currency from '~/common/helpers/currency';
-import i18nService from '~/common/services/i18n.service';
 import { handleExternalMembership } from '~/common/services/upgrade-modal.service';
 import {
   B1,
@@ -19,7 +18,7 @@ import {
   SiteMembershipPricingModelEnum,
   useGetSiteMembershipsAndSubscriptionsQuery,
 } from '~/graphql/api';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 export default function TenantMembershipsScreen() {
   const query = useGetSiteMembershipsAndSubscriptionsQuery(undefined, {
@@ -89,7 +88,7 @@ const MembershipCard = ({
           onPress={() => {
             handleExternalMembership(membership);
           }}>
-          {i18nService.t('membership.join')}
+          {sp.i18n.t('membership.join')}
         </Button>
       ) : (
         <B2 align="center" vertical="XL" font="medium">
@@ -100,7 +99,7 @@ const MembershipCard = ({
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   spaceBottom: ['marginBottom2x'],
   cardContainer: [
     'border2x',

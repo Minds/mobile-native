@@ -4,12 +4,12 @@ import React from 'react';
 import { View } from 'react-native';
 import FeedListInvisibleHeader from '~/common/components/FeedListInvisibleHeader';
 import MenuSheet from '~/common/components/bottom-sheet/MenuSheet';
-import i18nService from '~/common/services/i18n.service';
 import { B2, H4, Icon, Row } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { styles as headerStyles } from '~/topbar/Topbar';
 import useDismissibility from './hooks/useDismissibility';
 import { RecommendationType } from './types';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   type: RecommendationType;
@@ -23,28 +23,29 @@ function RecommendationHeader({ type, location, shadow }: PropsType) {
     type,
     location,
   );
+  const i18n = sp.i18n;
 
   const sheetOptions = React.useMemo(
     () => [
       {
-        title: i18nService.t('removeFromFeed'),
+        title: i18n.t('removeFromFeed'),
         onPress: dismiss,
         iconName: 'close',
         iconType: 'material-community',
       },
     ],
-    [dismiss],
+    [dismiss, i18n],
   );
 
   return shouldRender ? (
     <View
       style={
         shadow
-          ? [ThemedStyles.style.bgPrimaryBackground, headerStyles.shadow]
-          : ThemedStyles.style.bgPrimaryBackground
+          ? [sp.styles.style.bgPrimaryBackground, headerStyles.shadow]
+          : sp.styles.style.bgPrimaryBackground
       }>
       <Row align="centerBetween" vertical="L" horizontal="L">
-        <H4>{i18nService.t('recommendedForYou')}</H4>
+        <H4>{i18n.t('recommendedForYou')}</H4>
         <Row align="centerBoth">
           <B2
             color="link"
@@ -53,7 +54,7 @@ function RecommendationHeader({ type, location, shadow }: PropsType) {
                 ? navigation.navigate('SuggestedChannel')
                 : navigation.navigate('GroupsDiscovery');
             }}>
-            {i18nService.t('seeMore')}
+            {i18n.t('seeMore')}
           </B2>
 
           {dismissible && (

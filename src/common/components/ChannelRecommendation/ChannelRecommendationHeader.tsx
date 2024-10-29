@@ -5,12 +5,12 @@ import { View } from 'react-native';
 import FeedListInvisibleHeader from '~/common/components/FeedListInvisibleHeader';
 import MenuSheet from '~/common/components/bottom-sheet/MenuSheet';
 import { useLegacyStores } from '~/common/hooks/use-stores';
-import i18nService from '~/common/services/i18n.service';
 import { B2, H4, Icon, Row } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { styles as headerStyles } from '~/topbar/Topbar';
 import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
 import useChannelRecommendationContext from './hooks/useChannelRecommendationContext';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   location: string;
@@ -23,6 +23,7 @@ function ChannelRecommendationHeader({
   shadow,
   recommendationStore,
 }: PropsType) {
+  const i18n = sp.i18n;
   const navigation = useNavigation();
   const { dismissal } = useLegacyStores();
   const dismissible = location !== 'channel';
@@ -38,7 +39,7 @@ function ChannelRecommendationHeader({
   const sheetOptions = React.useMemo(
     () => [
       {
-        title: i18nService.t('removeFromFeed'),
+        title: i18n.t('removeFromFeed'),
         onPress: () => dismissal.dismiss('channel-recommendation:feed'),
         iconName: 'close',
         iconType: 'material-community',
@@ -47,7 +48,7 @@ function ChannelRecommendationHeader({
     [dismissal],
   );
 
-  const { alignSelfCenterMaxWidth, bgPrimaryBackground } = ThemedStyles.style;
+  const { alignSelfCenterMaxWidth, bgPrimaryBackground } = sp.styles.style;
 
   return shouldRender ? (
     <View
@@ -57,12 +58,12 @@ function ChannelRecommendationHeader({
         shadow ? headerStyles.shadow : undefined,
       ]}>
       <Row align="centerBetween" vertical="L" horizontal="L">
-        <H4>{i18nService.t('recommendedForYou')}</H4>
+        <H4>{i18n.t('recommendedForYou')}</H4>
         <Row align="centerBoth">
           <B2
             color="link"
             onPress={() => navigation.navigate('SuggestedChannel')}>
-            {i18nService.t('seeMore')}
+            {i18n.t('seeMore')}
           </B2>
 
           {dismissible && (

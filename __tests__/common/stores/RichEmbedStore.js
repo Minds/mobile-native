@@ -1,9 +1,13 @@
 import { toJS } from 'mobx';
 
-import RichEmbedStore from '../../../src/common/stores/RichEmbedStore';
-import RichEmbedService from '../../../src/common/services/rich-embed.service';
+import RichEmbedStore from '~/common/stores/RichEmbedStore';
+import RichEmbedService from '~/common/services/rich-embed.service';
+import sp from '~/services/serviceProvider';
 
-jest.mock('../../../src/common/services/rich-embed.service');
+jest.mock('~/services/serviceProvider');
+
+// mock services
+const richEmbedService = sp.mockService('richEmbed');
 
 /**
  * Tests
@@ -13,7 +17,7 @@ describe('rich embed store', () => {
 
   beforeEach(() => {
     store = new RichEmbedStore();
-    RichEmbedService.getMeta.mockClear();
+    richEmbedService.getMeta.mockClear();
   });
 
   it('it should return metadata from links without protocol', async () => {
@@ -25,7 +29,7 @@ describe('rich embed store', () => {
       },
     };
 
-    RichEmbedService.getMeta.mockResolvedValue(fakeMeta);
+    richEmbedService.getMeta.mockResolvedValue(fakeMeta);
 
     const promise = store.richEmbedCheck('hello www.minds.com');
 
@@ -36,7 +40,7 @@ describe('rich embed store', () => {
     await store.setRichEmbedPromise;
 
     expect(toJS(store.meta)).toEqual(fakeMeta);
-    expect(RichEmbedService.getMeta).toBeCalledWith('https://www.minds.com');
+    expect(richEmbedService.getMeta).toBeCalledWith('https://www.minds.com');
   });
 
   it('it should return metadata from links with protocol', async () => {
@@ -48,7 +52,7 @@ describe('rich embed store', () => {
       },
     };
 
-    RichEmbedService.getMeta.mockResolvedValue(fakeMeta);
+    richEmbedService.getMeta.mockResolvedValue(fakeMeta);
 
     const promise = store.richEmbedCheck(
       'hello https://www.minds.com/somelong/url?withparams=true&or=false',
@@ -61,7 +65,7 @@ describe('rich embed store', () => {
     await store.setRichEmbedPromise;
 
     expect(toJS(store.meta)).toEqual(fakeMeta);
-    expect(RichEmbedService.getMeta).toBeCalledWith(
+    expect(richEmbedService.getMeta).toBeCalledWith(
       'https://www.minds.com/somelong/url?withparams=true&or=false',
     );
   });
@@ -75,7 +79,7 @@ describe('rich embed store', () => {
       },
     };
 
-    RichEmbedService.getMeta.mockResolvedValue(fakeMeta);
+    richEmbedService.getMeta.mockResolvedValue(fakeMeta);
 
     const promise = store.richEmbedCheck(
       'hello http://www.minds.com/somelong/url?withparams=true&or=false',
@@ -88,7 +92,7 @@ describe('rich embed store', () => {
     await store.setRichEmbedPromise;
 
     expect(toJS(store.meta)).toEqual(fakeMeta);
-    expect(RichEmbedService.getMeta).toBeCalledWith(
+    expect(richEmbedService.getMeta).toBeCalledWith(
       'http://www.minds.com/somelong/url?withparams=true&or=false',
     );
   });

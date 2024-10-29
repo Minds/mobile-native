@@ -1,5 +1,5 @@
-import analyticsService from '~/common/services/analytics.service';
 import { GOOGLE_PLAY_STORE, IS_IOS } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 /**
  * Return whether a feature has a given variation state.
@@ -13,24 +13,24 @@ export function hasVariation(
 ) {
   return Array.isArray(featureKey)
     ? featureKey.every(
-        key => analyticsService.getFeatureFlag(key) === variation,
+        key => sp.resolve('analytics').getFeatureFlag(key) === variation,
       )
-    : analyticsService.getFeatureFlag(featureKey) === variation;
+    : sp.resolve('analytics').getFeatureFlag(featureKey) === variation;
 }
 
 /**
  * Update growthbook's attributes and features
  */
 export function updateFeatureFlags() {
-  analyticsService.initFeatureFlags();
+  sp.resolve('analytics').initFeatureFlags();
 }
 
 export function useIsFeatureOn(feature: FeatureID) {
-  return analyticsService.getFeatureFlag(feature);
+  return sp.resolve('analytics').getFeatureFlag(feature);
 }
 
 export function useFeature(feature: FeatureID) {
-  return analyticsService.getFeatureFlag(feature);
+  return sp.resolve('analytics').getFeatureFlag(feature);
 }
 
 export const useIsIOSFeatureOn = (feature: FeatureID) =>

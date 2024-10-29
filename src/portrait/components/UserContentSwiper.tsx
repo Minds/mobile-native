@@ -2,15 +2,14 @@ import { useFocusEffect } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import MetadataService from '~/common/services/metadata.service';
 import ViewStore from '~/common/stores/ViewStore';
-import ThemedStyles from '~/styles/ThemedStyles';
 
 import { useCarouselFocusEffect } from '../PortraitViewerScreen';
 import PortraitBarItem from '../models/PortraitBarItem';
-import portraitContentService from '../portrait-content.service';
 import PortraitActivity from './PortraitActivity';
 import PortraitPaginator from './PortraitPaginator';
+import { useMetadataService } from '~/services/hooks/useMetadataService';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   item: PortraitBarItem;
@@ -19,9 +18,6 @@ type PropsType = {
   unseenMode: boolean;
 };
 
-const metadataService = new MetadataService();
-metadataService.setSource('portrait').setMedium('feed');
-
 /**
  * User content swiper
  */
@@ -29,7 +25,8 @@ const UserContentSwiper = observer((props: PropsType) => {
   const activities = props.item.activities;
   const firstUnseen = activities.findIndex(a => !a.seen);
   const deltaPosition = React.useRef(0);
-
+  const metadataService = useMetadataService('portrait', 'feed');
+  const portraitContentService = sp.resolve('portraitContent');
   const store = useLocalStore(() => ({
     index: firstUnseen !== -1 ? firstUnseen : 0,
     viewStore: new ViewStore(),
@@ -130,7 +127,7 @@ const UserContentSwiper = observer((props: PropsType) => {
   );
 
   return (
-    <View style={ThemedStyles.style.flexContainer}>
+    <View style={sp.styles.style.flexContainer}>
       <PortraitActivity
         hasPaginator
         key={`activity${store.index}`}

@@ -4,12 +4,13 @@ import { View } from 'react-native';
 import UserModel from '~/channel/UserModel';
 import { Spacer } from '~/common/ui';
 import GroupsListItem from '~/groups/GroupsListItem';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import useRecommendationContext from './Recommendation.context';
 import ChannelRecommendationItem from './components/ChannelRecommendationItem';
 import { ChannelRecommendationStore } from './hooks/useChannelRecommendation';
 import useDismissibility from './hooks/useDismissibility';
 import { RecommendationLocation, RecommendationType } from './types';
+import sp from '~/services/serviceProvider';
 
 export interface RecommendationBodyProps {
   type: RecommendationType;
@@ -120,7 +121,7 @@ const RecommendationBody: FC<RecommendationBodyProps> = ({
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   borderBottom: ['borderBottom6x', 'bcolorBaseBackground'],
 });
 

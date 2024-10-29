@@ -12,11 +12,11 @@ import type { TextInput as TextInputType } from 'react-native';
 import { Portal } from '@gorhom/portal';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 
-import ThemedStyles from '../../styles/ThemedStyles';
 import { Flow } from 'react-native-animated-spinkit';
 import TextInput from '../../common/components/TextInput';
 import { FullWindowOverlay } from 'react-native-screens';
 import { H3 } from '../ui';
+import sp from '~/services/serviceProvider';
 
 const { height } = Dimensions.get('window');
 
@@ -100,7 +100,7 @@ const FloatingInput = React.forwardRef(
                   <TextInput
                     ref={inputRef}
                     autoFocus={true}
-                    placeholderTextColor={ThemedStyles.getColor('TertiaryText')}
+                    placeholderTextColor={sp.styles.getColor('TertiaryText')}
                     underlineColorAndroid="transparent"
                     {...props}
                     style={styles.input}
@@ -134,7 +134,7 @@ const Submit = ({
         children
       ) : (
         <View style={styles.indicator}>
-          <Flow color={ThemedStyles.getColor('PrimaryText')} />
+          <Flow color={sp.styles.getColor('PrimaryText')} />
         </View>
       )}
     </>
@@ -143,7 +143,7 @@ const Submit = ({
 
 export default React.memo(FloatingInput);
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   mainContainer: ['justifyEnd', 'flexContainer'],
   backdrop: ['flexContainer', 'bgBlack', 'opacity50'],
   indicator: ['alignSelfCenter', 'justifyEnd'],

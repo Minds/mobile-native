@@ -5,8 +5,8 @@ import * as entities from 'entities';
 import UserModel from '~/channel/UserModel';
 import Subscribe from '~/channel/v2/buttons/Subscribe';
 import MenuItem from '~/common/components/menus/MenuItem';
-import i18n from '~/common/services/i18n.service';
 import { B2, Icon, Row } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 
 interface ChannelRecommendationItemProps {
   channel: UserModel;
@@ -64,7 +64,7 @@ const ChannelRecommendationItem: FC<ChannelRecommendationItemProps> = ({
 const BoostedChannelLabel = () => (
   <Row top="XS" align="centerStart">
     <Icon name="boost" size="tiny" right="XS" color="Link" />
-    <B2 color="link">{i18n.t('boosts.boostedChannel')}</B2>
+    <B2 color="link">{sp.i18n.t('boosts.boostedChannel')}</B2>
   </Row>
 );
 

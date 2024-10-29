@@ -2,7 +2,6 @@ import React, { useCallback } from 'react';
 import { View } from 'react-native';
 
 import TextInput from '~/common/components/TextInput';
-import i18n from '~/common/services/i18n.service';
 import {
   B1,
   B2,
@@ -15,7 +14,7 @@ import {
   Screen,
   ScreenSection,
 } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import {
   GetRssFeedsQuery,
   useCreateRssFeedMutation,
@@ -26,10 +25,11 @@ import {
 import { UseQueryResult } from '@tanstack/react-query';
 import { showNotification } from 'AppMessages';
 import PressableScale from '~/common/components/PressableScale';
+import sp from '~/services/serviceProvider';
 
 export default function RssScreen() {
   const rssFeed = useGetRssFeedsQuery();
-
+  const i18n = sp.i18n;
   return (
     <Screen scroll>
       <ScreenSection>
@@ -65,7 +65,7 @@ const AddRssFeed = ({
 }) => {
   const mutation = useCreateRssFeedMutation<{ message?: string }>();
   const [text, setText] = React.useState('');
-
+  const i18n = sp.i18n;
   /**
    * Create feed
    */
@@ -122,6 +122,7 @@ const RssFeedsList = ({
 const Item = ({ rssFeed, item }) => {
   const removeMutation = useRemoveRssFeedMutation();
   const refreshMutation = useRefreshRssFeedMutation();
+  const i18n = sp.i18n;
 
   /**
    * Refresh feed
@@ -189,7 +190,7 @@ const Item = ({ rssFeed, item }) => {
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   input: [
     'colorPrimaryText',
     'border',

@@ -1,9 +1,11 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 import { MotiView } from 'moti';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { observer } from 'mobx-react';
 import { useDiscoveryV2Store } from './useDiscoveryV2Store';
+import sp from '~/services/serviceProvider';
+
 const { width } = Dimensions.get('window');
 
 const transition: any = { type: 'timing', duration: 160 };
@@ -40,7 +42,7 @@ const DiscoveryTabContent = observer(
         animate={animate}
         exit={exit}
         transition={transition}
-        style={ThemedStyles.style.positionAbsolute}>
+        style={sp.styles.style.positionAbsolute}>
         {children}
       </MotiView>
     );

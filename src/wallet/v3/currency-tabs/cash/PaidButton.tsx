@@ -1,9 +1,9 @@
 import React from 'react';
 import { ViewStyle } from 'react-native';
-import SegmentedButton from '../../../../common/components/SegmentedButton';
-import i18n from '../../../../common/services/i18n.service';
+import SegmentedButton from '~/common/components/SegmentedButton';
 import { WalletStoreType } from '../../../v2/createWalletStore';
 import { B2, Row } from '~ui';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
@@ -14,6 +14,7 @@ type PropsType = {
 const B2C = props => <B2 flat font="medium" {...props} />;
 
 const PaidButton = (props: PropsType) => {
+  const i18n = sp.i18n;
   const children = {
     childrenButton1: (
       <Row align="centerStart">

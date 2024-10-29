@@ -1,9 +1,10 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { ItemPropType, RowPropType, SpacerPropType } from './types';
 import { Row } from './Row';
 import { UNIT } from '~styles/Tokens';
+import sp from '~/services/serviceProvider';
 
 export const Item = ({
   noBorder,
@@ -18,7 +19,7 @@ export const Item = ({
   return <Row containerStyle={style} align="centerBetween" {...more} />;
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: {
     paddingVertical: UNIT.M,
     paddingHorizontal: UNIT.L,

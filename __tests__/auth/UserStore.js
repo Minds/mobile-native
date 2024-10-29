@@ -1,10 +1,13 @@
 import { whenWithTimeout } from 'mobx-utils';
-import channelService from '../../src/channel/ChannelService';
 import UserStore from '../../src/auth/UserStore';
 import meFactory from '../../__mocks__/fake/auth/MeFactory';
 import UserModel from '../../src/channel/UserModel';
+import sp from '~/services/serviceProvider';
 
-jest.mock('../../src/channel/ChannelService');
+jest.mock('~/services/serviceProvider');
+
+// mock services
+const channelService = sp.mockService('channel');
 
 // mock the static create method
 // UserModel.create = jest.fn();

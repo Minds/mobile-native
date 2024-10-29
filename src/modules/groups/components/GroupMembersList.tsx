@@ -15,11 +15,11 @@ import {
   BottomSheetMenuItemProps,
   pushBottomSheet,
 } from '~/common/components/bottom-sheet';
-import i18n from '~/common/services/i18n.service';
 import { confirm } from '~/common/components/Confirm';
 import { GroupMembersStoreType } from '../hooks/useGroupMembersStore';
 import { useGroupContext } from '../contexts/GroupContext';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 export type GroupMembersListProps = {
   group: GroupModel;
@@ -60,8 +60,8 @@ function GroupMembersFlashList(
   return store ? (
     <View
       style={[
-        ThemedStyles.style.flexContainer,
-        ThemedStyles.style.alignSelfCenterMaxWidth,
+        sp.styles.style.flexContainer,
+        sp.styles.style.alignSelfCenterMaxWidth,
       ]}>
       <FlashList
         estimatedItemSize={75}
@@ -98,6 +98,7 @@ const memberMenuPress = (
   group: GroupModel,
   store: GroupMembersStoreType,
 ) => {
+  const i18n = sp.i18n;
   pushBottomSheet({
     title: truncate(member.name, {
       length: 25,

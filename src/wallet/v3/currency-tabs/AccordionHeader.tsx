@@ -1,7 +1,8 @@
 import React from 'react';
 import { Tooltip } from 'react-native-elements';
+
 import { Icon, B1, Row, Spacer, B2 } from '~ui';
-import ThemedStyles from '~styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   title: string | React.ReactNode;
@@ -11,7 +12,7 @@ type PropsType = {
 };
 
 const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const SubTitle = subtitle ? (
     typeof subtitle === 'string' ? (
@@ -33,7 +34,7 @@ const AccordionHeader = ({ title, subtitle, tooltip, isActive }: PropsType) => {
               containerStyle={theme.borderRadius}
               width={tooltip.width}
               height={tooltip.height}
-              backgroundColor={ThemedStyles.getColor('Link')}
+              backgroundColor={sp.styles.getColor('Link')}
               popover={<B2 color="white">{tooltip.title}</B2>}>
               <Icon name="info" size="tiny" />
             </Tooltip>

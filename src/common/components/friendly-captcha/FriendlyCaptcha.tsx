@@ -6,10 +6,10 @@ import React, {
   useImperativeHandle,
   useRef,
 } from 'react';
-import openUrlService from '~/common/services/open-url.service';
 import { APP_API_URI } from '~/config/Config';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import html from './html';
+import sp from '~/services/serviceProvider';
 
 interface FriendlyCaptchaProps {
   onSolved: (solution: string) => void;
@@ -78,7 +78,7 @@ function FriendlyCaptcha(
    */
   const onNavigation = useCallback(request => {
     if (!request.url.includes(APP_API_URI)) {
-      openUrlService.open(request.url);
+      sp.resolve('openURL').open(request.url);
       return false;
     }
 
@@ -101,7 +101,7 @@ function FriendlyCaptcha(
       textInteractionEnabled={false}
       injectedJavaScript={
         `
-        setTheme(${ThemedStyles.theme === 1 ? "'dark'" : "'light'"});
+        setTheme(${sp.styles.theme === 1 ? "'dark'" : "'light'"});
         ${origin ? `window.captchaOrigin = '${origin}';` : ''}
         ` as string
       }

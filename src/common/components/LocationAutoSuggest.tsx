@@ -1,16 +1,14 @@
 import React, { useCallback, useEffect } from 'react';
 import { View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { observer, useLocalStore } from 'mobx-react';
-import logService from '../services/log.service';
 import CenteredLoading from './CenteredLoading';
-import apiService from '../services/api.service';
-import type { ApiResponse } from '../services/api.service';
-import i18n from '../services/i18n.service';
+import type { ApiResponse } from '../services/ApiResponse';
 import debounce from '../helpers/debounce';
 import Input from './Input';
 import MText from './MText';
 import InputContainer from './InputContainer';
+import sp from '~/services/serviceProvider';
 
 type addressType = {
   state?: string;
@@ -87,7 +85,7 @@ const createLocationAutoSuggestStore = (p: PropsType) => {
       const me = this;
       debounce(async () => {
         try {
-          const response: GeolocationResponse = await apiService.get(
+          const response: GeolocationResponse = await sp.api.get(
             'api/v1/geolocation/list',
             {
               q: me.value,
@@ -100,7 +98,7 @@ const createLocationAutoSuggestStore = (p: PropsType) => {
             throw error;
           }
         } catch (err) {
-          logService.exception('[location autoSuggest]', err);
+          sp.log.exception('[location autoSuggest]', err);
           me.setError(true);
         } finally {
           me.setLoading(false);
@@ -117,7 +115,7 @@ const createLocationAutoSuggestStore = (p: PropsType) => {
 
 const LocationAutoSuggest = observer((props: PropsType) => {
   const store = useLocalStore(createLocationAutoSuggestStore, props);
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const setLocation = useCallback(
     value => {
@@ -143,7 +141,7 @@ const LocationAutoSuggest = observer((props: PropsType) => {
   return (
     <View>
       <TextInput
-        placeholder={i18n.t('channel.edit.location')}
+        placeholder={sp.i18n.t('channel.edit.location')}
         onChangeText={store.setValue}
         value={store.value}
         testID="cityInput"

@@ -5,7 +5,7 @@ import Interactions from './Interactions';
 import { Dimensions } from 'react-native';
 import capitalize from '../../helpers/capitalize';
 import { getTitle } from './InteractionsBottomSheet';
-import NavigationService from '~/navigation/NavigationService';
+import sp from '~/services/serviceProvider';
 
 const { height: windowHeight } = Dimensions.get('window');
 const MAX_HEIGHT = Math.floor(windowHeight * 0.8);
@@ -43,7 +43,7 @@ const pushInteractionsBottomSheet = ({
 };
 
 export const pushInteractionsScreen = ({ entity, interaction }): void =>
-  NavigationService.push('Interactions', {
+  sp.navigation.push('Interactions', {
     entity,
     interaction,
   });

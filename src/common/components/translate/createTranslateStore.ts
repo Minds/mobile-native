@@ -1,9 +1,9 @@
 import { showNotification } from 'AppMessages';
 import * as entities from 'entities';
-import i18n from '~/common/services/i18n.service';
-import translationService from '~/common/services/translation.service';
+import sp from '~/services/serviceProvider';
 
 const createTranslateStore = () => {
+  const i18n = sp.i18n;
   const store = {
     show: false,
     translating: false,
@@ -17,6 +17,7 @@ const createTranslateStore = () => {
       this.translatedFrom = null;
     },
     async translate(language: string, guid: string) {
+      const translationService = sp.resolve('translation');
       let translatedFrom = null;
       try {
         const translation = await translationService.translate(guid, language);

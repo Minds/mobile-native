@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
-import MText from '../../../../../common/components/MText';
-import ThemedStyles from '../../../../../styles/ThemedStyles';
+
+import MText from '~/common/components/MText';
 import { format } from '../../MindsTokens';
+import sp from '~/services/serviceProvider';
 
 const ToolTipText = () => (
   <MText style={styles.tooltipTitle}>
@@ -33,7 +34,7 @@ type PropsType = {
 
 const TimeMultiplier = ({ multiplier }: PropsType) => {
   const tooltipRef = useRef<any>();
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const progressBar: any = {
     flex: 1,
     width: `${(multiplier / 3) * 100}%`,
@@ -65,7 +66,7 @@ const TimeMultiplier = ({ multiplier }: PropsType) => {
         containerStyle={theme.borderRadius}
         width={225}
         height={100}
-        backgroundColor={ThemedStyles.getColor('Link')}
+        backgroundColor={sp.styles.getColor('Link')}
         popover={<ToolTipText />}>
         <View />
       </Tooltip>

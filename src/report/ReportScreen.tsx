@@ -1,13 +1,8 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { Alert, View } from 'react-native';
-import openUrlService from '~/common/services/open-url.service';
 import { Button, Icon, Screen } from '~/common/ui';
 import { showNotification } from '../../AppMessages';
 import TextInput from '../common/components/TextInput';
-import i18n from '../common/services/i18n.service';
-import mindsService from '../common/services/minds-config.service';
-import ThemedStyles from '../styles/ThemedStyles';
-import reportService from './ReportService';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import MenuItem from '../common/components/menus/MenuItem';
 import ActivityModel from '~/newsfeed/ActivityModel';
@@ -21,8 +16,9 @@ import {
   useCreateNewReportMutation,
 } from '~/graphql/api';
 import { IS_TENANT } from '~/config/Config';
-import logService from '~/common/services/log.service';
 import UserModel from '~/channel/UserModel';
+import sp from '~/services/serviceProvider';
+import { ReasonIndex } from './types';
 
 type PropsType = {
   route: any;
@@ -37,8 +33,8 @@ export type Reason = {
 };
 const ReportScreen = ({ route, navigation }: PropsType) => {
   const { entity, requireNote, reason, title } = route.params;
-  const theme = ThemedStyles.style;
-
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
   const [reasonsList, setReasons] = useState(reason?.reasons || []);
 
   const [note, setNote] = useState('');
@@ -68,7 +64,7 @@ const ReportScreen = ({ route, navigation }: PropsType) => {
                 key={i}
                 onPress={
                   externalLink
-                    ? () => openUrlService.open(externalLink)
+                    ? () => sp.resolve('openURL').open(externalLink)
                     : () =>
                         reasonItem.reasons || reasonItem.hasMore
                           ? navigation.push('Report', {
@@ -177,16 +173,15 @@ function getExternalLinkForReason(reason): undefined | string {
 }
 
 function getReasons() {
-  const settings = mindsService.getSettings();
+  const settings = sp.config.getSettings();
 
   settings.report_reasons.forEach(r => {
-    //@ts-ignore we ignore the type validation because it depends on the server response
-    r.label = i18n.t(`reports.reasons.${r.value}.label`, {
+    r.label = sp.i18n.t(`reports.reasons.${r.value as ReasonIndex}.label`, {
       defaultValue: r.label,
     });
     if (r.reasons && r.reasons.length) {
       r.reasons.forEach(r2 => {
-        r2.label = i18n.t(
+        r2.label = sp.i18n.t(
           //@ts-ignore
           `reports.reasons.${r.value}.reasons.${r2.value}.label`,
           { defaultValue: r2.label },
@@ -212,6 +207,7 @@ function confirmAndSubmit({
   note: string;
   navigation: any;
 }) {
+  const i18n = sp.i18n;
   if (requireNote && note === '') {
     showNotification(i18n.t('reports.explain'));
     return;
@@ -278,18 +274,14 @@ async function submit({
       subreason?.value || null,
       note,
     );
-    await reportService.report(
-      guid,
-      urn,
-      reason.value,
-      subreason?.value || null,
-      note,
-    );
+    await sp
+      .resolve('report')
+      .report(guid, urn, reason.value, subreason?.value || null, note);
 
-    showNotification(i18n.t('reports.weHaveGotYourReport'));
+    showNotification(sp.i18n.t('reports.weHaveGotYourReport'));
   } catch (e) {
-    logService.exception('[ReportScreen]', e);
-    Alert.alert(i18n.t('error'), i18n.t('reports.errorSubmitting'));
+    sp.log.exception('[ReportScreen]', e);
+    Alert.alert(sp.i18n.t('error'), sp.i18n.t('reports.errorSubmitting'));
   }
 }
 
@@ -327,9 +319,9 @@ async function callMutation({
 
     await mutation.mutate(data);
 
-    showNotification(i18n.t('reports.weHaveGotYourReport'));
+    showNotification(sp.i18n.t('reports.weHaveGotYourReport'));
   } catch (e) {
-    Alert.alert(i18n.t('error'), i18n.t('reports.errorSubmitting'));
+    Alert.alert(sp.i18n.t('error'), sp.i18n.t('reports.errorSubmitting'));
   }
 }
 

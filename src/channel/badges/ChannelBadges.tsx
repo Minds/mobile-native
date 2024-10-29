@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react';
 import { IconNext } from '~ui/icons';
 import type UserModel from '../UserModel';
-import ThemedStyles from '~/styles/ThemedStyles';
-import i18n from '~/common/services/i18n.service';
+
 import { Row, SpacerPropType } from '~ui';
 import BadgeTooltip from '~/common/components/BadgeTooltip';
 import { IS_TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   channel: UserModel;
@@ -21,6 +21,7 @@ export default class ChannelBadges extends PureComponent<
    * Render
    */
   render() {
+    const i18n = sp.i18n;
     const { channel, ...spacer } = this.props;
     const size = 'tiny';
     const badges: Array<React.ReactNode> = [];
@@ -31,7 +32,7 @@ export default class ChannelBadges extends PureComponent<
         <BadgeTooltip
           key="source"
           label={`${source} profile`}
-          color={ThemedStyles.getColor('Link')}>
+          color={sp.styles.getColor('Link')}>
           <IconNext name="globe" size={size} active horizontal="XXXS" key={2} />
         </BadgeTooltip>,
       );
@@ -42,7 +43,7 @@ export default class ChannelBadges extends PureComponent<
         <BadgeTooltip
           key={'plus'}
           label={i18n.t('channel.badge.plus')}
-          color={ThemedStyles.getColor('Link')}>
+          color={sp.styles.getColor('Link')}>
           <IconNext
             active
             name="plus-circle-outline"
@@ -59,7 +60,7 @@ export default class ChannelBadges extends PureComponent<
         <BadgeTooltip
           key={'verified'}
           label={i18n.t('channel.badge.verified')}
-          color={ThemedStyles.getColor('SuccessBackground')}>
+          color={sp.styles.getColor('SuccessBackground')}>
           <IconNext
             name="verified"
             size={size}
@@ -77,7 +78,7 @@ export default class ChannelBadges extends PureComponent<
         <BadgeTooltip
           key={'founder'}
           label={i18n.t('channel.badge.founder')}
-          color={ThemedStyles.getColor('Link')}>
+          color={sp.styles.getColor('Link')}>
           <IconNext
             horizontal="XXXS"
             name="founder"

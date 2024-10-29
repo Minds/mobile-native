@@ -1,4 +1,3 @@
-//@ts-nocheck
 export const LICENSES = [
   {
     value: 'all-rights-reserved',

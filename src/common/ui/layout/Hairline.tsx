@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Row } from './Row';
 import { Spacer } from './Spacer';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { Column } from './Column';
 import {
   HairlinePropType,
@@ -10,6 +10,8 @@ import {
   SpacerPropType,
   ColumnPropType,
 } from './types';
+
+import sp from '~/services/serviceProvider';
 
 export const HairlineSpacer = ({
   noBorder,
@@ -32,7 +34,7 @@ export const HairlineColumn = ({
   return <Column containerStyle={!noBorder && styles.border} {...more} />;
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   border: [
     { borderBottomWidth: StyleSheet.hairlineWidth },
     'bcolorPrimaryBorder',

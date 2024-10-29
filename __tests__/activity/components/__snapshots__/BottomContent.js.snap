@@ -45,7 +45,7 @@ exports[`BottomContent component renders correctly 1`] = `
           "eth_wallet": "",
           "founder": false,
           "groupsCount": 0,
-          "guid": null,
+          "guid": undefined,
           "impressions": undefined,
           "isOwner": [Function],
           "is_admin": false,

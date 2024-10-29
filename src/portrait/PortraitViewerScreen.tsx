@@ -17,10 +17,10 @@ import { useStores } from '~/common/hooks/use-stores';
 import { AppStackParamList } from '~/navigation/NavigationTypes';
 import withModalProvider from '~/navigation/withModalProvide';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import ThemedStyles from '~/styles/ThemedStyles';
 
 import UserContentSwiper from './components/UserContentSwiper';
 import usePortraitAnimation from './hooks/usePortraitAnimation';
+import sp from '~/services/serviceProvider';
 
 type ActivityFullScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -130,7 +130,10 @@ const PortraitViewerScreen = withErrorBoundaryScreen(
     useFocusEffect(
       useCallback(() => {
         // resort data when unfocused
-        return () => portraitStore.sort();
+        return () => {
+          portraitStore.sort();
+          sp.resolve('portraitContent').save();
+        };
       }, [portraitStore]),
     );
 
@@ -144,7 +147,7 @@ const PortraitViewerScreen = withErrorBoundaryScreen(
     );
 
     return (
-      <View style={ThemedStyles.style.flexContainer}>
+      <View style={sp.styles.style.flexContainer}>
         <Carousel
           loop={false}
           ref={ref}
@@ -209,7 +212,7 @@ const CustomItem: React.FC<ItemProps> = observer(
     }, [animationValue]);
 
     return (
-      <View style={ThemedStyles.style.flexContainer}>
+      <View style={sp.styles.style.flexContainer}>
         <FocusProvider.Provider value={index === store.index}>
           <UserContentSwiper
             key={index}
@@ -221,7 +224,7 @@ const CustomItem: React.FC<ItemProps> = observer(
         </FocusProvider.Provider>
         <Animated.View
           pointerEvents="none"
-          style={[ThemedStyles.style.absoluteFill, maskStyle]}
+          style={[sp.styles.style.absoluteFill, maskStyle]}
         />
       </View>
     );

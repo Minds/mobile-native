@@ -1,7 +1,7 @@
 import type UserModel from '../../channel/UserModel';
 import type UserStore from '../../auth/UserStore';
-import { userItem } from './SearchBar.service';
-import NavigationService from '../../navigation/NavigationService';
+import type { userItem } from './SearchBar.service';
+import sp from '../../services/serviceProvider';
 
 const createSearchResultStore = () => {
   const store = {
@@ -38,10 +38,17 @@ const createSearchResultStore = () => {
         this.suggested = [];
         return;
       }
-      if (this.shouldShowSuggested && this.user) {
+      if (this.shouldShowSuggested) {
         this.loading = true;
-        this.suggested = await this.user.getSuggestedSearch(search);
-        this.loading = false;
+        try {
+          this.suggested = await sp
+            .resolve('searchBar')
+            .getSuggestedSearch(search);
+        } catch (error) {
+          sp.log.exception(error);
+        } finally {
+          this.loading = false;
+        }
       }
     },
     searchBarItemTap(item) {
@@ -56,7 +63,7 @@ const createSearchResultStore = () => {
     },
     searchDiscovery() {
       this.search = this.searchText;
-      NavigationService.navigate('Discovery', {
+      sp.navigation.navigate('Discovery', {
         screen: 'DiscoverySearch',
         params: { query: this.search },
       });

@@ -6,9 +6,6 @@ import CenteredLoading from '~/common/components/CenteredLoading';
 import ErrorLoading from '~/common/components/ErrorLoading';
 import InputContainer from '~/common/components/InputContainer';
 import useApiFetch, { FetchStore } from '~/common/hooks/useApiFetch';
-import apiService from '~/common/services/api.service';
-import i18n from '~/common/services/i18n.service';
-import mindsConfigService from '~/common/services/minds-config.service';
 
 import {
   B1,
@@ -19,6 +16,7 @@ import {
   ScreenSection,
 } from '~/common/ui';
 import StripeConnectButton from '../../wallet/v2/stripe-connect/StripeConnectButton';
+import serviceProvider from '~/services/serviceProvider';
 
 type Settings = {
   min_offchain_tokens: number;
@@ -28,7 +26,7 @@ type Settings = {
 export default observer(function SupermindSettingsScreen({ navigation }) {
   const fetchStore = useApiFetch<Settings>('api/v3/supermind/settings');
   const localStore = useLocalStore(createStore, { navigation, fetchStore });
-
+  const i18n = serviceProvider.i18n;
   /**
    * Sync values with local store
    */
@@ -36,7 +34,7 @@ export default observer(function SupermindSettingsScreen({ navigation }) {
     if (fetchStore.result) {
       localStore.setCash(fetchStore.result.min_cash.toString());
       localStore.setTokens(fetchStore.result.min_offchain_tokens.toString());
-      const config = mindsConfigService.getSettings();
+      const config = serviceProvider.config.getSettings();
       if (config.supermind?.min_thresholds) {
         localStore.setThresholds(config.supermind.min_thresholds);
       }
@@ -94,7 +92,7 @@ const Inputs = observer(
       <>
         <InputContainer
           testID="tokensInput"
-          placeholder={i18n.t('tokens')}
+          placeholder={serviceProvider.i18n.t('tokens')}
           onChangeText={v => {
             store.setTokens(v);
           }}
@@ -106,7 +104,7 @@ const Inputs = observer(
         />
         <InputContainer
           testID="cashInput"
-          placeholder={i18n.t('usd')}
+          placeholder={serviceProvider.i18n.t('usd')}
           keyboardType="numeric"
           error={store.cashError}
           onChangeText={v => {
@@ -118,7 +116,7 @@ const Inputs = observer(
     ) : (
       <ErrorLoading
         tryAgain={() => fetchStore.fetch()}
-        message={i18n.t('errorMessage')}
+        message={serviceProvider.i18n.t('errorMessage')}
       />
     ),
 );
@@ -144,6 +142,7 @@ const createStore = ({ navigation }) => {
       this.cashError = this.validateInput(v, this.min_thresholds.min_cash);
     },
     validateInput(value: string, minimum: number) {
+      const i18n = serviceProvider.i18n;
       const numericValue = parseFloat(value) || 0;
       if (value === '') {
         return i18n.t('auth.fieldRequired');
@@ -167,8 +166,9 @@ const createStore = ({ navigation }) => {
       );
     },
     async submit() {
+      const i18n = serviceProvider.i18n;
       try {
-        await apiService.post('api/v3/supermind/settings', {
+        await serviceProvider.api.post('api/v3/supermind/settings', {
           min_cash: parseFloat(this.cash),
           min_offchain_tokens: parseFloat(this.tokens),
         });

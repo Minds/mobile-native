@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18nService from '../services/i18n.service';
+
 import { B1, H2, Spacer } from '../ui';
 import { BottomSheetButton, pushBottomSheet } from './bottom-sheet';
+import sp from '~/services/serviceProvider';
 
 interface ConfirmProps {
   title: string;
@@ -26,10 +26,11 @@ export default function Confirm({
   onCancel,
   onLayout,
 }: ConfirmProps) {
+  const i18n = sp.i18n;
   return (
     <SafeAreaView
       edges={['bottom']}
-      style={ThemedStyles.style.flexContainer}
+      style={sp.styles.style.flexContainer}
       onLayout={onLayout}>
       <Spacer horizontal="L" bottom="S">
         <H2 align="center" bottom="L">
@@ -40,10 +41,10 @@ export default function Confirm({
       <BottomSheetButton
         action
         solid
-        text={actionText ?? i18nService.t('confirm')}
+        text={actionText ?? i18n.t('confirm')}
         onPress={onConfirm}
       />
-      <BottomSheetButton text={i18nService.t('cancel')} onPress={onCancel} />
+      <BottomSheetButton text={i18n.t('cancel')} onPress={onCancel} />
       <Spacer bottom="L" />
     </SafeAreaView>
   );

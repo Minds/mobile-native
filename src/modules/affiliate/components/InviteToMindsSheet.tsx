@@ -7,13 +7,11 @@ import {
   BottomSheetModal,
 } from '~/common/components/bottom-sheet';
 import { B2, Row } from '~/common/ui';
-import sessionService from '~/common/services/session.service';
 import { APP_URI } from '~/config/Config';
 import { showNotification } from 'AppMessages';
 import { IconButtonCircle } from './IconButtonCircle';
 import { Linking } from 'react-native';
-import ShareService from '~/share/ShareService';
-
+import sp from '~/services/serviceProvider';
 /**
  * Links Bottom Sheet
  */
@@ -61,7 +59,7 @@ const InviteToMindsSheet = React.forwardRef<BottomSheetModalType>(
 );
 
 const getURL = () => {
-  return encodeURI(`${APP_URI}?referrer=${sessionService.getUser().username}`);
+  return encodeURI(`${APP_URI}?referrer=${sp.session.getUser().username}`);
 };
 
 const inviteTweeter = () => {
@@ -83,7 +81,7 @@ const inviteFacebook = () => {
 };
 
 const openShare = () => {
-  ShareService.share('Join me on Minds', getURL());
+  sp.resolve('share').share('Join me on Minds', getURL());
 };
 
 const copyReferrer = () => {

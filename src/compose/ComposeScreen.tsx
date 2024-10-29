@@ -19,15 +19,11 @@ import {
 } from 'react-native-safe-area-context';
 
 import { StackScreenProps } from '@react-navigation/stack';
-import sessionService from '~/common/services/session.service';
 import { Row } from '~/common/ui';
 import BottomSheetButton from '../common/components/bottom-sheet/BottomSheetButton';
 import BottomSheet from '../common/components/bottom-sheet/BottomSheetModal';
-import i18n from '../common/services/i18n.service';
 import GroupModel from '../groups/GroupModel';
-import NavigationService from '../navigation/NavigationService';
 import ActivityModel from '../newsfeed/ActivityModel';
-import ThemedStyles, { useStyle } from '../styles/ThemedStyles';
 import BottomBar from './ComposeBottomBar';
 import ComposeTopBar from './ComposeTopBar';
 import { ComposerAutoComplete } from './ComposerAutoComplete';
@@ -44,6 +40,8 @@ import { ComposerStackParamList } from './ComposeStack';
 import ComposeAudienceSelector from './ComposeAudienceSelector';
 import { IS_IOS } from '~/config/Config';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import sp from '~/services/serviceProvider';
+import { useStyle } from '~/styles/hooks';
 
 const { width } = Dimensions.get('window');
 
@@ -68,24 +66,24 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
   const store = useComposeStore(props);
   const inputRef = useRef<any>(null);
   const isCreateModalOn = true;
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const scrollViewRef = useRef<ScrollView>(null);
 
   const optionsRef = useRef<any>(null);
   const confirmRef = useRef<any>(null);
   const showEmbed = store.embed.hasRichEmbed && store.embed.meta;
-
+  const i18n = sp.i18n;
   const placeholder = store.attachments.hasAttachment
     ? i18n.t('description')
     : i18n.t('capture.placeholder');
-  const showBottomBar = !optionsRef.current || !optionsRef.current.opened;
-  const channel = sessionService.getUser();
+
+  const channel = sp.session.getUser();
   const avatar =
     channel && channel.getAvatarSource ? channel.getAvatarSource('medium') : {};
 
   const discard = useCallback(() => {
     store.clear();
-    NavigationService.goBack();
+    sp.navigation.goBack();
   }, [store]);
 
   const onPressBack = useCallback(() => {
@@ -233,6 +231,19 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           scrollViewRef={scrollViewRef}
         />
 
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={IS_IOS ? 0 : 30}
+          behavior="padding"
+          style={styles.bottomBarContainer}>
+          <BottomBar
+            store={store}
+            onHashtag={handleHashtagPress}
+            onMoney={handleMoneyPress}
+            onOptions={handleOptionsPress}
+            onSupermind={handleSupermindPress}
+          />
+        </KeyboardAvoidingView>
+
         <PosterBottomSheet ref={optionsRef} />
 
         <BottomSheet
@@ -250,19 +261,6 @@ const ComposeScreen: React.FC<ScreenProps> = props => {
           />
         </BottomSheet>
       </SafeAreaView>
-      {showBottomBar && (
-        <KeyboardAvoidingView
-          behavior="padding"
-          style={styles.bottomBarContainer}>
-          <BottomBar
-            store={store}
-            onHashtag={handleHashtagPress}
-            onMoney={handleMoneyPress}
-            onOptions={handleOptionsPress}
-            onSupermind={handleSupermindPress}
-          />
-        </KeyboardAvoidingView>
-      )}
     </ComposeContext.Provider>
   );
 };
@@ -271,7 +269,7 @@ export default observer(ComposeScreen);
 
 const scrollViewContentContainerStyle = { paddingBottom: 35 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   bottomBarContainer: [
     'borderTopHair',
     'bcolorPrimaryBorder',

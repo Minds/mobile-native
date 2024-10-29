@@ -1,23 +1,23 @@
 import React from 'react';
 import { Alert } from 'react-native';
-import { Button, ScreenSection, B1, Screen } from '~ui';
-import i18n from '../../common/services/i18n.service';
-import AuthService from '~/auth/AuthService';
 import { useNavigation } from '@react-navigation/native';
+
+import { Button, ScreenSection, B1, Screen } from '~ui';
 import { TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 /**
  * Delete Channel Screen
  */
 export default function DeactivateChannelScreen() {
   const navigation = useNavigation();
-
+  const i18n = sp.i18n;
   const onDisable = () => {
     Alert.alert(
       i18n.t('attention'),
       i18n.t('settings.disableChannelConfirm'),
       [
-        { text: i18n.t('yes'), onPress: () => AuthService.disable() },
+        { text: i18n.t('yes'), onPress: () => sp.resolve('auth').disable() },
         { text: i18n.t('no') },
       ],
       { cancelable: false },

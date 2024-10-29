@@ -2,17 +2,18 @@ import * as React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react-native';
 import UserDataScreen from './UserDataScreen';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import analyticsService from '~/common/services/analytics.service';
-import settingsService from '../SettingsService';
-import mindsConfigService from '~/common/services/minds-config.service';
 import { useDeletePostHogPersonMutation } from '~/graphql/api';
 
-jest.mock('~/common/services/analytics.service', () => ({
-  setOptOut: jest.fn(),
-}));
-jest.mock('../SettingsService', () => ({
-  submitSettings: jest.fn(),
-}));
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
+const mindsConfigService = sp.mockService('config');
+const analyticsService = sp.mockService('analytics');
+const settingsApiService = sp.mockService('settingsApi');
 
 jest.mock('~/graphql/api');
 
@@ -44,14 +45,14 @@ describe('UserDataScreen', () => {
     render(<UserDataScreen />, { wrapper });
 
     jest.spyOn(analyticsService, 'setOptOut');
-    jest.spyOn(settingsService, 'submitSettings');
+    jest.spyOn(settingsApiService, 'submitSettings');
 
     const checkbox = screen.getByTestId('checkbox');
     fireEvent.press(checkbox);
 
     expect(analyticsService.setOptOut).toHaveBeenCalledTimes(1);
     expect(analyticsService.setOptOut).toHaveBeenCalledWith(true);
-    expect(settingsService.submitSettings).toHaveBeenCalled();
+    expect(settingsApiService.submitSettings).toHaveBeenCalled();
   });
 
   it('should set opt out to true when clicking on unchecked checkbox', () => {
@@ -62,7 +63,7 @@ describe('UserDataScreen', () => {
     });
 
     jest.spyOn(analyticsService, 'setOptOut');
-    jest.spyOn(settingsService, 'submitSettings');
+    jest.spyOn(settingsApiService, 'submitSettings');
 
     render(<UserDataScreen />, { wrapper });
 
@@ -71,7 +72,7 @@ describe('UserDataScreen', () => {
 
     expect(analyticsService.setOptOut).toHaveBeenCalledTimes(1);
     expect(analyticsService.setOptOut).toHaveBeenCalledWith(false);
-    expect(settingsService.submitSettings).toHaveBeenCalled();
+    expect(settingsApiService.submitSettings).toHaveBeenCalled();
   });
 
   it('should delete data when clicking button', async () => {

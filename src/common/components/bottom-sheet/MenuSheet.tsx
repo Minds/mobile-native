@@ -1,6 +1,5 @@
 import React, { PropsWithChildren, useRef } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import i18nService from '~/common/services/i18n.service';
 import {
   BottomSheetButton,
   BottomSheetMenuItem,
@@ -8,6 +7,7 @@ import {
   BottomSheetModal,
   BottomSheetModalHandle,
 } from './';
+import sp from '~/services/serviceProvider';
 
 export interface MenuSheetProps {
   items: BottomSheetMenuItemProps[];
@@ -46,7 +46,7 @@ export default function MenuSheet({
             key={i}
           />
         ))}
-        <BottomSheetButton text={i18nService.t('cancel')} onPress={close} />
+        <BottomSheetButton text={sp.i18n.t('cancel')} onPress={close} />
       </BottomSheetModal>
     </>
   );

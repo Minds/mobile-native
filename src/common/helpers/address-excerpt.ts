@@ -1,4 +1,3 @@
-//@ts-nocheck
 export default function addressExcerpt(address) {
   if (!address || address.toLowerCase().indexOf('0x') !== 0) {
     return address;

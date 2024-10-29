@@ -2,13 +2,19 @@ import 'react-native';
 import React from 'react';
 import { Text, Dimensions } from 'react-native';
 import { shallow } from 'enzyme';
-import MindsVideoV2 from '../../../src/media/v2/mindsVideo/MindsVideo';
-import MediaView from '../../../src/common/components/MediaView';
+import MindsVideoV2 from '~/media/v2/mindsVideo/MindsVideo';
+import MediaView from '~/common/components/MediaView';
 
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 
 jest.mock('@gorhom/bottom-sheet');
-jest.mock('../../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
+jest.mock('~/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
 
 describe('Media view component', () => {
   let user, comments, entity, screen;

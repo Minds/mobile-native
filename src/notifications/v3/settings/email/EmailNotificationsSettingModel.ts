@@ -1,8 +1,7 @@
 import { action, computed, observable } from 'mobx';
-import apiService from '../../../../common/services/api.service';
-import i18n, { LocaleType } from '../../../../common/services/i18n.service';
-import logService from '../../../../common/services/log.service';
+import type { LocaleType } from '~/common/services/i18n.service';
 import { TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 export type EmailNotificationsSettingType = {
   campaign: 'global' | 'when' | 'with';
@@ -32,7 +31,9 @@ export default class EmailNotificationsSettingModel {
 
   @computed
   get topic() {
-    let translation = i18n.t(`notificationSettings.${this._topic}`, { TENANT });
+    let translation = sp.i18n.t(`notificationSettings.${this._topic}`, {
+      TENANT,
+    });
     if (
       translation.includes('missing') &&
       translation.includes('translation')
@@ -55,13 +56,13 @@ export default class EmailNotificationsSettingModel {
           [this._topic]: this.value,
         },
       };
-      await apiService.post('api/v2/settings/emails', {
+      await sp.api.post('api/v2/settings/emails', {
         notifications,
       });
     } catch (err) {
       this._toggleValue(this.oldValue);
 
-      logService.exception('[NotificationsSettingModel] toggleEnabled', err);
+      sp.log.exception('[NotificationsSettingModel] toggleEnabled', err);
     }
   }
 

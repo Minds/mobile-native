@@ -7,12 +7,13 @@ import {
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import { StatusBar, View } from 'react-native';
-import ThemedStyles, { useStyle } from '../../../styles/ThemedStyles';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Handle from './Handle';
 import useBackHandler from './useBackHandler';
 import { H3, B1, IconButton } from '~ui';
 import { HORIZONTAL } from '~/styles/Tokens';
+import sp from '~/services/serviceProvider';
+import { useStyle } from '~/styles/hooks';
 
 interface PropsType extends Omit<BottomSheetModalProps, 'snapPoints'> {
   title?: string;
@@ -144,7 +145,7 @@ const MBottomSheetModal = forwardRef<BottomSheetModal, PropsType>(
   },
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   contentContainer: ['bgPrimaryBackgroundHighlight'],
   title: ['fontXXL', 'bold', 'textCenter', 'marginVertical3x'],
   detail: [

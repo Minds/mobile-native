@@ -3,9 +3,11 @@ import { ScrollView, View } from 'react-native';
 import { useBackHandler } from '@react-native-community/hooks';
 import { B1, Button } from '~ui';
 import { ModalFullScreen } from '~ui';
-import ThemedStyles from '~/styles/ThemedStyles';
-import i18n from '../services/i18n.service';
-import InputContainer from '../components/InputContainer';
+
+import InputContainer, {
+  InputContainerPropsType,
+} from '../components/InputContainer';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   title: string;
@@ -13,7 +15,7 @@ type PropsType = {
   error?: string;
   placeholder: string;
   maxLength?: number;
-  keyboardType?: string;
+  keyboardType?: InputContainerPropsType['keyboardType'];
   detail?: React.ReactNode;
   onBack?: () => void;
   onVerify?: () => void;
@@ -37,7 +39,7 @@ const CodeConfirmScreen = ({
   value,
   error,
 }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   // Disable back button on Android
   useBackHandler(
@@ -54,7 +56,7 @@ const CodeConfirmScreen = ({
       extra={
         onVerify ? (
           <Button mode="flat" size="small" type="action" onPress={onVerify}>
-            {i18n.t('verify')}
+            {sp.i18n.t('verify')}
           </Button>
         ) : undefined
       }>

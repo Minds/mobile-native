@@ -1,11 +1,11 @@
 import React from 'react';
 import { Linking } from 'react-native';
 
-import i18nService from '~/common/services/i18n.service';
 import { showUpgradeModal } from '~/common/services/upgrade-modal.service';
 import { Button } from '~/common/ui';
 import { TENANT_IS_NON_PROFIT } from '~/config/Config';
 import { useGetSiteMembershipForActivityQuery } from '~/graphql/api';
+import sp from '~/services/serviceProvider';
 
 export const ActivityMembershipJoinButton = ({
   activityGuid,
@@ -60,7 +60,7 @@ export const ActivityMembershipJoinButton = ({
       loading={query.isFetching}
       // disabled={query.isFetching}
       onPress={handlePress}>
-      {title || i18nService.t('membership.join')}
+      {title || sp.i18n.t('membership.join')}
     </Button>
   );
 };

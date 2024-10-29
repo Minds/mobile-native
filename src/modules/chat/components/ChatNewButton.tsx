@@ -3,8 +3,8 @@ import React from 'react';
 import { View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import ThemedStyles from '~/styles/ThemedStyles';
 import PressableScale from '~/common/components/PressableScale';
+import sp from '~/services/serviceProvider';
 
 type Props = {
   onPress?: () => void;
@@ -23,7 +23,7 @@ const ChatNewButtonIcon = ({ testID }: { testID?: string }) => (
   <View style={styles.iconContainer}>
     <Icon
       name="message-plus"
-      style={ThemedStyles.style.colorPrimaryBackground}
+      style={sp.styles.style.colorPrimaryBackground}
       size={32}
       testID={testID}
     />
@@ -32,7 +32,7 @@ const ChatNewButtonIcon = ({ testID }: { testID?: string }) => (
 
 export default ChatNewButton;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   iconContainer: [
     {
       width: 64,

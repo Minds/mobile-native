@@ -1,27 +1,33 @@
-//@ts-nocheck
-import api from './../common/services/api.service';
-import blockListService from '../common/services/block-list.service';
-import logService from '../common/services/log.service';
-import i18n from '../common/services/i18n.service';
+import type { ApiService } from '~/common/services/api.service';
+import type { BlockListService } from '~/common/services/block-list.service';
+import { I18nService } from '~/common/services/i18n.service';
+import type { LogService } from '~/common/services/log.service';
 
 /**
  * Channel Service
  */
-class ChannelService {
+export class ChannelService {
+  constructor(
+    private api: ApiService,
+    private blockListService: BlockListService,
+    private log: LogService,
+    private i18n: I18nService,
+  ) {}
+
   /**
    * Load Channel
    * @param {string} guid
    */
   async load(guid) {
-    return await api.get('api/v1/channel/' + guid);
+    return await this.api.get('api/v1/channel/' + guid);
   }
 
   upload(type, file, progress) {
-    return api.upload(`api/v1/channel/${type}`, { file }, null, progress);
+    return this.api.upload(`api/v1/channel/${type}`, { file }, null, progress);
   }
 
   save(data) {
-    return api.post(`api/v1/channel/info`, data);
+    return this.api.post(`api/v1/channel/info`, data);
   }
 
   /**
@@ -32,9 +38,9 @@ class ChannelService {
    */
   toggleSubscription(guid, value, data = {}) {
     if (value) {
-      return api.post('api/v1/subscribe/' + guid, data);
+      return this.api.post('api/v1/subscribe/' + guid, data);
     } else {
-      return api.delete('api/v1/subscribe/' + guid, data);
+      return this.api.delete('api/v1/subscribe/' + guid, data);
     }
   }
 
@@ -46,11 +52,11 @@ class ChannelService {
     let result;
 
     if (value) {
-      result = api.put('api/v1/block/' + guid);
-      blockListService.add(guid);
+      result = this.api.put('api/v1/block/' + guid);
+      this.blockListService.add(guid);
     } else {
-      result = api.delete('api/v1/block/' + guid);
-      blockListService.remove(guid);
+      result = this.api.delete('api/v1/block/' + guid);
+      this.blockListService.remove(guid);
     }
 
     return result;
@@ -59,9 +65,16 @@ class ChannelService {
   async getFeed(guid, opts = { limit: 12 }) {
     const tag = `channel:feed:${guid}`;
 
-    const data = await api.get(`api/v1/newsfeed/personal/${guid}`, opts, tag);
+    const data = await this.api.get<{
+      pinned: any[];
+      activity: any[];
+      'load-next': string;
+    }>(`api/v1/newsfeed/personal/${guid}`, opts, tag);
 
-    const feed = {
+    const feed: {
+      entities: any[];
+      offset: string;
+    } = {
       entities: [],
       offset: data['load-next'],
     };
@@ -80,8 +93,11 @@ class ChannelService {
   async getImageFeed(guid, offset) {
     const tag = `channel:images:${guid}`;
 
-    return api
-      .get(
+    return this.api
+      .get<{
+        entities: any[];
+        'load-next': string;
+      }>(
         'api/v1/entities/owner/image/' + guid,
         { offset: offset, limit: 12 },
         tag,
@@ -93,16 +109,19 @@ class ChannelService {
         };
       })
       .catch(err => {
-        logService.exception('[ChannelService]', err);
-        throw new Error(i18n.t('errorMessage'));
+        this.log.exception('[ChannelService]', err);
+        throw new Error(this.i18n.t('errorMessage'));
       });
   }
 
   async getVideoFeed(guid, offset) {
     const tag = `channel:images:${guid}`;
 
-    return api
-      .get(
+    return this.api
+      .get<{
+        entities: any[];
+        'load-next': string;
+      }>(
         'api/v1/entities/owner/video/' + guid,
         { offset: offset, limit: 12 },
         tag,
@@ -114,16 +133,19 @@ class ChannelService {
         };
       })
       .catch(err => {
-        logService.exception('[ChannelService]', err);
-        throw new Error(i18n.t('errorMessage'));
+        this.log.exception('[ChannelService]', err);
+        throw new Error(this.i18n.t('errorMessage'));
       });
   }
 
   async getBlogFeed(guid, offset) {
     const tag = `channel:blog:${guid}`;
 
-    return api
-      .get('api/v1/blog/owner/' + guid, { offset: offset, limit: 12 }, tag)
+    return this.api
+      .get<{
+        entities: any[];
+        'load-next': string;
+      }>('api/v1/blog/owner/' + guid, { offset: offset, limit: 12 }, tag)
       .then(data => {
         return {
           entities: data.entities,
@@ -131,8 +153,8 @@ class ChannelService {
         };
       })
       .catch(err => {
-        logService.exception('[ChannelService]', err);
-        throw new Error(i18n.t('errorMessage'));
+        this.log.exception('[ChannelService]', err);
+        throw new Error(this.i18n.t('errorMessage'));
       });
   }
 
@@ -143,7 +165,10 @@ class ChannelService {
    * @param {string} offset
    */
   async getSubscribers(guid, filter, offset) {
-    const data = await api.get('api/v1/subscribe/' + filter + '/' + guid, {
+    const data = await this.api.get<{
+      users: any[];
+      'load-next': string;
+    }>('api/v1/subscribe/' + filter + '/' + guid, {
       offset: offset,
       limit: 12,
     });
@@ -155,9 +180,9 @@ class ChannelService {
   }
 
   async getScheduledCount(guid) {
-    const response = await api.get(`api/v2/feeds/scheduled/${guid}/count`);
+    const response = await this.api.get<{
+      count: number;
+    }>(`api/v2/feeds/scheduled/${guid}/count`);
     return response.count;
   }
 }
-
-export default new ChannelService();

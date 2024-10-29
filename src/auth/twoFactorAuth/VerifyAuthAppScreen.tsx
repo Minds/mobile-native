@@ -2,15 +2,15 @@ import { RouteProp, useNavigation } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import { MoreStackParamList } from '../../navigation/NavigationTypes';
+
+import { MoreStackParamList } from '~/navigation/NavigationTypes';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
-import InputContainer from '../../common/components/InputContainer';
-import CenteredLoading from '../../common/components/CenteredLoading';
-import SaveButton from '../../common/components/SaveButton';
-import i18n from '../../common/services/i18n.service';
-import { showNotification } from '../../../AppMessages';
-import MText from '../../common/components/MText';
+import InputContainer from '~/common/components/InputContainer';
+import CenteredLoading from '~/common/components/CenteredLoading';
+import SaveButton from '~/common/components/SaveButton';
+import { showNotification } from '~/../AppMessages';
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
 type VerifyAuthAppRouteProp = RouteProp<
   MoreStackParamList,
@@ -22,9 +22,10 @@ type PropsType = {
 };
 
 const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const { store } = route.params ?? {};
   const navigation = useNavigation();
+  const i18n = sp.i18n;
 
   const onComplete = () => {
     store?.setLoading(false);
@@ -89,7 +90,7 @@ const VerifyAuthAppScreen = observer(({ route }: PropsType) => {
           onPress={store?.copySecret}>
           <Icon
             name="content-copy"
-            color={ThemedStyles.getColor('PrimaryText')}
+            color={sp.styles.getColor('PrimaryText')}
             size={14}
           />
           <MText style={[styles.smallTitle, theme.marginLeft]}>

@@ -9,11 +9,9 @@ import { showNotification } from '../../../AppMessages';
 import type CommentModel from './CommentModel';
 import type CommentsStore from './CommentsStore';
 import type BlogModel from '../../blogs/BlogModel';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
+
 import type GroupModel from '../../groups/GroupModel';
 import type ActivityModel from '../../newsfeed/ActivityModel';
-import sessionService from '../../common/services/session.service';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
 import {
   BottomSheetModal,
@@ -21,8 +19,8 @@ import {
   BottomSheetMenuItem,
   BottomSheetMenuItemProps,
 } from '../../common/components/bottom-sheet';
-import NavigationService from '~/navigation/NavigationService';
 import { useGroupContext } from '~/modules/groups/contexts/GroupContext';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   comment: CommentModel;
@@ -42,8 +40,9 @@ export default function CommentBottomMenu({
   store,
   onTranslate,
 }: PropsType) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const group = useGroupContext()?.group;
+  const i18n = sp.i18n;
 
   // Do not render BottomSheet unless it is necessary
   const [shown, setShown] = React.useState(false);
@@ -145,7 +144,7 @@ export default function CommentBottomMenu({
         actions.push(removeExplicit);
       }
     } else {
-      if (sessionService.getUser().isAdmin()) {
+      if (sp.session.getUser().isAdmin()) {
         actions.push(deleteOpt);
 
         if (!comment.mature) {
@@ -165,7 +164,7 @@ export default function CommentBottomMenu({
         iconName: 'flag-outline',
         iconType: 'ionicon',
         onPress: () => {
-          NavigationService.push('Report', { entity: comment });
+          sp.navigation.push('Report', { entity: comment });
           close();
         },
       });
@@ -183,7 +182,7 @@ export default function CommentBottomMenu({
       });
     }
     return actions;
-  }, [close, comment, entity, onTranslate, store, group]);
+  }, [i18n, comment, close, onTranslate, store, entity, group]);
 
   return (
     <TouchableOpacity onPress={show} hitSlop={hitSlop}>

@@ -1,16 +1,16 @@
 import React from 'react';
 import { observer } from 'mobx-react';
 import { ScrollView, View } from 'react-native';
-import i18n from '../../../../common/services/i18n.service';
-import ThemedStyles from '../../../../styles/ThemedStyles';
-import { useStores } from '../../../../common/hooks/use-stores';
+
+import { useStores } from '~/common/hooks/use-stores';
 import type EmailNotificationsSettingModel from './EmailNotificationsSettingModel';
-import MText from '../../../../common/components/MText';
+import MText from '~/common/components/MText';
 import Empty from '~/common/components/Empty';
 import { Button } from '~/common/ui';
 import CenteredLoading from '~/common/components/CenteredLoading';
-import MenuItemToggle from '../../../../common/components/menus/MenuItemToggle';
-import MenuItemSelect from '../../../../common/components/menus/MenuItemSelect';
+import MenuItemToggle from '~/common/components/menus/MenuItemToggle';
+import MenuItemSelect from '~/common/components/menus/MenuItemSelect';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {};
 
@@ -25,6 +25,7 @@ const topicsWithSelector = ['unread_notifications', 'top_posts'];
 type frecuencyOptionType = { frecuency: string; label: string };
 
 const EmailNotificationsSettings = ({}: PropsType) => {
+  const i18n = sp.i18n;
   const { notifications } = useStores();
   React.useEffect(() => {
     if (notifications.pushNotificationsSettings === null) {
@@ -126,7 +127,7 @@ const NotificationSelector = observer(
 
     return (
       <MenuItemSelect
-        selectTitle={i18n.t('notificationSettings.frecuency')}
+        selectTitle={sp.i18n.t('notificationSettings.frecuency')}
         title={setting.topic}
         data={frecuencyOptions}
         valueExtractor={item => item.label}
@@ -141,7 +142,7 @@ const NotificationSelector = observer(
   },
 );
 
-export const titleStyle = ThemedStyles.combine(
+export const titleStyle = sp.styles.combine(
   'fontMedium',
   'fontL',
   'colorSecondaryText',
@@ -149,7 +150,7 @@ export const titleStyle = ThemedStyles.combine(
   'marginTop8x',
   'paddingLeft4x',
 );
-export const containerStyle = ThemedStyles.combine(
+export const containerStyle = sp.styles.combine(
   'flexContainer',
   'paddingVertical2x',
 );

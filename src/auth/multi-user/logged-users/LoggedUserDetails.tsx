@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 import MCIcon from '@expo/vector-icons/MaterialCommunityIcons';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import Options from './Options';
 import UnreadNotifications from './UnreadNotifications';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   index: number;
@@ -17,7 +17,7 @@ const Icon = () => (
     name="check-circle"
     color={'#38A169'}
     size={24}
-    style={ThemedStyles.style.marginRight}
+    style={sp.styles.style.marginRight}
   />
 );
 
@@ -30,7 +30,7 @@ const LoggedUserDetails = (props: PropsType) => {
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['rowJustifySpaceEvenly', 'marginRight2x'],
 });
 

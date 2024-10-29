@@ -4,8 +4,9 @@ import MPressable from '~/common/components/MPressable';
 import { StyleSheet, View } from 'react-native';
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';
 import UserModel from '~/channel/UserModel';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { ChatMember } from '../types';
+import sp from '~/services/serviceProvider';
 
 type Props = {
   user: UserModel | ChatMember;
@@ -40,7 +41,7 @@ export function ChatUserItem({ user, onPress, selected, extra }: Props) {
             name="check"
             color="PrimaryBackground"
             size={20}
-            backgroundColor={ThemedStyles.getColor('IconActive')}
+            backgroundColor={sp.styles.getColor('IconActive')}
           />
         ) : (
           <Avatar size="small" source={userData.iconUrl} testID="UserAvatar" />

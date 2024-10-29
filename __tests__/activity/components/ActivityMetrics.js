@@ -5,6 +5,11 @@ import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker'
 
 import renderer from 'react-test-renderer';
 import ActivityMetrics from '../../../src/newsfeed/activity/metrics/ActivityMetrics';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+sp.mockService('styles');
+sp.mockService('i18n');
 
 jest.mock('../../../src/auth/UserStore');
 jest.mock('~/common/services/analytics.service');

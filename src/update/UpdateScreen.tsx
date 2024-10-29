@@ -4,14 +4,15 @@ import { Image, View } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { observer } from 'mobx-react';
 
-import updateService from '~/common/services/update.service';
-import i18n from '~/common/services/i18n.service';
 import MText from '~/common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import assets from '@assets';
-import ThemedStyles from '../styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 const UpdatingScreen = observer(() => {
+  const i18n = sp.i18n;
+  const updateService = sp.resolve('update');
   return (
     <View style={styles.mainContainer}>
       <View style={styles.container}>
@@ -27,7 +28,7 @@ const UpdatingScreen = observer(() => {
           <Progress.Bar
             progress={updateService.progress / 100}
             width={null}
-            color={ThemedStyles.getColor('Link')}
+            color={sp.styles.getColor('Link')}
           />
           <MText style={styles.downloading}>
             {i18n.t('downloading')} {updateService.progress}%
@@ -38,7 +39,7 @@ const UpdatingScreen = observer(() => {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   mainContainer: [
     'flexContainer',
     'bgSecondaryBackground',

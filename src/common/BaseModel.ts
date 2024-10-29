@@ -2,21 +2,15 @@ import { observable, action, computed, toJS, runInAction } from 'mobx';
 import get from 'lodash/get';
 import EventEmitter from 'eventemitter3';
 
-import sessionService from './services/session.service';
 import { vote } from './services/votes.service';
-import { recordView, toggleExplicit } from '../newsfeed/NewsfeedService';
-import logService from './services/log.service';
 import { toggleAllowComments as toggleAllow } from '../comments/CommentsService';
 import type UserModel from '../channel/UserModel';
 import type FeedStore from './stores/FeedStore';
 import AbstractModel from './AbstractModel';
-import MetadataService, {
-  Metadata,
-  MetadataMedium,
-} from './services/metadata.service';
-import { storeRatingService } from 'modules/store-rating';
+import type { Metadata, MetadataMedium } from './services/metadata.service';
 import getNetworkError from './helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
+import sp from '~/services/serviceProvider';
 
 /**
  * Base model
@@ -122,8 +116,8 @@ export default class BaseModel extends AbstractModel {
    */
   isOwner = () => {
     return this.ownerObj
-      ? sessionService.guid === this.ownerObj.guid
-      : this.owner_guid === sessionService.guid;
+      ? sp.session.guid === this.ownerObj.guid
+      : this.owner_guid === sp.session.guid;
   };
 
   /**
@@ -166,7 +160,7 @@ export default class BaseModel extends AbstractModel {
     if (
       this['thumbs:up:user_guids'] &&
       this['thumbs:up:user_guids'].length &&
-      this['thumbs:up:user_guids'].indexOf(sessionService.guid) >= 0
+      this['thumbs:up:user_guids'].indexOf(sp.session.guid) >= 0
     ) {
       return true;
     }
@@ -181,7 +175,7 @@ export default class BaseModel extends AbstractModel {
     if (
       this['thumbs:down:user_guids'] &&
       this['thumbs:down:user_guids'].length &&
-      this['thumbs:down:user_guids'].indexOf(sessionService.guid) >= 0
+      this['thumbs:down:user_guids'].indexOf(sp.session.guid) >= 0
     ) {
       return true;
     }
@@ -203,20 +197,17 @@ export default class BaseModel extends AbstractModel {
       this['thumbs:' + direction + ':user_guids'] = guids.filter(function (
         item,
       ) {
-        return item !== sessionService.guid;
+        return item !== sp.session.guid;
       });
     } else {
-      this['thumbs:' + direction + ':user_guids'] = [
-        sessionService.guid,
-        ...guids,
-      ];
+      this['thumbs:' + direction + ':user_guids'] = [sp.session.guid, ...guids];
     }
 
     this['thumbs:' + direction + ':count'] =
       parseInt(this['thumbs:' + direction + ':count'], 10) + delta;
 
     const params = this.getClientMetadata();
-
+    const storeRatingService = sp.resolve('storeRating');
     try {
       await vote(this.guid, direction, params);
       if (direction === 'up') {
@@ -232,11 +223,11 @@ export default class BaseModel extends AbstractModel {
         this['thumbs:' + direction + ':user_guids'] = guids.filter(function (
           item,
         ) {
-          return item !== sessionService.guid;
+          return item !== sp.session.guid;
         });
       } else {
         this['thumbs:' + direction + ':user_guids'] = [
-          sessionService.guid,
+          sp.session.guid,
           ...guids,
         ];
       }
@@ -269,7 +260,7 @@ export default class BaseModel extends AbstractModel {
   async toggleExplicit() {
     let value = !this.mature;
     try {
-      await toggleExplicit(this.guid, value);
+      await sp.resolve('newsfeed').toggleExplicit(this.guid, value);
       runInAction(() => {
         this.mature = value;
       });
@@ -277,7 +268,7 @@ export default class BaseModel extends AbstractModel {
       runInAction(() => {
         this.mature = !value;
       });
-      logService.exception('[BaseModel]', err);
+      sp.log.exception('[BaseModel]', err);
       throw err;
     }
   }
@@ -330,9 +321,12 @@ export default class BaseModel extends AbstractModel {
     if (this._list) {
       this._list.trackView?.(this, medium, position);
     } else {
-      const metadata = new MetadataService();
+      const metadata = sp.resolve('metadata');
       metadata.setMedium('single').setSource('single');
-      recordView(this, metadata.getClientMetadata(this, medium, position));
+      sp.resolve('newsfeed').recordView(
+        this,
+        metadata.getClientMetadata(this, medium, position),
+      );
     }
   }
 
@@ -343,7 +337,7 @@ export default class BaseModel extends AbstractModel {
     if (this._viewed) {
       return;
     }
-    recordView(this, meta);
+    sp.resolve('newsfeed').recordView(this, meta);
     this._viewed = true;
   }
 

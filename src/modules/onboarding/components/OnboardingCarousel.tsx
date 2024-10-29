@@ -8,14 +8,15 @@ import {
 import { Image } from 'expo-image';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { H1, H3 } from '~/common/ui';
-import { IS_IOS, IS_IPAD, STRAPI_URI } from '~/config/Config';
 import Carousel from 'react-native-reanimated-carousel';
-import Pagination from '~/newsfeed/boost-rotator/components/pagination/Pagination';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import { IS_IOS, IS_IPAD, STRAPI_URI } from '~/config/Config';
+import { H1, H3 } from '~/common/ui';
 import { useCarouselData } from '../hooks';
 import { Maybe, UploadFileEntity } from '~/graphql/strapi';
 import assets from '@assets';
+import Pagination from './Pagination';
+import sp from '~/services/serviceProvider';
 
 type OnboardingCarouselProps = {
   data: {
@@ -58,8 +59,8 @@ export const CarouselComponent = ({ data }: OnboardingCarouselProps) => {
       <Pagination
         activeDotIndex={index}
         dotsLength={data?.length ?? 0}
-        dotColor={ThemedStyles.getColor('PrimaryText')}
-        inactiveDotColor={ThemedStyles.getColor('SecondaryText')}
+        dotColor={sp.styles.getColor('PrimaryText')}
+        inactiveDotColor={sp.styles.getColor('SecondaryText')}
       />
     </>
   );

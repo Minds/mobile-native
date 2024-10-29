@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { View, ScrollView } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import type { FabScreenStore } from './FabScreen';
 import LabeledComponent from '../../common/components/LabeledComponent';
 import { CheckBox } from 'react-native-elements';
@@ -10,13 +10,14 @@ import InputContainer from '../../common/components/InputContainer';
 import MText from '../../common/components/MText';
 import StripeCardSelector from '../../common/components/stripe-card-selector/StripeCardSelector';
 import { IS_FROM_STORE } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type propsType = {
   store: FabScreenStore;
 };
 
 const UsdForm = observer(({ store }: propsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   useEffect(() => {
     store.getLastAmount();
@@ -54,9 +55,9 @@ const UsdForm = observer(({ store }: propsType) => {
   );
 });
 
-const scrollviewStyle = ThemedStyles.combine('paddingTop2x');
+const scrollviewStyle = sp.styles.combine('paddingTop2x');
 
-const textStyle = ThemedStyles.combine(
+const textStyle = sp.styles.combine(
   'colorPrimaryText',
   'fontMedium',
   'paddingLeft',

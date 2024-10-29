@@ -9,16 +9,10 @@ import Cancelable from 'promise-cancelable';
 import debounce from 'lodash/debounce';
 import padStart from 'lodash/padStart';
 import { runInAction } from 'mobx';
-
-import attachmentService from '../../../common/services/attachment.service';
-import logService from '../../../common/services/log.service';
-import apiService from '../../../common/services/api.service';
-import videoPlayerService from '../../../common/services/video-player.service';
-import analyticsService from '~/common/services/analytics.service';
-import SettingsStore from '~/settings/SettingsStore';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import { IS_IOS } from '~/config/Config';
 import { Orientation } from '~/services';
+import sp from '~/services/serviceProvider';
 import { showUpgradeModalForEntity } from '~/common/services/upgrade-modal.service';
 
 export type Source = {
@@ -40,7 +34,7 @@ const createMindsVideoStore = ({
   const store = {
     entity: <ActivityModel | null>null,
     initialVolume: <number | null>null,
-    volume: videoPlayerService.currentVolume,
+    volume: sp.resolve('videoPlayer').currentVolume,
     sources: null as Array<Source> | null,
     source: 0,
     currentTime: 0,
@@ -51,7 +45,6 @@ const createMindsVideoStore = ({
     error: false,
     inProgress: false,
     showFullControls: false,
-    showThumbnail: true,
     loaded: false,
     video: null as AVPlaybackSourceObject | null,
     showOverlay: false,
@@ -62,7 +55,7 @@ const createMindsVideoStore = ({
     /**
      * Should we track unmute event? true if volume is initially 0
      */
-    shouldTrackUnmuteEvent: videoPlayerService.currentVolume === 0,
+    shouldTrackUnmuteEvent: sp.resolve('videoPlayer').currentVolume === 0,
     hideOverlay: () => null as any,
     setEntity(entity: ActivityModel | null) {
       this.entity = entity;
@@ -72,7 +65,6 @@ const createMindsVideoStore = ({
       this.sources = null;
       this.source = 0;
       this.paused = true;
-      this.showThumbnail = true;
       this.currentTime = 0;
       this.currentSeek = null;
       this.duration = 0;
@@ -98,7 +90,7 @@ const createMindsVideoStore = ({
       if (this.sources) {
         this.setVideo({
           uri: this.sources[this.source].src,
-          headers: apiService.buildHeaders(),
+          headers: sp.api.buildHeaders(),
         });
       }
     },
@@ -106,7 +98,7 @@ const createMindsVideoStore = ({
       this.sources = sources;
       this.setVideo({
         uri: this.sources[this.source].src,
-        headers: apiService.buildHeaders(),
+        headers: sp.api.buildHeaders(),
       });
     },
     onFullscreenUpdate(event: VideoFullscreenUpdateEvent) {
@@ -118,7 +110,7 @@ const createMindsVideoStore = ({
       }
     },
     toggleFullScreen() {
-      videoPlayerService.setCurrent(this);
+      sp.resolve('videoPlayer').setCurrent(this);
       this.player?.presentFullscreenPlayer();
       if (!IS_IOS) {
         Orientation.unlock();
@@ -129,9 +121,6 @@ const createMindsVideoStore = ({
     },
     setShowOverlay(showOverlay: boolean) {
       this.showOverlay = showOverlay;
-    },
-    setShowThumbnail(showThumbnail: boolean) {
-      this.showThumbnail = showThumbnail;
     },
     /**
      * Sets and pre load the video
@@ -150,9 +139,10 @@ const createMindsVideoStore = ({
       this.volume = volume;
       // this.player?.setVolumeAsync(volume);
       this.player?.setIsMutedAsync(!this.volume);
-      videoPlayerService.setVolume(volume);
+      sp.resolve('videoPlayer').setVolume(volume);
     },
     trackUnmute() {
+      const analyticsService = sp.resolve('analytics');
       if (this.entity) {
         analyticsService.trackClick('video-player-unmuted', [
           analyticsService.buildEntityContext(this.entity),
@@ -265,7 +255,7 @@ const createMindsVideoStore = ({
 
           if (status.isPlaying) {
             this.setDuration(status.durationMillis || 0);
-            videoPlayerService.enableVolumeListener();
+            sp.resolve('videoPlayer').enableVolumeListener();
           }
         }
       }
@@ -305,7 +295,7 @@ const createMindsVideoStore = ({
       }
 
       if (sound === undefined) {
-        sound = Boolean(videoPlayerService.currentVolume);
+        sound = Boolean(sp.resolve('videoPlayer').currentVolume);
       }
 
       if (!this.video) {
@@ -337,7 +327,7 @@ const createMindsVideoStore = ({
       }
 
       // set as the current player in the service
-      videoPlayerService.setCurrent(this);
+      sp.resolve('videoPlayer').setCurrent(this);
     },
     pause(unregister: boolean = true) {
       unregister && this.unregister();
@@ -349,8 +339,8 @@ const createMindsVideoStore = ({
      * Unregister the player from the player service
      */
     unregister() {
-      if (videoPlayerService.current === this) {
-        videoPlayerService.clear();
+      if (sp.resolve('videoPlayer').current === this) {
+        sp.resolve('videoPlayer').clear();
       }
     },
     /**
@@ -376,7 +366,7 @@ const createMindsVideoStore = ({
         (!this.entity?.site_membership ||
           this.entity?.site_membership_unlocked) &&
         !this.entity?.paywall && // ignore if the entity is paywalled
-        !SettingsStore.dataSaverEnabled
+        !sp.resolve('settings').dataSaverEnabled
       ) {
         await this.init();
       }
@@ -407,11 +397,14 @@ const createMindsVideoStore = ({
       return new Cancelable(async (resolve, reject) => {
         if ((!this.sources || this.sources.length === 0) && this.entity) {
           try {
-            const videoObj: any = await attachmentService.getVideo(
-              this.entity.attachments && this.entity.attachments.attachment_guid
-                ? this.entity.attachments.attachment_guid
-                : this.entity.entity_guid || this.entity.guid,
-            );
+            const videoObj: any = await sp
+              .resolve('attachment')
+              .getVideo(
+                this.entity.attachments &&
+                  this.entity.attachments.attachment_guid
+                  ? this.entity.attachments.attachment_guid
+                  : this.entity.entity_guid || this.entity.guid,
+              );
 
             if (videoObj && videoObj.entity.transcoding_status) {
               this.transcoding =
@@ -433,7 +426,7 @@ const createMindsVideoStore = ({
             );
           } catch (error) {
             if (error instanceof Error) {
-              logService.exception('[MindsVideo]', error);
+              sp.log.exception('[MindsVideo]', error);
             }
             reject(error);
           }

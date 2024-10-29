@@ -4,12 +4,11 @@ import { Linking, Platform } from 'react-native';
 import SendIntentAndroid from 'react-native-send-intent';
 import { useAnalytics } from '~/common/contexts/analytics.context';
 import { IconButtonNext } from '~ui/icons';
-import logService from '../../../common/services/log.service';
 import { ANDROID_CHAT_APP, APP_URI } from '../../../config/Config';
-import ShareService from '../../../share/ShareService';
 import type ActivityModel from '../../ActivityModel';
 import { pushShareSheet } from '../ActivityActionSheet';
 import { actionsContainerStyle } from './styles';
+import serviceProvider from '~/services/serviceProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -40,7 +39,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
     },
     share() {
       analytics.trackClick('share');
-      ShareService.share(title, sharedLink);
+      serviceProvider.resolve('share').share(title, sharedLink);
     },
     async sendTo() {
       analytics.trackClick('sendTo');
@@ -59,7 +58,7 @@ export default observer(function ShareAction({ entity }: PropsType) {
           Linking.openURL('market://details?id=com.minds.chat');
         }
       } catch (error) {
-        logService.exception(error);
+        serviceProvider.log.exception(error);
         console.log(error);
       }
     },

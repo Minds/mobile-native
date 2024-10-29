@@ -4,20 +4,19 @@ import { ScrollView } from 'react-native';
 import ChannelListItem from '~/common/components/ChannelListItem';
 import ChannelListItemPlaceholder from '~/common/components/ChannelListItemPlaceholder';
 import Empty from '~/common/components/Empty';
-import UserModel from '../../../channel/UserModel';
-import useApiFetch from '../../../common/hooks/useApiFetch';
-import i18n from '../../../common/services/i18n.service';
-import NavigationService from '../../../navigation/NavigationService';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import UserModel from '~/channel/UserModel';
+import useApiFetch from '~/common/hooks/useApiFetch';
+
 import ModalContainer from './ModalContainer';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 /**
  * Subscribe channels Modal Screen
  */
 export default withErrorBoundaryScreen(
   observer(function SuggestedChannelsScreen() {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const suggestions = useApiFetch<Array<UserModel>>(
       'api/v2/suggestions/user',
       {
@@ -42,19 +41,19 @@ export default withErrorBoundaryScreen(
 
     return (
       <ModalContainer
-        title={i18n.t('onboarding.subscribeToChannel')}
+        title={sp.i18n.t('onboarding.subscribeToChannel')}
         contentContainer={[
           theme.bgPrimaryBackgroundHighlight,
           theme.alignSelfCenterMaxWidth,
         ]}
-        onPressBack={NavigationService.goBack}>
+        onPressBack={() => sp.navigation.goBack()}>
         <ScrollView style={theme.flexContainer}>
           {empty}
           {loadingPlaceholder}
           {suggestions.result?.slice().map(user => (
             <ChannelListItem
               updateFeed={false}
-              navigation={NavigationService}
+              navigation={sp.navigation}
               channel={user}
               key={user.guid}
             />

@@ -1,12 +1,10 @@
-//@ts-nocheck
 import React, { PureComponent } from 'react';
 
 import { Dimensions, Platform, View } from 'react-native';
 
-import ThemedStyles from '../styles/ThemedStyles';
 import CenteredLoading from '../common/components/CenteredLoading';
 import MText from '../common/components/MText';
-import openUrlService from '~/common/services/open-url.service';
+import sp from '../services/serviceProvider';
 
 const style = () => `
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700,800'>
@@ -23,8 +21,8 @@ const style = () => `
       /*padding-right: 4px;*/
       font-size: 12px;
       letter-spacing: 0;
-      background-color: ${ThemedStyles.getColor('PrimaryBackground')};
-      color: ${ThemedStyles.getColor('PrimaryText')};
+      background-color: ${sp.styles.getColor('PrimaryBackground')};
+      color: ${sp.styles.getColor('PrimaryText')};
       line-height: 20px;
     }
 
@@ -36,7 +34,7 @@ const style = () => `
     br, p, ul, ol {
       font-size: 16px;
       font-family: Roboto, Helvetica, Arial, sans-serif;
-      color: ${ThemedStyles.getColor('SecondaryText')};;
+      color: ${sp.styles.getColor('SecondaryText')};;
       font-weight: 400;
       line-height: 20px;
       text-rendering: optimizeLegibility;
@@ -53,7 +51,7 @@ const style = () => `
       margin-bottom: 0.58em;
       font-weight: 400;
       font-style: normal;
-      color: ${ThemedStyles.getColor('PrimaryText')};;
+      color: ${sp.styles.getColor('PrimaryText')};;
       margin-top: 20px;
 
 
@@ -69,7 +67,7 @@ const style = () => `
       font-weight: 600;
       font-family: Roboto;
       line-height: 1.1;
-      color: ${ThemedStyles.getColor('PrimaryText')};;
+      color: ${sp.styles.getColor('PrimaryText')};;
       font-size: 24px;
     }
 
@@ -176,6 +174,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
    * @var all allowed origins
    */
   all = ['*'];
+  webview: any;
 
   /**
    * state
@@ -222,7 +221,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
   onStateChange = event => {
     if (event.url.indexOf('http') > -1) {
       this.webview.stopLoading();
-      openUrlService.open(event.url);
+      sp.resolve('openURL').open(event.url);
     }
   };
 
@@ -246,7 +245,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
    * @return { boolean }
    */
   private handleShouldStartLoadWithRequest({ url }: any) {
-    openUrlService.open(url);
+    sp.resolve('openURL').open(url);
     return false;
   }
 
@@ -263,7 +262,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
         scrollEnabled={false}
         source={this.state.html}
         mixedContentMode="compatibility"
-        style={[ThemedStyles.style.bgPrimaryBackground, this.state.style]}
+        style={[sp.styles.style.bgPrimaryBackground, this.state.style]}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         allowsInlineMediaPlayback={true}
@@ -276,7 +275,7 @@ export default class BlogViewHTML extends PureComponent<PropsType> {
             : undefined
         }
         startInLoadingState={true}
-        renderLoading={() => <View style={ThemedStyles.style.flexContainer} />}
+        renderLoading={() => <View style={sp.styles.style.flexContainer} />}
         renderError={this.onError}
         onNavigationStateChange={
           Platform.OS === 'android' ? undefined : this.onStateChange

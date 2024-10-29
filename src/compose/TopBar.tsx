@@ -3,15 +3,16 @@ import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import { Flow } from 'react-native-animated-spinkit';
 import { IconButton } from '~ui/icons';
-import ThemedStyles, { useMemoStyle } from '../styles/ThemedStyles';
 import MText from '../common/components/MText';
 import { Spacer } from '../common/ui';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 /**
  * Compose Top bar
  */
 export default observer(function (props) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const backIconName = props.backIconName || 'close';
   const backIconSize = props.backIconSize || 30;
   const containerStyle = useMemoStyle(
@@ -36,7 +37,7 @@ export default observer(function (props) {
       <Spacer right="L">
         {props.store.posting ? (
           <View style={styles.dotIndicatorContainerStyle}>
-            <Flow color={ThemedStyles.getColor('SecondaryText')} />
+            <Flow color={sp.styles.getColor('SecondaryText')} />
           </View>
         ) : typeof props.rightText === 'string' ? (
           <MText
@@ -53,7 +54,7 @@ export default observer(function (props) {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   dotIndicatorContainerStyle: ['rowJustifyEnd'],
   topBar: {
     width: '100%',

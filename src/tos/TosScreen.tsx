@@ -3,12 +3,11 @@ import { Linking } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useBackHandler } from '@react-native-community/hooks';
 
-import apiService from '~/common/services/api.service';
-import logService from '~/common/services/log.service';
 import { B1, Button, ModalFullScreen } from '~/common/ui';
 import { useLegacyStores } from '~/common/hooks/use-stores';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 const openTerms = () => {
   Linking.openURL('https://www.minds.com/p/terms');
@@ -32,12 +31,12 @@ function TosScreen({ navigation }) {
   const ok = async () => {
     setError(false);
     try {
-      const response = await apiService.post<any>('api/v2/settings/tos');
+      const response = await sp.api.post<any>('api/v2/settings/tos');
       user.setTosLastUpdate(response.timestamp);
       navigation.goBack();
     } catch (err) {
       setError(true);
-      logService.exception('[TosModal]', err);
+      sp.log.exception('[TosModal]', err);
     }
   };
 
@@ -45,8 +44,8 @@ function TosScreen({ navigation }) {
     <ModalFullScreen title="TOS Update">
       <ScrollView
         contentContainerStyle={[
-          ThemedStyles.style.padding3x,
-          ThemedStyles.style.paddingTop6x,
+          sp.styles.style.padding3x,
+          sp.styles.style.paddingTop6x,
         ]}>
         <B1 align="justify">
           We've recently updated our{' '}

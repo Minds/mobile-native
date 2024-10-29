@@ -1,22 +1,22 @@
 import React, { useEffect, useReducer } from 'react';
 
 import { Alert } from 'react-native';
-
-import settingsService from '../SettingsService';
-import i18n from '../../common/services/i18n.service';
-import validator from '../../common/services/validator.service';
-import CenteredLoading from '../../common/components/CenteredLoading';
 import { inject, observer } from 'mobx-react';
-import ThemedStyles from '../../styles/ThemedStyles';
-import MText from '../../common/components/MText';
+import { useNavigation } from '@react-navigation/native';
+
+import validator from '~/common/services/validator.service';
+import CenteredLoading from '~/common/components/CenteredLoading';
+
+import MText from '~/common/components/MText';
 import { Button, Screen } from '~ui';
 import InputContainer from '~/common/components/InputContainer';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
-import { useNavigation } from '@react-navigation/native';
+import sp from '~/services/serviceProvider';
 
 const EmailScreenS = inject('user')(
   observer(({ user }) => {
     const navigation = useNavigation();
+    const i18n = sp.i18n;
     const [
       { email, saving, loaded, inProgress, showConfirmNote, disabled },
       setState,
@@ -37,7 +37,7 @@ const EmailScreenS = inject('user')(
         return;
       }
       setState({ saving: true });
-      settingsService
+      sp.resolve('settingsApi')
         .submitSettings({ email })
         .then(() => {
           user.me.confirmEmailCode();
@@ -73,12 +73,14 @@ const EmailScreenS = inject('user')(
     }, [save, disabled]);
 
     useEffect(() => {
-      settingsService.getSettings().then(({ channel }) => {
-        setState({ email: channel.email, loaded: true });
-      });
+      sp.resolve('settingsApi')
+        .getSettings()
+        .then(({ channel }) => {
+          setState({ email: channel.email, loaded: true });
+        });
     }, []);
 
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     const setEmail = (value: string) => {
       setState({

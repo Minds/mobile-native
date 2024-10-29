@@ -13,8 +13,6 @@ import { Image } from 'expo-image';
 import assets from '@assets';
 
 import type { ChannelStoreType, ChannelTabType } from './createChannelStore';
-import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
 import abbrev from '../../common/helpers/abbrev';
 import ChannelDescription from './ChannelDescription';
 import ChannelButtons from './ChannelButtons';
@@ -46,6 +44,8 @@ import {
   getSocialProfileMeta,
   shortenLink,
 } from '../SocialProfileMeta';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 const CENTERED = false;
 
@@ -74,8 +74,9 @@ const FADE_LENGTH = 30;
  */
 const ChannelHeader = withErrorBoundary(
   observer((props: PropsType) => {
+    const i18n = sp.i18n;
     // =====================| STATES & VARIABLES |=====================>
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const [fadeViewWidth, setFadeViewWidth] = useState(50);
     /** Whether the user interacted with the channel */
     const [interacted, setInteracted] = useState(false);
@@ -393,8 +394,8 @@ const SocialLinks = observer(({ channel }: { channel: UserModel }) => {
                       size={28}
                       style={
                         link.verified
-                          ? ThemedStyles.style.colorGreen
-                          : ThemedStyles.style.colorPrimaryText
+                          ? sp.styles.style.colorGreen
+                          : sp.styles.style.colorPrimaryText
                       }
                     />
                   ) : (
@@ -405,7 +406,7 @@ const SocialLinks = observer(({ channel }: { channel: UserModel }) => {
                     />
                   )}
                 </View>
-                <View style={ThemedStyles.style.flexContainer}>
+                <View style={sp.styles.style.flexContainer}>
                   <B1
                     font="medium"
                     numberOfLines={1}
@@ -418,7 +419,7 @@ const SocialLinks = observer(({ channel }: { channel: UserModel }) => {
                   <IconMC
                     name="check"
                     size={18}
-                    style={ThemedStyles.style.colorGreen}
+                    style={sp.styles.style.colorGreen}
                   />
                 )}
               </Row>
@@ -434,7 +435,7 @@ const SocialLinks = observer(({ channel }: { channel: UserModel }) => {
     <TouchableOpacity style={styles.linkContainer} onPress={openLinks}>
       <IconMC
         name="link-variant"
-        style={ThemedStyles.style.colorPrimaryText}
+        style={sp.styles.style.colorPrimaryText}
         size={17}
       />
       <B2 left="XS">
@@ -447,7 +448,7 @@ const SocialLinks = observer(({ channel }: { channel: UserModel }) => {
   ) : null;
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   channelDescription: ['paddingVertical'],
   linkContainer: ['rowJustifyStart', 'alignCenter', 'paddingVertical3x'],
   buttonsMarginContainer: {

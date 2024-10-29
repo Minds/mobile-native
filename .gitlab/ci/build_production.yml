@@ -47,7 +47,7 @@ eas_build_production_android:
   script:
     - npx eas-cli build --platform android --profile production --json --non-interactive --auto-submit --no-wait
   rules:
-    - if: $BUILD_MODE == "PRODUCTION"
+    - if: $BUILD_MODE == "PRODUCTION" || $BUILD_MODE == "PRODUCTION_ANDROID" || $BUILD_MODE == "PRODUCTION_STORES"
       when: always
     - if: $CI_COMMIT_REF_NAME == "master"
       when: manual
@@ -67,7 +67,7 @@ eas_build_production_ios:
   script:
     - npx eas-cli build --platform ios --profile production --json --non-interactive --auto-submit --no-wait
   rules:
-    - if: $BUILD_MODE == "PRODUCTION" || $BUILD_MODE == "PRODUCTION_IOS"
+    - if: $BUILD_MODE == "PRODUCTION" || $BUILD_MODE == "PRODUCTION_IOS" || $BUILD_MODE == "PRODUCTION_STORES"
       when: always
     - if: $CI_COMMIT_REF_NAME == "master"
       when: manual

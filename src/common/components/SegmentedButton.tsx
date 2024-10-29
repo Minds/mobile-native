@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, ViewStyle } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import Button from './Button';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   containerStyle?: ViewStyle | Array<ViewStyle>;
@@ -12,14 +13,14 @@ type PropsType = {
 };
 
 const SegmentedButton = (props: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const buttonStyle = {
-    borderColor: ThemedStyles.theme
-      ? ThemedStyles.getColor('PrimaryBorder')
+    borderColor: sp.styles.theme
+      ? sp.styles.getColor('PrimaryBorder')
       : '#FFFFFF',
-    backgroundColor: ThemedStyles.theme
-      ? ThemedStyles.getColor('PrimaryBackground')
-      : ThemedStyles.getColor('PrimaryBorder'),
+    backgroundColor: sp.styles.theme
+      ? sp.styles.getColor('PrimaryBackground')
+      : sp.styles.getColor('PrimaryBorder'),
   };
   return (
     <TouchableOpacity

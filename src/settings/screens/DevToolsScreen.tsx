@@ -2,47 +2,41 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Platform, Pressable, PressableProps } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import * as Clipboard from 'expo-clipboard';
+
 import FloatingInput from '~/common/components/FloatingInput';
 import Toggle from '~/common/components/Toggle';
-import api from '~/common/services/api.service';
-import { storages } from '~/common/services/storage/storages.service';
 import { B1, B2, Button, Column, H3, Row, ScreenSection } from '~/common/ui';
-import {
-  CANARY_KEY,
-  CUSTOM_API_URL,
-  DEV_MODE,
-  STAGING_KEY,
-} from '~/config/Config';
+import { CANARY_KEY, STAGING_KEY } from '~/config/Config';
 import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
-import ThemedStyles from '~/styles/ThemedStyles';
 // import { CodePushDebugger, codePush } from 'modules/codepush';
 import GrowthbookDev from '../components/GrowthbookDev';
 // import Link from '../../common/components/Link';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import pushService from '~/common/services/push.service';
-import * as Clipboard from 'expo-clipboard';
 import { showNotification } from 'AppMessages';
+import sp from '~/services/serviceProvider';
 
 const DevToolsScreen = () => {
+  const pushService = sp.resolve('push');
   const navigation = useNavigation();
-  const [apiURL, setApi] = useState(CUSTOM_API_URL);
+  const [apiURL, setApi] = useState(sp.resolve('devMode').getApiURL());
   const [staging, setStaging] = useState(
-    storages.app.getBool(STAGING_KEY) || false,
+    sp.storages.app.getBoolean(STAGING_KEY) || false,
   );
   const [canary, setCanary] = useState(
-    storages.app.getBool(CANARY_KEY) || false,
+    sp.storages.app.getBoolean(CANARY_KEY) || false,
   );
   const inputRef = React.useRef<any>();
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const setApiURLCallback = () => {
-    if (DEV_MODE.setApiURL(apiURL || '')) {
+    if (sp.resolve('devMode').setApiURL(apiURL || '')) {
       inputRef.current?.hide();
     }
   };
 
   const requestPushNote = () => {
-    const token = pushService.getToken();
+    const token = sp.resolve('push').getToken();
     const platform = Platform.OS;
     const payload = {
       token,
@@ -55,7 +49,7 @@ const DevToolsScreen = () => {
       media_url:
         'https://cdn.minds.com/fs/v1/thumbnail/1605257830766481421/xlarge/',
     };
-    api
+    sp.api
       .post('api/v3/notifications/push/manual-send', payload)
       .then(response => {
         console.log(response);
@@ -89,7 +83,7 @@ const DevToolsScreen = () => {
               value={staging}
               onValueChange={val => {
                 setStaging(val);
-                storages.app.setBool(STAGING_KEY, val);
+                sp.storages.app.set(STAGING_KEY, val);
               }}
             />
           </Row>
@@ -99,7 +93,7 @@ const DevToolsScreen = () => {
               value={canary}
               onValueChange={val => {
                 setCanary(val);
-                storages.app.setBool(CANARY_KEY, val);
+                sp.storages.app.set(CANARY_KEY, val);
               }}
             />
           </Row>
@@ -115,7 +109,7 @@ const DevToolsScreen = () => {
                 ref={inputRef}
                 autoCapitalize="none"
                 keyboardType="url"
-                onCancel={() => setApi(CUSTOM_API_URL)}
+                onCancel={() => setApi(sp.resolve('devMode').getApiURL())}
                 onSubmitEditing={setApiURLCallback}
                 defaultValue={apiURL || 'https://'}
                 onChangeText={v => setApi(v)}
@@ -171,17 +165,18 @@ export const HiddenTap = ({
   count?: number;
 }) => {
   const { current: countRef } = React.useRef<{ count: number }>({ count: 0 });
+  const devMode = sp.resolve('devMode');
 
   const setDeveloperMode = (v: boolean) => {
     countRef.count++;
     if (countRef.count > (count || 15)) {
       countRef.count = 0;
-      DEV_MODE.setDevMode(v);
+      devMode.setDevMode(v);
     }
   };
 
   return (
-    <Pressable onPress={() => setDeveloperMode(!DEV_MODE.isActive)} {...other}>
+    <Pressable onPress={() => setDeveloperMode(!devMode.isActive)} {...other}>
       {children}
     </Pressable>
   );

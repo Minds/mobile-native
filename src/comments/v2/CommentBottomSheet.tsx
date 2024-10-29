@@ -7,11 +7,11 @@ import {
 } from '@react-navigation/stack';
 import React from 'react';
 import { View, useWindowDimensions } from 'react-native';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { pushBottomSheet } from '../../common/components/bottom-sheet';
 import CommentList from './CommentList';
 import CommentsStore from './CommentsStore';
-import PermissionsService from '~/common/services/permissions.service';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   commentsStore: CommentsStore;
@@ -42,7 +42,7 @@ const ScreenReplyComment = ({ navigation }) => {
     );
     commentStore.setParent(comment);
     return commentStore;
-  }, [comment, entity]);
+  }, [comment, entity, parentCommentsStore]);
   React.useEffect(() => {
     if (open) {
       store.setShowInput(true);
@@ -66,7 +66,7 @@ const CommentBottomSheetBase = (props: PropsType) => {
     if (
       (props.commentsStore?.parent?.['comments:count'] === 0 ||
         props.commentsStore?.entity?.['comments:count'] === 0) &&
-      PermissionsService.canComment()
+      sp.permissions.canComment()
     ) {
       props.commentsStore?.setShowInput(true);
     }
@@ -77,9 +77,9 @@ const CommentBottomSheetBase = (props: PropsType) => {
       ...TransitionPresets.SlideFromRightIOS,
       headerShown: false,
       safeAreaInsets: { top: 0 },
-      // headerBackground: ThemedStyles.style.bgSecondaryBackground,
+      // headerBackground:  sp.styles.style.bgSecondaryBackground,
       cardStyle: [
-        ThemedStyles.style.bgSecondaryBackground,
+        sp.styles.style.bgSecondaryBackground,
         { overflow: 'visible' },
       ],
     }),

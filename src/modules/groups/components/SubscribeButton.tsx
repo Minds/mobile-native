@@ -1,8 +1,9 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import i18n from '~/common/services/i18n.service';
+
 import type GroupModel from '~/groups/GroupModel';
 import { Button, Row } from '~ui';
+import sp from '~/services/serviceProvider';
 
 type GroupMembershipButtonType =
   | 'join'
@@ -43,7 +44,7 @@ function SubscribeButton({ group, onPress, testID }: SubscribeButtonProps) {
     return null;
   }
 
-  const buttonText = i18n.t(
+  const buttonText = sp.i18n.t(
     buttonType !== 'invited' ? buttonType : 'group.buttonInvited',
   );
 
@@ -108,7 +109,7 @@ function SubscribeButton({ group, onPress, testID }: SubscribeButtonProps) {
         onPress={onCancelPress}
         pressableProps={HITSLOP}
         testID="groupCancelButton">
-        {i18n.t('reject')}
+        {sp.i18n.t('reject')}
       </Button>
     </Row>
   );

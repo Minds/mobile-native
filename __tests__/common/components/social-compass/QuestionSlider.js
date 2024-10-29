@@ -2,6 +2,13 @@ import React from 'react';
 import 'react-native';
 import { render } from '@testing-library/react-native';
 import QuestionSlider from '../../../../src/common/components/social-compass/QuestionSlider';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
 
 const mockData = {
   questionText: 'questionText',

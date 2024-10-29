@@ -1,20 +1,22 @@
-//@ts-nocheck
 import React, { useCallback, useState, useRef } from 'react';
 import { View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import Selector from '../../common/components/SelectorV2';
+
+import Selector, {
+  SelectorPropsType,
+} from '../../common/components/SelectorV2';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 import MText from './MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   data: Array<any>;
-  valueExtractor: Function;
-  keyExtractor: Function;
-  onSelected: Function;
+  valueExtractor: SelectorPropsType['valueExtractor'];
+  keyExtractor: SelectorPropsType['keyExtractor'];
+  onSelected: SelectorPropsType['onItemSelect'];
   selectTitle?: string;
   label: string;
   selected: any;
-  textStyle?: StyleProp<TextStyle>;
+  textStyle?: SelectorPropsType['textStyle'];
   backdropOpacity?: number;
   containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: StyleProp<TextStyle>;
@@ -22,11 +24,11 @@ type PropsType = {
 };
 
 const InputSelector = (props: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const [item, setItem] = useState(props.selected);
 
-  let selectorRef = useRef(null);
+  let selectorRef = useRef<any>(null);
 
   const selected = useCallback(
     item => {
@@ -73,7 +75,7 @@ const InputSelector = (props: PropsType) => {
         </MText>
         <MText
           style={[theme.colorPrimaryText, theme.fontM]}
-          onPress={() => selectorRef.current.show(item)}>
+          onPress={() => selectorRef.current?.show(item)}>
           {getValueOf(item)}
         </MText>
       </View>

@@ -1,7 +1,7 @@
 import React from 'react';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import i18n from '../../services/i18n.service';
+
 import MenuSubtitleWithButton from '../menus/MenuSubtitleWithButton';
+import sp from '~/services/serviceProvider';
 
 type HeaderPropsType = {
   labelText: string;
@@ -9,11 +9,11 @@ type HeaderPropsType = {
 };
 
 const Header = ({ onLinkPress, labelText }: HeaderPropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   return (
     <MenuSubtitleWithButton
       labelText={labelText}
-      linkText={i18n.t('settings.addTier')}
+      linkText={sp.i18n.t('settings.addTier')}
       containerStyle={[
         theme.paddingHorizontal4x,
         theme.marginBottom4x,

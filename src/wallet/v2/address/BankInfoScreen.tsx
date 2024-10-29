@@ -1,18 +1,17 @@
 import React, { useCallback } from 'react';
-
-import i18n from '../../../common/services/i18n.service';
-import SaveButton from '../../../common/components/SaveButton';
-import { UserError, isUserError } from '../../../common/UserError';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { AppStackParamList } from '../../../navigation/NavigationTypes';
-import CenteredLoading from '../../../common/components/CenteredLoading';
 import { observer, useLocalStore } from 'mobx-react';
-import logService from '../../../common/services/log.service';
+
+import SaveButton from '~/common/components/SaveButton';
+import { UserError, isUserError } from '~/common/UserError';
+import { AppStackParamList } from '~/navigation/NavigationTypes';
+import CenteredLoading from '~/common/components/CenteredLoading';
 import CashOnboarding from './bank-info/CashOnboarding';
 import CashForm from './bank-info/CashForm';
 import createBankInfoStore from './bank-info/createBankInfoStore';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 export type BankInfoScreenRouteProp = RouteProp<
   AppStackParamList,
@@ -32,7 +31,7 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
   const { walletStore } = route.params ?? {};
 
   const localStore = useLocalStore(createBankInfoStore, walletStore);
-
+  const i18n = sp.i18n;
   const friendlyFormKeys = {
     country: i18n.t('wallet.bank.country'),
     firstName: i18n.t('wallet.bank.firstName'),
@@ -106,7 +105,7 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
       await walletStore.createStripeAccount(form);
     } catch (err) {
       if (!isUserError(err) && err instanceof Error) {
-        logService.exception('[BankInfoScreen] createStripeAccount', err);
+        sp.log.exception('[BankInfoScreen] createStripeAccount', err);
       }
     } finally {
       localStore.setLoading(false);
@@ -141,7 +140,7 @@ const BankInfoScreen = observer(({ navigation, route }: PropsType) => {
       navigation.goBack();
     } catch (err) {
       if (!isUserError(err) && err instanceof Error) {
-        logService.exception('[BankInfoScreen] createStripeAccount', err);
+        sp.log.exception('[BankInfoScreen] createStripeAccount', err);
       }
     } finally {
       localStore.setLoading(false);

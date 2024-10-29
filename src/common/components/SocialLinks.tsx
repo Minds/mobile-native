@@ -1,8 +1,9 @@
 import React from 'react';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { SocialProfile, SocialProfileMeta } from '../../types/Common';
 import FaIcon from '@expo/vector-icons/FontAwesome5';
 import { Linking, View } from 'react-native';
+import sp from '~/services/serviceProvider';
 
 const getSocialProfileMeta = (key: string): SocialProfileMeta => {
   let defaultMeta: SocialProfileMeta = {
@@ -50,7 +51,7 @@ type PropsType = {
 };
 
 const SocialLinks = ({ socialLinks }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   if (!socialLinks) {
     return null;
@@ -78,7 +79,7 @@ const SocialLinks = ({ socialLinks }: PropsType) => {
             name={meta.icon}
             size={16}
             onPress={() => Linking.openURL(socialLink.value)}
-            color={ThemedStyles.getColor('Icon')}
+            color={sp.styles.getColor('Icon')}
             style={theme.marginHorizontal}
           />
         );

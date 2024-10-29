@@ -8,7 +8,7 @@ import MenuItem from '~/common/components/menus/MenuItem';
 import StripeCardSelector from '~/common/components/stripe-card-selector/StripeCardSelector';
 import number from '~/common/helpers/number';
 import { B1, B2, Button, Column, H2, HairlineRow, Screen } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useTranslation } from '../../locales';
 import { BoostType, useBoostStore } from '../boost.store';
 import { BoostStackScreenProps } from '../navigator';
@@ -20,14 +20,14 @@ import {
   useIAP,
   withIAPContext,
 } from 'react-native-iap';
-import NavigationService from '../../../../navigation/NavigationService';
 import { IS_FROM_STORE } from '~/config/Config';
 import { InteractionManager } from 'react-native';
-import useCurrentUser from '../../../../common/hooks/useCurrentUser';
+import useCurrentUser from '~/common/hooks/useCurrentUser';
 import BoostComposerHeader from '../components/BoostComposerHeader';
 import { CashSelector } from '~/common/components/cash-selector/CashSelector';
 import { useGifts } from '~/common/hooks/useGifts';
 import Link from '~/common/components/Link';
+import sp from '~/services/serviceProvider';
 
 type BoostReviewScreenProps = BoostStackScreenProps<'BoostReview'>;
 
@@ -129,7 +129,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
 
           InteractionManager.runAfterInteractions(() => {
             setTimeout(() => {
-              NavigationService.push('BoostUpgrade');
+              sp.navigation.push('BoostUpgrade');
               // the same time as the toast dismisses
             }, 2800);
           });
@@ -235,7 +235,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
             <CashSelector
               methodSelected={defaultSelectedMethod}
               onMethodSelected={method => setSelectedMethod(method)}
-              style={ThemedStyles.style.bgTransparent}
+              style={sp.styles.style.bgTransparent}
               borderless
             />
           )}
@@ -246,7 +246,7 @@ function BoostReviewScreen({ navigation }: BoostReviewScreenProps) {
               }}
               selectedCardId={selectedGiftedCardId}
               creditLabel={hasCredit ? creditLabel : undefined}
-              containerStyle={ThemedStyles.style.bgPrimaryBackground}
+              containerStyle={sp.styles.style.bgPrimaryBackground}
               borderless
             />
           ) : null}

@@ -1,7 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 
 import Message from './Message';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StatusBar, StyleSheet } from 'react-native';
 import ChatInput from './ChatInput';
 import { showMessageMenu } from './MessageMenu';
 import {
@@ -10,7 +10,7 @@ import {
 } from '../contexts/ChatRoomMessageContext';
 import { useSetReadReceipt } from '../hooks/useSetReadReceipt';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 type Props = {
   roomGuid: string;
@@ -40,11 +40,14 @@ function MessageFlatList({ isRequest }: Props) {
     [send],
   );
 
+  const statusBarHeight = StatusBar.currentHeight || 0;
+
   return (
     <KeyboardAvoidingView
       behavior="padding"
       enabled
-      style={ThemedStyles.style.flexContainer}>
+      keyboardVerticalOffset={statusBarHeight}
+      style={sp.styles.style.flexContainer}>
       <FlatList
         ref={listRef}
         data={messages}

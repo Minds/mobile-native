@@ -9,11 +9,11 @@ import {
   ScreenSection,
   Spacer,
 } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import Selector from '~/common/components/SelectorV2';
 import PressableScale from '~/common/components/PressableScale';
 import Input from '~/common/components/Input';
-import mindsConfigService from '~/common/services/minds-config.service';
+import sp from '~/services/serviceProvider';
 
 type FeatureFlagObj = { [key: string]: boolean | string };
 
@@ -27,7 +27,7 @@ const GrowthbookDev = () => {
   >({});
   const [filter, setFilter] = useState('');
 
-  const featureFlags = mindsConfigService.getSettings().posthog
+  const featureFlags = sp.config.getSettings().posthog
     .feature_flags as FeatureFlagObj;
 
   const selectFeatureValue = (name, value) => {
@@ -84,11 +84,9 @@ const FeatureItem = ({
   titleColor,
 }) => {
   const [showDetail, setShowDetail] = useState(false);
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   return (
-    <Column
-      containerStyle={ThemedStyles.style.bgSecondaryBackground}
-      bottom="S">
+    <Column containerStyle={sp.styles.style.bgSecondaryBackground} bottom="S">
       <Spacer space="L">
         <Row align="centerBetween">
           <PressableScale

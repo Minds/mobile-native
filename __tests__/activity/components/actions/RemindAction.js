@@ -2,13 +2,21 @@ import 'react-native';
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { activitiesServiceFaker } from '../../../../__mocks__/fake/ActivitiesFaker';
-import RemindAction from '../../../../src/newsfeed/activity/actions/RemindAction';
-import ActivityModel from '../../../../src/newsfeed/ActivityModel';
-import { getStores } from '../../../../AppStores';
+import { activitiesServiceFaker } from '~/../__mocks__/fake/ActivitiesFaker';
+import RemindAction from '~/newsfeed/activity/actions/RemindAction';
+import ActivityModel from '~/newsfeed/ActivityModel';
+import { getStores } from '~/../AppStores';
+import sp from '~/services/serviceProvider';
 
-jest.mock('../../../../AppStores');
-jest.mock('../../../../src/common/hooks/use-stores.tsx');
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
+sp.mockService('permissions');
+
+jest.mock('~/../AppStores');
+jest.mock('~/common/hooks/use-stores.tsx');
 
 getStores.mockReturnValue({
   newsfeed: {},

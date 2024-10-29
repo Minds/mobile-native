@@ -1,7 +1,7 @@
 import EventEmitter from 'eventemitter3';
-import logService from '~/common/services/log.service';
 import { SocketService } from '~/common/services/socket.service';
 import { ChatRoomEventType } from '../types';
+import serviceProvider from '~/services/serviceProvider';
 
 const CHAT_ROOM_NAME_PREFIX = 'chat:';
 const CHAT_ROOM_LIST_EVENT = 'chat_rooms';
@@ -53,7 +53,7 @@ export class GlobalChatSocketService {
   }
 
   public listen() {
-    logService.info('[GlobalChatSocketService] listen');
+    serviceProvider.log.info('[GlobalChatSocketService] listen');
     this.socket.unsubscribeAny(this.allSocketEvents);
     this.socket.subscribeAny(this.allSocketEvents);
   }

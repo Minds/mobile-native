@@ -3,7 +3,6 @@ import React from 'react';
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import moment from 'moment-timezone';
-import i18n from './src/common/services/i18n.service';
 
 require('./node_modules/react-native-gesture-handler/jestSetup.js');
 
@@ -15,6 +14,23 @@ const XMLHttpRequest = {
 global.XMLHttpRequest = XMLHttpRequest;
 
 configure({ adapter: new Adapter() });
+
+jest.mock('@livepeer/react-native');
+
+jest.mock('expo-updates', () => ({
+  checkForUpdateAsync: jest.fn(),
+  fetchUpdateAsync: jest.fn(),
+  reloadAsync: jest.fn(),
+}));
+
+jest.mock('expo-application', () => ({
+  getApplicationName: jest.fn(),
+}));
+
+// jest.mock('react-native-url-polyfill', () => ({
+//   URL: jest.fn(),
+//   URLSearchParams: jest.fn(),
+// }));
 
 jest.mock('~/config/Version', () => ({
   Version: {
@@ -33,21 +49,13 @@ jest.mock('react-native-reanimated', () => ({
   useAnimatedKeyboard: jest.fn().mockReturnValue({ height: 0 }),
 }));
 
-jest.mock('react-native-device-info', () => ({
-  getModel: jest.fn(),
-  getBuildNumber: jest.fn(),
-  getSystemVersion: jest.fn(),
-}));
-
 jest.mock('./src/newsfeed/NewsfeedService');
 
 jest.mock('expo-font');
 
 jest.mock('@react-native-camera-roll/camera-roll');
 jest.mock('expo-image');
-// jest.mock('react-native-device-info', () =>
-//   require('./node_modules/react-native-device-info/jest/react-native-device-info-mock'),
-// );
+
 // jest.mock('@snowplow/react-native-tracker');
 // jest.mock('mobx-react', () => require('mobx-react/custom'));
 jest.mock('@react-native-community/netinfo', () => ({
@@ -72,8 +80,6 @@ jest.doMock('moment-timezone', () => {
   moment.tz.setDefault('America/Los_Angeles');
   return moment;
 });
-
-i18n.setLocale('en', false);
 
 // fix for snapshots and touchables
 
@@ -146,3 +152,7 @@ jest.mock('@expo/vector-icons', () => ({
 jest.mock('react-native-keyboard-controller', () =>
   require('react-native-keyboard-controller/jest'),
 );
+
+// mocked here since mocking it locally on the api.service is not working (probably because of the circular dependency)
+// jest.mock('./src/navigation/NavigationService');
+// jest.mock('~/auth/AuthService');

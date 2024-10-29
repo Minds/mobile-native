@@ -6,16 +6,21 @@ import {
   waitFor,
 } from '@testing-library/react-native';
 import SupermindSettingsScreen from './SupermindSettingsScreen';
-import apiService from '~/common/services/api.service';
-import mindsConfigService from '~/common/services/minds-config.service';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+jest.mock('react-native-modern-datepicker', () => ({}));
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
+sp.mockService('connectivity');
+const mockedApi = sp.mockService('api');
+sp.mockService('analytics');
+const mindsConfigService = sp.mockService('config');
+sp.mockService('permissions');
 
 jest.mock('~/common/hooks/use-stores');
-jest.mock('~/common/services/permissions.service');
-jest.mock('~/common/services/minds-config.service');
-jest.mock('~/common/services/api.service');
-jest.mock('~/common/services/analytics.service');
-
-const mockedApi = apiService as jest.Mocked<typeof apiService>;
 
 const navigation = { goBack: jest.fn() };
 

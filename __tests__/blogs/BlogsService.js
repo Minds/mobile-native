@@ -1,19 +1,20 @@
-import api from '../../src/common/services/api.service';
-import blogService from '../../src/blogs/BlogsService';
+import { ApiService } from '~/common/services/api.service';
+import { BlogsService } from '~/blogs/BlogsService';
 
-jest.mock('../../src/common/services/api.service');
+jest.mock('~/common/services/api.service');
 
 /**
  * Tests
  */
 describe('blogs service', () => {
+  const api = new ApiService();
+  const blogService = new BlogsService(api);
   beforeEach(() => {
     api.get.mockClear();
   });
 
   it('should call api get when loadList is called and return the blogs', async () => {
-
-    const apiResponse = {entities: [1,2,3], 'load-next': 'a1'};
+    const apiResponse = { entities: [1, 2, 3], 'load-next': 'a1' };
 
     api.get.mockResolvedValue(apiResponse);
 
@@ -32,10 +33,8 @@ describe('blogs service', () => {
     expect(api.get.mock.calls[0][1].offset).toEqual('a0');
   });
 
-
   it('should call api get when loadEntity is called and return the blog', async () => {
-
-    const apiResponse = {blog: {guid: 'guid1'}};
+    const apiResponse = { blog: { guid: 'guid1' } };
 
     api.get.mockResolvedValue(apiResponse);
 

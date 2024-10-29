@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import UserModel from '../../channel/UserModel';
 import { observer } from 'mobx-react';
 import SuggestedSearch from './SuggestedSearch';
@@ -9,6 +9,7 @@ import MenuItem from '../../common/components/menus/MenuItem';
 import { SearchResultStoreType } from './createSearchResultStore';
 import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import ChannelListItem from '~/common/components/ChannelListItem';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   navigation: any;
@@ -31,7 +32,7 @@ const SearchResultComponent = observer(
             }}
             hideButtons
             navigation={navigation}
-            containerStyles={ThemedStyles.style.paddingVertical2x}
+            containerStyles={sp.styles.style.paddingVertical2x}
             borderless
           />
         );
@@ -78,12 +79,12 @@ const SearchResultComponent = observer(
   },
 );
 
-const containerStyle = ThemedStyles.combine(
+const containerStyle = sp.styles.combine(
   'bgPrimaryBackground',
   'flexContainer',
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   historyItem: ['bgTransparent', { borderTopWidth: 0 }],
 });
 

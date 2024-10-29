@@ -4,14 +4,14 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { FontsLoader } from 'FontsLoader';
-import PreviewUpdateService from './PreviewUpdateService';
 
 import { Button, H4, Screen } from '~/common/ui';
 import AppMessageProvider from 'AppMessageProvider';
 import { View } from 'react-native';
 import { QRScanner } from './QRScanner';
 import CenteredLoading from '~/common/components/CenteredLoading';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
+import './servicesRegister';
 
 /**
  * Minds Networks Preview App
@@ -35,17 +35,19 @@ const openTrial = () => {
 const Preview = () => {
   const [scan, setScan] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-
+  const themedStyle = sp.styles;
   const handleOpenURL = (url: string | { url: string } | null) => {
     url = url && typeof url === 'object' ? url.url : url;
 
-    if (url && PreviewUpdateService.isPreviewURL(url)) {
-      const channel = PreviewUpdateService.getPreviewChannel(url);
+    const previewUpdate = sp.resolve('previewUpdate');
+
+    if (url && previewUpdate.isPreviewURL(url)) {
+      const channel = previewUpdate.getPreviewChannel(url);
       if (!channel) {
         return;
       }
       setLoading(true);
-      PreviewUpdateService.updatePreview(channel).finally(() => {
+      previewUpdate.updatePreview(channel).finally(() => {
         setLoading(false);
       });
     }
@@ -61,13 +63,13 @@ const Preview = () => {
   }, []);
 
   const statusBarStyle =
-    ThemedStyles.theme === 0 ? 'dark-content' : 'light-content';
+    themedStyle.theme === 0 ? 'dark-content' : 'light-content';
 
   return (
     <Screen safe>
       <StatusBar
         barStyle={statusBarStyle}
-        backgroundColor={ThemedStyles.getColor('PrimaryBackground')}
+        backgroundColor={themedStyle.getColor('PrimaryBackground')}
       />
       {loading ? (
         <CenteredLoading />
@@ -93,7 +95,7 @@ const Preview = () => {
               Tap the button above to scan the network preview QR code. You can
               find the QR code in your email when your update build is ready.
             </H4>
-            <View style={ThemedStyles.style.rowJustifyCenter}>
+            <View style={themedStyle.style.rowJustifyCenter}>
               <Button type="action" size="large" onPress={() => setScan(true)}>
                 Scan QR code
               </Button>

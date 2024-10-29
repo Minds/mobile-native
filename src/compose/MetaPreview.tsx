@@ -10,10 +10,10 @@ import IonIcon from '@expo/vector-icons/Ionicons';
 import { observer } from 'mobx-react';
 import SmartImage from '../common/components/SmartImage';
 
-import ThemedStyles from '../styles/ThemedStyles';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
 import domain from '../common/helpers/domain';
 import MText from '../common/components/MText';
+import sp from '~/services/serviceProvider';
 
 const imgSize = Dimensions.get('window').width / 4;
 const thumbSize = PixelRatio.getPixelSizeForLayoutSize(imgSize);
@@ -23,7 +23,7 @@ const thumbSize = PixelRatio.getPixelSizeForLayoutSize(imgSize);
  * @param {Object} props
  */
 export default observer(function (props) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const source = { uri: mediaProxyUrl(props.meta.thumbnail, thumbSize) };
   const thumbnail = { uri: mediaProxyUrl(props.meta.thumbnail, 30) };
 

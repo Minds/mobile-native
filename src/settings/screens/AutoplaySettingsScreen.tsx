@@ -1,15 +1,15 @@
 import React, { useCallback } from 'react';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
 import { CheckBox } from 'react-native-elements';
 import { observer } from 'mobx-react';
-import sessionService from '../../common/services/session.service';
-import MText from '../../common/components/MText';
+
+import MText from '~/common/components/MText';
 import { Screen } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 
 const AutoplaySettingsScreen = observer(() => {
-  const theme = ThemedStyles.style;
-  const user = sessionService.getUser();
+  const theme = sp.styles.style;
+  const user = sp.session.getUser();
+  const i18n = sp.i18n;
 
   const toggleDisabled = useCallback(() => {
     user.toggleDisableAutoplayVideos();

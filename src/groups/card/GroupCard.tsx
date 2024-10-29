@@ -1,20 +1,22 @@
-//@ts-nocheck
 import React, { Component } from 'react';
-
 import { View, StyleSheet } from 'react-native';
-import SmartImage from '../../common/components/SmartImage';
-
-import { MINDS_CDN_URI } from '../../config/Config';
-import abbrev from '../../common/helpers/abbrev';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
-import MText from '../../common/components/MText';
 import { Image } from 'expo-image';
+
+import SmartImage from '~/common/components/SmartImage';
+import { MINDS_CDN_URI } from '~/config/Config';
+import abbrev from '~/common/helpers/abbrev';
+import MText from '~/common/components/MText';
+import type GroupModel from '../GroupModel';
+import sp from '~/services/serviceProvider';
+
+type Props = {
+  entity: GroupModel;
+};
 
 /**
  * Group Card
  */
-export default class GroupCard extends Component {
+export default class GroupCard extends Component<Props> {
   /**
    * Get Group Banner
    */
@@ -45,7 +47,8 @@ export default class GroupCard extends Component {
     const group = this.props.entity;
     const avatar = this.getAvatar();
     const iurl = this.getBannerFromGroup();
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
+    const i18n = sp.i18n;
 
     return (
       <View>

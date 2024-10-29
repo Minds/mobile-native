@@ -4,10 +4,11 @@ import React from 'react';
 import { Dimensions, StyleSheet, TouchableHighlight } from 'react-native';
 
 import { withErrorBoundary } from '../../../common/components/ErrorBoundary';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import HeroPartial from './item-partials/HeroPartial';
 import RichPartial from './item-partials/RichPartial';
 import TrendingHashtagPartial from './item-partials/TrendingHashtagPartial';
+import sp from '~/services/serviceProvider';
 
 export const DISCOVERY_TRENDING_MAX_LENGTH = 140;
 
@@ -61,7 +62,7 @@ export const DiscoveryTrendsListItem = withErrorBoundary((props: Props) => {
   );
 });
 
-export const styles = ThemedStyles.create({
+export const styles = sp.styles.create({
   container: [
     {
       borderBottomWidth: StyleSheet.hairlineWidth * 2,

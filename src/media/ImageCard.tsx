@@ -1,4 +1,3 @@
-//@ts-nocheck
 import React, { Component } from 'react';
 
 import { View, StyleSheet } from 'react-native';
@@ -7,14 +6,19 @@ import { Image } from 'expo-image';
 import { observer } from 'mobx-react';
 import SmartImage from '../common/components/SmartImage';
 import { MINDS_CDN_URI } from '../config/Config';
-import i18n from '../common/services/i18n.service';
 import MText from '../common/components/MText';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+import sp from '~/services/serviceProvider';
+
+type Props = {
+  entity: ActivityModel;
+};
+
 /**
  * Channel Card
  */
-
 @observer
-export default class ImageCard extends Component {
+export default class ImageCard extends Component<Props> {
   /**
    * Get Channel Avatar
    */
@@ -46,7 +50,7 @@ export default class ImageCard extends Component {
                   {entity.ownerObj.username.toUpperCase()}
                 </MText>
                 <MText style={styles.createdDate}>
-                  {i18n.date(entity.time_created * 1000)}
+                  {sp.i18n.date(parseInt(entity.time_created, 10) * 1000)}
                 </MText>
               </View>
             </View>

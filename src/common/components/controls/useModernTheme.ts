@@ -1,29 +1,28 @@
 import React from 'react';
-import ThemedStyles from '~/styles/ThemedStyles';
-
+import sp from '~/services/serviceProvider';
 export default function useModernTheme() {
   const commonTheme = React.useMemo(
     () => ({
-      backgroundColor: ThemedStyles.getColor('PrimaryBackgroundHighlight'),
-      calendarBackground: ThemedStyles.getColor('PrimaryBackgroundHighlight'),
-      dayTextColor: ThemedStyles.getColor('PrimaryText'),
-      textSectionTitleDisabledColor: ThemedStyles.getColor('TertiaryText'),
+      backgroundColor: sp.styles.getColor('PrimaryBackgroundHighlight'),
+      calendarBackground: sp.styles.getColor('PrimaryBackgroundHighlight'),
+      dayTextColor: sp.styles.getColor('PrimaryText'),
+      textSectionTitleDisabledColor: sp.styles.getColor('TertiaryText'),
 
-      textDisabledColor: ThemedStyles.getColor('TertiaryText'),
-      textSectionTitleColor: ThemedStyles.getColor('SecondaryText'),
-      indicatorColor: ThemedStyles.getColor('Link'),
-      dotColor: ThemedStyles.getColor('Link'),
-      selectedDayBackgroundColor: ThemedStyles.getColor('Link'),
-      selectedDayTextColor: ThemedStyles.getColor('White'),
-      monthTextColor: ThemedStyles.getColor('PrimaryText'),
-      todayTextColor: ThemedStyles.getColor('Link'),
-      arrowColor: ThemedStyles.getColor('Link'),
+      textDisabledColor: sp.styles.getColor('TertiaryText'),
+      textSectionTitleColor: sp.styles.getColor('SecondaryText'),
+      indicatorColor: sp.styles.getColor('Link'),
+      dotColor: sp.styles.getColor('Link'),
+      selectedDayBackgroundColor: sp.styles.getColor('Link'),
+      selectedDayTextColor: sp.styles.getColor('White'),
+      monthTextColor: sp.styles.getColor('PrimaryText'),
+      todayTextColor: sp.styles.getColor('Link'),
+      arrowColor: sp.styles.getColor('Link'),
 
-      textHeaderColor: ThemedStyles.getColor('PrimaryText'),
-      textDefaultColor: ThemedStyles.getColor('PrimaryText'),
-      selectedTextColor: ThemedStyles.getColor('White'),
-      mainColor: ThemedStyles.getColor('Link'),
-      textSecondaryColor: ThemedStyles.getColor('SecondaryText'),
+      textHeaderColor: sp.styles.getColor('PrimaryText'),
+      textDefaultColor: sp.styles.getColor('PrimaryText'),
+      selectedTextColor: sp.styles.getColor('White'),
+      mainColor: sp.styles.getColor('Link'),
+      textSecondaryColor: sp.styles.getColor('SecondaryText'),
       borderColor: 'rgba(122, 146, 165, 0.1)',
     }),
     [],

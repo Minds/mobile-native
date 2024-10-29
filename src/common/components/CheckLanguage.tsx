@@ -2,22 +2,21 @@ import React from 'react';
 import { View } from 'react-native';
 import Icon from '@expo/vector-icons/MaterialIcons';
 
-import i18n from '../services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
 import Button from './Button';
 import { observer } from 'mobx-react';
-import settingsStore from '../../settings/SettingsStore';
 import MText from './MText';
+import sp from '~/services/serviceProvider';
 
 /**
  * Check language component
  */
 export default observer(function CheckLanguage() {
-  const theme = ThemedStyles.style;
-
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
+  const settings = sp.resolve('settings');
   if (
     i18n.bestLocale !== i18n.locale &&
-    i18n.bestLocale !== settingsStore.ignoreBestLanguage
+    i18n.bestLocale !== settings.ignoreBestLanguage
   ) {
     const lang = i18n
       .getSupportedLocales()
@@ -35,9 +34,7 @@ export default observer(function CheckLanguage() {
           ]}>
           <View style={theme.rowJustifyEnd}>
             <Icon
-              onPress={() =>
-                settingsStore.setIgnoreBestLanguage(i18n.bestLocale)
-              }
+              onPress={() => settings.setIgnoreBestLanguage(i18n.bestLocale)}
               name="close"
               size={20}
               style={theme.colorIcon}

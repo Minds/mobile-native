@@ -2,34 +2,31 @@ import { useFocusEffect } from '@react-navigation/native';
 
 import { ResizeMode, VideoReadyForDisplayEvent } from 'expo-av';
 import { observer, useLocalStore } from 'mobx-react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   StyleProp,
   TouchableWithoutFeedback,
   View,
   ViewStyle,
 } from 'react-native';
-import RetryableImage from '~/common/components/RetryableImage';
-import type CommentModel from '../../../comments/v2/CommentModel';
-import getVideoThumb from '../../../common/helpers/get-video-thumbnail';
-import videoPlayerService from '../../../common/services/video-player.service';
-import { DATA_SAVER_THUMB_RES } from '../../../config/Config';
-import type ActivityModel from '../../../newsfeed/ActivityModel';
-import settingsStore from '../../../settings/SettingsStore';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import type CommentModel from '~/comments/v2/CommentModel';
+import getVideoThumb from '~/common/helpers/get-video-thumbnail';
+import { DATA_SAVER_THUMB_RES } from '~/config/Config';
+import type ActivityModel from '~/newsfeed/ActivityModel';
+
 import createMindsVideoStore from './createMindsVideoStore';
 import Controls from './overlays/Controls';
 import Error from './overlays/Error';
-import InProgress from './overlays/InProgress';
 import Transcoding from './overlays/Transcoding';
 import ExpoVideo from './Video';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity?: ActivityModel | CommentModel;
   autoplay?: boolean;
   repeat?: boolean;
   resizeMode?: ResizeMode;
-  video?: { uri: string; headers?: any };
+  video?: { uri: string; headers?: Record<string, string> };
   containerStyle?: StyleProp<ViewStyle>;
   onStoreCreated?: Function;
   onReadyForDisplay?: (event: VideoReadyForDisplayEvent) => void;
@@ -43,9 +40,10 @@ type PropsType = {
 };
 
 const MindsVideo = observer((props: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
+  const videoPlayerService = sp.resolve('videoPlayer');
   const dataSaverEnabled =
-    !props.ignoreDataSaver && settingsStore.dataSaverEnabled;
+    !props.ignoreDataSaver && sp.resolve('settings').dataSaverEnabled;
   const localStore = useLocalStore(createMindsVideoStore, {
     autoplay: props.autoplay,
     repeat: props.repeat,
@@ -55,14 +53,6 @@ const MindsVideo = observer((props: PropsType) => {
   });
 
   const onStoreCreated = props.onStoreCreated;
-
-  const [posterSource, setPosterSource] = useState(
-    props.entity
-      ? dataSaverEnabled
-        ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
-        : getVideoThumb(props.entity)
-      : null,
-  );
 
   useFocusEffect(
     React.useCallback(() => {
@@ -92,26 +82,17 @@ const MindsVideo = observer((props: PropsType) => {
       localStore.clear();
       localStore.setEntity(props.entity);
       localStore.preload();
-      setPosterSource(
-        dataSaverEnabled
-          ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
-          : getVideoThumb(props.entity),
-      );
     }
   }, [localStore, props.entity]);
 
   const onReadyForDisplay = React.useCallback(
     e => {
-      localStore.setShowThumbnail(false);
       if (props.onReadyForDisplay) {
         props.onReadyForDisplay(e);
       }
     },
-    [localStore, props.onReadyForDisplay],
+    [props.onReadyForDisplay],
   );
-
-  // Show inProgress overlay if load has started
-  const inProgressOverlay = localStore.inProgress && <InProgress />;
 
   // Show Error overlay if not in progress and error
   const errorOverlay = !localStore.inProgress && localStore.error && (
@@ -135,13 +116,14 @@ const MindsVideo = observer((props: PropsType) => {
       onPress={localStore.openControlOverlay}
       style={[theme.flexContainer, props.containerStyle]}>
       <View style={containerStyle}>
-        {localStore.showThumbnail && (
-          <RetryableImage
-            style={theme.positionAbsolute}
-            source={posterSource}
-          />
-        )}
         <ExpoVideo
+          posterSource={
+            props.entity
+              ? dataSaverEnabled
+                ? getVideoThumb(props.entity, DATA_SAVER_THUMB_RES)
+                : getVideoThumb(props.entity)
+              : undefined
+          }
           entity={props.entity}
           localStore={localStore}
           video={props.video}
@@ -149,7 +131,6 @@ const MindsVideo = observer((props: PropsType) => {
           resizeMode={props.resizeMode}
           onReadyForDisplay={onReadyForDisplay}
         />
-        {inProgressOverlay}
         {errorOverlay}
         {transCodingOverlay}
         {controlsOverlay}
@@ -158,6 +139,6 @@ const MindsVideo = observer((props: PropsType) => {
   );
 });
 
-const containerStyle = ThemedStyles.combine('flexContainer', 'bgBlack');
+const containerStyle = sp.styles.combine('flexContainer', 'bgBlack');
 
 export default MindsVideo;

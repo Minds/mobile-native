@@ -1,19 +1,20 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
-import { styles } from './InputNumber';
-import usePhoneValidationStore from '../usePhoneValidationStore';
-import i18n from '../../../../services/i18n.service';
-import Button from '../../../Button';
-import ThemedStyles from '../../../../../styles/ThemedStyles';
-import MText from '../../../MText';
 import { useBackHandler } from '@react-native-community/hooks';
+
+import { styles } from './InputNumber';
+import Button from '../../../Button';
+
+import MText from '../../../MText';
 import InputContainer from '~/common/components/InputContainer';
+import usePhoneValidationStore from '../usePhoneValidationStore';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {};
 
 const ConfirmNumber = observer(({}: PropsType) => {
   const store = usePhoneValidationStore();
-
+  const i18n = sp.i18n;
   // Disable back button on Android
   useBackHandler(
     useCallback(() => {
@@ -42,7 +43,7 @@ const ConfirmNumber = observer(({}: PropsType) => {
   );
 });
 
-const localStyles = ThemedStyles.create({
+const localStyles = sp.styles.create({
   codeSent: ['fontLM', 'textCenter', 'marginBottom8x'],
 });
 

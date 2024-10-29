@@ -7,10 +7,11 @@ import i18n from 'i18n-js';
 import { I18nManager, NativeModules, Platform } from 'react-native';
 import moment from 'moment-timezone';
 import { action, observable } from 'mobx';
-import { storages } from './storage/storages.service';
 // importing directly to use the type
 import enLocale from '../../../locales/en.json';
 import i18next from 'utils/locales';
+import type { Storages } from './storage/storages.service';
+import type { ApiService } from './api.service';
 
 // get all possible key paths
 type DeepKeys<T> = T extends object
@@ -117,12 +118,12 @@ type DateFormat = {
   datetime: string;
 };
 
-class I18nService {
+export class I18nService {
   @observable locale = 'en';
   bestLocale = 'en';
   dateFormat?: DateFormat;
 
-  constructor() {
+  constructor(private storages: Storages, private api: ApiService) {
     if (process.env.JEST_WORKER_ID === undefined) {
       this.init();
     }
@@ -135,7 +136,7 @@ class I18nService {
    */
   init() {
     // read locale from storage
-    let language = storages.app.getString('locale');
+    let language = this.storages.app.getString('locale');
     // get best available language when app start
     this.bestLocale = this.getBestLanguage();
 
@@ -282,7 +283,7 @@ class I18nService {
   @action
   setLocale(locale: string, store = true) {
     if (store) {
-      storages.app.setString('locale', locale);
+      this.storages.app.set('locale', locale);
     }
 
     i18next.changeLanguage(locale);
@@ -349,9 +350,7 @@ class I18nService {
    * Send locale to the backend
    */
   setLocaleBackend() {
-    // test fails if we use import
-    const api = require('./api.service').default;
-    api.post('api/v1/settings', {
+    this.api.post('api/v1/settings', {
       language: this.locale,
     });
   }
@@ -408,5 +407,3 @@ export function findBestAvailableLanguage(languageTags) {
     }
   }
 }
-
-export default new I18nService();

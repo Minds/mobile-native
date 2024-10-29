@@ -3,12 +3,12 @@ import { View } from 'react-native';
 import { observer } from 'mobx-react';
 import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
 
-import ThemedStyles from '../../styles/ThemedStyles';
 import { ChannelStoreType } from '../../channel/v2/createChannelStore';
 import ChannelBadges from '../../channel/badges/ChannelBadges';
 import UserStore from '../../auth/UserStore';
 import type UserModel from '../../channel/UserModel';
 import MText from './MText';
+import sp from '~/services/serviceProvider';
 
 type propsType = {
   store?: ChannelStoreType | UserStore;
@@ -18,7 +18,7 @@ type propsType = {
 
 const UserNamesComponent: FunctionComponent<propsType> = observer(
   ({ user, store, pay }) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     const channel: UserModel | null | undefined =
       user || (store instanceof UserStore ? store.me : store?.channel);
@@ -49,7 +49,7 @@ const UserNamesComponent: FunctionComponent<propsType> = observer(
   },
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['rowJustifyCenter', 'alignCenter', 'paddingTop8x', 'flexWrap'],
   payContainer: ['rowStretch', 'centered'],
   username: [

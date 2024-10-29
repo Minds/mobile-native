@@ -3,42 +3,43 @@ import React, { useCallback, useMemo } from 'react';
 import MenuItem from '~/common/components/menus/MenuItem';
 import useCurrentUser from '~/common/hooks/useCurrentUser';
 import { B2, Column, H2, Screen, ScreenHeader } from '~/common/ui';
-import NavigationService from '~/navigation/NavigationService';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 const tinycolor = require('tinycolor2');
 
 function BoostUpgrade() {
+  const navigtionService = sp.navigation;
   const user = useCurrentUser();
   const lighterLinkColor = useMemo(
-    () => tinycolor(ThemedStyles.getColor('Link')).brighten().toRgbString(),
+    () => tinycolor(sp.styles.getColor('Link')).brighten().toRgbString(),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [ThemedStyles.theme],
+    [sp.styles.theme],
   );
 
   const upgradePlus = useCallback(() => {
-    NavigationService.navigate('UpgradeScreen', {
+    navigtionService.navigate('UpgradeScreen', {
       onComplete: (success: any) => {
         if (success) {
           user?.togglePlus();
-          NavigationService.goBack();
+          navigtionService.goBack();
         }
       },
       pro: false,
     });
-  }, [user]);
+  }, [navigtionService, user]);
 
   const upgradePro = useCallback(() => {
-    NavigationService.navigate('UpgradeScreen', {
+    navigtionService.navigate('UpgradeScreen', {
       onComplete: (success: any) => {
         if (success) {
           user?.togglePro();
-          NavigationService.goBack();
+          navigtionService.goBack();
         }
       },
       pro: true,
     });
-  }, [user]);
+  }, [navigtionService, user]);
 
   return (
     <Screen scroll safe>
@@ -57,7 +58,7 @@ function BoostUpgrade() {
           leftIcon="queue"
           onPress={upgradePlus}
           iconColor="PrimaryText"
-          underlayColor={ThemedStyles.getColor('TertiaryBackground')}
+          underlayColor={sp.styles.getColor('TertiaryBackground')}
           containerItemStyle={styles.firstBox}
         />
 
@@ -77,7 +78,7 @@ function BoostUpgrade() {
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   firstBox: [
     'bgSecondaryBackground',
     {

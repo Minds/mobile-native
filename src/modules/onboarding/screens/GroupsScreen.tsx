@@ -9,10 +9,10 @@ import GroupModel from '~/groups/GroupModel';
 import useApiQuery from '~/services/hooks/useApiQuery';
 import CenteredLoading from '~/common/components/CenteredLoading';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import AuthService from '~/auth/AuthService';
+import serviceProvider from '~/services/serviceProvider';
 const Item = withErrorBoundary(GroupsListItem);
 
-const next = () => AuthService.setCompletedOnboard();
+const next = () => serviceProvider.resolve('auth').setCompletedOnboard();
 
 function GroupsScreen() {
   return (

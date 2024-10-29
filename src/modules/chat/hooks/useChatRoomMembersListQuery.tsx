@@ -1,12 +1,14 @@
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { showNotification } from 'AppMessages';
 import { produce } from 'immer';
-import logService from '~/common/services/log.service';
+
 import {
   GetChatRoomQuery,
   useInfiniteGetChatRoomMembersQuery,
   useRemoveMemberFromChatRoomMutation,
 } from '~/graphql/api';
+
+import sp from '~/services/serviceProvider';
 
 export function useChatRoomMembersListQuery(roomGuid: string) {
   const queryClient = useQueryClient();
@@ -42,7 +44,7 @@ export function useChatRoomMembersListQuery(roomGuid: string) {
         error instanceof Error ? error.message : 'Error removing member',
       );
 
-      logService.exception('[useRemoveMemberFromChatRoomMutation]', error);
+      sp.log.exception('[useRemoveMemberFromChatRoomMutation]', error);
     },
     onSuccess: (data, context) => {
       showNotification('User removed');

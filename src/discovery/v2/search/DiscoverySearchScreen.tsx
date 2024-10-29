@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { View } from 'react-native';
 import { observer } from 'mobx-react';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import { useNavigation } from '@react-navigation/core';
 import { RouteProp } from '@react-navigation/native';
 import { DiscoveryStackParamList } from '~/navigation/DiscoveryStack';
@@ -15,6 +15,7 @@ import DiscoveryV2SearchStore, {
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { IS_IPAD } from '~/config/Config';
 import CaptureFab from '~/capture/CaptureFab';
+import sp from '~/services/serviceProvider';
 
 interface Props {
   route: RouteProp<DiscoveryStackParamList, 'DiscoverySearch'>;
@@ -25,7 +26,7 @@ interface Props {
  */
 export const DiscoverySearchScreen = withErrorBoundaryScreen(
   observer((props: Props) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const store = useMemo(() => new DiscoveryV2SearchStore(), []);
 
     const navigation =

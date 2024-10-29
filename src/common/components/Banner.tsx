@@ -1,12 +1,13 @@
 import { observer } from 'mobx-react';
 import { ReactNode } from 'react';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useLegacyStores } from '../hooks/use-stores';
 import { DismissIdentifier } from '../stores/DismissalStore';
 import { Button, Column, IconButton } from '../ui';
 import MPressable from './MPressable';
 import { Typography, TypographyType } from '../ui/typography/Typography';
-import analyticsService, { ClickRef } from '../services/analytics.service';
+import type { ClickRef } from '../services/analytics.service';
+import sp from '~/services/serviceProvider';
 
 export interface BannerProps {
   dismissIdentifier?: DismissIdentifier;
@@ -34,7 +35,7 @@ function Banner({
 
   const onAction = () => {
     if (actionIdentifier) {
-      analyticsService.trackClick(actionIdentifier);
+      sp.resolve('analytics').trackClick(actionIdentifier);
     }
     props.onAction?.();
   };
@@ -77,7 +78,7 @@ function Banner({
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     'borderBottomHair',
     'borderTopHair',

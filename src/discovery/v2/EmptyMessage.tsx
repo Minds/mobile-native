@@ -2,7 +2,8 @@ import { View } from 'react-native';
 import { B2, H3, Icon } from '~/common/ui';
 import Button from '~/common/components/Button';
 import { IconMapNameType } from '~/common/ui/icons/map';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 type EmptyMessageProps = {
   icon?: IconMapNameType;
@@ -24,7 +25,7 @@ export const EmptyMessage = ({
         name={icon}
         size={24}
         style={styles.icon}
-        color={ThemedStyles.theme === 1 ? 'White' : 'Black'}
+        color={sp.styles.theme === 1 ? 'White' : 'Black'}
       />
       <View style={styles.text}>
         <H3>{title}</H3>
@@ -45,7 +46,7 @@ export const EmptyMessage = ({
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['flexContainer', 'rowJustifySpaceBetween', 'marginVerticalXXL'],
   icon: ['marginHorizontalXXL', 'marginTop1x'],
   text: ['flexContainer', 'marginRightXL'],

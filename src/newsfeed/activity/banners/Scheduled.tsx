@@ -1,6 +1,6 @@
 import React from 'react';
-import i18n from '../../../common/services/i18n.service';
 import Banner from './Banner';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   isScheduled: boolean;
@@ -11,6 +11,7 @@ const Scheduled = ({ isScheduled, time_created }: PropsType) => {
   if (!isScheduled) {
     return null;
   }
+  const i18n = sp.i18n;
   const message = `${i18n.t('activity.scheduled')} ${i18n.date(
     Number(time_created) * 1000,
   )}.`;

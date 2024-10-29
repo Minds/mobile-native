@@ -1,15 +1,16 @@
-import api, { ApiResponse } from './../common/services/api.service';
-import session from './../common/services/session.service';
+import { ApiService } from './../common/services/api.service';
+import { ApiResponse } from '~/common/services/ApiResponse';
 import delay from '../common/helpers/delay';
-import logService from '../common/services/log.service';
 import type UserModel from '../channel/UserModel';
 import { resetStackAndGoBack } from './multi-user/resetStackAndGoBack';
-import NavigationService from '../navigation/NavigationService';
-import i18n from '../common/services/i18n.service';
 import { showNotification } from 'AppMessages';
 import { action, observable } from 'mobx';
-import mindsConfigService from '~/common/services/minds-config.service';
 import { AuthType } from '~/common/services/storage/session.storage.service';
+import type { LogService } from '~/common/services/log.service';
+import type { SessionService } from '~/common/services/session.service';
+import type { NavigationService } from '~/navigation/NavigationService';
+import type { I18nService } from '~/common/services/i18n.service';
+import type { MindsConfigService } from '~/common/services/minds-config.service';
 
 export type TFA = 'sms' | 'totp';
 
@@ -64,15 +65,23 @@ type validateParams = {
 /**
  * Auth Services
  */
-class AuthService {
+export class AuthService {
   @observable justRegistered = false;
   @observable onboardCompleted = false;
-  showLoginPasswordModal: null | Function = null;
 
   @action
   setCompletedOnboard() {
     this.onboardCompleted = true;
   }
+
+  constructor(
+    private api: ApiService,
+    private log: LogService,
+    private session: SessionService,
+    private navigation: NavigationService,
+    private i18n: I18nService,
+    private config: MindsConfigService,
+  ) {}
 
   /**
    * Login user
@@ -94,12 +103,8 @@ class AuthService {
 
     // ignore if already logged in
     this.checkUserExist(username);
-
-    const { data, headers: responseHeaders } = await api.rawPost<LoginResponse>(
-      'api/v3/oauth/token',
-      params,
-    );
-
+    const { data, headers: responseHeaders } =
+      await this.api.rawPost<LoginResponse>('api/v3/oauth/token', params);
     if (responseHeaders && responseHeaders['set-cookie']) {
       const regex = /minds_pseudoid=([^;]*);/g;
       const result = regex.exec(responseHeaders['set-cookie'].join());
@@ -108,24 +113,24 @@ class AuthService {
       }
     }
 
-    if (session.isRelogin(username, data)) {
+    if (this.session.isRelogin(username, data)) {
       return data;
     }
 
-    const isFirstLogin = session.sessionsCount === 0;
+    const isFirstLogin = this.session.sessionsCount === 0;
 
     // if already have other sessions...
     if (!isFirstLogin) {
-      session.setSwitchingAccount(true);
+      this.session.setSwitchingAccount(true);
       this.sessionLogout(newUser);
     }
 
-    await api.clearCookies();
+    await this.api.clearCookies();
     await delay(100);
 
-    await session.addOAuthSession(data);
-    await session.login();
-    await mindsConfigService.update();
+    await this.session.addOAuthSession(data);
+    await this.session.login();
+    await this.config.update();
 
     // if this is not the first login we reset the stack keeping the login screen and the main only.
     // To force rendering the app behind the modal and get rid of the splash screen
@@ -133,7 +138,7 @@ class AuthService {
       resetStackAndGoBack();
     }
 
-    session.setSwitchingAccount(false);
+    this.session.setSwitchingAccount(false);
 
     return data;
   }
@@ -143,23 +148,23 @@ class AuthService {
    */
   checkUserExist(username: string) {
     if (
-      session.sessions.some(
+      this.session.sessions.some(
         token => token.user.username === username && !token.sessionExpired,
       )
     ) {
-      throw new Error(i18n.t('auth.alreadyLogged'));
+      throw new Error(this.i18n.t('auth.alreadyLogged'));
     }
   }
 
   async loginWithIndex(sessionIndex: number) {
-    session.setSwitchingAccount(true);
+    this.session.setSwitchingAccount(true);
     await this.sessionLogout();
-    await api.clearCookies();
+    await this.api.clearCookies();
     await delay(100);
-    await session.switchUser(sessionIndex);
-    await session.login();
+    await this.session.switchUser(sessionIndex);
+    await this.session.login();
     resetStackAndGoBack();
-    session.setSwitchingAccount(false);
+    this.session.setSwitchingAccount(false);
   }
 
   /**
@@ -168,22 +173,22 @@ class AuthService {
    * @param callback the callback to be called on success
    */
   async loginWithGuid(guid: string, callback: Function) {
-    const index = session.getIndexSessionFromGuid(guid);
+    const index = this.session.getIndexSessionFromGuid(guid);
 
     if (index !== false) {
       await this.loginWithIndex(index);
       callback();
     } else {
-      logService.exception('[AuthService] loginWithGuid');
+      this.log.exception('[AuthService] loginWithGuid');
     }
   }
 
   async handleActiveAccount() {
     // if after logout we have other accounts...
-    if (session.sessionsCount > 0) {
+    if (this.session.sessionsCount > 0) {
       await delay(100);
-      await session.switchUser(session.activeIndex);
-      await session.login();
+      await this.session.switchUser(this.session.activeIndex);
+      await this.session.login();
       resetStackAndGoBack();
     }
   }
@@ -193,7 +198,7 @@ class AuthService {
    */
   async disable() {
     try {
-      await this.logout(() => api.delete('api/v1/channel'));
+      await this.logout(() => this.api.delete('api/v1/channel'));
     } catch (e) {
       showNotification('Error disabling the channel');
     }
@@ -204,7 +209,9 @@ class AuthService {
    */
   async delete(password) {
     try {
-      await this.logout(() => api.post('api/v2/settings/delete', { password }));
+      await this.logout(() =>
+        this.api.post('api/v2/settings/delete', { password }),
+      );
     } catch (e) {
       showNotification('Error deleting the channel');
     }
@@ -217,29 +224,29 @@ class AuthService {
     this.justRegistered = false;
     this.onboardCompleted = false;
     try {
-      if (session.sessionsCount > 0) {
-        const state = NavigationService.getCurrentState();
+      if (this.session.sessionsCount > 0) {
+        const state = this.navigation.getCurrentState();
         if (state && state.name !== 'MultiUserScreen') {
-          NavigationService.navigate('MultiUserScreen');
+          this.navigation.navigate('MultiUserScreen');
         }
       }
 
       // delete device token first
-      await this.unregisterTokenFrom(session.activeIndex);
+      await this.unregisterTokenFrom(this.session.activeIndex);
 
       if (preLogoutCallBack) {
         await preLogoutCallBack();
       }
 
-      api.post('api/v3/oauth/revoke');
+      this.api.post('api/v3/oauth/revoke');
 
       // Logout and handle user switching or navigating to welcome screen
       this.logoutSession();
 
       return true;
     } catch (err) {
-      session.setSwitchingAccount(false);
-      logService.exception('[AuthService] logout', err);
+      this.session.setSwitchingAccount(false);
+      this.log.exception('[AuthService] logout', err);
       return false;
     }
   }
@@ -248,13 +255,13 @@ class AuthService {
    * Logout session and handle user switching or navigating to welcome screen
    */
   private async logoutSession() {
-    session.setSwitchingAccount(true);
-    session.logout();
+    this.session.setSwitchingAccount(true);
+    this.session.logout();
 
     // Fixes auto-subscribe issue on register
-    await api.clearCookies();
+    await this.api.clearCookies();
     await this.handleActiveAccount();
-    session.setSwitchingAccount(false);
+    this.session.setSwitchingAccount(false);
   }
 
   /**
@@ -265,29 +272,29 @@ class AuthService {
     this.onboardCompleted = false;
 
     try {
-      if (session.sessionsCount > 0) {
-        const state = NavigationService.getCurrentState();
+      if (this.session.sessionsCount > 0) {
+        const state = this.navigation.getCurrentState();
         if (state && state.name !== 'MultiUserScreen') {
-          NavigationService.navigate('MultiUserScreen');
+          this.navigation.navigate('MultiUserScreen');
           await delay(100);
         }
       }
       // delete device token first
-      await this.unregisterTokenFrom(session.activeIndex);
+      await this.unregisterTokenFrom(this.session.activeIndex);
 
-      session.setSwitchingAccount(true);
+      this.session.setSwitchingAccount(true);
       // revoke local session
-      session.setSessionExpired(true);
+      this.session.setSessionExpired(true);
 
       this.tryToRelog(() => {
-        session.setSessionExpired(false);
-        NavigationService.goBack();
+        this.session.setSessionExpired(false);
+        this.navigation.goBack();
       });
 
       return true;
     } catch (err) {
-      session.setSwitchingAccount(false);
-      logService.exception('[AuthService] revokeTokens', err);
+      this.session.setSwitchingAccount(false);
+      this.log.exception('[AuthService] revokeTokens', err);
       return false;
     }
   }
@@ -301,14 +308,16 @@ class AuthService {
       this.logoutSession();
     };
 
-    const currentSession = session.getSessionForIndex(session.activeIndex);
+    const currentSession = this.session.getSessionForIndex(
+      this.session.activeIndex,
+    );
 
     if (currentSession.authType === AuthType.Cookie) {
       await onCancel();
       return;
     }
 
-    NavigationService.navigate('RelogScreen', {
+    this.navigation.navigate('RelogScreen', {
       onLogin,
       onCancel,
     });
@@ -319,17 +328,14 @@ class AuthService {
    */
   async unregisterTokenFrom(index: number) {
     try {
-      const deviceToken = session.deviceToken;
+      const deviceToken = this.session.deviceToken;
       if (deviceToken) {
-        return await session.apiServiceInstances[index].delete(
+        return await this.session.apiServiceInstances[index].delete(
           `api/v3/notifications/push/token/${deviceToken}`,
         );
       }
     } catch (error) {
-      logService.exception(
-        '[AuthService] error unregistering push token',
-        error,
-      );
+      this.log.exception('[AuthService] error unregistering push token', error);
     }
   }
 
@@ -343,20 +349,20 @@ class AuthService {
       await this.unregisterTokenFrom(index);
 
       // revoke access token from backend
-      session.apiServiceInstances[index].post('api/v3/oauth/revoke');
-      session.setSwitchingAccount(true);
-      const logoutActive = session.logoutFrom(index);
+      this.session.apiServiceInstances[index].post('api/v3/oauth/revoke');
+      this.session.setSwitchingAccount(true);
+      const logoutActive = this.session.logoutFrom(index);
 
       // Fixes auto-subscribe issue on register
-      await api.clearCookies();
+      await this.api.clearCookies();
       if (logoutActive) {
         await this.handleActiveAccount();
       }
-      session.setSwitchingAccount(false);
+      this.session.setSwitchingAccount(false);
       return true;
     } catch (err) {
-      session.setSwitchingAccount(false);
-      logService.exception('[AuthService] logoutFrom', err);
+      this.session.setSwitchingAccount(false);
+      this.log.exception('[AuthService] logoutFrom', err);
       return false;
     }
   }
@@ -369,12 +375,12 @@ class AuthService {
     try {
       this.justRegistered = newUser;
       this.onboardCompleted = false;
-      session.logout(false);
+      this.session.logout(false);
       // Fixes auto-subscribe issue on register
-      await api.clearCookies();
+      await this.api.clearCookies();
       return true;
     } catch (err) {
-      logService.exception('[AuthService] sessionLogout', err);
+      this.log.exception('[AuthService] sessionLogout', err);
       return false;
     }
   }
@@ -384,16 +390,16 @@ class AuthService {
    */
   async logoutAll(): Promise<boolean> {
     try {
-      await api.delete('api/v1/authenticate/all');
-      await api.post('api/v3/oauth/revoke');
-      session.logout();
+      await this.api.delete('api/v1/authenticate/all');
+      await this.api.post('api/v3/oauth/revoke');
+      this.session.logout();
 
       // Fixes auto-subscribe issue on register
-      await api.clearCookies();
+      await this.api.clearCookies();
 
       return true;
     } catch (err) {
-      logService.exception('[AuthService] logoutAll', err);
+      this.log.exception('[AuthService] logoutAll', err);
       return false;
     }
   }
@@ -402,29 +408,29 @@ class AuthService {
    * Refresh user token
    */
   async refreshToken(refreshToken?, accessToken?): Promise<LoginResponse> {
-    logService.info('[AuthService] Refreshing token...');
+    this.log.info('[AuthService] Refreshing token...');
 
     const params = {
       grant_type: 'refresh_token',
       client_id: 'mobile',
       //client_secret: '',
-      refresh_token: refreshToken || session.refreshToken,
+      refresh_token: refreshToken || this.session.refreshToken,
     } as loginParms;
 
     const headers = accessToken
-      ? api.buildAuthorizationHeader(accessToken)
+      ? this.api.buildAuthorizationHeader(accessToken)
       : {};
 
     try {
-      const data: LoginResponse = await api.post<LoginResponse>(
+      const data: LoginResponse = await this.api.post<LoginResponse>(
         'api/v3/oauth/token',
         params,
         headers,
       );
-      logService.info('[AuthService] token refreshed');
+      this.log.info('[AuthService] token refreshed');
       return data;
     } catch (err) {
-      logService.exception('[AuthService] error claiming refresh token', err);
+      this.log.exception('[AuthService] error claiming refresh token', err);
       throw err;
     }
   }
@@ -435,7 +441,7 @@ class AuthService {
    */
   async register(params: registerParams): Promise<RegisterResponse> {
     try {
-      const response = await api.post<RegisterResponse>(
+      const response = await this.api.post<RegisterResponse>(
         'api/v1/register',
         params,
       );
@@ -450,7 +456,7 @@ class AuthService {
    */
   forgot(username: string): Promise<ForgotResponse> {
     const params = { username } as forgotParams;
-    return api.post('api/v1/forgotpassword/request', params);
+    return this.api.post('api/v1/forgotpassword/request', params);
   }
   /**
    * Set new password validating with code
@@ -469,7 +475,7 @@ class AuthService {
       password,
     } as resetParams;
 
-    return api.post('api/v1/forgotpassword/reset', params, {
+    return this.api.post('api/v1/forgotpassword/reset', params, {
       Authorization: undefined, // we want this request to be without authorization
     });
   }
@@ -479,8 +485,6 @@ class AuthService {
    */
   validatePassword(password: string): Promise<ValidateResponse> {
     const params = { password } as validateParams;
-    return api.post('api/v2/settings/password/validate', params);
+    return this.api.post('api/v2/settings/password/validate', params);
   }
 }
-
-export default new AuthService();

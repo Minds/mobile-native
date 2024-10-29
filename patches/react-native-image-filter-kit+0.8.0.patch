@@ -13,6 +13,87 @@ index 6546ccf..18e64f9 100755
      compileOptions {
          sourceCompatibility JavaVersion.VERSION_1_8
          targetCompatibility JavaVersion.VERSION_1_8
+diff --git a/node_modules/react-native-image-filter-kit/android/src/main/java/iyegoroff/imagefilterkit/FrescoControllerListener.java b/node_modules/react-native-image-filter-kit/android/src/main/java/iyegoroff/imagefilterkit/FrescoControllerListener.java
+index 6066545..f783c15 100644
+--- a/node_modules/react-native-image-filter-kit/android/src/main/java/iyegoroff/imagefilterkit/FrescoControllerListener.java
++++ b/node_modules/react-native-image-filter-kit/android/src/main/java/iyegoroff/imagefilterkit/FrescoControllerListener.java
+@@ -4,12 +4,13 @@ import android.graphics.drawable.Animatable;
+ 
+ import com.facebook.drawee.controller.ControllerListener;
+ import com.facebook.imagepipeline.image.ImageInfo;
+-import com.facebook.react.views.image.ReactImageDownloadListener;
+ 
+ import javax.annotation.Nonnull;
+ import javax.annotation.Nullable;
+ 
+-public class FrescoControllerListener extends ReactImageDownloadListener<ImageInfo> {
++// Remove the import for ReactImageDownloadListener
++// Change the class to implement ControllerListener<ImageInfo>
++public class FrescoControllerListener implements ControllerListener<ImageInfo> {
+   private final @Nullable ControllerListener<ImageInfo> mWrappedListener;
+   private final @Nonnull Functor.Arity0 mImageUpdated;
+   private final @Nonnull Functor.Arity1<Throwable> mError;
+@@ -34,18 +35,15 @@ public class FrescoControllerListener extends ReactImageDownloadListener<ImageIn
+     this(originalListener, onImageUpdated, arg1 -> { });
+   }
+ 
+-
+-  public void onSubmit(final String id, final Object callerContext) {
++  @Override
++  public void onSubmit(String id, Object callerContext) {
+     if (mWrappedListener != null) {
+       mWrappedListener.onSubmit(id, callerContext);
+     }
+   }
+ 
+-  public void onFinalImageSet(
+-    final String id,
+-    final @Nullable ImageInfo imageInfo,
+-    final @Nullable Animatable animatable
+-  ) {
++  @Override
++  public void onFinalImageSet(String id, @Nullable ImageInfo imageInfo, @Nullable Animatable animatable) {
+     if (mWrappedListener != null) {
+       mWrappedListener.onFinalImageSet(id, imageInfo, animatable);
+     }
+@@ -59,7 +57,22 @@ public class FrescoControllerListener extends ReactImageDownloadListener<ImageIn
+     }
+   }
+ 
+-  public void onFailure(final String id, final Throwable throwable) {
++  @Override
++  public void onIntermediateImageSet(String id, @Nullable ImageInfo imageInfo) {
++    if (mWrappedListener != null) {
++      mWrappedListener.onIntermediateImageSet(id, imageInfo);
++    }
++  }
++
++  @Override
++  public void onIntermediateImageFailed(String id, Throwable throwable) {
++    if (mWrappedListener != null) {
++      mWrappedListener.onIntermediateImageFailed(id, throwable);
++    }
++  }
++
++  @Override
++  public void onFailure(String id, Throwable throwable) {
+     mError.call(throwable);
+ 
+     if (mWrappedListener != null) {
+@@ -67,6 +80,13 @@ public class FrescoControllerListener extends ReactImageDownloadListener<ImageIn
+     }
+   }
+ 
++  @Override
++  public void onRelease(String id) {
++    if (mWrappedListener != null) {
++      mWrappedListener.onRelease(id);
++    }
++  }
++
+   void setDisabled() {
+     mIsEnabled = false;
+   }
 diff --git a/node_modules/react-native-image-filter-kit/ios/IFKFilterableImage.h b/node_modules/react-native-image-filter-kit/ios/IFKFilterableImage.h
 index 8651bef..01dd103 100644
 --- a/node_modules/react-native-image-filter-kit/ios/IFKFilterableImage.h

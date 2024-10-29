@@ -1,14 +1,34 @@
-import api from '../../../src/common/services/api.service';
-import imagePicker from '../../../src/common/services/image-picker.service';
-import service from '../../../src/common/services/attachment.service';
-jest.mock('../../../src/common/services/api.service');
-// jest.mock('../../../src/capture/CaptureService');
-jest.mock('../../../src/common/services/image-picker.service');
-jest.mock('../../../src/common/services/analytics.service');
+import { ApiService } from '~/common/services/api.service';
+import { LogService } from '~/common/services/log.service';
+import { I18nService } from '~/common/services/i18n.service';
+import { ImagePickerService } from '~/common/services/image-picker.service';
+import { AttachmentService } from '~/common/services/attachment.service';
+import { PermissionsService } from '~/common/services/permissions.service';
+
+// jest.mock('~/capture/CaptureService');
+jest.mock('~/common/services/permissions.service');
+jest.mock('~/common/services/api.service');
+jest.mock('~/common/services/image-picker.service');
+jest.mock('~/common/services/upgrade-modal.service', () => ({}));
+
 /**
  * Tests
  */
 describe('Attachment service', () => {
+  const api = new ApiService();
+  const logService = new LogService();
+  const permissions = new PermissionsService();
+  const i18n = new I18nService();
+  const imagePicker = new ImagePickerService();
+
+  const service = new AttachmentService(
+    api,
+    logService,
+    permissions,
+    i18n,
+    imagePicker,
+  );
+
   beforeEach(() => {
     api.upload.mockClear();
     api.delete.mockClear();
@@ -137,5 +157,45 @@ describe('Attachment service', () => {
     // call tested method
     const res = await service.gallery();
     expect(res).toEqual(null);
+  });
+
+  it('should upload to S3 successfully', async () => {
+    const file = {
+      uri: 'file://video.mp4',
+      type: 'video/mp4',
+      name: 'video.mp4',
+    };
+    const progressMock = jest.fn();
+    const s3Response = {
+      lease: {
+        presigned_url: 'https://s3.example.com/upload',
+        media_type: 'video',
+        guid: '1234-5678-9012',
+      },
+    };
+    const completeResponse = { status: 'success' };
+
+    api.put.mockImplementation(url => {
+      if (url === 'api/v2/media/upload/prepare/video') {
+        return Promise.resolve(s3Response);
+      } else if (url.startsWith('api/v2/media/upload/complete')) {
+        return Promise.resolve(completeResponse);
+      }
+    });
+
+    api.uploadToS3.mockResolvedValue(true);
+
+    const result = await service.uploadToS3(file, progressMock);
+
+    expect(api.put).toHaveBeenCalledWith('api/v2/media/upload/prepare/video');
+    expect(api.uploadToS3).toHaveBeenCalledWith(
+      s3Response.lease,
+      file,
+      progressMock,
+    );
+    expect(api.put).toHaveBeenCalledWith(
+      'api/v2/media/upload/complete/video/1234-5678-9012',
+    );
+    expect(result).toEqual({ guid: '1234-5678-9012' });
   });
 });

@@ -1,0 +1,796 @@
+diff --git a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/DisabledUpdatesController.kt b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/DisabledUpdatesController.kt
+index 8258478..89f8126 100644
+--- a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/DisabledUpdatesController.kt
++++ b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/DisabledUpdatesController.kt
+@@ -132,12 +132,14 @@ class DisabledUpdatesController(
+   }
+ 
+   override fun checkForUpdate(
++    channel: String?,
+     callback: IUpdatesController.ModuleCallback<IUpdatesController.CheckForUpdateResult>
+   ) {
+     callback.onFailure(UpdatesDisabledException("Updates.checkForUpdateAsync() is not supported when expo-updates is not enabled."))
+   }
+ 
+   override fun fetchUpdate(
++    channel: String?,
+     callback: IUpdatesController.ModuleCallback<IUpdatesController.FetchUpdateResult>
+   ) {
+     callback.onFailure(UpdatesDisabledException("Updates.fetchUpdateAsync() is not supported when expo-updates is not enabled."))
+diff --git a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/EnabledUpdatesController.kt b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/EnabledUpdatesController.kt
+index f3cdd54..0ea2485 100644
+--- a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/EnabledUpdatesController.kt
++++ b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/EnabledUpdatesController.kt
+@@ -214,15 +214,25 @@ class EnabledUpdatesController(
+     callback.onSuccess(stateMachine.context)
+   }
+ 
+-  override fun checkForUpdate(callback: IUpdatesController.ModuleCallback<IUpdatesController.CheckForUpdateResult>) {
+-    val procedure = CheckForUpdateProcedure(context, updatesConfiguration, databaseHolder, logger, fileDownloader, selectionPolicy, launchedUpdate) {
++  override fun checkForUpdate(channel: String?, callback: IUpdatesController.ModuleCallback<IUpdatesController.CheckForUpdateResult>) {
++
++    val updateConfigurationToUse = if (channel == null) updatesConfiguration else UpdatesConfiguration(context, mapOf("requestHeaders" to hashMapOf(
++      "expo-channel-name" to channel
++    )))
++
++    val procedure = CheckForUpdateProcedure(context, updateConfigurationToUse, databaseHolder, logger, fileDownloader, selectionPolicy, launchedUpdate) {
+       callback.onSuccess(it)
+     }
+     stateMachine.queueExecution(procedure)
+   }
+ 
+-  override fun fetchUpdate(callback: IUpdatesController.ModuleCallback<IUpdatesController.FetchUpdateResult>) {
+-    val procedure = FetchUpdateProcedure(context, updatesConfiguration, databaseHolder, updatesDirectory, fileDownloader, selectionPolicy, launchedUpdate) {
++  override fun fetchUpdate(channel: String?, callback: IUpdatesController.ModuleCallback<IUpdatesController.FetchUpdateResult>) {
++
++    val updateConfigurationToUse = if (channel == null) updatesConfiguration else UpdatesConfiguration(context, mapOf("requestHeaders" to hashMapOf(
++      "expo-channel-name" to channel
++    )))
++
++    val procedure = FetchUpdateProcedure(context, updateConfigurationToUse, databaseHolder, updatesDirectory, fileDownloader, selectionPolicy, launchedUpdate) {
+       callback.onSuccess(it)
+     }
+     stateMachine.queueExecution(procedure)
+diff --git a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/IUpdatesController.kt b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/IUpdatesController.kt
+index e774ef7..f0bb05d 100644
+--- a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/IUpdatesController.kt
++++ b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/IUpdatesController.kt
+@@ -124,7 +124,7 @@ interface IUpdatesController {
+     class RollBackToEmbedded(val commitTime: Date) : CheckForUpdateResult(Status.ROLL_BACK_TO_EMBEDDED)
+     class ErrorResult(val error: Exception, val message: String) : CheckForUpdateResult(Status.ERROR)
+   }
+-  fun checkForUpdate(callback: ModuleCallback<CheckForUpdateResult>)
++  fun checkForUpdate(channel: String?, callback: ModuleCallback<CheckForUpdateResult>)
+ 
+   sealed class FetchUpdateResult(private val status: Status) {
+     private enum class Status {
+@@ -139,7 +139,7 @@ interface IUpdatesController {
+     class RollBackToEmbedded : FetchUpdateResult(Status.ROLL_BACK_TO_EMBEDDED)
+     class ErrorResult(val error: Exception) : FetchUpdateResult(Status.ERROR)
+   }
+-  fun fetchUpdate(callback: ModuleCallback<FetchUpdateResult>)
++  fun fetchUpdate(channel: String?, callback: ModuleCallback<FetchUpdateResult>)
+ 
+   fun getExtraParams(callback: ModuleCallback<Bundle>)
+ 
+diff --git a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/UpdatesDevLauncherController.kt b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/UpdatesDevLauncherController.kt
+index ebb9a0e..60e4c22 100644
+--- a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/UpdatesDevLauncherController.kt
++++ b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/UpdatesDevLauncherController.kt
+@@ -331,12 +331,14 @@ class UpdatesDevLauncherController(
+   }
+ 
+   override fun checkForUpdate(
++    channel: String?,
+     callback: IUpdatesController.ModuleCallback<IUpdatesController.CheckForUpdateResult>
+   ) {
+     callback.onFailure(NotAvailableInDevClientException("Updates.checkForUpdateAsync() is not supported in development builds."))
+   }
+ 
+   override fun fetchUpdate(
++    channel: String?,
+     callback: IUpdatesController.ModuleCallback<IUpdatesController.FetchUpdateResult>
+   ) {
+     callback.onFailure(NotAvailableInDevClientException("Updates.fetchUpdateAsync() is not supported in development builds."))
+diff --git a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/UpdatesModule.kt b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/UpdatesModule.kt
+index f4248ea..5e30c02 100644
+--- a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/UpdatesModule.kt
++++ b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/UpdatesModule.kt
+@@ -115,8 +115,9 @@ class UpdatesModule : Module() {
+       })
+     }
+ 
+-    AsyncFunction("checkForUpdateAsync") { promise: Promise ->
++    AsyncFunction("checkForUpdateAsync") { channel: String?, promise: Promise ->
+       UpdatesController.instance.checkForUpdate(
++        channel,
+         object : IUpdatesController.ModuleCallback<IUpdatesController.CheckForUpdateResult> {
+           override fun onSuccess(result: IUpdatesController.CheckForUpdateResult) {
+             when (result) {
+@@ -163,8 +164,9 @@ class UpdatesModule : Module() {
+       )
+     }
+ 
+-    AsyncFunction("fetchUpdateAsync") { promise: Promise ->
++    AsyncFunction("fetchUpdateAsync") { channel: String?, promise: Promise ->
+       UpdatesController.instance.fetchUpdate(
++        channel,
+         object : IUpdatesController.ModuleCallback<IUpdatesController.FetchUpdateResult> {
+           override fun onSuccess(result: IUpdatesController.FetchUpdateResult) {
+             when (result) {
+diff --git a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/loader/FileDownloader.kt b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/loader/FileDownloader.kt
+index b1c25b0..484ff1d 100644
+--- a/node_modules/expo-updates/android/src/main/java/expo/modules/updates/loader/FileDownloader.kt
++++ b/node_modules/expo-updates/android/src/main/java/expo/modules/updates/loader/FileDownloader.kt
+@@ -739,6 +739,10 @@ class FileDownloader(context: Context, private val configuration: UpdatesConfigu
+         extraHeaders.put("Expo-Embedded-Update-ID", it.id.toString().lowercase())
+       }
+ 
++      if (configuration.requestHeaders != null && configuration.requestHeaders["expo-channel-name"] != null) {
++        extraHeaders.put("expo-channel-name", configuration.requestHeaders["expo-channel-name"])
++      }
++
+       database.updateDao().loadRecentUpdateIdsWithFailedLaunch().let {
+         if (it.isNotEmpty()) {
+           extraHeaders.put(
+diff --git a/node_modules/expo-updates/build/ExpoUpdates.web.d.ts.map b/node_modules/expo-updates/build/ExpoUpdates.web.d.ts.map
+index fa02636..30546e1 100644
+--- a/node_modules/expo-updates/build/ExpoUpdates.web.d.ts.map
++++ b/node_modules/expo-updates/build/ExpoUpdates.web.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"ExpoUpdates.web.d.ts","sourceRoot":"","sources":["../src/ExpoUpdates.web.ts"],"names":[],"mappings":";cACkB,QAAQ,IAAI,CAAC;;AAD/B,wBAIE"}
+\ No newline at end of file
++{"version":3,"file":"ExpoUpdates.web.d.ts","sourceRoot":"","sources":["../src/ExpoUpdates.web.ts"],"names":[],"mappings":";cACkB,OAAO,CAAC,IAAI,CAAC;;AAD/B,wBAIE"}
+\ No newline at end of file
+diff --git a/node_modules/expo-updates/build/ExpoUpdatesModule.types.d.ts b/node_modules/expo-updates/build/ExpoUpdatesModule.types.d.ts
+index ed4a0a4..7f77724 100644
+--- a/node_modules/expo-updates/build/ExpoUpdatesModule.types.d.ts
++++ b/node_modules/expo-updates/build/ExpoUpdatesModule.types.d.ts
+@@ -31,7 +31,7 @@ export interface ExpoUpdatesModule extends Pick<ProxyNativeModule, 'addListener'
+     manifest?: Manifest;
+     localAssets?: Record<string, string>;
+     reload: () => Promise<void>;
+-    checkForUpdateAsync: () => Promise<UpdateCheckResultRollBack | (Omit<UpdateCheckResultAvailable, 'manifest'> & ({
++    checkForUpdateAsync: (channel?: string) => Promise<UpdateCheckResultRollBack | (Omit<UpdateCheckResultAvailable, 'manifest'> & ({
+         manifestString: string;
+     } | {
+         manifest: Manifest;
+@@ -40,7 +40,7 @@ export interface ExpoUpdatesModule extends Pick<ProxyNativeModule, 'addListener'
+     setExtraParamAsync: (key: string, value: string | null) => Promise<void>;
+     readLogEntriesAsync: (maxAge: number) => Promise<UpdatesLogEntry[]>;
+     clearLogEntriesAsync: () => Promise<void>;
+-    fetchUpdateAsync: () => Promise<(Omit<UpdateFetchResultSuccess, 'manifest'> & ({
++    fetchUpdateAsync: (channel?: string) => Promise<(Omit<UpdateFetchResultSuccess, 'manifest'> & ({
+         manifestString: string;
+     } | {
+         manifest: Manifest;
+diff --git a/node_modules/expo-updates/build/ExpoUpdatesModule.types.d.ts.map b/node_modules/expo-updates/build/ExpoUpdatesModule.types.d.ts.map
+index 4dc290a..a82f9e4 100644
+--- a/node_modules/expo-updates/build/ExpoUpdatesModule.types.d.ts.map
++++ b/node_modules/expo-updates/build/ExpoUpdatesModule.types.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"ExpoUpdatesModule.types.d.ts","sourceRoot":"","sources":["../src/ExpoUpdatesModule.types.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,iBAAiB,EAAE,MAAM,mBAAmB,CAAC;AAEtD,OAAO,EACL,QAAQ,EACR,0BAA0B,EAC1B,6BAA6B,EAC7B,yBAAyB,EACzB,mCAAmC,EACnC,wBAAwB,EACxB,wBAAwB,EACxB,eAAe,EACf,gCAAgC,EACjC,MAAM,iBAAiB,CAAC;AAEzB;;GAEG;AACH,MAAM,WAAW,iBACf,SAAQ,IAAI,CAAC,iBAAiB,EAAE,aAAa,GAAG,iBAAiB,CAAC;IAClE,iBAAiB,EAAE,OAAO,CAAC;IAC3B,qBAAqB,EAAE,MAAM,GAAG,IAAI,CAAC;IACrC,gBAAgB,EAAE,OAAO,CAAC;IAC1B,SAAS,EAAE,OAAO,CAAC;IACnB,qBAAqB,CAAC,EAAE,OAAO,CAAC;IAChC;;OAEG;IACH,cAAc,EAAE,MAAM,CAAC;IACvB,kBAAkB,EAAE,MAAM,CAAC;IAC3B;;OAEG;IACH,OAAO,EAAE,MAAM,CAAC;IAChB,wDAAwD,EAAE,OAAO,CAAC;IAClE,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,UAAU,CAAC,EAAE,MAAM,CAAC;IACpB;;OAEG;IACH,cAAc,CAAC,EAAE,MAAM,CAAC;IACxB;;OAEG;IACH,QAAQ,CAAC,EAAE,QAAQ,CAAC;IACpB,WAAW,CAAC,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;IAErC,MAAM,EAAE,MAAM,OAAO,CAAC,IAAI,CAAC,CAAC;IAC5B,mBAAmB,EAAE,MAAM,OAAO,CAC9B,yBAAyB,GACzB,CAAC,IAAI,CAAC,0BAA0B,EAAE,UAAU,CAAC,GAC3C,CAAC;QAAE,cAAc,EAAE,MAAM,CAAA;KAAE,GAAG;QAAE,QAAQ,EAAE,QAAQ,CAAA;KAAE,CAAC,CAAC,GACxD,6BAA6B,CAChC,CAAC;IACF,mBAAmB,EAAE,MAAM,OAAO,CAAC,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC,CAAC;IAC3D,kBAAkB,EAAE,CAAC,GAAG,EAAE,MAAM,EAAE,KAAK,EAAE,MAAM,GAAG,IAAI,KAAK,OAAO,CAAC,IAAI,CAAC,CAAC;IACzE,mBAAmB,EAAE,CAAC,MAAM,EAAE,MAAM,KAAK,OAAO,CAAC,eAAe,EAAE,CAAC,CAAC;IACpE,oBAAoB,EAAE,MAAM,OAAO,CAAC,IAAI,CAAC,CAAC;IAC1C,gBAAgB,EAAE,MAAM,OAAO,CAC3B,CAAC,IAAI,CAAC,wBAAwB,EAAE,UAAU,CAAC,GACzC,CAAC;QAAE,cAAc,EAAE,MAAM,CAAA;KAAE,GAAG;QAAE,QAAQ,EAAE,QAAQ,CAAA;KAAE,CAAC,CAAC,GACxD,wBAAwB,GACxB,mCAAmC,CACtC,CAAC;IACF;;OAEG;IACH,iCAAiC,EAAE,MAAM,OAAO,CAC9C,gCAAgC,GAAG;QACjC,oBAAoB,CAAC,EAAE,MAAM,CAAC;QAC9B,wBAAwB,CAAC,EAAE,MAAM,CAAC;QAClC,4BAA4B,CAAC,EAAE,MAAM,CAAC;QACtC,cAAc,CAAC,EAAE,MAAM,CAAC;KACzB,CACF,CAAC;CACH"}
+\ No newline at end of file
++{"version":3,"file":"ExpoUpdatesModule.types.d.ts","sourceRoot":"","sources":["../src/ExpoUpdatesModule.types.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,iBAAiB,EAAE,MAAM,mBAAmB,CAAC;AAEtD,OAAO,EACL,QAAQ,EACR,0BAA0B,EAC1B,6BAA6B,EAC7B,yBAAyB,EACzB,mCAAmC,EACnC,wBAAwB,EACxB,wBAAwB,EACxB,eAAe,EACf,gCAAgC,EACjC,MAAM,iBAAiB,CAAC;AAEzB;;GAEG;AACH,MAAM,WAAW,iBACf,SAAQ,IAAI,CAAC,iBAAiB,EAAE,aAAa,GAAG,iBAAiB,CAAC;IAClE,iBAAiB,EAAE,OAAO,CAAC;IAC3B,qBAAqB,EAAE,MAAM,GAAG,IAAI,CAAC;IACrC,gBAAgB,EAAE,OAAO,CAAC;IAC1B,SAAS,EAAE,OAAO,CAAC;IACnB,qBAAqB,CAAC,EAAE,OAAO,CAAC;IAChC;;OAEG;IACH,cAAc,EAAE,MAAM,CAAC;IACvB,kBAAkB,EAAE,MAAM,CAAC;IAC3B;;OAEG;IACH,OAAO,EAAE,MAAM,CAAC;IAChB,wDAAwD,EAAE,OAAO,CAAC;IAClE,QAAQ,CAAC,EAAE,MAAM,CAAC;IAClB,UAAU,CAAC,EAAE,MAAM,CAAC;IACpB;;OAEG;IACH,cAAc,CAAC,EAAE,MAAM,CAAC;IACxB;;OAEG;IACH,QAAQ,CAAC,EAAE,QAAQ,CAAC;IACpB,WAAW,CAAC,EAAE,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC;IAErC,MAAM,EAAE,MAAM,OAAO,CAAC,IAAI,CAAC,CAAC;IAC5B,mBAAmB,EAAE,CAAC,OAAO,CAAC,EAAE,MAAM,KAAK,OAAO,CAC9C,yBAAyB,GACzB,CAAC,IAAI,CAAC,0BAA0B,EAAE,UAAU,CAAC,GAC3C,CAAC;QAAE,cAAc,EAAE,MAAM,CAAA;KAAE,GAAG;QAAE,QAAQ,EAAE,QAAQ,CAAA;KAAE,CAAC,CAAC,GACxD,6BAA6B,CAChC,CAAC;IACF,mBAAmB,EAAE,MAAM,OAAO,CAAC,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC,CAAC;IAC3D,kBAAkB,EAAE,CAAC,GAAG,EAAE,MAAM,EAAE,KAAK,EAAE,MAAM,GAAG,IAAI,KAAK,OAAO,CAAC,IAAI,CAAC,CAAC;IACzE,mBAAmB,EAAE,CAAC,MAAM,EAAE,MAAM,KAAK,OAAO,CAAC,eAAe,EAAE,CAAC,CAAC;IACpE,oBAAoB,EAAE,MAAM,OAAO,CAAC,IAAI,CAAC,CAAC;IAC1C,gBAAgB,EAAE,CAAC,OAAO,CAAC,EAAE,MAAM,KAAK,OAAO,CAC3C,CAAC,IAAI,CAAC,wBAAwB,EAAE,UAAU,CAAC,GACzC,CAAC;QAAE,cAAc,EAAE,MAAM,CAAA;KAAE,GAAG;QAAE,QAAQ,EAAE,QAAQ,CAAA;KAAE,CAAC,CAAC,GACxD,wBAAwB,GACxB,mCAAmC,CACtC,CAAC;IACF;;OAEG;IACH,iCAAiC,EAAE,MAAM,OAAO,CAC9C,gCAAgC,GAAG;QACjC,oBAAoB,CAAC,EAAE,MAAM,CAAC;QAC9B,wBAAwB,CAAC,EAAE,MAAM,CAAC;QAClC,4BAA4B,CAAC,EAAE,MAAM,CAAC;QACtC,cAAc,CAAC,EAAE,MAAM,CAAC;KACzB,CACF,CAAC;CACH"}
+\ No newline at end of file
+diff --git a/node_modules/expo-updates/build/ExpoUpdatesModule.types.js.map b/node_modules/expo-updates/build/ExpoUpdatesModule.types.js.map
+index 380f254..fd9fb62 100644
+--- a/node_modules/expo-updates/build/ExpoUpdatesModule.types.js.map
++++ b/node_modules/expo-updates/build/ExpoUpdatesModule.types.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"ExpoUpdatesModule.types.js","sourceRoot":"","sources":["../src/ExpoUpdatesModule.types.ts"],"names":[],"mappings":"","sourcesContent":["import { ProxyNativeModule } from 'expo-modules-core';\n\nimport {\n  Manifest,\n  UpdateCheckResultAvailable,\n  UpdateCheckResultNotAvailable,\n  UpdateCheckResultRollBack,\n  UpdateFetchResultRollBackToEmbedded,\n  UpdateFetchResultFailure,\n  UpdateFetchResultSuccess,\n  UpdatesLogEntry,\n  UpdatesNativeStateMachineContext,\n} from './Updates.types';\n\n/**\n * @internal\n */\nexport interface ExpoUpdatesModule\n  extends Pick<ProxyNativeModule, 'addListener' | 'removeListeners'> {\n  isEmergencyLaunch: boolean;\n  emergencyLaunchReason: string | null;\n  isEmbeddedLaunch: boolean;\n  isEnabled: boolean;\n  isUsingEmbeddedAssets?: boolean;\n  /**\n   * Can be empty string\n   */\n  runtimeVersion: string;\n  checkAutomatically: string;\n  /**\n   * Can be empty string\n   */\n  channel: string;\n  shouldDeferToNativeForAPIMethodAvailabilityInDevelopment: boolean;\n  updateId?: string;\n  commitTime?: string;\n  /**\n   * @platform android\n   */\n  manifestString?: string;\n  /**\n   * @platform ios\n   */\n  manifest?: Manifest;\n  localAssets?: Record<string, string>;\n\n  reload: () => Promise<void>;\n  checkForUpdateAsync: () => Promise<\n    | UpdateCheckResultRollBack\n    | (Omit<UpdateCheckResultAvailable, 'manifest'> &\n        ({ manifestString: string } | { manifest: Manifest }))\n    | UpdateCheckResultNotAvailable\n  >;\n  getExtraParamsAsync: () => Promise<Record<string, string>>;\n  setExtraParamAsync: (key: string, value: string | null) => Promise<void>;\n  readLogEntriesAsync: (maxAge: number) => Promise<UpdatesLogEntry[]>;\n  clearLogEntriesAsync: () => Promise<void>;\n  fetchUpdateAsync: () => Promise<\n    | (Omit<UpdateFetchResultSuccess, 'manifest'> &\n        ({ manifestString: string } | { manifest: Manifest }))\n    | UpdateFetchResultFailure\n    | UpdateFetchResultRollBackToEmbedded\n  >;\n  /**\n   * @hidden\n   */\n  getNativeStateMachineContextAsync: () => Promise<\n    UpdatesNativeStateMachineContext & {\n      latestManifestString?: string;\n      downloadedManifestString?: string;\n      lastCheckForUpdateTimeString?: string;\n      rollbackString?: string;\n    }\n  >;\n}\n"]}
+\ No newline at end of file
++{"version":3,"file":"ExpoUpdatesModule.types.js","sourceRoot":"","sources":["../src/ExpoUpdatesModule.types.ts"],"names":[],"mappings":"","sourcesContent":["import { ProxyNativeModule } from 'expo-modules-core';\n\nimport {\n  Manifest,\n  UpdateCheckResultAvailable,\n  UpdateCheckResultNotAvailable,\n  UpdateCheckResultRollBack,\n  UpdateFetchResultRollBackToEmbedded,\n  UpdateFetchResultFailure,\n  UpdateFetchResultSuccess,\n  UpdatesLogEntry,\n  UpdatesNativeStateMachineContext,\n} from './Updates.types';\n\n/**\n * @internal\n */\nexport interface ExpoUpdatesModule\n  extends Pick<ProxyNativeModule, 'addListener' | 'removeListeners'> {\n  isEmergencyLaunch: boolean;\n  emergencyLaunchReason: string | null;\n  isEmbeddedLaunch: boolean;\n  isEnabled: boolean;\n  isUsingEmbeddedAssets?: boolean;\n  /**\n   * Can be empty string\n   */\n  runtimeVersion: string;\n  checkAutomatically: string;\n  /**\n   * Can be empty string\n   */\n  channel: string;\n  shouldDeferToNativeForAPIMethodAvailabilityInDevelopment: boolean;\n  updateId?: string;\n  commitTime?: string;\n  /**\n   * @platform android\n   */\n  manifestString?: string;\n  /**\n   * @platform ios\n   */\n  manifest?: Manifest;\n  localAssets?: Record<string, string>;\n\n  reload: () => Promise<void>;\n  checkForUpdateAsync: (channel?: string) => Promise<\n    | UpdateCheckResultRollBack\n    | (Omit<UpdateCheckResultAvailable, 'manifest'> &\n        ({ manifestString: string } | { manifest: Manifest }))\n    | UpdateCheckResultNotAvailable\n  >;\n  getExtraParamsAsync: () => Promise<Record<string, string>>;\n  setExtraParamAsync: (key: string, value: string | null) => Promise<void>;\n  readLogEntriesAsync: (maxAge: number) => Promise<UpdatesLogEntry[]>;\n  clearLogEntriesAsync: () => Promise<void>;\n  fetchUpdateAsync: (channel?: string) => Promise<\n    | (Omit<UpdateFetchResultSuccess, 'manifest'> &\n        ({ manifestString: string } | { manifest: Manifest }))\n    | UpdateFetchResultFailure\n    | UpdateFetchResultRollBackToEmbedded\n  >;\n  /**\n   * @hidden\n   */\n  getNativeStateMachineContextAsync: () => Promise<\n    UpdatesNativeStateMachineContext & {\n      latestManifestString?: string;\n      downloadedManifestString?: string;\n      lastCheckForUpdateTimeString?: string;\n      rollbackString?: string;\n    }\n  >;\n}\n"]}
+\ No newline at end of file
+diff --git a/node_modules/expo-updates/build/Updates.d.ts b/node_modules/expo-updates/build/Updates.d.ts
+index 10e7b24..f975685 100644
+--- a/node_modules/expo-updates/build/Updates.d.ts
++++ b/node_modules/expo-updates/build/Updates.d.ts
+@@ -118,7 +118,7 @@ export declare function reloadAsync(): Promise<void>;
+  * The promise rejects in Expo Go or if the app is in development mode, or if there is an unexpected error or
+  * timeout communicating with the server. It also rejects when `expo-updates` is not enabled.
+  */
+-export declare function checkForUpdateAsync(): Promise<UpdateCheckResult>;
++export declare function checkForUpdateAsync(channel?: string): Promise<UpdateCheckResult>;
+ /**
+  * Retrieves the current extra params.
+  *
+@@ -169,7 +169,7 @@ export declare function clearLogEntriesAsync(): Promise<void>;
+  * The promise rejects in Expo Go or if the app is in development mode, or if there is an unexpected error or
+  * timeout communicating with the server. It also rejects when `expo-updates` is not enabled.
+  */
+-export declare function fetchUpdateAsync(): Promise<UpdateFetchResult>;
++export declare function fetchUpdateAsync(channel?: string): Promise<UpdateFetchResult>;
+ /**
+  * @hidden
+  */
+diff --git a/node_modules/expo-updates/build/Updates.d.ts.map b/node_modules/expo-updates/build/Updates.d.ts.map
+index b304cd9..aa85073 100644
+--- a/node_modules/expo-updates/build/Updates.d.ts.map
++++ b/node_modules/expo-updates/build/Updates.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"Updates.d.ts","sourceRoot":"","sources":["../src/Updates.ts"],"names":[],"mappings":"AAGA,OAAO,EACL,WAAW,EACX,QAAQ,EACR,iBAAiB,EACjB,iBAAiB,EACjB,8BAA8B,EAC9B,eAAe,EACf,gCAAgC,EACjC,MAAM,iBAAiB,CAAC;AAEzB;;;;;;;;GAQG;AACH,eAAO,MAAM,SAAS,EAAE,OAAiC,CAAC;AAE1D;;;;;;GAMG;AACH,eAAO,MAAM,QAAQ,EAAE,MAAM,GAAG,IAGtB,CAAC;AAEX;;;;GAIG;AACH,eAAO,MAAM,OAAO,EAAE,MAAM,GAAG,IAAkC,CAAC;AAElE;;GAEG;AACH,eAAO,MAAM,cAAc,EAAE,MAAM,GAAG,IAAyC,CAAC;AAShF;;GAEG;AACH,eAAO,MAAM,kBAAkB,EAAE,8BAA8B,GAAG,IACQ,CAAC;AAG3E;;GAEG;AACH,eAAO,MAAM,WAAW,EAAE,WAA2C,CAAC;AAEtE;;;;;;;;GAQG;AACH,eAAO,MAAM,iBAAiB,SAAgC,CAAC;AAE/D;;;GAGG;AACH,eAAO,MAAM,qBAAqB,eAAoC,CAAC;AAEvE;;;GAGG;AACH,eAAO,MAAM,gBAAgB,EAAE,OAA+C,CAAC;AAG/E;;GAEG;AACH,eAAO,MAAM,qBAAqB,EAAE,OAAoD,CAAC;AAEzF;;;;;;;;GAQG;AACH,eAAO,MAAM,QAAQ,EAAE,OAAO,CAAC,QAAQ,CAEnC,CAAC;AAEL;;;;;GAKG;AACH,eAAO,MAAM,SAAS,EAAE,IAAI,GAAG,IAEvB,CAAC;AAoBT;;;;;;;;;;;;;;;;;;;;;;;;;GAyBG;AACH,wBAAsB,WAAW,IAAI,OAAO,CAAC,IAAI,CAAC,CAWjD;AAED;;;;;;;;;;;;;;GAcG;AACH,wBAAsB,mBAAmB,IAAI,OAAO,CAAC,iBAAiB,CAAC,CAoBtE;AAED;;;;GAIG;AACH,wBAAsB,mBAAmB,IAAI,OAAO,CAAC,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC,CAE3E;AAED;;;;;;GAMG;AACH,wBAAsB,kBAAkB,CACtC,GAAG,EAAE,MAAM,EACX,KAAK,EAAE,MAAM,GAAG,IAAI,GAAG,SAAS,GAC/B,OAAO,CAAC,IAAI,CAAC,CAEf;AAED;;;;;;;;GAQG;AACH,wBAAsB,mBAAmB,CAAC,MAAM,GAAE,MAAgB,GAAG,OAAO,CAAC,eAAe,EAAE,CAAC,CAE9F;AAED;;;;;;;;;;GAUG;AACH,wBAAsB,oBAAoB,IAAI,OAAO,CAAC,IAAI,CAAC,CAE1D;AAED;;;;;;;;;;;;;GAaG;AACH,wBAAsB,gBAAgB,IAAI,OAAO,CAAC,iBAAiB,CAAC,CAoBnE;AAED;;GAEG;AACH,wBAAgB,iCAAiC,CAAC,WAAW,CAAC,EAAE,MAAM,QAIrE;AAED;;GAEG;AACH,wBAAgB,kCAAkC,CAChD,qBAAqB,EAAE,gCAAgC,GAAG;IACxD,oBAAoB,CAAC,EAAE,MAAM,CAAC;IAC9B,wBAAwB,CAAC,EAAE,MAAM,CAAC;IAClC,4BAA4B,CAAC,EAAE,MAAM,CAAC;IACtC,cAAc,CAAC,EAAE,MAAM,CAAC;CACzB,GACA,gCAAgC,CAmBlC;AAED;;GAEG;AACH,wBAAsB,iCAAiC,IAAI,OAAO,CAAC,gCAAgC,CAAC,CAGnG"}
+\ No newline at end of file
++{"version":3,"file":"Updates.d.ts","sourceRoot":"","sources":["../src/Updates.ts"],"names":[],"mappings":"AAGA,OAAO,EACL,WAAW,EACX,QAAQ,EACR,iBAAiB,EACjB,iBAAiB,EACjB,8BAA8B,EAC9B,eAAe,EACf,gCAAgC,EACjC,MAAM,iBAAiB,CAAC;AAEzB;;;;;;;;GAQG;AACH,eAAO,MAAM,SAAS,EAAE,OAAiC,CAAC;AAE1D;;;;;;GAMG;AACH,eAAO,MAAM,QAAQ,EAAE,MAAM,GAAG,IAGtB,CAAC;AAEX;;;;GAIG;AACH,eAAO,MAAM,OAAO,EAAE,MAAM,GAAG,IAAkC,CAAC;AAElE;;GAEG;AACH,eAAO,MAAM,cAAc,EAAE,MAAM,GAAG,IAAyC,CAAC;AAShF;;GAEG;AACH,eAAO,MAAM,kBAAkB,EAAE,8BAA8B,GAAG,IACQ,CAAC;AAG3E;;GAEG;AACH,eAAO,MAAM,WAAW,EAAE,WAA2C,CAAC;AAEtE;;;;;;;;GAQG;AACH,eAAO,MAAM,iBAAiB,SAAgC,CAAC;AAE/D;;;GAGG;AACH,eAAO,MAAM,qBAAqB,eAAoC,CAAC;AAEvE;;;GAGG;AACH,eAAO,MAAM,gBAAgB,EAAE,OAA+C,CAAC;AAG/E;;GAEG;AACH,eAAO,MAAM,qBAAqB,EAAE,OAAoD,CAAC;AAEzF;;;;;;;;GAQG;AACH,eAAO,MAAM,QAAQ,EAAE,OAAO,CAAC,QAAQ,CAEnC,CAAC;AAEL;;;;;GAKG;AACH,eAAO,MAAM,SAAS,EAAE,IAAI,GAAG,IAEvB,CAAC;AAoBT;;;;;;;;;;;;;;;;;;;;;;;;;GAyBG;AACH,wBAAsB,WAAW,IAAI,OAAO,CAAC,IAAI,CAAC,CAWjD;AAED;;;;;;;;;;;;;;GAcG;AACH,wBAAsB,mBAAmB,CAAC,OAAO,CAAC,EAAE,MAAM,GAAG,OAAO,CAAC,iBAAiB,CAAC,CAoBtF;AAED;;;;GAIG;AACH,wBAAsB,mBAAmB,IAAI,OAAO,CAAC,MAAM,CAAC,MAAM,EAAE,MAAM,CAAC,CAAC,CAE3E;AAED;;;;;;GAMG;AACH,wBAAsB,kBAAkB,CACtC,GAAG,EAAE,MAAM,EACX,KAAK,EAAE,MAAM,GAAG,IAAI,GAAG,SAAS,GAC/B,OAAO,CAAC,IAAI,CAAC,CAEf;AAED;;;;;;;;GAQG;AACH,wBAAsB,mBAAmB,CAAC,MAAM,GAAE,MAAgB,GAAG,OAAO,CAAC,eAAe,EAAE,CAAC,CAE9F;AAED;;;;;;;;;;GAUG;AACH,wBAAsB,oBAAoB,IAAI,OAAO,CAAC,IAAI,CAAC,CAE1D;AAED;;;;;;;;;;;;;GAaG;AACH,wBAAsB,gBAAgB,CAAC,OAAO,CAAC,EAAE,MAAM,GAAG,OAAO,CAAC,iBAAiB,CAAC,CAoBnF;AAED;;GAEG;AACH,wBAAgB,iCAAiC,CAAC,WAAW,CAAC,EAAE,MAAM,QAIrE;AAED;;GAEG;AACH,wBAAgB,kCAAkC,CAChD,qBAAqB,EAAE,gCAAgC,GAAG;IACxD,oBAAoB,CAAC,EAAE,MAAM,CAAC;IAC9B,wBAAwB,CAAC,EAAE,MAAM,CAAC;IAClC,4BAA4B,CAAC,EAAE,MAAM,CAAC;IACtC,cAAc,CAAC,EAAE,MAAM,CAAC;CACzB,GACA,gCAAgC,CAmBlC;AAED;;GAEG;AACH,wBAAsB,iCAAiC,IAAI,OAAO,CAAC,gCAAgC,CAAC,CAGnG"}
+\ No newline at end of file
+diff --git a/node_modules/expo-updates/build/Updates.js b/node_modules/expo-updates/build/Updates.js
+index b3122a7..2f5d146 100644
+--- a/node_modules/expo-updates/build/Updates.js
++++ b/node_modules/expo-updates/build/Updates.js
+@@ -150,12 +150,12 @@ export async function reloadAsync() {
+  * The promise rejects in Expo Go or if the app is in development mode, or if there is an unexpected error or
+  * timeout communicating with the server. It also rejects when `expo-updates` is not enabled.
+  */
+-export async function checkForUpdateAsync() {
++export async function checkForUpdateAsync(channel) {
+     if ((__DEV__ || isUsingDeveloperTool) &&
+         !shouldDeferToNativeForAPIMethodAvailabilityInDevelopment) {
+         throw new CodedError('ERR_UPDATES_DISABLED', `You cannot check for updates in development mode. ${manualUpdatesInstructions}`);
+     }
+-    const result = await ExpoUpdates.checkForUpdateAsync();
++    const result = await ExpoUpdates.checkForUpdateAsync(channel);
+     if ('manifestString' in result) {
+         const { manifestString, ...rest } = result;
+         return {
+@@ -223,12 +223,12 @@ export async function clearLogEntriesAsync() {
+  * The promise rejects in Expo Go or if the app is in development mode, or if there is an unexpected error or
+  * timeout communicating with the server. It also rejects when `expo-updates` is not enabled.
+  */
+-export async function fetchUpdateAsync() {
++export async function fetchUpdateAsync(channel) {
+     if ((__DEV__ || isUsingDeveloperTool) &&
+         !shouldDeferToNativeForAPIMethodAvailabilityInDevelopment) {
+         throw new CodedError('ERR_UPDATES_DISABLED', `You cannot fetch updates in development mode. ${manualUpdatesInstructions}`);
+     }
+-    const result = await ExpoUpdates.fetchUpdateAsync();
++    const result = await ExpoUpdates.fetchUpdateAsync(channel);
+     if ('manifestString' in result) {
+         const { manifestString, ...rest } = result;
+         return {
+diff --git a/node_modules/expo-updates/build/Updates.js.map b/node_modules/expo-updates/build/Updates.js.map
+index ee925e1..03a72e0 100644
+--- a/node_modules/expo-updates/build/Updates.js.map
++++ b/node_modules/expo-updates/build/Updates.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"Updates.js","sourceRoot":"","sources":["../src/Updates.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,UAAU,EAAE,MAAM,mBAAmB,CAAC;AAE/C,OAAO,WAAW,MAAM,eAAe,CAAC;AAWxC;;;;;;;;GAQG;AACH,MAAM,CAAC,MAAM,SAAS,GAAY,CAAC,CAAC,WAAW,CAAC,SAAS,CAAC;AAE1D;;;;;;GAMG;AACH,MAAM,CAAC,MAAM,QAAQ,GACnB,WAAW,CAAC,QAAQ,IAAI,OAAO,WAAW,CAAC,QAAQ,KAAK,QAAQ;IAC9D,CAAC,CAAC,WAAW,CAAC,QAAQ,CAAC,WAAW,EAAE;IACpC,CAAC,CAAC,IAAI,CAAC;AAEX;;;;GAIG;AACH,MAAM,CAAC,MAAM,OAAO,GAAkB,WAAW,CAAC,OAAO,IAAI,IAAI,CAAC;AAElE;;GAEG;AACH,MAAM,CAAC,MAAM,cAAc,GAAkB,WAAW,CAAC,cAAc,IAAI,IAAI,CAAC;AAEhF,MAAM,gCAAgC,GAAG;IACvC,MAAM,EAAE,SAAS;IACjB,mBAAmB,EAAE,mBAAmB;IACxC,KAAK,EAAE,OAAO;IACd,SAAS,EAAE,WAAW;CACvB,CAAC;AAEF;;GAEG;AACH,MAAM,CAAC,MAAM,kBAAkB,GAC7B,gCAAgC,CAAC,WAAW,CAAC,kBAAkB,CAAC,IAAI,IAAI,CAAC;AAE3E,eAAe;AACf;;GAEG;AACH,MAAM,CAAC,MAAM,WAAW,GAAgB,WAAW,CAAC,WAAW,IAAI,EAAE,CAAC;AAEtE;;;;;;;;GAQG;AACH,MAAM,CAAC,MAAM,iBAAiB,GAAG,WAAW,CAAC,iBAAiB,CAAC;AAE/D;;;GAGG;AACH,MAAM,CAAC,MAAM,qBAAqB,GAAG,WAAW,CAAC,qBAAqB,CAAC;AAEvE;;;GAGG;AACH,MAAM,CAAC,MAAM,gBAAgB,GAAY,WAAW,CAAC,gBAAgB,IAAI,KAAK,CAAC;AAE/E,eAAe;AACf;;GAEG;AACH,MAAM,CAAC,MAAM,qBAAqB,GAAY,WAAW,CAAC,qBAAqB,IAAI,KAAK,CAAC;AAEzF;;;;;;;;GAQG;AACH,MAAM,CAAC,MAAM,QAAQ,GACnB,CAAC,WAAW,CAAC,cAAc,CAAC,CAAC,CAAC,IAAI,CAAC,KAAK,CAAC,WAAW,CAAC,cAAc,CAAC,CAAC,CAAC,CAAC,WAAW,CAAC,QAAQ,CAAC;IAC5F,EAAE,CAAC;AAEL;;;;;GAKG;AACH,MAAM,CAAC,MAAM,SAAS,GAAgB,WAAW,CAAC,UAAU;IAC1D,CAAC,CAAC,IAAI,IAAI,CAAC,WAAW,CAAC,UAAU,CAAC;IAClC,CAAC,CAAC,IAAI,CAAC;AAET;;;;GAIG;AACH,MAAM,wDAAwD,GAC5D,CAAC,CAAC,WAAW,CAAC,wDAAwD,CAAC;AAEzE;;GAEG;AACH,MAAM,oBAAoB,GACxB,OAAO,IAAI,QAAQ,CAAC,CAAC,CAAC,CAAC,CAAC,QAAQ,CAAC,KAAK,EAAE,MAAM,EAAE,SAAS,EAAE,IAAI,CAAC,CAAC,CAAC,KAAK,CAAC;AAE1E,MAAM,yBAAyB,GAC7B,gIAAgI;IAChI,2CAA2C,CAAC;AAE9C;;;;;;;;;;;;;;;;;;;;;;;;;GAyBG;AACH,MAAM,CAAC,KAAK,UAAU,WAAW;IAC/B,IACE,CAAC,OAAO,IAAI,oBAAoB,CAAC;QACjC,CAAC,wDAAwD,EACzD;QACA,MAAM,IAAI,UAAU,CAClB,sBAAsB,EACtB,8EAA8E,yBAAyB,EAAE,CAC1G,CAAC;KACH;IACD,MAAM,WAAW,CAAC,MAAM,EAAE,CAAC;AAC7B,CAAC;AAED;;;;;;;;;;;;;;GAcG;AACH,MAAM,CAAC,KAAK,UAAU,mBAAmB;IACvC,IACE,CAAC,OAAO,IAAI,oBAAoB,CAAC;QACjC,CAAC,wDAAwD,EACzD;QACA,MAAM,IAAI,UAAU,CAClB,sBAAsB,EACtB,qDAAqD,yBAAyB,EAAE,CACjF,CAAC;KACH;IAED,MAAM,MAAM,GAAG,MAAM,WAAW,CAAC,mBAAmB,EAAE,CAAC;IACvD,IAAI,gBAAgB,IAAI,MAAM,EAAE;QAC9B,MAAM,EAAE,cAAc,EAAE,GAAG,IAAI,EAAE,GAAG,MAAM,CAAC;QAC3C,OAAO;YACL,GAAG,IAAI;YACP,QAAQ,EAAE,IAAI,CAAC,KAAK,CAAC,cAAc,CAAC;SACrC,CAAC;KACH;IACD,OAAO,MAAM,CAAC;AAChB,CAAC;AAED;;;;GAIG;AACH,MAAM,CAAC,KAAK,UAAU,mBAAmB;IACvC,OAAO,MAAM,WAAW,CAAC,mBAAmB,EAAE,CAAC;AACjD,CAAC;AAED;;;;;;GAMG;AACH,MAAM,CAAC,KAAK,UAAU,kBAAkB,CACtC,GAAW,EACX,KAAgC;IAEhC,OAAO,MAAM,WAAW,CAAC,kBAAkB,CAAC,GAAG,EAAE,KAAK,IAAI,IAAI,CAAC,CAAC;AAClE,CAAC;AAED;;;;;;;;GAQG;AACH,MAAM,CAAC,KAAK,UAAU,mBAAmB,CAAC,SAAiB,OAAO;IAChE,OAAO,MAAM,WAAW,CAAC,mBAAmB,CAAC,MAAM,CAAC,CAAC;AACvD,CAAC;AAED;;;;;;;;;;GAUG;AACH,MAAM,CAAC,KAAK,UAAU,oBAAoB;IACxC,MAAM,WAAW,CAAC,oBAAoB,EAAE,CAAC;AAC3C,CAAC;AAED;;;;;;;;;;;;;GAaG;AACH,MAAM,CAAC,KAAK,UAAU,gBAAgB;IACpC,IACE,CAAC,OAAO,IAAI,oBAAoB,CAAC;QACjC,CAAC,wDAAwD,EACzD;QACA,MAAM,IAAI,UAAU,CAClB,sBAAsB,EACtB,iDAAiD,yBAAyB,EAAE,CAC7E,CAAC;KACH;IAED,MAAM,MAAM,GAAG,MAAM,WAAW,CAAC,gBAAgB,EAAE,CAAC;IACpD,IAAI,gBAAgB,IAAI,MAAM,EAAE;QAC9B,MAAM,EAAE,cAAc,EAAE,GAAG,IAAI,EAAE,GAAG,MAAM,CAAC;QAC3C,OAAO;YACL,GAAG,IAAI;YACP,QAAQ,EAAE,IAAI,CAAC,KAAK,CAAC,cAAc,CAAC;SACrC,CAAC;KACH;IACD,OAAO,MAAM,CAAC;AAChB,CAAC;AAED;;GAEG;AACH,MAAM,UAAU,iCAAiC,CAAC,WAAoB;IACpE,OAAO,CAAC,IAAI,CACV,2GAA2G,CAC5G,CAAC;AACJ,CAAC;AAED;;GAEG;AACH,MAAM,UAAU,kCAAkC,CAChD,qBAKC;IAED,MAAM,aAAa,GAAG,EAAE,GAAG,qBAAqB,EAAE,CAAC;IACnD,IAAI,aAAa,CAAC,oBAAoB,EAAE;QACtC,aAAa,CAAC,cAAc,GAAG,IAAI,CAAC,KAAK,CAAC,aAAa,CAAC,oBAAoB,CAAC,CAAC;QAC9E,OAAO,aAAa,CAAC,oBAAoB,CAAC;KAC3C;IACD,IAAI,aAAa,CAAC,wBAAwB,EAAE;QAC1C,aAAa,CAAC,kBAAkB,GAAG,IAAI,CAAC,KAAK,CAAC,aAAa,CAAC,wBAAwB,CAAC,CAAC;QACtF,OAAO,aAAa,CAAC,wBAAwB,CAAC;KAC/C;IACD,IAAI,aAAa,CAAC,4BAA4B,EAAE;QAC9C,aAAa,CAAC,sBAAsB,GAAG,IAAI,IAAI,CAAC,aAAa,CAAC,4BAA4B,CAAC,CAAC;QAC5F,OAAO,aAAa,CAAC,4BAA4B,CAAC;KACnD;IACD,IAAI,aAAa,CAAC,cAAc,EAAE;QAChC,aAAa,CAAC,QAAQ,GAAG,IAAI,CAAC,KAAK,CAAC,aAAa,CAAC,cAAc,CAAC,CAAC;QAClE,OAAO,aAAa,CAAC,cAAc,CAAC;KACrC;IACD,OAAO,aAAa,CAAC;AACvB,CAAC;AAED;;GAEG;AACH,MAAM,CAAC,KAAK,UAAU,iCAAiC;IACrD,MAAM,aAAa,GAAG,MAAM,WAAW,CAAC,iCAAiC,EAAE,CAAC;IAC5E,OAAO,kCAAkC,CAAC,aAAa,CAAC,CAAC;AAC3D,CAAC","sourcesContent":["import { CodedError } from 'expo-modules-core';\n\nimport ExpoUpdates from './ExpoUpdates';\nimport {\n  LocalAssets,\n  Manifest,\n  UpdateCheckResult,\n  UpdateFetchResult,\n  UpdatesCheckAutomaticallyValue,\n  UpdatesLogEntry,\n  UpdatesNativeStateMachineContext,\n} from './Updates.types';\n\n/**\n * Whether `expo-updates` is enabled. This may be false in a variety of cases including:\n * - enabled set to false in configuration\n * - missing or invalid URL in configuration\n * - missing runtime version or SDK version in configuration\n * - error accessing storage on device during initialization\n *\n * When false, the embedded update is loaded.\n */\nexport const isEnabled: boolean = !!ExpoUpdates.isEnabled;\n\n/**\n * The UUID that uniquely identifies the currently running update. The\n * UUID is represented in its canonical string form and will always use lowercase letters.\n * This value is `null` when running in a local development environment or any other environment where `expo-updates` is disabled.\n * @example\n * `\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"`\n */\nexport const updateId: string | null =\n  ExpoUpdates.updateId && typeof ExpoUpdates.updateId === 'string'\n    ? ExpoUpdates.updateId.toLowerCase()\n    : null;\n\n/**\n * The channel name of the current build, if configured for use with EAS Update. `null` otherwise.\n *\n * Expo Go and development builds are not set to a specific channel and can run any updates compatible with their native runtime. Therefore, this value will always be `null` when running an update on Expo Go or a development build.\n */\nexport const channel: string | null = ExpoUpdates.channel ?? null;\n\n/**\n * The runtime version of the current build.\n */\nexport const runtimeVersion: string | null = ExpoUpdates.runtimeVersion ?? null;\n\nconst _checkAutomaticallyMapNativeToJS = {\n  ALWAYS: 'ON_LOAD',\n  ERROR_RECOVERY_ONLY: 'ON_ERROR_RECOVERY',\n  NEVER: 'NEVER',\n  WIFI_ONLY: 'WIFI_ONLY',\n};\n\n/**\n * Determines if and when `expo-updates` checks for and downloads updates automatically on startup.\n */\nexport const checkAutomatically: UpdatesCheckAutomaticallyValue | null =\n  _checkAutomaticallyMapNativeToJS[ExpoUpdates.checkAutomatically] ?? null;\n\n// @docsMissing\n/**\n * @hidden\n */\nexport const localAssets: LocalAssets = ExpoUpdates.localAssets ?? {};\n\n/**\n * `expo-updates` does its very best to always launch monotonically newer versions of your app so\n * you don't need to worry about backwards compatibility when you put out an update. In very rare\n * cases, it's possible that `expo-updates` may need to fall back to the update that's embedded in\n * the app binary, even after newer updates have been downloaded and run (an \"emergency launch\").\n * This boolean will be `true` if the app is launching under this fallback mechanism and `false`\n * otherwise. If you are concerned about backwards compatibility of future updates to your app, you\n * can use this constant to provide special behavior for this rare case.\n */\nexport const isEmergencyLaunch = ExpoUpdates.isEmergencyLaunch;\n\n/**\n * If `isEmergencyLaunch` is set to true, this will contain a string error message describing\n * what failed during initialization.\n */\nexport const emergencyLaunchReason = ExpoUpdates.emergencyLaunchReason;\n\n/**\n * This will be true if the currently running update is the one embedded in the build,\n * and not one downloaded from the updates server.\n */\nexport const isEmbeddedLaunch: boolean = ExpoUpdates.isEmbeddedLaunch || false;\n\n// @docsMissing\n/**\n * @hidden\n */\nexport const isUsingEmbeddedAssets: boolean = ExpoUpdates.isUsingEmbeddedAssets || false;\n\n/**\n * If `expo-updates` is enabled, this is the\n * [manifest](/versions/latest/sdk/constants/#manifest) (or\n * [classic manifest](/versions/latest/sdk/constants/#appmanifest))\n * object for the update that's currently running.\n *\n * In development mode, or any other environment in which `expo-updates` is disabled, this object is\n * empty.\n */\nexport const manifest: Partial<Manifest> =\n  (ExpoUpdates.manifestString ? JSON.parse(ExpoUpdates.manifestString) : ExpoUpdates.manifest) ??\n  {};\n\n/**\n * If `expo-updates` is enabled, this is a `Date` object representing the creation time of the update that's currently running (whether it was embedded or downloaded at runtime).\n *\n * In development mode, or any other environment in which `expo-updates` is disabled, this value is\n * null.\n */\nexport const createdAt: Date | null = ExpoUpdates.commitTime\n  ? new Date(ExpoUpdates.commitTime)\n  : null;\n\n/**\n * During non-expo development we block accessing the updates API methods on the JS side, but when developing in\n * Expo Go or a development client build, the controllers should have control over which API methods should\n * be allowed.\n */\nconst shouldDeferToNativeForAPIMethodAvailabilityInDevelopment =\n  !!ExpoUpdates.shouldDeferToNativeForAPIMethodAvailabilityInDevelopment;\n\n/**\n * Developer tool is set when a project is served by `expo start`.\n */\nconst isUsingDeveloperTool =\n  'extra' in manifest ? !!manifest.extra?.expoGo?.developer?.tool : false;\n\nconst manualUpdatesInstructions =\n  'To test usage of the expo-updates JS API in your app, make a release build with `npx expo run:ios --configuration Release` or ' +\n  '`npx expo run:android --variant Release`.';\n\n/**\n * Instructs the app to reload using the most recently downloaded version. This is useful for\n * triggering a newly downloaded update to launch without the user needing to manually restart the\n * app.\n * Unlike `Expo.reloadAppAsync()` provided by the `expo` package,\n * this function not only reloads the app but also changes the loaded JavaScript bundle to that of the most recently downloaded update.\n *\n * It is not recommended to place any meaningful logic after a call to `await\n * Updates.reloadAsync()`. This is because the promise is resolved after verifying that the app can\n * be reloaded, and immediately before posting an asynchronous task to the main thread to actually\n * reload the app. It is unsafe to make any assumptions about whether any more JS code will be\n * executed after the `Updates.reloadAsync` method call resolves, since that depends on the OS and\n * the state of the native module and main threads.\n *\n * This method cannot be used in Expo Go or development mode, and the returned promise will be rejected if you\n * try to do so. It also rejects when `expo-updates` is not enabled.\n *\n * @return A promise that fulfills right before the reload instruction is sent to the JS runtime, or\n * rejects if it cannot find a reference to the JS runtime. If the promise is rejected in production\n * mode, it most likely means you have installed the module incorrectly. Double check you've\n * followed the installation instructions. In particular, on iOS ensure that you set the `bridge`\n * property on `EXUpdatesAppController` with a pointer to the `RCTBridge` you want to reload, and on\n * Android ensure you either call `UpdatesController.initialize` with the instance of\n * `ReactApplication` you want to reload, or call `UpdatesController.setReactNativeHost` with the\n * proper instance of `ReactNativeHost`.\n */\nexport async function reloadAsync(): Promise<void> {\n  if (\n    (__DEV__ || isUsingDeveloperTool) &&\n    !shouldDeferToNativeForAPIMethodAvailabilityInDevelopment\n  ) {\n    throw new CodedError(\n      'ERR_UPDATES_DISABLED',\n      `You cannot use the Updates module in development mode in a production app. ${manualUpdatesInstructions}`\n    );\n  }\n  await ExpoUpdates.reload();\n}\n\n/**\n * Checks the server to see if a newly deployed update to your project is available. Does not\n * actually download the update. This method cannot be used in development mode, and the returned\n * promise will be rejected if you try to do so.\n *\n * Checking for an update uses a device's bandwidth and battery life like any network call.\n * Additionally, updates served by Expo may be rate limited. A good rule of thumb to check for\n * updates judiciously is to check when the user launches or foregrounds the app. Avoid polling for\n * updates in a frequent loop.\n *\n * @return A promise that fulfills with an [`UpdateCheckResult`](#updatecheckresult) object.\n *\n * The promise rejects in Expo Go or if the app is in development mode, or if there is an unexpected error or\n * timeout communicating with the server. It also rejects when `expo-updates` is not enabled.\n */\nexport async function checkForUpdateAsync(): Promise<UpdateCheckResult> {\n  if (\n    (__DEV__ || isUsingDeveloperTool) &&\n    !shouldDeferToNativeForAPIMethodAvailabilityInDevelopment\n  ) {\n    throw new CodedError(\n      'ERR_UPDATES_DISABLED',\n      `You cannot check for updates in development mode. ${manualUpdatesInstructions}`\n    );\n  }\n\n  const result = await ExpoUpdates.checkForUpdateAsync();\n  if ('manifestString' in result) {\n    const { manifestString, ...rest } = result;\n    return {\n      ...rest,\n      manifest: JSON.parse(manifestString),\n    };\n  }\n  return result;\n}\n\n/**\n * Retrieves the current extra params.\n *\n * This method cannot be used in Expo Go or development mode. It also rejects when `expo-updates` is not enabled.\n */\nexport async function getExtraParamsAsync(): Promise<Record<string, string>> {\n  return await ExpoUpdates.getExtraParamsAsync();\n}\n\n/**\n * Sets an extra param if value is non-null, otherwise unsets the param.\n * Extra params are sent as an [Expo Structured Field Value Dictionary](/technical-specs/expo-sfv-0/)\n * in the `Expo-Extra-Params` header of update requests. A compliant update server may use these params when selecting an update to serve.\n *\n * This method cannot be used in Expo Go or development mode. It also rejects when `expo-updates` is not enabled.\n */\nexport async function setExtraParamAsync(\n  key: string,\n  value: string | null | undefined\n): Promise<void> {\n  return await ExpoUpdates.setExtraParamAsync(key, value ?? null);\n}\n\n/**\n * Retrieves the most recent `expo-updates` log entries.\n *\n * @param maxAge Sets the max age of retrieved log entries in milliseconds. Default to `3600000` ms (1 hour).\n *\n * @return A promise that fulfills with an array of [`UpdatesLogEntry`](#updateslogentry) objects;\n *\n * The promise rejects if there is an unexpected error in retrieving the logs.\n */\nexport async function readLogEntriesAsync(maxAge: number = 3600000): Promise<UpdatesLogEntry[]> {\n  return await ExpoUpdates.readLogEntriesAsync(maxAge);\n}\n\n/**\n * Clears existing `expo-updates` log entries.\n *\n * > For now, this operation does nothing on the client.  Once log persistence has been\n * > implemented, this operation will actually remove existing logs.\n *\n * @return A promise that fulfills if the clear operation was successful.\n *\n * The promise rejects if there is an unexpected error in clearing the logs.\n *\n */\nexport async function clearLogEntriesAsync(): Promise<void> {\n  await ExpoUpdates.clearLogEntriesAsync();\n}\n\n/**\n * Downloads the most recently deployed update to your project from server to the device's local\n * storage. This method cannot be used in development mode, and the returned promise will be\n * rejected if you try to do so.\n *\n > **Note:** [`reloadAsync()`](#updatesreloadasync) can be called after promise resolution to\n * reload the app using the most recently downloaded version. Otherwise, the update will be applied\n * on the next app cold start.\n *\n * @return A promise that fulfills with an [`UpdateFetchResult`](#updatefetchresult) object.\n *\n * The promise rejects in Expo Go or if the app is in development mode, or if there is an unexpected error or\n * timeout communicating with the server. It also rejects when `expo-updates` is not enabled.\n */\nexport async function fetchUpdateAsync(): Promise<UpdateFetchResult> {\n  if (\n    (__DEV__ || isUsingDeveloperTool) &&\n    !shouldDeferToNativeForAPIMethodAvailabilityInDevelopment\n  ) {\n    throw new CodedError(\n      'ERR_UPDATES_DISABLED',\n      `You cannot fetch updates in development mode. ${manualUpdatesInstructions}`\n    );\n  }\n\n  const result = await ExpoUpdates.fetchUpdateAsync();\n  if ('manifestString' in result) {\n    const { manifestString, ...rest } = result;\n    return {\n      ...rest,\n      manifest: JSON.parse(manifestString),\n    };\n  }\n  return result;\n}\n\n/**\n * @hidden\n */\nexport function clearUpdateCacheExperimentalAsync(_sdkVersion?: string) {\n  console.warn(\n    \"This method is no longer necessary. `expo-updates` now automatically deletes your app's old bundle files!\"\n  );\n}\n\n/**\n * @hidden\n */\nexport function transformNativeStateMachineContext(\n  originalNativeContext: UpdatesNativeStateMachineContext & {\n    latestManifestString?: string;\n    downloadedManifestString?: string;\n    lastCheckForUpdateTimeString?: string;\n    rollbackString?: string;\n  }\n): UpdatesNativeStateMachineContext {\n  const nativeContext = { ...originalNativeContext };\n  if (nativeContext.latestManifestString) {\n    nativeContext.latestManifest = JSON.parse(nativeContext.latestManifestString);\n    delete nativeContext.latestManifestString;\n  }\n  if (nativeContext.downloadedManifestString) {\n    nativeContext.downloadedManifest = JSON.parse(nativeContext.downloadedManifestString);\n    delete nativeContext.downloadedManifestString;\n  }\n  if (nativeContext.lastCheckForUpdateTimeString) {\n    nativeContext.lastCheckForUpdateTime = new Date(nativeContext.lastCheckForUpdateTimeString);\n    delete nativeContext.lastCheckForUpdateTimeString;\n  }\n  if (nativeContext.rollbackString) {\n    nativeContext.rollback = JSON.parse(nativeContext.rollbackString);\n    delete nativeContext.rollbackString;\n  }\n  return nativeContext;\n}\n\n/**\n * @hidden\n */\nexport async function getNativeStateMachineContextAsync(): Promise<UpdatesNativeStateMachineContext> {\n  const nativeContext = await ExpoUpdates.getNativeStateMachineContextAsync();\n  return transformNativeStateMachineContext(nativeContext);\n}\n"]}
+\ No newline at end of file
++{"version":3,"file":"Updates.js","sourceRoot":"","sources":["../src/Updates.ts"],"names":[],"mappings":"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","sourcesContent":["import { CodedError } from 'expo-modules-core';\n\nimport ExpoUpdates from './ExpoUpdates';\nimport {\n  LocalAssets,\n  Manifest,\n  UpdateCheckResult,\n  UpdateFetchResult,\n  UpdatesCheckAutomaticallyValue,\n  UpdatesLogEntry,\n  UpdatesNativeStateMachineContext,\n} from './Updates.types';\n\n/**\n * Whether `expo-updates` is enabled. This may be false in a variety of cases including:\n * - enabled set to false in configuration\n * - missing or invalid URL in configuration\n * - missing runtime version or SDK version in configuration\n * - error accessing storage on device during initialization\n *\n * When false, the embedded update is loaded.\n */\nexport const isEnabled: boolean = !!ExpoUpdates.isEnabled;\n\n/**\n * The UUID that uniquely identifies the currently running update. The\n * UUID is represented in its canonical string form and will always use lowercase letters.\n * This value is `null` when running in a local development environment or any other environment where `expo-updates` is disabled.\n * @example\n * `\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"`\n */\nexport const updateId: string | null =\n  ExpoUpdates.updateId && typeof ExpoUpdates.updateId === 'string'\n    ? ExpoUpdates.updateId.toLowerCase()\n    : null;\n\n/**\n * The channel name of the current build, if configured for use with EAS Update. `null` otherwise.\n *\n * Expo Go and development builds are not set to a specific channel and can run any updates compatible with their native runtime. Therefore, this value will always be `null` when running an update on Expo Go or a development build.\n */\nexport const channel: string | null = ExpoUpdates.channel ?? null;\n\n/**\n * The runtime version of the current build.\n */\nexport const runtimeVersion: string | null = ExpoUpdates.runtimeVersion ?? null;\n\nconst _checkAutomaticallyMapNativeToJS = {\n  ALWAYS: 'ON_LOAD',\n  ERROR_RECOVERY_ONLY: 'ON_ERROR_RECOVERY',\n  NEVER: 'NEVER',\n  WIFI_ONLY: 'WIFI_ONLY',\n};\n\n/**\n * Determines if and when `expo-updates` checks for and downloads updates automatically on startup.\n */\nexport const checkAutomatically: UpdatesCheckAutomaticallyValue | null =\n  _checkAutomaticallyMapNativeToJS[ExpoUpdates.checkAutomatically] ?? null;\n\n// @docsMissing\n/**\n * @hidden\n */\nexport const localAssets: LocalAssets = ExpoUpdates.localAssets ?? {};\n\n/**\n * `expo-updates` does its very best to always launch monotonically newer versions of your app so\n * you don't need to worry about backwards compatibility when you put out an update. In very rare\n * cases, it's possible that `expo-updates` may need to fall back to the update that's embedded in\n * the app binary, even after newer updates have been downloaded and run (an \"emergency launch\").\n * This boolean will be `true` if the app is launching under this fallback mechanism and `false`\n * otherwise. If you are concerned about backwards compatibility of future updates to your app, you\n * can use this constant to provide special behavior for this rare case.\n */\nexport const isEmergencyLaunch = ExpoUpdates.isEmergencyLaunch;\n\n/**\n * If `isEmergencyLaunch` is set to true, this will contain a string error message describing\n * what failed during initialization.\n */\nexport const emergencyLaunchReason = ExpoUpdates.emergencyLaunchReason;\n\n/**\n * This will be true if the currently running update is the one embedded in the build,\n * and not one downloaded from the updates server.\n */\nexport const isEmbeddedLaunch: boolean = ExpoUpdates.isEmbeddedLaunch || false;\n\n// @docsMissing\n/**\n * @hidden\n */\nexport const isUsingEmbeddedAssets: boolean = ExpoUpdates.isUsingEmbeddedAssets || false;\n\n/**\n * If `expo-updates` is enabled, this is the\n * [manifest](/versions/latest/sdk/constants/#manifest) (or\n * [classic manifest](/versions/latest/sdk/constants/#appmanifest))\n * object for the update that's currently running.\n *\n * In development mode, or any other environment in which `expo-updates` is disabled, this object is\n * empty.\n */\nexport const manifest: Partial<Manifest> =\n  (ExpoUpdates.manifestString ? JSON.parse(ExpoUpdates.manifestString) : ExpoUpdates.manifest) ??\n  {};\n\n/**\n * If `expo-updates` is enabled, this is a `Date` object representing the creation time of the update that's currently running (whether it was embedded or downloaded at runtime).\n *\n * In development mode, or any other environment in which `expo-updates` is disabled, this value is\n * null.\n */\nexport const createdAt: Date | null = ExpoUpdates.commitTime\n  ? new Date(ExpoUpdates.commitTime)\n  : null;\n\n/**\n * During non-expo development we block accessing the updates API methods on the JS side, but when developing in\n * Expo Go or a development client build, the controllers should have control over which API methods should\n * be allowed.\n */\nconst shouldDeferToNativeForAPIMethodAvailabilityInDevelopment =\n  !!ExpoUpdates.shouldDeferToNativeForAPIMethodAvailabilityInDevelopment;\n\n/**\n * Developer tool is set when a project is served by `expo start`.\n */\nconst isUsingDeveloperTool =\n  'extra' in manifest ? !!manifest.extra?.expoGo?.developer?.tool : false;\n\nconst manualUpdatesInstructions =\n  'To test usage of the expo-updates JS API in your app, make a release build with `npx expo run:ios --configuration Release` or ' +\n  '`npx expo run:android --variant Release`.';\n\n/**\n * Instructs the app to reload using the most recently downloaded version. This is useful for\n * triggering a newly downloaded update to launch without the user needing to manually restart the\n * app.\n * Unlike `Expo.reloadAppAsync()` provided by the `expo` package,\n * this function not only reloads the app but also changes the loaded JavaScript bundle to that of the most recently downloaded update.\n *\n * It is not recommended to place any meaningful logic after a call to `await\n * Updates.reloadAsync()`. This is because the promise is resolved after verifying that the app can\n * be reloaded, and immediately before posting an asynchronous task to the main thread to actually\n * reload the app. It is unsafe to make any assumptions about whether any more JS code will be\n * executed after the `Updates.reloadAsync` method call resolves, since that depends on the OS and\n * the state of the native module and main threads.\n *\n * This method cannot be used in Expo Go or development mode, and the returned promise will be rejected if you\n * try to do so. It also rejects when `expo-updates` is not enabled.\n *\n * @return A promise that fulfills right before the reload instruction is sent to the JS runtime, or\n * rejects if it cannot find a reference to the JS runtime. If the promise is rejected in production\n * mode, it most likely means you have installed the module incorrectly. Double check you've\n * followed the installation instructions. In particular, on iOS ensure that you set the `bridge`\n * property on `EXUpdatesAppController` with a pointer to the `RCTBridge` you want to reload, and on\n * Android ensure you either call `UpdatesController.initialize` with the instance of\n * `ReactApplication` you want to reload, or call `UpdatesController.setReactNativeHost` with the\n * proper instance of `ReactNativeHost`.\n */\nexport async function reloadAsync(): Promise<void> {\n  if (\n    (__DEV__ || isUsingDeveloperTool) &&\n    !shouldDeferToNativeForAPIMethodAvailabilityInDevelopment\n  ) {\n    throw new CodedError(\n      'ERR_UPDATES_DISABLED',\n      `You cannot use the Updates module in development mode in a production app. ${manualUpdatesInstructions}`\n    );\n  }\n  await ExpoUpdates.reload();\n}\n\n/**\n * Checks the server to see if a newly deployed update to your project is available. Does not\n * actually download the update. This method cannot be used in development mode, and the returned\n * promise will be rejected if you try to do so.\n *\n * Checking for an update uses a device's bandwidth and battery life like any network call.\n * Additionally, updates served by Expo may be rate limited. A good rule of thumb to check for\n * updates judiciously is to check when the user launches or foregrounds the app. Avoid polling for\n * updates in a frequent loop.\n *\n * @return A promise that fulfills with an [`UpdateCheckResult`](#updatecheckresult) object.\n *\n * The promise rejects in Expo Go or if the app is in development mode, or if there is an unexpected error or\n * timeout communicating with the server. It also rejects when `expo-updates` is not enabled.\n */\nexport async function checkForUpdateAsync(channel?: string): Promise<UpdateCheckResult> {\n  if (\n    (__DEV__ || isUsingDeveloperTool) &&\n    !shouldDeferToNativeForAPIMethodAvailabilityInDevelopment\n  ) {\n    throw new CodedError(\n      'ERR_UPDATES_DISABLED',\n      `You cannot check for updates in development mode. ${manualUpdatesInstructions}`\n    );\n  }\n\n  const result = await ExpoUpdates.checkForUpdateAsync(channel);\n  if ('manifestString' in result) {\n    const { manifestString, ...rest } = result;\n    return {\n      ...rest,\n      manifest: JSON.parse(manifestString),\n    };\n  }\n  return result;\n}\n\n/**\n * Retrieves the current extra params.\n *\n * This method cannot be used in Expo Go or development mode. It also rejects when `expo-updates` is not enabled.\n */\nexport async function getExtraParamsAsync(): Promise<Record<string, string>> {\n  return await ExpoUpdates.getExtraParamsAsync();\n}\n\n/**\n * Sets an extra param if value is non-null, otherwise unsets the param.\n * Extra params are sent as an [Expo Structured Field Value Dictionary](/technical-specs/expo-sfv-0/)\n * in the `Expo-Extra-Params` header of update requests. A compliant update server may use these params when selecting an update to serve.\n *\n * This method cannot be used in Expo Go or development mode. It also rejects when `expo-updates` is not enabled.\n */\nexport async function setExtraParamAsync(\n  key: string,\n  value: string | null | undefined\n): Promise<void> {\n  return await ExpoUpdates.setExtraParamAsync(key, value ?? null);\n}\n\n/**\n * Retrieves the most recent `expo-updates` log entries.\n *\n * @param maxAge Sets the max age of retrieved log entries in milliseconds. Default to `3600000` ms (1 hour).\n *\n * @return A promise that fulfills with an array of [`UpdatesLogEntry`](#updateslogentry) objects;\n *\n * The promise rejects if there is an unexpected error in retrieving the logs.\n */\nexport async function readLogEntriesAsync(maxAge: number = 3600000): Promise<UpdatesLogEntry[]> {\n  return await ExpoUpdates.readLogEntriesAsync(maxAge);\n}\n\n/**\n * Clears existing `expo-updates` log entries.\n *\n * > For now, this operation does nothing on the client.  Once log persistence has been\n * > implemented, this operation will actually remove existing logs.\n *\n * @return A promise that fulfills if the clear operation was successful.\n *\n * The promise rejects if there is an unexpected error in clearing the logs.\n *\n */\nexport async function clearLogEntriesAsync(): Promise<void> {\n  await ExpoUpdates.clearLogEntriesAsync();\n}\n\n/**\n * Downloads the most recently deployed update to your project from server to the device's local\n * storage. This method cannot be used in development mode, and the returned promise will be\n * rejected if you try to do so.\n *\n > **Note:** [`reloadAsync()`](#updatesreloadasync) can be called after promise resolution to\n * reload the app using the most recently downloaded version. Otherwise, the update will be applied\n * on the next app cold start.\n *\n * @return A promise that fulfills with an [`UpdateFetchResult`](#updatefetchresult) object.\n *\n * The promise rejects in Expo Go or if the app is in development mode, or if there is an unexpected error or\n * timeout communicating with the server. It also rejects when `expo-updates` is not enabled.\n */\nexport async function fetchUpdateAsync(channel?: string): Promise<UpdateFetchResult> {\n  if (\n    (__DEV__ || isUsingDeveloperTool) &&\n    !shouldDeferToNativeForAPIMethodAvailabilityInDevelopment\n  ) {\n    throw new CodedError(\n      'ERR_UPDATES_DISABLED',\n      `You cannot fetch updates in development mode. ${manualUpdatesInstructions}`\n    );\n  }\n\n  const result = await ExpoUpdates.fetchUpdateAsync(channel);\n  if ('manifestString' in result) {\n    const { manifestString, ...rest } = result;\n    return {\n      ...rest,\n      manifest: JSON.parse(manifestString),\n    };\n  }\n  return result;\n}\n\n/**\n * @hidden\n */\nexport function clearUpdateCacheExperimentalAsync(_sdkVersion?: string) {\n  console.warn(\n    \"This method is no longer necessary. `expo-updates` now automatically deletes your app's old bundle files!\"\n  );\n}\n\n/**\n * @hidden\n */\nexport function transformNativeStateMachineContext(\n  originalNativeContext: UpdatesNativeStateMachineContext & {\n    latestManifestString?: string;\n    downloadedManifestString?: string;\n    lastCheckForUpdateTimeString?: string;\n    rollbackString?: string;\n  }\n): UpdatesNativeStateMachineContext {\n  const nativeContext = { ...originalNativeContext };\n  if (nativeContext.latestManifestString) {\n    nativeContext.latestManifest = JSON.parse(nativeContext.latestManifestString);\n    delete nativeContext.latestManifestString;\n  }\n  if (nativeContext.downloadedManifestString) {\n    nativeContext.downloadedManifest = JSON.parse(nativeContext.downloadedManifestString);\n    delete nativeContext.downloadedManifestString;\n  }\n  if (nativeContext.lastCheckForUpdateTimeString) {\n    nativeContext.lastCheckForUpdateTime = new Date(nativeContext.lastCheckForUpdateTimeString);\n    delete nativeContext.lastCheckForUpdateTimeString;\n  }\n  if (nativeContext.rollbackString) {\n    nativeContext.rollback = JSON.parse(nativeContext.rollbackString);\n    delete nativeContext.rollbackString;\n  }\n  return nativeContext;\n}\n\n/**\n * @hidden\n */\nexport async function getNativeStateMachineContextAsync(): Promise<UpdatesNativeStateMachineContext> {\n  const nativeContext = await ExpoUpdates.getNativeStateMachineContextAsync();\n  return transformNativeStateMachineContext(nativeContext);\n}\n"]}
+\ No newline at end of file
+diff --git a/node_modules/expo-updates/build/UpdatesEmitter.d.ts b/node_modules/expo-updates/build/UpdatesEmitter.d.ts
+index d3402ee..dc91c10 100644
+--- a/node_modules/expo-updates/build/UpdatesEmitter.d.ts
++++ b/node_modules/expo-updates/build/UpdatesEmitter.d.ts
+@@ -3,7 +3,7 @@ import type { UpdatesNativeStateChangeEvent } from './Updates.types';
+  * Add listener for state change events
+  * @hidden
+  */
+-export declare const addUpdatesStateChangeListener: (listener: (event: UpdatesNativeStateChangeEvent) => void) => import("fbemitter").EventSubscription;
++export declare const addUpdatesStateChangeListener: (listener: (event: UpdatesNativeStateChangeEvent) => void) => any;
+ /**
+  * Allows JS to emit a simulated native state change event (used in unit testing)
+  * @hidden
+diff --git a/node_modules/expo-updates/build/UpdatesEmitter.d.ts.map b/node_modules/expo-updates/build/UpdatesEmitter.d.ts.map
+index 553218a..48f5df4 100644
+--- a/node_modules/expo-updates/build/UpdatesEmitter.d.ts.map
++++ b/node_modules/expo-updates/build/UpdatesEmitter.d.ts.map
+@@ -1 +1 @@
+-{"version":3,"file":"UpdatesEmitter.d.ts","sourceRoot":"","sources":["../src/UpdatesEmitter.ts"],"names":[],"mappings":"AAKA,OAAO,KAAK,EAAE,6BAA6B,EAAE,MAAM,iBAAiB,CAAC;AAuBrE;;;GAGG;AACH,eAAO,MAAM,6BAA6B,qBACtB,6BAA6B,KAAK,IAAI,0CAGzD,CAAC;AAEF;;;GAGG;AACH,eAAO,MAAM,wBAAwB,UAAW,6BAA6B,SAE5E,CAAC"}
+\ No newline at end of file
++{"version":3,"file":"UpdatesEmitter.d.ts","sourceRoot":"","sources":["../src/UpdatesEmitter.ts"],"names":[],"mappings":"AAKA,OAAO,KAAK,EAAE,6BAA6B,EAAE,MAAM,iBAAiB,CAAC;AAuBrE;;;GAGG;AACH,eAAO,MAAM,6BAA6B,aAC9B,CAAC,KAAK,EAAE,6BAA6B,KAAK,IAAI,QAGzD,CAAC;AAEF;;;GAGG;AACH,eAAO,MAAM,wBAAwB,UAAW,6BAA6B,SAE5E,CAAC"}
+\ No newline at end of file
+diff --git a/node_modules/expo-updates/build/UpdatesEmitter.js.map b/node_modules/expo-updates/build/UpdatesEmitter.js.map
+index 10a6390..d2a1a17 100644
+--- a/node_modules/expo-updates/build/UpdatesEmitter.js.map
++++ b/node_modules/expo-updates/build/UpdatesEmitter.js.map
+@@ -1 +1 @@
+-{"version":3,"file":"UpdatesEmitter.js","sourceRoot":"","sources":["../src/UpdatesEmitter.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,IAAI,kBAAkB,EAAE,MAAM,mBAAmB,CAAC;AACvE,OAAO,EAAE,YAAY,IAAI,cAAc,EAAE,MAAM,WAAW,CAAC;AAE3D,OAAO,iBAAiB,MAAM,eAAe,CAAC;AAC9C,OAAO,EAAE,kCAAkC,EAAE,MAAM,WAAW,CAAC;AAG/D,MAAM,mBAAmB,GAAG,IAAI,kBAAkB,CAAC,iBAAiB,CAAC,CAAC;AACtE,mBAAmB,CAAC,WAAW,CAAC,oCAAoC,EAAE,2BAA2B,CAAC,CAAC;AAEnG,IAAI,eAAe,GAA0B,IAAI,CAAC;AAClD,SAAS,kBAAkB;IACzB,IAAI,CAAC,eAAe,EAAE;QACpB,eAAe,GAAG,IAAI,cAAc,EAAE,CAAC;KACxC;IACD,OAAO,eAAe,CAAC;AACzB,CAAC;AAED,qCAAqC;AACrC,SAAS,2BAA2B,CAAC,MAAW;IAC9C,IAAI,SAAS,GAAG,EAAE,GAAG,MAAM,EAAE,CAAC;IAC9B,IAAI,OAAO,MAAM,KAAK,QAAQ,EAAE;QAC9B,SAAS,GAAG,IAAI,CAAC,KAAK,CAAC,MAAM,CAAC,CAAC;KAChC;IACD,SAAS,CAAC,OAAO,GAAG,kCAAkC,CAAC,SAAS,CAAC,OAAO,CAAC,CAAC;IAC1E,kBAAkB,EAAE,CAAC,IAAI,CAAC,8BAA8B,EAAE,SAAS,CAAC,CAAC;AACvE,CAAC;AAED;;;GAGG;AACH,MAAM,CAAC,MAAM,6BAA6B,GAAG,CAC3C,QAAwD,EACxD,EAAE;IACF,OAAO,kBAAkB,EAAE,CAAC,WAAW,CAAC,8BAA8B,EAAE,QAAQ,CAAC,CAAC;AACpF,CAAC,CAAC;AAEF;;;GAGG;AACH,MAAM,CAAC,MAAM,wBAAwB,GAAG,CAAC,KAAoC,EAAE,EAAE;IAC/E,2BAA2B,CAAC,KAAK,CAAC,CAAC;AACrC,CAAC,CAAC","sourcesContent":["import { EventEmitter as NativeEventEmitter } from 'expo-modules-core';\nimport { EventEmitter as JsEventEmitter } from 'fbemitter';\n\nimport ExpoUpdatesModule from './ExpoUpdates';\nimport { transformNativeStateMachineContext } from './Updates';\nimport type { UpdatesNativeStateChangeEvent } from './Updates.types';\n\nconst _nativeEventEmitter = new NativeEventEmitter(ExpoUpdatesModule);\n_nativeEventEmitter.addListener('Expo.nativeUpdatesStateChangeEvent', _emitNativeStateChangeEvent);\n\nlet _jsEventEmitter: JsEventEmitter | null = null;\nfunction _getJsEventEmitter(): JsEventEmitter {\n  if (!_jsEventEmitter) {\n    _jsEventEmitter = new JsEventEmitter();\n  }\n  return _jsEventEmitter;\n}\n\n// Reemits native state change events\nfunction _emitNativeStateChangeEvent(params: any) {\n  let newParams = { ...params };\n  if (typeof params === 'string') {\n    newParams = JSON.parse(params);\n  }\n  newParams.context = transformNativeStateMachineContext(newParams.context);\n  _getJsEventEmitter().emit('Expo.updatesStateChangeEvent', newParams);\n}\n\n/**\n * Add listener for state change events\n * @hidden\n */\nexport const addUpdatesStateChangeListener = (\n  listener: (event: UpdatesNativeStateChangeEvent) => void\n) => {\n  return _getJsEventEmitter().addListener('Expo.updatesStateChangeEvent', listener);\n};\n\n/**\n * Allows JS to emit a simulated native state change event (used in unit testing)\n * @hidden\n */\nexport const emitTestStateChangeEvent = (event: UpdatesNativeStateChangeEvent) => {\n  _emitNativeStateChangeEvent(event);\n};\n"]}
+\ No newline at end of file
++{"version":3,"file":"UpdatesEmitter.js","sourceRoot":"","sources":["../src/UpdatesEmitter.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,YAAY,IAAI,kBAAkB,EAAE,MAAM,mBAAmB,CAAC;AACvE,OAAO,EAAE,YAAY,IAAI,cAAc,EAAE,MAAM,WAAW,CAAC;AAE3D,OAAO,iBAAiB,MAAM,eAAe,CAAC;AAC9C,OAAO,EAAE,kCAAkC,EAAE,MAAM,WAAW,CAAC;AAG/D,MAAM,mBAAmB,GAAG,IAAI,kBAAkB,CAAC,iBAAiB,CAAC,CAAC;AACtE,mBAAmB,CAAC,WAAW,CAAC,oCAAoC,EAAE,2BAA2B,CAAC,CAAC;AAEnG,IAAI,eAAe,GAA0B,IAAI,CAAC;AAClD,SAAS,kBAAkB;IACzB,IAAI,CAAC,eAAe,EAAE,CAAC;QACrB,eAAe,GAAG,IAAI,cAAc,EAAE,CAAC;IACzC,CAAC;IACD,OAAO,eAAe,CAAC;AACzB,CAAC;AAED,qCAAqC;AACrC,SAAS,2BAA2B,CAAC,MAAW;IAC9C,IAAI,SAAS,GAAG,EAAE,GAAG,MAAM,EAAE,CAAC;IAC9B,IAAI,OAAO,MAAM,KAAK,QAAQ,EAAE,CAAC;QAC/B,SAAS,GAAG,IAAI,CAAC,KAAK,CAAC,MAAM,CAAC,CAAC;IACjC,CAAC;IACD,SAAS,CAAC,OAAO,GAAG,kCAAkC,CAAC,SAAS,CAAC,OAAO,CAAC,CAAC;IAC1E,kBAAkB,EAAE,CAAC,IAAI,CAAC,8BAA8B,EAAE,SAAS,CAAC,CAAC;AACvE,CAAC;AAED;;;GAGG;AACH,MAAM,CAAC,MAAM,6BAA6B,GAAG,CAC3C,QAAwD,EACxD,EAAE;IACF,OAAO,kBAAkB,EAAE,CAAC,WAAW,CAAC,8BAA8B,EAAE,QAAQ,CAAC,CAAC;AACpF,CAAC,CAAC;AAEF;;;GAGG;AACH,MAAM,CAAC,MAAM,wBAAwB,GAAG,CAAC,KAAoC,EAAE,EAAE;IAC/E,2BAA2B,CAAC,KAAK,CAAC,CAAC;AACrC,CAAC,CAAC","sourcesContent":["import { EventEmitter as NativeEventEmitter } from 'expo-modules-core';\nimport { EventEmitter as JsEventEmitter } from 'fbemitter';\n\nimport ExpoUpdatesModule from './ExpoUpdates';\nimport { transformNativeStateMachineContext } from './Updates';\nimport type { UpdatesNativeStateChangeEvent } from './Updates.types';\n\nconst _nativeEventEmitter = new NativeEventEmitter(ExpoUpdatesModule);\n_nativeEventEmitter.addListener('Expo.nativeUpdatesStateChangeEvent', _emitNativeStateChangeEvent);\n\nlet _jsEventEmitter: JsEventEmitter | null = null;\nfunction _getJsEventEmitter(): JsEventEmitter {\n  if (!_jsEventEmitter) {\n    _jsEventEmitter = new JsEventEmitter();\n  }\n  return _jsEventEmitter;\n}\n\n// Reemits native state change events\nfunction _emitNativeStateChangeEvent(params: any) {\n  let newParams = { ...params };\n  if (typeof params === 'string') {\n    newParams = JSON.parse(params);\n  }\n  newParams.context = transformNativeStateMachineContext(newParams.context);\n  _getJsEventEmitter().emit('Expo.updatesStateChangeEvent', newParams);\n}\n\n/**\n * Add listener for state change events\n * @hidden\n */\nexport const addUpdatesStateChangeListener = (\n  listener: (event: UpdatesNativeStateChangeEvent) => void\n) => {\n  return _getJsEventEmitter().addListener('Expo.updatesStateChangeEvent', listener);\n};\n\n/**\n * Allows JS to emit a simulated native state change event (used in unit testing)\n * @hidden\n */\nexport const emitTestStateChangeEvent = (event: UpdatesNativeStateChangeEvent) => {\n  _emitNativeStateChangeEvent(event);\n};\n"]}
+\ No newline at end of file
+diff --git a/node_modules/expo-updates/cli/build/assetsVerifyAsync.js b/node_modules/expo-updates/cli/build/assetsVerifyAsync.js
+index 73d1b89..79d7081 100644
+--- a/node_modules/expo-updates/cli/build/assetsVerifyAsync.js
++++ b/node_modules/expo-updates/cli/build/assetsVerifyAsync.js
+@@ -1,6 +1,12 @@
+ "use strict";
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.getExportedMetadataHashSet = exports.getExportedMetadataAsync = exports.getFullAssetDumpHashSet = exports.getFullAssetDumpAsync = exports.getBuildManifestHashSet = exports.getBuildManifestAsync = exports.getMissingAssetsAsync = void 0;
++exports.getMissingAssetsAsync = getMissingAssetsAsync;
++exports.getBuildManifestAsync = getBuildManifestAsync;
++exports.getBuildManifestHashSet = getBuildManifestHashSet;
++exports.getFullAssetDumpAsync = getFullAssetDumpAsync;
++exports.getFullAssetDumpHashSet = getFullAssetDumpHashSet;
++exports.getExportedMetadataAsync = getExportedMetadataAsync;
++exports.getExportedMetadataHashSet = getExportedMetadataHashSet;
+ const fs_1 = require("fs");
+ const errors_1 = require("./utils/errors");
+ const debug = require('debug')('expo-updates:assets:verify');
+@@ -39,7 +45,6 @@ async function getMissingAssetsAsync(buildManifestPath, exportMetadataPath, asse
+     });
+     return missingAssets;
+ }
+-exports.getMissingAssetsAsync = getMissingAssetsAsync;
+ /**
+  * Reads and returns the embedded manifest (app.manifest) for a build.
+  *
+@@ -53,7 +58,6 @@ async function getBuildManifestAsync(buildManifestPath) {
+     const buildManifest = JSON.parse(buildManifestString);
+     return buildManifest;
+ }
+-exports.getBuildManifestAsync = getBuildManifestAsync;
+ /**
+  * Extracts the set of asset hashes from a build manifest.
+  *
+@@ -63,7 +67,6 @@ exports.getBuildManifestAsync = getBuildManifestAsync;
+ function getBuildManifestHashSet(buildManifest) {
+     return new Set((buildManifest.assets ?? []).map((asset) => asset.packagerHash));
+ }
+-exports.getBuildManifestHashSet = getBuildManifestHashSet;
+ /**
+  * Reads and extracts the asset dump for an exported bundle.
+  *
+@@ -75,7 +78,6 @@ async function getFullAssetDumpAsync(assetMapPath) {
+     const assetMap = new Map(Object.entries(JSON.parse(assetMapString)));
+     return assetMap;
+ }
+-exports.getFullAssetDumpAsync = getFullAssetDumpAsync;
+ /**
+  * Extracts the set of asset hashes from an asset dump.
+  *
+@@ -94,7 +96,6 @@ function getFullAssetDumpHashSet(assetDump) {
+         fullAssetHashMap,
+     };
+ }
+-exports.getFullAssetDumpHashSet = getFullAssetDumpHashSet;
+ /**
+  * Reads and extracts the metadata.json from an exported bundle.
+  *
+@@ -106,7 +107,6 @@ async function getExportedMetadataAsync(exportedMetadataPath) {
+     const metadata = JSON.parse(metadataString);
+     return metadata;
+ }
+-exports.getExportedMetadataAsync = getExportedMetadataAsync;
+ /**
+  * Extracts the set of asset hashes from an exported bundle's metadata for a given platform.
+  *
+@@ -123,4 +123,3 @@ function getExportedMetadataHashSet(metadata, platform) {
+     // Asset paths in the export metadata are of the form 'assets/<hash string>'
+     return new Set(assets.map((asset) => asset.path.substring(7, asset.path.length)));
+ }
+-exports.getExportedMetadataHashSet = getExportedMetadataHashSet;
+diff --git a/node_modules/expo-updates/cli/build/configureCodeSigningAsync.js b/node_modules/expo-updates/cli/build/configureCodeSigningAsync.js
+index c6b5dba..db24585 100644
+--- a/node_modules/expo-updates/cli/build/configureCodeSigningAsync.js
++++ b/node_modules/expo-updates/cli/build/configureCodeSigningAsync.js
+@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+     return (mod && mod.__esModule) ? mod : { "default": mod };
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.configureCodeSigningAsync = void 0;
++exports.configureCodeSigningAsync = configureCodeSigningAsync;
+ const code_signing_certificates_1 = require("@expo/code-signing-certificates");
+ const config_1 = require("@expo/config");
+ const fs_1 = require("fs");
+@@ -41,4 +41,3 @@ async function configureCodeSigningAsync(projectRoot, { certificateInput, keyInp
+     });
+     (0, log_1.log)(`Code signing configuration written to app configuration.`);
+ }
+-exports.configureCodeSigningAsync = configureCodeSigningAsync;
+diff --git a/node_modules/expo-updates/cli/build/generateCodeSigningAsync.js b/node_modules/expo-updates/cli/build/generateCodeSigningAsync.js
+index aa8a9d7..736d83e 100644
+--- a/node_modules/expo-updates/cli/build/generateCodeSigningAsync.js
++++ b/node_modules/expo-updates/cli/build/generateCodeSigningAsync.js
+@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+     return (mod && mod.__esModule) ? mod : { "default": mod };
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.generateCodeSigningAsync = void 0;
++exports.generateCodeSigningAsync = generateCodeSigningAsync;
+ const code_signing_certificates_1 = require("@expo/code-signing-certificates");
+ const assert_1 = __importDefault(require("assert"));
+ const fs_1 = require("fs");
+@@ -42,4 +42,3 @@ async function generateCodeSigningAsync(projectRoot, { certificateValidityDurati
+     (0, log_1.log)(`Generated code signing certificate output in ${certificateOutputDir}.`);
+     (0, log_1.log)(`To automatically configure this project for code signing, run \`yarn expo-updates codesigning:configure --certificate-input-directory=${certificateOutput} --key-input-directory=${keyOutput}\`.`);
+ }
+-exports.generateCodeSigningAsync = generateCodeSigningAsync;
+diff --git a/node_modules/expo-updates/cli/build/syncConfigurationToNativeAsync.js b/node_modules/expo-updates/cli/build/syncConfigurationToNativeAsync.js
+index f5e34e0..827ef24 100644
+--- a/node_modules/expo-updates/cli/build/syncConfigurationToNativeAsync.js
++++ b/node_modules/expo-updates/cli/build/syncConfigurationToNativeAsync.js
+@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+     return (mod && mod.__esModule) ? mod : { "default": mod };
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.syncConfigurationToNativeAsync = void 0;
++exports.syncConfigurationToNativeAsync = syncConfigurationToNativeAsync;
+ const config_1 = require("@expo/config");
+ const config_plugins_1 = require("@expo/config-plugins");
+ const plist_1 = __importDefault(require("@expo/plist"));
+@@ -25,7 +25,6 @@ async function syncConfigurationToNativeAsync(options) {
+             break;
+     }
+ }
+-exports.syncConfigurationToNativeAsync = syncConfigurationToNativeAsync;
+ async function syncConfigurationToNativeAndroidAsync(options) {
+     const { exp } = (0, config_1.getConfig)(options.projectRoot, {
+         isPublicConfig: true,
+diff --git a/node_modules/expo-updates/cli/build/utils/args.js b/node_modules/expo-updates/cli/build/utils/args.js
+index 2671ffb..ed5473f 100644
+--- a/node_modules/expo-updates/cli/build/utils/args.js
++++ b/node_modules/expo-updates/cli/build/utils/args.js
+@@ -26,7 +26,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+     return (mod && mod.__esModule) ? mod : { "default": mod };
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.requireArg = exports.assertArgs = exports.getProjectRoot = void 0;
++exports.getProjectRoot = getProjectRoot;
++exports.assertArgs = assertArgs;
++exports.requireArg = requireArg;
+ // Common utilities for interacting with `args` library.
+ // These functions should be used by every command.
+ const arg_1 = __importDefault(require("arg"));
+@@ -45,7 +47,6 @@ function getProjectRoot(args) {
+     }
+     return projectRoot;
+ }
+-exports.getProjectRoot = getProjectRoot;
+ /**
+  * Parse args and assert unknown options.
+  *
+@@ -66,7 +67,6 @@ function assertArgs(schema, argv) {
+         throw error;
+     }
+ }
+-exports.assertArgs = assertArgs;
+ function requireArg(args, name) {
+     const value = args[name];
+     if (value === undefined || value === null) {
+@@ -74,4 +74,3 @@ function requireArg(args, name) {
+     }
+     return value;
+ }
+-exports.requireArg = requireArg;
+diff --git a/node_modules/expo-updates/cli/build/utils/dir.js b/node_modules/expo-updates/cli/build/utils/dir.js
+index d4ef45d..ed3ae7c 100644
+--- a/node_modules/expo-updates/cli/build/utils/dir.js
++++ b/node_modules/expo-updates/cli/build/utils/dir.js
+@@ -1,8 +1,7 @@
+ "use strict";
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.ensureDirAsync = void 0;
++exports.ensureDirAsync = ensureDirAsync;
+ const fs_1 = require("fs");
+ function ensureDirAsync(path) {
+     return fs_1.promises.mkdir(path, { recursive: true });
+ }
+-exports.ensureDirAsync = ensureDirAsync;
+diff --git a/node_modules/expo-updates/cli/build/utils/errors.js b/node_modules/expo-updates/cli/build/utils/errors.js
+index d652924..e511401 100644
+--- a/node_modules/expo-updates/cli/build/utils/errors.js
++++ b/node_modules/expo-updates/cli/build/utils/errors.js
+@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+     return (mod && mod.__esModule) ? mod : { "default": mod };
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.logCmdError = exports.CommandError = void 0;
++exports.CommandError = void 0;
++exports.logCmdError = logCmdError;
+ const assert_1 = require("assert");
+ const chalk_1 = __importDefault(require("chalk"));
+ const log_1 = require("./log");
+@@ -38,4 +39,3 @@ function logCmdError(error) {
+     const errorDetails = error.stack ? '\n' + chalk_1.default.gray(error.stack) : '';
+     (0, log_1.exit)(chalk_1.default.red(error.toString()) + errorDetails);
+ }
+-exports.logCmdError = logCmdError;
+diff --git a/node_modules/expo-updates/cli/build/utils/log.js b/node_modules/expo-updates/cli/build/utils/log.js
+index daeee89..ac9c8cb 100644
+--- a/node_modules/expo-updates/cli/build/utils/log.js
++++ b/node_modules/expo-updates/cli/build/utils/log.js
+@@ -3,38 +3,38 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+     return (mod && mod.__esModule) ? mod : { "default": mod };
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.exit = exports.clear = exports.log = exports.warn = exports.exception = exports.error = exports.timeEnd = exports.time = void 0;
++exports.time = time;
++exports.timeEnd = timeEnd;
++exports.error = error;
++exports.exception = exception;
++exports.warn = warn;
++exports.log = log;
++exports.clear = clear;
++exports.exit = exit;
+ const chalk_1 = __importDefault(require("chalk"));
+ function time(label) {
+     console.time(label);
+ }
+-exports.time = time;
+ function timeEnd(label) {
+     console.timeEnd(label);
+ }
+-exports.timeEnd = timeEnd;
+ function error(...message) {
+     console.error(...message);
+ }
+-exports.error = error;
+ /** Print an error and provide additional info (the stack trace) in debug mode. */
+ function exception(e) {
+     error(chalk_1.default.red(e.toString()) + (process.env.EXPO_DEBUG ? '\n' + chalk_1.default.gray(e.stack) : ''));
+ }
+-exports.exception = exception;
+ function warn(...message) {
+     console.warn(...message.map((value) => chalk_1.default.yellow(value)));
+ }
+-exports.warn = warn;
+ function log(...message) {
+     console.log(...message);
+ }
+-exports.log = log;
+ /** Clear the terminal of all text. */
+ function clear() {
+     process.stdout.write(process.platform === 'win32' ? '\x1B[2J\x1B[0f' : '\x1B[2J\x1B[3J\x1B[H');
+ }
+-exports.clear = clear;
+ /** Log a message and exit the current process. If the `code` is non-zero then `console.error` will be used instead of `console.log`. */
+ function exit(message, code = 1) {
+     if (message instanceof Error) {
+@@ -51,4 +51,3 @@ function exit(message, code = 1) {
+     }
+     process.exit(code);
+ }
+-exports.exit = exit;
+diff --git a/node_modules/expo-updates/cli/build/utils/modifyConfigAsync.js b/node_modules/expo-updates/cli/build/utils/modifyConfigAsync.js
+index caa824f..bca3726 100644
+--- a/node_modules/expo-updates/cli/build/utils/modifyConfigAsync.js
++++ b/node_modules/expo-updates/cli/build/utils/modifyConfigAsync.js
+@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
+     return (mod && mod.__esModule) ? mod : { "default": mod };
+ };
+ Object.defineProperty(exports, "__esModule", { value: true });
+-exports.attemptModification = void 0;
++exports.attemptModification = attemptModification;
+ const config_1 = require("@expo/config");
+ const chalk_1 = __importDefault(require("chalk"));
+ const Log = __importStar(require("./log"));
+@@ -42,7 +42,6 @@ async function attemptModification(projectRoot, edits, exactEdits) {
+         warnAboutConfigAndThrow(modification.type, modification.message, exactEdits);
+     }
+ }
+-exports.attemptModification = attemptModification;
+ function logNoConfig() {
+     Log.log(chalk_1.default.yellow(`No Expo config was found. Please create an Expo config (${chalk_1.default.bold `app.json`} or ${chalk_1.default.bold `app.config.js`}) in your project root.`));
+ }
+diff --git a/node_modules/expo-updates/cli/tsconfig.tsbuildinfo b/node_modules/expo-updates/cli/tsconfig.tsbuildinfo
+new file mode 100644
+index 0000000..173feeb
+--- /dev/null
++++ b/node_modules/expo-updates/cli/tsconfig.tsbuildinfo
+@@ -0,0 +1 @@
++{"root":["./src/assetsverify.ts","./src/assetsverifyasync.ts","./src/assetsverifytypes.ts","./src/cli.ts","./src/configurecodesigning.ts","./src/configurecodesigningasync.ts","./src/generatecodesigning.ts","./src/generatecodesigningasync.ts","./src/generatefingerprint.ts","./src/resolveruntimeversion.ts","./src/syncconfigurationtonative.ts","./src/syncconfigurationtonativeasync.ts","./src/utils/args.ts","./src/utils/dir.ts","./src/utils/errors.ts","./src/utils/log.ts","./src/utils/modifyconfigasync.ts"],"errors":true,"version":"5.6.2"}
+\ No newline at end of file
+diff --git a/node_modules/expo-updates/ios/EXUpdates/AppController.swift b/node_modules/expo-updates/ios/EXUpdates/AppController.swift
+index 3409926..006b6ff 100644
+--- a/node_modules/expo-updates/ios/EXUpdates/AppController.swift
++++ b/node_modules/expo-updates/ios/EXUpdates/AppController.swift
+@@ -102,10 +102,12 @@ public protocol InternalAppControllerInterface: AppControllerInterface {
+     error errorBlockArg: @escaping (_ error: Exception) -> Void
+   )
+   func checkForUpdate(
++    channel: String?,
+     success successBlockArg: @escaping (_ checkForUpdateResult: CheckForUpdateResult) -> Void,
+     error errorBlockArg: @escaping (_ error: Exception) -> Void
+   )
+   func fetchUpdate(
++    channel: String?,
+     success successBlockArg: @escaping (_ fetchUpdateResult: FetchUpdateResult) -> Void,
+     error errorBlockArg: @escaping (_ error: Exception) -> Void
+   )
+diff --git a/node_modules/expo-updates/ios/EXUpdates/DevLauncherAppController.swift b/node_modules/expo-updates/ios/EXUpdates/DevLauncherAppController.swift
+index 5a511c8..295dae5 100644
+--- a/node_modules/expo-updates/ios/EXUpdates/DevLauncherAppController.swift
++++ b/node_modules/expo-updates/ios/EXUpdates/DevLauncherAppController.swift
+@@ -331,11 +331,11 @@ public final class DevLauncherAppController: NSObject, InternalAppControllerInte
+     }
+   }
+ 
+-  public func checkForUpdate(success successBlockArg: @escaping (CheckForUpdateResult) -> Void, error errorBlockArg: @escaping (ExpoModulesCore.Exception) -> Void) {
++  public func checkForUpdate(channel: String?, success successBlockArg: @escaping (CheckForUpdateResult) -> Void, error errorBlockArg: @escaping (ExpoModulesCore.Exception) -> Void) {
+     errorBlockArg(NotAvailableInDevClientException("Updates.checkForUpdateAsync()"))
+   }
+ 
+-  public func fetchUpdate(success successBlockArg: @escaping (FetchUpdateResult) -> Void, error errorBlockArg: @escaping (ExpoModulesCore.Exception) -> Void) {
++  public func fetchUpdate(channel: String?, success successBlockArg: @escaping (FetchUpdateResult) -> Void, error errorBlockArg: @escaping (ExpoModulesCore.Exception) -> Void) {
+     errorBlockArg(NotAvailableInDevClientException("Updates.fetchUpdateAsync()"))
+   }
+ 
+diff --git a/node_modules/expo-updates/ios/EXUpdates/DisabledAppController.swift b/node_modules/expo-updates/ios/EXUpdates/DisabledAppController.swift
+index f31a376..b797559 100644
+--- a/node_modules/expo-updates/ios/EXUpdates/DisabledAppController.swift
++++ b/node_modules/expo-updates/ios/EXUpdates/DisabledAppController.swift
+@@ -88,6 +88,7 @@ public class DisabledAppController: InternalAppControllerInterface {
+   }
+ 
+   public func checkForUpdate(
++    channel: String?,
+     success successBlockArg: @escaping (CheckForUpdateResult) -> Void,
+     error errorBlockArg: @escaping (ExpoModulesCore.Exception) -> Void
+   ) {
+@@ -95,6 +96,7 @@ public class DisabledAppController: InternalAppControllerInterface {
+   }
+ 
+   public func fetchUpdate(
++    channel: String?,
+     success successBlockArg: @escaping (FetchUpdateResult) -> Void,
+     error errorBlockArg: @escaping (ExpoModulesCore.Exception) -> Void
+   ) {
+diff --git a/node_modules/expo-updates/ios/EXUpdates/EnabledAppController.swift b/node_modules/expo-updates/ios/EXUpdates/EnabledAppController.swift
+index 125b4ca..a707567 100644
+--- a/node_modules/expo-updates/ios/EXUpdates/EnabledAppController.swift
++++ b/node_modules/expo-updates/ios/EXUpdates/EnabledAppController.swift
+@@ -252,12 +252,33 @@ public class EnabledAppController: UpdatesStateChangeDelegate, InternalAppContro
+   }
+ 
+   public func checkForUpdate(
++    channel: String?,
+     success successBlockArg: @escaping (_ checkForUpdateResult: CheckForUpdateResult) -> Void,
+     error errorBlockArg: @escaping (_ error: Exception) -> Void
+   ) {
++    var updatesConfiguration = self.config
++
++    if let channel = channel {
++      // Allow to override the channel name in the request headers, used for minds preview app
++      var mutableRequestHeaders = updatesConfiguration.requestHeaders
++      mutableRequestHeaders["expo-channel-name"] = channel
++      updatesConfiguration = UpdatesConfig(
++        scopeKey: updatesConfiguration.scopeKey,
++        updateUrl: updatesConfiguration.updateUrl,
++        requestHeaders: mutableRequestHeaders,
++        launchWaitMs: updatesConfiguration.launchWaitMs,
++        checkOnLaunch: updatesConfiguration.checkOnLaunch,
++        codeSigningConfiguration: updatesConfiguration.codeSigningConfiguration,
++        runtimeVersion: updatesConfiguration.runtimeVersion,
++        hasEmbeddedUpdate: updatesConfiguration.hasEmbeddedUpdate,
++        enableExpoUpdatesProtocolV0CompatibilityMode: updatesConfiguration.enableExpoUpdatesProtocolV0CompatibilityMode
++      )
++    }
++
++    // Use updatesConfiguration instead of self.config for the rest of the method
+     let procedure = CheckForUpdateProcedure(
+       database: self.database,
+-      config: self.config,
++      config: updatesConfiguration,
+       selectionPolicy: self.selectionPolicy,
+       logger: self.logger
+     ) {
+@@ -271,12 +292,33 @@ public class EnabledAppController: UpdatesStateChangeDelegate, InternalAppContro
+   }
+ 
+   public func fetchUpdate(
++    channel: String?,
+     success successBlockArg: @escaping (_ fetchUpdateResult: FetchUpdateResult) -> Void,
+     error errorBlockArg: @escaping (_ error: Exception) -> Void
+   ) {
++    var updatesConfiguration = self.config
++
++    if let channel = channel {
++      // Allow to override the channel name in the request headers, used for minds preview app
++      var mutableRequestHeaders = updatesConfiguration.requestHeaders
++      mutableRequestHeaders["expo-channel-name"] = channel
++      updatesConfiguration = UpdatesConfig(
++        scopeKey: updatesConfiguration.scopeKey,
++        updateUrl: updatesConfiguration.updateUrl,
++        requestHeaders: mutableRequestHeaders,
++        launchWaitMs: updatesConfiguration.launchWaitMs,
++        checkOnLaunch: updatesConfiguration.checkOnLaunch,
++        codeSigningConfiguration: updatesConfiguration.codeSigningConfiguration,
++        runtimeVersion: updatesConfiguration.runtimeVersion,
++        hasEmbeddedUpdate: updatesConfiguration.hasEmbeddedUpdate,
++        enableExpoUpdatesProtocolV0CompatibilityMode: updatesConfiguration.enableExpoUpdatesProtocolV0CompatibilityMode
++      )
++    }
++
++    // Use updatesConfiguration instead of self.config for the rest of the method
+     let procedure = FetchUpdateProcedure(
+       database: self.database,
+-      config: self.config,
++      config: updatesConfiguration,
+       selectionPolicy: self.selectionPolicy,
+       controllerQueue: self.controllerQueue,
+       updatesDirectory: self.updatesDirectoryInternal,
+diff --git a/node_modules/expo-updates/ios/EXUpdates/UpdatesModule.swift b/node_modules/expo-updates/ios/EXUpdates/UpdatesModule.swift
+index 7d8c621..d35d831 100644
+--- a/node_modules/expo-updates/ios/EXUpdates/UpdatesModule.swift
++++ b/node_modules/expo-updates/ios/EXUpdates/UpdatesModule.swift
+@@ -85,8 +85,8 @@ public final class UpdatesModule: Module {
+       }
+     }
+ 
+-    AsyncFunction("checkForUpdateAsync") { (promise: Promise) in
+-      AppController.sharedInstance.checkForUpdate { checkForUpdateResult in
++    AsyncFunction("checkForUpdateAsync") { (channel: String?, promise: Promise) in
++     AppController.sharedInstance.checkForUpdate(channel: channel) { checkForUpdateResult in
+         switch checkForUpdateResult {
+         case .noUpdateAvailable(let reason):
+           promise.resolve([
+@@ -152,8 +152,8 @@ public final class UpdatesModule: Module {
+       }
+     }
+ 
+-    AsyncFunction("fetchUpdateAsync") { (promise: Promise) in
+-      AppController.sharedInstance.fetchUpdate { fetchUpdateResult in
++   AsyncFunction("fetchUpdateAsync") { (channel: String?, promise: Promise) in
++      AppController.sharedInstance.fetchUpdate(channel: channel) { fetchUpdateResult in
+         switch fetchUpdateResult {
+         case .success(let manifest):
+           promise.resolve([
+diff --git a/node_modules/expo-updates/plugin/tsconfig.tsbuildinfo b/node_modules/expo-updates/plugin/tsconfig.tsbuildinfo
+new file mode 100644
+index 0000000..18de100
+--- /dev/null
++++ b/node_modules/expo-updates/plugin/tsconfig.tsbuildinfo
+@@ -0,0 +1 @@
++{"root":["./src/withupdates.ts"],"version":"5.6.2"}
+\ No newline at end of file
+diff --git a/node_modules/expo-updates/src/ExpoUpdatesModule.types.ts b/node_modules/expo-updates/src/ExpoUpdatesModule.types.ts
+index 3bc18d1..8457d9b 100644
+--- a/node_modules/expo-updates/src/ExpoUpdatesModule.types.ts
++++ b/node_modules/expo-updates/src/ExpoUpdatesModule.types.ts
+@@ -45,7 +45,7 @@ export interface ExpoUpdatesModule
+   localAssets?: Record<string, string>;
+ 
+   reload: () => Promise<void>;
+-  checkForUpdateAsync: () => Promise<
++  checkForUpdateAsync: (channel?: string) => Promise<
+     | UpdateCheckResultRollBack
+     | (Omit<UpdateCheckResultAvailable, 'manifest'> &
+         ({ manifestString: string } | { manifest: Manifest }))
+@@ -55,7 +55,7 @@ export interface ExpoUpdatesModule
+   setExtraParamAsync: (key: string, value: string | null) => Promise<void>;
+   readLogEntriesAsync: (maxAge: number) => Promise<UpdatesLogEntry[]>;
+   clearLogEntriesAsync: () => Promise<void>;
+-  fetchUpdateAsync: () => Promise<
++  fetchUpdateAsync: (channel?: string) => Promise<
+     | (Omit<UpdateFetchResultSuccess, 'manifest'> &
+         ({ manifestString: string } | { manifest: Manifest }))
+     | UpdateFetchResultFailure
+diff --git a/node_modules/expo-updates/src/Updates.ts b/node_modules/expo-updates/src/Updates.ts
+index 5d6be29..fd01491 100644
+--- a/node_modules/expo-updates/src/Updates.ts
++++ b/node_modules/expo-updates/src/Updates.ts
+@@ -189,7 +189,7 @@ export async function reloadAsync(): Promise<void> {
+  * The promise rejects in Expo Go or if the app is in development mode, or if there is an unexpected error or
+  * timeout communicating with the server. It also rejects when `expo-updates` is not enabled.
+  */
+-export async function checkForUpdateAsync(): Promise<UpdateCheckResult> {
++export async function checkForUpdateAsync(channel?: string): Promise<UpdateCheckResult> {
+   if (
+     (__DEV__ || isUsingDeveloperTool) &&
+     !shouldDeferToNativeForAPIMethodAvailabilityInDevelopment
+@@ -200,7 +200,7 @@ export async function checkForUpdateAsync(): Promise<UpdateCheckResult> {
+     );
+   }
+ 
+-  const result = await ExpoUpdates.checkForUpdateAsync();
++  const result = await ExpoUpdates.checkForUpdateAsync(channel);
+   if ('manifestString' in result) {
+     const { manifestString, ...rest } = result;
+     return {
+@@ -276,7 +276,7 @@ export async function clearLogEntriesAsync(): Promise<void> {
+  * The promise rejects in Expo Go or if the app is in development mode, or if there is an unexpected error or
+  * timeout communicating with the server. It also rejects when `expo-updates` is not enabled.
+  */
+-export async function fetchUpdateAsync(): Promise<UpdateFetchResult> {
++export async function fetchUpdateAsync(channel?: string): Promise<UpdateFetchResult> {
+   if (
+     (__DEV__ || isUsingDeveloperTool) &&
+     !shouldDeferToNativeForAPIMethodAvailabilityInDevelopment
+@@ -287,7 +287,7 @@ export async function fetchUpdateAsync(): Promise<UpdateFetchResult> {
+     );
+   }
+ 
+-  const result = await ExpoUpdates.fetchUpdateAsync();
++  const result = await ExpoUpdates.fetchUpdateAsync(channel);
+   if ('manifestString' in result) {
+     const { manifestString, ...rest } = result;
+     return {

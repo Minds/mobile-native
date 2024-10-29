@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
 import { View } from 'react-native';
 import { H3, H4 } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { styles as headerStyles } from '~/topbar/Topbar';
+import sp from '~/services/serviceProvider';
 
 interface NewsfeedHeaderProps {
   title?: string;
@@ -41,7 +42,7 @@ const NewsfeedHeader = ({
   );
 };
 
-const containerStyle = ThemedStyles.combine(
+const containerStyle = sp.styles.combine(
   {
     paddingVertical: 16,
   },
@@ -52,7 +53,7 @@ const containerStyle = ThemedStyles.combine(
   'bcolorTertiaryBackground',
   'alignSelfCenterMaxWidth',
 );
-const containerSmallStyle = ThemedStyles.combine(
+const containerSmallStyle = sp.styles.combine(
   {
     paddingVertical: 12,
   },

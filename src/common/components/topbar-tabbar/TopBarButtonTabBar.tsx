@@ -7,8 +7,9 @@ import {
   ViewStyle,
   ScrollView,
 } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import TabBarButtonTabBarItem from './TopBarButtonTabBarItem';
+import sp from '~/services/serviceProvider';
 
 export type ButtonTabType<T> = {
   id: T;
@@ -35,7 +36,7 @@ export const topBarButtonTabBarRef = React.createRef<ScrollView>();
  * Tab bar
  */
 function TopBarButtonTabBar<T>(props: PropsType<T>) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   return (
     <View style={[theme.rowJustifyStart, theme.bgPrimaryBackground]}>

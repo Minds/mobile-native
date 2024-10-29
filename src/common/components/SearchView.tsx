@@ -7,10 +7,10 @@ import {
   ViewStyle,
   View,
 } from 'react-native';
-
 import Icon from '@expo/vector-icons/Ionicons';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import TextInput from './TextInput';
+import sp from '~/services/serviceProvider';
 
 type IconName = React.ComponentProps<typeof Icon>['name'];
 
@@ -60,10 +60,10 @@ export default class SearchView extends PureComponent<Props> {
             onFocus={this.props.onFocus}
             onBlur={this.props.onBlur}
             selectTextOnFocus={true}
-            placeholderTextColor={ThemedStyles.getColor('SecondaryText')}
+            placeholderTextColor={sp.styles.getColor('SecondaryText')}
             {...attributes}
             underlineColorAndroid={'transparent'}
-            style={[styles.input, ThemedStyles.style.colorPrimaryText]}
+            style={[styles.input, sp.styles.style.colorPrimaryText]}
             testID="MessengerContactText"
           />
         }
@@ -86,7 +86,7 @@ export default class SearchView extends PureComponent<Props> {
               <Icon
                 size={18}
                 name={iconRight}
-                style={ThemedStyles.style.colorSecondaryText}
+                style={sp.styles.style.colorSecondaryText}
               />
             </TouchableOpacity>
           );
@@ -100,7 +100,7 @@ export default class SearchView extends PureComponent<Props> {
   }
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     'bgSecondaryBackground',
     {
@@ -145,4 +145,4 @@ const styles = ThemedStyles.create({
   },
 });
 
-const iconStyle = ThemedStyles.combine(styles.icon, 'colorIcon');
+const iconStyle = sp.styles.combine(styles.icon, 'colorIcon');

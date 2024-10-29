@@ -1,13 +1,19 @@
 import { waitFor } from '@testing-library/react-native';
-import AuthService from '../../auth/AuthService';
-import { SessionService } from './session.service';
+import { SessionService } from '~/common/services/session.service';
+import * as configConstants from '../../config/Config';
+import CookieManager from '@react-native-cookies/cookies';
+import { AnalyticsService } from './analytics.service';
 import {
   AuthType,
   SessionStorageService,
 } from './storage/session.storage.service';
-import * as configConstants from '../../config/Config';
-import analyticsService from './analytics.service';
-import CookieManager from '@react-native-cookies/cookies';
+import { Storages } from './storage/storages.service';
+import { LogService } from './log.service';
+import { SettingsService } from '~/settings/SettingsService';
+import { AuthService } from '~/auth/AuthService';
+import sp from '~/services/serviceProvider';
+import { ApiService } from './api.service';
+import { Lifetime } from '~/services/injectionContainer';
 
 // Mock external services and modules
 jest.mock('../../../AppStores', () => ({
@@ -24,6 +30,21 @@ jest.mock('../../../AppStores', () => ({
 jest.mock('../../auth/AuthService');
 jest.mock('./storage/session.storage.service');
 jest.mock('./analytics.service');
+jest.mock('./api.service');
+jest.mock('~/settings/SettingsService');
+jest.mock('./log.service');
+// @ts-ignore
+sp.register('apiNoActiveSession', () => new ApiService(), Lifetime.Singleton);
+// @ts-ignore
+const analyticsService = new AnalyticsService();
+
+const storages = new Storages();
+const log = new LogService();
+// @ts-ignore
+const settings = new SettingsService();
+// @ts-ignore
+const auth = new AuthService() as jest.Mocked<AuthService>;
+
 const mockedAnalyticsService = analyticsService as jest.Mocked<
   typeof analyticsService
 >;
@@ -55,8 +76,16 @@ describe('SessionService init', () => {
   let sessionStorageMock;
 
   beforeEach(() => {
+    // @ts-ignore
     sessionStorageMock = new SessionStorageService();
-    sessionService = new SessionService(sessionStorageMock);
+    sessionService = new SessionService(
+      sessionStorageMock,
+      analyticsService,
+      storages,
+      log,
+      settings,
+      auth,
+    );
   });
 
   it('init should handle no active sessions', async () => {
@@ -106,9 +135,17 @@ describe('SessionService initialization and token management', () => {
   let sessionStorageMock;
 
   beforeEach(() => {
+    // @ts-ignore
     sessionStorageMock = new SessionStorageService();
-    sessionService = new SessionService(sessionStorageMock);
-    AuthService.refreshToken = jest.fn().mockClear();
+    sessionService = new SessionService(
+      sessionStorageMock,
+      analyticsService,
+      storages,
+      log,
+      settings,
+      auth,
+    );
+    auth.refreshToken.mockClear();
     sessionService.activeIndex = 0;
   });
 
@@ -125,7 +162,8 @@ describe('SessionService initialization and token management', () => {
   it('should handle token refresh successfully', async () => {
     sessionService.setRefreshToken('valid_refresh_token');
     sessionService.refreshTokenExpires = Date.now() / 1000 + 5000; // Future expiration
-    AuthService.refreshToken = jest.fn().mockResolvedValue({
+    // @ts-ignore
+    auth.refreshToken.mockResolvedValue({
       access_token: 'new_access_token.MTIzNA==',
       refresh_token: 'new_refresh_token',
     });
@@ -134,7 +172,7 @@ describe('SessionService initialization and token management', () => {
 
     expect(sessionService.token).toBe('new_access_token.MTIzNA==');
     expect(sessionService.refreshToken).toBe('new_refresh_token');
-    expect(AuthService.refreshToken).toHaveBeenCalled();
+    expect(auth.refreshToken).toHaveBeenCalled();
   });
 
   it('should not refresh token if it cannot refresh', async () => {
@@ -152,8 +190,16 @@ describe('SessionService session management', () => {
   let sessionStorageMock;
 
   beforeEach(() => {
+    // @ts-ignore
     sessionStorageMock = new SessionStorageService();
-    sessionService = new SessionService(sessionStorageMock);
+    sessionService = new SessionService(
+      sessionStorageMock,
+      analyticsService,
+      storages,
+      log,
+      settings,
+      auth,
+    );
   });
 
   it('should add a new session successfully', async () => {
@@ -183,7 +229,8 @@ describe('SessionService session management', () => {
       refresh_token: 'refresh',
       pseudo_id: 'pseudoId',
     };
-    AuthService.refreshToken = jest.fn().mockResolvedValue(tokens);
+    // @ts-ignore
+    auth.refreshToken.mockResolvedValue(tokens);
     await sessionService.addOAuthSession(tokens);
 
     await waitFor(async () => {
@@ -242,8 +289,16 @@ describe('SessionService user and session information', () => {
   let sessionService;
 
   beforeEach(() => {
+    // @ts-ignore
     const sessionStorageMock = new SessionStorageService();
-    sessionService = new SessionService(sessionStorageMock);
+    sessionService = new SessionService(
+      sessionStorageMock,
+      analyticsService,
+      storages,
+      log,
+      settings,
+      auth,
+    );
     // Mock sessions setup
     sessionService.sessions = [
       {
@@ -279,8 +334,16 @@ describe('SessionService with AuthType.Cookie', () => {
   let sessionStorageMock;
 
   beforeEach(() => {
+    // @ts-ignore
     sessionStorageMock = new SessionStorageService();
-    sessionService = new SessionService(sessionStorageMock);
+    sessionService = new SessionService(
+      sessionStorageMock,
+      analyticsService,
+      storages,
+      log,
+      settings,
+      auth,
+    );
   });
 
   it('should replace ALL sessions when adding a cookie session', async () => {

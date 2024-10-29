@@ -1,7 +1,7 @@
 import { observable, decorate, action, runInAction } from 'mobx';
-import BaseModel from '../common/BaseModel';
-import { GOOGLE_PLAY_STORE, MINDS_CDN_URI } from '../config/Config';
-import groupsService from './GroupsService';
+import BaseModel from '~/common/BaseModel';
+import { GOOGLE_PLAY_STORE, MINDS_CDN_URI } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 export enum GroupAccessType {
   PRIVATE = 0,
@@ -34,7 +34,7 @@ export default class GroupModel extends BaseModel {
   @action
   toggleShowBoosts(enabled: boolean) {
     this.show_boosts = enabled ? 1 : 0;
-    groupsService.toggleShowBoosts(this.guid, this.show_boosts);
+    sp.resolve('groups').toggleShowBoosts(this.guid, this.show_boosts);
   }
 
   @action
@@ -50,12 +50,12 @@ export default class GroupModel extends BaseModel {
       this['is:awaiting'] = true;
     }
     try {
-      await groupsService.join(this.guid);
+      await sp.resolve('groups').join(this.guid);
       if (this.isPublic) {
         GroupModel.events.emit('joinedGroup', this);
       } else {
         // we need to reftech the group to know the state, since we don't know if the user was invited
-        const group = await groupsService.loadEntity(this.guid);
+        const group = await sp.resolve('groups').loadEntity(this.guid);
         this.update(group);
       }
     } catch (error) {
@@ -74,7 +74,7 @@ export default class GroupModel extends BaseModel {
   async leave() {
     this['is:member'] = false;
     try {
-      await groupsService.leave(this.guid);
+      await sp.resolve('groups').leave(this.guid);
       GroupModel.events.emit('leavedGroup', this);
     } catch (error) {
       runInAction(() => (this['is:member'] = true));
@@ -85,7 +85,7 @@ export default class GroupModel extends BaseModel {
     this['is:member'] = true;
     this['is:invited'] = false;
     try {
-      await groupsService.acceptInvitation(this.guid);
+      await sp.resolve('groups').acceptInvitation(this.guid);
       GroupModel.events.emit('joinedGroup', this);
     } catch (error) {
       runInAction(() => {
@@ -98,7 +98,7 @@ export default class GroupModel extends BaseModel {
   async declineInvitation() {
     this['is:invited'] = false;
     try {
-      await groupsService.declineInvitation(this.guid);
+      await sp.resolve('groups').declineInvitation(this.guid);
     } catch (error) {
       runInAction(() => {
         this['is:invited'] = true;
@@ -109,7 +109,7 @@ export default class GroupModel extends BaseModel {
   async cancelRequest() {
     this['is:awaiting'] = false;
     try {
-      await groupsService.cancelRequest(this.guid);
+      await sp.resolve('groups').cancelRequest(this.guid);
     } catch (error) {
       runInAction(() => {
         this['is:awaiting'] = true;

@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import CenteredLoading from '../../common/components/CenteredLoading';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import FindInDiscoveryButton from './FindInDiscoveryButton';
 import { observer } from 'mobx-react';
 import { SearchResultStoreType } from './createSearchResultStore';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   localStore: SearchResultStoreType;
@@ -26,8 +27,8 @@ const SuggestedSearch = observer(({ localStore, renderUser }: PropsType) => {
     return (
       <ScrollView
         keyboardShouldPersistTaps="handled"
-        style={ThemedStyles.style.flexContainer}
-        contentContainerStyle={ThemedStyles.style.paddingVertical3x}>
+        style={sp.styles.style.flexContainer}
+        contentContainerStyle={sp.styles.style.paddingVertical3x}>
         <FindInDiscoveryButton localStore={localStore} />
         {localStore.suggested.map(renderUser)}
       </ScrollView>

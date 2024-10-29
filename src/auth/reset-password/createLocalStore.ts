@@ -1,11 +1,7 @@
-import NavigationService from '~/navigation/NavigationService';
 import { showNotification } from '../../../AppMessages';
-import delay from '../../common/helpers/delay';
-import validatePassword from '../../common/helpers/validatePassword';
-import apiService from '../../common/services/api.service';
-import i18n from '../../common/services/i18n.service';
-import logService from '../../common/services/log.service';
-import AuthService from '../AuthService';
+import delay from '~/common/helpers/delay';
+import validatePassword from '~/common/helpers/validatePassword';
+import sp from '~/services/serviceProvider';
 
 type StepsType = 'inputUser' | 'emailSended' | 'inputPassword';
 
@@ -45,7 +41,7 @@ const createLocalStore = () => ({
     this.sent = Date.now();
   },
   get title() {
-    return i18n.t(
+    return sp.i18n.t(
       `auth.${
         this.currentStep !== 'inputPassword'
           ? 'resetPassword'
@@ -67,7 +63,7 @@ const createLocalStore = () => ({
     if (this.canSendAgain) {
       this.setSending(true);
       try {
-        await AuthService.forgot(this.username);
+        await sp.resolve('auth').forgot(this.username);
         this.setSent();
         if (this.currentStep === 'inputUser') {
           this.navToEmailSended();
@@ -75,32 +71,32 @@ const createLocalStore = () => ({
       } catch (err: any) {
         const message =
           (typeof err === 'object' && err !== null && err.message) ||
-          i18n.t('messenger.errorDirectMessage');
+          sp.i18n.t('messenger.errorDirectMessage');
         if (
           message === 'You have exceed the rate limit. Please try again later.'
         ) {
           this.rateLimited = true;
-          showError(i18n.t('auth.rateLimit'));
-          NavigationService.goBack();
+          showError(sp.i18n.t('auth.rateLimit'));
+          sp.navigation.goBack();
           return;
         }
         showError(message);
-        logService.exception('[ForgotPassword]', err);
+        sp.log.exception('[ForgotPassword]', err);
       } finally {
         this.setSending(false);
       }
     } else {
-      showError(i18n.t('auth.waitMoment'));
+      showError(sp.i18n.t('auth.waitMoment'));
     }
   },
   async resetPassword() {
     if (!this.username || !this.code) {
-      showError(i18n.t('errorMessage'));
+      showError(sp.i18n.t('errorMessage'));
       return false;
     }
 
     if (!validatePassword(this.password).all) {
-      showError(i18n.t('auth.invalidPassword'));
+      showError(sp.i18n.t('auth.invalidPassword'));
       return false;
     }
 
@@ -108,11 +104,9 @@ const createLocalStore = () => ({
       this.setSending(true);
       let success = false;
       try {
-        const data = await AuthService.reset(
-          this.username,
-          this.password,
-          this.code,
-        );
+        const data = await sp
+          .resolve('auth')
+          .reset(this.username, this.password, this.code);
         if (data.status === 'success') {
           this.setSent();
           success = true;
@@ -124,9 +118,9 @@ const createLocalStore = () => ({
         if (err.message) {
           showError(err.message);
         } else {
-          showError(i18n.t('errorMessage'));
+          showError(sp.i18n.t('errorMessage'));
         }
-        logService.exception('[ResetPassword]', err);
+        sp.log.exception('[ResetPassword]', err);
       } finally {
         this.setSending(false);
         if (success) {
@@ -137,13 +131,12 @@ const createLocalStore = () => ({
           const response = {
             success,
             login: async () => {
-              showNotification(i18n.t('auth.waitLogin'), 'info', 3000);
-
+              showNotification(sp.i18n.t('auth.waitLogin'), 'info', 3000);
               await delay(150);
               // clear the cookies (fix future issues with calls)
-              await apiService.clearCookies();
+              await sp.api.clearCookies();
               await delay(300);
-              AuthService.login(username, password);
+              sp.resolve('auth').login(username, password);
             },
           };
           return response;

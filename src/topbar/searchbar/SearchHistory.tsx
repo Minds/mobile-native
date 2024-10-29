@@ -1,11 +1,11 @@
 import React from 'react';
-import ThemedStyles from '../../styles/ThemedStyles';
 import { View, ScrollView } from 'react-native';
-import i18n from '../../common/services/i18n.service';
-import { useLegacyStores } from '../../common/hooks/use-stores';
 import { useKeyboard } from '@react-native-community/hooks';
+
+import { useLegacyStores } from '~/common/hooks/use-stores';
 import { SearchResultStoreType } from './createSearchResultStore';
-import MText from '../../common/components/MText';
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   localStore: SearchResultStoreType;
@@ -13,7 +13,7 @@ type PropsType = {
 };
 
 const SearchHistory = ({ localStore, renderItem }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const titleStyle = [
     theme.subTitleText,
     theme.colorSecondaryText,
@@ -31,6 +31,8 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
   const scrollHeight = {
     height: keyboard.keyboardShown ? keyboard.keyboardHeight : '90%',
   };
+
+  const i18n = sp.i18n;
 
   return (
     <ScrollView
@@ -64,7 +66,7 @@ const SearchHistory = ({ localStore, renderItem }: PropsType) => {
 
 export default SearchHistory;
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',

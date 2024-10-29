@@ -1,7 +1,7 @@
 import { RouteProp } from '@react-navigation/core';
 import React from 'react';
 import { RootStackParamList } from '../../navigation/NavigationTypes';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { ModalFullScreen } from '../ui';
 import { withErrorBoundaryScreen } from '../components/ErrorBoundaryScreen';
 import Markdown from 'react-native-markdown-display';
@@ -9,6 +9,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { useAuxPagesQuery } from '~/graphql/strapi';
 import { APP_URI } from '~/config/Config';
 import CenteredLoading from '../components/CenteredLoading';
+import sp from '~/services/serviceProvider';
 
 type WebContentScreenRouteProp = RouteProp<RootStackParamList, 'WebContent'>;
 
@@ -46,7 +47,7 @@ function WebContentScreen({ route }: WebContentScreenProps) {
 
 const fixDeepLinks = (url: string) => url.replace(/\]\(\//g, '](mindsapp://');
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   scrollView: ['flexContainer', 'padding3x'],
   body: ['colorPrimaryText', 'fontLM'],
   link: ['link', 'bold'],

@@ -1,14 +1,14 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { View } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import Selector from '../../common/components/SelectorV2';
-import MText from '../../common/components/MText';
+
+import Selector from '~/common/components/SelectorV2';
+import MText from '~/common/components/MText';
 import { Screen } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 
 export default function () {
-  const CS = ThemedStyles.style;
-
+  const CS = sp.styles.style;
+  const i18n = sp.i18n;
   const [language, setLanguage] = useState(i18n.getCurrentLocale());
 
   let selectorRef = useRef<any>(null);
@@ -18,7 +18,7 @@ export default function () {
       setLanguage(value);
       i18n.setLocale(value);
     },
-    [setLanguage],
+    [i18n],
   );
 
   return (

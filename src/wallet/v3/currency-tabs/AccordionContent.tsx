@@ -1,10 +1,11 @@
 import React from 'react';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import { StyleSheet, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import MText from '../../../common/components/MText';
 import { B2, B1, Row as LayoutRow } from '~ui';
+import sp from '~/services/serviceProvider';
 
 export type AccordionContentData = {
   title: string;
@@ -22,7 +23,7 @@ type PropsType = {
 };
 
 export const Container = ({ style = {}, children }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const paddingPointsView = [
     theme.rowJustifyStart,
     theme.paddingLeft4x,
@@ -58,7 +59,7 @@ export const Info = ({ children }) => {
 };
 
 const AccordionContent = ({ data, summary }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   return (
     <View
@@ -81,7 +82,7 @@ const AccordionContent = ({ data, summary }: PropsType) => {
                     containerStyle={theme.borderRadius}
                     width={row.tooltip.width}
                     height={row.tooltip.height}
-                    backgroundColor={ThemedStyles.getColor('Link')}
+                    backgroundColor={sp.styles.getColor('Link')}
                     popover={
                       <MText style={theme.colorWhite}>
                         {row.tooltip.title}

@@ -3,11 +3,12 @@ import {
   noticeMapper,
   NoticeName,
 } from '../components/in-feed-notices/notices';
-import analyticsService from './analytics.service';
-import apiService, { ApiResponse } from './api.service';
-import logService from './log.service';
-import sessionService from './session.service';
-import { storages } from './storage/storages.service';
+import { ApiResponse } from './ApiResponse';
+import type { ApiService } from './api.service';
+import type { SessionService } from './session.service';
+import type { LogService } from './log.service';
+import type { Storages } from './storage/storages.service';
+import type { AnalyticsService } from './analytics.service';
 
 type Notice = {
   key: NoticeName;
@@ -36,11 +37,19 @@ export class InFeedNoticesService {
   @observable dismissed: Dismissed = {};
   loading = false;
 
+  constructor(
+    private session: SessionService,
+    private log: LogService,
+    private storages: Storages,
+    private api: ApiService,
+    private analytics: AnalyticsService,
+  ) {}
+
   init() {
     // We init the service on login
-    sessionService.onLogin(() => this.onLogin());
+    this.session.onLogin(() => this.onLogin());
     // And clear on logout
-    sessionService.onLogout(() => this.clear());
+    this.session.onLogout(() => this.clear());
   }
 
   /**
@@ -87,21 +96,23 @@ export class InFeedNoticesService {
    * Store the notices in local storage
    */
   private storeData(data: Notices) {
-    storages.user?.setArray('IN_FEED_NOTICES_DATA', data);
+    this.storages.user?.setObject('IN_FEED_NOTICES_DATA', data);
   }
 
   /**
    * Load from storage
    */
   private loadStoredData(): Notices | undefined | null {
-    return storages.user?.getArray('IN_FEED_NOTICES_DATA');
+    return this.storages.user?.getObject('IN_FEED_NOTICES_DATA');
   }
 
   /**
    * Load dismissed from storage
    */
   private loadDismissed(): Dismissed | undefined | null {
-    return storages.user?.getMap<Dismissed>('IN_FEED_NOTICES_DISMISSED');
+    return this.storages.user?.getObject<Dismissed>(
+      'IN_FEED_NOTICES_DISMISSED',
+    );
   }
 
   /**
@@ -113,7 +124,7 @@ export class InFeedNoticesService {
     }
     try {
       this.loading = true;
-      const response = await apiService.get<InFeedResponse>(
+      const response = await this.api.get<InFeedResponse>(
         'api/v3/feed-notices',
       );
       if (response.notices) {
@@ -121,7 +132,7 @@ export class InFeedNoticesService {
         this.storeData(response.notices);
       }
     } catch (error) {
-      logService.exception('[InFeedNoticesService]', error);
+      this.log.exception('[InFeedNoticesService]', error);
     } finally {
       this.loading = false;
     }
@@ -181,7 +192,7 @@ export class InFeedNoticesService {
     const currentTop = this.getTopNotice();
     // there is a notice and it is implemented (exists in mapper)
     if (currentTop && noticeMapper[currentTop]) {
-      analyticsService.trackView(`feed-notice-${currentTop}`);
+      this.analytics.trackView(`feed-notice-${currentTop}`);
     }
   }
 
@@ -193,7 +204,7 @@ export class InFeedNoticesService {
 
     // there is a notice and it is implemented (exists in mapper)
     if (notice && noticeMapper[notice]) {
-      analyticsService.trackView(`feed-notice-${notice}`);
+      this.analytics.trackView(`feed-notice-${notice}`);
     }
   }
 
@@ -203,7 +214,7 @@ export class InFeedNoticesService {
   @action
   dismiss(noticeName: NoticeName) {
     this.dismissed[noticeName] = String(Date.now());
-    storages.user?.setMap('IN_FEED_NOTICES_DISMISSED', this.dismissed);
+    this.storages.user?.setObject('IN_FEED_NOTICES_DISMISSED', this.dismissed);
   }
 
   /**
@@ -230,5 +241,3 @@ export class InFeedNoticesService {
     );
   }
 }
-
-export default new InFeedNoticesService();

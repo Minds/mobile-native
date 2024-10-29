@@ -5,10 +5,10 @@ import { Image } from 'expo-image';
 
 import UserModel from '~/channel/UserModel';
 import MText from '~/common/components/MText';
-import i18n from '~/common/services/i18n.service';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { Prospect, ReferralsEntity } from '../ReferralTypes';
 import PingButton from './PingButton';
+import sp from '~/services/serviceProvider';
 
 interface ReferralRowProps {
   referral: ReferralsEntity;
@@ -16,7 +16,7 @@ interface ReferralRowProps {
 }
 
 const ReferralRow = ({ referral, onPress }: ReferralRowProps) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const _getAvatarSource = useCallback((referral: ReferralsEntity) => {
     const user = UserModel.checkOrCreate(referral.prospect);
@@ -45,7 +45,7 @@ const ReferralRow = ({ referral, onPress }: ReferralRowProps) => {
             {`@${referral.prospect.username}`}
           </MText>
           <MText style={[theme.colorTertiaryText, theme.fontS]}>
-            {i18n.t('referrals.signedUpOn')}{' '}
+            {sp.i18n.t('referrals.signedUpOn')}{' '}
             {moment(referral.register_timestamp).format('YYYY/MM/DD')}
           </MText>
         </View>

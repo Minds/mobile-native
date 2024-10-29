@@ -5,8 +5,7 @@ import { observer, useLocalStore } from 'mobx-react';
 import { StackScreenProps } from '@react-navigation/stack';
 
 import MIcon from '@expo/vector-icons/MaterialCommunityIcons';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
+
 import Wrapper from './common/Wrapper';
 import CenteredLoading from '../../../common/components/CenteredLoading';
 import { SupportTiersType } from '../../../wire/WireTypes';
@@ -15,15 +14,16 @@ import MText from '../../../common/components/MText';
 import { PosterStackParamList } from '~/compose/PosterOptions/PosterStackNavigator';
 import { useComposeContext } from '~/compose/useComposeStore';
 import Switch from '~/common/components/controls/Switch';
+import sp from '~/services/serviceProvider';
 
 interface PropsType
   extends FC,
     StackScreenProps<PosterStackParamList, 'CustomMonetize'> {}
 
 const CustomMonetizeScreen = observer(({}: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const store = useComposeContext();
-
+  const i18n = sp.i18n;
   const localStore = useLocalStore(() => ({
     show: false,
     usd: '0',

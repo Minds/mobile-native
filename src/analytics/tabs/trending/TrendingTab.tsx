@@ -5,14 +5,13 @@ import { ScrollView, TouchableOpacity, View } from 'react-native';
 import ActivityIndicator from '../../../common/components/ActivityIndicator';
 import MText from '../../../common/components/MText';
 import useApiFetch from '../../../common/hooks/useApiFetch';
-import i18n from '../../../common/services/i18n.service';
-import ThemedStyles from '../../../styles/ThemedStyles';
 import { Dashboard, Entity } from '../../AnalyticsTypes';
 import { activityIndicatorStyle, errorStyle } from '../dashboard/DashboardTab';
 import { getMaxFeedWidth } from '~/styles/Style';
+import sp from '~/services/serviceProvider';
 
 const TrendingTab = observer(() => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const navigation = useNavigation<any>();
 
   const getEntityRoute = useCallback(
@@ -127,8 +126,8 @@ const TrendingTab = observer(() => {
   if (error || dataError) {
     return (
       <MText style={errorStyle} onPress={onTryAgain}>
-        {i18n.t('error') + '\n'}
-        <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
+        {sp.i18n.t('error') + '\n'}
+        <MText style={theme.colorLink}>{sp.i18n.t('tryAgain')}</MText>
       </MText>
     );
   }
@@ -140,22 +139,22 @@ const TrendingTab = observer(() => {
       <View style={theme.rowJustifySpaceBetween}>
         <View style={styles.firstColumn}>
           <MText style={theme.bold}>
-            {i18n.t('analytics.trending.content')}
+            {sp.i18n.t('analytics.trending.content')}
           </MText>
         </View>
         <View style={styles.columnView}>
           <MText style={styles.text}>
-            {i18n.t('analytics.trending.totalViews')}
+            {sp.i18n.t('analytics.trending.totalViews')}
           </MText>
         </View>
         <View style={styles.columnView}>
           <MText style={styles.text}>
-            {i18n.t('analytics.trending.organic')}
+            {sp.i18n.t('analytics.trending.organic')}
           </MText>
         </View>
         <View style={styles.columnView}>
           <MText style={styles.text}>
-            {i18n.t('analytics.trending.pageViews')}
+            {sp.i18n.t('analytics.trending.pageViews')}
           </MText>
         </View>
       </View>
@@ -195,7 +194,7 @@ const TrendingTab = observer(() => {
 export default TrendingTab;
 
 const width = getMaxFeedWidth();
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   scrollView: ['flexContainer', { width }, 'marginBottom24x'],
   columnView: ['flexColumnCentered', 'paddingRight'],
   columnViewP: ['flexColumnCentered', 'padding'],

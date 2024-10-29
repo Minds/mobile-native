@@ -2,15 +2,14 @@ import React, { useCallback, useMemo } from 'react';
 import times from 'lodash/times';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { observer } from 'mobx-react';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import TopBar from '../TopBar';
-import i18n from '../../common/services/i18n.service';
-import NavigationService from '../../navigation/NavigationService';
 import MText from '../../common/components/MText';
 import { useComposeContext } from '~/compose/useComposeStore';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
 import { showNotification } from 'AppMessages';
 import { IS_FROM_STORE } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 /**
  * Nsfw Option
@@ -42,6 +41,8 @@ const NsfwOption = props => {
 export default observer(function () {
   const store = useComposeContext();
   const length = store.nsfw.length;
+  const i18n = sp.i18n;
+  const navigation = sp.navigation;
   const options = useMemo(
     () =>
       times(7, ((i: 0 | 1 | 2 | 3 | 4 | 5 | 6) => ({
@@ -57,8 +58,8 @@ export default observer(function () {
       <TopBar
         leftText="NSFW"
         rightText={i18n.t('done')}
-        onPressRight={NavigationService.goBack}
-        onPressBack={NavigationService.goBack}
+        onPressRight={() => navigation.goBack()}
+        onPressBack={() => navigation.goBack()}
         backIconName="chevron-left"
         backIconSize="large"
         store={store}
@@ -87,7 +88,7 @@ export default observer(function () {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: ['flexContainer', 'bgPrimaryBackground'],
   optsContainer: {
     marginBottom: 10,

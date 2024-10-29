@@ -1,13 +1,14 @@
 import { Linking, ScrollView } from 'react-native';
 import React from 'react';
 import { H4, ModalFullScreen } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import CenteredLoading from '~/common/components/CenteredLoading';
 import Markdown from 'react-native-markdown-display';
 import { RootStackScreenProps } from '~/navigation/NavigationTypes';
 import { CustomPageType } from '../types';
 import useCustomPage from '../hooks/useCustomPage';
 import { showNotification } from 'AppMessages';
+import sp from '~/services/serviceProvider';
 
 type CustomPageScreenProps = RootStackScreenProps<'CustomPages'>;
 
@@ -60,7 +61,7 @@ export default function CustomPageScreen({
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   scrollView: ['flexContainer', 'padding3x'],
   body: ['colorPrimaryText', 'fontLM'],
   link: ['link', 'bold'],

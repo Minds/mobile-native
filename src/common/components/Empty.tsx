@@ -1,8 +1,8 @@
 import React from 'react';
 import { Image, View } from 'react-native';
-import ThemedStyles from '~/styles/ThemedStyles';
-import i18nService from '../services/i18n.service';
+
 import MText from './MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   title?: string;
@@ -11,7 +11,7 @@ type PropsType = {
 };
 
 export default function Empty({
-  title = i18nService.t('nothingToSee'),
+  title = sp.i18n.t('nothingToSee'),
   subtitle,
   children,
 }: PropsType) {
@@ -28,7 +28,7 @@ export default function Empty({
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   emptyContainer: [
     'centered',
     'paddingTop7x',

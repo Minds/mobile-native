@@ -2,18 +2,19 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
 import { ResetPasswordStore } from './createLocalStore';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '~/common/services/i18n.service';
+
 import InputContainer from '~/common/components/InputContainer';
 import MText from '~/common/components/MText';
 import { Button } from '~/common/ui';
 import { IS_IPAD } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   store: ResetPasswordStore;
 };
 
 const InputUser = observer(({ store }: PropsType) => {
+  const i18n = sp.i18n;
   return (
     <View>
       <MText style={styles.text}>{i18n.t('auth.inputUser')}</MText>
@@ -43,7 +44,7 @@ const InputUser = observer(({ store }: PropsType) => {
 export default InputUser;
 
 export const styles = {
-  text: ThemedStyles.combine(
+  text: sp.styles.combine(
     'fontMedium',
     'fontL',
     'textCenter',
@@ -54,10 +55,10 @@ export const styles = {
       top: -3,
     },
   ),
-  label: ThemedStyles.combine('colorSecondaryText'),
-  inputText: ThemedStyles.combine('colorPrimaryText'),
-  button: ThemedStyles.combine('margin6x', 'marginTop10x'),
-  buttonIpad: ThemedStyles.combine('margin6x', 'marginTop10x', {
+  label: sp.styles.combine('colorSecondaryText'),
+  inputText: sp.styles.combine('colorPrimaryText'),
+  button: sp.styles.combine('margin6x', 'marginTop10x'),
+  buttonIpad: sp.styles.combine('margin6x', 'marginTop10x', {
     width: '45%',
     alignSelf: 'center',
   }),

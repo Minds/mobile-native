@@ -18,15 +18,15 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+import Animated from 'react-native-reanimated';
+
 import useApiFetch from '../hooks/useApiFetch';
-import i18n from '../services/i18n.service';
 import CenteredLoading from './CenteredLoading';
 import ActivityIndicator from './ActivityIndicator';
 import MText from './MText';
 import { IS_IOS } from '../../config/Config';
 import StickyListWrapper from './StickyListWrapper';
-import Animated from 'react-native-reanimated';
+import sp from '~/services/serviceProvider';
 
 export type OffsetListProps<T = any> = {
   header?: React.ReactElement;
@@ -61,7 +61,7 @@ export default observer(
   // TODO: add ref types
   forwardRef(function OffsetList(props: OffsetListProps, ref: any) {
     // =====================| STATES & VARIABLES |=====================>
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const [offset, setOffset] = useState<string | number>(
       props.offsetPagination ? 0 : '',
     );
@@ -218,8 +218,8 @@ export default observer(
             theme.marginVertical4x,
           ]}
           onPress={() => fetchStore.fetch()}>
-          {i18n.t('error') + '\n'}
-          <MText style={theme.colorLink}>{i18n.t('tryAgain')}</MText>
+          {sp.i18n.t('error') + '\n'}
+          <MText style={theme.colorLink}>{sp.i18n.t('tryAgain')}</MText>
         </MText>
       );
     }
@@ -242,8 +242,8 @@ export default observer(
           refreshing={!!fetchStore.refreshing}
           onRefresh={_refresh}
           progressViewOffset={IS_IOS ? 0 : 80}
-          tintColor={ThemedStyles.getColor('Link')}
-          colors={[ThemedStyles.getColor('Link')]}
+          tintColor={sp.styles.getColor('Link')}
+          colors={[sp.styles.getColor('Link')]}
         />
       ),
       onScroll: props.onScroll,
@@ -265,4 +265,4 @@ export default observer(
   }),
 );
 
-const listStyle = ThemedStyles.combine('flexContainer', 'bgPrimaryBackground');
+const listStyle = sp.styles.combine('flexContainer', 'bgPrimaryBackground');

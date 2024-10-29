@@ -1,11 +1,14 @@
-import service from '../../../src/common/services/minds-config.service';
-import api from '../../../src/common/services/api.service';
+import { MindsConfigService } from '~/common/services/minds-config.service';
+import { ApiService } from '~/common/services/api.service';
 
-jest.mock('../../../src/common/services/api.service');
+jest.mock('~/common/services/api.service');
 /**
  * Tests
  */
 describe('Minds service', () => {
+  const api = new ApiService();
+  const service = new MindsConfigService(api);
+
   it('Should get settings', async () => {
     const apiResponse = { settings: { loaded: 10, total: 200 } };
 

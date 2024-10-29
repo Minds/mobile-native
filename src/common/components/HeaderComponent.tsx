@@ -1,11 +1,13 @@
 import React, { FunctionComponent, ReactNode } from 'react';
 import { ImageBackground, View, StyleSheet, Dimensions } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { observer } from 'mobx-react';
 import { ChannelStoreType } from '../../channel/v2/createChannelStore';
 import UserStore from '../../auth/UserStore';
 import type UserModel from '../../channel/UserModel';
 import { Image } from 'expo-image';
+
+import sp from '~/services/serviceProvider';
 
 const bannerAspectRatio = 3.2;
 const { width } = Dimensions.get('window');
@@ -20,7 +22,7 @@ type propsType = {
 
 const HeaderComponent: FunctionComponent<propsType> = observer(
   ({ user, store, children }: propsType) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     const channel: UserModel | null | undefined =
       user || (store instanceof UserStore ? store.me : store?.channel);

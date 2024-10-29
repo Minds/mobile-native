@@ -2,48 +2,48 @@ import 'react-native';
 import React from 'react';
 import { Pressable } from 'react-native';
 import { shallow } from 'enzyme';
+import sp from '~/services/serviceProvider';
 
-import Activity from '../../../src/newsfeed/activity/Activity';
+jest.mock('~/services/serviceProvider');
+
+sp.mockService('styles');
+sp.mockService('session');
+
+import Activity from '~/newsfeed/activity/Activity';
 
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 
-import ExplicitText from '../../../src/common/components/explicit/ExplicitText';
-import OwnerBlock from '../../../src/newsfeed/activity/OwnerBlock';
-import BottomContent from '../../../src/newsfeed/activity/BottomContent';
+import ExplicitText from '~/common/components/explicit/ExplicitText';
+import OwnerBlock from '~/newsfeed/activity/OwnerBlock';
+import BottomContent from '~/newsfeed/activity/BottomContent';
+import MediaView from '~/common/components/MediaView';
+import ActivityModel from '~/newsfeed/ActivityModel';
 
-import MediaView from '../../../src/common/components/MediaView';
-
-import ActivityModel from '../../../src/newsfeed/ActivityModel';
-
-jest.mock('../../../src/common/services/session.service');
-
-jest.mock('../../../src/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
-jest.mock(
-  '../../../src/common/components/explicit/ExplicitText',
-  () => 'ExplicitText',
-);
-jest.mock('../../../src/newsfeed/activity/OwnerBlock', () => 'OwnerBlock');
-jest.mock('../../../src/newsfeed/activity/Actions', () => 'Actions');
+jest.mock('~/common/services/session.service');
+jest.mock('~/media/v2/mindsVideo/MindsVideo', () => 'MindsVideoV2');
+jest.mock('~/common/components/explicit/ExplicitText', () => 'ExplicitText');
+jest.mock('~/newsfeed/activity/OwnerBlock', () => 'OwnerBlock');
+jest.mock('~/newsfeed/activity/Actions', () => 'Actions');
 
 jest.mock(
-  '../../../src/newsfeed/activity/ActivityActionSheet',
+  '~/newsfeed/activity/ActivityActionSheet',
   () => 'ActivityActionSheet',
 );
 jest.mock(
-  '../../../src/newsfeed/activity/metrics/ActivityMetrics',
+  '~/newsfeed/activity/metrics/ActivityMetrics',
   () => 'ActivityMetrics',
 );
 
 jest.mock('../../../AppStores');
 
-jest.mock('../../../src/common/contexts/analytics.context', () => ({
+jest.mock('~/common/contexts/analytics.context', () => ({
   withAnalyticsContext:
     mapper =>
     ({ children }) =>
       children,
 }));
 
-jest.mock('../../../src/newsfeed/activity/contexts/Activity.context', () => ({
+jest.mock('~/newsfeed/activity/contexts/Activity.context', () => ({
   withActivityContext:
     mapper =>
     ({ children }) =>
@@ -51,7 +51,7 @@ jest.mock('../../../src/newsfeed/activity/contexts/Activity.context', () => ({
 }));
 
 jest.mock(
-  '../../../src/newsfeed/activity/hocs/undoable',
+  '~/newsfeed/activity/hocs/undoable',
   () =>
     () =>
     ({ children }) =>

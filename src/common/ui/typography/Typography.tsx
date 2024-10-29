@@ -2,8 +2,9 @@ import React from 'react';
 import { Text, TextProps, TouchableWithoutFeedback } from 'react-native';
 import type { FONT_FAMILY } from '~styles/Tokens';
 import { UNIT } from '~styles/Tokens';
-import ThemedStyles from '~styles/ThemedStyles';
+
 import { SpacerPropType, withSpacer } from '~ui';
+import sp from '~/services/serviceProvider';
 
 const hitSlop = {
   top: UNIT.XS,
@@ -63,8 +64,8 @@ export const TypographyComponent = ({
   const styleName = `typo_${type}_${font}_${color}_${align}_${!!flat}`;
 
   const fontStyle = style
-    ? [ThemedStyles.style[styleName], style]
-    : ThemedStyles.style[styleName];
+    ? [sp.styles.style[styleName], style]
+    : sp.styles.style[styleName];
 
   const renderedText = (
     <Text style={fontStyle} {...more}>

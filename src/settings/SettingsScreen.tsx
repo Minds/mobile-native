@@ -1,46 +1,44 @@
 import React, { useCallback } from 'react';
 import { ScrollView, View } from 'react-native';
-import AuthService from '../auth/AuthService';
 import MenuItem, { MenuItemProps } from '../common/components/menus/MenuItem';
-import i18n from '../common/services/i18n.service';
-import sessionService from '../common/services/session.service';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import { ScreenHeader, Screen } from '~/common/ui/screen';
 import { observer } from 'mobx-react';
 import { HiddenTap } from './screens/DevToolsScreen';
 import {
   AFFILIATES_ENABLED,
-  DEV_MODE,
   GOOGLE_PLAY_STORE,
   IS_IOS,
   IS_IPAD,
   IS_TENANT,
 } from '~/config/Config';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import openUrlService from '~/common/services/open-url.service';
+import sp from '~/services/serviceProvider';
 
 /**
  * Retrieves the link & jwt for zendesk and navigate to it.
  */
 export const navigateToHelp = async () => {
-  openUrlService.open('https://chatwoot.help/hc/minds/en');
+  sp.resolve('openURL').open('https://chatwoot.help/hc/minds/en');
 };
 
 const setDarkMode = () => {
-  if (ThemedStyles.theme) {
-    ThemedStyles.setLight();
+  const themeService = sp.styles;
+  if (themeService.theme) {
+    themeService.setLight();
   } else {
-    ThemedStyles.setDark();
+    themeService.setDark();
   }
+  sp.storages.app.set('theme', themeService.theme);
 };
 
 type Item = MenuItemProps & { screen?: string; params?: any };
 
 const SettingsScreen = observer(({ navigation }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const hideTokens = GOOGLE_PLAY_STORE;
-
-  const user = sessionService.getUser();
+  const i18n = sp.i18n;
+  const user = sp.session.getUser();
 
   const onComplete = useCallback(
     (forPro: boolean) => {
@@ -142,13 +140,13 @@ const SettingsScreen = observer(({ navigation }) => {
     });
     secondSection.unshift({
       title: i18n.t(
-        ThemedStyles.theme ? 'settings.enterLight' : 'settings.enterDark',
+        sp.styles.theme ? 'settings.enterLight' : 'settings.enterDark',
       ),
       onPress: setDarkMode,
     });
   }
 
-  if (DEV_MODE.isActive) {
+  if (sp.resolve('devMode').isActive) {
     secondSection.push({
       title: 'Developer Options',
       screen: 'DevTools',
@@ -165,7 +163,7 @@ const SettingsScreen = observer(({ navigation }) => {
 
   secondSection.push({
     title: i18n.t('settings.logout'),
-    onPress: () => AuthService.logout(),
+    onPress: () => sp.resolve('auth').logout(),
     icon: 'login-variant',
   });
 

@@ -1,6 +1,7 @@
-import { storages } from './../../common/services/storage/storages.service';
 import { observable, action } from 'mobx';
 import UserModel from '~/channel/UserModel';
+import sp from '~/services/serviceProvider';
+
 /**
  * how long should the subscriptions persist
  */
@@ -83,7 +84,7 @@ export class RecentSubscriptionsStore {
    * saves subscriptions to storage
    */
   private _persist() {
-    storages.user?.setArray(
+    sp.storages.user?.setObject<Array<RecentSubscription>>(
       RecentSubscriptionsStore.STORAGE_KEY,
       this.subscriptions,
     );
@@ -95,7 +96,7 @@ export class RecentSubscriptionsStore {
   @action
   private _rehydrate() {
     this.subscriptions =
-      storages.user?.getArray<RecentSubscription>(
+      sp.storages.user?.getObject<Array<RecentSubscription>>(
         RecentSubscriptionsStore.STORAGE_KEY,
       ) || [];
   }

@@ -4,7 +4,6 @@ import AccordionSet, {
   AccordionDataType,
   RenderFunction,
 } from '../../../../common/components/AccordionSet';
-import i18n from '../../../../common/services/i18n.service';
 import AccordionHeader from '../AccordionHeader';
 import MindsTokens, { format } from '../MindsTokens';
 import AccordionContent, { AccordionContentData } from '../AccordionContent';
@@ -15,48 +14,48 @@ import { PricesType } from '../../../v2/createWalletStore';
 import { Reward, TokensTabStore } from './createTokensTabStore';
 import { Spacer } from '~ui';
 import MText from '~/common/components/MText';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   store: TokensTabStore;
   prices: PricesType;
 };
-
 const getProcessedData = (data: Reward): AccordionContentData[] => [
   {
-    title: i18n.t('wallet.yourScore'),
+    title: sp.i18n.t('wallet.yourScore'),
     info: `${format(data.score, false)} points`,
     tooltip: {
-      title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Score`),
+      title: sp.i18n.t(`wallet.tokens.tooltips.${data.reward_type}Score`),
       width: 200,
       height: 80,
     },
   },
   {
-    title: i18n.t('wallet.networkScore'),
+    title: sp.i18n.t('wallet.networkScore'),
     info: `${format(data.global_summary.score, false)} points`,
     tooltip: {
-      title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Total`),
+      title: sp.i18n.t(`wallet.tokens.tooltips.${data.reward_type}Total`),
       width: 200,
       height: 80,
     },
   },
   {
-    title: i18n.t('wallet.yourShare'),
+    title: sp.i18n.t('wallet.yourShare'),
     info: `${format(data.share_pct * 100)}%`,
     tooltip: {
-      title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Percentage`),
+      title: sp.i18n.t(`wallet.tokens.tooltips.${data.reward_type}Percentage`),
       width: 200,
       height: 80,
     },
   },
   {
-    title: i18n.t('wallet.rewards', { count: 1 }),
+    title: sp.i18n.t('wallet.rewards', { count: 1 }),
     info: `${format(parseFloat(data.token_amount))} (${format(
       data.share_pct * 100,
     )}% of ${format(parseFloat(data.global_summary.token_amount))})`,
     tooltip: {
-      title: i18n.t(`wallet.tokens.tooltips.${data.reward_type}Reward`),
+      title: sp.i18n.t(`wallet.tokens.tooltips.${data.reward_type}Reward`),
       width: 200,
       height: 80,
     },
@@ -109,7 +108,7 @@ const MindsScores = observer(({ store, prices }: PropsType) => {
   ];
 
   const accordionData: Array<AccordionDataType> = scores.map(reward => ({
-    title: i18n.t(`wallet.${reward.reward_type}`),
+    title: sp.i18n.t(`wallet.${reward.reward_type}`),
     subtitle:
       reward.reward_type === 'holding' ? (
         ''
@@ -129,13 +128,13 @@ const MindsScores = observer(({ store, prices }: PropsType) => {
       />
     ),
     tooltip: {
-      title: i18n.t(`wallet.tokens.tooltips.${reward.reward_type}`),
+      title: sp.i18n.t(`wallet.tokens.tooltips.${reward.reward_type}`),
       width: 200,
       height: 80,
     },
     footer:
       reward.reward_type === 'holding'
-        ? i18n.t(`wallet.tokens.footers.${reward.reward_type}`)
+        ? sp.i18n.t(`wallet.tokens.footers.${reward.reward_type}`)
         : undefined,
   }));
 
@@ -151,7 +150,7 @@ const MindsScores = observer(({ store, prices }: PropsType) => {
   );
 });
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   footerText: [
     'colorSecondaryText',
     'marginLeft4x',

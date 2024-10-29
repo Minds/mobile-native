@@ -1,11 +1,12 @@
 import React, { ReactNode } from 'react';
 import { View } from 'react-native';
 import { Row, SpacerPropType } from '~ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { IconButton } from '..';
 import { useNavigation } from '@react-navigation/native';
 import { IconMapNameType } from '../icons/map';
 import { Typography, TypographyPropsType } from '../typography/Typography';
+import sp from '~/services/serviceProvider';
 
 export type ScreenHeaderType = {
   title?: string;
@@ -81,7 +82,7 @@ export const ScreenHeader = ({
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: {
     zIndex: 1,
   },

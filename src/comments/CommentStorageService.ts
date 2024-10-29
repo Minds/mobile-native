@@ -1,10 +1,12 @@
-import logService from '../common/services/log.service';
-import { storages } from '../common/services/storage/storages.service';
+import type { LogService } from '~/common/services/log.service';
+import type { Storages } from '~/common/services/storage/storages.service';
 
 /**
  * Comment storage service
  */
 export class CommentStorageService {
+  constructor(private storages: Storages, private log: LogService) {}
+
   /**
    * Read a page from the storage
    *
@@ -25,9 +27,9 @@ export class CommentStorageService {
       const key = `comm:${entityGuid}:${parentPath}:${offset}:${
         focusedUrn || ''
       }:${descending ? '0' : '1'}`;
-      return storages.userCache?.getMap(key);
+      return this.storages.userCache?.getObject(key);
     } catch (err) {
-      logService.exception('[CommentStorageService]', err);
+      this.log.exception('[CommentStorageService]', err);
       return null;
     }
   }
@@ -54,9 +56,9 @@ export class CommentStorageService {
       const key = `comm:${entityGuid}:${parentPath}:${offset}:${
         focusedUrn || ''
       }:${descending ? '0' : '1'}`;
-      return storages.userCache?.setMap(key, this.clean(data));
+      return this.storages.userCache?.setObject(key, this.clean(data));
     } catch (err) {
-      logService.exception('[CommentStorageService]', err);
+      this.log.exception('[CommentStorageService]', err);
       console.log(err);
     }
   }
@@ -75,5 +77,3 @@ export class CommentStorageService {
     return data;
   }
 }
-
-export default new CommentStorageService();

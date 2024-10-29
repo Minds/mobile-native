@@ -1,51 +1,48 @@
-import 'react-native';
 import React from 'react';
 import { Platform, Linking } from 'react-native';
-import { shallow } from 'enzyme';
-import BlogCard from '../../src/blogs/BlogCard';
+import { render, fireEvent } from '@testing-library/react-native';
+import BlogCard from '~/blogs/BlogCard';
 import blogFakeFactory from '../../__mocks__/fake/blogs/BlogFactory';
-import BlogModel from '../../src/blogs/BlogModel';
-// Note: test renderer must be required after react-native.
-import renderer from 'react-test-renderer';
-import Actions from '../../src/newsfeed/activity/Actions';
+import BlogModel from '~/blogs/BlogModel';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('api');
+sp.mockService('i18n');
 
 Linking.openURL = jest.fn();
 
-jest.mock('../../src/newsfeed/activity/Actions', () => 'Actions');
+jest.mock('~/newsfeed/activity/Actions', () => 'Actions');
 
-/**
- * Tests
- */
 describe('blog card component', () => {
-  it('should renders correctly', () => {
+  it('should render correctly', () => {
     const blogEntity = BlogModel.create(blogFakeFactory(1));
 
-    const blog = renderer.create(<BlogCard entity={blogEntity} />).toJSON();
+    const { toJSON } = render(<BlogCard entity={blogEntity} />);
 
-    expect(blog).toMatchSnapshot();
+    expect(toJSON()).toMatchSnapshot();
   });
 
-  it('should nav to blog', done => {
+  it('should nav to blog', async () => {
     const blogEntity = BlogModel.create(blogFakeFactory(1));
     blogEntity.can = () => true;
 
     const navigation = { push: jest.fn() };
 
-    try {
-      const wrapper = shallow(
-        <BlogCard entity={blogEntity} navigation={navigation} />,
-      );
+    const { getByTestId } = render(
+      <BlogCard entity={blogEntity} navigation={navigation} />,
+    );
 
-      Platform.OS = 'ios';
+    Platform.OS = 'ios';
 
-      // call method
-      wrapper.instance().navToBlog();
+    // Assuming there's a touchable element with testID="blogCard"
+    fireEvent.press(getByTestId('blogPressable'));
 
-      // expect fn to be called once
-      expect(navigation.push).toBeCalledWith('BlogView', { blog: blogEntity });
-      done();
-    } catch (e) {
-      done.fail(e);
-    }
+    expect(navigation.push).toHaveBeenCalledWith('BlogView', {
+      blog: blogEntity,
+    });
   });
 });

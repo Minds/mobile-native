@@ -2,13 +2,11 @@ import { useBackHandler } from '@react-native-community/hooks';
 import { observer } from 'mobx-react';
 import React, { useCallback, useEffect } from 'react';
 import CodeConfirmScreen from '~/common/screens/CodeConfirmScreen';
-import i18n from '~/common/services/i18n.service';
 import { B1 } from '~/common/ui';
-import AuthService from './AuthService';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
-import NavigationService from '../navigation/NavigationService';
 import { TENANT } from '~/config/Config';
 import { use2FAEmailVerification } from '~/onboarding/v2/use2FAEmailVerification';
+import sp from '~/services/serviceProvider';
 
 /**
  * Initial email verification screen
@@ -35,12 +33,12 @@ const InitialEmailVerificationScreen = () => {
   const detail = (
     <>
       <B1 color="secondary" vertical="XL" horizontal="L">
-        {i18n.t('onboarding.verifyEmailDescription2')}
+        {sp.i18n.t('onboarding.verifyEmailDescription2')}
         <B1
           color={localStore.resending ? 'tertiary' : 'link'}
           onPress={localStore.resend}>
           {' '}
-          {i18n.t('onboarding.resend')}
+          {sp.i18n.t('onboarding.resend')}
         </B1>
       </B1>
 
@@ -48,7 +46,7 @@ const InitialEmailVerificationScreen = () => {
         horizontal="L"
         color="link"
         onPress={() =>
-          NavigationService.push('ChangeEmail', {
+          sp.navigation.push('ChangeEmail', {
             onSubmit: () => localStore.resend(),
           })
         }>
@@ -58,15 +56,15 @@ const InitialEmailVerificationScreen = () => {
   );
   return (
     <CodeConfirmScreen
-      onBack={AuthService.justRegistered ? undefined : localStore.cancel}
-      title={i18n.t('onboarding.verifyEmailAddress')}
+      onBack={sp.resolve('auth').justRegistered ? undefined : localStore.cancel}
+      title={sp.i18n.t('onboarding.verifyEmailAddress')}
       onVerify={localStore.submit}
-      description={i18n.t('auth.2faEmailDescription', { TENANT })}
+      description={sp.i18n.t('auth.2faEmailDescription', { TENANT })}
       maxLength={6}
       keyboardType={'numeric'}
-      placeholder={i18n.t('auth.authCode')}
+      placeholder={sp.i18n.t('auth.authCode')}
       onChangeText={localStore.setCode}
-      error={localStore.error ? i18n.t('auth.2faInvalid') : ''}
+      error={localStore.error ? sp.i18n.t('auth.2faInvalid') : ''}
       value={localStore.code}
       detail={detail}
     />

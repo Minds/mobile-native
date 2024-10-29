@@ -2,18 +2,15 @@ import { useRoute } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import CodeConfirmScreen from '~/common/screens/CodeConfirmScreen';
-import i18n from '~/common/services/i18n.service';
 import { Button } from '~/common/ui';
 import KeyboardSpacingView from '../common/components/keyboard/KeyboardSpacingView';
-import NavigationService from '../navigation/NavigationService';
-import ThemedStyles from '../styles/ThemedStyles';
-import settingsService from '../settings/SettingsService';
 import { showNotification } from '../../AppMessages';
 import validator from '../common/services/validator.service';
 import { IS_IOS } from '../config/Config';
-
+import sp from '~/services/serviceProvider';
 /**
  * This screen is used in onboarding to update the email
  */
@@ -35,21 +32,22 @@ const ChangeEmailScreen = () => {
         return;
       }
 
-      return settingsService
+      return sp
+        .resolve('settingsApi')
         .submitSettings({ email: this.email })
         .then(() => {
-          NavigationService.goBack();
+          sp.navigation.goBack();
           route.params.onSubmit?.();
         })
         .catch(() =>
-          showNotification(i18n.t('settings.errorSaving'), 'danger'),
+          showNotification(sp.i18n.t('settings.errorSaving'), 'danger'),
         );
     },
   }));
 
   // verify on mount
   useEffect(() => {
-    settingsService
+    sp.resolve('settingsApi')
       .getSettings()
       .then(({ channel }) => localStore.setEmail(channel.email))
       .catch(console.error);
@@ -59,7 +57,7 @@ const ChangeEmailScreen = () => {
     <KeyboardSpacingView safe={IS_IOS} enabled>
       <SafeAreaView
         edges={['bottom']}
-        style={ThemedStyles.style.bgPrimaryBackground}>
+        style={sp.styles.style.bgPrimaryBackground}>
         <Button
           type="action"
           size="large"
@@ -76,13 +74,13 @@ const ChangeEmailScreen = () => {
   return (
     <>
       <CodeConfirmScreen
-        onBack={NavigationService.goBack}
+        onBack={() => sp.navigation.goBack()}
         title={'Change email'}
-        description={i18n.t('auth.mistypedEmail')}
+        description={sp.i18n.t('auth.mistypedEmail')}
         keyboardType={'email-address'}
         placeholder={'New email address'}
         onChangeText={localStore.setEmail}
-        error={localStore.error ? i18n.t('auth.2faInvalid') : ''}
+        error={localStore.error ? sp.i18n.t('auth.2faInvalid') : ''}
         value={localStore.email}
       />
       {detail}

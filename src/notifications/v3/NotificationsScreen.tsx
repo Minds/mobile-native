@@ -1,19 +1,17 @@
 import React, { useCallback, useRef } from 'react';
 import { observer } from 'mobx-react';
 import { View, FlatList, ViewToken, Platform } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import NotificationsTopBar, {
   NotificationsTabOptions,
 } from './NotificationsTopBar';
-import i18n from '../../common/services/i18n.service';
 import NotificationItem from './notification/Notification';
-import { useStores } from '../../common/hooks/use-stores';
-import ErrorBoundary from '../../common/components/ErrorBoundary';
+import { useStores } from '~/common/hooks/use-stores';
+import ErrorBoundary from '~/common/components/ErrorBoundary';
 import NotificationModel from './notification/NotificationModel';
-import EmptyList from '../../common/components/EmptyList';
-import MText from '../../common/components/MText';
-import { pushInteractionsScreen } from '../../common/components/interactions/pushInteractionsBottomSheet';
-import sessionService from '~/common/services/session.service';
+import EmptyList from '~/common/components/EmptyList';
+import MText from '~/common/components/MText';
+import { pushInteractionsScreen } from '~/common/components/interactions/pushInteractionsBottomSheet';
 import Topbar from '~/topbar/Topbar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
@@ -24,6 +22,7 @@ import PrefetchNotifications from './PrefetchNotifications';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { IS_IPAD } from '~/config/Config';
 import CaptureFab from '~/capture/CaptureFab';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   navigation?: any;
@@ -38,6 +37,7 @@ const viewabilityConfig = {
 const NotificationsScreen = observer(({ navigation }: PropsType) => {
   const { notifications } = useStores();
   const listRef = useRef<FlatList>(null);
+  const i18n = sp.i18n;
 
   const [query, notificationsList] = useInfiniteFeedQuery(
     ['notifications', notifications.filter],
@@ -76,7 +76,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       unsubscribeTab();
       unsubscribeDrawer();
     };
-  }, [navigation, query, refresh]);
+  }, [navigation, notifications, query, refresh]);
 
   const onViewableItemsChanged = React.useCallback(
     (viewableItems: { viewableItems: ViewToken[]; changed: ViewToken[] }) => {
@@ -114,6 +114,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
       </View>
     );
   }, [
+    i18n,
     notifications.filter,
     query.error,
     query.isLoading,
@@ -121,7 +122,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     refresh,
   ]);
 
-  const user = sessionService.getUser();
+  const user = sp.session.getUser();
 
   const renderItem = useCallback((row: any): React.ReactElement => {
     const notification = row.item;
@@ -129,7 +130,7 @@ const NotificationsScreen = observer(({ navigation }: PropsType) => {
     return (
       <ErrorBoundary
         message="Can't show this notification"
-        containerStyle={ThemedStyles.style.borderBottomHair}>
+        containerStyle={sp.styles.style.borderBottomHair}>
         <NotificationItem
           notification={notification}
           onShowSubscribers={() =>
@@ -195,7 +196,7 @@ export default withErrorBoundaryScreen(
   'NotificationsScreen',
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   containerStyle: { flexGrow: 1 },
   container: ['bgPrimaryBackground', 'flexContainer'],
   centerMaxWidth: ['alignSelfCenterMaxWidth'],

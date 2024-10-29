@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { Platform } from 'react-native';
 
 export default function (name) {

@@ -2,12 +2,12 @@ import { RouteProp } from '@react-navigation/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 
-import i18n from '~/common/services/i18n.service';
 import { RootStackParamList } from '~/navigation/NavigationTypes';
 import ModalContainer from '~/onboarding/v2/steps/ModalContainer';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import ChooseBrowser from '../components/ChooseBrowser';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 import { useWindowDimensions } from 'react-native';
 
 type ChooseBrowserModalScreenRouteProp = RouteProp<
@@ -39,7 +39,7 @@ const ChooseBrowserModalScreen = ({ navigation, route }: PropsType) => {
 
   return (
     <ModalContainer
-      title={i18n.t('settings.chooseBrowser')}
+      title={sp.i18n.t('settings.chooseBrowser')}
       onPressBack={navigation.goBack}
       marginTop={height / 3}
       contentContainer={containerStyle}>
@@ -53,7 +53,7 @@ export default withErrorBoundaryScreen(
   'ChooseBrowserModal',
 );
 
-const containerStyle = ThemedStyles.combine(
+const containerStyle = sp.styles.combine(
   'bgPrimaryBackgroundHighlight',
   'alignSelfCenterMaxWidth',
   {

@@ -4,7 +4,8 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 const AnimatedHeight: React.FunctionComponent<PropsWithChildren<{}>> = ({
   children,
@@ -26,9 +27,7 @@ const AnimatedHeight: React.FunctionComponent<PropsWithChildren<{}>> = ({
 
   return (
     <Animated.View style={[animatedHeightStyle, { overflow: 'hidden' }]}>
-      <View
-        onLayout={handleLayout}
-        style={ThemedStyles.style.positionAbsoluteTop}>
+      <View onLayout={handleLayout} style={sp.styles.style.positionAbsoluteTop}>
         {children}
       </View>
     </Animated.View>

@@ -1,15 +1,11 @@
 import { Timeout } from '~/types/Common';
-import apiService from '../../common/services/api.service';
-import logService from '../../common/services/log.service';
-import sessionService from '../../common/services/session.service';
-import socketService from '../../common/services/socket.service';
 import type NotificationModel from './notification/NotificationModel';
 import { NotificationsTabOptions } from './NotificationsTopBar';
 import EmailNotificationsSettingModel, {
   EmailNotificationsSettingType,
 } from './settings/email/EmailNotificationsSettingModel';
 import PushNotificationsSettingModel from './settings/push/PushNotificationsSettingModel';
-import pushService from '~/common/services/push.service';
+import sp from '~/services/serviceProvider';
 
 export type FilterType = '' | NotificationsTabOptions;
 
@@ -28,7 +24,7 @@ const createNotificationsStore = () => ({
     this.silentRefresh = value;
   },
   init() {
-    sessionService.onSession((token: string) => {
+    sp.session.onSession((token: string) => {
       if (token) {
         // load count on session start
         this.loadUnreadCount();
@@ -50,6 +46,7 @@ const createNotificationsStore = () => ({
   },
   setUnread(unread: number) {
     this.unread = unread;
+    const pushService = sp.resolve('push');
     pushService.setBadgeCount(unread);
     if (unread === 0) {
       pushService.clearNotifications();
@@ -60,21 +57,21 @@ const createNotificationsStore = () => ({
     this.setUnread(unread);
   },
   listen() {
-    socketService.subscribe('notification', this.onSocket);
+    sp.socket.subscribe('notification', this.onSocket);
   },
   unlisten() {
-    socketService.unsubscribe('notification', this.onSocket);
+    sp.socket.unsubscribe('notification', this.onSocket);
   },
   async loadUnreadCount() {
     try {
       const response = <any>(
-        await apiService.get('api/v3/notifications/unread-count', {})
+        await sp.api.get('api/v3/notifications/unread-count', {})
       );
       if (response.count) {
         this.setUnread(response.count);
       }
     } catch (err) {
-      logService.exception('[NotificationsStore] unread-count', err);
+      sp.log.exception('[NotificationsStore] unread-count', err);
     }
   },
   startPollCount() {
@@ -92,17 +89,17 @@ const createNotificationsStore = () => ({
     try {
       notification.read = true;
       this.setUnread(this.unread - 1);
-      await apiService.put('api/v3/notifications/read/' + notification.urn);
+      await sp.api.put('api/v3/notifications/read/' + notification.urn);
     } catch (err) {
       notification.read = false;
       this.setUnread(this.unread + 1);
-      logService.exception('[NotificationsStore] markAsRead', err);
+      sp.log.exception('[NotificationsStore] markAsRead', err);
     }
   },
   async loadMailNotificationsSettings() {
     try {
       this.mailsNotificationsSettings = [];
-      const response = <any>await apiService.get('api/v2/settings/emails');
+      const response = <any>await sp.api.get('api/v2/settings/emails');
       if (response.notifications) {
         this.mailsNotificationsSettings = response.notifications.map(
           (notifications: EmailNotificationsSettingType) =>
@@ -113,7 +110,7 @@ const createNotificationsStore = () => ({
       }
     } catch (err) {
       this.mailsNotificationsSettings = null;
-      logService.exception(
+      sp.log.exception(
         '[NotificationsStore] loadMailNotificationsSettings',
         err,
       );
@@ -123,7 +120,7 @@ const createNotificationsStore = () => ({
     try {
       this.pushNotificationsSettings = [];
       const response = <any>(
-        await apiService.get('api/v3/notifications/push/settings')
+        await sp.api.get('api/v3/notifications/push/settings')
       );
       if (response.settings) {
         this.pushNotificationsSettings = response.settings.map(
@@ -134,7 +131,7 @@ const createNotificationsStore = () => ({
       }
     } catch (err) {
       this.pushNotificationsSettings = null;
-      logService.exception('[NotificationsStore] loadSettings', err);
+      sp.log.exception('[NotificationsStore] loadSettings', err);
     }
   },
   reset() {

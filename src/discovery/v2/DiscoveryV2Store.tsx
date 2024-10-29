@@ -1,8 +1,7 @@
 import { observable, action } from 'mobx';
-import apiService from '~/common/services/api.service';
 import FeedStore from '~/common/stores/FeedStore';
-import { storages } from '~/common/services/storage/storages.service';
 import { IS_TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 export default class DiscoveryV2Store {
   @observable activeTabId: TDiscoveryV2Tabs = IS_TENANT ? 'latest' : 'top';
@@ -60,7 +59,8 @@ export default class DiscoveryV2Store {
       .setInjectBoost(false)
       .setLimit(15);
 
-    this.lastDiscoveryTimestamp = storages.app.getInt(DISCOVERY_TS_KEY) ?? 0;
+    this.lastDiscoveryTimestamp =
+      sp.storages.app.getNumber(DISCOVERY_TS_KEY) ?? 0;
 
     this.badgeVisible =
       +new Date() - (this.lastDiscoveryTimestamp ?? 0) > 86400 * 1000; // 24 hours
@@ -106,10 +106,7 @@ export default class DiscoveryV2Store {
       const params = plus
         ? { plus: 1, as_activities: 1 }
         : { as_activities: 1 };
-      const response = await apiService.get<any>(
-        'api/v3/discovery/trends',
-        params,
-      );
+      const response = await sp.api.get<any>('api/v3/discovery/trends', params);
       const trends = response.trends.filter(trend => !!trend);
       if (response.hero) {
         trends.unshift(response.hero);
@@ -133,10 +130,7 @@ export default class DiscoveryV2Store {
       const params = plus
         ? { plus: 1, as_activities: 1, trending_tags_v2: true }
         : { as_activities: 1, trending_tags_v2: false };
-      const response = await apiService.get<any>(
-        'api/v3/discovery/tags',
-        params,
-      );
+      const response = await sp.api.get<any>('api/v3/discovery/tags', params);
       this.setTags(response.tags);
       this.setTrendingTags(response.trending);
     } catch (err) {
@@ -187,7 +181,7 @@ export default class DiscoveryV2Store {
     deselected: TDiscoveryTagsTag[],
   ): Promise<void> {
     this.tags = selected.slice();
-    await apiService.post('api/v3/discovery/tags', {
+    await sp.api.post('api/v3/discovery/tags', {
       selected: selected.map(tag => tag.value),
       deselected: deselected.map(tag => tag.value),
     });
@@ -228,13 +222,13 @@ export default class DiscoveryV2Store {
   clearBadge() {
     this.badgeVisible = false;
     this.lastDiscoveryTimestamp = +new Date();
-    storages.app.setInt(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
+    sp.storages.app.set(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
   }
 
   showBadge() {
     this.badgeVisible = true;
     this.lastDiscoveryTimestamp = 0;
-    storages.app.setInt(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
+    sp.storages.app.set(DISCOVERY_TS_KEY, this.lastDiscoveryTimestamp);
   }
 }
 

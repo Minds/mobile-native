@@ -1,6 +1,5 @@
 import { ColorsNameType } from '~styles/Colors';
-import ThemedStyles from '~styles/ThemedStyles';
-
+import sp from '~/services/serviceProvider';
 export const getIconColor = ({
   color,
   active,
@@ -21,20 +20,20 @@ export const getIconColor = ({
   defaultColor: ColorsNameType;
 }) => {
   if (!color && !disabled && !active && !light) {
-    return ThemedStyles.getColor(defaultColor);
+    return sp.styles.getColor(defaultColor);
   }
 
   if (color) {
-    return ThemedStyles.getColor(color);
+    return sp.styles.getColor(color);
   }
 
   if (active === true) {
-    return ThemedStyles.getColor(activeColor);
+    return sp.styles.getColor(activeColor);
   }
 
   if (light === true) {
-    return ThemedStyles.getColor(lightColor);
+    return sp.styles.getColor(lightColor);
   }
 
-  return ThemedStyles.getColor(disabledColor);
+  return sp.styles.getColor(disabledColor);
 };

@@ -1,15 +1,16 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React from 'react';
 import { ViewStyle } from 'react-native';
-import i18n from '../../services/i18n.service';
+import moment from 'moment';
+
 import { PressableLine } from '~ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
 import type { BottomSheetModal as BottomSheetModalType } from '@gorhom/bottom-sheet';
 import { Calendar } from 'react-native-calendars';
 import { UIUnitType } from '~/styles/Tokens';
 import useModernTheme from './useModernTheme';
-import moment from 'moment';
+import sp from '~/services/serviceProvider';
 
 export type DateRangePickerPropsType = {
   spacing?: UIUnitType;
@@ -48,7 +49,7 @@ const DateRangePicker = observer((props: DateRangePickerPropsType) => {
       endDate: p.endDate,
       confirmedText: '',
       get marks() {
-        const color = ThemedStyles.getColor('Link');
+        const color = sp.styles.getColor('Link');
         if (localStore.startDate && localStore.endDate) {
           const range = generateDateRange(
             localStore.startDate,
@@ -125,14 +126,14 @@ const DateRangePicker = observer((props: DateRangePickerPropsType) => {
         const shownStartDate = !localStore.startDate
           ? ''
           : todaysDate === localStore.textStartDate
-          ? i18n.t('wallet.today')
-          : i18n.date(localStore.startDate, 'date', 'UTC');
+          ? sp.i18n.t('wallet.today')
+          : sp.i18n.date(localStore.startDate, 'date', 'UTC');
 
         const shownEndDate = !localStore.endDate
           ? ''
           : todaysDate === localStore.textEndDate
-          ? i18n.t('wallet.today')
-          : i18n.date(localStore.endDate, 'date', 'UTC');
+          ? sp.i18n.t('wallet.today')
+          : sp.i18n.date(localStore.endDate, 'date', 'UTC');
         localStore.confirmedText = shownStartDate + ' - ' + shownEndDate;
       },
       send() {
@@ -190,7 +191,7 @@ const DateRangePicker = observer((props: DateRangePickerPropsType) => {
           theme={theme}
         />
         <BottomSheetButton
-          text={i18n.t('done')}
+          text={sp.i18n.t('done')}
           onPress={localStore.onConfirm}
         />
       </BottomSheetModal>

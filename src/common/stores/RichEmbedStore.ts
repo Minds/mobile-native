@@ -1,8 +1,7 @@
 import { observable, action, runInAction } from 'mobx';
-import RichEmbedService from '../services/rich-embed.service';
 import Util from '../helpers/util';
-import logService from '../services/log.service';
 import { Timeout } from '~/types/Common';
+import sp from '~/services/serviceProvider';
 
 export type MetaType = {
   thumbnail?: string;
@@ -15,6 +14,7 @@ export type MetaType = {
  * Rich embed store
  */
 export default class RichEmbedStore {
+  constructor(private richEmbedService = sp.resolve('richEmbed')) {}
   @observable hasRichEmbed = false;
   @observable metaInProgress = false;
   @observable meta: MetaType = null;
@@ -97,14 +97,14 @@ export default class RichEmbedStore {
     this.metaInProgress = true;
 
     try {
-      const meta: MetaType = await RichEmbedService.getMeta(url);
+      const meta: MetaType = await this.richEmbedService.getMeta(url);
       runInAction(() => {
         this.meta = meta;
         this.metaInProgress = false;
       });
     } catch (e) {
       this.metaInProgress = false;
-      logService.exception('[RichEmbedStore]', e);
+      sp.log.exception('[RichEmbedStore]', e);
     }
   }
 }

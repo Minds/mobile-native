@@ -1,13 +1,12 @@
 import React, { useEffect } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
-import UniswapWidget from '../common/components/uniswap-widget/UniswapWidget';
-import ThemedStyles from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
-import mindsConfigService from '../common/services/minds-config.service';
 import { observer, useLocalStore } from 'mobx-react';
-import createLocalStore from './createLocalStore';
-import ModalScreen from '../common/components/ModalScreen';
+
 import Icon from '@expo/vector-icons/MaterialCommunityIcons';
+import UniswapWidget from '~/common/components/uniswap-widget/UniswapWidget';
+
+import createLocalStore from './createLocalStore';
+import ModalScreen from '~/common/components/ModalScreen';
 import {
   ONCHAIN_ENABLED,
   LIQUIDITY_ENABLED,
@@ -17,6 +16,7 @@ import {
 } from '../config/Config';
 import MText from '../common/components/MText';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 type IconName = React.ComponentProps<typeof Icon>['name'];
 
@@ -43,7 +43,7 @@ interface ContentType {
 }
 
 const EarnItem = ({ content }: { content: ContentType }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   return (
     <TouchableOpacity
@@ -57,17 +57,17 @@ const EarnItem = ({ content }: { content: ContentType }) => {
       <View style={[theme.rowJustifyStart, theme.alignCenter]}>
         <Icon
           name={content.icon}
-          color={ThemedStyles.getColor('PrimaryText')}
+          color={sp.styles.getColor('PrimaryText')}
           size={20}
           style={[theme.centered, theme.marginRight3x]}
         />
         <MText style={[theme.fontL, theme.colorPrimaryText, theme.bold]}>
-          {i18n.t(`earnScreen.${content.name}.title`)}
+          {sp.i18n.t(`earnScreen.${content.name}.title`)}
         </MText>
       </View>
       <Icon
         name={'chevron-right'}
-        color={ThemedStyles.getColor('SecondaryText')}
+        color={sp.styles.getColor('SecondaryText')}
         size={24}
       />
     </TouchableOpacity>
@@ -75,7 +75,7 @@ const EarnItem = ({ content }: { content: ContentType }) => {
 };
 
 const ResourceItem = ({ content }: { content: ResourceType }) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   return (
     <TouchableOpacity
@@ -87,11 +87,11 @@ const ResourceItem = ({ content }: { content: ResourceType }) => {
       ]}
       onPress={content.onPress}>
       <MText style={[theme.fontL, theme.colorSecondaryText, theme.fontMedium]}>
-        {i18n.t(`earnScreen.${content.name}`)}
+        {sp.i18n.t(`earnScreen.${content.name}`)}
       </MText>
       <Icon
         name={'chevron-right'}
-        color={ThemedStyles.getColor('SecondaryText')}
+        color={sp.styles.getColor('SecondaryText')}
         size={24}
       />
     </TouchableOpacity>
@@ -100,12 +100,12 @@ const ResourceItem = ({ content }: { content: ResourceType }) => {
 
 export default withErrorBoundaryScreen(
   observer(function ({ navigation }) {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     const localStore = useLocalStore(createLocalStore);
     const hideTokens = GOOGLE_PLAY_STORE;
 
     useEffect(() => {
-      const settings = mindsConfigService.getSettings();
+      const settings = sp.config.getSettings();
       localStore.setTokenAddress(settings.blockchain.token.address);
     }, [localStore]);
 
@@ -185,6 +185,8 @@ export default withErrorBoundaryScreen(
       theme.marginTop5x,
       theme.paddingLeft5x,
     ];
+
+    const i18n = sp.i18n;
 
     return (
       <>

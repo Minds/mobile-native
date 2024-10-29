@@ -6,7 +6,7 @@ import {
   TouchableOpacityProps,
   ViewStyle,
 } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 export default function ListItemButton(
   props: TouchableOpacityProps & {
@@ -14,7 +14,7 @@ export default function ListItemButton(
     style?: ViewStyle;
   },
 ) {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   return (
     <TouchableOpacity
       {...props}

@@ -2,6 +2,12 @@ import * as React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import { ChatUserItem } from './ChatUserItem';
 import UserModel from '~/channel/UserModel';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 
 describe('ChatUserItem', () => {
   const mockUser = UserModel.create({

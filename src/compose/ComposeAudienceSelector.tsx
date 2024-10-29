@@ -11,7 +11,6 @@ import MenuItem from '../common/components/menus/MenuItem';
 import MenuItemOption from '../common/components/menus/MenuItemOption';
 import abbrev from '../common/helpers/abbrev';
 import { useLegacyStores } from '../common/hooks/use-stores';
-import i18n from '../common/services/i18n.service';
 import { useSupportTiers } from '../common/services/support-tiers.service';
 import {
   B1,
@@ -25,12 +24,12 @@ import {
 } from '../common/ui';
 import { IS_IOS, IS_TENANT, TENANT } from '../config/Config';
 import GroupModel from '../groups/GroupModel';
-import NavigationService from '../navigation/NavigationService';
-import ThemedStyles from '../styles/ThemedStyles';
+
 import { upgradeToPlus } from '../upgrade/UpgradeScreen';
 import { ComposeAudience } from './createComposeStore';
 import { ComposeStoreType } from './useComposeStore';
 import { Trans } from 'react-i18next';
+import sp from '~/services/serviceProvider';
 
 const BOTTOM_SHEET_HEIGHT = Math.floor(Dimensions.get('window').height * 0.8);
 
@@ -54,6 +53,31 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
   const { user } = useLegacyStores();
   const selected = store?.audience ?? { type: 'public' };
   const groupsListRef = useRef<any>(null);
+  const i18n = sp.i18n;
+
+  const texts = {
+    title: i18n.t('composer.audienceSelector.title'),
+    done: i18n.t('composer.audienceSelector.done'),
+    audience: {
+      public: {
+        title: i18n.t('composer.audienceSelector.audience.public.title'),
+      },
+      plus: {
+        title: i18n.t('composer.audienceSelector.audience.plus.title'),
+        subtitle: i18n.t('composer.audienceSelector.audience.plus.subtitle'),
+      },
+    },
+    memberships: i18n.t('composer.audienceSelector.memberships'),
+    groups: i18n.t('composer.audienceSelector.groups'),
+    noGroups: i18n.t('composer.audienceSelector.noGroups'),
+    discoverGroups: i18n.t('composer.audienceSelector.discoverGroups'),
+    plus: {
+      title: i18n.t('composer.audienceSelector.plus.title'),
+      action: i18n.t('composer.audienceSelector.plus.action'),
+    },
+    manage: i18n.t('composer.audienceSelector.manage'),
+    getStarted: i18n.t('composer.audienceSelector.getStarted'),
+  };
 
   const handleSelect = useCallback(
     async audience => {
@@ -172,7 +196,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
                 mode="flat"
                 type="action"
                 top="S"
-                onPress={() => NavigationService.push('TierManagementScreen')}>
+                onPress={() => sp.navigation.push('TierManagementScreen')}>
                 {texts.manage}
               </Button>
             )}
@@ -219,7 +243,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
                 mode="solid"
                 type="action"
                 vertical="L"
-                onPress={() => NavigationService.push('TierManagementScreen')}>
+                onPress={() => sp.navigation.push('TierManagementScreen')}>
                 {texts.getStarted}
               </Button>
             </Column>
@@ -272,7 +296,7 @@ const AudienceSelectorSheet = observer((props: AudienceSelectorSheetProps) => {
                   mode="outline"
                   top="L"
                   onPress={() => {
-                    NavigationService.push('GroupsDiscovery');
+                    sp.navigation.push('GroupsDiscovery');
                   }}>
                   {texts.discoverGroups}
                 </Button>
@@ -292,7 +316,7 @@ const ComposeAudienceGroupItem = ({ group, selected, onPress, index }) => {
 
   const commonProps = {
     title: group.name,
-    subtitle: i18n.t('groups.listMembersCount', {
+    subtitle: sp.i18n.t('groups.listMembersCount', {
       count: abbrev(group['members:count']),
     }),
     borderless: true,
@@ -321,21 +345,21 @@ const PlusTerms = () => (
     <B2 bottom="L">
       <Trans
         i18nKey="monetize"
-        defaults={i18n.t('monetize.terms.title')}
+        defaults={sp.i18n.t('monetize.terms.title')}
         components={{
           'terms-link': <TermsLink />,
         }}
       />
     </B2>
-    <B2>• {i18n.t('monetize.terms.originalContent')}</B2>
-    <B2 bottom="L">• {i18n.t('monetize.terms.exclusive')}</B2>
-    <B2>{i18n.t('monetize.terms.violations')}</B2>
+    <B2>• {sp.i18n.t('monetize.terms.originalContent')}</B2>
+    <B2 bottom="L">• {sp.i18n.t('monetize.terms.exclusive')}</B2>
+    <B2>{sp.i18n.t('monetize.terms.violations')}</B2>
   </>
 );
 
 const TermsLink = () => (
   <Link url="https://www.minds.com/p/monetization-terms">
-    <B2>{i18n.t('monetize.terms.linkTitle', { TENANT })}</B2>
+    <B2>{sp.i18n.t('monetize.terms.linkTitle', { TENANT })}</B2>
   </Link>
 );
 
@@ -361,6 +385,7 @@ export const pushAudienceSelector = (
   );
 
 const ComposeAudienceSelector = ({ store }: { store: ComposeStoreType }) => {
+  const i18n = sp.i18n;
   const audienceMapping: Record<ComposeAudience['type'], string> = {
     public: i18n.t('composer.audienceSelector.titles.public'),
     plus: i18n.t('composer.audienceSelector.titles.plus'),
@@ -386,7 +411,7 @@ const ComposeAudienceSelector = ({ store }: { store: ComposeStoreType }) => {
 
 export default observer(ComposeAudienceSelector);
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   list: { height: BOTTOM_SHEET_HEIGHT },
   rounded: {
     width: 30,
@@ -401,27 +426,3 @@ const styles = ThemedStyles.create({
   },
   listPadding: { paddingBottom: 200 },
 });
-
-const texts = {
-  title: i18n.t('composer.audienceSelector.title'),
-  done: i18n.t('composer.audienceSelector.done'),
-  audience: {
-    public: {
-      title: i18n.t('composer.audienceSelector.audience.public.title'),
-    },
-    plus: {
-      title: i18n.t('composer.audienceSelector.audience.plus.title'),
-      subtitle: i18n.t('composer.audienceSelector.audience.plus.subtitle'),
-    },
-  },
-  memberships: i18n.t('composer.audienceSelector.memberships'),
-  groups: i18n.t('composer.audienceSelector.groups'),
-  noGroups: i18n.t('composer.audienceSelector.noGroups'),
-  discoverGroups: i18n.t('composer.audienceSelector.discoverGroups'),
-  plus: {
-    title: i18n.t('composer.audienceSelector.plus.title'),
-    action: i18n.t('composer.audienceSelector.plus.action'),
-  },
-  manage: i18n.t('composer.audienceSelector.manage'),
-  getStarted: i18n.t('composer.audienceSelector.getStarted'),
-};

@@ -3,24 +3,22 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import inFeedNoticesService from '~/common/services/in-feed.notices.service';
-import { showNotification } from '../../../../AppMessages';
-import Button from '../../../common/components/Button';
-import MText from '../../../common/components/MText';
-import TagSelect from '../../../common/components/TagSelect';
-import { useLegacyStores } from '../../../common/hooks/use-stores';
-import i18n from '../../../common/services/i18n.service';
-import NavigationService from '../../../navigation/NavigationService';
-import ThemedStyles from '../../../styles/ThemedStyles';
+import { showNotification } from '~/../AppMessages';
+import Button from '~/common/components/Button';
+import MText from '~/common/components/MText';
+import TagSelect from '~/common/components/TagSelect';
+import { useLegacyStores } from '~/common/hooks/use-stores';
+
 import ModalContainer from './ModalContainer';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import sp from '~/services/serviceProvider';
 
 /**
  * Select Hashtag Screen
  */
 export default withErrorBoundaryScreen(
   observer(function SelectHashtagsScreen({ navigation, route }) {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     const { hashtag } = useLegacyStores();
 
@@ -34,7 +32,7 @@ export default withErrorBoundaryScreen(
           if (hashtag.selectedCount >= 3) {
             return;
           }
-          showNotification(i18n.t('onboarding.selectThreeTags'), 'warning');
+          showNotification(sp.i18n.t('onboarding.selectThreeTags'), 'warning');
           // Prevent default behavior of leaving the screen
           e.preventDefault();
         });
@@ -46,19 +44,19 @@ export default withErrorBoundaryScreen(
         }
 
         // refresh in-feed notices when leaving the screen
-        inFeedNoticesService.load();
+        sp.resolve('inFeedNotices').load();
       };
     }, [hashtag, navigation, route]);
 
     const onPress = () => {
       if (hashtag.suggested.filter(s => s.selected).length >= 3) {
-        NavigationService.goBack();
+        sp.navigation.goBack();
       } else {
-        showNotification(i18n.t('onboarding.selectThreeTags'), 'warning');
+        showNotification(sp.i18n.t('onboarding.selectThreeTags'), 'warning');
       }
     };
 
-    const backgroundColor = ThemedStyles.getColor('PrimaryBackground');
+    const backgroundColor = sp.styles.getColor('PrimaryBackground');
     const startColor = backgroundColor + '00';
     const endColor = backgroundColor + 'FF';
     const gradient = (
@@ -73,12 +71,12 @@ export default withErrorBoundaryScreen(
       <ModalContainer
         title="Hashtags"
         contentContainer={theme.alignSelfCenterMaxWidth}
-        onPressBack={NavigationService.goBack}>
+        onPressBack={() => sp.navigation.goBack()}>
         <View style={[theme.flexContainer, theme.paddingHorizontal4x]}>
           <ScrollView contentContainerStyle={theme.paddingBottom7x}>
             <MText
               style={[theme.fontLM, theme.textCenter, theme.marginBottom2x]}>
-              {i18n.t('onboarding.hashtagDescription')}
+              {sp.i18n.t('onboarding.hashtagDescription')}
             </MText>
             <TagSelect
               tagStyle={styles.hashtag}
@@ -94,7 +92,7 @@ export default withErrorBoundaryScreen(
           {gradient}
           <Button
             onPress={onPress}
-            text={i18n.t('done')}
+            text={sp.i18n.t('done')}
             containerStyle={[
               theme.transparentButton,
               theme.fullWidth,

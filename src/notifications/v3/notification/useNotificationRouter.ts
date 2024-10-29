@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/core';
 import UserModel from '../../../channel/UserModel';
-import sessionService from '../../../common/services/session.service';
 import type NotificationModel from './NotificationModel';
 import { NotificationType } from './NotificationModel';
 import { GOOGLE_PLAY_STORE } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 const useNotificationRouter = (
   notification: NotificationModel,
@@ -20,7 +20,7 @@ const useNotificationRouter = (
         guid: user.guid,
         entity: user,
       }),
-    navToOwnChannel: () => router.navToChannel(sessionService.getUser()),
+    navToOwnChannel: () => router.navToChannel(sp.session.getUser()),
     navToEntity: () => {
       navigator.set(navigation, notification);
 
@@ -110,7 +110,7 @@ const useNotificationRouter = (
           break;
         default:
           // If the navigation was targeted to us navigate to own channel
-          if (notification.to_guid === sessionService.getUser().guid) {
+          if (notification.to_guid === sp.session.getUser().guid) {
             return router.navToOwnChannel();
           }
 

@@ -2,25 +2,26 @@ import { observer } from 'mobx-react';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Linking } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import CenteredLoading from '~/common/components/CenteredLoading';
 import Switch from '~/common/components/controls/Switch';
 import InputContainer from '~/common/components/InputContainer';
 import delay from '~/common/helpers/delay';
 import useCurrentUser from '~/common/hooks/useCurrentUser';
-import i18n from '~/common/services/i18n.service';
-import mindsConfigService from '~/common/services/minds-config.service';
-import ThemedStyles from '~styles/ThemedStyles';
+
 import { B1, Button, H1, Row, ScreenSection } from '~ui';
-import { showNotification } from '../../../../AppMessages';
+import { showNotification } from '~/../AppMessages';
 import useConnectAccount from './hooks/useConnectAccount';
 import useConnectedAccount from './hooks/useConnectedAccount';
 import useDisconnectAccount from './hooks/useDisconnectAccount';
 import useUpdateAccount from './hooks/useUpdateAccount';
 import { useTweetMessageQuery } from '~/graphql/strapi';
+import sp from '~/services/serviceProvider';
 
 function TwitterSyncScreen() {
-  const mindsSettings = mindsConfigService.getSettings()!;
+  const mindsSettings = sp.config.getSettings()!;
   const minFollowers = mindsSettings.twitter?.min_followers_for_sync;
+  const i18n = sp.i18n;
 
   const user = useCurrentUser();
   const { connectedAccount, error: connectedAccountError } =
@@ -108,7 +109,7 @@ function TwitterSyncScreen() {
           'danger',
         );
       });
-  }, [discoverable, updateAccount]);
+  }, [discoverable, updateAccount, i18n]);
 
   /**
    * connects account
@@ -134,7 +135,7 @@ function TwitterSyncScreen() {
           'danger',
         ),
       );
-  }, [twitterHandle, connectAccount]);
+  }, [i18n, connectAccount, twitterHandle]);
 
   /**
    * disconnects account and changes sync status
@@ -148,7 +149,7 @@ function TwitterSyncScreen() {
           'danger',
         ),
       );
-  }, [disconnectAccount]);
+  }, [disconnectAccount, i18n]);
 
   useEffect(() => {
     if (connectedAccount) {
@@ -170,7 +171,7 @@ function TwitterSyncScreen() {
       <>
         <ScreenSection top="L2">
           <Row>
-            <B1 containerStyle={ThemedStyles.style.flexContainer} right="XXL">
+            <B1 containerStyle={sp.styles.style.flexContainer} right="XXL">
               {i18n.t('settings.twitterSync.discoverable')}
             </B1>
 
@@ -246,7 +247,7 @@ function TwitterSyncScreen() {
 
   return (
     <KeyboardAwareScrollView
-      style={ThemedStyles.style.flexContainer}
+      style={sp.styles.style.flexContainer}
       keyboardDismissMode={'on-drag'}>
       <ScreenSection top="L">
         <B1 color="secondary">

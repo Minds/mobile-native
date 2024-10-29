@@ -1,16 +1,16 @@
 import React from 'react';
-import { View } from 'react-native';
-import DeviceInfo from 'react-native-device-info';
+import { Platform, View } from 'react-native';
+import { osVersion, deviceName, brand } from 'expo-device';
 import { Image } from 'expo-image';
 
-import ThemedStyles from '~/styles/ThemedStyles';
 import { Version } from '~/config/Version';
 import MText from '~/common/components/MText';
 import { Screen } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 
 export default function AppInfoScreen() {
-  const theme = ThemedStyles.style;
-  const logo = ThemedStyles.theme
+  const theme = sp.styles.style;
+  const logo = sp.styles.theme
     ? require('../../../assets/images/logo_horizontal.png')
     : require('../../../assets/images/logo_horizontal_dark.png');
 
@@ -37,15 +37,17 @@ export default function AppInfoScreen() {
       </MText>
       <View style={rowStyle}>
         <MText style={titleStyle}>Brand</MText>
-        <MText style={valueStyle}>{DeviceInfo.getBrand()}</MText>
+        <MText style={valueStyle}>{brand}</MText>
       </View>
       <View style={rowStyle}>
         <MText style={titleStyle}>Type</MText>
-        <MText style={valueStyle}>{DeviceInfo.getDeviceType()}</MText>
+        <MText style={valueStyle}>{deviceName}</MText>
       </View>
       <View style={rowStyle}>
-        <MText style={titleStyle}>Device</MText>
-        <MText style={valueStyle}>{DeviceInfo.getModel()}</MText>
+        <MText style={titleStyle}>
+          {Platform.select({ ios: 'iOS', android: 'Android' })}
+        </MText>
+        <MText style={valueStyle}>{osVersion}</MText>
       </View>
     </Screen>
   );

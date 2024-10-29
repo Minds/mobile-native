@@ -1,11 +1,10 @@
 import { observable } from 'mobx';
-import UserModel from '../../../channel/UserModel';
-import AbstractModel from '../../../common/AbstractModel';
-import toFriendlyCrypto from '../../../common/helpers/toFriendlyCrypto';
-import i18n from '../../../common/services/i18n.service';
-import sessionService from '../../../common/services/session.service';
+import UserModel from '~/channel/UserModel';
+import AbstractModel from '~/common/AbstractModel';
+import toFriendlyCrypto from '~/common/helpers/toFriendlyCrypto';
 import GroupModel from '~/groups/GroupModel';
 import { TENANT } from '~/config/Config';
+import serviceProvider from '~/services/serviceProvider';
 
 export default class NotificationModel extends AbstractModel {
   created_timestamp!: number;
@@ -83,7 +82,7 @@ export default class NotificationModel extends AbstractModel {
         return '';
     }
 
-    const sessionGuid = sessionService.getUser().guid;
+    const sessionGuid = serviceProvider.session.getUser().guid;
     return this.entity?.owner_guid === sessionGuid ||
       (this.to_guid === sessionGuid && this.type !== 'tag')
       ? 'your'
@@ -134,7 +133,7 @@ export default class NotificationModel extends AbstractModel {
     if (type === NotificationType.boost_rejected) {
       type = 'boost_rejected_v2';
     }
-    return i18n.t(`notification.verbs.${type}`, {
+    return serviceProvider.i18n.t(`notification.verbs.${type}`, {
       amount: this.data?.tokens_formatted ?? this.data?.amount_usd,
       TENANT,
     });

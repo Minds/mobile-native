@@ -1,8 +1,8 @@
 import { Socket, io } from 'socket.io-client';
-import logService from './log.service';
-import sessionService from './session.service';
 import { GlobalChatSocketService } from '~/modules/chat/service/chat-socket-service';
 import { APP_HOST } from '~/config/Config';
+import type { SessionService } from './session.service';
+import type { LogService } from './log.service';
 
 /**
  * Socket Service
@@ -14,8 +14,16 @@ export class SocketService {
 
   private rooms: string[] = [];
 
+  /**
+   * Constructor
+   */
+  constructor(
+    private sessionService: SessionService,
+    private logService: LogService,
+  ) {}
+
   init() {
-    sessionService.onSession(token => {
+    this.sessionService.onSession(token => {
       if (token) {
         this.setUp();
       } else if (this.socket) {
@@ -27,7 +35,7 @@ export class SocketService {
   setUp() {
     this.socket?.close();
 
-    logService.info('[ws]::connecting to ', APP_HOST);
+    this.logService.info('[ws]::connecting to ', APP_HOST);
     this.socket = io('wss://' + APP_HOST, {
       path: '/api/sockets/socket.io',
       reconnection: true,
@@ -35,7 +43,7 @@ export class SocketService {
       autoConnect: false,
       transports: ['websocket'], // important with RNs
       auth: {
-        accessToken: sessionService.token,
+        accessToken: this.sessionService.token,
       },
     });
 
@@ -59,24 +67,24 @@ export class SocketService {
 
     // connect
     this.socket.on('connect', () => {
-      logService.info(`[ws]::connected to ${APP_HOST}`);
+      this.logService.info(`[ws]::connected to ${APP_HOST}`);
       // Re-join previously join room on a reconnect
       this.rooms.forEach(room => this.socket?.emit('join', room));
     });
 
     // disconnect
     this.socket.on('disconnect', () => {
-      logService.info(`[ws]::disconnected from ${APP_HOST}`);
+      this.logService.info(`[ws]::disconnected from ${APP_HOST}`);
     });
 
     // error
     this.socket.on('error', e => {
-      logService.info('[ws]::error', e);
+      this.logService.info('[ws]::error', e);
     });
   }
 
   reconnect() {
-    logService.info('[ws]::reconnect');
+    this.logService.info('[ws]::reconnect');
 
     // this.socket?.disconnect();
     this.socket?.connect();
@@ -85,7 +93,7 @@ export class SocketService {
   }
 
   disconnect() {
-    logService.info('[ws]::disconnect');
+    this.logService.info('[ws]::disconnect');
     this.socket?.disconnect();
     return this;
   }
@@ -128,7 +136,7 @@ export class SocketService {
       return this;
     }
 
-    logService.info('[ws]:joining room', room);
+    this.logService.info('[ws]:joining room', room);
 
     return this.emit('join', room);
   }
@@ -141,10 +149,8 @@ export class SocketService {
     const i = this.rooms.indexOf(room);
     this.rooms.splice(i, 1);
 
-    logService.info('[ws]:leaving room', room);
+    this.logService.info('[ws]:leaving room', room);
 
     return this.emit('leave', room);
   }
 }
-
-export default new SocketService();

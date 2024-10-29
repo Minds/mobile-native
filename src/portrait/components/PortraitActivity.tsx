@@ -11,19 +11,16 @@ import FloatingBackButton from '~/common/components/FloatingBackButton';
 import MText from '~/common/components/MText';
 import MediaView from '~/common/components/MediaView';
 import ExplicitOverlay from '~/common/components/explicit/ExplicitOverlay';
-import i18n from '~/common/services/i18n.service';
-import sessionService from '~/common/services/session.service';
-import videoPlayerService from '~/common/services/video-player.service';
 import type ActivityModel from '~/newsfeed/ActivityModel';
 import Actions from '~/newsfeed/activity/Actions';
 import Activity from '~/newsfeed/activity/Activity';
 import ActivityActionSheet from '~/newsfeed/activity/ActivityActionSheet';
 import OwnerBlock from '~/newsfeed/activity/OwnerBlock';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import LockV2 from '~/wire/v2/lock/Lock';
 import ActivityContainer from '~/newsfeed/activity/ActivityContainer';
-
 import { useCarouselFocus } from '../PortraitViewerScreen';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   entity: ActivityModel;
@@ -46,14 +43,14 @@ const PortraitActivity = observer((props: PropsType) => {
   const store = useLocalStore(() => ({
     comments: new CommentsStore(props.entity),
     toggleVolume() {
-      videoPlayerService.current?.toggleVolume();
+      sp.resolve('videoPlayer').current?.toggleVolume();
     },
   }));
 
   const focused = useCarouselFocus();
   const insets = useSafeAreaInsets();
 
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const entity: ActivityModel = props.entity;
   const mediaRef = useRef<MediaView>(null);
   const remindRef = useRef<Activity>(null);
@@ -62,7 +59,7 @@ const PortraitActivity = observer((props: PropsType) => {
   const hasRemind = !!entity.remind_object;
   const { current: cleanBottom } = useRef({
     paddingBottom: insets.bottom ? insets.bottom - 10 : 0,
-    backgroundColor: ThemedStyles.getColor('PrimaryBackground'),
+    backgroundColor: sp.styles.getColor('PrimaryBackground'),
   });
   const { current: cleanTop } = useRef({
     paddingTop: insets.top
@@ -80,7 +77,7 @@ const PortraitActivity = observer((props: PropsType) => {
 
   useEffect(() => {
     if (focused) {
-      const user = sessionService.getUser();
+      const user = sp.session.getUser();
 
       if (
         ((user.plus && !user.disable_autoplay_videos) || props.forceAutoplay) &&
@@ -120,11 +117,11 @@ const PortraitActivity = observer((props: PropsType) => {
         <MText
           numberOfLines={1}
           style={[theme.fontM, theme.colorSecondaryText, theme.paddingRight]}>
-          {i18n.date(parseInt(entity.time_created, 10) * 1000, 'friendly')}
+          {sp.i18n.date(parseInt(entity.time_created, 10) * 1000, 'friendly')}
           {!!entity.edited && (
             <MText style={[theme.fontS, theme.colorSecondaryText]}>
               {' '}
-              · {i18n.t('edited').toUpperCase()}
+              · {sp.i18n.t('edited').toUpperCase()}
             </MText>
           )}
         </MText>
@@ -204,7 +201,7 @@ const PortraitActivity = observer((props: PropsType) => {
             <Icon
               onPress={store.toggleVolume}
               name={
-                videoPlayerService.currentVolume === 0
+                sp.resolve('videoPlayer').currentVolume === 0
                   ? 'volume-mute'
                   : 'volume-high'
               }
@@ -224,7 +221,7 @@ const PortraitActivity = observer((props: PropsType) => {
 
 export default withErrorBoundary(PortraitActivity);
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   mainContainer: [window, 'flexContainer', 'bgSecondaryBackground'],
   backButton: {
     position: undefined,

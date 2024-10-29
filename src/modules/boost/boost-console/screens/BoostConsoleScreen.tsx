@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import React, { useEffect, useRef } from 'react';
 import { FlatList, View } from 'react-native';
 import CenteredLoading from '~/common/components/CenteredLoading';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { H4, IconButton, Screen, ScreenHeader } from '~ui';
 import { useTranslation } from '../../locales';
 import BoostConsoleStore from '../boost-console.store';
@@ -13,6 +13,7 @@ import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
 import { IS_IPAD } from '~/config/Config';
 import BoostFeed from '../components/v3/BoostFeed';
 import OnboardingOverlay from '~/components/OnboardingOverlay';
+import sp from '~/services/serviceProvider';
 
 interface BoostConsoleScreenProps {
   route: RouteProp<any>;
@@ -130,7 +131,7 @@ function BoostConsoleScreen({
 
 export default observer(BoostConsoleScreen);
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   list: ['bgPrimaryBackground', 'flexContainer'],
   emptyContent: ['alignCenter', 'marginTop12x'],
 });

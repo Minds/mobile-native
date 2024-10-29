@@ -1,23 +1,30 @@
 import React, { useRef } from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Tooltip } from 'react-native-elements';
-import MText from '../../../../../common/components/MText';
-import ThemedStyles from '../../../../../styles/ThemedStyles';
-import { B3 } from '~ui';
-import i18n from '~/common/services/i18n.service';
+import MText from '~/common/components/MText';
 
-const ToolTipText = () => (
-  <View>
-    <MText style={styles.tooltipTitle}>Casual · 1x</MText>
-    <MText style={styles.tooltipText}>{i18n.t('wallet.activity.oneDay')}</MText>
-    <MText style={styles.tooltipTitle}>Core · 2x</MText>
-    <MText style={styles.tooltipText}>
-      {i18n.t('wallet.activity.threeDay')}
-    </MText>
-    <MText style={styles.tooltipTitle}>Hardcore · 3x</MText>
-    <MText style={styles.tooltipText}>{i18n.t('wallet.activity.sixDay')}</MText>
-  </View>
-);
+import { B3 } from '~ui';
+import sp from '~/services/serviceProvider';
+
+const ToolTipText = () => {
+  const i18n = sp.i18n;
+  return (
+    <View>
+      <MText style={styles.tooltipTitle}>Casual · 1x</MText>
+      <MText style={styles.tooltipText}>
+        {i18n.t('wallet.activity.oneDay')}
+      </MText>
+      <MText style={styles.tooltipTitle}>Core · 2x</MText>
+      <MText style={styles.tooltipText}>
+        {i18n.t('wallet.activity.threeDay')}
+      </MText>
+      <MText style={styles.tooltipTitle}>Hardcore · 3x</MText>
+      <MText style={styles.tooltipText}>
+        {i18n.t('wallet.activity.sixDay')}
+      </MText>
+    </View>
+  );
+};
 
 type PropsType = {
   multiplier: any;
@@ -27,7 +34,7 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
   const activityLevel =
     typeof multiplier === 'string' ? parseInt(multiplier) : multiplier;
   const tooltipRef = useRef<any>();
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const getLevelStyle = (level: number) => {
     const backgroundLevels = {
       level1: { backgroundColor: '#69A617' },
@@ -92,7 +99,7 @@ const ActivityMultiplier = ({ multiplier }: PropsType) => {
         containerStyle={theme.borderRadius}
         width={250}
         height={200}
-        backgroundColor={ThemedStyles.getColor('Link')}
+        backgroundColor={sp.styles.getColor('Link')}
         popover={<ToolTipText />}>
         <View />
       </Tooltip>

@@ -2,33 +2,35 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef } from 'react';
 import moment from 'moment-timezone';
 import MenuItem from '../../common/components/menus/MenuItem';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { Tooltip } from 'react-native-elements';
 import useOnboardingProgress from './useOnboardingProgress';
 import { observer } from 'mobx-react';
-import SettingsStore from '../../settings/SettingsStore';
+
 import { Spacer } from '~/common/ui';
 import { useThrottledCallback } from '~/common/hooks/useDebouncedCallback';
+import sp from '~/services/serviceProvider';
 
 let shownOnce = false;
 /**
  * Initial onboarding button
  */
 export default observer(function InitialOnboardingButton() {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const tooltipRef = useRef<Tooltip>(null);
   const navigation = useNavigation();
 
   // get onboarding progress
   const progressStore = useOnboardingProgress();
+  const settings = sp.resolve('settings');
+  const i18n = sp.i18n;
 
   useFocusEffect(
     useThrottledCallback(
       () => {
         if (
-          SettingsStore.ignoreOnboarding &&
-          SettingsStore.ignoreOnboarding.isAfter(moment())
+          settings.ignoreOnboarding &&
+          settings.ignoreOnboarding.isAfter(moment())
         ) {
           return;
         }
@@ -73,8 +75,8 @@ export default observer(function InitialOnboardingButton() {
   if (
     !progressStore.result ||
     progressStore.result.is_completed ||
-    (SettingsStore.ignoreOnboarding &&
-      SettingsStore.ignoreOnboarding.isAfter(moment())) ||
+    (settings.ignoreOnboarding &&
+      settings.ignoreOnboarding.isAfter(moment())) ||
     progressStore.result.id === 'OngoingOnboardingGroup' // disable ongoing onboarding temporarily
   ) {
     return null;

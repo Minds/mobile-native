@@ -4,16 +4,16 @@ import { View } from 'react-native';
 import type { BottomSheetModal } from '@gorhom/bottom-sheet';
 
 import { DiscoveryTrendsListItem } from './DiscoveryTrendsListItem';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import i18n from '../../../common/services/i18n.service';
-import Button from '../../../common/components/Button';
-import { InjectItem } from '../../../common/components/FeedList';
+
+import Button from '~/common/components/Button';
+import { InjectItem } from '~/common/components/FeedListInjectedItem';
 import type DiscoveryV2Store from '../DiscoveryV2Store';
-import CenteredLoading from '../../../common/components/CenteredLoading';
+import CenteredLoading from '~/common/components/CenteredLoading';
 import DiscoveryTrendPlaceHolder from './DiscoveryTrendPlaceHolder';
 import DiscoveryTagsManager from '../tags/DiscoveryTagsManager';
-import MText from '../../../common/components/MText';
+import MText from '~/common/components/MText';
 import FeedListSticky from '~/common/components/FeedListSticky';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   plus?: boolean;
@@ -74,6 +74,8 @@ export const DiscoveryTrendsList = observer(
       ]);
     }
 
+    const i18n = sp.i18n;
+
     /**
      * Render
      */
@@ -110,7 +112,7 @@ export const DiscoveryTrendsList = observer(
   },
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   emptyContainer: ['halfHeight', 'alignCenter', 'justifyCenter', 'flexColumn'],
   emptyMessage: [
     'fontXXXL',

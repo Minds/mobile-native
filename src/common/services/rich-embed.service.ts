@@ -1,13 +1,15 @@
 import type { MetaType } from '../stores/RichEmbedStore';
-import api from './api.service';
+import type { ApiService } from './api.service';
 
-class RichEmbedService {
+export class RichEmbedService {
+  constructor(private api: ApiService) {}
+
   async getMeta(url): Promise<MetaType> {
     if (!url) {
       return null;
     }
 
-    let response: any = await api.get('api/v1/newsfeed/preview', { url });
+    let response: any = await this.api.get('api/v1/newsfeed/preview', { url });
 
     if (!response) {
       return null;
@@ -37,5 +39,3 @@ class RichEmbedService {
     return meta;
   }
 }
-
-export default new RichEmbedService();

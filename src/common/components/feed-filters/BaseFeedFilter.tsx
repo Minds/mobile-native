@@ -3,11 +3,10 @@ import { observer } from 'mobx-react';
 import { Keyboard, TextStyle, TouchableOpacity, ViewStyle } from 'react-native';
 import MdIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
-
-import i18n from '~/common/services/i18n.service';
-import ThemedStyles, { useStyle } from '~/styles/ThemedStyles';
 import MText from '../MText';
 import { BottomSheetButton, BottomSheetModal } from '../bottom-sheet';
+import sp from '~/services/serviceProvider';
+import { useStyle } from '~/styles/hooks';
 
 export type BaseFeedFilterPropsType = {
   hideLabel?: boolean;
@@ -50,16 +49,16 @@ const BaseFeedFilter = (props: BaseFeedFilterPropsType) => {
         <MdIcon
           name="filter-variant"
           size={18}
-          style={ThemedStyles.style.colorIcon}
+          style={sp.styles.style.colorIcon}
         />
         {!props.hideLabel && (
-          <MText style={textStyle}>{props.label || i18n.t('filter')}</MText>
+          <MText style={textStyle}>{props.label || sp.i18n.t('filter')}</MText>
         )}
       </TouchableOpacity>
       <BottomSheetModal ref={ref} title={props.title}>
         <BottomSheetScrollView>
           {props.children}
-          <BottomSheetButton text={i18n.t('close')} onPress={close} />
+          <BottomSheetButton text={sp.i18n.t('close')} onPress={close} />
         </BottomSheetScrollView>
       </BottomSheetModal>
     </>

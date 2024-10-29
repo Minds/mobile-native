@@ -7,11 +7,11 @@ import {
 import { PermissionsAndroid, Platform } from 'react-native';
 
 import { router } from './push/v2/router';
-import logService from './log.service';
-import analyticsService from './analytics.service';
 import { NotificationActionResponse } from 'react-native-notifications/lib/src/interfaces/NotificationActionResponse';
-import apiService from './api.service';
 import { IS_IOS } from '~/config/Config';
+import type { ApiService } from './api.service';
+import type { AnalyticsService } from './analytics.service';
+import type { LogService } from './log.service';
 
 /**
  * Push Service
@@ -21,7 +21,11 @@ export class PushService {
   /**
    * Constructor
    */
-  constructor() {
+  constructor(
+    private apiService: ApiService,
+    private analyticsService: AnalyticsService,
+    private logService: LogService,
+  ) {
     Notifications.events().registerNotificationOpened(
       (
         notification: Notification,
@@ -61,7 +65,8 @@ export class PushService {
     }
     // delay navigation on app start
     setTimeout(() => {
-      data.uri && analyticsService.trackPushNotificationOpenedEvent(data.uri);
+      data.uri &&
+        this.analyticsService.trackPushNotificationOpenedEvent(data.uri);
       router.navigate(data);
     }, 500);
   };
@@ -84,13 +89,13 @@ export class PushService {
         console.log('[PushService] Device Token Received', event.deviceToken);
         if (event.deviceToken) {
           this.token = event.deviceToken;
-          apiService
+          this.apiService
             .post('api/v3/notifications/push/token', {
               service: IS_IOS ? 'apns' : 'fcm',
               token: event.deviceToken,
             })
-            .catch(err => logService.exception('[PushService]', err))
-            .then(() => logService.log('[PushService]: Registered'));
+            .catch(err => this.logService.exception('[PushService]', err))
+            .then(() => this.logService.log('[PushService]: Registered'));
         }
       },
     );
@@ -136,5 +141,3 @@ export class PushService {
     return this.token;
   }
 }
-
-export default new PushService();

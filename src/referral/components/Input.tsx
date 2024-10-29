@@ -5,12 +5,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { showNotification } from '../../../AppMessages';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+import { showNotification } from '~/../AppMessages';
+
 import * as Clipboard from 'expo-clipboard';
-import TextInput from '../../common/components/TextInput';
-import MText from '../../common/components/MText';
+import TextInput from '~/common/components/TextInput';
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
 interface InputProps {
   textToCopy: string;
@@ -19,13 +19,13 @@ interface InputProps {
 }
 
 const Input = ({ textToCopy, label, style }: InputProps) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const _textInput = useRef<TextInputType>();
 
   const _onFocus = useCallback(() => {
     _textInput.current!.focus();
     Clipboard.setStringAsync(textToCopy);
-    showNotification(i18n.t('copied'), 'info', 3000);
+    showNotification(sp.i18n.t('copied'), 'info', 3000);
   }, [textToCopy]);
 
   return (
@@ -58,7 +58,7 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
             theme.paddingHorizontal4x,
             styles.copyText,
           ]}>
-          {i18n.t('copy')}
+          {sp.i18n.t('copy')}
         </MText>
         <TouchableOpacity
           onPress={_onFocus}

@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
 import { View, ViewProps } from 'react-native';
 import { FC } from 'react';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { LinearGradient } from 'expo-linear-gradient';
+import sp from '~/services/serviceProvider';
 
 interface FadeViewProps extends ViewProps {
   fades: ('left' | 'right' | 'top' | 'bottom')[];
@@ -21,7 +22,7 @@ const FadeView: FC<FadeViewProps> = ({
   ...props
 }) => {
   const backgroundColor =
-    backgroundColorProp || ThemedStyles.getColor('PrimaryBackground');
+    backgroundColorProp || sp.styles.getColor('PrimaryBackground');
   const endColor = backgroundColor + 'FF';
   const startColor = backgroundColor + '00';
 
@@ -100,7 +101,7 @@ const FadeView: FC<FadeViewProps> = ({
     });
 
     return array;
-  }, [fades]);
+  }, [endColor, fadeLength, fades, startColor]);
 
   return (
     <View {...props}>

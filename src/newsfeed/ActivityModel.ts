@@ -1,32 +1,20 @@
 import { runInAction, action, observable, decorate } from 'mobx';
 import { FlatList, Alert, Platform } from 'react-native';
+import { Image, ImageSource } from 'expo-image';
 import debounce from 'lodash/debounce';
+
 import BaseModel from '../common/BaseModel';
 import UserModel from '../channel/UserModel';
-import wireService from '../wire/WireService';
-import sessionService from '../common/services/session.service';
-import {
-  setPinPost,
-  deleteItem,
-  unfollow,
-  follow,
-} from '../newsfeed/NewsfeedService';
-import api from '../common/services/api.service';
-import { isApiError, isNetworkError } from '~/common/services/ApiErrors';
 
+import { isApiError, isNetworkError } from '~/common/services/ApiErrors';
 import { GOOGLE_PLAY_STORE, MINDS_CDN_URI, APP_URI } from '../config/Config';
-import i18n from '../common/services/i18n.service';
-import logService from '../common/services/log.service';
 import type { ThumbSize, LockType } from '../types/Common';
 import GroupModel from '../groups/GroupModel';
 import { SupportTiersType } from '../wire/WireTypes';
-import mindsService from '../common/services/minds-config.service';
-import NavigationService from '../navigation/NavigationService';
 import { showNotification } from '../../AppMessages';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
-import socketService from '~/common/services/socket.service';
-import { Image, ImageSource } from 'expo-image';
 import { BoostButtonText } from '../modules/boost/boost-composer/boost.store';
+import sp from '~/services/serviceProvider';
 
 type Thumbs = Record<ThumbSize, string> | Record<ThumbSize, string>[];
 
@@ -265,7 +253,7 @@ export default class ActivityModel extends BaseModel {
           this.type === 'comment'
             ? this.thumbnail_src
             : mediaProxyUrl(this.thumbnail_src),
-        headers: api.buildHeaders(),
+        headers: sp.api.buildHeaders(),
       };
     }
 
@@ -276,12 +264,12 @@ export default class ActivityModel extends BaseModel {
     ) {
       return {
         uri: this.thumbnail_src,
-        headers: api.buildHeaders(),
+        headers: sp.api.buildHeaders(),
       };
     }
 
     if (this.thumbnails && this.thumbnails[size]) {
-      return { uri: this.thumbnails[size], headers: api.buildHeaders() };
+      return { uri: this.thumbnails[size], headers: sp.api.buildHeaders() };
     }
 
     // fallback to old behavior
@@ -290,19 +278,19 @@ export default class ActivityModel extends BaseModel {
       const unlock = this.isOwner() ? '?unlock_paywall=1' : '';
       return {
         uri: APP_URI + 'fs/v1/thumbnail/' + guid + unlock,
-        headers: api.buildHeaders(),
+        headers: sp.api.buildHeaders(),
       };
     }
 
     if (this.custom_type === 'batch') {
       return {
         uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.entity_guid + '/' + size,
-        headers: api.buildHeaders(),
+        headers: sp.api.buildHeaders(),
       };
     }
     return {
       uri: MINDS_CDN_URI + 'fs/v1/thumbnail/' + this.guid + '/' + size,
-      headers: api.buildHeaders(),
+      headers: sp.api.buildHeaders(),
     };
   }
 
@@ -319,7 +307,7 @@ export default class ActivityModel extends BaseModel {
   }
 
   shouldBeBlured(): boolean {
-    const user = sessionService.getUser();
+    const user = sp.session.getUser();
 
     if (user && user.mature) {
       return false;
@@ -364,7 +352,7 @@ export default class ActivityModel extends BaseModel {
   @action
   toggleMatureVisibility = () => {
     if (GOOGLE_PLAY_STORE || Platform.OS === 'ios') {
-      showNotification(i18n.t('activity.notSafeComment'));
+      showNotification(sp.i18n.t('activity.notSafeComment'));
       return;
     }
     this.mature_visibility = !this.mature_visibility;
@@ -409,6 +397,7 @@ export default class ActivityModel extends BaseModel {
    */
   @action
   async unlock(ignoreError = false) {
+    const wireService = sp.resolve('wire');
     try {
       const result: object | false = await wireService.unlock(this.guid);
       if (result) {
@@ -427,7 +416,7 @@ export default class ActivityModel extends BaseModel {
         this.perma_url &&
         this.perma_url?.startsWith(APP_URI)
       ) {
-        NavigationService.push('BlogView', {
+        sp.navigation.push('BlogView', {
           guid: this.entity_guid,
           unlock: true,
         });
@@ -446,7 +435,7 @@ export default class ActivityModel extends BaseModel {
       }
 
       if (isNetworkError(err)) {
-        showNotification(i18n.t('cantReachServer'), 'warning', 3000);
+        showNotification(sp.i18n.t('cantReachServer'), 'warning', 3000);
       }
 
       return -1;
@@ -466,7 +455,7 @@ export default class ActivityModel extends BaseModel {
     }
     let type: LockType = support_tier.public ? 'members' : 'paywall';
 
-    if (mindsService.settings.plus.support_tier_urn === support_tier.urn) {
+    if (sp.config.settings.plus.support_tier_urn === support_tier.urn) {
       type = 'plus';
     }
 
@@ -489,10 +478,11 @@ export default class ActivityModel extends BaseModel {
       this.wire_threshold && 'support_tier' in this.wire_threshold
         ? this.wire_threshold.support_tier
         : null;
+    const i18n = sp.i18n;
 
     switch (lockType) {
       case 'plus':
-        NavigationService.push('UpgradeScreen', {
+        sp.navigation.push('UpgradeScreen', {
           support_tier,
           entity: this,
           onComplete: (resultComplete: any) => {
@@ -511,7 +501,7 @@ export default class ActivityModel extends BaseModel {
         break;
       case 'members':
       case 'paywall':
-        NavigationService.push('JoinMembershipScreen', {
+        sp.navigation.push('JoinMembershipScreen', {
           entity: this,
           onComplete: (resultComplete: any) => {
             if (resultComplete && resultComplete.payload.method === 'onchain') {
@@ -538,10 +528,10 @@ export default class ActivityModel extends BaseModel {
 
     try {
       this.pinned = !this.pinned;
-      await setPinPost(this.guid, this.pinned);
+      await sp.resolve('newsfeed').setPinPost(this.guid, this.pinned);
     } catch (e) {
       this.pinned = !this.pinned;
-      Alert.alert(i18n.t('errorPinnedPost'));
+      Alert.alert(sp.i18n.t('errorPinnedPost'));
     }
   }
 
@@ -550,7 +540,7 @@ export default class ActivityModel extends BaseModel {
       return this.has_reminded;
     }
     try {
-      const result = await api.get<{ has_reminded: boolean }>(
+      const result = await sp.api.get<{ has_reminded: boolean }>(
         `api/v3/newsfeed/activity/has-reminded/${this.guid}`,
       );
       if (result && result.has_reminded !== undefined) {
@@ -566,24 +556,24 @@ export default class ActivityModel extends BaseModel {
   @action
   async deleteEntity() {
     try {
-      await deleteItem(this.guid);
+      await sp.resolve('newsfeed').deleteItem(this.guid);
       this.removeFromList();
       ActivityModel.events.emit('deleteEntity', this);
     } catch (err) {
-      logService.exception('[ActivityModel]', err);
+      sp.log.exception('[ActivityModel]', err);
       throw err;
     }
   }
 
   async deleteRemind() {
     try {
-      await api.delete(`api/v3/newsfeed/activity/remind/${this.guid}`);
+      await sp.api.delete(`api/v3/newsfeed/activity/remind/${this.guid}`);
       if (this.remind_users?.length) {
         this.removeFromList();
       }
       ActivityModel.events.emit('deleteEntity', this);
     } catch (err) {
-      logService.exception('[ActivityModel]', err);
+      sp.log.exception('[ActivityModel]', err);
       throw err;
     }
   }
@@ -591,25 +581,27 @@ export default class ActivityModel extends BaseModel {
   @action
   async hideEntity() {
     try {
-      await api.put(`api/v3/newsfeed/hide-entities/${this.guid}`);
+      await sp.api.put(`api/v3/newsfeed/hide-entities/${this.guid}`);
       this.removeFromList();
       ActivityModel.events.emit('hideEntity', this);
     } catch (err) {
-      logService.exception('[ActivityModel]', err);
+      sp.log.exception('[ActivityModel]', err);
       throw err;
     }
   }
 
   @action
   async toggleFollow() {
-    const method = this['is:following'] ? unfollow : follow;
+    const method = this['is:following']
+      ? sp.resolve('newsfeed').unfollow
+      : sp.resolve('newsfeed').follow;
     try {
       await method(this.guid);
       runInAction(() => {
         this['is:following'] = !this['is:following'];
       });
     } catch (err) {
-      logService.exception('[ActivityModel]', err);
+      sp.log.exception('[ActivityModel]', err);
       throw err;
     }
   }
@@ -649,7 +641,7 @@ export default class ActivityModel extends BaseModel {
   }
 
   private onMetricsUpdate = (event: string) => {
-    logService.log('[ActivityModel] metrics update', event);
+    sp.log.log('[ActivityModel] metrics update', event);
 
     try {
       const metricsEvent: MetricsChangedEvent = JSON.parse(event);
@@ -663,7 +655,7 @@ export default class ActivityModel extends BaseModel {
         }
       });
     } catch (e) {
-      logService.error(e, event);
+      sp.log.error(e, event);
       return;
     }
   };
@@ -677,8 +669,8 @@ export default class ActivityModel extends BaseModel {
    * listens to metrics updates
    */
   private listenForMetrics(): void {
-    socketService.join(this.metricsRoom);
-    socketService.subscribe(this.metricsRoom, this.onMetricsUpdate);
+    sp.socket.join(this.metricsRoom);
+    sp.socket.subscribe(this.metricsRoom, this.onMetricsUpdate);
   }
 
   /**
@@ -686,8 +678,8 @@ export default class ActivityModel extends BaseModel {
    */
   private unlistenFromMetrics(): void {
     this.listenForMetricsDebounced.cancel();
-    socketService.leave(this.metricsRoom);
-    socketService.unsubscribe(this.metricsRoom, this.onMetricsUpdate);
+    sp.socket.leave(this.metricsRoom);
+    sp.socket.unsubscribe(this.metricsRoom, this.onMetricsUpdate);
   }
 
   /**

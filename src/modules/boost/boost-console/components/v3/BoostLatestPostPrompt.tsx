@@ -1,19 +1,17 @@
 import React from 'react';
 import BaseNotice from '~/common/components/in-feed-notices/notices/BaseNotice';
-import apiService from '~/common/services/api.service';
-import sessionService from '~/common/services/session.service';
-import NavigationService from '~/navigation/NavigationService';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import { showNotification } from '../../../../../../AppMessages';
 import { useTranslation } from '../../../locales';
 import { observer } from 'mobx-react';
+import sp from '~/services/serviceProvider';
 
 const BoostLatestPostPrompt = () => {
-  const user = sessionService.getUser();
+  const user = sp.session.getUser();
   const { t } = useTranslation();
 
   const boostLatestPost = async () => {
-    const response = await apiService.get<any>(
+    const response = await sp.api.get<any>(
       `api/v2/feeds/container/${user.guid}/activities`,
       {
         sync: 1,
@@ -43,7 +41,7 @@ const BoostLatestPostPrompt = () => {
 
     const latestPost = ActivityModel.create(sortedEntitesByTimeCreated[0]);
 
-    return NavigationService.navigate('BoostScreenV2', {
+    return sp.navigation.navigate('BoostScreenV2', {
       entity: latestPost,
     });
   };

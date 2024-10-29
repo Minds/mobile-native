@@ -1,10 +1,9 @@
 import React, { ReactNode } from 'react';
 import { View } from 'react-native';
-import inFeedNoticesService from '~/common/services/in-feed.notices.service';
 import { B2, Button, H3, IconButtonNext, IconNext } from '~/common/ui';
 import { IconNameType } from '~/common/ui/icons/map';
-import ThemedStyles from '~/styles/ThemedStyles';
 import { NoticeName } from '.';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   name?: NoticeName;
@@ -43,8 +42,8 @@ export default function BaseNotice({
       <View style={styles.left}>
         <IconNext name={iconName} size="medium" color="PrimaryText" />
       </View>
-      <View style={ThemedStyles.style.flexContainer}>
-        <View style={ThemedStyles.style.rowJustifySpaceBetween}>
+      <View style={sp.styles.style.flexContainer}>
+        <View style={sp.styles.style.rowJustifySpaceBetween}>
           <H3 bottom="XS">{title}</H3>
           {dismissable && (
             <View style={styles.right}>
@@ -55,7 +54,7 @@ export default function BaseNotice({
                 onPress={() => {
                   if (name) {
                     setDismissed(true);
-                    inFeedNoticesService.dismiss(name);
+                    sp.resolve('inFeedNotices').dismiss(name);
                   }
                   onClose?.();
                 }}
@@ -88,7 +87,7 @@ export default function BaseNotice({
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     'paddingVerticalL',
     'paddingRightL',

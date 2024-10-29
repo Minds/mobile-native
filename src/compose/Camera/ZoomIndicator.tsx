@@ -9,8 +9,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import MText from '../../common/components/MText';
-import ThemedStyles from '../../styles/ThemedStyles';
-
+import sp from '~/services/serviceProvider';
 type PropsType = {
   zoom: Animated.SharedValue<number>;
   zoomVisible: Animated.SharedValue<boolean>;
@@ -73,7 +72,7 @@ export default function ZoomIndicator({
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   text: [
     'centered',
     'fontXXL',

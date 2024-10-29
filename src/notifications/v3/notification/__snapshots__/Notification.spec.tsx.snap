@@ -49,13 +49,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -104,7 +98,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#242424",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -267,7 +261,7 @@ exports[`Notification 24 hours before an offer expires 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -326,13 +320,7 @@ exports[`Notification Affiliate earnings deposited 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -381,7 +369,7 @@ exports[`Notification Affiliate earnings deposited 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#242424",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -488,7 +476,7 @@ exports[`Notification Affiliate earnings deposited 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -547,13 +535,7 @@ exports[`Notification An offer expires 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -602,7 +584,7 @@ exports[`Notification An offer expires 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#242424",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -766,7 +748,7 @@ exports[`Notification An offer expires 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -825,13 +807,7 @@ exports[`Notification Boost accepted 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -880,7 +856,7 @@ exports[`Notification Boost accepted 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#242424",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -987,7 +963,7 @@ exports[`Notification Boost accepted 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -1023,7 +999,7 @@ exports[`Notification Boost accepted 1`] = `
             "borderColor": "#3f4b56",
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "#010100",
           },
         ]
       }
@@ -1068,11 +1044,93 @@ exports[`Notification Boost accepted 1`] = `
             style={
               [
                 {
-                  "padding": 1,
+                  "paddingHorizontal": 16,
+                },
+                {
+                  "paddingVertical": 12,
                 },
               ]
             }
-          />
+          >
+            <View
+              style={null}
+            >
+              <Text
+                selectable={true}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      [
+                        {
+                          "fontFamily": "Roboto_400Regular",
+                          "fontSize": 16,
+                          "lineHeight": 24,
+                        },
+                        {
+                          "fontSize": 18,
+                        },
+                        {
+                          "color": "#F2F2F2",
+                        },
+                        {
+                          "fontFamily": "Roboto_500Medium",
+                          "fontWeight": "500",
+                        },
+                      ],
+                      {
+                        "marginBottom": 4,
+                      },
+                      {
+                        "fontFamily": "Roboto_900Black",
+                        "fontWeight": "700",
+                      },
+                    ],
+                  ]
+                }
+              >
+                TITLE
+              </Text>
+              <Text
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      {
+                        "fontFamily": "Roboto_400Regular",
+                        "fontSize": 16,
+                        "lineHeight": 24,
+                      },
+                      {
+                        "fontSize": 18,
+                      },
+                      {
+                        "color": "#F2F2F2",
+                      },
+                      {
+                        "fontFamily": "Roboto_500Medium",
+                        "fontWeight": "500",
+                      },
+                    ],
+                  ]
+                }
+              >
+                Message
+              </Text>
+            </View>
+            <View />
+          </View>
         </View>
         <View
           style={
@@ -1113,7 +1171,7 @@ exports[`Notification Boost accepted 1`] = `
               ]
             }
           >
-            Invalid date
+            Mar 25, 2018
           </Text>
         </View>
       </View>
@@ -1171,13 +1229,7 @@ exports[`Notification Boost complete 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -1226,7 +1278,7 @@ exports[`Notification Boost complete 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#242424",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -1333,7 +1385,7 @@ exports[`Notification Boost complete 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -1369,7 +1421,7 @@ exports[`Notification Boost complete 1`] = `
             "borderColor": "#3f4b56",
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "#010100",
           },
         ]
       }
@@ -1414,11 +1466,93 @@ exports[`Notification Boost complete 1`] = `
             style={
               [
                 {
-                  "padding": 1,
+                  "paddingHorizontal": 16,
+                },
+                {
+                  "paddingVertical": 12,
                 },
               ]
             }
-          />
+          >
+            <View
+              style={null}
+            >
+              <Text
+                selectable={true}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      [
+                        {
+                          "fontFamily": "Roboto_400Regular",
+                          "fontSize": 16,
+                          "lineHeight": 24,
+                        },
+                        {
+                          "fontSize": 18,
+                        },
+                        {
+                          "color": "#F2F2F2",
+                        },
+                        {
+                          "fontFamily": "Roboto_500Medium",
+                          "fontWeight": "500",
+                        },
+                      ],
+                      {
+                        "marginBottom": 4,
+                      },
+                      {
+                        "fontFamily": "Roboto_900Black",
+                        "fontWeight": "700",
+                      },
+                    ],
+                  ]
+                }
+              >
+                TITLE
+              </Text>
+              <Text
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      {
+                        "fontFamily": "Roboto_400Regular",
+                        "fontSize": 16,
+                        "lineHeight": 24,
+                      },
+                      {
+                        "fontSize": 18,
+                      },
+                      {
+                        "color": "#F2F2F2",
+                      },
+                      {
+                        "fontFamily": "Roboto_500Medium",
+                        "fontWeight": "500",
+                      },
+                    ],
+                  ]
+                }
+              >
+                Message
+              </Text>
+            </View>
+            <View />
+          </View>
         </View>
         <View
           style={
@@ -1459,7 +1593,7 @@ exports[`Notification Boost complete 1`] = `
               ]
             }
           >
-            Invalid date
+            Mar 25, 2018
           </Text>
         </View>
       </View>
@@ -1517,13 +1651,7 @@ exports[`Notification Boost rejected 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -1572,7 +1700,7 @@ exports[`Notification Boost rejected 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#242424",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -1679,7 +1807,7 @@ exports[`Notification Boost rejected 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -1715,7 +1843,7 @@ exports[`Notification Boost rejected 1`] = `
             "borderColor": "#3f4b56",
           },
           {
-            "backgroundColor": undefined,
+            "backgroundColor": "#010100",
           },
         ]
       }
@@ -1760,11 +1888,93 @@ exports[`Notification Boost rejected 1`] = `
             style={
               [
                 {
-                  "padding": 1,
+                  "paddingHorizontal": 16,
+                },
+                {
+                  "paddingVertical": 12,
                 },
               ]
             }
-          />
+          >
+            <View
+              style={null}
+            >
+              <Text
+                selectable={true}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      [
+                        {
+                          "fontFamily": "Roboto_400Regular",
+                          "fontSize": 16,
+                          "lineHeight": 24,
+                        },
+                        {
+                          "fontSize": 18,
+                        },
+                        {
+                          "color": "#F2F2F2",
+                        },
+                        {
+                          "fontFamily": "Roboto_500Medium",
+                          "fontWeight": "500",
+                        },
+                      ],
+                      {
+                        "marginBottom": 4,
+                      },
+                      {
+                        "fontFamily": "Roboto_900Black",
+                        "fontWeight": "700",
+                      },
+                    ],
+                  ]
+                }
+              >
+                TITLE
+              </Text>
+              <Text
+                selectable={false}
+                style={
+                  [
+                    {
+                      "color": "#F2F2F2",
+                    },
+                    {
+                      "fontFamily": "Roboto_400Regular",
+                    },
+                    [
+                      {
+                        "fontFamily": "Roboto_400Regular",
+                        "fontSize": 16,
+                        "lineHeight": 24,
+                      },
+                      {
+                        "fontSize": 18,
+                      },
+                      {
+                        "color": "#F2F2F2",
+                      },
+                      {
+                        "fontFamily": "Roboto_500Medium",
+                        "fontWeight": "500",
+                      },
+                    ],
+                  ]
+                }
+              >
+                Message
+              </Text>
+            </View>
+            <View />
+          </View>
         </View>
         <View
           style={
@@ -1805,7 +2015,7 @@ exports[`Notification Boost rejected 1`] = `
               ]
             }
           >
-            Invalid date
+            Mar 25, 2018
           </Text>
         </View>
       </View>
@@ -1863,13 +2073,7 @@ exports[`Notification Gift boost created 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -1918,7 +2122,7 @@ exports[`Notification Gift boost created 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#242424",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2053,7 +2257,7 @@ exports[`Notification Gift boost created 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -2139,7 +2343,7 @@ exports[`Notification Gift boost created 1`] = `
           style={
             {
               "alignItems": "center",
-              "borderColor": undefined,
+              "borderColor": "#FFD048",
               "borderRadius": 100,
               "borderWidth": 1,
               "bottom": 0,
@@ -2259,13 +2463,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -2314,7 +2512,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#242424",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2478,7 +2676,7 @@ exports[`Notification Receiver accepts an offer 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -2537,13 +2735,7 @@ exports[`Notification Receiver declines an offer 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -2592,7 +2784,7 @@ exports[`Notification Receiver declines an offer 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#242424",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2756,7 +2948,7 @@ exports[`Notification Receiver declines an offer 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -2815,13 +3007,7 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -2870,7 +3056,7 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#242424",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -2977,7 +3163,7 @@ exports[`Notification Referrer affiliate earnings deposited 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFD048",
             },
           ]
         }
@@ -3036,13 +3222,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
         <Image
           source={
             {
-              "headers": {
-                "App-Version": "3.8.0",
-                "Cache-Control": "no-cache, no-store, must-revalidate",
-                "Content-Type": "application/json",
-                "Pragma": "no-cache",
-                "no-cache": "1",
-              },
+              "headers": undefined,
               "uri": "https://cdn.minds.com/icon/fakeGuid/medium/undefined",
             }
           }
@@ -3091,7 +3271,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
               style={
                 {
                   "alignItems": "center",
-                  "backgroundColor": "#242424",
+                  "backgroundColor": "#FFD048",
                   "borderRadius": 14,
                   "height": 24,
                   "justifyContent": "center",
@@ -3255,7 +3435,7 @@ exports[`Notification Sender sends a Supermind offer 1`] = `
               "width": 10,
             },
             {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFD048",
             },
           ]
         }

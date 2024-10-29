@@ -2,7 +2,6 @@ import React from 'react';
 import { observer } from 'mobx-react';
 import { View } from 'react-native';
 
-import ThemedStyles from '../styles/ThemedStyles';
 import { UpgradeStoreType } from './createUpgradeStore';
 import MText from '../common/components/MText';
 import MenuItemOption from '../common/components/menus/MenuItemOption';
@@ -12,8 +11,8 @@ import type {
   SubscriptionIOS,
 } from 'react-native-iap';
 import { PlanList } from './PlanOptions';
-import i18n from '~/common/services/i18n.service';
 import { IS_IOS } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   store: UpgradeStoreType;
@@ -24,7 +23,7 @@ type PropsType = {
  * Plan options component
  */
 const PlanOptionsIAP = observer(({ store, subscriptions }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const isTokens = store.method === 'tokens';
   const plans = isTokens ? store.plansTokens : store.plansUSD;
 
@@ -67,7 +66,7 @@ const PlanListIOSIAP = observer(
     subscriptions: SubscriptionIOS[];
     store: UpgradeStoreType;
   }) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
     return (
       <>
         {subscriptions.map(subscription => {
@@ -77,7 +76,7 @@ const PlanListIOSIAP = observer(
           const currency = subscription.currency || 'USD';
           const price = isMonthly
             ? subscription.localizedPrice
-            : (cost / 12).toLocaleString(i18n.getDeviceLocale(), {
+            : (cost / 12).toLocaleString(sp.i18n.getDeviceLocale(), {
                 style: 'currency',
                 currency,
               });
@@ -121,7 +120,7 @@ const PlanListAndroidIAP = observer(
     subscriptions: SubscriptionAndroid[];
     store: UpgradeStoreType;
   }) => {
-    const theme = ThemedStyles.style;
+    const theme = sp.styles.style;
 
     return (
       <>
@@ -134,7 +133,7 @@ const PlanListAndroidIAP = observer(
             const detail = ' / month';
             const price = isMonthly
               ? pricingPhases.formattedPrice
-              : (cost / 12).toLocaleString(i18n.getDeviceLocale(), {
+              : (cost / 12).toLocaleString(sp.i18n.getDeviceLocale(), {
                   style: 'currency',
                   currency: pricingPhases.priceCurrencyCode,
                 });

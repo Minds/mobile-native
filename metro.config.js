@@ -19,8 +19,25 @@ config.resolver.nodeModulesPaths = [
 // Override getTransformOptions so we can turn inlineRequires on
 config.transformer.getTransformOptions = async () => ({
   transform: {
-    experimentalImportSupport: false,
-    inlineRequires: true,
+    experimentalImportSupport: true,
+    inlineRequires: {
+      blockList: {
+        // require() calls in `DoNotInlineHere.js` will not be inlined.
+        [require.resolve('./src/services/serviceProvider.ts')]: true,
+
+        // require() calls anywhere else will be inlined, unless they
+        // match any entry nonInlinedRequires (see below).
+      },
+    },
+    nonInlinedRequires: [
+      // We can remove this option and rely on the default after
+      // https://github.com/facebook/metro/pull/1126 is released.
+      'React',
+      'react',
+      'react/jsx-dev-runtime',
+      'react/jsx-runtime',
+      'react-native',
+    ],
     unstable_disableES6Transforms: false,
   },
   preloadedModules: false,

@@ -6,9 +6,9 @@ import React, {
   useRef,
 } from 'react';
 import { BottomSheet } from '~/common/components/bottom-sheet';
-import ThemedStyles from '~/styles/ThemedStyles';
-import PosterStackNavigator from './PosterStackNavigator';
 
+import PosterStackNavigator from './PosterStackNavigator';
+import sp from '~/services/serviceProvider';
 const SNAP_POINTS = ['90%'];
 
 /**
@@ -29,9 +29,13 @@ export default forwardRef((props: any, ref) => {
     },
   }));
 
-  const handleVisibilityChange = useCallback(
-    visible => {
-      if (!visible) {
+  /**
+   * Handle bottom sheet change
+   * Attention: We were using onVisibilityChange but it was not working as expected (it was triggered with false when the keyboard was open)
+   */
+  const handleChange = useCallback(
+    state => {
+      if (state === -1) {
         navigation.navigate('PosterOptions');
       }
     },
@@ -42,9 +46,11 @@ export default forwardRef((props: any, ref) => {
     <BottomSheet
       // @ts-ignore
       ref={sheetRef}
-      handleStyle={ThemedStyles.style.bgPrimaryBackground}
-      onVisibilityChange={handleVisibilityChange}
+      keyboardBlurBehavior="none"
+      handleStyle={sp.styles.style.bgPrimaryBackground}
+      onChange={handleChange}
       enableContentPanningGesture
+      keyboardBehavior="interactive"
       snapPoints={SNAP_POINTS}>
       <PosterStackNavigator />
     </BottomSheet>

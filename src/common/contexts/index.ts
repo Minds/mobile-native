@@ -1,16 +1,13 @@
-import newsfeed from '../../newsfeed/NewsfeedStore';
-import user from '../../auth/UserStore';
-import wire from '../../wire/WireStore';
-import hashtag from '../../common/stores/HashtagStore';
-import reportStore from '../../report/ReportStore';
-import wallet from '../../wallet/WalletStore';
-
-import sessionService from '../services/session.service';
-import logService from '../services/log.service';
-import DiscoveryV2Store from '../../discovery/v2/DiscoveryV2Store';
+import newsfeed from '~/newsfeed/NewsfeedStore';
+import user from '~/auth/UserStore';
+import wire from '~/wire/WireStore';
+import hashtag from '~/common/stores/HashtagStore';
+import reportStore from '~/report/ReportStore';
+import wallet from '~/wallet/WalletStore';
+import DiscoveryV2Store from '~/discovery/v2/DiscoveryV2Store';
 import { RecentSubscriptionsStore } from '~/channel/subscription/RecentSubscriptionsStore';
 import { DismissalStore } from '../stores/DismissalStore';
-
+import sp from '~/services/serviceProvider';
 /**
  * This is initialized by /src/AppStores.ts and uses MobXProviderContext
  * to pass through to the `inject` pattern or `useLegacyStores`
@@ -28,18 +25,18 @@ export function createClassStores() {
     recentSubscriptions: new RecentSubscriptionsStore(),
     dismissal: new DismissalStore(),
   };
-  sessionService.onLogout(() => {
+  sp.session.onLogout(() => {
     for (const id in stores) {
       if (stores[id].reset) {
-        logService.info(`Reseting legacy store ${id}`);
+        sp.log.info(`Reseting legacy store ${id}`);
         stores[id].reset();
       }
     }
   });
-  sessionService.onLogin(newUser => {
+  sp.session.onLogin(newUser => {
     for (const id in stores) {
       if (stores[id].onLogin) {
-        logService.info(`Calling onLogin in legacy store ${id}`);
+        sp.log.info(`Calling onLogin in legacy store ${id}`);
         stores[id].onLogin(newUser);
       }
     }

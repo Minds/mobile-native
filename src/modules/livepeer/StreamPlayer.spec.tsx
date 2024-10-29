@@ -2,6 +2,11 @@ import { render } from '@testing-library/react-native';
 import { usePlaybackInfo } from '@livepeer/react-native/hooks';
 import { StreamPlayer } from './StreamPlayer';
 import useRecordedVideo from './hooks/useRecordedVideo';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+// mock services
+sp.mockService('styles');
 
 jest.mock('@livepeer/react-native/hooks');
 jest.mock('@livepeer/react-native', () => ({

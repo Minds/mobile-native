@@ -2,10 +2,18 @@ import 'react-native';
 import React from 'react';
 import { render } from '@testing-library/react-native';
 
-import TrendingHashtagPartial from '../../../../../src/discovery/v2/trends/item-partials/TrendingHashtagPartial';
-import RichPartial from '../../../../../src/discovery/v2/trends/item-partials/RichPartial';
-import HeroPartial from '../../../../../src/discovery/v2/trends/item-partials/HeroPartial';
-import { TrendingActivity } from '../../../../../__mocks__/fake/discovery/TrendingActivity';
+import TrendingHashtagPartial from '~/discovery/v2/trends/item-partials/TrendingHashtagPartial';
+import RichPartial from '~/discovery/v2/trends/item-partials/RichPartial';
+import HeroPartial from '~/discovery/v2/trends/item-partials/HeroPartial';
+import { TrendingActivity } from '~/../__mocks__/fake/discovery/TrendingActivity';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
+sp.mockService('i18n');
+sp.mockService('settings');
 
 const data = TrendingActivity;
 

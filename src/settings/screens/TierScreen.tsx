@@ -3,10 +3,8 @@ import { observer, useLocalStore } from 'mobx-react';
 import { SupportTiersType } from '../../wire/WireTypes';
 import { View } from 'react-native';
 import SettingInput from '~/common/components/SettingInput';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '~/common/services/i18n.service';
+
 import SaveButton from '~/common/components/SaveButton';
-import supportTiersService from '~/common/services/support-tiers.service';
 import { UserError } from '~/common/UserError';
 import MText from '~/common/components/MText';
 import Switch from '~/common/components/controls/Switch';
@@ -14,6 +12,7 @@ import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen
 import { Button } from '~/common/ui/buttons';
 import { confirm } from '~/common/components/Confirm';
 import { GOOGLE_PLAY_STORE } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   route: any;
@@ -21,6 +20,8 @@ type PropsType = {
 };
 
 const createTierStore = () => {
+  const supportTiersService = sp.resolve('supportTiers');
+
   const store = {
     support_tier: { has_tokens: true, has_usd: true } as SupportTiersType,
     saving: false,
@@ -87,7 +88,8 @@ const createTierStore = () => {
 };
 
 const TierScreen = observer(({ route, navigation }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
+  const i18n = sp.i18n;
   const { tier, tierManagementStore } = route.params ?? {};
   let isNew = true;
 
@@ -127,7 +129,7 @@ const TierScreen = observer(({ route, navigation }: PropsType) => {
       tierManagementStore?.removeTier(localStore.support_tier);
       navigation.goBack();
     }
-  }, [localStore, navigation, tierManagementStore]);
+  }, [i18n, localStore, navigation, tierManagementStore]);
 
   navigation.setOptions({
     headerRight: () => <SaveButton onPress={save} />,

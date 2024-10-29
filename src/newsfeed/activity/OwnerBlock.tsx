@@ -9,17 +9,16 @@ import {
 import { Icon } from 'react-native-elements';
 import { Image } from 'expo-image';
 
-import withPreventDoubleTap from '../../common/components/PreventDoubleTap';
-import ThemedStyles from '../../styles/ThemedStyles';
+import withPreventDoubleTap from '~/common/components/PreventDoubleTap';
+
 import type ActivityModel from '../ActivityModel';
-import i18nService from '../../common/services/i18n.service';
-import { SearchResultStoreType } from '../../topbar/searchbar/createSearchResultStore';
-import { withSearchResultStore } from '../../common/hooks/withStores';
-import ChannelBadges from '../../channel/badges/ChannelBadges';
+import { SearchResultStoreType } from '~/topbar/searchbar/createSearchResultStore';
+import { withSearchResultStore } from '~/common/hooks/withStores';
+import ChannelBadges from '~/channel/badges/ChannelBadges';
 import { NavigationProp } from '@react-navigation/native';
-import UserModel from '../../channel/UserModel';
-import { ChannelContext } from '../../channel/v2/ChannelContext';
-import MText from '../../common/components/MText';
+import UserModel from '~/channel/UserModel';
+import { ChannelContext } from '~/channel/v2/ChannelContext';
+import MText from '~/common/components/MText';
 import {
   B1,
   B2,
@@ -32,6 +31,7 @@ import {
 } from '~ui';
 import { IS_IOS } from '~/config/Config';
 import NewsfeedHeader from '../NewsfeedHeader';
+import sp from '~/services/serviceProvider';
 
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 
@@ -164,7 +164,7 @@ class OwnerBlock extends PureComponent<PropsType> {
   constructor(props) {
     super(props);
 
-    this.containerStyle = ThemedStyles.combine(
+    this.containerStyle = sp.styles.combine(
       'borderBottomHair',
       'bcolorPrimaryBorder',
       props.containerStyle,
@@ -181,6 +181,7 @@ class OwnerBlock extends PureComponent<PropsType> {
 
     const groupEmphasized =
       this.props.emphasizeGroup && this.props.entity.containerObj;
+    const i18nService = sp.i18n;
 
     // Remind header
     const remind = this.props.entity.remind_users ? (
@@ -212,8 +213,8 @@ class OwnerBlock extends PureComponent<PropsType> {
               type="ionicon"
               name="trending-up"
               size={18}
-              style={ThemedStyles.style.marginRight}
-              color={ThemedStyles.getColor('Link')}
+              style={sp.styles.style.marginRight}
+              color={sp.styles.getColor('Link')}
             />
             <B2 font="medium" color="link">
               {i18nService.t('boosted')}
@@ -327,9 +328,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const groupNameStyle = ThemedStyles.combine('fontM', 'colorSecondaryText');
+const groupNameStyle = sp.styles.combine('fontM', 'colorSecondaryText');
 
-const nameTouchableStyle = ThemedStyles.combine(
-  'rowJustifyStart',
-  'alignCenter',
-);
+const nameTouchableStyle = sp.styles.combine('rowJustifyStart', 'alignCenter');

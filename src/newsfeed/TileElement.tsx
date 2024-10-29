@@ -4,7 +4,8 @@ import { TouchableOpacity } from 'react-native';
 
 import SmartImage from '../common/components/SmartImage';
 import mediaProxyUrl from '../common/helpers/media-proxy-url';
-import ThemedStyles from '../styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
+
 import type ActivityModel from './ActivityModel';
 
 type PropsType = {
@@ -75,7 +76,7 @@ export default class TileElement extends PureComponent<
       ready: false,
     };
     this.style = { width: this.props.size, height: this.props.size };
-    this.containerStyle = ThemedStyles.combine(
+    this.containerStyle = sp.styles.combine(
       {
         width: this.props.size,
         height: this.props.size,

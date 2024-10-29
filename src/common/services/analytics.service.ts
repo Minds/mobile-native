@@ -1,6 +1,6 @@
+import { observe } from 'mobx';
 import PostHog from 'posthog-react-native';
 
-import { storages } from './storage/storages.service';
 import {
   IS_REVIEW,
   IS_TENANT,
@@ -11,9 +11,9 @@ import {
 import BaseModel from '../BaseModel';
 import { Metadata } from './metadata.service';
 import { DismissIdentifier } from '../stores/DismissalStore';
-import mindsConfigService from './minds-config.service';
-import { observe } from 'mobx';
-import sessionService from './session.service';
+import type { SessionService } from './session.service';
+import type { Storages } from './storage/storages.service';
+import type { MindsConfigService } from './minds-config.service';
 
 const IGNORE_SCREENS = ['Comments'];
 
@@ -46,22 +46,13 @@ export class AnalyticsService {
   networkUserId: string | null | undefined;
   userId: string | null | undefined;
 
-  configDisposer = observe(mindsConfigService, 'settings', change => {
-    const postHogConfigs = change.newValue?.posthog;
+  configDisposer;
 
-    if (postHogConfigs) {
-      const isOptOut = postHogConfigs.opt_out;
-      if (isOptOut) {
-        this.posthog.optOut();
-      } else {
-        if (this.posthog.optedOut) {
-          this.posthog.optIn();
-        }
-      }
-    }
-  });
-
-  constructor() {
+  constructor(
+    private session: SessionService,
+    private storages: Storages,
+    private config: MindsConfigService,
+  ) {
     this.posthog = new PostHog(POSTHOG_API_KEY, {
       host: POSTHOG_HOST,
       preloadFeatureFlags: false, // We provide these from our backend
@@ -82,8 +73,22 @@ export class AnalyticsService {
     // }
 
     // On logout we should reset posthog
-    sessionService?.onLogout(() => {
+    this.session.onLogout(() => {
       this.posthog.reset();
+    });
+    this.configDisposer = observe(this.config, 'settings', change => {
+      const postHogConfigs = change.newValue?.posthog;
+
+      if (postHogConfigs) {
+        const isOptOut = postHogConfigs.opt_out;
+        if (isOptOut) {
+          this.posthog.optOut();
+        } else {
+          if (this.posthog.optedOut) {
+            this.posthog.optIn();
+          }
+        }
+      }
     });
   }
 
@@ -99,7 +104,7 @@ export class AnalyticsService {
    * Set if a user has disabled analytics or not
    */
   public setOptOut(optOut: boolean): void {
-    const posthostConfig = mindsConfigService.getSettings().posthog;
+    const posthostConfig = this.config.getSettings().posthog;
     posthostConfig.opt_out = optOut;
   }
 
@@ -127,7 +132,7 @@ export class AnalyticsService {
    */
   initFeatureFlags(): void {
     const featureFlags =
-      mindsConfigService.getSettings()?.posthog?.feature_flags || {};
+      this.config.getSettings()?.posthog?.feature_flags || {};
 
     this.posthog.overrideFeatureFlag(featureFlags);
   }
@@ -149,11 +154,11 @@ export class AnalyticsService {
    */
   addExperiment(key: string, response: string | boolean): void {
     const CACHE_KEY = `experiment:${key}`;
-    const date = storages.user?.getInt(CACHE_KEY);
+    const date = this.storages.user?.getNumber(CACHE_KEY);
     if (date && date > Date.now() - 86400000) {
       return; // Do not emit event
     } else {
-      storages.user?.setInt(CACHE_KEY, Date.now());
+      this.storages.user?.set(CACHE_KEY, Date.now());
     }
     if (!IS_REVIEW) {
       this.posthog.capture('$feature_flag_called', {
@@ -351,8 +356,6 @@ export class AnalyticsService {
     });
   }
 }
-
-export default new AnalyticsService();
 
 export type ClickRef =
   | 'share'

@@ -2,12 +2,18 @@ import 'react-native';
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { shallow } from 'enzyme';
-import ExplicitText from '../../../src/common/components/explicit/ExplicitText';
+import ExplicitText from '~/common/components/explicit/ExplicitText';
 
 import { activitiesServiceFaker } from '../../../__mocks__/fake/ActivitiesFaker';
 
 import renderer from 'react-test-renderer';
-import ActivityModel from '../../../src/newsfeed/ActivityModel';
+import ActivityModel from '~/newsfeed/ActivityModel';
+import sp from '~/services/serviceProvider';
+
+jest.mock('~/services/serviceProvider');
+
+// mock services
+sp.mockService('styles');
 
 describe('Explicit text component', () => {
   let user, comments, entity, screen;

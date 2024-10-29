@@ -1,10 +1,11 @@
 import React from 'react';
 import SmallCircleButton from '~/common/components/SmallCircleButton';
 import type GroupModel from '~/groups/GroupModel';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useCreateGroupChatRoom } from '../hooks/useCreateGroupChatRoom';
 import { useCreateGroupChatRoomLegacy } from '../hooks/useCreateGroupChatRoomLegacy';
 import { useIsFeatureOn } from 'ExperimentsProvider';
+import sp from '~/services/serviceProvider';
 
 export default function GroupChatButton({ group }: { group: GroupModel }) {
   const shouldDisplay = !group.conversationDisabled || group.isOwner();
@@ -30,12 +31,12 @@ export default function GroupChatButton({ group }: { group: GroupModel }) {
       type="material-community"
       raised={true}
       onPress={createRoom}
-      color={ThemedStyles.getColor('PrimaryBackground')}
+      color={sp.styles.getColor('PrimaryBackground')}
       iconStyle={style.icon}
       reverseColor={
         isCreateLoading
-          ? ThemedStyles.getColor('TertiaryText')
-          : ThemedStyles.getColor('PrimaryText')
+          ? sp.styles.getColor('TertiaryText')
+          : sp.styles.getColor('PrimaryText')
       }
     />
   );

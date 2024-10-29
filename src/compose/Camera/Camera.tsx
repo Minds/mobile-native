@@ -16,7 +16,6 @@ import { Camera } from 'react-native-vision-camera';
 import FadeFrom from '../../common/components/animations/FadeFrom';
 import { IS_IOS } from '../../config/Config';
 import { RootStackParamList } from '../../navigation/NavigationTypes';
-import ThemedStyles, { useStyle } from '../../styles/ThemedStyles';
 import { PermissionsContext } from '../PermissionsCheck';
 import VideoClock from '../VideoClock';
 import CamIcon from './CamIcon';
@@ -31,10 +30,9 @@ import useCameraStyle from './useCameraStyle';
 import ZoomGesture from './ZoomGesture';
 import ZoomIndicator from './ZoomIndicator';
 import PressableScale from '~/common/components/PressableScale';
-import PermissionsService from '~/common/services/permissions.service';
 import { showNotification } from 'AppMessages';
-import i18n from '~/common/services/i18n.service';
-import useIsPortrait from '~/common/hooks/useIsPortrait';
+import sp from '~/services/serviceProvider';
+import { useStyle } from '~/styles/hooks';
 
 type CaptureScreenRouteProp = RouteProp<RootStackParamList, 'Capture'>;
 
@@ -72,7 +70,7 @@ const PRESENTATION_ORDER = {
  */
 export default observer(function (props: PropsType) {
   const permissions = React.useContext(PermissionsContext);
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const camera = useRef<Camera>(null);
   const route = useRoute<CaptureScreenRouteProp>();
   const navigation = useNavigation();
@@ -149,8 +147,8 @@ export default observer(function (props: PropsType) {
   // capture long press handler
   const onLongPress = useCallback(async () => {
     if (!store.recording) {
-      if (!PermissionsService.canUploadVideo()) {
-        showNotification(i18n.t('composer.create.mediaVideoError'));
+      if (!sp.permissions.canUploadVideo()) {
+        showNotification(sp.i18n.t('composer.create.mediaVideoError'));
         return;
       }
 
@@ -167,9 +165,6 @@ export default observer(function (props: PropsType) {
   );
 
   const orientationStyle = useCameraStyle(insets);
-  const isPortrait = useIsPortrait();
-
-  console.log('isPortrait', isPortrait);
 
   return (
     <View style={theme.flexContainer}>
@@ -191,6 +186,7 @@ export default observer(function (props: PropsType) {
                 device={device}
                 format={format}
                 fps={30}
+                outputOrientation="device"
                 lowLightBoost={
                   device.supportsLowLightBoost && store.lowLightBoost
                 }
@@ -200,7 +196,6 @@ export default observer(function (props: PropsType) {
                 onInitialized={store.isReady}
                 onError={e => console.log(e)}
                 enableZoomGesture={false}
-                orientation={isPortrait ? 'portrait' : 'landscape-left'}
                 animatedProps={cameraAnimatedProps}
                 photo={props.mode === 'photo'}
                 video={props.mode !== 'photo'}

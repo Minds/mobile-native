@@ -10,13 +10,12 @@ import { observer, useLocalStore } from 'mobx-react';
 
 import createTranslateStore from './createTranslateStore';
 import Translated from './Translated';
-import translationService from '../../services/translation.service';
-import i18n from '../../services/i18n.service';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
 import CenteredLoading from '../CenteredLoading';
 import SelectorV2 from '../SelectorV2';
 import { B2 } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 export interface TranslatePropsType {
   entity: ActivityModel;
@@ -25,8 +24,9 @@ export interface TranslatePropsType {
 
 const Translate = observer(
   forwardRef((props: TranslatePropsType, ref) => {
+    const translationService = sp.resolve('translation');
     const localStore = useLocalStore(createTranslateStore);
-
+    const i18n = sp.i18n;
     const languageSelected = useCallback(
       ({ language }) => {
         localStore.setCurrent(language);
@@ -46,7 +46,7 @@ const Translate = observer(
         localStore.translate(lang, props.entity.guid);
         return lang;
       }
-    }, [localStore, props.entity.guid]);
+    }, [localStore, props.entity.guid, translationService]);
 
     /**
      * Imperative functionality of the component
@@ -70,7 +70,7 @@ const Translate = observer(
         }
       };
       shouldTranslate();
-    }, [localStore, props.entity.guid]);
+    }, [i18n, localStore, props.entity.guid, translationService]);
 
     return (
       <View>
@@ -89,8 +89,8 @@ const Translate = observer(
                     <Icon
                       name="md-globe"
                       type="ionicon"
-                      style={ThemedStyles.style.paddingRight1x}
-                      color={ThemedStyles.getColor('PrimaryText')}
+                      style={sp.styles.style.paddingRight1x}
+                      color={sp.styles.getColor('PrimaryText')}
                       size={14}
                     />
                     <B2 color="secondary" onPress={() => show()}>
@@ -114,7 +114,7 @@ const Translate = observer(
 
 export default Translate;
 
-const translationBarStyle = ThemedStyles.combine(
+const translationBarStyle = sp.styles.combine(
   'rowJustifyStart',
   'alignCenter',
   'marginTop3x',

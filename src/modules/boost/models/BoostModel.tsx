@@ -1,14 +1,13 @@
 import BaseModel from '~/common/BaseModel';
 import { action, extendObservable } from 'mobx';
-import logService from '~/common/services/log.service';
 import {
   acceptBoost,
   rejectBoost,
   revokeBoost,
 } from '../boost-console/boost-console.api';
 import { showNotification } from 'AppMessages';
-import i18n from '~/common/services/i18n.service';
 import UserModel from '../../../channel/UserModel';
+import sp from '~/services/serviceProvider';
 
 /**
  * User model
@@ -37,7 +36,7 @@ export default class BoostModel extends BaseModel {
       await rejectBoost(this.guid);
       this.state = 'rejected';
     } catch (err) {
-      logService.exception('[BaseModel]', err);
+      sp.log.exception('[BaseModel]', err);
       throw err;
     }
   }
@@ -48,7 +47,7 @@ export default class BoostModel extends BaseModel {
       await acceptBoost(this.guid);
       this.state = 'accepted';
     } catch (err) {
-      logService.exception('[BaseModel]', err);
+      sp.log.exception('[BaseModel]', err);
       throw err;
     }
   }
@@ -58,9 +57,9 @@ export default class BoostModel extends BaseModel {
     try {
       await revokeBoost(this.guid);
       this.state = 'revoked';
-      showNotification(i18n.t('notification.boostRevoked'), 'success');
+      showNotification(sp.i18n.t('notification.boostRevoked'), 'success');
     } catch (err) {
-      logService.exception('[BaseModel]', err);
+      sp.log.exception('[BaseModel]', err);
       throw err;
     }
   }

@@ -1,8 +1,5 @@
-//@ts-nocheck
 import { observable, action, computed } from 'mobx';
-
-import hashtagService from '../services/hashtag.service';
-import settingsStore from '../../settings/SettingsStore';
+import sp from '~/services/serviceProvider';
 
 /**
  * Hashtag
@@ -18,7 +15,7 @@ export class HashtagStore {
    */
   async loadSuggested() {
     this.setLoading(true);
-    const tags = await hashtagService.getSuggested();
+    const tags = await sp.resolve('hashtag').getSuggested();
     this.setLoading(false);
     this.setSuggested(tags);
   }
@@ -43,7 +40,6 @@ export class HashtagStore {
   @action
   toggleAll() {
     this.all = !this.all;
-    settingsStore.setUseHashtags(!this.all);
   }
 
   /**
@@ -52,7 +48,6 @@ export class HashtagStore {
   @action
   setAll(value) {
     this.all = value;
-    settingsStore.setUseHashtags(!this.all);
   }
 
   /**
@@ -81,11 +76,12 @@ export class HashtagStore {
   async select(tag) {
     tag.selected = true;
     try {
-      const result = await hashtagService.add(tag.value);
+      const result = await sp.resolve('hashtag').add(tag.value);
       if (result.status !== 'success') {
         tag.selected = false;
       }
     } catch (e) {
+      console.log('Error selecting tag', e);
       tag.selected = false;
     }
   }
@@ -109,7 +105,7 @@ export class HashtagStore {
     tag.selected = false;
 
     try {
-      const result = await hashtagService.delete(tag.value);
+      const result = await sp.resolve('hashtag').delete(tag.value);
       if (result.status !== 'success') {
         tag.selected = true;
       }

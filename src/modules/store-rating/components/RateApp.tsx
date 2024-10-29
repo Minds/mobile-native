@@ -3,11 +3,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {
   BottomSheetButton,
   pushBottomSheet,
-} from '../../../common/components/bottom-sheet';
-import i18nService from '../../../common/services/i18n.service';
-import { Spacer, H2 } from '../../../common/ui';
-import ThemedStyles from '../../../styles/ThemedStyles';
+} from '~/common/components/bottom-sheet';
+import { Spacer, H2 } from '~/common/ui';
+
 import { TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 interface RateAppProps {
   onConfirm: () => void;
@@ -24,23 +24,24 @@ export default function RateApp({
   onCancel,
   onLayout,
 }: RateAppProps) {
+  const i18n = sp.i18n;
   return (
     <SafeAreaView
       edges={['bottom']}
-      style={ThemedStyles.style.flexContainer}
+      style={sp.styles.style.flexContainer}
       onLayout={onLayout}>
       <Spacer horizontal="L" bottom="S">
         <H2 align="center" bottom="L">
-          {i18nService.t('storeRating.prompt', { TENANT })}
+          {i18n.t('storeRating.prompt', { TENANT })}
         </H2>
       </Spacer>
       <BottomSheetButton
         action
         solid
-        text={i18nService.t('yes')}
+        text={i18n.t('yes')}
         onPress={onConfirm}
       />
-      <BottomSheetButton text={i18nService.t('no')} onPress={onCancel} />
+      <BottomSheetButton text={i18n.t('no')} onPress={onCancel} />
       <Spacer bottom="L" />
     </SafeAreaView>
   );

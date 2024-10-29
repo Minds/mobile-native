@@ -1,10 +1,9 @@
 import { B1, Button, Screen } from '~/common/ui';
-import subscriptionProService from '~/common/services/subscription.pro.service';
 import { useEffect, useState } from 'react';
-import sessionService from '~/common/services/session.service';
 import { useNavigation } from '@react-navigation/native';
 import { confirm } from '~/common/components/Confirm';
-
+import sp from '~/services/serviceProvider';
+import { useService } from '~/services/hooks/useService';
 export default function () {
   const { cancelSubscription, expiryString } = useCancelProSubscription();
   return (
@@ -26,14 +25,15 @@ export default function () {
 
 const useCancelProSubscription = () => {
   const navigation = useNavigation();
-  const user = sessionService.getUser();
+  const user = sp.session.getUser();
   const [expiryString, setExpiryString] = useState('');
+  const subscriptionProService = useService('subscriptionPro');
 
   useEffect(() => {
     subscriptionProService
       .expires()
       .then(() => setExpiryString(subscriptionProService.expiryString));
-  }, [expiryString]);
+  }, [expiryString, subscriptionProService]);
 
   const cancelSubscription = async () => {
     if (

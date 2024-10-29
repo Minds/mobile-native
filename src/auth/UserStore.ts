@@ -1,8 +1,7 @@
 import { observable, action } from 'mobx';
 
-import channelService from './../channel/ChannelService';
 import UserModel from './../channel/UserModel';
-import searchBarService from '../topbar/searchbar/SearchBar.service';
+import serviceProvider from '~/services/serviceProvider';
 
 /**
  * Login Store
@@ -61,7 +60,7 @@ class UserStore {
       this.clearUser();
     }
 
-    let response: any = await channelService.load('me');
+    let response: any = await serviceProvider.resolve('channel').load('me');
 
     this.setUser(response.channel);
 
@@ -87,9 +86,9 @@ class UserStore {
   searchBarItemTap(item: UserModel | string) {
     if (item instanceof UserModel) {
       const user = { user: item.toPlainObject() };
-      searchBarService.onItemTap(user);
+      this.searchBarService.onItemTap(user);
     } else {
-      searchBarService.onItemTap(item);
+      this.searchBarService.onItemTap(item);
     }
   }
 
@@ -97,14 +96,14 @@ class UserStore {
    * Clear search history for user
    */
   searchBarClearHistory() {
-    searchBarService.clearSearchHistory();
+    this.searchBarService.clearSearchHistory();
   }
 
   /**
    * Get user search history
    */
   getSearchHistory() {
-    return searchBarService.getSearchHistory();
+    return this.searchBarService.getSearchHistory();
   }
 
   /**
@@ -112,7 +111,11 @@ class UserStore {
    * @param {String} search
    */
   async getSuggestedSearch(search) {
-    return await searchBarService.getSuggestedSearch(search);
+    return await this.searchBarService.getSuggestedSearch(search);
+  }
+
+  get searchBarService() {
+    return serviceProvider.resolve('searchBar');
   }
 }
 

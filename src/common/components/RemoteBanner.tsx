@@ -1,12 +1,13 @@
 import { Linking, StyleSheet } from 'react-native';
 
 import Banner from './Banner';
-import analyticsService, { ClickRef } from '../services/analytics.service';
 import moment from 'moment';
+import type { ClickRef } from '../services/analytics.service';
 import { DismissIdentifier } from '../stores/DismissalStore';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { useRemoteBannerQuery } from '~/graphql/strapi';
 import { MarkDown } from './MarkDown';
+import sp from '~/services/serviceProvider';
 
 export default function RemoteBanner() {
   const {
@@ -29,7 +30,9 @@ export default function RemoteBanner() {
 
   const onPress = url
     ? () => {
-        analyticsService.trackClick(`banner:${identifier}:action` as ClickRef);
+        sp.resolve('analytics').trackClick(
+          `banner:${identifier}:action` as ClickRef,
+        );
         Linking.openURL(url);
       }
     : undefined;
@@ -43,7 +46,7 @@ export default function RemoteBanner() {
   );
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   body: ['colorPrimaryText', 'fontLM'],
   link: ['link', 'bold'],
 }) as StyleSheet.NamedStyles<any>;

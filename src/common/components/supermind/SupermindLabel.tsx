@@ -1,9 +1,11 @@
 import { View } from 'react-native';
 import React from 'react';
-import ThemedStyles, { useMemoStyle } from '~/styles/ThemedStyles';
 import { LinearGradient } from 'expo-linear-gradient';
+
 import { SupermindGradient } from '~/styles/Colors';
 import { Typography, TypographyType } from '../../ui/typography/Typography';
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 type Props = {
   text?: string;
@@ -23,7 +25,7 @@ export default function SupermindLabel({
   return (
     <View style={outerStyle}>
       <LinearGradient
-        style={ThemedStyles.style.flexContainerCenter}
+        style={sp.styles.style.flexContainerCenter}
         colors={SupermindGradient}
         start={start}
         end={end}
@@ -39,7 +41,7 @@ export default function SupermindLabel({
 const start = { x: 0, y: 0 };
 const end = { x: 1, y: 0 };
 const locations = [0, 0.4, 1];
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   outerStyle: {
     borderRadius: 3,
     overflow: 'hidden',

@@ -2,18 +2,19 @@ import { useNavigation } from '@react-navigation/native';
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
 import { View } from 'react-native';
-import MenuItem from '../../common/components/menus/MenuItem';
-import i18n from '../../common/services/i18n.service';
-import ThemedStyles from '../../styles/ThemedStyles';
+import MenuItem from '~/common/components/menus/MenuItem';
+
 import createTwoFactorStore, { Options } from './createTwoFactorStore';
-import MText from '../../common/components/MText';
+import MText from '~/common/components/MText';
 import Button from '~/common/components/Button';
 import ActivityIndicator from '~/common/components/ActivityIndicator';
 import { TENANT } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type OptionDef = { id: Exclude<Options, 'disable'>; enabled: boolean };
 
 const TwoFactorAuthSettingsScreen = observer(() => {
+  const i18n = sp.i18n;
   const navigation = useNavigation();
   const localStore = useLocalStore(createTwoFactorStore);
 
@@ -102,13 +103,14 @@ const TwoFactorAuthSettingsScreen = observer(() => {
 });
 
 const ItemTitle = ({ id, enabled }: OptionDef) => {
+  const i18n = sp.i18n;
   // Inverted colors
-  const backgroundColor = ThemedStyles.theme
-    ? ThemedStyles.style.bgPrimaryBackground_Light
-    : ThemedStyles.style.bgPrimaryBackground_Dark;
-  const color = ThemedStyles.theme
-    ? ThemedStyles.style.colorPrimaryText_Light
-    : ThemedStyles.style.colorPrimaryText_Dark;
+  const backgroundColor = sp.styles.theme
+    ? sp.styles.style.bgPrimaryBackground_Light
+    : sp.styles.style.bgPrimaryBackground_Dark;
+  const color = sp.styles.theme
+    ? sp.styles.style.colorPrimaryText_Light
+    : sp.styles.style.colorPrimaryText_Dark;
 
   return (
     <View style={styles.container}>
@@ -129,7 +131,7 @@ const ItemTitle = ({ id, enabled }: OptionDef) => {
   );
 };
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   optDescription: ['colorSecondaryText', 'fontL'],
   row: ['rowJustifyStart', 'marginBottom2x'],
   error: ['fontXL', 'textCenter', 'paddingVertical4x'],

@@ -1,14 +1,20 @@
 import { Platform } from 'react-native';
-import service from '../../../src/common/services/download.service';
 import * as MediaLibrary from 'expo-media-library';
 
-jest.mock('../../../src/common/services/session.service');
+import { DownloadService } from '~/common/services/download.service';
+import { I18nService } from '~/common/services/i18n.service';
+jest.mock('~/common/services/i18n.service');
 jest.mock('expo-media-library');
+
 const FAKE_URL = 'https://fake.com';
+
 /**
  * Tests
  */
 describe('Download service', () => {
+  const i18n = new I18nService();
+  const service = new DownloadService(i18n);
+
   it('should call camera roll on android', async () => {
     Platform.OS = 'notios';
     await service.downloadToGallery(FAKE_URL);

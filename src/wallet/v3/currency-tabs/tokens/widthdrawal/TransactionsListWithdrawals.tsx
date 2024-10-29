@@ -1,10 +1,11 @@
 import React, { useCallback } from 'react';
 import { observer } from 'mobx-react';
-import OffsetList from '../../../../../common/components/OffsetList';
-import WithdrawalEntry from './WithdrawalEntry';
-import ThemedStyles from '../../../../../styles/ThemedStyles';
 import { View } from 'react-native';
+
+import OffsetList from '~/common/components/OffsetList';
+import WithdrawalEntry from './WithdrawalEntry';
 import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
 /**
  * Transactions list for a users  withdrawals.
@@ -45,14 +46,14 @@ const TransactionsListWithdrawals = observer(() => {
 
 export default TransactionsListWithdrawals;
 
-const containerStyle = ThemedStyles.combine(
+const containerStyle = sp.styles.combine(
   'height75',
   'bgPrimaryBackground',
   'padding3x',
   'borderRadius5x',
 );
 
-const headerContainerStyle = ThemedStyles.combine(
+const headerContainerStyle = sp.styles.combine(
   'flexContainer',
   'fullWidth',
   'rowJustifySpaceBetween',
@@ -60,7 +61,7 @@ const headerContainerStyle = ThemedStyles.combine(
   'bcolorPrimaryBorder',
 );
 
-const headerTextStyle = ThemedStyles.combine(
+const headerTextStyle = sp.styles.combine(
   'colorSecondaryText',
   'flexContainer',
   'padding3x',

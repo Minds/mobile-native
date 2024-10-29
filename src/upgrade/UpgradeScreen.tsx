@@ -3,7 +3,6 @@ import { observer, useLocalStore } from 'mobx-react';
 import { StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import ThemedStyles from '../styles/ThemedStyles';
 import FitScrollView from '../common/components/FitScrollView';
 import Header from './Header';
 import createUpgradeStore from './createUpgradeStore';
@@ -12,6 +11,7 @@ import { IS_FROM_STORE, IS_IOS } from '~/config/Config';
 import UpgradeStripeTokens from './UpgradeStripeTokens';
 import UpgradeInAppPurchasesTokens from './UpgradeInAppPurchasesTokens';
 import { withIAPContext } from 'react-native-iap';
+import sp from '~/services/serviceProvider';
 import { useWindowDimensions } from 'react-native';
 
 type PropsType = {
@@ -21,7 +21,7 @@ type PropsType = {
 
 const UpgradeScreen = observer(({ route }: PropsType) => {
   const localStore = useLocalStore(createUpgradeStore);
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const insets = useSafeAreaInsets();
   const { height } = useWindowDimensions();
   const { onComplete, pro } = route.params;

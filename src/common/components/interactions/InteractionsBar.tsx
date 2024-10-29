@@ -5,10 +5,10 @@ import Counter from '~/newsfeed/activity/actions/Counter';
 import type BlogModel from '../../../blogs/BlogModel';
 import type CommentModel from '../../../comments/v2/CommentModel';
 import type ActivityModel from '../../../newsfeed/ActivityModel';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import i18n from '../../services/i18n.service';
+
 import MText from '../MText';
 import PressableScale from '../PressableScale';
+import sp from '~/services/serviceProvider';
 
 interface PropsType {
   entity: ActivityModel | CommentModel | BlogModel;
@@ -27,6 +27,7 @@ export default observer(function InteractionsBar({
   onShowRemindsPress,
   onShowQuotesPress,
 }: PropsType) {
+  const i18n = sp.i18n;
   return (
     <View style={containerStyle}>
       {entity['thumbs:up:count'] > 0 && (
@@ -89,18 +90,14 @@ export default observer(function InteractionsBar({
   );
 });
 
-const buttonStyle = ThemedStyles.combine('marginLeft2x', 'paddingVertical3x');
-const buttonInnerStyle = ThemedStyles.combine('rowJustifyCenter');
-const containerStyle = ThemedStyles.combine(
+const buttonStyle = sp.styles.combine('marginLeft2x', 'paddingVertical3x');
+const buttonInnerStyle = sp.styles.combine('rowJustifyCenter');
+const containerStyle = sp.styles.combine(
   'rowJustifyStart',
   'bgPrimaryBackground',
   'paddingLeft2x',
   'borderTopHair',
   'bcolorPrimaryBorder',
 );
-const textStyle = ThemedStyles.combine('colorSecondaryText', 'fontM');
-const countStyle = ThemedStyles.combine(
-  'colorPrimaryText',
-  'fontM',
-  'fontMedium',
-);
+const textStyle = sp.styles.combine('colorSecondaryText', 'fontM');
+const countStyle = sp.styles.combine('colorPrimaryText', 'fontM', 'fontMedium');

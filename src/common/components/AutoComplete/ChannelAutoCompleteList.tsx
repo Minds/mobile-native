@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect } from 'react';
 import { FlatList, View } from 'react-native';
 import ChannelListItem from '~/common/components/ChannelListItem';
-import ThemedStyles from '~styles/ThemedStyles';
+
 import UserModel from '~/channel/UserModel';
 import { observer } from 'mobx-react';
 import useChannelSuggestion from './useChannelSuggestion';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { B1 } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 
 export interface ChannelAutoCompleteListProps {
   /**
@@ -65,7 +66,7 @@ function ChannelAutoCompleteList({
       renderItem={renderItem}
       keyExtractor={item => item.guid}
       contentContainerStyle={contentContainerStyle}
-      style={ThemedStyles.style.bgPrimaryBackgroundHighlight}
+      style={sp.styles.style.bgPrimaryBackgroundHighlight}
     />
   );
 }
@@ -76,11 +77,11 @@ const Empty = () => (
   </View>
 );
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   empty: ['flexContainerCenter', 'padding4x'],
 });
 
-const contentContainerStyle = ThemedStyles.combine(
+const contentContainerStyle = sp.styles.combine(
   'borderTop',
   'bcolorPrimaryBorder',
 );

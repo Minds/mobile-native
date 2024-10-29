@@ -1,6 +1,6 @@
-import api from './api.service';
-import logService from './log.service';
-import { storages } from './storage/storages.service';
+import type { ApiService } from './api.service';
+import type { LogService } from './log.service';
+import type { Storages } from './storage/storages.service';
 
 type Language = {
   language: string;
@@ -11,9 +11,15 @@ type Language = {
 /**
  * Translation service
  */
-class TranslationService {
+export class TranslationService {
   defaultLanguage = 'en';
   languagesReady: Array<Language> | null = null;
+
+  constructor(
+    private storages: Storages,
+    private api: ApiService,
+    private log: LogService,
+  ) {}
 
   // /**
   //  * Class constructor
@@ -30,7 +36,7 @@ class TranslationService {
    */
   async getLanguages() {
     if (!this.languagesReady) {
-      const cached = storages.app.getArray<Language>(
+      const cached = this.storages.app.getObject<Array<Language>>(
         `translation:languages:${this.defaultLanguage}`,
       );
       if (cached && cached.length > 0) {
@@ -38,23 +44,26 @@ class TranslationService {
         return cached;
       } else {
         try {
-          const response: any = await api.get('api/v1/translation/languages', {
-            target: this.defaultLanguage,
-          });
+          const response: any = await this.api.get(
+            'api/v1/translation/languages',
+            {
+              target: this.defaultLanguage,
+            },
+          );
           if (!response.languages) {
             throw new Error('No languages array');
           }
-          storages.app.setArray(
+          this.storages.app.setObject(
             `translation:languages:${this.defaultLanguage}`,
             response.languages,
           );
-          storages.app.setString(
+          this.storages.app.set(
             'translation:userDefault',
             response.userDefault || '', // if value is null it crashes the app on ios
           );
           return response.languages;
         } catch (e) {
-          logService.exception('[TranslationService]', e);
+          this.log.exception('[TranslationService]', e);
         }
       }
     }
@@ -67,7 +76,7 @@ class TranslationService {
    */
   async getUserDefaultLanguage() {
     await this.getLanguages();
-    return storages.app.getString('translation:userDefault');
+    return this.storages.app.getString('translation:userDefault');
   }
 
   /**
@@ -75,8 +84,8 @@ class TranslationService {
    */
   async purgeLanguagesCache() {
     this.languagesReady = null;
-    storages.app.removeItem(`translation:languages:${this.defaultLanguage}`);
-    storages.app.removeItem('translation:userDefault');
+    this.storages.app.delete(`translation:languages:${this.defaultLanguage}`);
+    this.storages.app.delete('translation:userDefault');
   }
 
   /**
@@ -132,17 +141,19 @@ class TranslationService {
    * @param {string} language
    */
   async translate(guid, language) {
-    const response: any = await api.get(
+    const response: any = await this.api.get(
       `api/v1/translation/translate/${guid}`,
       {
         target: language,
       },
     );
-    const defaultLanguage = storages.app.getString('translation:userDefault');
+    const defaultLanguage = this.storages.app.getString(
+      'translation:userDefault',
+    );
 
     if (!defaultLanguage !== language) {
       // update it async
-      storages.app.setString('translation:userDefault', language);
+      this.storages.app.set('translation:userDefault', language);
     }
 
     if (response.purgeLanguagesCache) {
@@ -159,5 +170,3 @@ class TranslationService {
     return response.translation;
   }
 }
-
-export default new TranslationService();

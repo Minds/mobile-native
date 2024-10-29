@@ -1,25 +1,20 @@
 import React, { useEffect, useRef, useCallback, useMemo } from 'react';
-
 import { View, FlatList } from 'react-native';
-
 import { observer } from 'mobx-react';
 
-import Activity from '../../../newsfeed/activity/Activity';
-import { ComponentsStyle } from '../../../styles/Components';
-import ErrorBoundary from '../../../common/components/ErrorBoundary';
-import FeedList from '../../../common/components/FeedList';
+import Activity from '~/newsfeed/activity/Activity';
+import { ComponentsStyle } from '~/styles/Components';
+import ErrorBoundary from '~/common/components/ErrorBoundary';
+import FeedList from '~/common/components/FeedList';
 
-import ThemedStyles from '../../../styles/ThemedStyles';
 import { useDiscoveryV2SearchStore } from './DiscoveryV2SearchContext';
-import GroupsListItem from '../../../groups/GroupsListItem';
-import i18n from '../../../common/services/i18n.service';
-import UserModel from '../../../channel/UserModel';
-import { useStores } from '../../../common/hooks/use-stores';
-import MText from '../../../common/components/MText';
+import GroupsListItem from '~/groups/GroupsListItem';
+import UserModel from '~/channel/UserModel';
+import { useStores } from '~/common/hooks/use-stores';
+import MText from '~/common/components/MText';
 import ChannelListItem from '~/common/components/ChannelListItem';
 import AnimatedHeight from '~/common/components/animations/AnimatedHeight';
 import { B2, H4, Row } from '~/common/ui';
-import i18nService from '../../../common/services/i18n.service';
 import Divider from '~/common/components/Divider';
 import {
   ActivityNode,
@@ -29,6 +24,7 @@ import {
 } from '~/graphql/api';
 import GroupModel from '~/groups/GroupModel';
 import { ChannelRecommendationItem } from '~/modules/recommendation';
+import sp from '~/services/serviceProvider';
 
 interface Props {
   navigation: any;
@@ -36,12 +32,12 @@ interface Props {
 }
 
 export const DiscoverySearchList = observer((props: Props) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
 
   const store = useDiscoveryV2SearchStore();
   const searchBarStore = useStores().searchBar;
   let listRef = useRef<FlatList<[]>>(null);
-
+  const i18n = sp.i18n;
   useEffect(() => {
     if (listRef.current) {
       listRef.current.scrollToOffset({ offset: -65, animated: true });
@@ -112,7 +108,7 @@ export const DiscoverySearchList = observer((props: Props) => {
         </View>
       </View>
     );
-  }, [store.refreshing]);
+  }, [i18n, store.refreshing]);
 
   const { algorithm, q: searchTerm } =
     store.listStore.feedsService.params ?? {};
@@ -144,7 +140,7 @@ function Finder({ type, query }: { type: 'group' | 'channel'; query: string }) {
 
   return entities.length === 0 ? null : (
     <>
-      <View style={ThemedStyles.style.bgPrimaryBackground}>
+      <View style={sp.styles.style.bgPrimaryBackground}>
         <Row align="centerBetween" vertical="L" horizontal="L">
           <H4>{type === 'channel' ? 'Channels' : 'Groups'}</H4>
           <B2
@@ -152,7 +148,7 @@ function Finder({ type, query }: { type: 'group' | 'channel'; query: string }) {
             onPress={() => {
               store.setAlgorithm(type === 'channel' ? 'channels' : 'groups');
             }}>
-            {i18nService.t('seeMore')}
+            {sp.i18n.t('seeMore')}
           </B2>
         </Row>
       </View>

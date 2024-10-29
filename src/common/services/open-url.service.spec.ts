@@ -1,23 +1,22 @@
 import { OpenURLService } from './open-url.service';
-import { Linking, Alert } from 'react-native';
-import { InAppBrowser } from 'react-native-inappbrowser-reborn';
-import { storages } from './storage/storages.service';
-import deeplinksRouterService from './deeplinks-router.service';
+import { Linking } from 'react-native';
 
-const mockedAppStorage = storages.app as jest.Mocked<typeof storages.app>;
-const mockedInAppBrowser = InAppBrowser as jest.Mocked<typeof InAppBrowser>;
+import { Storages } from './storage/storages.service';
+import { DeepLinksRouterService } from './deeplinks-router.service';
+import { NavigationService } from '~/navigation/NavigationService';
+import { openLinkInInAppBrowser } from './inapp-browser.service';
 
 // ### Mocks ###
-jest.mock('./analytics.service.ts', () => ({
-  AnalyticsService: jest.fn().mockImplementation(() => ({
-    trackScreenView: jest.fn(),
-    trackEvent: jest.fn(),
-  })),
+jest.mock('react-native-url-polyfill', () => ({
+  URL: jest.fn(),
+  URLSearchParams: jest.fn(),
 }));
-
-jest.mock('./deeplinks-router.service.ts', () => ({
-  navigate: jest.fn(),
+jest.mock('./analytics.service');
+jest.mock('./deeplinks-router.service');
+jest.mock('~/common/services/inapp-browser.service', () => ({
+  openLinkInInAppBrowser: jest.fn(),
 }));
+jest.mock('~/navigation/NavigationService');
 
 jest.mock('../../config/Config', () => ({
   APP_URI: 'https://www.minds.com',
@@ -47,21 +46,22 @@ jest.mock('react-native-inappbrowser-reborn', () => ({
   },
 }));
 
-jest.mock('~/navigation/NavigationService', () => ({
-  navigate: jest.fn(),
-  push: jest.fn(),
-}));
-
 // ### Tests ###
 describe('OpenURLService', () => {
   let service;
+  const storages = new Storages();
+  const mockedAppStorage = storages.app as jest.Mocked<typeof storages.app>;
+  // @ts-ignore
+  const navigation = new NavigationService();
+  // @ts-ignore
+  const deeplink = new DeepLinksRouterService();
 
   beforeEach(() => {
-    service = new OpenURLService();
+    service = new OpenURLService(storages, navigation, deeplink);
   });
 
   it('should initialize with preferred browser from storage', () => {
-    mockedAppStorage.getInt.mockReturnValue(1);
+    mockedAppStorage.getNumber.mockReturnValue(1);
     service.init();
     expect(service.preferredBrowser).toBe(1);
   });
@@ -69,59 +69,32 @@ describe('OpenURLService', () => {
   it('should set preferred browser and store it', () => {
     service.setPreferredBrowser(0);
     expect(service.preferredBrowser).toBe(0);
-    expect(storages.app.setInt).toHaveBeenCalledWith('openLinksBrowser', 0);
-  });
-
-  it('should open link in in-app browser if available', async () => {
-    mockedInAppBrowser.isAvailable.mockResolvedValue(true);
-    await service.openLinkInInAppBrowser('https://example.com');
-    expect(mockedInAppBrowser.open).toHaveBeenCalledWith(
-      'https://example.com',
-      expect.any(Object),
-    );
-  });
-
-  it('should open link in default browser if in-app browser not available', async () => {
-    mockedInAppBrowser.isAvailable.mockResolvedValue(false);
-    await service.openLinkInInAppBrowser('https://example.com');
-    expect(Linking.openURL).toHaveBeenCalledWith('https://example.com');
-  });
-
-  it('should handle error when opening link in in-app browser', async () => {
-    mockedInAppBrowser.isAvailable.mockRejectedValue(
-      new Error('Error message'),
-    );
-    await service.openLinkInInAppBrowser('https://example.com');
-    expect(Alert.alert).toHaveBeenCalledWith('Error message');
+    expect(mockedAppStorage.set).toHaveBeenCalledWith('openLinksBrowser', 0);
   });
 
   it('should open link in deeplink router if it is the apps domain', async () => {
     await service.open('https://www.minds.com/wallet');
-    expect(deeplinksRouterService.navigate).toHaveBeenCalledWith(
+    expect(deeplink.navigate).toHaveBeenCalledWith(
       'https://www.minds.com/wallet',
     );
   });
 
   it('should open link in deeplink router if it is the apps domain without https://www.', async () => {
     await service.open('minds.com/wallet');
-    expect(deeplinksRouterService.navigate).toHaveBeenCalledWith(
+    expect(deeplink.navigate).toHaveBeenCalledWith(
       'https://www.minds.com/wallet',
     );
   });
 
   it('should open link in default browser if it is selected', async () => {
-    service.setPreferredBrowser(0);
+    service.setPreferredBrowser(1);
     await service.open('https://example.com');
     expect(Linking.openURL).toHaveBeenCalledWith('https://example.com');
   });
 
   it('should open link in in-app browser if it is selected', async () => {
-    service.setPreferredBrowser(1);
-    mockedInAppBrowser.isAvailable.mockResolvedValue(true);
+    service.setPreferredBrowser(0);
     await service.open('https://example.com');
-    expect(mockedInAppBrowser.open).toHaveBeenCalledWith(
-      'https://example.com',
-      expect.any(Object),
-    );
+    expect(openLinkInInAppBrowser).toHaveBeenCalledWith('https://example.com');
   });
 });

@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, TextProps } from 'react-native';
-import ThemedStyles from '~styles/ThemedStyles';
+
+import sp from '~/services/serviceProvider';
 
 export type MTextProps = TextProps & {
   children:
@@ -18,7 +19,7 @@ export type MTextProps = TextProps & {
  */
 const MText = ({ style, ...p }: MTextProps) => {
   const defaultStyle = [
-    ThemedStyles.style.colorPrimaryText,
+    sp.styles.style.colorPrimaryText,
     styles.text,
     style as any,
   ];

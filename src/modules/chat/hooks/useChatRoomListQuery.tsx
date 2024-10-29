@@ -8,10 +8,11 @@ import {
 import { useAllChatRoomsEvent } from './useAllChatRoomsEvent';
 import { useEffect, useMemo } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import logService from '~/common/services/log.service';
 import { produce } from 'immer';
+
 import { ChatRoomEventType } from '../types';
-import { gqlFetcher } from '~/common/services/api.service';
+import sp from '~/services/serviceProvider';
+import { gqlFetcher } from '~/common/services/gqlFetcher';
 
 export function useChatRoomListQuery() {
   const queryClient = useQueryClient();
@@ -101,7 +102,7 @@ export function useChatRoomListQuery() {
           },
         );
       } catch (error) {
-        logService.exception('[useChatRoomListQuery] fetching room', error);
+        sp.log.exception('[useChatRoomListQuery] fetching room', error);
       }
     }
   });

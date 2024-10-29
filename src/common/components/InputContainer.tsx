@@ -1,7 +1,8 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
 import { View, StyleSheet, ViewStyle, Pressable } from 'react-native';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import Input, { PropsType as InputPropsType } from './Input';
+import sp from '~/services/serviceProvider';
 
 export interface InputContainerPropsType extends InputPropsType {
   noBottomBorder?: boolean;
@@ -16,7 +17,7 @@ const InputContainer = (
   props: InputContainerPropsType,
   ref: React.Ref<InputContainerImperativeHandle>,
 ) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const { style, noBottomBorder, ...otherProps } = props;
   const inputRef = React.useRef<Input>(null);
 

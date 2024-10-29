@@ -6,12 +6,12 @@ import { useBackHandler } from '@react-native-community/hooks';
 
 import { B1 } from '~ui';
 import { showNotification } from 'AppMessages';
-import i18n from '../common/services/i18n.service';
 import { TwoFactorError } from '~/common/services/ApiErrors';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import CodeConfirmScreen from '~/common/screens/CodeConfirmScreen';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { TENANT } from '~/config/Config';
+import serviceProvider from '~/services/serviceProvider';
 
 type ForgotScreenRouteProp = RouteProp<
   RootStackParamList,
@@ -29,6 +29,8 @@ type PropsType = {
 const TwoFactorConfirmScreen = observer(({ route, navigation }: PropsType) => {
   const { onConfirm, title, onCancel, mfaType, oldCode, showRecovery } =
     route.params;
+
+  const i18n = serviceProvider.i18n;
 
   // Disable back button on Android
   useBackHandler(

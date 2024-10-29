@@ -22,11 +22,11 @@ import { withErrorBoundary } from '../../common/components/ErrorBoundary';
 import Edit from './buttons/Edit';
 import { Row } from '~ui';
 import SupermindButton from '../../common/components/supermind/SupermindButton';
-import ThemedStyles from '../../styles/ThemedStyles';
+
 import { SUPERMIND_ENABLED, WIRE_ENABLED } from '~/config/Config';
 import PostSubscription from './buttons/PostSubscription';
 import { useCreateChatRoom } from '~/modules/chat/hooks/useCreateChatRoom';
-import PermissionsService from '~/common/services/permissions.service';
+import sp from '~/services/serviceProvider';
 
 export type ButtonsType =
   | 'edit'
@@ -145,18 +145,17 @@ const ChannelButtons = withErrorBoundary(
         {shouldShow('supermind') && SUPERMIND_ENABLED && (
           <SupermindButton
             entity={props.store.channel}
-            style={ThemedStyles.style.marginLeft2x}
+            style={sp.styles.style.marginLeft2x}
           />
         )}
-        {shouldShow('chat') &&
-          !PermissionsService.shouldHideCreateChatRoom() && (
-            <ChatButton
-              raisedIcons={props.raisedIcons}
-              iconColor={props.iconColor}
-              iconReverseColor={props.iconReverseColor}
-              guid={props.store.channel.guid}
-            />
-          )}
+        {shouldShow('chat') && !sp.permissions.shouldHideCreateChatRoom() && (
+          <ChatButton
+            raisedIcons={props.raisedIcons}
+            iconColor={props.iconColor}
+            iconReverseColor={props.iconReverseColor}
+            guid={props.store.channel.guid}
+          />
+        )}
         {shouldShow('more') && (
           <SmallCircleButton
             raised={props.raisedIcons}
@@ -191,7 +190,7 @@ const ChatButton = ({ raisedIcons, iconColor, iconReverseColor, guid }) => {
       name="chat"
       type="ion"
       onPress={() => {
-        if (PermissionsService.canCreateChatRoom(true)) {
+        if (sp.permissions.canCreateChatRoom(true)) {
           createChatRoom([guid]);
         }
       }}

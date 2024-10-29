@@ -6,11 +6,11 @@ import MCIcon from '@expo/vector-icons/MaterialCommunityIcons';
 import type UserStore from '~/auth/UserStore';
 import MText from '~/common/components/MText';
 import token from '~/common/helpers/token';
-import i18n from '~/common/services/i18n.service';
 import { ComponentsStyle } from '~/styles/Components';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import type BoostModel from '../../models/BoostModel';
 import { BoostConsoleStoreContext } from '../contexts/boost-store.context';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   boost: BoostModel;
@@ -42,12 +42,12 @@ export default class BoostActionBar extends Component<PropsType> {
   }
 
   renderTime() {
-    const date = i18n.date(
+    const date = sp.i18n.date(
       parseInt(this.props.boost.time_created, 10) * 1000,
       'friendly',
     );
     return (
-      <View style={ThemedStyles.style.flexColumnCentered} key="time">
+      <View style={sp.styles.style.flexColumnCentered} key="time">
         <MCIcon name="clock" size={20} style={styles.icon} />
         <MText style={styles.value} numberOfLines={1}>
           {date}
@@ -58,7 +58,7 @@ export default class BoostActionBar extends Component<PropsType> {
 
   renderTarget() {
     return this.props.boost.destination ? (
-      <View style={ThemedStyles.style.flexColumnCentered} key="target">
+      <View style={sp.styles.style.flexColumnCentered} key="target">
         <IonIcon name="person" size={20} style={styles.icon} />
         <MText style={styles.value} numberOfLines={1}>
           {'@' + this.props.boost.destination.username}
@@ -69,7 +69,7 @@ export default class BoostActionBar extends Component<PropsType> {
 
   renderViews() {
     return this.props.boost.impressions ? (
-      <View style={ThemedStyles.style.flexColumnCentered} key="views">
+      <View style={sp.styles.style.flexColumnCentered} key="views">
         <MCIcon name="eye" size={20} style={styles.icon} />
         <MText style={styles.value}>
           {this.props.boost.impressions + ' views'}
@@ -80,7 +80,7 @@ export default class BoostActionBar extends Component<PropsType> {
 
   renderStatus() {
     return this.props.boost.state ? (
-      <View style={ThemedStyles.style.flexColumnCentered} key="status">
+      <View style={sp.styles.style.flexColumnCentered} key="status">
         <MCIcon name="timer-sand-empty" size={20} style={styles.icon} />
         <MText style={styles.value}>{this.props.boost.state}</MText>
       </View>
@@ -89,7 +89,7 @@ export default class BoostActionBar extends Component<PropsType> {
 
   renderBid() {
     return this.props.boost.bid ? (
-      <View style={ThemedStyles.style.flexColumnCentered} key="bid">
+      <View style={sp.styles.style.flexColumnCentered} key="bid">
         <MCIcon name="bank" size={20} style={styles.icon} />
         <MText style={styles.value}>
           {['offchain', 'onchain', 'peer', 'tokens'].includes(
@@ -105,15 +105,16 @@ export default class BoostActionBar extends Component<PropsType> {
   }
 
   renderScheduled() {
+    const i18n = sp.i18n;
     return this.props.boost.scheduledTs ? (
-      <View style={ThemedStyles.style.flexColumnCentered} key="schedule">
+      <View style={sp.styles.style.flexColumnCentered} key="schedule">
         <MCIcon name="alarm" size={20} style={styles.icon} />
         <MText style={styles.value}>
           {i18n.date(this.props.boost.scheduledTs * 1000)}
         </MText>
       </View>
     ) : (
-      <View style={ThemedStyles.style.flexColumnCentered} key="schedule">
+      <View style={sp.styles.style.flexColumnCentered} key="schedule">
         <MCIcon name="clock" size={20} style={styles.icon} />
         <MText style={styles.value}>
           {i18n.date(
@@ -126,17 +127,18 @@ export default class BoostActionBar extends Component<PropsType> {
   }
 
   renderActions() {
+    const i18n = sp.i18n;
     let buttons: ReactElement[] = [];
     if (this.canRevoke()) {
       buttons.push(
-        <View style={ThemedStyles.style.flexColumnCentered} key="revoke">
+        <View style={sp.styles.style.flexColumnCentered} key="revoke">
           <TouchableHighlight
             onPress={() => {
               this.props.boost.revoke();
             }}
             underlayColor="transparent"
             style={ComponentsStyle.redbutton}>
-            <MText style={ThemedStyles.style.colorAlert}>
+            <MText style={sp.styles.style.colorAlert}>
               {' '}
               {i18n.t('revoke').toUpperCase()}{' '}
             </MText>
@@ -147,7 +149,7 @@ export default class BoostActionBar extends Component<PropsType> {
 
     if (this.canReject()) {
       buttons.push(
-        <View style={ThemedStyles.style.flexColumnCentered} key="reject">
+        <View style={sp.styles.style.flexColumnCentered} key="reject">
           <TouchableHighlight
             onPress={() => {
               this.props.boost.reject();
@@ -155,7 +157,7 @@ export default class BoostActionBar extends Component<PropsType> {
             underlayColor="transparent"
             style={ComponentsStyle.redbutton}>
             <MText
-              style={ThemedStyles.style.colorAlert}
+              style={sp.styles.style.colorAlert}
               adjustsFontSizeToFit
               numberOfLines={1}>
               {' '}
@@ -168,7 +170,7 @@ export default class BoostActionBar extends Component<PropsType> {
 
     if (this.canAccept()) {
       buttons.push(
-        <View style={ThemedStyles.style.flexColumnCentered} key="accept">
+        <View style={sp.styles.style.flexColumnCentered} key="accept">
           <TouchableHighlight
             onPress={() => {
               this.props.boost.accept();
@@ -176,7 +178,7 @@ export default class BoostActionBar extends Component<PropsType> {
             underlayColor="transparent"
             style={ComponentsStyle.bluebutton}>
             <MText
-              style={ThemedStyles.style.colorLink}
+              style={sp.styles.style.colorLink}
               adjustsFontSizeToFit
               numberOfLines={1}>
               {' '}
@@ -230,7 +232,7 @@ export default class BoostActionBar extends Component<PropsType> {
   }
 }
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   container: [
     'bcolorBaseBackground',
     {

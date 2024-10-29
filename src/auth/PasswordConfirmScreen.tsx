@@ -1,7 +1,5 @@
 import React from 'react';
 import { observer, useLocalStore } from 'mobx-react';
-import ThemedStyles from '../styles/ThemedStyles';
-import i18n from '../common/services/i18n.service';
 import { RootStackParamList } from '../navigation/NavigationTypes';
 import { RouteProp } from '@react-navigation/core';
 import { SafeAreaView, StyleSheet, TouchableOpacity, View } from 'react-native';
@@ -9,11 +7,10 @@ import Icon from '@expo/vector-icons/MaterialCommunityIcons';
 import IonIcon from '@expo/vector-icons/Ionicons';
 import InputContainer from '../common/components/InputContainer';
 import { icon } from './styles';
-import authService from './AuthService';
-import NavigationService from '../navigation/NavigationService';
 import MText from '../common/components/MText';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
+import serviceProvider from '~/services/serviceProvider';
 
 type PasswordConfirmation = RouteProp<
   RootStackParamList,
@@ -30,12 +27,13 @@ type PropsType = {
 
 const PasswordConfirmScreen = withErrorBoundaryScreen(
   observer((props: PropsType) => {
-    const theme = ThemedStyles.style;
+    const i18n = serviceProvider.i18n;
+    const theme = serviceProvider.styles.style;
     const onConfirm = props.route?.params?.onConfirm || props.onConfirm;
     const title = props.route?.params?.title || props.title;
     const onGoBackPress = React.useCallback(() => {
       if (props.route?.params?.onConfirm !== undefined) {
-        NavigationService.goBack();
+        serviceProvider.navigation.goBack();
       } else {
         props.onGoBackPress && props.onGoBackPress();
       }
@@ -56,9 +54,9 @@ const PasswordConfirmScreen = withErrorBoundaryScreen(
       async submit() {
         this.error = false;
         try {
-          await authService.validatePassword(this.password);
+          await serviceProvider.resolve('auth').validatePassword(this.password);
           if (onConfirm) {
-            NavigationService.goBack();
+            serviceProvider.navigation.goBack();
             onConfirm(this.password);
           }
           this.password = '';
@@ -80,7 +78,7 @@ const PasswordConfirmScreen = withErrorBoundaryScreen(
             <Icon
               name="chevron-left"
               size={32}
-              color={ThemedStyles.getColor('SecondaryText')}
+              color={serviceProvider.styles.getColor('SecondaryText')}
               style={iconStyle}
               onPress={onGoBackPress}
             />

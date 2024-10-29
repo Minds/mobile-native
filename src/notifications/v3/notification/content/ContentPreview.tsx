@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, TextStyle } from 'react-native';
-import i18n from '~/common/services/i18n.service';
+
 import { Button } from '~/common/ui';
 import ReadMore from '~/common/components/ReadMore';
-import BlogCard from '../../../../blogs/BlogCard';
-import BlogModel from '../../../../blogs/BlogModel';
-import Activity from '../../../../newsfeed/activity/Activity';
-import ActivityModel from '../../../../newsfeed/ActivityModel';
+import BlogCard from '~/blogs/BlogCard';
+import BlogModel from '~/blogs/BlogModel';
+import Activity from '~/newsfeed/activity/Activity';
+import ActivityModel from '~/newsfeed/ActivityModel';
 import type NotificationModel from '../NotificationModel';
 import { NotificationType } from '../NotificationModel';
 import {
@@ -17,6 +17,9 @@ import {
 } from '../styles';
 import useNotificationRouter from '../useNotificationRouter';
 import GroupsListItem from '~/groups/GroupsListItem';
+import sp from '~/services/serviceProvider';
+import UserModel from '~/channel/UserModel';
+import ChannelListItem from '~/common/components/ChannelListItem';
 
 type PropsType = {
   notification: NotificationModel;
@@ -84,7 +87,7 @@ const ContentPreview = React.memo(({ notification, navigation }: PropsType) => {
         renderContent(notification, navigation)}
       {hasGiftCard && (
         <Button mode="outline" type="action" onPress={navigateToObject}>
-          {i18n.t('notification.claimGiftButton')}
+          {sp.i18n.t('notification.claimGiftButton')}
         </Button>
       )}
     </View>
@@ -119,9 +122,15 @@ const renderContent = (notification: NotificationModel, navigation: any) => {
       />
     );
   } else {
-    return (
+    const entity = notification.type.startsWith('boost_')
+      ? notification.entity.entity
+      : notification.entity;
+
+    return entity.type === 'user' ? (
+      <ChannelListItem channel={UserModel.create(entity)} />
+    ) : (
       <Activity
-        entity={ActivityModel.create(notification.entity)}
+        entity={ActivityModel.create(entity)}
         navigation={navigation}
         autoHeight={false}
         showOnlyContent={true}

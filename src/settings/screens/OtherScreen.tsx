@@ -1,24 +1,20 @@
 import React, { useCallback } from 'react';
-import MenuItem from '../../common/components/menus/MenuItem';
-import ThemedStyles from '../../styles/ThemedStyles';
-import i18n from '../../common/services/i18n.service';
-import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
-import NavigationService from '../../navigation/NavigationService';
-import {
-  BLOCK_USER_ENABLED,
-  IS_TENANT,
-  MEMBERSHIP_TIERS_ENABLED,
-} from '~/config/Config';
-import sessionService from '~/common/services/session.service';
+
+import MenuItem from '~/common/components/menus/MenuItem';
+
+import MenuSubtitle from '~/common/components/menus/MenuSubtitle';
+import { IS_TENANT, MEMBERSHIP_TIERS_ENABLED } from '~/config/Config';
 import { Screen } from '~/common/ui';
+import sp from '~/services/serviceProvider';
 
 function useNavCallback(screen) {
   return useCallback(() => {
-    NavigationService.navigate(screen);
+    sp.navigation.navigate(screen);
   }, [screen]);
 }
 
 export default function () {
+  const i18n = sp.i18n;
   const contentAdmin = [
     {
       title: i18n.t('settings.blockedChannels'),
@@ -35,7 +31,7 @@ export default function () {
 
   const contentMigration: Array<any> = [];
 
-  if (IS_TENANT || sessionService.getUser().plus) {
+  if (IS_TENANT || sp.session.getUser().plus) {
     contentMigration.push({
       title: i18n.t('settings.rssSync'),
       onPress: useNavCallback('RssScreen'),
@@ -58,8 +54,7 @@ export default function () {
 
   return (
     <Screen scroll>
-      {BLOCK_USER_ENABLED &&
-        generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
+      {generateSection(i18n.t('settings.otherOptions.a'), contentAdmin)}
       {MEMBERSHIP_TIERS_ENABLED &&
         generateSection(i18n.t('settings.otherOptions.b'), paidContent)}
       {generateSection(
@@ -88,8 +83,5 @@ const generateSection = (title, items) => {
   ) : null;
 };
 
-const firstMenuItemStyle = ThemedStyles.combine('bgPrimaryBackground');
-const menuItemStyle = ThemedStyles.combine(
-  'bgPrimaryBackground',
-  'borderTop0x',
-);
+const firstMenuItemStyle = sp.styles.combine('bgPrimaryBackground');
+const menuItemStyle = sp.styles.combine('bgPrimaryBackground', 'borderTop0x');

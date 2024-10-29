@@ -3,7 +3,7 @@ import React from 'react';
 import type UserModel from '~/channel/UserModel';
 import PressableScale from '~/common/components/PressableScale';
 import { B3, Icon } from '~/common/ui';
-import ThemedStyles from '~/styles/ThemedStyles';
+import sp from '~/services/serviceProvider';
 
 type Props = {
   user: UserModel;
@@ -23,7 +23,7 @@ export default function ChatUserChip({ user, onPress }: Props) {
   );
 }
 
-const chipStyle = ThemedStyles.combine(
+const chipStyle = sp.styles.combine(
   'paddingHorizontal3x',
   'paddingVertical',
   'rowJustifySpaceBetween',

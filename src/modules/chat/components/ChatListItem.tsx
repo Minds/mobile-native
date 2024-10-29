@@ -4,11 +4,11 @@ import moment from 'moment';
 
 import { Avatar, B2, B3, Row } from '~/common/ui';
 import MPressable from '~/common/components/MPressable';
-import i18nService from '~/common/services/i18n.service';
 import { withErrorBoundary } from '~/common/components/ErrorBoundary';
 import { ChatRoom } from '../types';
-import ThemedStyles from '~/styles/ThemedStyles';
+
 import { APP_URI } from '~/config/Config';
+import sp from '~/services/serviceProvider';
 
 type Props = {
   chat: ChatRoom;
@@ -65,7 +65,7 @@ function ChatListItem({ chat, onPress }: Props) {
               {chat.node.name}
             </B2>
             <B2 color="secondary">
-              {i18nService.date(moment(timestamp), 'friendly')}
+              {sp.i18n.date(moment(timestamp), 'friendly')}
             </B2>
           </View>
           <View style={styles.nameContainer}>
@@ -84,7 +84,7 @@ function ChatListItem({ chat, onPress }: Props) {
 
 export default withErrorBoundary(React.memo(ChatListItem), 'ChatListItem');
 
-const styles = ThemedStyles.create({
+const styles = sp.styles.create({
   unread: [
     {
       width: 8,

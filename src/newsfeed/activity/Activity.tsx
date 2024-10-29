@@ -6,22 +6,16 @@ import { View, LayoutChangeEvent, Pressable } from 'react-native';
 import * as Clipboard from 'expo-clipboard';
 import * as entities from 'entities';
 
-import ExplicitText from '../../common/components/explicit/ExplicitText';
-import settingsStore from '../../settings/SettingsStore';
+import ExplicitText from '~/common/components/explicit/ExplicitText';
 import OwnerBlock from './OwnerBlock';
 import ActivityActionSheet from './ActivityActionSheet';
-import MediaView from '../../common/components/MediaView';
-import Translate from '../../common/components/translate/Translate';
-import ExplicitOverlay from '../../common/components/explicit/ExplicitOverlay';
-import Lock from '../../wire/v2/lock/Lock';
-import Pinned from '../../common/components/Pinned';
-import blockListService from '../../common/services/block-list.service';
-import i18n from '../../common/services/i18n.service';
+import MediaView from '~/common/components/MediaView';
+import Translate from '~/common/components/translate/Translate';
+import ExplicitOverlay from '~/common/components/explicit/ExplicitOverlay';
+import Lock from '~/wire/v2/lock/Lock';
+import Pinned from '~/common/components/Pinned';
 import ActivityModel from '../ActivityModel';
-import ThemedStyles, { useMemoStyle } from '../../styles/ThemedStyles';
-import sessionService from '../../common/services/session.service';
-import NavigationService from '../../navigation/NavigationService';
-import { showNotification } from '../../../AppMessages';
+import { showNotification } from '~/../AppMessages';
 import DeletedRemind from './DeletedRemind';
 import BottomContent from './BottomContent';
 import {
@@ -34,18 +28,19 @@ import {
   styles,
   textStyle,
 } from './styles';
-import MText from '../../common/components/MText';
+import MText from '~/common/components/MText';
 import ActivityContainer from './ActivityContainer';
 import { withAnalyticsContext } from '~/common/contexts/analytics.context';
-import analyticsService from '~/common/services/analytics.service';
 import { useFeedStore } from '~/common/contexts/feed-store.context';
-import FadeView from '../../common/components/FadeView';
+import FadeView from '~/common/components/FadeView';
 import { withActivityContext } from './contexts/Activity.context';
 import undoable from './hocs/undoable';
 import { BoostCTA } from '~/modules/boost';
 import ActivityMetrics from './metrics/ActivityMetrics';
 import { showUpgradeModal } from '~/common/services/upgrade-modal.service';
 const FONT_THRESHOLD = 300;
+import sp from '~/services/serviceProvider';
+import { useMemoStyle } from '~/styles/hooks';
 
 export type ActivityProps = {
   entity: ActivityModel;
@@ -74,6 +69,7 @@ export type ActivityProps = {
  * Activity
  */
 @withAnalyticsContext<ActivityProps>(props => {
+  const analyticsService = sp.resolve('analytics');
   const feedStore = useFeedStore();
   const clientMetaContext =
     feedStore?.metadataService &&
@@ -181,10 +177,10 @@ export default class Activity extends Component<ActivityProps> {
         const type = this.props.entity.custom_type || this.props.entity.subtype;
         if (type === 'video') {
           if (visible) {
-            const user = sessionService.getUser();
+            const user = sp.session.getUser();
             if (
               !user.disable_autoplay_videos &&
-              !settingsStore.dataSaverEnabled &&
+              !sp.resolve('settings').dataSaverEnabled &&
               !(
                 // do not autoplay minds+ videos for non plus users
                 (
@@ -194,7 +190,7 @@ export default class Activity extends Component<ActivityProps> {
                 )
               )
             ) {
-              const state = NavigationService.getCurrentState();
+              const state = sp.navigation.getCurrentState();
 
               // sound only for ActivityScreen (Full screen)
               const sound = state.name === 'Activity' ? true : undefined; // undefined to use the latest option from the video player service
@@ -228,7 +224,7 @@ export default class Activity extends Component<ActivityProps> {
     Clipboard.setStringAsync(
       entities.decodeHTML(title ? title + '\n' + entity.text : entity.text),
     );
-    showNotification(i18n.t('copied'), 'info');
+    showNotification(sp.i18n.t('copied'), 'info');
   };
 
   setMediaViewRef = o => {
@@ -295,14 +291,14 @@ export default class Activity extends Component<ActivityProps> {
     const remind_object = this.props.entity.remind_object;
 
     if (remind_object && !this.props.hideRemind) {
-      if (blockListService.has(remind_object.owner_guid)) {
+      if (sp.resolve('blockList').has(remind_object.owner_guid)) {
         return (
           <View style={remindBlockContainerStyle}>
             <MText style={styles.blockedNoticeDesc}>
-              {i18n.t('activity.remindBlocked')}
+              {sp.i18n.t('activity.remindBlocked')}
               <MText
                 onPress={this.navToRemindChannel}
-                style={ThemedStyles.style.bold}>
+                style={sp.styles.style.bold}>
                 {' '}
                 @{remind_object.ownerObj.username}
               </MText>

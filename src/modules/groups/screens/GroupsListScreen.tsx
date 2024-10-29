@@ -13,7 +13,6 @@ import {
   HairlineRow,
   H4,
 } from '~/common/ui';
-import i18n from '~/common/services/i18n.service';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
 import { IS_IPAD } from '~/config/Config';
 import { GroupsEmpty } from '..';
@@ -26,6 +25,7 @@ import GroupMemberships from '~/groups/components/GroupMemberships';
 import Topbar from '~/topbar/Topbar';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '~/navigation/NavigationTypes';
+import sp from '~/services/serviceProvider';
 
 const DebouncedGroupsListItem = withErrorBoundary(
   withPreventDoubleTap(GroupsListItem),
@@ -37,6 +37,7 @@ const GroupsListScreen = observer(({ route }: Props) => {
   const { showTopBar } = route.params;
   const navigation = useNavigation();
   const [isEmpty, setIsEmpty] = useState(true);
+  const i18n = sp.i18n;
 
   const navigateToDiscovery = () => navigation.navigate('GroupsDiscovery');
   const renderGroup = useCallback(
@@ -86,7 +87,7 @@ const GroupsListScreen = observer(({ route }: Props) => {
             <GroupMemberships />
 
             <H4 horizontal="L" vertical="L">
-              {i18n.t('groups.joined')}
+              {sp.i18n.t('groups.joined')}
             </H4>
           </>
         }

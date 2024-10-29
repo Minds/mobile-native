@@ -1,12 +1,12 @@
 import React from 'react';
-import MenuSubtitle from '../../common/components/menus/MenuSubtitle';
-import MenuItem from '../../common/components/menus/MenuItem';
-import i18n from '../../common/services/i18n.service';
-import { Screen } from '../../common/ui';
-import FitScrollView from '../../common/components/FitScrollView';
+
+import MenuSubtitle from '~/common/components/menus/MenuSubtitle';
+import MenuItem from '~/common/components/menus/MenuItem';
+import { Screen } from '~/common/ui';
+import FitScrollView from '~/common/components/FitScrollView';
 import { GOOGLE_PLAY_STORE } from '~/config/Config';
 import { navigateToHelp } from '../SettingsScreen';
-import openUrlService from '~/common/services/open-url.service';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {};
 
@@ -16,52 +16,55 @@ const items = [
     options: [
       // {
       //   id: 'mobile',
-      //   onPress: () => openUrlService.open('https://mobile.minds.com/mobile'),
+      //   onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/mobile'),
       // },
       // {
       //   id: 'careers',
-      //   onPress: () => openUrlService.open('https://jobs.lever.co/minds'),
+      //   onPress: () => sp.resolve('openURL').open('https://jobs.lever.co/minds'),
       // },
       // {
       //   id: 'blog',
-      //   onPress: () => openUrlService.open('https://www.minds.com/minds/blogs'),
+      //   onPress: () => sp.resolve('openURL').open('https://www.minds.com/minds/blogs'),
       // },
       // {
       //   id: 'whitepaper',
       //   onPress: () =>
-      //     openUrlService.open(
+      //     sp.resolve('openURL').open(
       //       'https://cdn-assets.minds.com/front/dist/browser/en/assets/documents/Minds-Whitepaper-v2.pdf',
       //     ),
       // },
       {
         id: 'rights',
         onPress: () =>
-          openUrlService.open('https://www.minds.com/p/billofrights'),
+          sp.resolve('openURL').open('https://www.minds.com/p/billofrights'),
       },
       // {
       //   id: 'events',
-      //   onPress: () => openUrlService.open('https://change.minds.com/'),
+      //   onPress: () => sp.resolve('openURL').open('https://change.minds.com/'),
       // },
       // {
       //   id: 'store',
-      //   onPress: () => openUrlService.open('https://teespring.com/stores/minds'),
+      //   onPress: () => sp.resolve('openURL').open('https://teespring.com/stores/minds'),
       // },
       {
         id: 'terms',
-        onPress: () => openUrlService.open('https://www.minds.com/p/terms'),
+        onPress: () =>
+          sp.resolve('openURL').open('https://www.minds.com/p/terms'),
       },
       {
         id: 'privacy',
-        onPress: () => openUrlService.open('https://www.minds.com/p/privacy'),
+        onPress: () =>
+          sp.resolve('openURL').open('https://www.minds.com/p/privacy'),
       },
       // {
       //   id: 'content',
       //   onPress: () =>
-      //     openUrlService.open('https://mobile.minds.com/content-policy'),
+      //     sp.resolve('openURL').open('https://mobile.minds.com/content-policy'),
       // },
       {
         id: 'dmca',
-        onPress: () => openUrlService.open('https://www.minds.com/p/dmca'),
+        onPress: () =>
+          sp.resolve('openURL').open('https://www.minds.com/p/dmca'),
       },
     ],
   },
@@ -74,22 +77,23 @@ const items = [
       },
       {
         id: 'contact',
-        onPress: () => openUrlService.open('https://www.minds.com/p/contact'),
+        onPress: () =>
+          sp.resolve('openURL').open('https://www.minds.com/p/contact'),
       },
       // {
       //   id: 'community',
       //   onPress: () =>
-      //     openUrlService.open(
+      //     sp.resolve('openURL').open(
       //       'https://www.minds.com/groups/profile/100000000000000681',
       //     ),
       // },
       // {
       //   id: 'languages',
-      //   onPress: () => openUrlService.open('https://mobile.minds.com/localization'),
+      //   onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/localization'),
       // },
       {
         id: 'status',
-        onPress: () => openUrlService.open('https://status.minds.com/'),
+        onPress: () => sp.resolve('openURL').open('https://status.minds.com/'),
       },
     ],
   },
@@ -98,43 +102,43 @@ const items = [
   //   options: [
   //     {
   //       id: 'upgrade',
-  //       onPress: () => openUrlService.open('https://mobile.minds.com/upgrades'),
+  //       onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/upgrades'),
   //       show: false,
   //     },
   //     {
   //       id: 'token',
-  //       onPress: () => openUrlService.open('https://mobile.minds.com/token'),
+  //       onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/token'),
   //     },
   //     {
   //       id: 'plus',
-  //       onPress: () => openUrlService.open('https://mobile.minds.com/plus'),
+  //       onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/plus'),
   //       show: false,
   //     },
   //     {
   //       id: 'pro',
-  //       onPress: () => openUrlService.open('https://mobile.minds.com/pro'),
+  //       onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/pro'),
   //       show: false,
   //     },
   //     {
   //       id: 'pay',
-  //       onPress: () => openUrlService.open('https://mobile.minds.com/pay'),
+  //       onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/pay'),
   //     },
   //     {
   //       id: 'nodes',
-  //       onPress: () => openUrlService.open('https://mobile.minds.com/nodes'),
+  //       onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/nodes'),
   //     },
   //     {
   //       id: 'boost',
-  //       onPress: () => openUrlService.open('https://mobile.minds.com/boost'),
+  //       onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/boost'),
   //     },
   //     {
   //       id: 'rewards',
-  //       onPress: () => openUrlService.open('https://mobile.minds.com/rewards'),
+  //       onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/rewards'),
   //     },
   //     {
   //       id: 'youtube',
   //       onPress: () =>
-  //         openUrlService.open('https://mobile.minds.com/youtube-migration'),
+  //         sp.resolve('openURL').open('https://mobile.minds.com/youtube-migration'),
   //     },
   //   ],
   // },
@@ -143,26 +147,26 @@ const items = [
   //   options: [
   //     {
   //       id: 'docs',
-  //       onPress: () => openUrlService.open('https://developers.minds.com/'),
+  //       onPress: () => sp.resolve('openURL').open('https://developers.minds.com/'),
   //     },
   //     {
   //       id: 'community',
   //       onPress: () =>
-  //         openUrlService.open(
+  //         sp.resolve('openURL').open(
   //           'https://mobile.minds.com/groups/profile/365903183068794880',
   //         ),
   //     },
   //     {
   //       id: 'code',
-  //       onPress: () => openUrlService.open('https://gitlab.com/minds'),
+  //       onPress: () => sp.resolve('openURL').open('https://gitlab.com/minds'),
   //     },
   //     {
   //       id: 'canary',
-  //       onPress: () => openUrlService.open('https://mobile.minds.com/canary'),
+  //       onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/canary'),
   //     },
   //     {
   //       id: 'branding',
-  //       onPress: () => openUrlService.open('https://mobile.minds.com/branding'),
+  //       onPress: () => sp.resolve('openURL').open('https://mobile.minds.com/branding'),
   //     },
   //   ],
   // },
@@ -181,14 +185,14 @@ const ResourcesScreen = ({}: PropsType) => {
         {items.map((item: Items, index) => (
           <React.Fragment key={item.id}>
             <MenuSubtitle>
-              {i18n.t(`settings.${item.id}.title`).toUpperCase()}
+              {sp.i18n.t(`settings.${item.id}.title`).toUpperCase()}
             </MenuSubtitle>
             {item.options.map((option: Options<typeof index>, i) =>
               !shouldHideCash || option.show !== false ? (
                 <MenuItem
                   key={`${item.id}.${option.id}`}
                   // @ts-ignore
-                  title={i18n.t(`settings.${item.id}.${option.id}`)}
+                  title={sp.i18n.t(`settings.${item.id}.${option.id}`)}
                   onPress={option.onPress}
                   noBorderTop={i > 0}
                 />

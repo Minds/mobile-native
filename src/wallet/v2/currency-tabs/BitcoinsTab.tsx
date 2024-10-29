@@ -1,17 +1,17 @@
 import React from 'react';
+import { observer } from 'mobx-react';
 
-import i18n from '../../../common/services/i18n.service';
 import {
   WalletScreenRouteProp,
   WalletScreenNavigationProp,
 } from '../../v3/WalletScreen';
 import { WalletStoreType } from '../createWalletStore';
-import { observer } from 'mobx-react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import ThemedStyles from '../../../styles/ThemedStyles';
-import MenuItem from '../../../common/components/menus/MenuItem';
-import MenuSubtitle from '../../../common/components/menus/MenuSubtitle';
-import MText from '../../../common/components/MText';
+
+import MenuItem from '~/common/components/menus/MenuItem';
+import MenuSubtitle from '~/common/components/menus/MenuSubtitle';
+import MText from '~/common/components/MText';
+import sp from '~/services/serviceProvider';
 
 type PropsType = {
   walletStore: WalletStoreType;
@@ -20,8 +20,9 @@ type PropsType = {
 };
 
 const BitcoinsTab = observer(({ walletStore, navigation }: PropsType) => {
-  const theme = ThemedStyles.style;
+  const theme = sp.styles.style;
   const address = walletStore.wallet.btc.address;
+  const i18n = sp.i18n;
   return (
     <ScrollView>
       {!address && (

@@ -1,16 +1,40 @@
-import boostedContentService from '../../../src/modules/boost/services/boosted-content.service';
-import blockListService from '../../../src/common/services/block-list.service';
-import sessionService from '../../../src/common/services/session.service';
+import { BoostedContentService } from '~/modules/boost/services/boosted-content.service';
+import { BlockListService } from '~/common/services/block-list.service';
+import { SessionService } from '~/common/services/session.service';
+import { LogService } from '~/common/services/log.service';
+import { Lifetime } from '~/services/injectionContainer';
+import { FeedsService } from '~/common/services/feeds.service.ts';
 
-jest.mock('../../../src/common/services/feeds.service');
-jest.mock('../../../src/common/services/session.service');
-jest.mock('../../../src/common/services/block-list.service');
+jest.mock('~/common/services/feeds.service');
+jest.mock('~/common/services/session.service');
+jest.mock('~/common/services/block-list.service');
+jest.mock('~/common/services/feeds.service');
+
+import sp from '~/services/serviceProvider';
+
+const feedService = new FeedsService();
+feedService.setLimit.mockReturnThis();
+feedService.setOffset.mockReturnThis();
+feedService.setPaginated.mockReturnThis();
+feedService.setDataProperty.mockReturnThis();
+feedService.setEndpoint.mockReturnThis();
+feedService.setParams.mockReturnThis();
+const blockListService = new BlockListService();
+sp.register('feed', () => feedService, Lifetime.Singleton);
+sp.register('blockList', () => blockListService, Lifetime.Singleton);
 
 /**
  * Tests
  */
 describe('Boosted content service', () => {
+  let boostedContentService, sessionService, logService;
   beforeEach(() => {
+    sessionService = new SessionService();
+    logService = new LogService();
+    boostedContentService = new BoostedContentService(
+      sessionService,
+      logService,
+    );
     blockListService.has.mockClear();
     sessionService.userLoggedIn = true;
     boostedContentService.init();

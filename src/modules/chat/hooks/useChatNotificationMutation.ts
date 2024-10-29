@@ -7,8 +7,8 @@ import {
   GetChatRoomQuery,
   useUpdateChatRoomNotificationSettingsMutation,
 } from '~/graphql/api';
-import logService from '~/common/services/log.service';
 import { getChatRoomInfoKey } from './useChatRoomInfoQuery';
+import sp from '~/services/serviceProvider';
 
 export function useChatNotificationMutation() {
   const queryClient = useQueryClient();
@@ -30,7 +30,7 @@ export function useChatNotificationMutation() {
       return { previousData };
     },
     onError: (error, variables, context) => {
-      logService.exception('[useChatNotificationMutation]', error);
+      sp.log.exception('[useChatNotificationMutation]', error);
       // rollback on error
       const key = getChatRoomInfoKey(variables.roomGuid);
       queryClient.setQueryData(key, context?.previousData);
