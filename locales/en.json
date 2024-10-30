@@ -168,6 +168,8 @@
     }
   },
   "auth": {
+    "accessAs": "Access as {{name}}",
+    "logOut": "Log out",
     "2faRequired": "2FA required",
     "2faEmailDescription": "{{TENANT}} just sent a 6-digit authentication code to your registered email address",
     "2faSmsDescription": "To continue, please confirm the two-factor verification code sent to your phone before continuing.",

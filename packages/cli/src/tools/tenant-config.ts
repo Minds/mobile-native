@@ -50,6 +50,7 @@ query GetMultiTenantConfig {
     welcomeEmailEnabled
     loggedInLandingPageIdMobile
     nsfwEnabled
+    membersOnlyModeEnabled
   }
 }
 `
@@ -86,6 +87,8 @@ export async function getTenantConfig(id: string) {
 
   mobileConfig.APP_LANDING_PAGE_LOGGED_IN = config.loggedInLandingPageIdMobile
 
+  // this will not be necessary if it is added to the mobile config query
+  mobileConfig.MEMBERS_ONLY_MODE = config.membersOnlyModeEnabled
   return mobileConfig
 }
 

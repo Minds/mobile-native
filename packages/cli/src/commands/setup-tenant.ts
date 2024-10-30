@@ -184,6 +184,7 @@ function generateTenantJSON(
     ACCENT_COLOR_DARK: data.ACCENT_COLOR_DARK || '#1b85d6',
     BACKGROUND_COLOR_LIGHT: light_background,
     BACKGROUND_COLOR_DARK: dark_background,
+    MEMBERS_ONLY_MODE: data.MEMBERS_ONLY_MODE,
     WELCOME_LOGO: data.WELCOME_LOGO,
     ADAPTIVE_ICON: './assets/images/icon_adaptive.png',
     ADAPTIVE_COLOR: data.THEME === 'light' ? light_background : dark_background,

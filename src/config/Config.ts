@@ -94,7 +94,7 @@ export const BACKGROUND_TERTIARY_COLOR_DARK = tinycolor(
 
 export const TENANT = Tenant.APP_NAME;
 export const TENANT_ID = Tenant.TENANT_ID;
-
+export const MEMBERS_ONLY_MODE = Tenant.MEMBERS_ONLY_MODE;
 export const WELCOME_LOGO = Tenant.WELCOME_LOGO;
 
 // network timeout time

@@ -13,6 +13,7 @@
   "BACKGROUND_COLOR_DARK": "#010101",
   "WELCOME_LOGO": "horizontal",
   "ADAPTIVE_ICON": "./assets/images/icon_adaptive.png",
+  "MEMBERS_ONLY_MODE": false,
   "ADAPTIVE_COLOR": "#ffffff",
   "THEME": "dark",
   "TENANT_ID": null,

@@ -23,7 +23,7 @@ import ModalTransition from './ModalTransition';
 import AuthTransition from './AuthTransition';
 
 import { observer } from 'mobx-react';
-import { IS_IPAD, IS_TENANT } from '~/config/Config';
+import { IS_IPAD, IS_TENANT, MEMBERS_ONLY_MODE } from '~/config/Config';
 import withModalProvider from './withModalProvide';
 import sp from '~/services/serviceProvider';
 
@@ -153,7 +153,6 @@ const AppStack = observer(() => {
             require('~/channel/v2/edit/ChannelEditScreen').default
           }
           options={{
-            headerBackVisible: false,
             animation: 'slide_from_bottom',
             title: i18n.t('channel.editChannel'),
           }}
@@ -292,17 +291,29 @@ const rootStackCardScreenOptions = {
 };
 
 const RootStack = observer(function () {
-  const is_email_confirmed = sp.session.getUser()?.email_confirmed;
-  const auth = sp.resolve('auth');
   const session = sp.session;
+  const is_email_confirmed = session.getUser()?.email_confirmed;
+  const auth = sp.resolve('auth');
   const i18n = sp.i18n;
   const shouldShowEmailVerification =
-    !is_email_confirmed && !sp.session.switchingAccount && auth.justRegistered;
+    !is_email_confirmed && !session.switchingAccount && auth.justRegistered;
+
+  const tenantSettings = sp.config.getSettings()['tenant'];
+
+  const shouldShowMembersOnly =
+    MEMBERS_ONLY_MODE &&
+    sp.session.userLoggedIn &&
+    tenantSettings?.['should_show_membership_gate'];
 
   return (
     <RootStackNav.Navigator screenOptions={defaultScreenOptions}>
       {!sp.session.showAuthNav ? (
-        shouldShowEmailVerification ? (
+        shouldShowMembersOnly ? (
+          <RootStackNav.Screen
+            name="OnlyMembers"
+            getComponent={() => require('~/auth/OnlyMembersScreen').default}
+          />
+        ) : shouldShowEmailVerification ? (
           <>
             <RootStackNav.Screen
               initialParams={{ mfaType: 'email' }}
