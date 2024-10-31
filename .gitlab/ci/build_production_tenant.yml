@@ -45,3 +45,31 @@ eas_build_production_ios_tenant:
   rules:
     - if: $BUILD_MODE == "PRODUCTION_TENANT"
       when: always
+
+# Bumps the version, builds and submits the android & ios store apps
+eas_build_production_android_tenant_custom:
+  stage: build
+  image: cimg/aws:2023.12
+  tags: [minds-ci]
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - ../yarn
+  before_script:
+    - yarn install --cache-folder ../yarn
+    - yarn add sharp --ignore-engines -W
+    - wget -q -O - "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
+    - cp .secure_files/google-services.json .
+  script:
+    - |
+      if [ -z "$TENANT_ID" ]; then
+        echo "ERROR: TENANT_ID is not set."
+        exit 1
+      fi
+    - echo "Building tenant $TENANT_ID..."
+    - mobile setup-tenant $TENANT_ID
+    - mobile bump-tenant $TENANT_ID
+    - npx eas-cli build --profile production --json --non-interactive --auto-submit --no-wait
+  rules:
+    - if: $BUILD_MODE == "PRODUCTION_TENANT_BUMP"
+      when: always
