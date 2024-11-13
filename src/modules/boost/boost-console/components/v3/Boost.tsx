@@ -60,6 +60,15 @@ const Rejection = ({ boost }: BoostProps) => {
   const wasWrongAudience =
     boost.rejection_reason === BoostRejectionReason.WRONG_AUDIENCE;
 
+  if (!boost?.entity) {
+    return null;
+  }
+
+  let entity: ActivityModel | UserModel =
+    boost.target_location === BoostTargetLocation.newsfeed
+      ? ActivityModel.create(boost.entity)
+      : UserModel.create(boost.entity);
+
   return (
     <Column horizontal="L" bottom="L">
       <B1 font="bold">{t('Reason for rejection')}</B1>
@@ -69,7 +78,7 @@ const Rejection = ({ boost }: BoostProps) => {
           <Link
             onPress={() =>
               navigation?.navigate('BoostScreenV2', {
-                entity: boost.entity,
+                entity: entity,
                 boostType:
                   boost.target_location === BoostTargetLocation.newsfeed
                     ? 'post'
