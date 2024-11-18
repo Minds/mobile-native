@@ -48,7 +48,7 @@ Clone locale\
 
 ## Building
 
-- `yarn android` or `yarn ios`
+- `npx expo run:android` or `npx expo run:ios`
 
 ## Testing
 

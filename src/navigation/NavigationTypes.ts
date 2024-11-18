@@ -114,6 +114,7 @@ export type MoreStackParamList = {
   ChooseBrowser: {};
   DevTools: {};
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
+  DownloadedAudioScreen: {};
 };
 
 type TwoFactorConfirmationParams = {

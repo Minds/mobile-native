@@ -154,7 +154,7 @@ export function Icon({
 export interface IIconNext extends UIBaseType {
   color?: ColorsNameType;
   name: IconMapNameType;
-  size?: UIIconSizeType;
+  size?: UIIconSizeType | number;
   active?: boolean;
   light?: boolean;
   disabled?: boolean;
@@ -184,7 +184,10 @@ function IconNextComponent({
     iconStyles.push(styles.shadow);
   }
 
-  const sizeNumeric = ICON_SIZES[size] || ICON_SIZES[ICON_SIZE_DEFAULT];
+  const sizeNumeric =
+    typeof size === 'number'
+      ? size
+      : ICON_SIZES[size] || ICON_SIZES[ICON_SIZE_DEFAULT];
 
   const iconColor = getIconColor({
     color,
