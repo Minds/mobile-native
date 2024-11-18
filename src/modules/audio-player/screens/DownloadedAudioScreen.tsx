@@ -1,4 +1,4 @@
-import { useWindowDimensions, View } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import useGetDownloadedList from '../hooks/useGetDownloadedList';
 import { FlashList } from '@shopify/flash-list';
 import { useCallback } from 'react';

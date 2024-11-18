@@ -22,7 +22,7 @@ export type GlobalAudioPlayerProps = {
 
 export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
   const playBackState = usePlaybackState();
-  const { playing, bufferingDuringPlay } = useIsPlaying();
+  const { playing } = useIsPlaying();
   const progress = useProgress();
   const activeTrack = useActiveTrack();
   const fullscreen = !!props.fullscreen;

@@ -1,7 +1,5 @@
 import { View } from 'react-native';
 import TrackPlayer, {
-  State,
-  Track,
   useActiveTrack,
   useIsPlaying,
 } from 'react-native-track-player';

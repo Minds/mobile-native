@@ -1,5 +1,4 @@
 import TrackPlayer, {
-  State,
   Track,
   useActiveTrack,
   useIsPlaying,
@@ -16,7 +15,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import AudioTrackComp from './AudioTrackComp';
-import useGetDownloadedList from '../hooks/useGetDownloadedList';
 import useIsTrackDownloaded from '../hooks/useIsTrackDownloaded';
 
 export type AudioQueueItemProps = {

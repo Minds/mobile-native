@@ -17,7 +17,6 @@ import {
   MEMBERSHIP_TIERS_ENABLED,
 } from '~/config/Config';
 import WalletStack from './WalletStack';
-import { View } from 'react-native';
 import FloatingAudioPlayer from '~/modules/audio-player/components/FloatingAudioPlayer';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
