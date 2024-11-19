@@ -15,6 +15,7 @@ import SmartImage from '~/common/components/SmartImage';
 import { pushBottomSheet } from '~/common/components/bottom-sheet';
 import { FullscreenAudioPlayer } from './FullscreenAudioPlayer';
 import { formatDuration } from '../utils/duration-format';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export type GlobalAudioPlayerProps = {
   fullscreen?: boolean;
@@ -54,35 +55,34 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
     });
   };
 
-  const onNonControlTap = async () => {
+  const onNonControlTap = () => {
     if (!fullscreen) {
       openFullscreenPlayer();
-    } else {
-      // Remove from the playlist
-      const activeTrackIndex =
-        (await TrackPlayer.getActiveTrackIndex()) as number;
-      await TrackPlayer.remove(activeTrackIndex);
     }
   };
 
   const artworkSize = fullscreen ? 128 : 46;
 
   const trackMeta = (
-    <View style={sp.styles.style.paddingHorizontal4x}>
-      <MText
-        style={[
-          sp.styles.style.fontXS,
-          fullscreen ? sp.styles.style.textCenter : undefined,
-        ]}>
-        {activeTrack?.artist || '...'}
-      </MText>
-      <MText
-        style={[
-          sp.styles.style.fontBold,
-          fullscreen ? sp.styles.style.textCenter : undefined,
-        ]}>
-        {activeTrack?.title || '...'}
-      </MText>
+    <View style={[sp.styles.style.paddingHorizontal3x, { flexShrink: 1 }]}>
+      <TouchableOpacity onPress={onNonControlTap}>
+        <MText
+          style={[
+            sp.styles.style.fontXS,
+            fullscreen ? sp.styles.style.textCenter : undefined,
+          ]}>
+          {activeTrack?.artist || '...'}
+        </MText>
+        <MText
+          ellipsizeMode="tail"
+          style={[
+            sp.styles.style.fontBold,
+            fullscreen ? sp.styles.style.textCenter : undefined,
+          ]}
+          numberOfLines={fullscreen ? 3 : 2}>
+          {activeTrack?.title || '...'}
+        </MText>
+      </TouchableOpacity>
     </View>
   );
 
@@ -126,9 +126,14 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
   return activeTrack && playBackState !== undefined ? (
     <View>
       <View>
-        <Row align="centerBetween">
-          <Row align="centerBetween">
-            <View onTouchStart={onNonControlTap}>
+        <View style={{ flexDirection: 'row' }}>
+          <View
+            style={{
+              alignItems: 'center',
+              flexDirection: 'row',
+              flexShrink: 1,
+            }}>
+            <TouchableOpacity onPress={onNonControlTap}>
               <SmartImage
                 contentFit="cover"
                 style={[
@@ -147,16 +152,16 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
                   ]}
                 />
               ) : undefined}
-            </View>
+            </TouchableOpacity>
             {!fullscreen ? trackMeta : null}
-          </Row>
-          <View style={{ flex: 1, alignSelf: 'center' }}>
+          </View>
+          <View style={{ flex: 1, alignSelf: 'center', minWidth: 148 }}>
             {fullscreen ? (
               <View style={sp.styles.style.paddingVertical2x}>{trackMeta}</View>
             ) : null}
             {playerControls}
           </View>
-        </Row>
+        </View>
       </View>
 
       <View>

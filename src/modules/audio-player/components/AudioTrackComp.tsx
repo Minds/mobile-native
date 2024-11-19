@@ -23,12 +23,14 @@ export default function AudioTrackComp(props: AudioTrackCompProps) {
         sp.styles.style.paddingHorizontal4x,
         sp.styles.style.rowJustifySpaceBetween,
         sp.styles.style.alignCenter,
+        sp.styles.style.gap2x,
       ]}>
       <View
         style={[
           sp.styles.style.rowJustifySpaceBetween,
           sp.styles.style.alignCenter,
           sp.styles.style.gap4x,
+          { flexShrink: 1 },
         ]}>
         <View>
           <SmartImage
@@ -37,7 +39,7 @@ export default function AudioTrackComp(props: AudioTrackCompProps) {
             source={track.artwork}
           />
         </View>
-        <View>
+        <View style={{ flex: 1 }}>
           <MText
             style={[
               sp.styles.style.fontXS,
@@ -45,7 +47,10 @@ export default function AudioTrackComp(props: AudioTrackCompProps) {
             ]}>
             {track.artist}
           </MText>
-          <MText style={[sp.styles.style.fontBold]}>
+          <MText
+            style={[sp.styles.style.fontBold]}
+            ellipsizeMode="tail"
+            numberOfLines={1}>
             {track.title || '...'}
           </MText>
           <MText
@@ -64,6 +69,7 @@ export default function AudioTrackComp(props: AudioTrackCompProps) {
           sp.styles.style.rowJustifySpaceBetween,
           sp.styles.style.alignCenter,
           sp.styles.style.gap3x,
+          { flexShrink: 0 },
         ]}>
         {rightButtons}
       </View>

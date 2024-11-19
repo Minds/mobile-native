@@ -2,7 +2,6 @@ import { useWindowDimensions } from 'react-native';
 import useGetDownloadedList from '../hooks/useGetDownloadedList';
 import { FlashList } from '@shopify/flash-list';
 import { useCallback } from 'react';
-import FloatingAudioPlayer from '../components/FloatingAudioPlayer';
 import { DownloadedTrack } from '../services/audio-download.service';
 import AudioTrackComp from '../components/AudioTrackComp';
 import { IconButtonNext, Screen, ScreenHeader } from '~/common/ui';
@@ -72,16 +71,12 @@ export default function DownloadedAudioScreen() {
   return (
     <Screen safe onlyTopEdge>
       <ScreenHeader title={sp.i18n.t('moreScreen.downloadedAudio')} back />
-
       <FlashList
         estimatedItemSize={12}
         data={Object.values(list || {})}
         renderItem={renderItem}
-        style={{ flex: 1 }}
         drawDistance={height}
       />
-
-      <FloatingAudioPlayer />
     </Screen>
   );
 }

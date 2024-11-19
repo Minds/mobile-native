@@ -12,7 +12,7 @@ export default function FloatingAudioPlayer(props: FloatingAudioPlayer) {
     <View
       style={[
         sp.styles.style.paddingHorizontal4x,
-        sp.styles.style.paddingTop4x,
+        sp.styles.style.paddingTop2x,
         sp.styles.style.borderTop,
         { borderColor: sp.styles.getColor('PrimaryBorder') },
       ]}>

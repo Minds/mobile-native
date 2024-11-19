@@ -161,23 +161,22 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
             : () => item.url && sp.resolve('openURL').open(item.url),
       }));
 
-    if (downloadedTracksCount > 0) {
-      list.push({
-        name: i18n.t('moreScreen.downloadedAudio'),
-        icon: 'offline-pin',
-        testID: 'Drawer:settings',
-        onPress: () => {
-          navigation.navigate('DownloadedAudioScreen');
-        },
-      });
-    }
-
     list.push({
       name: i18n.t('moreScreen.settings'),
       icon: 'settings',
       testID: 'Drawer:settings',
       onPress: () => {
         navigation.navigate('Settings');
+      },
+    });
+  }
+
+  if (downloadedTracksCount > 0) {
+    list.push({
+      name: i18n.t('moreScreen.downloadedAudio'),
+      icon: 'offline-pin',
+      onPress: () => {
+        navigation.navigate('DownloadedAudioScreen');
       },
     });
   }
