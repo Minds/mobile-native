@@ -26,17 +26,17 @@ export default class ChannelBadges extends PureComponent<
     const size = 'tiny';
     const badges: Array<React.ReactNode> = [];
 
-    // if (channel.source === 'activitypub') {
-    const source = channel.username?.split('@')?.[1] || 'External';
-    badges.push(
-      <BadgeTooltip
-        key="source"
-        label={`${source} profile`}
-        color={sp.styles.getColor('Link')}>
-        <IconNext name="globe" size={size} active horizontal="XXXS" key={2} />
-      </BadgeTooltip>,
-    );
-    // }
+    if (channel.source === 'activitypub') {
+      const source = channel.username?.split('@')?.[1] || 'External';
+      badges.push(
+        <BadgeTooltip
+          key="source"
+          label={`${source} profile`}
+          color={sp.styles.getColor('Link')}>
+          <IconNext name="globe" size={size} active horizontal="XXXS" key={2} />
+        </BadgeTooltip>,
+      );
+    }
 
     if (channel.plus) {
       badges.push(
@@ -55,23 +55,23 @@ export default class ChannelBadges extends PureComponent<
       );
     }
 
-    // if (channel.verified && !IS_TENANT) {
-    badges.push(
-      <BadgeTooltip
-        key={'verified'}
-        label={i18n.t('channel.badge.verified')}
-        color={sp.styles.getColor('SuccessBackground')}>
-        <IconNext
-          name="verified"
-          size={size}
-          color={channel.isAdmin() ? 'Green' : undefined}
-          active
-          horizontal="XXXS"
-          key={2}
-        />
-      </BadgeTooltip>,
-    );
-    // }
+    if (channel.verified && !IS_TENANT) {
+      badges.push(
+        <BadgeTooltip
+          key={'verified'}
+          label={i18n.t('channel.badge.verified')}
+          color={sp.styles.getColor('SuccessBackground')}>
+          <IconNext
+            name="verified"
+            size={size}
+            color={channel.isAdmin() ? 'Green' : undefined}
+            active
+            horizontal="XXXS"
+            key={2}
+          />
+        </BadgeTooltip>,
+      );
+    }
 
     if (channel.founder && !IS_TENANT) {
       badges.push(

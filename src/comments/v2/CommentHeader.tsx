@@ -164,7 +164,6 @@ const styles = StyleSheet.create({
     marginTop: 1,
   },
   pinnedIcon: {
-    marginLeft: 4,
     transform: 'translateY(1px)',
   },
 });
