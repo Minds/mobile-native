@@ -54,6 +54,7 @@ export default observer(function Comment({
     votedUp,
     votedDown,
     replies_count,
+    pinned,
   } = comment;
 
   const { username, plus: isPlusUser } = ownerObj;
@@ -148,8 +149,6 @@ export default observer(function Comment({
       entity: store.entity,
     });
   }, [navigation, comment, store.entity]);
-
-  console.log({ replies_count, hideReply });
 
   return (
     <View

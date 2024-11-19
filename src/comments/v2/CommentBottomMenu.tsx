@@ -21,6 +21,7 @@ import {
 } from '../../common/components/bottom-sheet';
 import { useGroupContext } from '~/modules/groups/contexts/GroupContext';
 import sp from '~/services/serviceProvider';
+import { useSetCommentPinnedState } from './hooks/useSetCommentPinnedState';
 
 type PropsType = {
   comment: CommentModel;
@@ -58,6 +59,8 @@ export default function CommentBottomMenu({
       setShown(true);
     }
   }, [shown]);
+
+  const { setCommentPinnedState } = useSetCommentPinnedState(store);
 
   const dismissOptions: Array<BottomSheetMenuItemProps> = React.useMemo(() => {
     const actions: Array<BottomSheetMenuItemProps> = [
@@ -124,6 +127,18 @@ export default function CommentBottomMenu({
       },
     };
 
+    if (entity.isOwner() && !store.parent) {
+      actions.push({
+        title: !comment.pinned ? i18n.t('pin') : i18n.t('unpin'),
+        iconName: 'push-pin',
+        iconType: 'material',
+        onPress: () => {
+          setCommentPinnedState(comment.guid, !comment.pinned);
+          close();
+        },
+      });
+    }
+
     if (comment.isOwner()) {
       actions.push({
         title: i18n.t('edit'),
@@ -182,7 +197,7 @@ export default function CommentBottomMenu({
       });
     }
     return actions;
-  }, [i18n, comment, close, onTranslate, store, entity, group]);
+  }, [i18n, comment, close, onTranslate, store, entity, group, comment.pinned]);
 
   return (
     <TouchableOpacity onPress={show} hitSlop={hitSlop}>
