@@ -11,6 +11,7 @@ import MText from '~/common/components/MText';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 import sp from '~/services/serviceProvider';
 import IconMa from '@expo/vector-icons/MaterialIcons';
+import BadgeTooltip from '../../common/components/BadgeTooltip';
 
 type PropsType = {
   entity: CommentModel;
@@ -45,6 +46,7 @@ class CommentHeader extends Component<PropsType> {
     const theme = sp.styles.style;
     const channel = this.props.entity.ownerObj;
     const rightToolbar = this.props.rightToolbar || null;
+    const i18n = sp.i18n;
 
     const avatarSrc = channel.getAvatarSource();
 
@@ -100,12 +102,18 @@ class CommentHeader extends Component<PropsType> {
           </View>
           <ChannelBadges channel={this.props.entity.ownerObj} />
           {this.props.entity.pinned && (
-            <IconMa
-              name="push-pin"
-              size={15}
-              style={styles.pinnedIcon}
+            <BadgeTooltip
+              key="pinned"
+              label={i18n.t('pinned')}
               color={sp.styles.getColor('Link')}
-            />
+              position="left">
+              <IconMa
+                name="push-pin"
+                size={15}
+                style={styles.pinnedIcon}
+                color={sp.styles.getColor('Link')}
+              />
+            </BadgeTooltip>
           )}
           {rightToolbar}
         </View>
