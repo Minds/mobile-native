@@ -498,7 +498,9 @@ export default function () {
         />
       </MoreStack.Navigator>
 
-      <FloatingAudioPlayer />
+      <FloatingAudioPlayer
+        style={IS_IOS ? sp.styles.style.paddingBottom4x : undefined}
+      />
     </>
   );
 }

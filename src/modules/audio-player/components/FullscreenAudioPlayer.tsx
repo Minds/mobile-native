@@ -10,6 +10,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import { AudioQueueItem } from './AudioQueueItem';
 import useGetDownloadedList from '../hooks/useGetDownloadedList';
+import { IS_IOS } from '../../../config/Config';
 
 export type FullscreenAudioPlayerProps = {
   bottomSheetRef: BottomSheetMethods;
@@ -60,7 +61,10 @@ export const FullscreenAudioPlayer = (props: FullscreenAudioPlayerProps) => {
         data={queue}
         renderItem={renderItem}
         keyExtractor={(item, index) => `${item}-${index}`}
-        style={{ maxHeight: height * 0.8 - 100 }}
+        style={[
+          IS_IOS ? sp.styles.style.paddingBottom6x : undefined,
+          { maxHeight: height * 0.8 - 100 },
+        ]}
       />
     </>
   );

@@ -1,9 +1,11 @@
-import { View } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 import GlobalAudioPlayer from './GlobalAudioPlayer';
 import sp from '~/services/serviceProvider';
 import { useIsAudioPlayerActive } from '../hooks/useIsAudioPlayerActive';
 
-export type FloatingAudioPlayer = {};
+export type FloatingAudioPlayer = {
+  style?: StyleProp<ViewStyle>;
+};
 
 export default function FloatingAudioPlayer(props: FloatingAudioPlayer) {
   const isActive = useIsAudioPlayerActive();
@@ -15,6 +17,7 @@ export default function FloatingAudioPlayer(props: FloatingAudioPlayer) {
         sp.styles.style.paddingTop2x,
         sp.styles.style.borderTop,
         { borderColor: sp.styles.getColor('PrimaryBorder') },
+        props.style,
       ]}>
       <GlobalAudioPlayer />
     </View>
