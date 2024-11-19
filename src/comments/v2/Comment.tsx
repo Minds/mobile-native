@@ -54,7 +54,6 @@ export default observer(function Comment({
     votedUp,
     votedDown,
     replies_count,
-    pinned,
   } = comment;
 
   const { username, plus: isPlusUser } = ownerObj;
@@ -67,6 +66,10 @@ export default observer(function Comment({
   );
   const startColor = (sp.styles.theme ? '#242A30' : '#F5F5F5') + '00';
   const endColor = backgroundColor + 'FF';
+
+  const renderCommentHeader: () => JSX.Element = React.useCallback(() => {
+    return <CommentHeader entity={comment} navigation={navigation} />;
+  }, [comment, navigation, comment.pinned]);
 
   const renderRevealedFooter = React.useCallback(
     handlePress => {
@@ -160,8 +163,7 @@ export default observer(function Comment({
           ? styles.focused
           : theme.bcolorPrimaryBorder,
       ]}>
-      <CommentHeader entity={comment} navigation={navigation} />
-
+      {renderCommentHeader()}
       {!mature || comment.isOwner() ? (
         <>
           <View style={[styles.body, theme.flexContainer]}>
