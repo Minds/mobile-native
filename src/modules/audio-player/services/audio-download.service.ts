@@ -5,6 +5,7 @@ import { showNotification } from 'AppMessages';
 import ActivityModel from '~/newsfeed/ActivityModel';
 import moment from 'moment';
 import { observable } from 'mobx';
+import { ApiService } from '~/common/services/api.service';
 
 export type DownloadedTrack = {
   localFilePath: string;
@@ -18,7 +19,7 @@ export class AudioPlayerDownloadService {
   @observable
   public downloadedTracks: DownloadedTrackList = {};
 
-  constructor(storages: Storages) {
+  constructor(storages: Storages, private apiService: ApiService) {
     this.userStorage = storages.user as Storage;
     this.init();
   }
@@ -31,6 +32,8 @@ export class AudioPlayerDownloadService {
    * Builds a Track object
    */
   public buildRemoteTrack(entity: ActivityModel): Track {
+    const headers = this.apiService.buildHeaders();
+
     return {
       id: entity.guid,
       title: entity.title,
@@ -39,6 +42,7 @@ export class AudioPlayerDownloadService {
       artwork: entity.custom_data.thumbnail_src,
       duration: entity.custom_data.duration_secs,
       date: moment(parseInt(entity.time_created) * 1000).toISOString(),
+      headers: headers,
     };
   }
 
@@ -70,6 +74,7 @@ export class AudioPlayerDownloadService {
       fromUrl: track.url,
       toFile: filePath,
       progressDivider: 1,
+      headers: this.apiService.buildHeaders(),
     });
 
     try {

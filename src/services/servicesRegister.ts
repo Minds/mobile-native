@@ -778,7 +778,7 @@ sp.register(
     const Service =
       require('~/modules/audio-player/services/audio-download.service')
         .AudioPlayerDownloadService as typeof AudioPlayerDownloadService;
-    return new Service(sp.resolve('storages'));
+    return new Service(sp.resolve('storages'), sp.resolve('api'));
   },
   Lifetime.Singleton,
 );

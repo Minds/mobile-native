@@ -73,7 +73,10 @@ export default function InlineAudioPlayer(props: InlineAudioPlayerProps) {
                 sp.styles.style.borderRadius10x,
                 { backgroundColor: '#333' },
               ]}
-              source={entity.custom_data.thumbnail_src}
+              source={{
+                uri: entity.custom_data.thumbnail_src,
+                headers: sp.api.buildHeaders(),
+              }}
               recyclingKey={entity.urn}
             />
           </View>

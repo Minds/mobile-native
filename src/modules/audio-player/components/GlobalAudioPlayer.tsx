@@ -140,7 +140,10 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
                   { width: artworkSize, height: artworkSize },
                   sp.styles.style.borderRadius4x,
                 ]}
-                source={activeTrack.artwork}
+                source={{
+                  uri: activeTrack.artwork,
+                  headers: sp.api.buildHeaders(),
+                }}
               />
               {!fullscreen ? (
                 <Icon

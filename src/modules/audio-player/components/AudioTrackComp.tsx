@@ -36,7 +36,10 @@ export default function AudioTrackComp(props: AudioTrackCompProps) {
           <SmartImage
             contentFit="cover"
             style={[{ width: 48, height: 48 }, sp.styles.style.borderRadius4x]}
-            source={track.artwork}
+            source={{
+              uri: track.artwork,
+              headers: sp.api.buildHeaders(),
+            }}
           />
         </View>
         <View style={{ flex: 1 }}>
