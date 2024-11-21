@@ -65,7 +65,7 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
 
   const trackMeta = (
     <View style={[sp.styles.style.paddingHorizontal3x, { flexShrink: 1 }]}>
-      <TouchableOpacity onPress={onNonControlTap}>
+      <TouchableOpacity onPress={onNonControlTap} testID="audio-player-meta">
         <MText
           style={[
             sp.styles.style.fontXS,
@@ -136,7 +136,9 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
               flexDirection: 'row',
               flexShrink: 1,
             }}>
-            <TouchableOpacity onPress={onNonControlTap}>
+            <TouchableOpacity
+              onPress={onNonControlTap}
+              testID="audio-player-artwork">
               <SmartImage
                 contentFit="cover"
                 style={[

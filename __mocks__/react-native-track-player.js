@@ -5,6 +5,8 @@ export const useProgress = jest.fn(() => ({}));
 
 export const State = {
   Paused: 'paused',
+  Ready: 'ready',
+  Ended: 'ended',
 };
 
 export default {
@@ -13,6 +15,7 @@ export default {
   load: jest.fn(),
   skip: jest.fn(),
   seekTo: jest.fn(),
+  seekBy: jest.fn(),
   setupPlayer: jest.fn(() => Promise.resolve()),
   destroy: jest.fn(),
   reset: jest.fn(),
@@ -20,5 +23,6 @@ export default {
   pause: jest.fn(),
   stop: jest.fn(),
   getQueue: jest.fn(() => Promise.resolve([])),
+  setQueue: jest.fn(() => Promise.resolve()),
   getActiveTrackIndex: jest.fn(() => Promise.resolve(undefined)),
 };

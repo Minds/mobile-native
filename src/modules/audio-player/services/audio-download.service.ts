@@ -122,9 +122,7 @@ export class AudioPlayerDownloadService {
 
     for (let i in queue) {
       const queuedTrack = queue[i];
-      console.log(queuedTrack, track);
       if (queuedTrack.id === track.id) {
-        //console.log(queue, i, track);
         queue[i] = track;
       }
     }
