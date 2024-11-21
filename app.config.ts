@@ -67,13 +67,13 @@ const plugins: any = [
     'expo-build-properties',
     {
       android: {
-        compileSdkVersion: 34,
-        targetSdkVersion: 34,
+        compileSdkVersion: 35,
+        targetSdkVersion: 35,
         buildToolsVersion: '34.0.0',
         kotlinVersion: '1.8.0',
       },
       ios: {
-        deploymentTarget: '13.4',
+        deploymentTarget: '15.1',
         flipper: false,
       },
     },
@@ -92,6 +92,7 @@ const plugins: any = [
       cameraPermissionText: cameraMessage,
       enableMicrophonePermission: true,
       microphonePermissionText: micMessage,
+      enableCodeScanner: true,
     },
   ],
   './plugins/withAndroidMainApplicationAttributes.js',
