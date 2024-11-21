@@ -109,6 +109,7 @@ export default function InlineAudioPlayer(props: InlineAudioPlayerProps) {
                   sp.styles.style.gap2x,
                 ]}>
                 <IconButtonNext
+                  testID="play-track"
                   scale
                   name={isPlaying ? 'pause-circle' : 'play-circle'}
                   size={48}
@@ -127,6 +128,7 @@ export default function InlineAudioPlayer(props: InlineAudioPlayerProps) {
                 </MText>
               </View>
               <IconButtonNext
+                testID="queue-track"
                 scale
                 name="playlist-add"
                 size="small"

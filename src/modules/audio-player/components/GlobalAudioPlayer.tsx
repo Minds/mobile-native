@@ -94,6 +94,7 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
         alignSelf: fullscreen ? 'center' : 'flex-end',
       }}>
       <IconButtonNext
+        testID="replay-button"
         scale
         name="replay-10"
         size={32}
@@ -104,6 +105,7 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
         }}
       />
       <IconButtonNext
+        testID="play-button"
         scale
         name={playing ? 'pause-circle' : 'play-circle'}
         size={64}
@@ -111,6 +113,7 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
         onPress={toggleAudio}
       />
       <IconButtonNext
+        testID="forward-button"
         scale
         name="forward-10"
         size={32}

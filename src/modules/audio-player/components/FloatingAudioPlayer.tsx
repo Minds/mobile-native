@@ -12,6 +12,7 @@ export default function FloatingAudioPlayer(props: FloatingAudioPlayer) {
 
   return isActive ? (
     <View
+      testID="floating-audio-player"
       style={[
         sp.styles.style.paddingHorizontal4x,
         sp.styles.style.paddingTop2x,

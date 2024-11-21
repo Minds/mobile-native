@@ -72,6 +72,7 @@ export const AudioQueueItem = (props: AudioQueueItemProps) => {
   const rightButtons = (
     <>
       <IconButtonNext
+        testID="remove-track"
         scale
         name="playlist-remove"
         size={32}
@@ -82,6 +83,7 @@ export const AudioQueueItem = (props: AudioQueueItemProps) => {
       />
       <Animated.View style={[isDownloading ? animatedStyle : undefined]}>
         <IconButtonNext
+          testID="download-track"
           scale
           name={
             isDownloading
@@ -105,6 +107,7 @@ export const AudioQueueItem = (props: AudioQueueItemProps) => {
         />
       </Animated.View>
       <IconButtonNext
+        testID="play-track"
         scale
         name={isPlaying ? 'pause-circle' : 'play-circle'}
         size={32}
