@@ -15,6 +15,7 @@ import { registerRootComponent } from 'expo';
 import { LogBox } from 'react-native';
 import App from './App';
 import { enableFreeze } from 'react-native-screens';
+import TrackPlayer, { Capability } from 'react-native-track-player';
 
 LogBox.ignoreAllLogs();
 LogBox.ignoreLogs([
@@ -34,3 +35,16 @@ enableFreeze(true);
 // console.log(`module.exports = ${JSON.stringify(loadedModuleNames.sort())};`);
 
 registerRootComponent(App);
+
+TrackPlayer.registerPlaybackService(() => require('./service'));
+
+TrackPlayer.setupPlayer().then(async () => {
+  await TrackPlayer.updateOptions({
+    capabilities: [
+      Capability.Play,
+      Capability.Pause,
+      Capability.SkipToNext,
+      Capability.SkipToPrevious,
+    ],
+  });
+});

@@ -83,6 +83,10 @@ export default class ExplicitText extends Component<PropsType, StateType> {
       }
     }
 
+    if (entity.custom_type === 'audio') {
+      title = '';
+    }
+
     let body: React.ReactNode | null = null;
     let moreLess: React.ReactNode | null = null;
     let explicitToggle = null;

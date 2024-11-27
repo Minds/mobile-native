@@ -3,7 +3,7 @@ import { MMKV } from 'react-native-mmkv';
 /**
  * Storage instance
  */
-class Storage extends MMKV {
+export class Storage extends MMKV {
   getObject<T>(key: string): T | undefined {
     const data = this.getString(key);
     if (data) {

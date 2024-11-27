@@ -30,6 +30,7 @@ import {
 import { getLandingPage } from '~/services/landingPage';
 import { useStores } from '~/common/hooks/use-stores';
 import { usePrefetchChatRoomList } from '~/modules/chat/hooks/useChatRoomListQuery';
+import FloatingAudioPlayer from '~/modules/audio-player/components/FloatingAudioPlayer';
 
 const isIOS = Platform.OS === 'ios';
 
@@ -404,7 +405,12 @@ const groupsOptions = { tabBarTestID: 'Tabs:Groups' };
 const discoveryOptions = { tabBarTestID: 'Tabs:Explore' };
 const chatOptions = { tabBarTestID: 'Tabs:Chat' };
 const focusedState = { selected: true };
-const tabBar = props => <TabBar {...props} />;
+const tabBar = props => (
+  <View>
+    <FloatingAudioPlayer />
+    <TabBar {...props} />
+  </View>
+);
 
 const screenMappings = {
   'tab#/channel/': {

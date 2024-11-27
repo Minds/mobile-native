@@ -180,6 +180,7 @@ export default class ActivityModel extends BaseModel {
       case 'image':
       case 'video':
       case 'batch':
+      case 'audio':
         return true;
     }
     if (
