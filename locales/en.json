@@ -1255,7 +1255,8 @@
     "settings": "Settings",
     "upgrade": "Upgrade",
     "terms": "Terms",
-    "wallet": "Wallet"
+    "wallet": "Wallet",
+    "downloadedAudio": "Downloaded Audio"
   },
   "userTypeAhead": {
     "placeholder": "Start typing a username to search...",

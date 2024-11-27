@@ -15,6 +15,7 @@ import { IconNameType } from '~/common/ui/icons/map';
 import { NavigationItemTypeEnum } from '~/graphql/api';
 import { useCustomNavigationMenu } from '~/modules/navigation/service/custom-navigation.service';
 import sp from '~/services/serviceProvider';
+import useGetDownloadedList from '~/modules/audio-player/hooks/useGetDownloadedList';
 
 type Flags = Record<'hasPro' | 'hasPlus', boolean>;
 
@@ -30,6 +31,8 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
   const customNavigation = useCustomNavigationMenu();
   const channel = sp.session.getUser();
   const i18n = sp.i18n;
+
+  const { count: downloadedTracksCount } = useGetDownloadedList();
 
   let list: MenuItem[];
   if (!IS_TENANT) {
@@ -164,6 +167,16 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
       testID: 'Drawer:settings',
       onPress: () => {
         navigation.navigate('Settings');
+      },
+    });
+  }
+
+  if (downloadedTracksCount > 0) {
+    list.push({
+      name: i18n.t('moreScreen.downloadedAudio'),
+      icon: 'offline-pin',
+      onPress: () => {
+        navigation.navigate('DownloadedAudioScreen');
       },
     });
   }
