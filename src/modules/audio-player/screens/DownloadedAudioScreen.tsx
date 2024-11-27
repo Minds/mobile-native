@@ -11,7 +11,6 @@ import TrackPlayer, {
   useIsPlaying,
 } from 'react-native-track-player';
 import sp from '~/services/serviceProvider';
-import MText from '~/common/components/MText';
 
 export default function DownloadedAudioScreen() {
   const { list } = useGetDownloadedList();
@@ -72,7 +71,6 @@ export default function DownloadedAudioScreen() {
   return (
     <Screen safe onlyTopEdge>
       <ScreenHeader title={sp.i18n.t('moreScreen.downloadedAudio')} back />
-      <MText>{Object.values(list || {}).length}</MText>
       <FlashList
         estimatedItemSize={12}
         data={Object.values(list || {})}
