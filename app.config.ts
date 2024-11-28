@@ -178,6 +178,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         'This lets you save photos to your camera roll',
       NSCameraUsageDescription: cameraMessage,
       NSMicrophoneUsageDescription: micMessage,
+      UIBackgroundModes: ['audio'],
     },
     splash: {
       image: './assets/images/splash.png',

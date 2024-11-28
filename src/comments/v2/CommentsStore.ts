@@ -738,6 +738,18 @@ export default class CommentsStore {
   }
 
   /**
+   * Updates pinned state for a specific comment in the store.
+   * Call to update server should be made via GraphQL mutation.
+   * @param { string } guid - The guid of the comment to update.
+   * @param { boolean } pinned - The new pinned state.
+   */
+  @action
+  setPinned(guid: string, pinned: boolean): void {
+    let index: number = this.comments.findIndex(x => x.guid === guid);
+    this.comments[index].pinned = pinned;
+  }
+
+  /**
    * Delete
    * @param {string} guid
    */

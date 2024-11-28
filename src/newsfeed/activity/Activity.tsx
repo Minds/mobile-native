@@ -333,6 +333,10 @@ export default class Activity extends Component<ActivityProps> {
       showUpgradeModal();
       return;
     }
+
+    if (this.props.entity.custom_type === 'audio') {
+      return;
+    }
     this.navToActivity();
   };
 
@@ -345,14 +349,17 @@ export default class Activity extends Component<ActivityProps> {
     const hasMedia = entity.hasMedia();
     const hasRemind = !!entity.remind_object;
 
-    /* Shows ontop only for rich embed or reminds */
+    /* Shows ontop only for rich embed, reminds or audio */
     const shouldShowMessageOnTop = Boolean(
-      this.props.entity.perma_url || this.props.entity.remind_object,
+      this.props.entity.perma_url ||
+        this.props.entity.remind_object ||
+        this.props.entity.custom_type === 'audio',
     );
     const shouldShowMessageOnBottom = !(
       this.props.entity.perma_url ||
       this.props.entity.remind_object ||
-      this.props.entity.remind_deleted
+      this.props.entity.remind_deleted ||
+      this.props.entity.custom_type === 'audio'
     );
 
     const isShortText =

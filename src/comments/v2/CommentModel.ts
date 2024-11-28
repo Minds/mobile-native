@@ -73,4 +73,5 @@ decorate(CommentModel, {
   replies_count: observable,
   description: observable,
   attachment_guid: observable,
+  pinned: observable,
 });
