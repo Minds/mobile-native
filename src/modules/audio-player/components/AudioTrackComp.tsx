@@ -61,7 +61,7 @@ export default function AudioTrackComp(props: AudioTrackCompProps) {
               sp.styles.style.fontXS,
               sp.styles.style.colorSecondaryText,
             ]}>
-            {moment(track.date).fromNow()} &middot;{' '}
+            {moment(track.date).utc().fromNow()} &middot;{' '}
             {formatDuration((track.duration || 0) * 1000, true)}
           </MText>
         </View>

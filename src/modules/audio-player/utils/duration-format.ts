@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 export const formatDuration = (ms: number, friendly: boolean = false) => {
-  const duration = moment(ms);
+  const duration = moment(ms).utc();
 
   if (friendly) {
     return (
