@@ -61,6 +61,7 @@ export type MoreStackParamList = {
     currency?: string;
     section?: string;
   };
+  DiscoverySearch: {};
   PlusDiscoveryScreen: {};
   BoostConsole: {
     location?: string;
