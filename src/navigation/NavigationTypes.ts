@@ -264,7 +264,13 @@ export type AppStackParamList = {
     supermindRequest?: SupermindRequestModel;
   };
   WebView: WebViewParams;
-  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
+  DiscoverySearch: {
+    query: string;
+    plus?: boolean;
+    q?: string;
+    f?: string;
+    t?: string;
+  };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
     /**

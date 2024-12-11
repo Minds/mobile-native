@@ -522,6 +522,10 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'downloading',
   },
+  headphones: {
+    font: 'MaterialIcons',
+    name: 'headphones',
+  },
 } as const;
 
 export type IconNameType = keyof typeof ICON_MAP;

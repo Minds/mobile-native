@@ -39,9 +39,12 @@ export const DiscoverySearchScreen = withErrorBoundaryScreen(
 
     useEffect(() => {
       const q = decodeURIComponent(props.route.params?.q ?? '');
-      const { query = q, f, plus } = props.route.params ?? {};
+      const { query = q, f, t, plus } = props.route.params ?? {};
       if (f) {
         store.setAlgorithm(f as DiscoveryV2SearchStoreAlgorithm);
+      }
+      if (t) {
+        store.setFilter(t);
       }
       store.setQuery(query, plus);
     }, [store, props.route.params]);
