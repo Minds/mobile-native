@@ -1,5 +1,5 @@
-# release an expo update for the Minds app
-update_production:
+# prepares an expo update for the Minds app using the develop branch
+update_develop:
   stage: build
   image: node:18.18-alpine
   tags: [minds-ci]
