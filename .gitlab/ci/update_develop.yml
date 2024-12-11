@@ -11,6 +11,6 @@ update_develop:
     - apk add --no-cache bash git
     - yarn install --cache-folder ../.yarn
   script:
-    - npx eas-cli update --branch develop --message $CI_COMMIT_MESSAGE --json --non-interactive
+    - npx eas-cli update --branch develop --message "$CI_COMMIT_MESSAGE" --json --non-interactive
   rules:
     - if: $CI_COMMIT_REF_NAME == "develop"
