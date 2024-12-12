@@ -165,7 +165,7 @@ type ChatImageProps = { image: ChatImageNode; onLongPress?: () => void };
 const ChatImage = ({ image, onLongPress }: ChatImageProps): React.ReactNode => {
   const navigation = useNavigation();
   const aspectRatio: number = useMemo(
-    () => image.width / image.height,
+    () => (image?.width && image?.height ? image.width / image.height : 1),
     [image],
   );
   const placeholder: BlurhashPlaceholderType = useMemo(
