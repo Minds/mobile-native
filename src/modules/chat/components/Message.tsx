@@ -173,8 +173,8 @@ const ChatImage = ({ image, onLongPress }: ChatImageProps): React.ReactNode => {
       image.blurhash
         ? {
             blurhash: image.blurhash,
-            width: image.width,
-            height: image.height,
+            width: image.width ?? undefined,
+            height: image.height ?? undefined,
           }
         : undefined,
     [image],
