@@ -269,7 +269,7 @@ export type ChatImageNode = NodeInterface & {
   /** The guid of the image. */
   guid: Scalars['String']['output'];
   /** The height of the image. */
-  height: Scalars['Int']['output'];
+  height?: Maybe<Scalars['Int']['output']>;
   /** The unique ID of the image for GraphQL. */
   id: Scalars['ID']['output'];
   /** The updated timestamp of the image in ISO 8601 format. */
@@ -279,7 +279,7 @@ export type ChatImageNode = NodeInterface & {
   /** The URL of the image. */
   url: Scalars['String']['output'];
   /** The width of the image. */
-  width: Scalars['Int']['output'];
+  width?: Maybe<Scalars['Int']['output']>;
 };
 
 export type ChatMessageEdge = EdgeInterface & {
@@ -4007,8 +4007,8 @@ export type CreateChatMessageMutation = {
         id: string;
         guid: string;
         url: string;
-        height: number;
-        width: number;
+        height?: number | null;
+        width?: number | null;
         blurhash?: string | null;
       } | null;
       sender: {
@@ -4209,8 +4209,8 @@ export type GetChatMessagesQuery = {
           id: string;
           guid: string;
           url: string;
-          height: number;
-          width: number;
+          height?: number | null;
+          width?: number | null;
           blurhash?: string | null;
         } | null;
       };
