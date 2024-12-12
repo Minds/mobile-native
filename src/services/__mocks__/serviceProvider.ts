@@ -28,6 +28,7 @@ import type { UpdateService } from '~/common/services/update.service';
 import type { VideoPlayerService } from '~/common/services/video-player.service';
 import type { WireService } from '~/wire/WireService';
 import type { BlogsService } from '~/blogs/BlogsService';
+import type { AudioPlayerDownloadService } from '~/modules/audio-player/services/audio-download.service';
 
 import { ThemedStyles } from '~/styles/ThemedStyles';
 import { ImagePickerService } from '../../common/services/image-picker.service';
@@ -64,6 +65,7 @@ jest.mock('~/common/services/update.service');
 jest.mock('~/common/services/video-player.service');
 jest.mock('~/wire/WireService');
 jest.mock('~/blogs/BlogsService');
+jest.mock('~/modules/audio-player/services/audio-download.service');
 
 const styles = new ThemedStyles(1);
 
@@ -312,6 +314,14 @@ sp.mockService = <K extends keyof Services>(
       sp.register('imagePicker', () => imagePicker, Lifetime.Singleton);
       // @ts-ignore
       return imagePicker;
+    case 'audioPlayer':
+      const AudioPlayerDownloadService =
+        require('~/modules/audio-player/services/audio-download.service').AudioPlayerDownloadService;
+      const audioPlayer =
+        new AudioPlayerDownloadService() as jest.Mocked<AudioPlayerDownloadService>;
+      sp.register('audioPlayer', () => audioPlayer, Lifetime.Singleton);
+      // @ts-ignore
+      return audioPlayer;
   }
   throw new Error(`Service not found: ${service}`);
 };

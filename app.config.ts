@@ -92,6 +92,7 @@ const plugins: any = [
       cameraPermissionText: cameraMessage,
       enableMicrophonePermission: true,
       microphonePermissionText: micMessage,
+      enableLocation: false,
     },
   ],
   './plugins/withAndroidMainApplicationAttributes.js',
@@ -177,6 +178,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         'This lets you save photos to your camera roll',
       NSCameraUsageDescription: cameraMessage,
       NSMicrophoneUsageDescription: micMessage,
+      UIBackgroundModes: ['audio'],
     },
     splash: {
       image: './assets/images/splash.png',
@@ -184,6 +186,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: is_dark
         ? Tenant.BACKGROUND_COLOR_DARK
         : Tenant.BACKGROUND_COLOR_LIGHT,
+    },
+    entitlements: {
+      'aps-environment': 'development',
     },
   },
   notification: {

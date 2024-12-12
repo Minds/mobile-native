@@ -16,6 +16,7 @@ import { showNotification } from '../../../AppMessages';
 import MediaViewMultiImage from './media-view/MediaViewMultiImage';
 import { copyToClipboard } from '../helpers/copyToClipboard';
 import sp from '~/services/serviceProvider';
+import InlineAudioPlayer from '~/modules/audio-player/components/InlineAudioPlayer';
 
 type PropsType = {
   entity: ActivityModel | CommentModel;
@@ -103,6 +104,12 @@ export default class MediaView extends Component<PropsType> {
               onOverlayPress={this.props.onVideoOverlayPress}
               repeat={true}
             />
+          </View>
+        );
+      case 'audio':
+        return (
+          <View style={[sp.styles.style.fullWidth]}>
+            <InlineAudioPlayer entity={this.props.entity} />
           </View>
         );
     }

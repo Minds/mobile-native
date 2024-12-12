@@ -61,6 +61,7 @@ export type MoreStackParamList = {
     currency?: string;
     section?: string;
   };
+  DiscoverySearch: {};
   PlusDiscoveryScreen: {};
   BoostConsole: {
     location?: string;
@@ -114,6 +115,7 @@ export type MoreStackParamList = {
   ChooseBrowser: {};
   DevTools: {};
   BoostScreenV2: { entity: ActivityModel; boostType: BoostType };
+  DownloadedAudioScreen: {};
 };
 
 type TwoFactorConfirmationParams = {
@@ -263,7 +265,13 @@ export type AppStackParamList = {
     supermindRequest?: SupermindRequestModel;
   };
   WebView: WebViewParams;
-  DiscoverySearch: { query: string; plus?: boolean; q?: string; f?: string };
+  DiscoverySearch: {
+    query: string;
+    plus?: boolean;
+    q?: string;
+    f?: string;
+    t?: string;
+  };
   PortraitViewerScreen: {
     items: Array<PortraitBarItem>;
     /**

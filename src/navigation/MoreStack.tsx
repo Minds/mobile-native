@@ -17,6 +17,7 @@ import {
   MEMBERSHIP_TIERS_ENABLED,
 } from '~/config/Config';
 import WalletStack from './WalletStack';
+import FloatingAudioPlayer from '~/modules/audio-player/components/FloatingAudioPlayer';
 
 const MoreStack = createNativeStackNavigator<MoreStackParamList>();
 const hideHeader: NativeStackNavigationOptions = { headerShown: false };
@@ -125,356 +126,388 @@ export default function () {
       ];
 
   return (
-    <MoreStack.Navigator
-      initialRouteName={IS_IPAD ? 'Settings' : 'Drawer'}
-      screenOptions={sp.styles.defaultScreenOptions}>
-      <MoreStack.Screen name="Drawer" component={Drawer} options={hideHeader} />
-      <MoreStack.Screen
-        name="Wallet"
-        component={WalletStack}
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="GroupsList"
-        getComponent={() =>
-          require('~/modules/groups/screens/GroupsListScreen').default
-        }
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="Analytics"
-        getComponent={() => require('~/analytics/AnalyticsScreen').default}
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="Channel"
-        getComponent={() => require('~/channel/v2/ChannelScreen').default}
-        options={hideHeader}
-        getId={({ params }) =>
-          'Channel' + (params?.entity?.guid || params?.guid || '')
-        }
-      />
-      <MoreStack.Screen
-        name="Interactions"
-        getComponent={() =>
-          require('~/common/components/interactions/InteractionsScreen').default
-        }
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="PlusDiscoveryScreen"
-        getComponent={() =>
-          require('~/discovery/v2/PlusDiscoveryScreen').default
-        }
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="Settings"
-        getComponent={() => require('~/settings/SettingsScreen').default}
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="SupermindConsole"
-        getComponent={() =>
-          require('~/supermind/SupermindConsoleScreen').default
-        }
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="Account"
-        getComponent={() =>
-          require('~/common/components/OptionsDrawer').default
-        }
-        options={{
-          title: i18n.t('settings.account'),
-        }}
-        initialParams={{ options: AccountScreenOptions }}
-      />
-      <MoreStack.Screen
-        name="Security"
-        getComponent={() =>
-          require('~/common/components/OptionsDrawer').default
-        }
-        options={{ title: i18n.t('settings.security') }}
-        initialParams={{ options: SecurityScreenOptions }}
-      />
-      <MoreStack.Screen
-        name="Pro"
-        getComponent={() =>
-          require('~/settings/screens/MindsProScreen').default
-        }
-        options={{ title: 'Cancel Pro Subscription' }}
-      />
-      <MoreStack.Screen
-        name="Billing"
-        getComponent={() =>
-          require('~/common/components/OptionsDrawer').default
-        }
-        options={{ title: i18n.t('settings.billing') }}
-        initialParams={{ options: BillingScreenOptions }}
-      />
-      <MoreStack.Screen
-        name="AffiliateProgram"
-        getComponent={() =>
-          require('modules/affiliate/screens/AffiliateProgramScreen').default
-        }
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="BoostConsole"
-        getComponent={() => require('modules/boost').BoostConsoleScreen}
-        options={hideHeader}
-      />
-      <MoreStack.Screen
-        name="Other"
-        getComponent={() => require('~/settings/screens/OtherScreen').default}
-        options={{ title: i18n.t('settings.other') }}
-      />
-      <MoreStack.Screen
-        name="ChooseBrowser"
-        getComponent={() =>
-          require('~/settings/screens/ChooseBrowserScreen').default
-        }
-        options={{ title: i18n.t('settings.chooseBrowser') }}
-      />
-      <MoreStack.Screen
-        name="Resources"
-        getComponent={() =>
-          require('~/settings/screens/ResourcesScreen').default
-        }
-        options={{ title: i18n.t('settings.resources') }}
-      />
-      <MoreStack.Screen
-        name="SettingsNotifications"
-        getComponent={() =>
-          require('~/common/components/OptionsDrawer').default
-        }
-        options={{
-          title: i18n.t('settings.accountOptions.4'),
-        }}
-        initialParams={{ options: NotificationsScreenOptions }}
-      />
-      <MoreStack.Screen
-        name="SettingsEmail"
-        getComponent={() => require('~/settings/screens/EmailScreen').default}
-        options={{ title: i18n.t('settings.accountOptions.1') }}
-      />
-      <MoreStack.Screen
-        name="SettingsPassword"
-        getComponent={() =>
-          require('~/settings/screens/PasswordScreen').default
-        }
-        options={{ title: i18n.t('settings.accountOptions.3') }}
-      />
-      <MoreStack.Screen
-        name="PushNotificationsSettings"
-        getComponent={() =>
-          require('~/notifications/v3/settings/push/PushNotificationsSettings')
-            .default
-        }
-        options={{ title: i18n.t('settings.pushNotification') }}
-      />
-      <MoreStack.Screen
-        name="EmailNotificationsSettings"
-        getComponent={() =>
-          require('~/notifications/v3/settings/email/EmailNotificationsSettings')
-            .default
-        }
-        options={{ title: i18n.t('settings.emailNotifications') }}
-      />
-      <MoreStack.Screen
-        name="DataSaverScreen"
-        getComponent={() =>
-          require('~/settings/screens/DataSaverScreen').default
-        }
-        options={{ title: i18n.t('settings.networkOptions.1') }}
-      />
-      <MoreStack.Screen
-        name="BlockedChannels"
-        getComponent={() =>
-          require('~/settings/screens/blocked/BlockedChannelsScreen').default
-        }
-        options={{ title: i18n.t('settings.blockedChannels') }}
-      />
-      <MoreStack.Screen
-        name="RssScreen"
-        getComponent={() =>
-          require('~/modules/rss-settings/screens/RssScreen.tsx').default
-        }
-        options={{
-          title: i18n.t('settings.rssSync'),
-          headerTitleAlign: 'center',
-        }}
-      />
-      {MEMBERSHIP_TIERS_ENABLED && (
+    <>
+      <MoreStack.Navigator
+        initialRouteName={IS_IPAD ? 'Settings' : 'Drawer'}
+        screenOptions={sp.styles.defaultScreenOptions}>
         <MoreStack.Screen
-          name="TierManagementScreen"
+          name="Drawer"
+          component={Drawer}
+          options={hideHeader}
+        />
+        <MoreStack.Screen
+          name="Wallet"
+          component={WalletStack}
+          options={hideHeader}
+        />
+        <MoreStack.Screen
+          name="GroupsList"
           getComponent={() =>
-            require('~/common/components/tier-management/TierManagementScreen')
+            require('~/modules/groups/screens/GroupsListScreen').default
+          }
+          options={hideHeader}
+        />
+        <MoreStack.Screen
+          name="Analytics"
+          getComponent={() => require('~/analytics/AnalyticsScreen').default}
+          options={hideHeader}
+        />
+        <MoreStack.Screen
+          name="Channel"
+          getComponent={() => require('~/channel/v2/ChannelScreen').default}
+          options={hideHeader}
+          getId={({ params }) =>
+            'Channel' + (params?.entity?.guid || params?.guid || '')
+          }
+        />
+        <MoreStack.Screen
+          name="Interactions"
+          getComponent={() =>
+            require('~/common/components/interactions/InteractionsScreen')
               .default
           }
-          options={{ title: i18n.t('settings.otherOptions.b1') }}
-          initialParams={{ useForSelection: false }}
+          options={hideHeader}
         />
-      )}
-      <MoreStack.Screen
-        name="DeleteChannel"
-        getComponent={() =>
-          require('~/settings/screens/DeleteChannelScreen').default
-        }
-        options={{ title: i18n.t('settings.deleteChannel') }}
-      />
-      <MoreStack.Screen
-        name="UpgradeOptionsScreen"
-        getComponent={() => require('modules/upgrade').UpgradeOptionsScreen}
-        options={{ title: 'Upgrade' }}
-      />
-      <MoreStack.Screen
-        name="DeactivateChannel"
-        getComponent={() =>
-          require('~/settings/screens/DeactivateChannelScreen').default
-        }
-        options={{ title: i18n.t('settings.disableChannel') }}
-      />
-      <MoreStack.Screen
-        name="LanguageScreen"
-        getComponent={() =>
-          require('~/settings/screens/LanguageScreen').default
-        }
-        options={{ title: i18n.t('settings.accountOptions.2') }}
-      />
-      <MoreStack.Screen
-        name="NSFWScreen"
-        getComponent={() => require('~/settings/screens/NSFWScreen').default}
-        options={{ title: i18n.t('settings.accountOptions.5') }}
-      />
-      <MoreStack.Screen
-        name="AutoplaySettingsScreen"
-        getComponent={() =>
-          require('~/settings/screens/AutoplaySettingsScreen').default
-        }
-        options={{ title: i18n.t('settings.accountOptions.7') }}
-      />
-      <MoreStack.Screen
-        name="VideoSoundSettingsScreen"
-        getComponent={() =>
-          require('~/settings/screens/VideoSoundSettingsScreen').default
-        }
-        options={{ title: i18n.t('settings.accountOptions.9') }}
-      />
-      <MoreStack.Screen
-        name="UserDataScreen"
-        getComponent={() =>
-          require('~/settings/screens/UserDataScreen').default
-        }
-        options={{ title: i18n.t('settings.accountOptions.10') }}
-      />
-      <MoreStack.Screen
-        name="SupermindSettingsScreen"
-        getComponent={() =>
-          require('~/settings/screens/SupermindSettingsScreen').default
-        }
-        options={{ headerShown: false }}
-      />
-      <MoreStack.Screen
-        name="BoostSettingsScreen"
-        getComponent={() =>
-          require('~/settings/screens/BoostSettingsScreen').default
-        }
-        options={{ title: i18n.t('settings.accountOptions.8') }}
-      />
-      <MoreStack.Screen
-        name="TwoFactorAuthSettingsScreen"
-        getComponent={() =>
-          require('~/auth/twoFactorAuth/TwoFactorAuthSettingsScreen').default
-        }
-        options={{ title: i18n.t('settings.securityOptions.1') }}
-      />
-      <MoreStack.Screen
-        name="RecoveryCodesScreen"
-        getComponent={() =>
-          require('~/auth/twoFactorAuth/RecoveryCodesScreen').default
-        }
-        options={{ title: i18n.t('settings.TFA') }}
-      />
-      <MoreStack.Screen
-        name="VerifyAuthAppScreen"
-        getComponent={() =>
-          require('~/auth/twoFactorAuth/VerifyAuthAppScreen').default
-        }
-        options={{ title: i18n.t('settings.TFA') }}
-      />
-      <MoreStack.Screen
-        name="DisableTFA"
-        getComponent={() => require('~/auth/twoFactorAuth/DisableTFA').default}
-        options={{ title: i18n.t('settings.TFA') }}
-      />
-      <MoreStack.Screen
-        name="DevicesScreen"
-        getComponent={() => require('~/settings/screens/DevicesScreen').default}
-        options={{ title: i18n.t('settings.securityOptions.2') }}
-      />
-      {!IS_FROM_STORE && (
         <MoreStack.Screen
-          name="PaymentMethods"
+          name="PlusDiscoveryScreen"
           getComponent={() =>
-            require('~/settings/screens/BillingScreen').default
+            require('~/discovery/v2/PlusDiscoveryScreen').default
           }
-          options={{ title: i18n.t('settings.billingOptions.1') }}
+          options={hideHeader}
         />
-      )}
-      {!IS_IOS && (
         <MoreStack.Screen
-          name="RecurringPayments"
-          getComponent={() =>
-            require('~/settings/screens/RecurringPayments').default
-          }
-          options={{ title: i18n.t('settings.billingOptions.2') }}
+          name="Settings"
+          getComponent={() => require('~/settings/SettingsScreen').default}
+          options={hideHeader}
         />
-      )}
-      <MoreStack.Screen
-        name="ReportedContent"
-        getComponent={() => require('~/report/ReportedContentScreen').default}
-        options={{ title: i18n.t('settings.otherOptions.a1') }}
+        <MoreStack.Screen
+          name="SupermindConsole"
+          getComponent={() =>
+            require('~/supermind/SupermindConsoleScreen').default
+          }
+          options={hideHeader}
+        />
+        <MoreStack.Screen
+          name="Account"
+          getComponent={() =>
+            require('~/common/components/OptionsDrawer').default
+          }
+          options={{
+            title: i18n.t('settings.account'),
+          }}
+          initialParams={{ options: AccountScreenOptions }}
+        />
+        <MoreStack.Screen
+          name="Security"
+          getComponent={() =>
+            require('~/common/components/OptionsDrawer').default
+          }
+          options={{ title: i18n.t('settings.security') }}
+          initialParams={{ options: SecurityScreenOptions }}
+        />
+        <MoreStack.Screen
+          name="Pro"
+          getComponent={() =>
+            require('~/settings/screens/MindsProScreen').default
+          }
+          options={{ title: 'Cancel Pro Subscription' }}
+        />
+        <MoreStack.Screen
+          name="Billing"
+          getComponent={() =>
+            require('~/common/components/OptionsDrawer').default
+          }
+          options={{ title: i18n.t('settings.billing') }}
+          initialParams={{ options: BillingScreenOptions }}
+        />
+        <MoreStack.Screen
+          name="AffiliateProgram"
+          getComponent={() =>
+            require('modules/affiliate/screens/AffiliateProgramScreen').default
+          }
+          options={hideHeader}
+        />
+        <MoreStack.Screen
+          name="BoostConsole"
+          getComponent={() => require('modules/boost').BoostConsoleScreen}
+          options={hideHeader}
+        />
+        <MoreStack.Screen
+          name="DiscoverySearch"
+          getComponent={() =>
+            require('~/discovery/v2/search/DiscoverySearchScreen')
+              .DiscoverySearchScreen
+          }
+        />
+        <MoreStack.Screen
+          name="Other"
+          getComponent={() => require('~/settings/screens/OtherScreen').default}
+          options={{ title: i18n.t('settings.other') }}
+        />
+        <MoreStack.Screen
+          name="ChooseBrowser"
+          getComponent={() =>
+            require('~/settings/screens/ChooseBrowserScreen').default
+          }
+          options={{ title: i18n.t('settings.chooseBrowser') }}
+        />
+        <MoreStack.Screen
+          name="Resources"
+          getComponent={() =>
+            require('~/settings/screens/ResourcesScreen').default
+          }
+          options={{ title: i18n.t('settings.resources') }}
+        />
+        <MoreStack.Screen
+          name="SettingsNotifications"
+          getComponent={() =>
+            require('~/common/components/OptionsDrawer').default
+          }
+          options={{
+            title: i18n.t('settings.accountOptions.4'),
+          }}
+          initialParams={{ options: NotificationsScreenOptions }}
+        />
+        <MoreStack.Screen
+          name="SettingsEmail"
+          getComponent={() => require('~/settings/screens/EmailScreen').default}
+          options={{ title: i18n.t('settings.accountOptions.1') }}
+        />
+        <MoreStack.Screen
+          name="SettingsPassword"
+          getComponent={() =>
+            require('~/settings/screens/PasswordScreen').default
+          }
+          options={{ title: i18n.t('settings.accountOptions.3') }}
+        />
+        <MoreStack.Screen
+          name="PushNotificationsSettings"
+          getComponent={() =>
+            require('~/notifications/v3/settings/push/PushNotificationsSettings')
+              .default
+          }
+          options={{ title: i18n.t('settings.pushNotification') }}
+        />
+        <MoreStack.Screen
+          name="EmailNotificationsSettings"
+          getComponent={() =>
+            require('~/notifications/v3/settings/email/EmailNotificationsSettings')
+              .default
+          }
+          options={{ title: i18n.t('settings.emailNotifications') }}
+        />
+        <MoreStack.Screen
+          name="DataSaverScreen"
+          getComponent={() =>
+            require('~/settings/screens/DataSaverScreen').default
+          }
+          options={{ title: i18n.t('settings.networkOptions.1') }}
+        />
+        <MoreStack.Screen
+          name="BlockedChannels"
+          getComponent={() =>
+            require('~/settings/screens/blocked/BlockedChannelsScreen').default
+          }
+          options={{ title: i18n.t('settings.blockedChannels') }}
+        />
+        <MoreStack.Screen
+          name="RssScreen"
+          getComponent={() =>
+            require('~/modules/rss-settings/screens/RssScreen.tsx').default
+          }
+          options={{
+            title: i18n.t('settings.rssSync'),
+            headerTitleAlign: 'center',
+          }}
+        />
+        {MEMBERSHIP_TIERS_ENABLED && (
+          <MoreStack.Screen
+            name="TierManagementScreen"
+            getComponent={() =>
+              require('~/common/components/tier-management/TierManagementScreen')
+                .default
+            }
+            options={{ title: i18n.t('settings.otherOptions.b1') }}
+            initialParams={{ useForSelection: false }}
+          />
+        )}
+        <MoreStack.Screen
+          name="DeleteChannel"
+          getComponent={() =>
+            require('~/settings/screens/DeleteChannelScreen').default
+          }
+          options={{ title: i18n.t('settings.deleteChannel') }}
+        />
+        <MoreStack.Screen
+          name="UpgradeOptionsScreen"
+          getComponent={() => require('modules/upgrade').UpgradeOptionsScreen}
+          options={{ title: 'Upgrade' }}
+        />
+        <MoreStack.Screen
+          name="DeactivateChannel"
+          getComponent={() =>
+            require('~/settings/screens/DeactivateChannelScreen').default
+          }
+          options={{ title: i18n.t('settings.disableChannel') }}
+        />
+        <MoreStack.Screen
+          name="LanguageScreen"
+          getComponent={() =>
+            require('~/settings/screens/LanguageScreen').default
+          }
+          options={{ title: i18n.t('settings.accountOptions.2') }}
+        />
+        <MoreStack.Screen
+          name="NSFWScreen"
+          getComponent={() => require('~/settings/screens/NSFWScreen').default}
+          options={{ title: i18n.t('settings.accountOptions.5') }}
+        />
+        <MoreStack.Screen
+          name="AutoplaySettingsScreen"
+          getComponent={() =>
+            require('~/settings/screens/AutoplaySettingsScreen').default
+          }
+          options={{ title: i18n.t('settings.accountOptions.7') }}
+        />
+        <MoreStack.Screen
+          name="VideoSoundSettingsScreen"
+          getComponent={() =>
+            require('~/settings/screens/VideoSoundSettingsScreen').default
+          }
+          options={{ title: i18n.t('settings.accountOptions.9') }}
+        />
+        <MoreStack.Screen
+          name="UserDataScreen"
+          getComponent={() =>
+            require('~/settings/screens/UserDataScreen').default
+          }
+          options={{ title: i18n.t('settings.accountOptions.10') }}
+        />
+        <MoreStack.Screen
+          name="SupermindSettingsScreen"
+          getComponent={() =>
+            require('~/settings/screens/SupermindSettingsScreen').default
+          }
+          options={{ headerShown: false }}
+        />
+        <MoreStack.Screen
+          name="BoostSettingsScreen"
+          getComponent={() =>
+            require('~/settings/screens/BoostSettingsScreen').default
+          }
+          options={{ title: i18n.t('settings.accountOptions.8') }}
+        />
+        <MoreStack.Screen
+          name="TwoFactorAuthSettingsScreen"
+          getComponent={() =>
+            require('~/auth/twoFactorAuth/TwoFactorAuthSettingsScreen').default
+          }
+          options={{ title: i18n.t('settings.securityOptions.1') }}
+        />
+        <MoreStack.Screen
+          name="RecoveryCodesScreen"
+          getComponent={() =>
+            require('~/auth/twoFactorAuth/RecoveryCodesScreen').default
+          }
+          options={{ title: i18n.t('settings.TFA') }}
+        />
+        <MoreStack.Screen
+          name="VerifyAuthAppScreen"
+          getComponent={() =>
+            require('~/auth/twoFactorAuth/VerifyAuthAppScreen').default
+          }
+          options={{ title: i18n.t('settings.TFA') }}
+        />
+        <MoreStack.Screen
+          name="DisableTFA"
+          getComponent={() =>
+            require('~/auth/twoFactorAuth/DisableTFA').default
+          }
+          options={{ title: i18n.t('settings.TFA') }}
+        />
+        <MoreStack.Screen
+          name="DevicesScreen"
+          getComponent={() =>
+            require('~/settings/screens/DevicesScreen').default
+          }
+          options={{ title: i18n.t('settings.securityOptions.2') }}
+        />
+        {!IS_FROM_STORE && (
+          <MoreStack.Screen
+            name="PaymentMethods"
+            getComponent={() =>
+              require('~/settings/screens/BillingScreen').default
+            }
+            options={{ title: i18n.t('settings.billingOptions.1') }}
+          />
+        )}
+        {!IS_IOS && (
+          <MoreStack.Screen
+            name="RecurringPayments"
+            getComponent={() =>
+              require('~/settings/screens/RecurringPayments').default
+            }
+            options={{ title: i18n.t('settings.billingOptions.2') }}
+          />
+        )}
+        <MoreStack.Screen
+          name="ReportedContent"
+          getComponent={() => require('~/report/ReportedContentScreen').default}
+          options={{ title: i18n.t('settings.otherOptions.a1') }}
+        />
+        <MoreStack.Screen
+          name="AppInfo"
+          getComponent={() =>
+            require('~/settings/screens/AppInfoScreen').default
+          }
+        />
+        <MoreStack.Screen
+          name="WebView"
+          getComponent={() => require('~/common/screens/WebViewScreen').default}
+        />
+        <MoreStack.Screen
+          name="BoostScreenV2"
+          getComponent={() => require('modules/boost').BoostComposerStack}
+          options={{ headerShown: false }}
+        />
+        <MoreStack.Screen
+          name="SupermindTwitterConnect"
+          getComponent={() =>
+            require('~/supermind/SupermindTwitterConnectScreen').default
+          }
+          options={{ headerShown: false }}
+        />
+        <MoreStack.Screen
+          name="GroupView"
+          getComponent={() =>
+            require('~/modules/groups/screens/GroupScreen').GroupScreen
+          }
+          options={{ headerShown: false }}
+        />
+        <MoreStack.Screen
+          name="Activity"
+          getComponent={() => require('~/newsfeed/ActivityScreen').default}
+          options={hideHeader}
+          initialParams={{ noBottomInset: true }}
+        />
+        <MoreStack.Screen
+          name="GroupsManage"
+          getComponent={() => require('~/groups/GroupsManageScreen').default}
+          options={{ headerShown: false }}
+        />
+        <MoreStack.Screen
+          name="DownloadedAudioScreen"
+          getComponent={() =>
+            require('~/modules/audio-player/screens/DownloadedAudioScreen')
+              .default
+          }
+          options={hideHeader}
+        />
+      </MoreStack.Navigator>
+
+      <FloatingAudioPlayer
+        style={IS_IOS ? sp.styles.style.paddingBottom4x : undefined}
       />
-      <MoreStack.Screen
-        name="AppInfo"
-        getComponent={() => require('~/settings/screens/AppInfoScreen').default}
-      />
-      <MoreStack.Screen
-        name="WebView"
-        getComponent={() => require('~/common/screens/WebViewScreen').default}
-      />
-      <MoreStack.Screen
-        name="BoostScreenV2"
-        getComponent={() => require('modules/boost').BoostComposerStack}
-        options={{ headerShown: false }}
-      />
-      <MoreStack.Screen
-        name="SupermindTwitterConnect"
-        getComponent={() =>
-          require('~/supermind/SupermindTwitterConnectScreen').default
-        }
-        options={{ headerShown: false }}
-      />
-      <MoreStack.Screen
-        name="GroupView"
-        getComponent={() =>
-          require('~/modules/groups/screens/GroupScreen').GroupScreen
-        }
-        options={{ headerShown: false }}
-      />
-      <MoreStack.Screen
-        name="Activity"
-        getComponent={() => require('~/newsfeed/ActivityScreen').default}
-        options={hideHeader}
-        initialParams={{ noBottomInset: true }}
-      />
-      <MoreStack.Screen
-        name="GroupsManage"
-        getComponent={() => require('~/groups/GroupsManageScreen').default}
-        options={{ headerShown: false }}
-      />
-    </MoreStack.Navigator>
+    </>
   );
 }

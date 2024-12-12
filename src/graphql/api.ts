@@ -2412,6 +2412,16 @@ export type UpdatePostSubscriptionsMutation = {
   };
 };
 
+export type SetCommentPinnedStateMutationVariables = Exact<{
+  commentGuid: Scalars['String']['input'];
+  pinned: Scalars['Boolean']['input'];
+}>;
+
+export type SetCommentPinnedStateMutation = {
+  __typename?: 'Mutation';
+  commentPinnedState: boolean;
+};
+
 export type GetDismissalsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetDismissalsQuery = {
@@ -6421,6 +6431,44 @@ useUpdatePostSubscriptionsMutation.fetcher = (
     UpdatePostSubscriptionsMutation,
     UpdatePostSubscriptionsMutationVariables
   >(UpdatePostSubscriptionsDocument, variables, options);
+export const SetCommentPinnedStateDocument = `
+    mutation SetCommentPinnedState($commentGuid: String!, $pinned: Boolean!) {
+  commentPinnedState(commentGuid: $commentGuid, pinned: $pinned)
+}
+    `;
+export const useSetCommentPinnedStateMutation = <
+  TError = unknown,
+  TContext = unknown,
+>(
+  options?: UseMutationOptions<
+    SetCommentPinnedStateMutation,
+    TError,
+    SetCommentPinnedStateMutationVariables,
+    TContext
+  >,
+) =>
+  useMutation<
+    SetCommentPinnedStateMutation,
+    TError,
+    SetCommentPinnedStateMutationVariables,
+    TContext
+  >(
+    ['SetCommentPinnedState'],
+    (variables?: SetCommentPinnedStateMutationVariables) =>
+      gqlFetcher<
+        SetCommentPinnedStateMutation,
+        SetCommentPinnedStateMutationVariables
+      >(SetCommentPinnedStateDocument, variables)(),
+    options,
+  );
+useSetCommentPinnedStateMutation.fetcher = (
+  variables: SetCommentPinnedStateMutationVariables,
+  options?: RequestInit['headers'],
+) =>
+  gqlFetcher<
+    SetCommentPinnedStateMutation,
+    SetCommentPinnedStateMutationVariables
+  >(SetCommentPinnedStateDocument, variables, options);
 export const GetDismissalsDocument = `
     query GetDismissals {
   dismissals {

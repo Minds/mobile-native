@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { StyleSheet, View, Platform } from 'react-native';
 import { Image } from 'expo-image';
 import { TouchableOpacity } from '@gorhom/bottom-sheet';
@@ -10,6 +10,8 @@ import ChannelBadges from '~/channel/badges/ChannelBadges';
 import MText from '~/common/components/MText';
 const DebouncedTouchableOpacity = withPreventDoubleTap(TouchableOpacity);
 import sp from '~/services/serviceProvider';
+import IconMa from '@expo/vector-icons/MaterialIcons';
+import BadgeTooltip from '../../common/components/BadgeTooltip';
 
 type PropsType = {
   entity: CommentModel;
@@ -23,7 +25,7 @@ type PropsType = {
 /**
  * Comment Header Component
  */
-class CommentHeader extends PureComponent<PropsType> {
+class CommentHeader extends Component<PropsType> {
   /**
    * Navigate To channel
    */
@@ -44,6 +46,7 @@ class CommentHeader extends PureComponent<PropsType> {
     const theme = sp.styles.style;
     const channel = this.props.entity.ownerObj;
     const rightToolbar = this.props.rightToolbar || null;
+    const i18n = sp.i18n;
 
     const avatarSrc = channel.getAvatarSource();
 
@@ -98,6 +101,20 @@ class CommentHeader extends PureComponent<PropsType> {
             </View>
           </View>
           <ChannelBadges channel={this.props.entity.ownerObj} />
+          {this.props.entity.pinned && (
+            <BadgeTooltip
+              key="pinned"
+              label={i18n.t('pinned')}
+              color={sp.styles.getColor('Link')}
+              position="left">
+              <IconMa
+                name="push-pin"
+                size={15}
+                style={styles.pinnedIcon}
+                color={sp.styles.getColor('Link')}
+              />
+            </BadgeTooltip>
+          )}
           {rightToolbar}
         </View>
       </View>
@@ -145,5 +162,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto_400Regular',
     fontSize: 15,
     marginTop: 1,
+  },
+  pinnedIcon: {
+    transform: 'translateY(1px)',
   },
 });

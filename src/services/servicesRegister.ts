@@ -58,6 +58,7 @@ import type { ImagePickerService } from '~/common/services/image-picker.service'
 import type PreviewUpdateService from 'preview/PreviewUpdateService';
 
 import sp from '~/services/serviceProvider';
+import type { AudioPlayerDownloadService } from '~/modules/audio-player/services/audio-download.service';
 
 /**
  * Register all services
@@ -777,3 +778,15 @@ sp.register('chatImageUpload', () => {
     .ChatImageUploadService as typeof ChatImageUploadService;
   return new Service(sp.resolve('api'));
 });
+
+// audio player service
+sp.register(
+  'audioPlayer',
+  () => {
+    const Service =
+      require('~/modules/audio-player/services/audio-download.service')
+        .AudioPlayerDownloadService as typeof AudioPlayerDownloadService;
+    return new Service(sp.resolve('storages'), sp.resolve('api'));
+  },
+  Lifetime.Singleton,
+);
