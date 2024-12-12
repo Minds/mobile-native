@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useMemo, useCallback } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
-import { Image } from 'expo-image';
+import { Image, ImageSource } from 'expo-image';
 
 import { Avatar, B1, B2 } from '~/common/ui';
 import { ChatMessage } from '../types';
@@ -15,6 +15,9 @@ import {
   useChatRoomContext,
 } from '../contexts/ChatRoomContext';
 import sp from '~/services/serviceProvider';
+import SmartImage from '~/common/components/SmartImage';
+import { ChatImageNode } from '~/graphql/api';
+import { useNavigation } from '@react-navigation/native';
 
 type Props = {
   message: ChatMessage;
@@ -79,7 +82,9 @@ function Message({ message, onLongPress }: Props) {
         activeOpacity={0.7}
         style={styles.bubbleContainer}
         onLongPress={longPress}>
-        {message.node.richEmbed ? (
+        {message.node.image ? (
+          <ChatImage image={message.node.image} onLongPress={longPress} />
+        ) : message.node.richEmbed ? (
           <RichEmbed message={message} onLongPress={longPress} />
         ) : (
           <View style={styles.bubbleRight}>
@@ -144,6 +149,65 @@ const RichEmbed = ({
   );
 };
 
+/** Blurhash placeholder type */
+type BlurhashPlaceholderType =
+  | Pick<ImageSource, 'blurhash' | 'width' | 'height'>
+  | undefined;
+
+/** Chat image props */
+type ChatImageProps = { image: ChatImageNode; onLongPress?: () => void };
+
+/**
+ * Chat image component
+ * @param { ChatImageProps } props - The props for the chat image component.
+ * @returns { React.ReactNode } The chat image component.
+ */
+const ChatImage = ({ image, onLongPress }: ChatImageProps): React.ReactNode => {
+  const navigation = useNavigation();
+  const aspectRatio: number = useMemo(
+    () => image.width / image.height,
+    [image],
+  );
+  const placeholder: BlurhashPlaceholderType = useMemo(
+    () =>
+      image.blurhash
+        ? {
+            blurhash: image.blurhash,
+            width: image.width,
+            height: image.height,
+          }
+        : undefined,
+    [image],
+  );
+
+  /**
+   * Handle chat image press by navigating to the chat image gallery screen.
+   * @returns { void }
+   */
+  const handleChatImagePress = useCallback(() => {
+    navigation.navigate('ChatImageGallery', { images: [image] });
+  }, [navigation, image]);
+
+  return (
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={handleChatImagePress}
+      onLongPress={onLongPress}>
+      <SmartImage
+        contentFit="cover"
+        source={image.url}
+        style={[
+          {
+            aspectRatio: aspectRatio,
+          },
+          styles.imageAttachment,
+        ]}
+        placeholder={placeholder}
+      />
+    </TouchableOpacity>
+  );
+};
+
 export default React.memo(Message);
 
 const styles = sp.styles.create({
@@ -188,5 +252,13 @@ const styles = sp.styles.create({
       flex: 1,
       aspectRatio: 1.91 / 1,
     },
+  ],
+  imageAttachment: [
+    {
+      minWidth: 200,
+      minHeight: 200,
+      maxHeight: 500,
+    },
+    'borderRadius15x',
   ],
 });

@@ -10,6 +10,8 @@ import TextInput from '~/common/components/TextInput';
 import Tags from '~/common/components/Tags';
 import { useNavigation } from '@react-navigation/native';
 import sp from '~/services/serviceProvider';
+import { PickedMedia } from '~/common/services/image-picker.service';
+import ChatUploadButton from './ChatUploadButton';
 
 const { height } = Dimensions.get('window');
 
@@ -17,17 +19,19 @@ const Touchable = preventDoubleTap(TouchableOpacity);
 
 type Props = {
   onSendMessage: (text: string) => void;
+  onUploadImage: (image: PickedMedia) => Promise<void>;
 };
 
 /**
  * Floating Input component
  */
 // TODO: Optimize this component (Reduce re-renders)
-const ChatInput = ({ onSendMessage }: Props) => {
+const ChatInput = ({ onSendMessage, onUploadImage }: Props) => {
   const navigation = useNavigation();
   const theme = sp.styles.style;
   const ref = React.useRef<TextInputType>(null);
   const [text, setText] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
 
   const inputMaxHeight = {
     maxHeight: height * 0.2,
@@ -86,14 +90,21 @@ const ChatInput = ({ onSendMessage }: Props) => {
             {text}
           </Tags>
         </TextInput>
-        {!saving ? (
-          <Touchable
-            onPress={send}
-            hitSlop={hitSlop}
-            style={styles.sendIcon}
-            testID="PostCommentButton">
-            <Icon name="send" size={18} style={theme.colorSecondaryText} />
-          </Touchable>
+        {!saving && !isUploading ? (
+          <>
+            <ChatUploadButton
+              onUploadImage={onUploadImage}
+              onUploadingStateChange={setIsUploading}
+              hitSlop={hitSlop}
+            />
+            <Touchable
+              onPress={send}
+              hitSlop={hitSlop}
+              style={styles.sendIcon}
+              testID="PostCommentButton">
+              <Icon name="send" size={20} style={theme.colorSecondaryText} />
+            </Touchable>
+          </>
         ) : (
           <View style={[theme.alignSelfCenter, theme.justifyEnd]}>
             <Flow color={sp.styles.getColor('PrimaryText')} />

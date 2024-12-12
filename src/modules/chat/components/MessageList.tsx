@@ -11,6 +11,8 @@ import {
 import { useSetReadReceipt } from '../hooks/useSetReadReceipt';
 import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import sp from '~/services/serviceProvider';
+import { PickedMedia } from '../../../common/services/image-picker.service';
+import { useUploadChatImage } from '../hooks/useUploadChatImage';
 
 type Props = {
   roomGuid: string;
@@ -18,8 +20,10 @@ type Props = {
 };
 
 function MessageFlatList({ isRequest }: Props) {
-  const { fetchNextPage, send, messages, roomGuid } =
+  const { fetchNextPage, loadNewMessages, send, messages, roomGuid } =
     useChatRoomMessageContext();
+  const { uploadImage } = useUploadChatImage(roomGuid);
+
   const listRef = useRef<FlatList>(null);
   const setReceipt = useSetReadReceipt();
 
@@ -38,6 +42,20 @@ function MessageFlatList({ isRequest }: Props) {
       send(message);
     },
     [send],
+  );
+
+  /**
+   * Handle upload image.
+   * @param { PickedMedia } image - The image to upload.
+   * @returns { Promise<void> }
+   */
+  const handleUploadImage = useCallback(
+    async (image: PickedMedia): Promise<void> => {
+      listRef.current?.scrollToOffset({ offset: 0, animated: false });
+      await uploadImage(image);
+      loadNewMessages();
+    },
+    [uploadImage, loadNewMessages],
   );
 
   const statusBarHeight = StatusBar.currentHeight || 0;
@@ -64,7 +82,12 @@ function MessageFlatList({ isRequest }: Props) {
         renderItem={renderMessage}
         keyExtractor={keyExtractor}
       />
-      {!isRequest && <ChatInput onSendMessage={sendMessage} />}
+      {!isRequest && (
+        <ChatInput
+          onSendMessage={sendMessage}
+          onUploadImage={handleUploadImage}
+        />
+      )}
     </KeyboardAvoidingView>
   );
 }

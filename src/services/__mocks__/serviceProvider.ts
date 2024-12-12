@@ -30,6 +30,7 @@ import type { WireService } from '~/wire/WireService';
 import type { BlogsService } from '~/blogs/BlogsService';
 
 import { ThemedStyles } from '~/styles/ThemedStyles';
+import { ImagePickerService } from '../../common/services/image-picker.service';
 
 const { Lifetime } = require('../injectionContainer');
 
@@ -303,6 +304,14 @@ sp.mockService = <K extends keyof Services>(
       sp.register('blogs', () => blogs, Lifetime.Singleton);
       // @ts-ignore
       return blogs;
+    case 'imagePicker':
+      const ImagePickerService =
+        require('~/common/services/image-picker.service').ImagePickerService;
+      const imagePicker =
+        new ImagePickerService() as jest.Mocked<ImagePickerService>;
+      sp.register('imagePicker', () => imagePicker, Lifetime.Singleton);
+      // @ts-ignore
+      return imagePicker;
   }
   throw new Error(`Service not found: ${service}`);
 };
