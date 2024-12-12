@@ -92,11 +92,13 @@ const ChatInput = ({ onSendMessage, onUploadImage }: Props) => {
         </TextInput>
         {!saving && !isUploading ? (
           <>
-            <ChatUploadButton
-              onUploadImage={onUploadImage}
-              onUploadingStateChange={setIsUploading}
-              hitSlop={hitSlop}
-            />
+            {sp.resolve('permissions').canUploadChatMedia(true) && (
+              <ChatUploadButton
+                onUploadImage={onUploadImage}
+                onUploadingStateChange={setIsUploading}
+                hitSlop={hitSlop}
+              />
+            )}
             <Touchable
               onPress={send}
               hitSlop={hitSlop}
