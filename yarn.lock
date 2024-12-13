@@ -7450,11 +7450,6 @@ core-js-pure@^3.30.2:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.39.0.tgz#aa0d54d70a15bdc13e7c853db87c10abc30d68f3"
   integrity sha512-7fEcWwKI4rJinnK+wLTezeg2smbFFdSBP6E2kQZNbnzM2s1rpKQ6aaRteZSSg7FLU3P0HGGVo/gbpfanU36urg==
 
-core-js@^1.0.0:
-  version "1.2.7"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
-  integrity sha512-ZiPp9pZlgxpWRu0M+YWbm6+aQ84XEfH1JRXvfOc/fILWI0VKhLC2LX13X1NYq4fULzLMq7Hfh43CSo2/aIaUPA==
-
 core-util-is@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
@@ -9358,7 +9353,7 @@ expo-updates-interface@~1.0.0:
   resolved "https://registry.yarnpkg.com/expo-updates-interface/-/expo-updates-interface-1.0.0.tgz#b98c66b800d29561c62409556948b2af3d5316e5"
   integrity sha512-93oWtvULJOj+Pp+N/lpTcFfuREX1wNeHtp7Lwn8EbzYYmdn37MvZU3TPW2tYYCZuhzmKEXnUblYcruYoDu7IrQ==
 
-expo-updates@~0.26.8:
+expo-updates@~0.26.9:
   version "0.26.9"
   resolved "https://registry.yarnpkg.com/expo-updates/-/expo-updates-0.26.9.tgz#9be11c482c572f90d479aa1f7bd1ac509d7fa102"
   integrity sha512-eHdvM4+xXaLV3uuTn3ooWsDC69IPV9ukpuPDglsBWJKagVi40u7DJQ375oGNgjqxd91irEBeBSCr9tCWm905QA==
@@ -12370,11 +12365,6 @@ jest@~29.7.0:
     import-local "^3.0.2"
     jest-cli "^29.7.0"
 
-jetifier@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/jetifier/-/jetifier-2.0.0.tgz#699391367ca1fe7bc4da5f8bf691eb117758e4cb"
-  integrity sha512-J4Au9KuT74te+PCCCHKgAjyLlEa+2VyIAEPNCdE5aNkAJ6FAJcAqcdzEkSnzNksIa9NkGmC4tPiClk2e7tCJuQ==
-
 jimp-compact@0.16.1:
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/jimp-compact/-/jimp-compact-0.16.1.tgz#9582aea06548a2c1e04dd148d7c3ab92075aefa3"
@@ -12681,11 +12671,6 @@ knuth-shuffle-seeded@^1.0.6:
   integrity sha512-9pFH0SplrfyKyojCLxZfMcvkhf5hH0d+UwR9nTVJ/DDQJGuzcXjTwB7TP7sDfehSudlGGaOLblmEWqv04ERVWg==
   dependencies:
     seed-random "~2.2.0"
-
-krustykrab@^1.0.1:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/krustykrab/-/krustykrab-1.1.0.tgz#2b77faf06da9a43fe740799ac73fc2e8b6b515b0"
-  integrity sha512-xpX9MPbw+nJseewe6who9Oq46RQwrBfps+dO/N4fSjJhsf2+y4XWC2kz46oBGX8yzMHyYJj35ug0X5s5yxB6tA==
 
 ky@0.30.0:
   version "0.30.0"
@@ -14985,14 +14970,6 @@ phin@^3.7.1:
   dependencies:
     centra "^2.7.0"
 
-photo-editor@^0.2.0:
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/photo-editor/-/photo-editor-0.2.6.tgz#2110983b3f174b70d10ae61c631bbb92f3fb3b3d"
-  integrity sha512-VLRUpLyk/P2uyw3u4pkEjGkrC1QVeHcf2Fgzwkm58iUuhI2+3JblwjwXEOVyCKwo6QDuIEZBvVPth+wHmBbiEw==
-  dependencies:
-    eventemitter3 "^5.0.1"
-    krustykrab "^1.0.1"
-
 picocolors@^1.0.0, picocolors@^1.1.0, picocolors@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.1.1.tgz#3d321af3eab939b083c8f929a1d12cda81c26b6b"
@@ -15707,7 +15684,7 @@ react-native-gesture-handler@~2.12.0, react-native-gesture-handler@~2.20.2:
     invariant "^2.2.4"
     prop-types "^15.7.2"
 
-react-native-iap@^12.15.2:
+react-native-iap@^12.15.7:
   version "12.15.7"
   resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-12.15.7.tgz#392073222e8aebf230449fce0a914577ef85e0ae"
   integrity sha512-+xpbu5Idxbe3SfmBFF/boQekUiqwzdzxKgr2d0txHXD/rEScncj3C10QRXiUKTct5vpa1mNPKVU095ecRm3cNA==
@@ -15808,13 +15785,6 @@ react-native-navigation-bar-color@^2.0.1:
   resolved "https://registry.yarnpkg.com/react-native-navigation-bar-color/-/react-native-navigation-bar-color-2.0.2.tgz#2e14ca79a656d81d5b4b7433ae43966ef5206444"
   integrity sha512-ZmpLWRocyme1au11e5ZuecMS/UCi57nlzgnioi03Q6ERMbeUOqqbWgNBaNB7SsCeqBV6fZPjo3+A64zEIpzw4w==
 
-"react-native-notifications@https://github.com/Minds/react-native-notifications":
-  version "5.0.4"
-  resolved "https://github.com/Minds/react-native-notifications#10c57717fb5fe54c0cffbebf20794cc8728b62c9"
-  dependencies:
-    core-js "^1.0.0"
-    uuid "^2.0.3"
-
 react-native-pager-view@6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.2.0.tgz#51380d93fbe47f6380dc71d613a787bf27a4ca37"
@@ -15831,11 +15801,6 @@ react-native-pager-view@6.5.1:
   dependencies:
     libphonenumber-js "^1.9.49"
     react-native-country-picker-modal "^2.0.0"
-
-react-native-photo-editor@^1.0.13:
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/react-native-photo-editor/-/react-native-photo-editor-1.0.13.tgz#292d2f1a87bb3fb9b75000683f05664f360bdf6b"
-  integrity sha512-SWrnatVC4H73cEN+6rVlc0M5cGS20K6EwL8u2CmlBlLNEwH6OfayMgOCwpKJdmN2GPZKJ2JraQru8Ga7JL4zaw==
 
 react-native-pinchable@^0.2.1:
   version "0.2.1"
@@ -16628,12 +16593,13 @@ rn-color-matrices@^4.1.0:
   dependencies:
     clamp "^1.0.1"
 
-rn-update-apk@^4.5.0:
-  version "4.5.1"
-  resolved "https://registry.yarnpkg.com/rn-update-apk/-/rn-update-apk-4.5.1.tgz#762604c57f92ef6c697854b957aab97eda0e7bc9"
-  integrity sha512-622vErv6qqhxNYIaaawgO3wmCUrC5LJlHdDjGg9dvEuXQL1FQyiFUil+/S8lp3gBVywtpUvuPSP2roOLgMntUQ==
+rn-update-apk@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/rn-update-apk/-/rn-update-apk-5.0.0.tgz#0fbcbffe66c2f19b9d362071cfe06c6c68e0d7d4"
+  integrity sha512-WExx/lW6c0E+iqyRdo5XCRdZt7CVgHxXjxwGFCMtJhKfI7s8vg3XdbtS+CjGxns9nApnqVcrjANoubFdzRwnwQ==
   dependencies:
     react-native-fs "^2.16.6"
+    semver "^7.3.5"
 
 rst-selector-parser@^2.2.3:
   version "2.2.3"
@@ -18634,11 +18600,6 @@ uuid@9.0.1, uuid@^9.0.0, uuid@^9.0.1:
   version "9.0.1"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
   integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
-
-uuid@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
-  integrity sha512-FULf7fayPdpASncVy4DLh3xydlXEJJpvIELjYjNeQWYUZ9pclcpvCZSr2gkmN2FrrGcI7G/cJsIEwk5/8vfXpg==
 
 uuid@^7.0.3:
   version "7.0.3"
