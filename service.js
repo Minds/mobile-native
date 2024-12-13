@@ -1,4 +1,5 @@
-import TrackPlayer from 'react-native-track-player';
+import { showNotification } from 'AppMessages';
+import TrackPlayer, { Event } from 'react-native-track-player';
 
 module.exports = async function () {
   TrackPlayer.addEventListener('remote-play', () => TrackPlayer.play());
@@ -7,4 +8,14 @@ module.exports = async function () {
   TrackPlayer.addEventListener('remote-previous', () =>
     TrackPlayer.skipToPrevious(),
   );
+  TrackPlayer.addEventListener(Event.PlaybackError, async e => {
+    const progress = await TrackPlayer.getProgress();
+    const duration = progress?.duration ?? 0;
+
+    if (!duration) {
+      showNotification('Still processing. Try again shortly.', 'warning');
+    } else {
+      showNotification('Something went wrong.', 'danger');
+    }
+  });
 };
