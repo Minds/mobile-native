@@ -9247,10 +9247,10 @@ expo-image-picker@~16.0.2:
   dependencies:
     expo-image-loader "~5.0.0"
 
-expo-image@~2.0.1:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/expo-image/-/expo-image-2.0.2.tgz#7e97a5f4129c7f0b76b5ca9edbd8793ba4b4ca9e"
-  integrity sha512-LkjdE5ij48Yu7eE5E1ruXpxgmyRw33oaapPkNpDx/AKh1GEGQ0wQ4genvV1QXZmlNrzaRurzuVUvwz8n3abwdg==
+expo-image@~2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/expo-image/-/expo-image-2.0.3.tgz#0a39a51af7af786226aa5ffc000277ca0e564a52"
+  integrity sha512-+YnHTQv8jbXaut3FY7TDhNiSiGZ927C329mHvTZWV4Fyj32/Hjhhmk7dqq9I6LrA0nqBBiJjFj3u6VdHvCBnZg==
 
 expo-json-utils@~0.14.0:
   version "0.14.0"
