@@ -94,7 +94,12 @@ export default function InlineAudioPlayer(props: InlineAudioPlayerProps) {
                 ]}>
                 {entity.ownerObj.name}
               </MText>
-              <MText style={[sp.styles.style.fontBold]}>{entity.title}</MText>
+              <MText
+                style={[sp.styles.style.fontBold]}
+                ellipsizeMode="tail"
+                numberOfLines={3}>
+                {entity.title}
+              </MText>
             </View>
             <View
               style={[

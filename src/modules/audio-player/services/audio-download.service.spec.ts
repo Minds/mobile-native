@@ -6,6 +6,7 @@ import TrackPlayer from 'react-native-track-player';
 
 const storageMock = sp.mockService('storages');
 const apiMock = sp.mockService('api');
+sp.mockService('analytics');
 
 describe('AudioPlayerDownloadService', () => {
   let service: AudioPlayerDownloadService;
