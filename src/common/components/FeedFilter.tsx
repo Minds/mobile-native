@@ -28,7 +28,7 @@ type PropsType = {
   textStyle?: TextStyle | TextStyle[];
 };
 
-const filters = ['all', 'images', 'videos', 'blogs'] as const;
+const filters = ['all', 'images', 'videos', 'blogs', 'audio'] as const;
 
 /**
  * Feed Filter selector

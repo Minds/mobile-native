@@ -54,6 +54,14 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
             },
           }
         : null,
+      {
+        name: i18n.t('discovery.filters.audio'),
+        icon: 'headphones',
+        testID: 'Drawer:audio',
+        onPress: () => {
+          navigation.push('DiscoverySearch', { t: 'audio', f: 'latest' });
+        },
+      },
       BOOSTS_ENABLED
         ? {
             name: i18n.t('settings.boostConsole'),

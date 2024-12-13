@@ -233,6 +233,13 @@ export default function () {
           options={hideHeader}
         />
         <MoreStack.Screen
+          name="DiscoverySearch"
+          getComponent={() =>
+            require('~/discovery/v2/search/DiscoverySearchScreen')
+              .DiscoverySearchScreen
+          }
+        />
+        <MoreStack.Screen
           name="Other"
           getComponent={() => require('~/settings/screens/OtherScreen').default}
           options={{ title: i18n.t('settings.other') }}

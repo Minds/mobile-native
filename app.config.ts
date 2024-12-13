@@ -93,6 +93,7 @@ const plugins: any = [
       enableMicrophonePermission: true,
       microphonePermissionText: micMessage,
       enableCodeScanner: true,
+      enableLocation: false,
     },
   ],
   './plugins/withAndroidMainApplicationAttributes.js',
@@ -186,6 +187,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       backgroundColor: is_dark
         ? Tenant.BACKGROUND_COLOR_DARK
         : Tenant.BACKGROUND_COLOR_LIGHT,
+    },
+    entitlements: {
+      'aps-environment': 'development',
     },
   },
   notification: {
