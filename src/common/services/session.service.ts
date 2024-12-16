@@ -147,10 +147,10 @@ export class SessionService {
 
       const session = this.sessions[this.activeIndex];
 
-      const { user, pseudoId } = session;
+      const { user } = session;
 
       // set the analytics pseudo id (if not tenant)
-      this.analytics.setUserId(IS_TENANT ? user.guid : pseudoId);
+      this.analytics.setUserId(user.guid);
 
       let access_token: string;
 
