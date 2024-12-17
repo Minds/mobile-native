@@ -1,4 +1,4 @@
-import TrackPlayer, { Track } from 'react-native-track-player';
+import TrackPlayer, { Event, State, Track } from 'react-native-track-player';
 import { Storage, Storages } from '~/common/services/storage/storages.service';
 import RNFS from 'react-native-fs';
 import { showNotification } from 'AppMessages';
@@ -6,6 +6,7 @@ import ActivityModel from '~/newsfeed/ActivityModel';
 import moment from 'moment';
 import { observable } from 'mobx';
 import { ApiService } from '~/common/services/api.service';
+import { AnalyticsService } from '~/common/services/analytics.service';
 
 export type DownloadedTrack = {
   localFilePath: string;
@@ -19,13 +20,38 @@ export class AudioPlayerDownloadService {
   @observable
   public downloadedTracks: DownloadedTrackList = {};
 
-  constructor(storages: Storages, private apiService: ApiService) {
+  constructor(
+    storages: Storages,
+    private apiService: ApiService,
+    private analyticService: AnalyticsService,
+  ) {
     this.userStorage = storages.user as Storage;
     this.init();
   }
 
   public init(): void {
     this.downloadedTracks = this.getDownloadedTracks();
+
+    TrackPlayer.addEventListener(Event.PlaybackState, e => {
+      let eventName: string;
+      switch (e.state) {
+        case State.Playing:
+          eventName = 'audio_play';
+          break;
+        case State.Paused:
+          eventName = 'audio_pause';
+          break;
+        default:
+          return;
+      }
+
+      (async () => {
+        const activeTrack = await TrackPlayer.getActiveTrack();
+        this.analyticService.posthog.capture(eventName, {
+          entity_guid: activeTrack?.id,
+        });
+      })();
+    });
   }
 
   /**
