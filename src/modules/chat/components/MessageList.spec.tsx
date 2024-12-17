@@ -14,6 +14,7 @@ jest.mock('~/services/serviceProvider');
 sp.mockService('styles');
 sp.mockService('i18n');
 sp.mockService('permissions');
+sp.mockService('navigation');
 
 const sessionService = sp.mockService('session');
 

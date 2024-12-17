@@ -13,6 +13,7 @@ import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import sp from '~/services/serviceProvider';
 import { PickedMedia } from '../../../common/services/image-picker.service';
 import { useUploadChatImage } from '../hooks/useUploadChatImage';
+import { ChatMessage } from '../types';
 
 type Props = {
   roomGuid: string;
@@ -60,6 +61,26 @@ function MessageFlatList({ isRequest }: Props) {
 
   const statusBarHeight = StatusBar.currentHeight || 0;
 
+  const renderMessage = data => {
+    const message = data.item as ChatMessage;
+
+    const previousMessage = messages[data.index + 1] as ChatMessage | undefined;
+    const nextMessage = messages[data.index - 1] as ChatMessage | undefined;
+
+    return (
+      <Message
+        message={message}
+        isPreviousFromSameSender={
+          message.node.sender.id === previousMessage?.node.sender.id
+        }
+        isNextFromSameSender={
+          message.node.sender.id === nextMessage?.node.sender.id
+        }
+        onLongPress={showMessageMenu}
+      />
+    );
+  };
+
   return (
     <KeyboardAvoidingView
       behavior="padding"
@@ -91,10 +112,6 @@ function MessageFlatList({ isRequest }: Props) {
     </KeyboardAvoidingView>
   );
 }
-
-const renderMessage = ({ item }) => {
-  return <Message message={item} onLongPress={showMessageMenu} />;
-};
 
 /**
  * Message list component

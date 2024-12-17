@@ -1,9 +1,9 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback, useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import moment from 'moment';
 import { Image, ImageSource } from 'expo-image';
 
-import { Avatar, B1, B2 } from '~/common/ui';
+import { Avatar, B1, B2, B3, B4 } from '~/common/ui';
 import { ChatMessage } from '../types';
 import {
   ChatRoomMessagesContextType,
@@ -18,9 +18,13 @@ import sp from '~/services/serviceProvider';
 import SmartImage from '~/common/components/SmartImage';
 import { ChatImageNode } from '~/graphql/api';
 import { useNavigation } from '@react-navigation/native';
+import Tags from '~/common/components/Tags';
+import chatDate from '../utils/chat-date';
 
 type Props = {
   message: ChatMessage;
+  isPreviousFromSameSender: boolean;
+  isNextFromSameSender: boolean;
   onLongPress: (
     message: ChatMessage,
     context: ChatRoomMessagesContextType,
@@ -28,11 +32,18 @@ type Props = {
   ) => void | Promise<void>;
 };
 
-function Message({ message, onLongPress }: Props) {
+function Message({
+  message,
+  isPreviousFromSameSender,
+  isNextFromSameSender,
+  onLongPress,
+}: Props) {
   const sender = message.node.sender.node;
-  const date = moment(message.node.timeCreatedISO8601);
+
   const context = useChatRoomMessageContext();
   const roomContext = useChatRoomContext();
+  const showSender = !isPreviousFromSameSender;
+  const [showTimestamp, setShowTimestamp] = useState(!isNextFromSameSender);
 
   const longPress = onLongPress
     ? () => {
@@ -45,8 +56,16 @@ function Message({ message, onLongPress }: Props) {
   const isMe = sender.guid === user.guid;
 
   return !isMe ? (
-    <View style={styles.container}>
-      <View style={styles.avatarContainer}>
+    <View
+      style={[
+        styles.container,
+        !isNextFromSameSender ? sp.styles.style.paddingBottom6x : undefined,
+      ]}>
+      <View
+        style={[
+          styles.avatarContainer,
+          showTimestamp ? { paddingBottom: 18 } : undefined,
+        ]}>
         <Avatar
           size="tiny"
           onPress={() => {
@@ -57,43 +76,70 @@ function Message({ message, onLongPress }: Props) {
           }}
         />
       </View>
-      <TouchableOpacity style={styles.bubbleContainer} onLongPress={longPress}>
-        <B2 left="S" font="medium">
-          {sender.name}
-        </B2>
-        {message.node.richEmbed ? (
-          <RichEmbed message={message} onLongPress={longPress} />
-        ) : (
-          <View style={styles.bubble}>
-            <B1>{message.node.plainText}</B1>
-          </View>
-        )}
-        <B2 left="S" font="medium" color="secondary">
-          {i18n.date(date, 'friendly')}
-        </B2>
-      </TouchableOpacity>
-    </View>
-  ) : (
-    <View
-      style={
-        message.cursor ? styles.containerRight : styles.containerRightSending
-      }>
       <TouchableOpacity
-        activeOpacity={0.7}
-        style={styles.bubbleContainer}
-        onLongPress={longPress}>
+        style={[styles.bubbleContainer]}
+        onLongPress={longPress}
+        onPress={() => setShowTimestamp(!showTimestamp)}>
+        {showSender ? (
+          <B3
+            left="S"
+            font="medium"
+            style={[
+              sp.styles.style.paddingBottom,
+              sp.styles.style.colorSecondaryText,
+            ]}>
+            {sender.name}
+          </B3>
+        ) : undefined}
         {message.node.image ? (
           <ChatImage image={message.node.image} onLongPress={longPress} />
         ) : message.node.richEmbed ? (
           <RichEmbed message={message} onLongPress={longPress} />
         ) : (
-          <View style={styles.bubbleRight}>
-            <B1 color="primaryDark">{message.node.plainText}</B1>
+          <View style={styles.bubble}>
+            <B2>
+              <Tags navigation={sp.navigation} selectable>
+                {message.node.plainText}
+              </Tags>
+            </B2>
           </View>
         )}
-        <B2 font="medium" color="secondary" align="right" right="S">
-          {i18n.date(date, 'friendly')}
-        </B2>
+        {showTimestamp ? (
+          <B4 left="S" font="regular" color="secondary">
+            {chatDate(message.node.timeCreatedUnix, false)}
+          </B4>
+        ) : undefined}
+      </TouchableOpacity>
+    </View>
+  ) : (
+    <View
+      style={[
+        message.cursor ? styles.containerRight : styles.containerRightSending,
+        !isNextFromSameSender ? sp.styles.style.paddingBottom6x : undefined,
+      ]}>
+      <TouchableOpacity
+        activeOpacity={0.7}
+        style={[styles.bubbleContainer]}
+        onPress={() => setShowTimestamp(!showTimestamp)}
+        onLongPress={longPress}>
+        {message.node.image ? (
+          <ChatImage image={message.node.image} onLongPress={longPress} right />
+        ) : message.node.richEmbed ? (
+          <RichEmbed message={message} onLongPress={longPress} />
+        ) : (
+          <View style={styles.bubbleRight}>
+            <B2 color="primaryDark">
+              <Tags navigation={sp.navigation} selectable>
+                {message.node.plainText}
+              </Tags>
+            </B2>
+          </View>
+        )}
+        {showTimestamp ? (
+          <B4 left="S" font="regular" align="right" right="S" color="secondary">
+            {chatDate(message.node.timeCreatedUnix, false)}
+          </B4>
+        ) : undefined}
       </TouchableOpacity>
     </View>
   );
@@ -121,30 +167,32 @@ const RichEmbed = ({
         url && sp.resolve('openURL').open(url);
       }}
       style={isMe ? styles.richBubbleRight : styles.richBubble}>
-      <B1 color={isMe ? 'primaryDark' : 'primary'} horizontal="L" vertical="M">
-        {message.node.plainText}
-      </B1>
+      <B2 color={isMe ? 'primaryDark' : 'primary'} horizontal="M" vertical="M">
+        <Tags navigation={sp.navigation} selectable>
+          {message.node.plainText}
+        </Tags>
+      </B2>
       <Image
         source={message.node.richEmbed?.thumbnailSrc}
         contentFit="cover"
         style={styles.image}
       />
-      <B2
+      <B3
         horizontal="L"
         top="M"
         font="medium"
         color={isMe ? 'primaryDark' : 'primary'}
         numberOfLines={2}>
         {message.node.richEmbed?.title}
-      </B2>
-      <B2
+      </B3>
+      <B4
         color={isMe ? 'secondaryDark' : 'secondary'}
         horizontal="L"
         top="XS"
         numberOfLines={1}
         bottom="M">
         {domain(message.node.richEmbed?.url)}
-      </B2>
+      </B4>
     </TouchableOpacity>
   );
 };
@@ -155,14 +203,22 @@ type BlurhashPlaceholderType =
   | undefined;
 
 /** Chat image props */
-type ChatImageProps = { image: ChatImageNode; onLongPress?: () => void };
+type ChatImageProps = {
+  image: ChatImageNode;
+  onLongPress?: () => void;
+  right?: boolean;
+};
 
 /**
  * Chat image component
  * @param { ChatImageProps } props - The props for the chat image component.
  * @returns { React.ReactNode } The chat image component.
  */
-const ChatImage = ({ image, onLongPress }: ChatImageProps): React.ReactNode => {
+const ChatImage = ({
+  image,
+  onLongPress,
+  right,
+}: ChatImageProps): React.ReactNode => {
   const navigation = useNavigation();
   const aspectRatio: number = useMemo(
     () => (image?.width && image?.height ? image.width / image.height : 1),
@@ -195,7 +251,7 @@ const ChatImage = ({ image, onLongPress }: ChatImageProps): React.ReactNode => {
       onLongPress={onLongPress}>
       <SmartImage
         contentFit="cover"
-        source={image.url}
+        source={{ uri: image.url, headers: sp.api.buildHeaders() }}
         style={[
           {
             aspectRatio: aspectRatio,
@@ -225,9 +281,9 @@ const styles = sp.styles.create({
     'bgSecondaryBackground',
     'paddingHorizontal3x',
     'paddingVertical2x',
-    'marginVertical',
+    //'marginVertical',
   ],
-  avatarContainer: ['paddingBottom6x', 'paddingRight3x'],
+  avatarContainer: ['paddingRight3x', { borderColor: 'red', borderWidth: 0 }],
   bubbleRight: [
     'borderRadius15x',
     {
@@ -236,10 +292,11 @@ const styles = sp.styles.create({
     },
     'paddingHorizontal3x',
     'paddingVertical2x',
-    'marginVertical',
+    //'marginVertical',
   ],
   bubbleContainer: [
-    'paddingTop3x',
+    { borderColor: 'green', borderWidth: 0 },
+    'paddingTop1x',
     {
       maxWidth: '70%',
     },
@@ -255,9 +312,10 @@ const styles = sp.styles.create({
   ],
   imageAttachment: [
     {
-      minWidth: 200,
-      minHeight: 200,
+      minWidth: 180,
+      minHeight: 180,
       maxHeight: 500,
+      flexShrink: 1,
     },
     'borderRadius15x',
   ],
