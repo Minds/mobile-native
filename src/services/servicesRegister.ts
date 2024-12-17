@@ -4,6 +4,7 @@ import { LogService } from '~/common/services/log.service';
 import { NavigationService } from '~/navigation/NavigationService';
 import { ConnectivityService } from '~/common/services/connectivity.service';
 import { ThemedStyles } from '~/styles/ThemedStyles';
+import { ChatImageUploadService } from '~/modules/chat/service/chat-image-upload-service';
 
 import type { DevModeService } from '~/config/DevModeService';
 import type { ApiService } from '~/common/services/api.service';
@@ -769,6 +770,13 @@ sp.register('previewUpdate', () => {
   const Service = require('preview/PreviewUpdateService')
     .default as typeof PreviewUpdateService;
   return new Service(sp.resolve('storages'), sp.resolve('log'));
+});
+
+// chat image upload service
+sp.register('chatImageUpload', () => {
+  const Service = require('~/modules/chat/service/chat-image-upload-service')
+    .ChatImageUploadService as typeof ChatImageUploadService;
+  return new Service(sp.resolve('api'));
 });
 
 // audio player service

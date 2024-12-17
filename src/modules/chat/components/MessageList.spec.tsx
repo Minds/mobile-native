@@ -13,6 +13,9 @@ jest.mock('~/services/serviceProvider');
 // mock services
 sp.mockService('styles');
 sp.mockService('i18n');
+sp.mockService('permissions');
+sp.mockService('navigation');
+
 const sessionService = sp.mockService('session');
 
 jest.mock('../hooks/useChatRoomMessagesQuery');

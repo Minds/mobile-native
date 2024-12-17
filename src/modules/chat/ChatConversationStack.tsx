@@ -7,7 +7,7 @@ import {
 } from '@react-navigation/stack';
 import { AppStackScreenProps } from '~/navigation/NavigationTypes';
 import { ChatMember } from './types';
-import { GetChatRoomQuery } from '~/graphql/api';
+import { ChatImageNode, GetChatRoomQuery } from '~/graphql/api';
 
 export type ChatStackParamList = {
   Chat: {
@@ -25,6 +25,9 @@ export type ChatStackParamList = {
   ChatAddUsers: {
     roomGuid: string;
     ignore?: string[];
+  };
+  ChatImageGallery: {
+    images: ChatImageNode[];
   };
 };
 
@@ -66,6 +69,10 @@ export function ChatConversationStack({}: PropsType) {
       <Screen
         name="ChatAddUsers"
         getComponent={() => require('./screens/ChatAddUsersScreen').default}
+      />
+      <Screen
+        name="ChatImageGallery"
+        getComponent={() => require('./screens/ChatImageGalleryScreen').default}
       />
     </Navigator>
   );
