@@ -55,7 +55,7 @@ const plugins: any = [
   'react-native-iap',
   'expo-updates',
   'expo-localization',
-  // 'react-native-notifications',
+  'react-native-notifications',
   [
     '@sentry/react-native/expo',
     {

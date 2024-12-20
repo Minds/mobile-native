@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { CameraRoll } from '@react-native-camera-roll/camera-roll';
 import { showNotification } from 'AppMessages';
-import { runInAction } from 'mobx';
 import { observer } from 'mobx-react';
-import { Image, InteractionManager, StatusBar, View } from 'react-native';
+import { InteractionManager, StatusBar, View } from 'react-native';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
-import RNPhotoEditor from 'react-native-photo-editor';
+
 import {
   SafeAreaView,
   useSafeAreaInsets,
@@ -172,41 +171,6 @@ export default withErrorBoundaryScreen(
     }, [i18n, mode, portraitMode]);
 
     /**
-     * called when edit icon is pressed. opens the rnPhotoEditor and handles callback
-     */
-    const onEdit = useCallback(() => {
-      try {
-        setMediaToConfirm(null);
-        RNPhotoEditor.Edit({
-          path: mediaToConfirm.uri.replace('file://', ''),
-          stickers: ['sticker6', 'sticker9'],
-          hiddenControls: ['save', 'share'],
-          onDone: () => {
-            // reset the filter as a workaround because we will have to rerender the filter slider.
-            // but ideally we should keep the filter and scroll to that filter slide
-            setFilter(null);
-
-            Image.getSize(
-              mediaToConfirm.uri,
-              (w, h) => {
-                runInAction(() => {
-                  mediaToConfirm.key++;
-                  mediaToConfirm.width = w;
-                  mediaToConfirm.height = h;
-
-                  setMediaToConfirm(mediaToConfirm);
-                });
-              },
-              err => console.log(err),
-            );
-          },
-        });
-      } catch (err) {
-        sp.log.exception(err);
-      }
-    }, [mediaToConfirm]);
-
-    /**
      * Download the media to the gallery
      */
     const runDownload = useCallback(async () => {
@@ -334,7 +298,6 @@ export default withErrorBoundaryScreen(
                         downloading={downloading}
                         onDownload={runDownload}
                       />
-                      <EditIconButton onPress={onEdit} />
                     </SafeAreaView>
                   </View>
                 ) : (
