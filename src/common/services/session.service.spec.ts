@@ -108,16 +108,14 @@ describe('SessionService init', () => {
     expect(session.user.guid).toBe('123');
   });
 
-  it('should set a pseudo id for non tenant', () => {
+  it('should set a real guid id for non tenant', () => {
     sessionStorageMock.getAll.mockReturnValueOnce(mockedSession);
     const mockedConstants = configConstants as { IS_TENANT: boolean };
     mockedConstants.IS_TENANT = false;
 
     sessionService.init();
 
-    expect(mockedAnalyticsService.setUserId).toHaveBeenCalledWith(
-      'pseudo_id_here',
-    );
+    expect(mockedAnalyticsService.setUserId).toHaveBeenCalledWith('123');
   });
 
   it('should set a real user id for tenant', () => {

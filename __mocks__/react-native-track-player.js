@@ -3,6 +3,13 @@ export const useIsPlaying = jest.fn(() => ({}));
 export const usePlaybackState = jest.fn();
 export const useProgress = jest.fn(() => ({}));
 
+export const Event = {
+  PlaybackState: {
+    Playing: 'playing',
+    Paused: 'paused',
+  },
+};
+
 export const State = {
   Paused: 'paused',
   Ready: 'ready',
@@ -25,4 +32,5 @@ export default {
   getQueue: jest.fn(() => Promise.resolve([])),
   setQueue: jest.fn(() => Promise.resolve()),
   getActiveTrackIndex: jest.fn(() => Promise.resolve(undefined)),
+  addEventListener: jest.fn(),
 };

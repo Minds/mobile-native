@@ -54,6 +54,7 @@ import type { ChannelService } from '~/channel/ChannelService';
 import type { GroupsService } from '~/groups/GroupsService';
 import type PreviewUpdateService from 'preview/PreviewUpdateService';
 import type { ImagePickerService } from '~/common/services/image-picker.service';
+import { ChatImageUploadService } from '../modules/chat/service/chat-image-upload-service';
 import type AudioPlayerDownloadService from '~/modules/audio-player/services/audio-download.service';
 
 // service provider
@@ -164,6 +165,7 @@ export type Services = {
   groups: GroupsService;
   previewUpdate: PreviewUpdateService; // only for previewer
   imagePicker: ImagePickerService;
+  chatImageUpload: ChatImageUploadService;
   audioPlayer: AudioPlayerDownloadService;
 };
 

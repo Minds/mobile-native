@@ -1,6 +1,5 @@
 import React from 'react';
 import { View } from 'react-native';
-import moment from 'moment';
 
 import { Avatar, B2, B3, Row } from '~/common/ui';
 import MPressable from '~/common/components/MPressable';
@@ -9,6 +8,7 @@ import { ChatRoom } from '../types';
 
 import { APP_URI } from '~/config/Config';
 import sp from '~/services/serviceProvider';
+import chatDate from '../utils/chat-date';
 
 type Props = {
   chat: ChatRoom;
@@ -18,11 +18,9 @@ type Props = {
 
 function ChatListItem({ chat, onPress }: Props) {
   const isGroupChat = chat.node.roomType === 'GROUP_OWNED';
-  const timestamp =
-    1000 *
-    (chat.lastMessageCreatedTimestamp
-      ? chat.lastMessageCreatedTimestamp
-      : parseInt(chat.node.timeCreatedUnix, 10));
+  const timestamp = chat.lastMessageCreatedTimestamp
+    ? chat.lastMessageCreatedTimestamp
+    : parseInt(chat.node.timeCreatedUnix, 10);
 
   return (
     <MPressable onPress={onPress} testID="chatListItem">
@@ -64,9 +62,7 @@ function ChatListItem({ chat, onPress }: Props) {
             <B2 font="medium" numberOfLines={1} style={styles.name}>
               {chat.node.name}
             </B2>
-            <B2 color="secondary">
-              {sp.i18n.date(moment(timestamp), 'friendly')}
-            </B2>
+            <B3 color="secondary">{chatDate(timestamp, true)}</B3>
           </View>
           <View style={styles.nameContainer}>
             <View style={styles.message}>
