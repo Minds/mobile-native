@@ -238,7 +238,8 @@
     "escape-string-regexp": "4.0.0",
     "color-convert": "2.0.1",
     "react-native-gesture-handler": "~2.20.2",
-    "strip-ansi": "6.0.1"
+    "strip-ansi": "6.0.1",
+    "cheerio": "1.0.0-rc.10"
   },
   "workspaces": [
     "packages/*"

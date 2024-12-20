@@ -1,44 +1,87 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`TwitterSyncScreen renders correctly 1`] = `
-<QueryClientProvider
-  client={
-    QueryClient {
-      "defaultOptions": {
-        "queries": {
-          "cacheTime": 0,
-          "refetchOnMount": true,
-          "refetchOnReconnect": false,
-          "refetchOnWindowFocus": false,
-          "retry": false,
-          "staleTime": 0,
-        },
-      },
-      "logger": {
-        "error": [Function],
-        "log": [Function],
-        "warn": [Function],
-      },
-      "mountCount": 0,
-      "mutationCache": MutationCache {
-        "config": {},
-        "listeners": Set {},
-        "mutationId": 0,
-        "mutations": [],
-        "subscribe": [Function],
-      },
-      "mutationDefaults": [],
-      "queryCache": QueryCache {
-        "config": {},
-        "listeners": Set {},
-        "queries": [],
-        "queriesMap": {},
-        "subscribe": [Function],
-      },
-      "queryDefaults": [],
+<RCTScrollView
+  automaticallyAdjustContentInsets={false}
+  contentInset={
+    {
+      "bottom": 0,
     }
   }
+  enableAutomaticScroll={true}
+  enableOnAndroid={false}
+  enableResetScrollToCoords={true}
+  extraHeight={75}
+  extraScrollHeight={0}
+  getScrollResponder={[Function]}
+  handleOnScroll={[Function]}
+  keyboardDismissMode="on-drag"
+  keyboardOpeningTime={250}
+  keyboardSpace={0}
+  onScroll={[Function]}
+  resetKeyboardSpace={[Function]}
+  scrollEventThrottle={1}
+  scrollForExtraHeightOnAndroid={[Function]}
+  scrollIntoView={[Function]}
+  scrollToEnd={[Function]}
+  scrollToFocusedInput={[Function]}
+  scrollToPosition={[Function]}
+  showsVerticalScrollIndicator={true}
+  style={
+    {
+      "flex": 1,
+    }
+  }
+  update={[Function]}
+  viewIsInsideTabBar={false}
 >
-  <TwitterSyncScreen />
-</QueryClientProvider>
+  <View>
+    <View
+      style={
+        {
+          "marginHorizontal": 16,
+          "marginTop": 16,
+        }
+      }
+    >
+      <Text
+        style={
+          [
+            {
+              "color": "#b9bbc0",
+            },
+            {
+              "fontFamily": "Roboto_400Regular",
+            },
+            {
+              "fontSize": 16,
+              "lineHeight": 24,
+            },
+            {
+              "textAlign": "left",
+            },
+          ]
+        }
+      >
+        Using our Twitter Sync tool, Twitter users with over NaN followers can have their new tweets automatically copied over from Twitter to Minds. Retweets, replies, and tweet deletions are not synced to Minds. You can edit and/or delete posts on Minds through the Minds app or website.
+      </Text>
+    </View>
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "transparent",
+          "flex": 1,
+          "justifyContent": "center",
+          "minHeight": 100,
+        }
+      }
+    >
+      <ActivityIndicator
+        color="#FFD048"
+        size="large"
+      />
+    </View>
+  </View>
+</RCTScrollView>
 `;
