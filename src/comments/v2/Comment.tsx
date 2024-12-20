@@ -204,14 +204,14 @@ export default observer(function Comment({
               direction="up"
               voted={votedUp}
               size="tiny"
-              touchableComponent={TouchableOpacity}
+              touchableComponent={TouchableOpacity as any}
             />
             <ThumbAction
               entity={comment}
               direction="down"
               voted={votedDown}
               size="tiny"
-              touchableComponent={TouchableOpacity}
+              touchableComponent={TouchableOpacity as any}
             />
             <ShareAction entity={comment} />
             {!hideReply && <ReplyAction size={16} onPressReply={reply} />}

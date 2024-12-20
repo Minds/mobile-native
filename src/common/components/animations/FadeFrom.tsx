@@ -36,7 +36,7 @@ export const FadeFrom: FC<
   }, [direction]);
 
   return (
-    <MotiView {...props} from={from} animate={animate}>
+    <MotiView {...(props as any)} from={from} animate={animate}>
       {children}
     </MotiView>
   );

@@ -13,13 +13,17 @@ export const useChannelContext = () => {
   return React.useContext(ChannelContext);
 };
 
-export function withChannelContext<T>(
+type WithChannel = {
+  channel?: UserModel;
+};
+
+export function withChannelContext<T extends WithChannel>(
   WrappedComponent: React.ComponentType<T>,
 ) {
-  return React.forwardRef((props: T, ref: React.Ref<T>) => (
+  return React.forwardRef<any, Omit<T, keyof WithChannel>>((props, ref) => (
     <ChannelContext.Consumer>
       {({ channel }) => (
-        <WrappedComponent {...props} channel={channel} ref={ref} />
+        <WrappedComponent {...(props as any)} channel={channel} ref={ref} />
       )}
     </ChannelContext.Consumer>
   ));

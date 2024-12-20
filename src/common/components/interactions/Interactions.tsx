@@ -42,10 +42,11 @@ const Interactions = (props: InteractionsProps) => {
     paddingTop: bottomInsets * 1.5,
   });
   const footerGradientColors = useMemo(
-    () => [
-      sp.styles.getColor('PrimaryBackground') + '00',
-      sp.styles.getColor('PrimaryBackground'),
-    ],
+    () =>
+      [
+        sp.styles.getColor('PrimaryBackground') + '00',
+        sp.styles.getColor('PrimaryBackground'),
+      ] as readonly [string, string],
     [],
   );
   const entity = props.entity;

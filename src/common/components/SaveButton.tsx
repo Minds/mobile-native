@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 import { Button, Spacer } from '~ui';
 import sp from '~/services/serviceProvider';
 
@@ -13,7 +13,7 @@ type propsType = {
 
 const SaveButton = ({ onPress, text, spinner, style, disabled }: propsType) => {
   return (
-    <Spacer containerStyle={style}>
+    <Spacer containerStyle={style as ViewStyle}>
       <Button
         disabled={disabled}
         onPress={onPress}

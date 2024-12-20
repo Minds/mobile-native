@@ -425,10 +425,6 @@ const DownloadIconButton = ({ downloading, onDownload }) => {
   );
 };
 
-const EditIconButton = ({ onPress }) => (
-  <IconButtonNext name="edit" size="large" onPress={onPress} light shadow />
-);
-
 const styles = sp.styles.create({
   container: [
     'flexContainer',

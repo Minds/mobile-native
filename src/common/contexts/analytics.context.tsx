@@ -35,15 +35,18 @@ export const useAnalytics = () => {
     contexts: analyticsContext,
   };
 };
+
 export function withAnalyticsContext<T>(
   contextResolver: (
     props: T,
   ) => EventContext | EventContext[] | null | undefined,
 ) {
-  return (WrappedComponent: any) =>
-    React.forwardRef((props: T, ref: React.Ref<T>) => (
-      <AnalyticsProvider context={contextResolver(props)}>
-        <WrappedComponent {...props} ref={ref} />
+  return (WrappedComponent: any): any => {
+    const WithAnalytics = React.forwardRef<any, T>((props, ref) => (
+      <AnalyticsProvider context={contextResolver(props as T)}>
+        <WrappedComponent {...(props as T)} ref={ref} />
       </AnalyticsProvider>
-    )) as any;
+    ));
+    return WithAnalytics as any;
+  };
 }
