@@ -494,6 +494,10 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'play-circle',
   },
+  'stop-circle': {
+    font: 'MaterialIcons',
+    name: 'stop-circle',
+  },
   'playlist-add': {
     font: 'MaterialIcons',
     name: 'playlist-add',
@@ -525,6 +529,10 @@ const ICON_MAP = {
   headphones: {
     font: 'MaterialIcons',
     name: 'headphones',
+  },
+  speed: {
+    font: 'MaterialIcons',
+    name: 'speed',
   },
 } as const;
 

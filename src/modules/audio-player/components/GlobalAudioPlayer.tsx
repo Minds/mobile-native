@@ -8,7 +8,7 @@ import TrackPlayer, {
   useProgress,
 } from 'react-native-track-player';
 import MText from '~/common/components/MText';
-import { IconButtonNext, Row } from '~/common/ui';
+import { IconButtonNext, IconNext, Row } from '~/common/ui';
 import Icon from '@expo/vector-icons/MaterialIcons';
 import sp from '~/services/serviceProvider';
 import SmartImage from '~/common/components/SmartImage';
@@ -16,6 +16,8 @@ import { pushBottomSheet } from '~/common/components/bottom-sheet';
 import { FullscreenAudioPlayer } from './FullscreenAudioPlayer';
 import { formatDuration } from '../utils/duration-format';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { PlaybackSpeedPicker } from './PlaybackSpeedPicker';
+import { usePlaybackRate } from '../hooks/usePlaybackRate';
 
 export type GlobalAudioPlayerProps = {
   fullscreen?: boolean;
@@ -26,6 +28,7 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
   const { playing } = useIsPlaying();
   const progress = useProgress();
   const activeTrack = useActiveTrack();
+  const { rate, refreshRateState } = usePlaybackRate();
   const fullscreen = !!props.fullscreen;
 
   const toggleAudio = async () => {
@@ -55,30 +58,45 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
     });
   };
 
+  const openPlaybackSpeedPicker = () => {
+    pushBottomSheet({
+      component: (bottomSheetRef, handleContentLayout) => (
+        <View
+          onLayout={handleContentLayout}
+          style={{ flexDirection: 'column' }}>
+          <PlaybackSpeedPicker
+            bottomSheetRef={bottomSheetRef}
+            onSelected={refreshRateState}
+          />
+        </View>
+      ),
+      onClose: () => refreshRateState,
+    });
+  };
+
   const onNonControlTap = () => {
     if (!fullscreen) {
       openFullscreenPlayer();
     }
   };
 
-  const artworkSize = fullscreen ? 128 : 46;
+  const artworkSize = fullscreen ? '100%' : 46;
 
   const trackMeta = (
-    <View style={[sp.styles.style.paddingHorizontal3x, { flexShrink: 1 }]}>
+    <View
+      style={[
+        !fullscreen
+          ? sp.styles.style.paddingHorizontal3x
+          : sp.styles.style.paddingTop4x,
+        { flexShrink: 1 },
+      ]}>
       <TouchableOpacity onPress={onNonControlTap} testID="audio-player-meta">
-        <MText
-          style={[
-            sp.styles.style.fontXS,
-            fullscreen ? sp.styles.style.textCenter : undefined,
-          ]}>
+        <MText style={[sp.styles.style.fontXS]}>
           {activeTrack?.artist || '...'}
         </MText>
         <MText
           ellipsizeMode="tail"
-          style={[
-            sp.styles.style.fontBold,
-            fullscreen ? sp.styles.style.textCenter : undefined,
-          ]}
+          style={[sp.styles.style.fontBold]}
           numberOfLines={fullscreen ? 3 : 2}>
           {activeTrack?.title || '...'}
         </MText>
@@ -90,9 +108,39 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
     <Row
       align="centerBetween"
       containerStyle={{
-        width: 146,
+        width: fullscreen ? '100%' : 146,
         alignSelf: fullscreen ? 'center' : 'flex-end',
       }}>
+      {fullscreen ? (
+        <>
+          <TouchableOpacity
+            onPress={openPlaybackSpeedPicker}
+            testID="audio-player-speed"
+            style={[
+              sp.styles.style.flexColumn,
+              sp.styles.style.alignCenter,
+              sp.styles.style.flexColumnCentered,
+            ]}>
+            <IconNext
+              testID="speed-button"
+              name="speed"
+              size={24}
+              color={rate != 1 ? 'Link' : 'PrimaryText'}
+            />
+            <MText
+              style={[
+                sp.styles.style.fontXS,
+                sp.styles.style.fontMedium,
+                rate != 1
+                  ? sp.styles.style.colorLink
+                  : sp.styles.style.colorPrimaryText,
+              ]}>
+              {rate}x
+            </MText>
+          </TouchableOpacity>
+        </>
+      ) : undefined}
+
       <IconButtonNext
         testID="replay-button"
         scale
@@ -123,13 +171,58 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
           await TrackPlayer.play(); // After seek, always play
         }}
       />
+
+      {fullscreen ? (
+        <IconButtonNext
+          testID="stop-button"
+          scale
+          name="stop-circle"
+          size={32}
+          color="PrimaryText"
+          onPress={async () => {
+            sp.navigation.goBack();
+            await TrackPlayer.reset();
+          }}
+        />
+      ) : undefined}
     </Row>
+  );
+
+  const progressBar = (
+    <View>
+      <View style={[{ flexDirection: 'row', alignItems: 'center', gap: 8 }]}>
+        <MText style={sp.styles.style.fontXS}>
+          {formatDuration(progress.position * 1000)}
+        </MText>
+        <Slider
+          style={[{ flex: 1 }]}
+          value={progress.position}
+          minimumValue={0}
+          maximumValue={progress.duration}
+          thumbStyle={{
+            height: 12,
+            width: 12,
+            backgroundColor: sp.styles.getColor('PrimaryText'),
+          }}
+          trackStyle={fullscreen ? { height: 6 } : undefined}
+          onSlidingComplete={async value => {
+            await TrackPlayer.seekTo(value);
+            await TrackPlayer.play(); // After seek, always play
+          }}
+          allowTouchTrack></Slider>
+        <MText style={sp.styles.style.fontXS}>
+          {formatDuration(
+            (progress.duration || activeTrack?.duration || 0) * 1000,
+          )}
+        </MText>
+      </View>
+    </View>
   );
 
   return activeTrack && playBackState !== undefined ? (
     <View>
       <View>
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: fullscreen ? 'column' : 'row' }}>
           <View
             style={{
               alignItems: 'center',
@@ -142,7 +235,7 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
               <SmartImage
                 contentFit="cover"
                 style={[
-                  { width: artworkSize, height: artworkSize },
+                  { width: artworkSize, maxWidth: '100%', aspectRatio: 1 },
                   sp.styles.style.borderRadius4x,
                 ]}
                 source={{
@@ -166,40 +259,16 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
           <View style={{ flex: 1, alignSelf: 'center', minWidth: 148 }}>
             {fullscreen ? (
               <View style={sp.styles.style.paddingVertical2x}>{trackMeta}</View>
-            ) : null}
+            ) : undefined}
+
+            {fullscreen ? progressBar : undefined}
+
             {playerControls}
           </View>
         </View>
       </View>
 
-      <View>
-        <View style={[{ flexDirection: 'row', alignItems: 'center', gap: 8 }]}>
-          <MText style={sp.styles.style.fontXS}>
-            {formatDuration(progress.position * 1000)}
-          </MText>
-          <Slider
-            style={[{ flex: 1 }]}
-            value={progress.position}
-            minimumValue={0}
-            maximumValue={progress.duration}
-            thumbStyle={{
-              height: 12,
-              width: 12,
-              backgroundColor: sp.styles.getColor('PrimaryText'),
-            }}
-            trackStyle={fullscreen ? { height: 6 } : undefined}
-            onSlidingComplete={async value => {
-              await TrackPlayer.seekTo(value);
-              await TrackPlayer.play(); // After seek, always play
-            }}
-            allowTouchTrack></Slider>
-          <MText style={sp.styles.style.fontXS}>
-            {formatDuration(
-              (progress.duration || activeTrack.duration || 0) * 1000,
-            )}
-          </MText>
-        </View>
-      </View>
+      {!fullscreen ? progressBar : undefined}
     </View>
   ) : undefined;
 }
