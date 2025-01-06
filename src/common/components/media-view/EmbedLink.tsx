@@ -143,21 +143,27 @@ export default function EmbedLink({
   if (!small) {
     return (
       <View style={styles.smallContainerStyle}>
-        {source.uri ? (
-          <MediaViewImage
-            showPlayIcon={showPlayIcon}
-            entity={entity}
-            onImagePress={onTap ? onTap : onImagePress}
-            onImageLongPress={onImageLongPress}
-            style={sp.styles.style.bgSecondaryBackground}
-          />
-        ) : null}
-        <TouchableOpacity
-          style={sp.styles.style.padding4x}
-          onPress={onTap ? onTap : openLink}>
-          <MText style={titleStyle}>{title}</MText>
-          <MText style={domainStyle}>{domain(entity.perma_url)}</MText>
-        </TouchableOpacity>
+        {showEmbeddedPlayer ? (
+          embeddedPlayer
+        ) : (
+          <>
+            {source.uri ? (
+              <MediaViewImage
+                showPlayIcon={showPlayIcon}
+                entity={entity}
+                onImagePress={onTap ? onTap : onImagePress}
+                onImageLongPress={onImageLongPress}
+                style={sp.styles.style.bgSecondaryBackground}
+              />
+            ) : null}
+            <TouchableOpacity
+              style={sp.styles.style.padding4x}
+              onPress={onTap ? onTap : openLink}>
+              <MText style={titleStyle}>{title}</MText>
+              <MText style={domainStyle}>{domain(entity.perma_url)}</MText>
+            </TouchableOpacity>
+          </>
+        )}
       </View>
     );
   }

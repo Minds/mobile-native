@@ -2,8 +2,8 @@ import React from 'react';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { Button, ScreenSection, B1, Screen } from '~ui';
-import { TENANT } from '~/config/Config';
+import { Button, ScreenSection, B1, Screen, B2 } from '~ui';
+import { IS_TENANT, TENANT } from '~/config/Config';
 import sp from '~/services/serviceProvider';
 
 /**
@@ -38,6 +38,11 @@ export default function DeactivateChannelScreen() {
     <Screen>
       <ScreenSection top="M">
         <B1>{i18n.t('settings.disableDescription', { TENANT })}</B1>
+        {IS_TENANT ? (
+          <B2 style={[sp.styles.style.paddingTop2x]}>
+            {i18n.t('settings.tenantDeleteAddition')}
+          </B2>
+        ) : undefined}
         <Button top="XXL" onPress={confirmPassword} type="warning">
           {i18n.t('settings.disableChannelButton')}
         </Button>
