@@ -14,11 +14,24 @@ export type DownloadedTrack = {
 
 export type DownloadedTrackList = { [key: string]: DownloadedTrack };
 
+export type TrackProgress = {
+  progress: number;
+  lastPlayedAt: Date;
+};
+
+export type TrackProgressList = { [key: string]: TrackProgress };
+
+const AUDIO_TRACK_PROGRESS_STORAGE_KEY = 'audio-track-progress';
+const AUDIO_DOWNLOADED_TRACKS_STORAGE_KEY = 'audio-downloaded-tracks';
+
 export class AudioPlayerDownloadService {
   private userStorage: Storage;
 
   @observable
   public downloadedTracks: DownloadedTrackList = {};
+
+  @observable
+  public trackProgressList: TrackProgressList = {};
 
   constructor(
     storages: Storages,
@@ -31,6 +44,7 @@ export class AudioPlayerDownloadService {
 
   public init(): void {
     this.downloadedTracks = this.getDownloadedTracks();
+    this.trackProgressList = this.getTrackProgressList();
 
     TrackPlayer.addEventListener(Event.PlaybackState, e => {
       let eventName: string;
@@ -115,7 +129,10 @@ export class AudioPlayerDownloadService {
     // Save / Update the list of downloaded tracks
     const downloadedTracks = this.getDownloadedTracks();
     downloadedTracks[track.id] = { ...track, localFilePath: filePath };
-    this.userStorage.setObject('audio-downloaded-tracks', downloadedTracks);
+    this.userStorage.setObject(
+      AUDIO_DOWNLOADED_TRACKS_STORAGE_KEY,
+      downloadedTracks,
+    );
     this.downloadedTracks = downloadedTracks;
 
     // Update the url of the track
@@ -131,6 +148,9 @@ export class AudioPlayerDownloadService {
       }
     }
     await TrackPlayer.setQueue(queue);
+
+    // Reset the progress time
+    this.resetActiveTrackProgress();
   }
 
   /**
@@ -155,6 +175,9 @@ export class AudioPlayerDownloadService {
 
     await TrackPlayer.setQueue(queue);
 
+    // Reset the progress time
+    this.resetActiveTrackProgress();
+
     try {
       // Remove the file
       await RNFS.unlink(this.getFilePath(track.id));
@@ -166,8 +189,19 @@ export class AudioPlayerDownloadService {
 
     // Remove from the list of downloaded tracks
     delete downloadedTracks[track.id];
-    this.userStorage.setObject('audio-downloaded-tracks', downloadedTracks);
+    this.userStorage.setObject(
+      AUDIO_DOWNLOADED_TRACKS_STORAGE_KEY,
+      downloadedTracks,
+    );
     this.downloadedTracks = downloadedTracks;
+  }
+
+  /**
+   * Reset the player to the last known progress that the active track had
+   */
+  private async resetActiveTrackProgress(): Promise<void> {
+    const activeTrack = await TrackPlayer.getActiveTrack();
+    await TrackPlayer.seekTo(this.getTrackProgress(activeTrack?.id));
   }
 
   public async isTrackDownloaded(track: Track): Promise<boolean> {
@@ -175,10 +209,46 @@ export class AudioPlayerDownloadService {
   }
 
   /**
+   * Returns any saved progress of the track
+   */
+  public getTrackProgress(trackId: string): number {
+    return this.trackProgressList[trackId]?.progress || 0;
+  }
+
+  /**
+   * Saves a tracks position to device storage
+   */
+  public async setTrackProgress(
+    trackNumber: number,
+    position: number,
+  ): Promise<void> {
+    const track = await TrackPlayer.getTrack(trackNumber);
+
+    this.trackProgressList[track?.id] = {
+      progress: position,
+      lastPlayedAt: new Date(),
+    };
+
+    this.userStorage.setObject(
+      AUDIO_TRACK_PROGRESS_STORAGE_KEY,
+      this.trackProgressList,
+    );
+  }
+
+  /**
    * A key value object of all the downloaded tracks
    */
   public getDownloadedTracks(): DownloadedTrackList {
-    return this.userStorage.getObject('audio-downloaded-tracks') || {};
+    return (
+      this.userStorage.getObject(AUDIO_DOWNLOADED_TRACKS_STORAGE_KEY) || {}
+    );
+  }
+
+  /**
+   * A key value object of all the tracks that have been played  on the device
+   */
+  public getTrackProgressList(): TrackProgressList {
+    return this.userStorage.getObject(AUDIO_TRACK_PROGRESS_STORAGE_KEY) || {};
   }
 
   /**

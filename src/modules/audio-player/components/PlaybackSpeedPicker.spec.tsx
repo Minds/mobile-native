@@ -1,8 +1,5 @@
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
+import { render } from '@testing-library/react-native';
 import sp from '~/services/serviceProvider';
-import TrackPlayer, { Track, useIsPlaying } from 'react-native-track-player';
-import { AudioQueueItem } from './AudioQueueItem';
-import useIsTrackDownloaded from '../hooks/useIsTrackDownloaded';
 import { PlaybackSpeedPicker } from './PlaybackSpeedPicker';
 
 jest.mock('~/services/serviceProvider');

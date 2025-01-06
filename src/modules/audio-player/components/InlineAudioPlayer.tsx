@@ -39,6 +39,7 @@ export default function InlineAudioPlayer(props: InlineAudioPlayerProps) {
       // Load this track if not already active
       if (activeTrack?.id !== entity.guid) {
         await TrackPlayer.load(await service.buildHybridTrack(entity));
+        await TrackPlayer.seekTo(await service.getTrackProgress(entity.guid));
       }
       // And play
       await TrackPlayer.play();

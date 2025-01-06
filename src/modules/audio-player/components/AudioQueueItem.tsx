@@ -116,6 +116,10 @@ export const AudioQueueItem = (props: AudioQueueItemProps) => {
             await TrackPlayer.pause();
           } else {
             await TrackPlayer.skip(trackIndex);
+            const progress = service.getTrackProgress(track?.id);
+            if (progress < (track.duration || 0)) {
+              await TrackPlayer.seekTo(progress);
+            }
             await TrackPlayer.play(); // And then play
           }
         }}

@@ -23,6 +23,7 @@ export default function DownloadedAudioScreen() {
   const renderItem = useCallback(
     (row: { index: number; item: DownloadedTrack; target: string }) => {
       const track: Track = { ...row.item, url: row.item.localFilePath };
+      delete track.headers; // Causes a crash when trying to load
       const isPlaying = playing && track.id === activeTrack?.id;
       return (
         <AudioTrackComp
@@ -56,6 +57,12 @@ export default function DownloadedAudioScreen() {
                     await TrackPlayer.pause();
                   } else {
                     await TrackPlayer.load(track);
+                    const progress = sp
+                      .resolve('audioPlayer')
+                      .getTrackProgress(track.id);
+                    if (progress < (track.duration || 0)) {
+                      await TrackPlayer.seekTo(progress);
+                    }
                     await TrackPlayer.play();
                   }
                 }}

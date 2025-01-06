@@ -31,6 +31,7 @@ export default {
   stop: jest.fn(),
   getQueue: jest.fn(() => Promise.resolve([])),
   setQueue: jest.fn(() => Promise.resolve()),
+  getActiveTrack: jest.fn(() => Promise.resolve(undefined)),
   getActiveTrackIndex: jest.fn(() => Promise.resolve(undefined)),
   getRate: jest.fn(),
   addEventListener: jest.fn(),

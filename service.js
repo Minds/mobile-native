@@ -1,4 +1,5 @@
-import TrackPlayer from 'react-native-track-player';
+import TrackPlayer, { Event } from 'react-native-track-player';
+import sp from '~/services/serviceProvider';
 
 module.exports = async function () {
   TrackPlayer.addEventListener('remote-play', () => TrackPlayer.play());
@@ -7,4 +8,7 @@ module.exports = async function () {
   TrackPlayer.addEventListener('remote-previous', () =>
     TrackPlayer.skipToPrevious(),
   );
+  TrackPlayer.addEventListener(Event.PlaybackProgressUpdated, e => {
+    sp.resolve('audioPlayer').setTrackProgress(e.track, e.position);
+  });
 };

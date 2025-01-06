@@ -40,6 +40,7 @@ TrackPlayer.registerPlaybackService(() => require('./service'));
 
 TrackPlayer.setupPlayer().then(async () => {
   await TrackPlayer.updateOptions({
+    progressUpdateEventInterval: 5,
     capabilities: [
       Capability.Play,
       Capability.Pause,
