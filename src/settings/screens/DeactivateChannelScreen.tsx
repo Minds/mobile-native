@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { Button, ScreenSection, B1, Screen, B2 } from '~ui';
-import { IS_TENANT, TENANT } from '~/config/Config';
+import { TENANT } from '~/config/Config';
 import sp from '~/services/serviceProvider';
 
 /**

@@ -2,7 +2,6 @@ import React from 'react';
 import { Alert } from 'react-native';
 import { Screen, ScreenSection, Button, B1, B2 } from '~ui';
 import sp from '~/services/serviceProvider';
-import { IS_TENANT } from '~/config/Config';
 
 /**
  * Delete Channel Screen
@@ -39,7 +38,7 @@ export default function DeleteChannelScreen({ navigation }) {
     <Screen>
       <ScreenSection top="M">
         {customText ? (
-          <B2 style={[sp.styles.style.paddingTop2x]}>{customText}</B2>
+          <B2 style={[sp.styles.style.paddingTop2x, {}]}>{customText}</B2>
         ) : (
           <B1>{i18n.t('settings.deleteDescription')}</B1>
         )}
