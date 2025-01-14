@@ -718,7 +718,6 @@
     "deleteChannel": "Delete Account",
     "disableDescription": "Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to {{TENANT}}.",
     "deleteDescription": "Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable.",
-    "tenantDeleteAddition": "Please note that this action only deletes/deactivates your account on this specific app. If you wish to take further action, such as canceling an external paid subscription, please contact the network administrator for assistance.",
     "confirmNewPassword": "Confirm New Password",
     "currentEmail": "Current Email",
     "deactivate": "Deactivate Account",

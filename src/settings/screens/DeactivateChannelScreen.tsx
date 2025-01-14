@@ -12,6 +12,7 @@ import sp from '~/services/serviceProvider';
 export default function DeactivateChannelScreen() {
   const navigation = useNavigation();
   const i18n = sp.i18n;
+  const customText = sp.config.settings?.tenant?.disable_account_disclaimer;
   const onDisable = () => {
     Alert.alert(
       i18n.t('attention'),
@@ -37,12 +38,11 @@ export default function DeactivateChannelScreen() {
   return (
     <Screen>
       <ScreenSection top="M">
-        <B1>{i18n.t('settings.disableDescription', { TENANT })}</B1>
-        {IS_TENANT ? (
-          <B2 style={[sp.styles.style.paddingTop2x]}>
-            {i18n.t('settings.tenantDeleteAddition')}
-          </B2>
-        ) : undefined}
+        {customText ? (
+          <B2 style={[sp.styles.style.paddingTop2x]}>{customText}</B2>
+        ) : (
+          <B1>{i18n.t('settings.disableDescription', { TENANT })}</B1>
+        )}
         <Button top="XXL" onPress={confirmPassword} type="warning">
           {i18n.t('settings.disableChannelButton')}
         </Button>

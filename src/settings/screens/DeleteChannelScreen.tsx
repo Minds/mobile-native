@@ -9,6 +9,7 @@ import { IS_TENANT } from '~/config/Config';
  */
 export default function DeleteChannelScreen({ navigation }) {
   const i18n = sp.i18n;
+  const customText = sp.config.settings?.tenant?.delete_account_disclaimer;
   const onDelete = password => {
     Alert.alert(
       i18n.t('attention'),
@@ -37,12 +38,11 @@ export default function DeleteChannelScreen({ navigation }) {
   return (
     <Screen>
       <ScreenSection top="M">
-        <B1>{i18n.t('settings.deleteDescription')}</B1>
-        {IS_TENANT ? (
-          <B2 style={[sp.styles.style.paddingTop2x]}>
-            {i18n.t('settings.tenantDeleteAddition')}
-          </B2>
-        ) : undefined}
+        {customText ? (
+          <B2 style={[sp.styles.style.paddingTop2x]}>{customText}</B2>
+        ) : (
+          <B1>{i18n.t('settings.deleteDescription')}</B1>
+        )}
         <Button top="XXL" onPress={confirmPassword} type="warning">
           {i18n.t('settings.deleteChannelButton')}
         </Button>
