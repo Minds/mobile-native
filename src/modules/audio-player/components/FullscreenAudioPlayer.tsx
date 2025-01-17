@@ -1,4 +1,4 @@
-import { useWindowDimensions, View } from 'react-native';
+import { View } from 'react-native';
 import GlobalAudioPlayer from './GlobalAudioPlayer';
 import sp from '~/services/serviceProvider';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
@@ -44,10 +44,8 @@ export const FullscreenAudioPlayer = (props: FullscreenAudioPlayerProps) => {
     [queue, downloadedList],
   );
 
-  const { height } = useWindowDimensions();
-
   return (
-    <>
+    <View>
       <View style={[sp.styles.style.padding4x]}>
         <GlobalAudioPlayer fullscreen />
       </View>
@@ -57,9 +55,9 @@ export const FullscreenAudioPlayer = (props: FullscreenAudioPlayerProps) => {
         keyExtractor={(item, index) => `${item}-${index}`}
         style={[
           IS_IOS ? sp.styles.style.paddingBottom6x : undefined,
-          { maxHeight: height * 0.8 - 100 },
+          { maxHeight: '50%' },
         ]}
       />
-    </>
+    </View>
   );
 };

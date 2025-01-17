@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import { Slider } from 'react-native-elements';
 import TrackPlayer, {
   State,
@@ -30,6 +30,8 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
   const activeTrack = useActiveTrack();
   const { rate, refreshRateState } = usePlaybackRate();
   const fullscreen = !!props.fullscreen;
+
+  const { height: wHeight } = useWindowDimensions();
 
   const toggleAudio = async () => {
     if (
@@ -228,32 +230,41 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
               alignItems: 'center',
               flexDirection: 'row',
               flexShrink: 1,
+              justifyContent: 'center',
             }}>
-            <TouchableOpacity
-              onPress={onNonControlTap}
-              testID="audio-player-artwork">
-              <SmartImage
-                contentFit="cover"
-                style={[
-                  { width: artworkSize, maxWidth: '100%', aspectRatio: 1 },
-                  sp.styles.style.borderRadius4x,
-                ]}
-                source={{
-                  uri: activeTrack.artwork,
-                  headers: sp.api.buildHeaders(),
-                }}
-              />
-              {!fullscreen ? (
-                <Icon
-                  name={fullscreen ? 'playlist-remove' : 'playlist-play'}
-                  size={fullscreen ? 32 : 24}
+            {wHeight > 800 || !fullscreen ? (
+              <TouchableOpacity
+                onPress={onNonControlTap}
+                testID="audio-player-artwork">
+                <SmartImage
+                  contentFit="cover"
                   style={[
-                    sp.styles.style.colorPrimaryText,
-                    { position: 'absolute', bottom: 0 },
+                    {
+                      width: artworkSize,
+                      maxWidth: '100%',
+                      aspectRatio: 1,
+                      flexShrink: 1,
+                      maxHeight: wHeight / 2,
+                    },
+                    sp.styles.style.borderRadius4x,
                   ]}
+                  source={{
+                    uri: activeTrack.artwork,
+                    headers: sp.api.buildHeaders(),
+                  }}
                 />
-              ) : undefined}
-            </TouchableOpacity>
+                {!fullscreen ? (
+                  <Icon
+                    name={fullscreen ? 'playlist-remove' : 'playlist-play'}
+                    size={fullscreen ? 32 : 24}
+                    style={[
+                      sp.styles.style.colorPrimaryText,
+                      { position: 'absolute', bottom: 0 },
+                    ]}
+                  />
+                ) : undefined}
+              </TouchableOpacity>
+            ) : undefined}
             {!fullscreen ? trackMeta : null}
           </View>
           <View style={{ flex: 1, alignSelf: 'center', minWidth: 148 }}>
