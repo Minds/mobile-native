@@ -137,6 +137,8 @@ const styles = sp.styles.create({
   buttonContainer: {
     padding: 32,
     alignItems: 'center',
+    justifyContent: 'flex-end',
+    flex: 1,
   },
   containerStyleButtons: {
     width: IS_IPAD ? '45%' : '100%',
@@ -148,6 +150,7 @@ const styles = sp.styles.create({
   imageSquare: {
     marginTop: '15%',
     width: '80%',
+    maxHeight: '50%',
     paddingHorizontal: 130,
     aspectRatio: 1,
     alignSelf: 'center',
