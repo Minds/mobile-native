@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import GlobalAudioPlayer from './GlobalAudioPlayer';
 import sp from '~/services/serviceProvider';
 import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
@@ -44,20 +44,24 @@ export const FullscreenAudioPlayer = (props: FullscreenAudioPlayerProps) => {
     [queue, downloadedList],
   );
 
+  const { height } = useWindowDimensions();
+
   return (
-    <View>
-      <View style={[sp.styles.style.padding4x]}>
-        <GlobalAudioPlayer fullscreen />
-      </View>
-      <BottomSheetFlatList
-        data={queue}
-        renderItem={renderItem}
-        keyExtractor={(item, index) => `${item}-${index}`}
-        style={[
-          IS_IOS ? sp.styles.style.paddingBottom6x : undefined,
-          { maxHeight: '50%' },
-        ]}
-      />
-    </View>
+    <BottomSheetFlatList
+      ListHeaderComponent={
+        <View style={[sp.styles.style.padding4x]}>
+          <GlobalAudioPlayer fullscreen />
+        </View>
+      }
+      data={queue}
+      renderItem={renderItem}
+      keyExtractor={(item, index) => `${item}-${index}`}
+      style={[
+        IS_IOS
+          ? sp.styles.style.paddingBottom6x
+          : sp.styles.style.paddingBottom2x,
+        { maxHeight: height * 0.9 },
+      ]}
+    />
   );
 };

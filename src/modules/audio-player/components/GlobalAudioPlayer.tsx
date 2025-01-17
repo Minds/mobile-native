@@ -220,6 +220,7 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
       </View>
     </View>
   );
+  console.log(wHeight);
 
   return activeTrack && playBackState !== undefined ? (
     <View>
@@ -232,7 +233,7 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
               flexShrink: 1,
               justifyContent: 'center',
             }}>
-            {wHeight > 800 || !fullscreen ? (
+            {wHeight > 500 || !fullscreen ? (
               <TouchableOpacity
                 onPress={onNonControlTap}
                 testID="audio-player-artwork">
@@ -244,7 +245,7 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
                       maxWidth: '100%',
                       aspectRatio: 1,
                       flexShrink: 1,
-                      maxHeight: wHeight / 2,
+                      maxHeight: wHeight / 3,
                     },
                     sp.styles.style.borderRadius4x,
                   ]}
