@@ -220,7 +220,6 @@ export default function GlobalAudioPlayer(props: GlobalAudioPlayerProps) {
       </View>
     </View>
   );
-  console.log(wHeight);
 
   return activeTrack && playBackState !== undefined ? (
     <View>
