@@ -2,7 +2,7 @@
 # Generates a tenant build receiving a zip file
 eas_build_apk_zip:
   stage: build
-  image: node:alpine
+  image: node:20-alpine
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}

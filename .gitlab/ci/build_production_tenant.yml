@@ -28,7 +28,7 @@ eas_build_production_android_tenant:
 # Build and submit the ios play store app
 eas_build_production_ios_tenant:
   stage: build
-  image: node:alpine
+  image: node:20-alpine
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}

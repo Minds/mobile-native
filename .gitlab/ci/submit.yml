@@ -1,7 +1,7 @@
 # Demo APK generation
 submit_production:
   stage: submit
-  image: node:alpine
+  image: node:20-alpine
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}

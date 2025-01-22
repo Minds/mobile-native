@@ -1,7 +1,7 @@
 # Demo generation for preview app
 eas_build_preview_zip:
   stage: build
-  image: node:alpine
+  image: node:20-alpine
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}
@@ -24,7 +24,7 @@ eas_build_preview_zip:
 # Preview trigger from the backend
 eas_build_preview:
   stage: build
-  image: node:alpine
+  image: node:20-alpine
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}
