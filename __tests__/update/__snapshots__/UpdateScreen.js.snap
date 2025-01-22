@@ -42,7 +42,11 @@ exports[`Update Screen Component renders correctly 1`] = `
   >
     <Image
       resizeMode="contain"
-      source={1}
+      source={
+        {
+          "testUri": "../../../assets/images/logo_square.png",
+        }
+      }
       style={
         {
           "height": 90,

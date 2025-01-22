@@ -18,7 +18,7 @@ const BORDER_RADIUS = 3;
 type PropsType = {
   fullWidth?: boolean;
   entity: ActivityModel;
-  style?: ImageProps['style'];
+  style?: any;
   ignoreDataSaver?: boolean;
   mode?: ImageProps['contentFit'];
   /**
@@ -77,20 +77,20 @@ export default function MediaViewMultiImage({
   return (
     <Row top="M" horizontal="M" containerStyle={styles.container}>
       <Column flex right="XS">
-        <ImageItem {...images[0]} />
+        <ImageItem {...(images[0] as any)} />
         {images.length === 4 && (
           <>
             <Spacer top="S" />
-            <ImageItem {...images[2]} />
+            <ImageItem {...(images[2] as any)} />
           </>
         )}
       </Column>
       <Column flex left="XS">
-        <ImageItem {...images[1]} />
+        <ImageItem {...(images[1] as any)} />
         {images.length > 2 && (
           <>
             <Spacer top="S" />
-            <ImageItem {...images[images.length - 1]} />
+            <ImageItem {...(images[images.length - 1] as any)} />
           </>
         )}
       </Column>

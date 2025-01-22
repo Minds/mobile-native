@@ -92,4 +92,8 @@ export const DARK_THEME: ColorsType = {
   ButtonText: '#000000',
 };
 
-export const SupermindGradient = ['#2B52E8', '#5238ED', '#9B0FA8'];
+export const SupermindGradient = ['#2B52E8', '#5238ED', '#9B0FA8'] as readonly [
+  string,
+  string,
+  string,
+];

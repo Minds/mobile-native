@@ -1,6 +1,6 @@
 import { observer, useLocalStore } from 'mobx-react';
 import React, { useEffect } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, ViewStyle } from 'react-native';
 import { Image, ImageProps } from 'expo-image';
 import { autorun } from 'mobx';
 import ProgressCircle from 'react-native-progress/CircleSnail';
@@ -49,7 +49,7 @@ const SmartImage = observer(function (props: SmartImageProps) {
 
   if (store.error) {
     return (
-      <View style={[props.style, sp.styles.style.centered]}>
+      <View style={[props.style as any, sp.styles.style.centered]}>
         <Icon
           name="cloud-offline-outline"
           size={props.iconSize || 24}
@@ -60,7 +60,7 @@ const SmartImage = observer(function (props: SmartImageProps) {
   }
 
   return (
-    <View style={props.style}>
+    <View style={props.style as ViewStyle}>
       <Image
         {...otherProps}
         onError={store.setError}

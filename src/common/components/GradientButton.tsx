@@ -31,7 +31,7 @@ export default function GradientButton({ title, style, ...props }: Props) {
 
 const start = { x: 0, y: 0 };
 const end = { x: 1, y: 0 };
-const locations = [0, 0.4, 1];
+const locations = [0, 0.4, 1] as readonly [number, number, number];
 const styles = sp.styles.create({
   outerStyle: [
     {

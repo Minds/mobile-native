@@ -29,7 +29,7 @@ export const FadeFrom: FC<
 
   return (
     <MotiView
-      {...props}
+      {...(props as any)}
       from={animation.from}
       animate={animation.to}
       transition={transition}>

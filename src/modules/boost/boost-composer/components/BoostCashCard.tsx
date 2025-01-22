@@ -36,7 +36,7 @@ export const BoostCashCard = ({
       style={styles.touchable}>
       <LinearGradient
         locations={[0, 0.24, 1]}
-        colors={colorMap[cardColor] as unknown as string[]}
+        colors={colorMap[cardColor]}
         style={styles.linear}
         start={{ x: 0.1, y: 0.2 }}
       />

@@ -2,6 +2,7 @@ import Markdown, { MarkdownProps } from 'react-native-markdown-display';
 
 type MarkDownProps = MarkdownProps & {
   disableLinks?: boolean;
+  children: any;
 };
 
 export function MarkDown(props: MarkDownProps) {
