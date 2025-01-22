@@ -1,0 +1,13 @@
+diff --git a/node_modules/react-native-iap/plugin/build/withIAP.js b/node_modules/react-native-iap/plugin/build/withIAP.js
+index afb7911..1474072 100644
+--- a/node_modules/react-native-iap/plugin/build/withIAP.js
++++ b/node_modules/react-native-iap/plugin/build/withIAP.js
+@@ -46,7 +46,7 @@ const modifyAppBuildGradle = (buildGradle, paymentProvider) => {
+ };
+ exports.modifyAppBuildGradle = modifyAppBuildGradle;
+ const modifyProjectBuildGradle = (buildGradle) => {
+-    const supportLibVersion = `supportLibVersion = "28.0.0"`;
++    const supportLibVersion = `// supportLibVersion = "28.0.0"`;
+     if (buildGradle.includes(supportLibVersion)) {
+         return buildGradle;
+     }

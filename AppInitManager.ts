@@ -134,9 +134,8 @@ export class AppInitManager {
       serviceProvider.resolve('portraitBoostedContent').load();
     }
 
-    Sentry.configureScope(scope => {
-      scope.setUser({ id: user.guid });
-    });
+    // set user id for sentry
+    Sentry.setUser({ id: user.guid });
 
     // register device token into backend on login
     serviceProvider.resolve('push').registerToken();

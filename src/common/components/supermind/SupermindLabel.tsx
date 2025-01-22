@@ -26,10 +26,10 @@ export default function SupermindLabel({
     <View style={outerStyle}>
       <LinearGradient
         style={sp.styles.style.flexContainerCenter}
-        colors={SupermindGradient}
+        colors={SupermindGradient as any}
         start={start}
         end={end}
-        locations={locations}>
+        locations={locations as any}>
         <Typography type={font} color="white" font="medium" horizontal="XS">
           {text || 'Supermind'}
         </Typography>

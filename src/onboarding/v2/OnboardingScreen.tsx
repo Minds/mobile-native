@@ -243,12 +243,13 @@ export default withErrorBoundaryScreen(
                 key={i}
                 {...item}
                 titleStyle={
-                  [
+                  Object.assign(
+                    {},
                     item.iconColor
                       ? theme.colorSecondaryText
                       : theme.colorPrimaryText,
                     item.iconColor ? theme.strikeThrough : null,
-                  ] as TextStyle
+                  ) as TextStyle
                 }
                 noBorderTop={i > 0}
               />

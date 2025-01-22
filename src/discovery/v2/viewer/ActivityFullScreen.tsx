@@ -196,7 +196,7 @@ const ActivityFullScreen = observer((props: PropsType) => {
   const backgroundColor = sp.styles.getColor('SecondaryBackground');
   const startColor = backgroundColor + '00';
   const endColor = backgroundColor + 'FF';
-  const gradientColors = useRef([startColor, endColor]).current;
+  const gradientColors = useRef<any>([startColor, endColor]).current;
 
   const showNSFW = entity.shouldBeBlured() && !entity.mature_visibility;
 

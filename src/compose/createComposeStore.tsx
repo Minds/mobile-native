@@ -1,9 +1,6 @@
-import RNPhotoEditor from 'react-native-photo-editor';
 import { measureHeights } from '@bigbee.dev/react-native-measure-text-size';
 import RichEmbedStore from '../common/stores/RichEmbedStore';
 import ActivityModel from '../newsfeed/ActivityModel';
-import { runInAction } from 'mobx';
-import { Image } from 'react-native';
 import getNetworkError from '~/common/helpers/getNetworkError';
 import { showNotification } from 'AppMessages';
 import { SupermindRequestParam } from './SupermindComposeScreen';
@@ -299,53 +296,6 @@ export default function (props) {
         } else {
           this.nsfw.push(opt);
         }
-      }
-    },
-    /**
-     * Edit the current post image
-     */
-    async editImage() {
-      const mediaToConfirm = this.mediaToConfirm;
-      if (!mediaToConfirm || !mediaToConfirm.type.startsWith('image')) {
-        return;
-      }
-
-      try {
-        RNPhotoEditor.Edit({
-          path: mediaToConfirm.uri.replace('file://', ''),
-          stickers: ['sticker6', 'sticker9'],
-          hiddenControls: ['save', 'share'],
-          onDone: _result => {
-            Image.getSize(
-              mediaToConfirm.uri,
-              () => {
-                runInAction(() => {
-                  if (mediaToConfirm.key) {
-                    mediaToConfirm.key++;
-                  } else {
-                    mediaToConfirm.key = 0;
-                  }
-
-                  // if (
-                  //   Platform.OS === 'android' &&
-                  //   mediaToConfirm.orientation &&
-                  //   (mediaToConfirm.orientation === 'portrait' ||
-                  //     mediaToConfirm.orientation === 'portrait-upside-down')
-                  // ) {
-                  //   mediaToConfirm.width = h;
-                  //   mediaToConfirm.height = w;
-                  // } else {
-                  //   mediaToConfirm.width = w;
-                  //   mediaToConfirm.height = h;
-                  // }
-                });
-              },
-              err => console.log(err),
-            );
-          },
-        });
-      } catch (err) {
-        sp.log.exception(err);
       }
     },
     /**

@@ -11,11 +11,13 @@ export function withFeedStoreProvider<
     feedStore: FeedStore<BaseModel>;
   },
 >(WrappedComponent: React.ComponentType<T>) {
-  return React.forwardRef((props: T, ref: React.Ref<T>) => (
+  const WithFeedStore = React.forwardRef<any, T>((props, ref) => (
     <FeedStoreContext.Provider value={props.feedStore}>
-      <WrappedComponent {...props} ref={ref} />
+      <WrappedComponent {...(props as any)} ref={ref} />
     </FeedStoreContext.Provider>
-  )) as any;
+  ));
+
+  return WithFeedStore as unknown as React.ComponentType<T>;
 }
 
 export const useFeedStore = () => useContext(FeedStoreContext);

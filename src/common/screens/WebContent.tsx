@@ -5,7 +5,7 @@ import { RootStackParamList } from '../../navigation/NavigationTypes';
 import { ModalFullScreen } from '../ui';
 import { withErrorBoundaryScreen } from '../components/ErrorBoundaryScreen';
 import Markdown from 'react-native-markdown-display';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, ViewStyle } from 'react-native';
 import { useAuxPagesQuery } from '~/graphql/strapi';
 import { APP_URI } from '~/config/Config';
 import CenteredLoading from '../components/CenteredLoading';
@@ -34,7 +34,7 @@ function WebContentScreen({ route }: WebContentScreenProps) {
 
   return (
     <ModalFullScreen back title={isLoading ? '' : h1}>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView style={styles.scrollView as ViewStyle}>
         {isLoading ? (
           <CenteredLoading />
         ) : (

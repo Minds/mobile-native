@@ -221,7 +221,7 @@ const GradientContainer = ({ children, colors }) => (
   </Spacer>
 );
 
-const SupermindGradient = ['#83E4D4', '#FFD048'];
+const SupermindGradient = ['#83E4D4', '#FFD048'] as readonly [string, string];
 const start = { x: 0, y: 0 };
 const end = { x: 1, y: 0 };
 const startVertical = { x: 0, y: 0 };

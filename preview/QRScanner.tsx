@@ -1,46 +1,56 @@
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import {
+  Camera,
+  useCameraDevice,
+  useCameraPermission,
+  useCodeScanner,
+} from 'react-native-vision-camera';
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Linking, StyleSheet } from 'react-native';
 import { B1, Button } from '~/common/ui';
 
 export const QRScanner = ({ setScan }) => {
-  const [hasPermission, setHasPermission] = useState<Boolean | null>(null);
+  const { hasPermission, requestPermission } = useCameraPermission();
+  const device = useCameraDevice('back');
+  const [isActive, setIsActive] = useState(true);
+
+  const codeScanner = useCodeScanner({
+    codeTypes: ['qr'],
+    onCodeScanned: codes => {
+      if (codes.length > 0 && isActive) {
+        setIsActive(false);
+        const data = codes[0].value;
+        if (data?.startsWith('mindspreview://preview/')) {
+          Linking.openURL(data);
+        }
+        setScan(false);
+      }
+    },
+  });
 
   useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    };
+    requestPermission();
+  }, [requestPermission]);
 
-    getBarCodeScannerPermissions();
-  }, []);
-
-  const handleBarCodeScanned = ({ data }) => {
-    if (data.startsWith('mindspreview://preview/')) {
-      Linking.openURL(data);
-    }
-    setScan(false);
-  };
-
-  if (!hasPermission) {
+  if (!hasPermission || !device) {
     return (
-      <>
-        <View style={{ padding: 16, flex: 1 }}>
-          <B1 numberOfLines={1} align="center">
-            {hasPermission === false
-              ? 'No access to camera'
-              : 'Requesting for camera permission'}
-          </B1>
-        </View>
-      </>
+      <View style={{ padding: 16, flex: 1 }}>
+        <B1 numberOfLines={1} align="center">
+          {hasPermission === false
+            ? 'No access to camera'
+            : 'Requesting for camera permission'}
+        </B1>
+      </View>
     );
   }
+
   return (
     <>
-      <BarCodeScanner
-        onBarCodeScanned={handleBarCodeScanned}
+      <Camera
         style={StyleSheet.absoluteFillObject}
+        device={device}
+        isActive={isActive}
+        codeScanner={codeScanner}
       />
       <View
         style={{

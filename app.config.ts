@@ -55,7 +55,7 @@ const plugins: any = [
   'react-native-iap',
   'expo-updates',
   'expo-localization',
-  './node_modules/react-native-notifications/app.plugin.js',
+  'react-native-notifications',
   [
     '@sentry/react-native/expo',
     {
@@ -67,13 +67,13 @@ const plugins: any = [
     'expo-build-properties',
     {
       android: {
-        compileSdkVersion: 34,
-        targetSdkVersion: 34,
-        buildToolsVersion: '34.0.0',
-        kotlinVersion: '1.8.0',
+        // compileSdkVersion: 35,
+        // targetSdkVersion: 35,
+        buildToolsVersion: '35.0.0',
+        // kotlinVersion: '1.8.0',
       },
       ios: {
-        deploymentTarget: '13.4',
+        deploymentTarget: '15.1',
         flipper: false,
       },
     },
@@ -92,6 +92,7 @@ const plugins: any = [
       cameraPermissionText: cameraMessage,
       enableMicrophonePermission: true,
       microphonePermissionText: micMessage,
+      enableCodeScanner: true,
       enableLocation: false,
     },
   ],
