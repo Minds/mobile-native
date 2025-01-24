@@ -56,7 +56,7 @@ export default function InlineAudioPlayer(props: InlineAudioPlayerProps) {
       style={[
         sp.styles.style.paddingVertical2x,
         sp.styles.style.paddingHorizontal4x,
-        { height: 172 }, // Stop jump on load
+        { minHeight: 172 }, // Stop jump on load
       ]}>
       <View
         style={[
