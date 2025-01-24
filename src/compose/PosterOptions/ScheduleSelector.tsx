@@ -10,6 +10,8 @@ import DateTimePicker from '~/common/components/controls/DateTimePicker';
 import { useComposeContext } from '~/compose/useComposeStore';
 import MenuItemOption from '../../common/components/menus/MenuItemOption';
 import sp from '~/services/serviceProvider';
+import useCurrentUser from '~/common/hooks/useCurrentUser';
+import { IS_TENANT } from '~/config/Config';
 
 /**
  * NSFW selector
@@ -18,6 +20,7 @@ export default observer(function () {
   const theme = sp.styles.style;
   const i18n = sp.i18n;
   const navigation = sp.navigation;
+  const user = useCurrentUser()!;
   const store = useComposeContext();
   const dateTimePickerRef = useRef<any>(null); // todo: don't use any
   const localStore = useLocalStore(() => ({
@@ -33,6 +36,22 @@ export default observer(function () {
       }
     },
   }));
+
+  const onPick = useCallback(() => {
+    if (!user.plus && !IS_TENANT) {
+      navigation.navigate('UpgradeScreen', {
+        onComplete: (success: any) => {
+          if (success) {
+            user.togglePlus();
+            localStore.showPicker();
+          }
+        },
+        pro: false,
+      });
+    } else {
+      localStore.showPicker();
+    }
+  }, [localStore]);
 
   const onNow = useCallback(() => {
     store.setTimeCreated(null);
@@ -66,7 +85,7 @@ export default observer(function () {
       />
       <MenuItemOption
         title={i18n.t('capture.customTime')}
-        onPress={localStore.showPicker}
+        onPress={onPick}
         label={
           store.time_created ? moment(store.time_created).calendar() : undefined
         }
