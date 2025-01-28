@@ -21,7 +21,13 @@ export const useUploadChatImage = (
       try {
         const response: ApiResponse = await sp
           .resolve('chatImageUpload')
-          .upload(media, roomGuid);
+          .upload(
+            {
+              ...media,
+              type: media.mime,
+            },
+            roomGuid,
+          );
         return response?.status === 'success';
       } catch (error) {
         console.error('Error uploading image:', error);

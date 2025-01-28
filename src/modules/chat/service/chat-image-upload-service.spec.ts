@@ -9,7 +9,7 @@ describe('ChatImageUploadService', () => {
 
   beforeEach(() => {
     mockApiService = {
-      post: jest.fn(),
+      upload: jest.fn(),
     } as any;
 
     service = new ChatImageUploadService(mockApiService);
@@ -34,36 +34,49 @@ describe('ChatImageUploadService', () => {
         name: mockMedia.fileName,
       });
 
-      await service.upload(mockMedia, mockRoomGuid);
-
-      expect(mockApiService.post).toHaveBeenCalledWith(
-        `api/v3/chat/image/upload/${mockRoomGuid}`,
-        expect.any(FormData),
+      await service.upload(
         {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+          ...mockMedia,
+          type: mockMedia.mime,
         },
+        mockRoomGuid,
+      );
+
+      expect(mockApiService.upload).toHaveBeenCalledWith(
+        `api/v3/chat/image/upload/${mockRoomGuid}`,
+        expect.anything(),
       );
     });
 
     it('should return api response', async () => {
-      mockApiService.post.mockResolvedValueOnce(
+      mockApiService.upload.mockResolvedValueOnce(
         Promise.resolve(mockSuccessResponse),
       );
 
-      const result = await service.upload(mockMedia, mockRoomGuid);
+      const result = await service.upload(
+        {
+          ...mockMedia,
+          type: mockMedia.mime,
+        },
+        mockRoomGuid,
+      );
 
       expect(result).toBe(mockSuccessResponse);
     });
 
     it('should propagate api errors', async () => {
       const mockError = new Error('API Error');
-      mockApiService.post.mockRejectedValueOnce(mockError);
+      mockApiService.upload.mockRejectedValueOnce(mockError);
 
-      await expect(service.upload(mockMedia, mockRoomGuid)).rejects.toThrow(
-        mockError,
-      );
+      await expect(
+        service.upload(
+          {
+            ...mockMedia,
+            type: mockMedia.mime,
+          },
+          mockRoomGuid,
+        ),
+      ).rejects.toThrow(mockError);
     });
   });
 });

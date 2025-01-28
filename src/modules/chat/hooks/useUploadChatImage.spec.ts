@@ -34,7 +34,10 @@ describe('useUploadChatImage', () => {
 
     expect(sp.resolve).toHaveBeenCalledWith('chatImageUpload');
     expect(mockUploadService.upload).toHaveBeenCalledWith(
-      mockMedia,
+      {
+        ...mockMedia,
+        type: mockMedia.mime,
+      },
       mockRoomGuid,
     );
     expect(success).toBe(true);
@@ -48,7 +51,10 @@ describe('useUploadChatImage', () => {
 
     expect(sp.resolve).toHaveBeenCalledWith('chatImageUpload');
     expect(mockUploadService.upload).toHaveBeenCalledWith(
-      mockMedia,
+      {
+        ...mockMedia,
+        type: mockMedia.mime,
+      },
       mockRoomGuid,
     );
     expect(success).toBe(false);
@@ -65,7 +71,10 @@ describe('useUploadChatImage', () => {
     );
     expect(sp.resolve).toHaveBeenCalledWith('chatImageUpload');
     expect(mockUploadService.upload).toHaveBeenCalledWith(
-      mockMedia,
+      {
+        ...mockMedia,
+        type: mockMedia.mime,
+      },
       mockRoomGuid,
     );
   });

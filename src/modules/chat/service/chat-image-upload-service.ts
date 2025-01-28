@@ -1,6 +1,6 @@
 import type { ApiService } from '~/common/services/api.service';
-import { PickedMedia } from '~/common/services/image-picker.service';
 import { ApiResponse } from '~/common/services/ApiResponse';
+import { Media } from '../../../common/stores/AttachmentStore';
 
 /**
  * Chat image upload service.
@@ -10,25 +10,21 @@ export class ChatImageUploadService {
 
   /**
    * Upload image to chat. Note that this function will NOT update the room.
-   * @param { PickedMedia } media - The media to upload.
+   * @param { Media } media - The media to upload.
    * @param { string } roomGuid - The room GUID.
    * @returns { Promise<ApiResponse> } The API response.
    */
-  public async upload(
-    media: PickedMedia,
-    roomGuid: string,
-  ): Promise<ApiResponse> {
-    const formData: FormData = new FormData();
-    formData.append('file', {
-      ...media,
-      type: media.mime,
-      name: media.fileName,
-    });
+  public async upload(media: Media, roomGuid: string): Promise<ApiResponse> {
+    const file = {
+      uri: media.uri,
+      path: media.path || null,
+      type: media.type,
+      name: media.filename || 'test',
+    };
+    if (file.type === 'image') {
+      file.type = 'image/jpeg';
+    }
 
-    return this.api.post(`api/v3/chat/image/upload/${roomGuid}`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    return this.api.upload(`api/v3/chat/image/upload/${roomGuid}`, { file });
   }
 }

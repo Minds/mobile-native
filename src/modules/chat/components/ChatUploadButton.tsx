@@ -34,6 +34,11 @@ const ChatUploadButton = ({
         maxFiles: 1,
       });
       if (!result) return;
+
+      if (result.length !== 1) {
+        return;
+      }
+
       onUploadingStateChange(true);
       await onUploadImage(result[0]);
     } catch (err) {
