@@ -55,7 +55,7 @@ describe('AudioPlayerDownloadService', () => {
 
   it('should build local track from an entity', async () => {
     (RNFS.exists as jest.Mock).mockResolvedValue(true);
-    (RNFS.CachesDirectoryPath as string) = '/tmp';
+    (RNFS.DocumentDirectoryPath as string) = '/tmp';
 
     const entity = {
       guid: '123',

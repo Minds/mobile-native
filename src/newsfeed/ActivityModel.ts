@@ -270,7 +270,11 @@ export default class ActivityModel extends BaseModel {
     }
 
     if (this.thumbnails && this.thumbnails[size]) {
-      return { uri: this.thumbnails[size], headers: sp.api.buildHeaders() };
+      return {
+        uri: this.thumbnails[size],
+        headers: sp.api.buildHeaders(),
+        cacheKey: this.guid + size,
+      };
     }
 
     // fallback to old behavior

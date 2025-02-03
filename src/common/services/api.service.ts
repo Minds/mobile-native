@@ -404,8 +404,6 @@ export class ApiService {
     let headers: any = {
       'Content-Type': 'application/json',
       'Cache-Control': 'no-cache, no-store, must-revalidate',
-      Pragma: 'no-cache',
-      'no-cache': '1',
       'App-Version': Version.VERSION,
       ...customHeaders,
     };

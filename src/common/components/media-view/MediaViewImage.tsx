@@ -113,7 +113,8 @@ export default function MediaViewImage({
     [aspectRatio, style],
   );
 
-  const imageError = () => {
+  const imageError = e => {
+    console.log('imageError', source, entity.getThumbSource('xlarge'), e);
     setImageLoadFailed(true);
   };
 

@@ -117,13 +117,16 @@ export class AudioPlayerDownloadService {
       headers: this.apiService.buildHeaders(),
     });
 
-    try {
-      await download.promise;
-      showNotification('Downloaded ' + track.title);
-    } catch (err) {
-      console.error(err);
-      showNotification('Failed to download ' + track.title);
-      return; // Do not proceed
+    if (!this.isTrackDownloaded(track)) {
+      // Sometims the file is there and the datastore has just forgot about it
+      try {
+        await download.promise;
+        showNotification('Downloaded ' + track.title);
+      } catch (err) {
+        console.error(err);
+        showNotification('Failed to download ' + track.title);
+        return; // Do not proceed
+      }
     }
 
     // Save / Update the list of downloaded tracks
@@ -255,7 +258,7 @@ export class AudioPlayerDownloadService {
    * Returns the filepath of based on an id
    */
   private getFilePath(id: string): string {
-    return `${RNFS.CachesDirectoryPath}/${id}.mp3`;
+    return `${RNFS.DocumentDirectoryPath}/${id}.mp3`;
   }
 }
 
