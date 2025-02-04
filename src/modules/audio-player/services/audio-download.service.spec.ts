@@ -99,7 +99,7 @@ describe('AudioPlayerDownloadService', () => {
 
     // Storage is updated
     expect(storageMock.user.setObject).toHaveBeenCalledWith(
-      'audio-downloaded-tracks',
+      'audio-downloaded-tracks-v2',
       {
         '123': {
           id: '123',
@@ -133,7 +133,7 @@ describe('AudioPlayerDownloadService', () => {
 
     expect(RNFS.unlink).toHaveBeenCalledWith('/tmp/123.mp3');
     expect(storageMock.user.setObject).toHaveBeenCalledWith(
-      'audio-downloaded-tracks',
+      'audio-downloaded-tracks-v2',
       {},
     );
 

@@ -22,7 +22,7 @@ export type TrackProgress = {
 export type TrackProgressList = { [key: string]: TrackProgress };
 
 const AUDIO_TRACK_PROGRESS_STORAGE_KEY = 'audio-track-progress';
-const AUDIO_DOWNLOADED_TRACKS_STORAGE_KEY = 'audio-downloaded-tracks';
+const AUDIO_DOWNLOADED_TRACKS_STORAGE_KEY = 'audio-downloaded-tracks-v2';
 
 export class AudioPlayerDownloadService {
   private userStorage: Storage;
