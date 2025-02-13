@@ -37,9 +37,6 @@ import { StoresProvider } from './src/common/hooks/use-stores';
 import appInitManager from './AppInitManager';
 import AppMessageProvider from 'AppMessageProvider';
 import * as SplashScreen from 'expo-splash-screen';
-import FriendlyCaptchaProvider, {
-  setFriendlyCaptchaReference,
-} from '~/common/components/friendly-captcha/FriendlyCaptchaProvider';
 import { Orientation, QueryProvider } from '~/services';
 import { ConfigProvider } from '~/modules/livepeer';
 
@@ -177,22 +174,19 @@ class App extends Component<Props> {
                         onReady={appInitManager.onNavigatorReady}
                         onStateChange={sp.navigation.onStateChange}>
                         <AppMessageProvider key={`message_${styles.theme}`}>
-                          <FriendlyCaptchaProvider
-                            ref={setFriendlyCaptchaReference}>
-                            <PortalProvider>
-                              <BottomSheetModalProvider>
-                                <ErrorBoundary
-                                  message="An error occurred"
-                                  containerStyle={styles.style.centered}>
-                                  <ConfigProvider>
-                                    <NavigationStack
-                                      key={styles.theme + sp.i18n.locale}
-                                    />
-                                  </ConfigProvider>
-                                </ErrorBoundary>
-                              </BottomSheetModalProvider>
-                            </PortalProvider>
-                          </FriendlyCaptchaProvider>
+                          <PortalProvider>
+                            <BottomSheetModalProvider>
+                              <ErrorBoundary
+                                message="An error occurred"
+                                containerStyle={styles.style.centered}>
+                                <ConfigProvider>
+                                  <NavigationStack
+                                    key={styles.theme + sp.i18n.locale}
+                                  />
+                                </ConfigProvider>
+                              </ErrorBoundary>
+                            </BottomSheetModalProvider>
+                          </PortalProvider>
                         </AppMessageProvider>
                       </NavigationContainer>
                     </Provider>

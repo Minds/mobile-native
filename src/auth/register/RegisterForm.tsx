@@ -20,7 +20,6 @@ import MText from '~/common/components/MText';
 import { BottomSheetButton } from '~/common/components/bottom-sheet';
 import FitScrollView from '~/common/components/FitScrollView';
 import DismissKeyboard from '~/common/components/DismissKeyboard';
-import FriendlyCaptcha from '~/common/components/friendly-captcha/FriendlyCaptcha';
 import { IS_IPAD, IS_TENANT, APP_URI, TENANT } from '~/config/Config';
 import sp from '~/services/serviceProvider';
 
@@ -34,7 +33,6 @@ const alphanumericPattern = '^[a-zA-Z0-9_]+$';
 const RegisterForm = observer(({ onRegister }: PropsType) => {
   const navigation = useNavigation();
   const captchaRef = useRef<any>(null);
-  const friendlyCaptchaRef = useRef<any>(null);
   const scrollViewRef = useRef<ScrollView>();
   const emailRef = useRef<InputContainerImperativeHandle>(null);
   const passwordRef = useRef<InputContainerImperativeHandle>(null);
@@ -60,10 +58,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
       });
       store.usernameTaken = !response.valid;
     }, 300),
-    friendlyCaptchaEnabled: true,
-    setFriendlyCaptchaEnabled(enabled: boolean) {
-      store.friendlyCaptchaEnabled = enabled;
-    },
     setCaptcha(value: string) {
       this.captcha = value;
     },
@@ -87,9 +81,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           exclusive_promotions: store.exclusivePromotions,
           captcha: store.captcha,
         } as registerParams;
-        if (store.friendlyCaptchaEnabled) {
-          params.friendly_captcha_enabled = true;
-        }
+
         const authService = sp.resolve('auth');
         await authService.register(params);
         await sp.api.clearCookies();
@@ -112,7 +104,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
           showNotification(err.message, 'warning', 3000);
           sp.log.exception(err);
         }
-        friendlyCaptchaRef.current?.reset();
       } finally {
         store.inProgress = false;
       }
@@ -143,14 +134,7 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
         return;
       }
 
-      // use friendly captcha if it was enabled and if the puzzle was solved,
-      // otherwise fall back to the legacy captcha
-      if (store.friendlyCaptchaEnabled && this.captcha) {
-        return this.register();
-      } else {
-        store.setFriendlyCaptchaEnabled(false);
-        captchaRef.current?.show();
-      }
+      captchaRef.current?.show();
     },
     // on password focus
     focus() {
@@ -277,10 +261,6 @@ const RegisterForm = observer(({ onRegister }: PropsType) => {
             : undefined
         }
       />
-
-      {store.friendlyCaptchaEnabled && (
-        <FriendlyCaptcha ref={friendlyCaptchaRef} onSolved={store.setCaptcha} />
-      )}
     </View>
   );
 
