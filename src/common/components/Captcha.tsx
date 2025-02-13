@@ -162,7 +162,7 @@ const Captcha = observer(
 export default Captcha;
 
 const styles = sp.styles.create({
-  modalContainer: ['fullWidth', 'margin0x', 'justifyEnd'],
+  modalContainer: ['fullWidth', 'margin0x', { justifyContent: 'flex-start' }],
   textVerification: [
     'fontXL',
     'colorPrimaryText',
