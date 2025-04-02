@@ -124,7 +124,7 @@
     "react-native-inappbrowser-reborn": "https://github.com/proyecto26/react-native-inappbrowser",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-keyboard-controller": "^1.13.4",
-    "react-native-markdown-display": "^7.0.0-alpha.2",
+    "react-native-markdown-display": "^7.0.2",
     "react-native-mmkv": "2.12.2",
     "react-native-modal": "^13.0.1",
     "react-native-modern-datepicker": "https://gitlab.com/minds/react-native-modern-datepicker.git",

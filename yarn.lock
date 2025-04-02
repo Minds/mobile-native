@@ -15777,7 +15777,7 @@ react-native-keyboard-controller@^1.13.4:
   dependencies:
     react-native-is-edge-to-edge "^1.1.6"
 
-react-native-markdown-display@^7.0.0-alpha.2:
+react-native-markdown-display@^7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/react-native-markdown-display/-/react-native-markdown-display-7.0.2.tgz#b6584cec8d6670c0141fb8780bc2f0710188a4c2"
   integrity sha512-Mn4wotMvMfLAwbX/huMLt202W5DsdpMO/kblk+6eUs55S57VVNni1gzZCh5qpznYLjIQELNh50VIozEfY6fvaQ==
