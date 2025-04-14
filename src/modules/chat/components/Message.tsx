@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Image, ImageSource } from 'expo-image';
 
-import { Avatar, B2, B3, B4 } from '~/common/ui';
+import { Avatar, B3, B4 } from '~/common/ui';
 import { ChatMessage } from '../types';
 import {
   ChatRoomMessagesContextType,
@@ -17,8 +17,8 @@ import sp from '~/services/serviceProvider';
 import SmartImage from '~/common/components/SmartImage';
 import { ChatImageNode } from '~/graphql/api';
 import { useNavigation } from '@react-navigation/native';
-import Tags from '~/common/components/Tags';
 import chatDate from '../utils/chat-date';
+import MarkdownText from './MarkdownText';
 
 type Props = {
   message: ChatMessage;
@@ -95,11 +95,7 @@ function Message({
           <RichEmbed message={message} onLongPress={longPress} />
         ) : (
           <View style={styles.bubble}>
-            <B2>
-              <Tags navigation={sp.navigation} selectable>
-                {message.node.plainText}
-              </Tags>
-            </B2>
+            <MarkdownText>{message.node.plainText}</MarkdownText>
           </View>
         )}
         {showTimestamp ? (
@@ -126,11 +122,7 @@ function Message({
           <RichEmbed message={message} onLongPress={longPress} />
         ) : (
           <View style={styles.bubbleRight}>
-            <B2 color="primaryDark">
-              <Tags navigation={sp.navigation} selectable>
-                {message.node.plainText}
-              </Tags>
-            </B2>
+            <MarkdownText dark>{message.node.plainText}</MarkdownText>
           </View>
         )}
         {showTimestamp ? (
@@ -165,11 +157,9 @@ const RichEmbed = ({
         url && sp.resolve('openURL').open(url);
       }}
       style={isMe ? styles.richBubbleRight : styles.richBubble}>
-      <B2 color={isMe ? 'primaryDark' : 'primary'} horizontal="M" vertical="M">
-        <Tags navigation={sp.navigation} selectable>
-          {message.node.plainText}
-        </Tags>
-      </B2>
+      <View style={styles.horizontalPadding}>
+        <MarkdownText dark={isMe}>{message.node.plainText}</MarkdownText>
+      </View>
       <Image
         source={message.node.richEmbed?.thumbnailSrc}
         contentFit="cover"
@@ -274,11 +264,12 @@ const styles = sp.styles.create({
     'borderRadius15x',
     { flex: 1, overflow: 'hidden', backgroundColor: '#1B85D6' },
   ],
+  horizontalPadding: ['paddingHorizontal2x'],
   bubble: [
     'borderRadius15x',
     'bgSecondaryBackground',
-    'paddingHorizontal3x',
-    'paddingVertical2x',
+    'paddingHorizontal2x',
+    'paddingVertical',
     //'marginVertical',
   ],
   avatarContainer: ['paddingRight3x', { borderColor: 'red', borderWidth: 0 }],
@@ -288,8 +279,8 @@ const styles = sp.styles.create({
       backgroundColor: '#1B85D6',
       padding: 10,
     },
-    'paddingHorizontal3x',
-    'paddingVertical2x',
+    'paddingHorizontal2x',
+    'paddingVertical',
     //'marginVertical',
   ],
   bubbleContainer: [

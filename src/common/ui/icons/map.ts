@@ -28,6 +28,10 @@ const ICON_MAP = {
     font: 'MaterialIcons',
     name: 'info',
   },
+  ai: {
+    font: 'MaterialIcons',
+    name: 'smart-toy',
+  },
   'info-outline': {
     font: 'MaterialIcons',
     name: 'info-outline',

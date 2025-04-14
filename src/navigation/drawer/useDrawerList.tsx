@@ -16,6 +16,7 @@ import { NavigationItemTypeEnum } from '~/graphql/api';
 import { useCustomNavigationMenu } from '~/modules/navigation/service/custom-navigation.service';
 import sp from '~/services/serviceProvider';
 import useGetDownloadedList from '~/modules/audio-player/hooks/useGetDownloadedList';
+import { useCreateChatRoom } from '~/modules/chat/hooks/useCreateChatRoom';
 
 type Flags = Record<'hasPro' | 'hasPlus', boolean>;
 
@@ -31,6 +32,7 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
   const customNavigation = useCustomNavigationMenu();
   const channel = sp.session.getUser();
   const i18n = sp.i18n;
+  const { createChatRoom } = useCreateChatRoom();
 
   const { count: downloadedTracksCount } = useGetDownloadedList();
 
@@ -43,6 +45,16 @@ export const useDrawerList = ({ hasPro, hasPlus }: Flags) => {
         testID: 'Drawer:channel',
         onPress: () => {
           navigation.push('Channel', { entity: channel });
+        },
+      },
+      {
+        name: 'AI',
+        icon: 'ai',
+        testID: 'Drawer:channel',
+        onPress: () => {
+          const aiChatGUID = sp.config.getSettings().ai?.default_chat_user_guid;
+          if (!aiChatGUID) return;
+          createChatRoom([aiChatGUID]);
         },
       },
       !IS_IOS
