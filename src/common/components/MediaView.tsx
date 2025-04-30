@@ -17,6 +17,9 @@ import MediaViewMultiImage from './media-view/MediaViewMultiImage';
 import { copyToClipboard } from '../helpers/copyToClipboard';
 import sp from '~/services/serviceProvider';
 import InlineAudioPlayer from '~/modules/audio-player/components/InlineAudioPlayer';
+import { IS_TENANT } from '~/config/Config';
+import Icon from '@expo/vector-icons/Ionicons';
+import MText from './MText';
 
 type PropsType = {
   entity: ActivityModel | CommentModel;
@@ -41,6 +44,43 @@ type PropsType = {
 @observer
 export default class MediaView extends Component<PropsType> {
   videoPlayer: MindsVideoStoreType | null = null;
+
+  /**
+   * Hide the video player if the video is expired
+   */
+  isVideoExpired(): boolean {
+    if (IS_TENANT) {
+      return false; // Tenants will not show the expired state
+    }
+    if (this.props.entity.ownerObj.plus) {
+      return false; // Plus videos always available
+    }
+    if (
+      parseInt(this.props.entity.time_created) * 1000 <
+      Date.now() - 86400 * 30
+    ) {
+      return true; // Posts older than 30 days will show in this state
+    }
+    return false;
+  }
+
+  /**
+   * If the user is not plus and their video is not yet expired, show a warning
+   * if they own the post
+   */
+  shouldShowVideoExpiringWarning(): boolean {
+    if (this.props.entity.owner_guid !== sp.session.guid) {
+      return false; // Not the owner
+    }
+    if (this.props.entity.ownerObj.plus) {
+      return false; // Don't show if plus
+    }
+    if (this.isVideoExpired()) {
+      return false; // Don't show if already expired
+    }
+
+    return true;
+  }
 
   /**
    * Show activity media
@@ -85,6 +125,32 @@ export default class MediaView extends Component<PropsType> {
           />
         );
       case 'video':
+        const theme = sp.styles.style;
+
+        const deletedNoticeStyle = [
+          theme.rowJustifyCenter,
+          theme.gap2x,
+          theme.margin4x,
+          theme.padding4x,
+          theme.borderRadius6x,
+          theme.bgSecondaryBackground,
+        ];
+
+        if (this.isVideoExpired()) {
+          return (
+            <View style={deletedNoticeStyle}>
+              <Icon
+                name="information-circle"
+                size={35}
+                style={[theme.colorSecondaryText, theme.paddingRight]}
+              />
+              <MText style={[theme.fontM, { flex: 1, alignSelf: 'center' }]}>
+                This video is no longer available.
+              </MText>
+            </View>
+          );
+        }
+
         const custom_data = this.props.entity.custom_data;
         let aspectRatio = 16 / 9;
 
@@ -94,16 +160,40 @@ export default class MediaView extends Component<PropsType> {
         }
 
         return (
-          <View style={[sp.styles.style.fullWidth, { aspectRatio }]}>
-            <MindsVideo
-              entity={this.props.entity}
-              ignoreDataSaver={this.props.ignoreDataSaver}
-              onStoreCreated={this.onStoreCreated}
-              hideOverlay={this.props.hideOverlay}
-              onProgress={this.props.onVideoProgress}
-              onOverlayPress={this.props.onVideoOverlayPress}
-              repeat={true}
-            />
+          <View style={[sp.styles.style.fullWidth]}>
+            <View style={[sp.styles.style.fullWidth, { aspectRatio }]}>
+              <MindsVideo
+                entity={this.props.entity}
+                ignoreDataSaver={this.props.ignoreDataSaver}
+                onStoreCreated={this.onStoreCreated}
+                hideOverlay={this.props.hideOverlay}
+                onProgress={this.props.onVideoProgress}
+                onOverlayPress={this.props.onVideoOverlayPress}
+                repeat={true}
+              />
+            </View>
+            {this.shouldShowVideoExpiringWarning() ? (
+              <View
+                style={deletedNoticeStyle}
+                onTouchStart={e => {
+                  e.stopPropagation();
+                  sp.navigation.navigate('UpgradeScreen', {
+                    onComplete: (success: any) => {},
+                    pro: false,
+                  });
+                }}>
+                <Icon
+                  name="information-circle"
+                  size={35}
+                  style={[theme.colorSecondaryText, theme.paddingRight]}
+                />
+                <MText style={[theme.fontM, { flex: 1 }]}>
+                  This video will be automatically deleted in 30 days. &nbsp;
+                  <MText style={theme.link}>Upgrade to plus</MText> to keep your
+                  videos forever
+                </MText>
+              </View>
+            ) : undefined}
           </View>
         );
       case 'audio':
