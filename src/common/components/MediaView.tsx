@@ -20,6 +20,7 @@ import InlineAudioPlayer from '~/modules/audio-player/components/InlineAudioPlay
 import { IS_TENANT } from '~/config/Config';
 import Icon from '@expo/vector-icons/Ionicons';
 import MText from './MText';
+import moment from 'moment';
 
 type PropsType = {
   entity: ActivityModel | CommentModel;
@@ -48,7 +49,7 @@ export default class MediaView extends Component<PropsType> {
   /**
    * Hide the video player if the video is expired
    */
-  isVideoExpired(): boolean {
+  get isVideoExpired(): boolean {
     if (IS_TENANT) {
       return false; // Tenants will not show the expired state
     }
@@ -68,18 +69,29 @@ export default class MediaView extends Component<PropsType> {
    * If the user is not plus and their video is not yet expired, show a warning
    * if they own the post
    */
-  shouldShowVideoExpiringWarning(): boolean {
+  get shouldShowVideoExpiringWarning(): boolean {
     if (this.props.entity.owner_guid !== sp.session.guid) {
       return false; // Not the owner
     }
     if (this.props.entity.ownerObj.plus) {
       return false; // Don't show if plus
     }
-    if (this.isVideoExpired()) {
+    if (this.isVideoExpired) {
       return false; // Don't show if already expired
     }
 
     return true;
+  }
+
+  /**
+   * The number of days before the video expires
+   */
+  get expiresInDays(): number {
+    const now = moment();
+    const expiresAt = moment(
+      parseInt(this.props.entity.time_created) * 1000,
+    ).add(30, 'days');
+    return expiresAt.diff(now, 'days');
   }
 
   /**
@@ -136,7 +148,7 @@ export default class MediaView extends Component<PropsType> {
           theme.bgSecondaryBackground,
         ];
 
-        if (this.isVideoExpired()) {
+        if (this.isVideoExpired) {
           return (
             <View style={deletedNoticeStyle}>
               <Icon
@@ -172,10 +184,10 @@ export default class MediaView extends Component<PropsType> {
                 repeat={true}
               />
             </View>
-            {this.shouldShowVideoExpiringWarning() ? (
+            {this.shouldShowVideoExpiringWarning ? (
               <View
                 style={deletedNoticeStyle}
-                onTouchStart={e => {
+                onTouchEnd={e => {
                   e.stopPropagation();
                   sp.navigation.navigate('UpgradeScreen', {
                     onComplete: (success: any) => {},
@@ -188,9 +200,13 @@ export default class MediaView extends Component<PropsType> {
                   style={[theme.colorSecondaryText, theme.paddingRight]}
                 />
                 <MText style={[theme.fontM, { flex: 1 }]}>
-                  This video will be automatically deleted in 30 days. &nbsp;
+                  This video will be automatically deleted
+                  {this.expiresInDays > 1
+                    ? ` in ${this.expiresInDays} days. `
+                    : ' today.'}
+                  &nbsp;
                   <MText style={theme.link}>Upgrade to plus</MText> to keep your
-                  videos forever
+                  videos forever.
                 </MText>
               </View>
             ) : undefined}
