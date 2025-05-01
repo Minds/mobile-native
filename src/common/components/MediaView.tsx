@@ -56,10 +56,10 @@ export default class MediaView extends Component<PropsType> {
     if (this.props.entity.ownerObj.plus) {
       return false; // Plus videos always available
     }
-    if (
-      parseInt(this.props.entity.time_created) * 1000 <
-      Date.now() - 86400 * 30
-    ) {
+
+    const unixTx = Date.now() / 1000;
+    const expiresSec = 86400 * 30;
+    if (parseInt(this.props.entity.time_created) < unixTx - expiresSec) {
       return true; // Posts older than 30 days will show in this state
     }
     return false;
@@ -90,7 +90,7 @@ export default class MediaView extends Component<PropsType> {
     const now = moment();
     const expiresAt = moment(
       parseInt(this.props.entity.time_created) * 1000,
-    ).add(30, 'days');
+    ).add(31, 'days');
     return expiresAt.diff(now, 'days');
   }
 
