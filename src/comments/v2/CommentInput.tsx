@@ -195,6 +195,7 @@ const CommentInput = observer(() => {
             onChangeText={provider.store?.setText}
             keyboardType={'default'}
             maxLength={CHAR_LIMIT}
+            autoCorrect={false}
             onImageChange={
               provider.store
                 ? onImageInput(provider.store.onAttachedMedia)
