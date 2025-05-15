@@ -50,6 +50,7 @@ export const ComposerTextInput = observer(
         onContentSizeChange={localStore.onSizeChange}
         ref={ref}
         scrollEnabled={false}
+        autoCorrect={false}
         placeholder={placeholder}
         placeholderTextColor={sp.styles.getColor('TertiaryText')}
         onChangeText={store.setText}
