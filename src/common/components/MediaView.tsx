@@ -70,6 +70,9 @@ export default class MediaView extends Component<PropsType> {
    * if they own the post
    */
   get shouldShowVideoExpiringWarning(): boolean {
+    if (IS_TENANT) {
+      return false; // Tenants will not show the expiring notice
+    }
     if (this.props.entity.owner_guid !== sp.session.guid) {
       return false; // Not the owner
     }
