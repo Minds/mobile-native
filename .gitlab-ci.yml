@@ -16,6 +16,7 @@ include:
   - local: .gitlab/ci/release.yml
   - local: .gitlab/ci/submit.yml
   - local: .gitlab/ci/maintenance.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
   # - local: .gitlab/ci/qa.yml
 
 stages:
@@ -24,6 +25,7 @@ stages:
   - submit
   - release
   - maintenance
+  - scan
   - qa
 
 # Gets the version of the app parsing the gradle.properties file
@@ -169,3 +171,6 @@ stages:
   rules:
     - if: $CI_COMMIT_TAG != null && $CI_COMMIT_TAG !~ $VERSION_REGEX
       when: on_success
+
+dependency_scanning:
+  stage: scan
