@@ -19,7 +19,6 @@ import { IconButtonNext } from '~/common/ui/icons';
 import FloatingBackButton from '../common/components/FloatingBackButton';
 import Camera from './Camera/Camera';
 import PermissionsCheck from './PermissionsCheck';
-import ImageFilterSlider from './ImageFilterSlider/ImageFilterSlider';
 import MediaPreviewFullScreen from './MediaPreviewFullScreen';
 import { Orientation } from '~/services';
 import { withErrorBoundaryScreen } from '~/common/components/ErrorBoundaryScreen';
@@ -286,13 +285,6 @@ export default withErrorBoundaryScreen(
               <View style={styles.filterContainer}>
                 {mode === 'photo' ? (
                   <View style={theme.flexContainer}>
-                    <ImageFilterSlider
-                      image={mediaToConfirm}
-                      extractEnabled={extractEnabled}
-                      onExtractImage={handleConfirm}
-                      onFilterChange={setFilter}
-                    />
-
                     <SafeAreaView style={styles.topToolbarContainer}>
                       <DownloadIconButton
                         downloading={downloading}
