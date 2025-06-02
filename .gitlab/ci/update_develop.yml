@@ -1,7 +1,7 @@
 # prepares an expo update for the Minds app using the develop branch
 update_develop:
   stage: build
-  image: node:18.18-alpine
+  image: node:20-alpine
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}
