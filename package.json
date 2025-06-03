@@ -234,7 +234,8 @@
     "semver": "^7.7.2",
     "cross-spawn": "^7.0.5",
     "axios": "^0.30.0",
-    "image-size": "^1.2.1"
+    "image-size": "^1.2.1",
+    "@expo/cli": "^0.24.13"
   },
   "workspaces": [
     "packages/*"
