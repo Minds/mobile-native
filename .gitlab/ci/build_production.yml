@@ -1,7 +1,7 @@
 # Build the OSS version of the app on EAS, downloads the APK and updates the releases.json
 eas_build_production_android_oss:
   stage: build
-  image: cimg/aws:2023.12
+  image: cimg/aws:2025.01
   tags: [minds-ci]
   artifacts:
     paths:
@@ -34,7 +34,7 @@ eas_build_production_android_oss:
 # Build and submit the android play store app
 eas_build_production_android:
   stage: build
-  image: cimg/aws:2023.12
+  image: cimg/aws:2025.01
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}
