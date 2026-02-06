@@ -27,7 +27,7 @@ const TokenTopBar = ({
   onchainStore,
 }: PropsType) => {
   const theme = sp.styles.style;
-  const tooltipRef = useRef<any>();
+  const tooltipRef = useRef<any>(null);
   const screen = useWindowDimensions();
   const tokens = (
     <>

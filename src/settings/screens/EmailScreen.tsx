@@ -20,8 +20,11 @@ const EmailScreenS = inject('user')(
     const [
       { email, saving, loaded, inProgress, showConfirmNote, disabled },
       setState,
-    ] = useReducer<EmailStateFn>(
-      (prevState, nextState) => ({ ...prevState, ...nextState }),
+    ] = useReducer(
+      (prevState: EmailState, nextState: Partial<EmailState>) => ({
+        ...prevState,
+        ...nextState,
+      }),
       {
         email: '',
         saving: false,
@@ -139,6 +142,5 @@ type EmailState = {
   showConfirmNote?: boolean;
   disabled?: boolean;
 };
-type EmailStateFn = (prev: EmailState, next: EmailState) => EmailState;
 
 export default EmailScreenS;

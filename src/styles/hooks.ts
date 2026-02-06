@@ -12,7 +12,7 @@ import sp from '~/services/serviceProvider';
  * Returns an stable reference
  */
 export function useStyle(...styles: Array<StyleOrCustom>) {
-  const ref = React.useRef<any[]>();
+  const ref = React.useRef<any[] | null>(null);
   if (!ref.current) {
     ref.current = sp.styles.combine(...styles);
   }
@@ -60,7 +60,7 @@ export function useStyleFromProps(props: Object) {
     key => key + (typeof props[key] === 'string' ? props[key] : ''),
   );
 
-  const ref = React.useRef<any[]>();
+  const ref = React.useRef<any[] | null>(null);
   if (!ref.current) {
     ref.current = sp.styles.combine(...styles);
   }

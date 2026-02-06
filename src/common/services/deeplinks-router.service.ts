@@ -89,6 +89,11 @@ export class DeepLinksRouterService {
    * @param {string} url
    */
   navigate(url, trackAnalytics = false) {
+    // Ignore Expo dev client URLs
+    if (url && url.includes('expo-development-client')) {
+      return false;
+    }
+
     if (IS_TENANT_PREVIEW && url && this.previewUpdate.isPreviewURL(url)) {
       const channel = this.previewUpdate.getPreviewChannel(url);
       if (!channel) {

@@ -28,7 +28,7 @@ type ItemType = {
 };
 
 const TokenTabOptions = observer((props: PropsType) => {
-  const ref = React.useRef<any>();
+  const ref = React.useRef<any>(null);
   const navigation = useNavigation();
   const isConnected = isWalletConnected(props.onchainStore);
   const address = props.walletStore.wallet.receiver.address || '';

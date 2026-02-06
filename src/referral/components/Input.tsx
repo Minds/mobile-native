@@ -20,7 +20,7 @@ interface InputProps {
 
 const Input = ({ textToCopy, label, style }: InputProps) => {
   const theme = sp.styles.style;
-  const _textInput = useRef<TextInputType>();
+  const _textInput = useRef<TextInputType>(null);
 
   const _onFocus = useCallback(() => {
     _textInput.current!.focus();
@@ -33,7 +33,9 @@ const Input = ({ textToCopy, label, style }: InputProps) => {
       <MText>{label}</MText>
       <View style={[theme.marginTop2x, styles.inputContainer]}>
         <TextInput
-          ref={ref => (_textInput.current = ref!)}
+          ref={ref => {
+            _textInput.current = ref;
+          }}
           selectTextOnFocus
           caretHidden
           textContentType={'URL'}

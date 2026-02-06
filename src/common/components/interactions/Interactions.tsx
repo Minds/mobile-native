@@ -50,7 +50,7 @@ const Interactions = (props: InteractionsProps) => {
     [],
   );
   const entity = props.entity;
-  const offsetListRef = useRef<any>();
+  const offsetListRef = useRef<any>(null);
   const store = useLocalStore(() => ({
     feedStore: new FeedStore(),
     interaction,

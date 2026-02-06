@@ -16,7 +16,7 @@ const SNAP_POINTS = ['90%'];
  * @param {Object} props
  */
 export default forwardRef((props: any, ref) => {
-  const sheetRef = useRef<any>();
+  const sheetRef = useRef<any>(null);
   const navigation = useNavigation();
 
   useImperativeHandle(ref, () => ({

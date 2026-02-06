@@ -36,7 +36,7 @@ export default function AnimatedTopHeader({
   top,
 }: Props) {
   const navigation = useNavigation();
-  const menuRef = useRef<any>();
+  const menuRef = useRef<any>(null);
   const bgColor = sp.styles.getColor('PrimaryBackground');
 
   const topbarStyle = useAnimatedStyle(() => {

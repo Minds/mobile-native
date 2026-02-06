@@ -39,7 +39,7 @@ export default observer(function Comment({
   isHeader,
 }: PropsType) {
   const navigation = useNavigation<any>();
-  const translateRef = React.useRef<any>();
+  const translateRef = React.useRef<any>(null);
   const theme = sp.styles.style;
   const i18n = sp.i18n;
 

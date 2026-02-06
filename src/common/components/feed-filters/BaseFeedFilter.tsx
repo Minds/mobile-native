@@ -21,7 +21,7 @@ export type BaseFeedFilterPropsType = {
  * Base Feed Filter component
  */
 const BaseFeedFilter = (props: BaseFeedFilterPropsType) => {
-  const ref = React.useRef<any>();
+  const ref = React.useRef<any>(null);
   const close = React.useCallback(() => {
     ref.current?.dismiss();
   }, [ref]);

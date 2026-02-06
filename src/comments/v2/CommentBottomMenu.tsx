@@ -48,7 +48,7 @@ export default function CommentBottomMenu({
   // Do not render BottomSheet unless it is necessary
   const [shown, setShown] = React.useState(false);
 
-  const ref = React.useRef<any>();
+  const ref = React.useRef<any>(null);
   const close = React.useCallback(() => {
     ref.current?.dismiss();
   }, []);

@@ -15,7 +15,7 @@ import sp from '~/services/serviceProvider';
  */
 const WithdrawalEntry = ({ withdrawal }: WithdrawalItemPropsType) => {
   const theme = sp.styles.style;
-  const tooltipRef = useRef<any>();
+  const tooltipRef = useRef<any>(null);
 
   /**
    * Truncates middle of address e.g. 0xd...10a

@@ -19,7 +19,7 @@ type PropsType = {
 
 const Sort = observer(({ sortState, setSortState }: PropsType) => {
   const { t } = useTranslation();
-  const ref = React.useRef<any>();
+  const ref = React.useRef<any>(null);
   const close = React.useCallback(() => {
     ref.current?.dismiss();
   }, [ref]);

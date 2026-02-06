@@ -55,7 +55,6 @@ const plugins: any = [
   'react-native-iap',
   'expo-updates',
   'expo-localization',
-  'react-native-notifications',
   [
     '@sentry/react-native/expo',
     {
@@ -97,6 +96,7 @@ const plugins: any = [
     },
   ],
   './plugins/withAndroidMainApplicationAttributes.js',
+  './plugins/withNotificationsBridgingHeader.js',
 ];
 // Add tracking-transparency plugin if enabled
 if (Tenant.APP_TRACKING_MESSAGE_ENABLED) {
@@ -180,6 +180,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       NSCameraUsageDescription: cameraMessage,
       NSMicrophoneUsageDescription: micMessage,
       UIBackgroundModes: ['audio'],
+      ITSAppUsesNonExemptEncryption: false,
     },
     splash: {
       image: './assets/images/splash.png',

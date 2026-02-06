@@ -26,7 +26,7 @@ const DevToolsScreen = () => {
   const [canary, setCanary] = useState(
     sp.storages.app.getBoolean(CANARY_KEY) || false,
   );
-  const inputRef = React.useRef<any>();
+  const inputRef = React.useRef<any>(null);
   const theme = sp.styles.style;
 
   const setApiURLCallback = () => {

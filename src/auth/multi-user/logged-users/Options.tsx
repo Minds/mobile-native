@@ -21,7 +21,7 @@ const hitSlop = { top: 10, bottom: 10, left: 10, right: 10 };
 
 const Options = ({ index, isActive, username, onSwitchPress }: PropsType) => {
   const theme = sp.styles.style;
-  const ref = React.useRef<any>();
+  const ref = React.useRef<any>(null);
   const close = React.useCallback(() => {
     ref.current?.dismiss();
   }, []);

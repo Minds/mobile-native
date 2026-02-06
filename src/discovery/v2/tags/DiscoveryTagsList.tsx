@@ -35,7 +35,7 @@ export const DiscoveryTagsList = withErrorBoundary(
   observer(
     ({ plus, store, type, showManageTags = true, style, header }: Props) => {
       const navigation = useNavigation<StackNavigationProp<any>>();
-      const ref = React.useRef<BottomSheetModal>();
+      const ref = React.useRef<BottomSheetModal>(null);
       const i18n = sp.i18n;
       useEffect(() => {
         store.loadTags(plus);

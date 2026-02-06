@@ -144,7 +144,7 @@ const DiscoveryTagsManager = (props: Props, ref) => {
     );
   };
 
-  const inputRef = React.useRef<any>();
+  const inputRef = React.useRef<any>(null);
 
   const onDone = useCallback(async () => {
     await discoveryV2.saveTags(store.selected, store.deselected);

@@ -162,7 +162,8 @@ class App extends Component<Props> {
     return (
       <KeyboardProvider>
         <FontsLoader>
-          <GestureHandlerRootView style={appContainerStyle}>
+          <GestureHandlerRootView
+            style={styles.combine('flexContainer', 'bgPrimaryBackground')}>
             <SafeAreaProvider>
               {sp.session.ready && (
                 <StoresProvider>
@@ -202,11 +203,6 @@ class App extends Component<Props> {
 }
 
 export default App;
-
-const appContainerStyle = sp.styles.combine(
-  'flexContainer',
-  'bgPrimaryBackground',
-);
 
 // if (__DEV__) {
 //   require('./tron');

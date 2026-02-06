@@ -7,7 +7,7 @@ import serviceProvider, { ServiceName, Services } from '../serviceProvider';
  * For scoped services it returns always the same instance for the component
  */
 export function useService<T extends ServiceName>(service: T) {
-  const ref = useRef<Services[T]>();
+  const ref = useRef<Services[T]>(null);
   if (!ref.current) {
     ref.current = serviceProvider.resolve(service) as Services[T];
   }

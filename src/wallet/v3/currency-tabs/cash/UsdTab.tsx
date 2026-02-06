@@ -42,7 +42,7 @@ const UsdTab = observer(
     tokensTabStore,
     usdTabStore,
   }: PropsType) => {
-    const tooltipRef = useRef<any>();
+    const tooltipRef = useRef<any>(null);
     const screen = useWindowDimensions();
     const theme = sp.styles.style;
     const i18n = sp.i18n;

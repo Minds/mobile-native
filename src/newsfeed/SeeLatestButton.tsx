@@ -71,7 +71,7 @@ export const useSeeLatestStyle = (count: number, top?: number) => {
   const topDistance = top || additionalTop;
   const [dismissible, setDismissible] = useState(false);
   const countAvailable = !!count;
-  const timeOutRef = useRef<Timeout>();
+  const timeOutRef = useRef<Timeout>(null);
 
   const dismissed = useDerivedValue(() => {
     return dismissible && scrollDirection.value === ScrollDirection.down;
@@ -118,9 +118,9 @@ export const useSeeLatestStyle = (count: number, top?: number) => {
 };
 
 const useWatchForUpdates = (countEndpoint: string) => {
-  const previousCount = useRef<number>();
+  const previousCount = useRef<number>(null);
   const [count, setCount] = useState<number>();
-  const newPostInterval = useRef<any>();
+  const newPostInterval = useRef<any>(null);
   const { fetch: fetchCount } = useApiFetch<{ count: number }>(countEndpoint, {
     skip: true,
   });

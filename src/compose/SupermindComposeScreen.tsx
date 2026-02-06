@@ -81,10 +81,6 @@ type SupermindState = {
   offer?: string;
   errors?: any;
 };
-type SupermindStateFn = (
-  prev: SupermindState,
-  next: SupermindState,
-) => SupermindState;
 
 type PropsType = PosterStackScreenProps<'ComposeSupermind'>;
 
@@ -121,8 +117,11 @@ const SupermindComposeScreen: React.FC<PropsType> = props => {
       errors = {},
     },
     setState,
-  ] = useReducer<SupermindStateFn>(
-    (prevState, nextState) => ({ ...prevState, ...nextState }),
+  ] = useReducer(
+    (prevState: SupermindState, nextState: Partial<SupermindState>) => ({
+      ...prevState,
+      ...nextState,
+    }),
     {
       channel: data?.channel,
       replyType: data?.reply_type ?? ReplyType.text,

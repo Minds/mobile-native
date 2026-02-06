@@ -178,7 +178,9 @@ const ChannelTopBar = observer(
         <>
           <TextInput
             placeholder="Search Channel"
-            ref={ref => (textInputRef.current = ref)}
+            ref={ref => {
+              textInputRef.current = ref;
+            }}
             style={[
               styles.searchInput,
               Platform.OS === 'ios' && { padding: 15 },

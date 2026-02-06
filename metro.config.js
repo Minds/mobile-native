@@ -16,6 +16,11 @@ config.resolver.nodeModulesPaths = [
   path.resolve(workspaceRoot, 'node_modules'),
 ];
 
+// Disable package exports resolution to prevent ESM entry points from being
+// used in packages that don't work correctly with Metro's ESM support
+// (e.g., react-i18next, styled-components). Falls back to main/react-native fields.
+config.resolver.unstable_enablePackageExports = false;
+
 // Override getTransformOptions so we can turn inlineRequires on
 config.transformer.getTransformOptions = async () => ({
   transform: {

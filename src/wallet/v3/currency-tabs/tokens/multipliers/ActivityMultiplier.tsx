@@ -33,7 +33,7 @@ type PropsType = {
 const ActivityMultiplier = ({ multiplier }: PropsType) => {
   const activityLevel =
     typeof multiplier === 'string' ? parseInt(multiplier) : multiplier;
-  const tooltipRef = useRef<any>();
+  const tooltipRef = useRef<any>(null);
   const theme = sp.styles.style;
   const getLevelStyle = (level: number) => {
     const backgroundLevels = {

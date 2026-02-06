@@ -107,8 +107,8 @@ const SelectorV2: ForwardRefRenderFunction<any, SelectorPropsType> = (
   );
 
   // =====================| REFS |==========================>
-  const bottomSheetRef = useRef<any>();
-  const flatListRef = useRef<any>();
+  const bottomSheetRef = useRef<any>(null);
+  const flatListRef = useRef<any>(null);
 
   // =====================| FUNCTIONS |==========================>
   /**

@@ -33,7 +33,7 @@ const alphanumericPattern = '^[a-zA-Z0-9_]+$';
 const RegisterForm = observer(({ onRegister }: PropsType) => {
   const navigation = useNavigation();
   const captchaRef = useRef<any>(null);
-  const scrollViewRef = useRef<ScrollView>();
+  const scrollViewRef = useRef<ScrollView>(null);
   const emailRef = useRef<InputContainerImperativeHandle>(null);
   const passwordRef = useRef<InputContainerImperativeHandle>(null);
   const i18n = sp.i18n;

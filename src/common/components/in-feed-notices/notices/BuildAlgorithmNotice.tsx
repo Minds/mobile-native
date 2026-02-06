@@ -11,7 +11,7 @@ import sp from '~/services/serviceProvider';
  * Build Your Algorithm Notice
  */
 function BuildAlgorithm({ name }: NoticeProps) {
-  const ref = React.useRef<any>();
+  const ref = React.useRef<any>(null);
   const { result: questionsResult, loading } = useQuestions();
   const inFeedNoticesService = sp.resolve('inFeedNotices');
   const i18n = sp.i18n;

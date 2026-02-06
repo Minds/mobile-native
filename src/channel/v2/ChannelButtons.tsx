@@ -91,7 +91,7 @@ const check = {
  */
 const ChannelButtons = withErrorBoundary(
   observer((props: PropsWithChildren<ChannelButtonsPropsType>) => {
-    const menuRef = useRef<any>();
+    const menuRef = useRef<any>(null);
     const navigation =
       useNavigation<NativeStackNavigationProp<AppStackParamList>>();
 

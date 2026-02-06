@@ -33,7 +33,7 @@ type PropsType = {
 };
 
 const TimeMultiplier = ({ multiplier }: PropsType) => {
-  const tooltipRef = useRef<any>();
+  const tooltipRef = useRef<any>(null);
   const theme = sp.styles.style;
   const progressBar: any = {
     flex: 1,

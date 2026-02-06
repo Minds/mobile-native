@@ -33,7 +33,7 @@ type PropsType = {
 
 const Filter = observer((props: PropsType) => {
   const i18n = sp.i18n;
-  const ref = React.useRef<any>();
+  const ref = React.useRef<any>(null);
   const close = React.useCallback(() => {
     ref.current?.dismiss();
   }, [ref]);
