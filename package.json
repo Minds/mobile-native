@@ -104,7 +104,7 @@
     "moment-timezone": "^0.5.33",
     "moti": "^0.29.0",
     "patch-package": "^7.0.0",
-    "posthog-react-native": "^3.1.0",
+    "posthog-react-native": "^4.31.1",
     "promise-cancelable": "^2.1.1",
     "react": "19.0.0",
     "react-i18next": "^12.2.2",

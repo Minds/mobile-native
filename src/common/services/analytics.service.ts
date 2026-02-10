@@ -56,9 +56,9 @@ export class AnalyticsService {
     this.posthog = new PostHog(POSTHOG_API_KEY, {
       host: POSTHOG_HOST,
       preloadFeatureFlags: false, // We provide these from our backend
-      captureNativeAppLifecycleEvents: true, // ? Not sure how relevant these are
       persistence: 'file',
       sendFeatureFlagEvent: false, // Storage not working? We will do ourselves
+      personProfiles: IS_TENANT ? 'identified_only' : 'never',
     });
 
     // Globally register property
@@ -350,10 +350,10 @@ export class AnalyticsService {
       }
     }
 
-    this.posthog.capture('dataref_' + eventType, {
-      ref: eventRef,
-      ...properties,
-    });
+    // this.posthog.capture('dataref_' + eventType, {
+    //   ref: eventRef,
+    //   ...properties,
+    // });
   }
 }
 

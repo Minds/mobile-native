@@ -131,14 +131,14 @@ export default class FeedStore<T extends BaseModel = ActivityModel> {
    * @param {string} medium
    */
   trackView(entity, medium?: MetadataMedium, position?: number) {
-    return this.metadataService
-      ? this.viewStore.view(
-          entity,
-          this.metadataService as MetadataService,
-          medium,
-          position,
-        )
-      : Promise.resolve();
+    // return this.metadataService
+    //   ? this.viewStore.view(
+    //       entity,
+    //       this.metadataService as MetadataService,
+    //       medium,
+    //       position,
+    //     )
+    //   : Promise.resolve();
   }
 
   /**

@@ -3278,6 +3278,13 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
+"@posthog/core@1.21.0":
+  version "1.21.0"
+  resolved "https://registry.yarnpkg.com/@posthog/core/-/core-1.21.0.tgz#f907aa9a6f4d0419585cb11eb5a7c4c27f039abb"
+  integrity sha512-0a2JUIX1vhduP2El/6/J8s5AeYAurIoufQGFgMiGnJE5ajd63o9LFocu2vFYYBnIOmy75y4ADNeW8zSl1keEQQ==
+  dependencies:
+    cross-spawn "^7.0.6"
+
 "@react-native-camera-roll/camera-roll@^7.8.3":
   version "7.10.2"
   resolved "https://registry.yarnpkg.com/@react-native-camera-roll/camera-roll/-/camera-roll-7.10.2.tgz#af2234f60f0b55aff9afb60888ce7f0669d52593"
@@ -11634,10 +11641,12 @@ postcss@~8.4.32:
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
 
-posthog-react-native@^3.1.0:
-  version "3.16.1"
-  resolved "https://registry.yarnpkg.com/posthog-react-native/-/posthog-react-native-3.16.1.tgz#6f346295e68582b670ef0722014e935cfd9013a0"
-  integrity sha512-qrsQC552nY9emZbv2HmnPfckS1waFf5kG1LLGF1noUhgXWzNfLfwK20FIypjRR50O+j/vCFIzQBmoy4Sv/U2RA==
+posthog-react-native@^4.31.1:
+  version "4.31.1"
+  resolved "https://registry.yarnpkg.com/posthog-react-native/-/posthog-react-native-4.31.1.tgz#c97ffc9fc64cb6372d48abb3a48b0c3335f4e741"
+  integrity sha512-67HHwzPuoe2Vc9PMdWIXOp4HIPF8C565eTI+AVudezm4fP/keiV0j3/4immcOpqomN3KhjTkSx4qVYGhS70PHg==
+  dependencies:
+    "@posthog/core" "1.21.0"
 
 prelude-ls@^1.2.1:
   version "1.2.1"

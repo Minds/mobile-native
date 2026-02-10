@@ -318,16 +318,16 @@ export default class BaseModel extends AbstractModel {
    * @deprecated used by FeedStore, removed with graphql implementation
    */
   sendViewed(medium?: MetadataMedium, position?: number) {
-    if (this._list) {
-      this._list.trackView?.(this, medium, position);
-    } else {
-      const metadata = sp.resolve('metadata');
-      metadata.setMedium('single').setSource('single');
-      sp.resolve('newsfeed').recordView(
-        this,
-        metadata.getClientMetadata(this, medium, position),
-      );
-    }
+    // if (this._list) {
+    //   this._list.trackView?.(this, medium, position);
+    // } else {
+    //   const metadata = sp.resolve('metadata');
+    //   metadata.setMedium('single').setSource('single');
+    //   sp.resolve('newsfeed').recordView(
+    //     this,
+    //     metadata.getClientMetadata(this, medium, position),
+    //   );
+    // }
   }
 
   /**
