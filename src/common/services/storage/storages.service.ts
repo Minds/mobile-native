@@ -1,9 +1,52 @@
-import { MMKV } from 'react-native-mmkv';
+import { createMMKV } from 'react-native-mmkv';
+import type { MMKV } from 'react-native-mmkv';
 
 /**
  * Storage instance
  */
-export class Storage extends MMKV {
+export class Storage {
+  private mmkv: MMKV;
+
+  constructor(config: { id: string }) {
+    this.mmkv = createMMKV(config);
+  }
+
+  getString(key: string) {
+    return this.mmkv.getString(key);
+  }
+
+  set(key: string, value: boolean | string | number | ArrayBuffer) {
+    this.mmkv.set(key, value);
+  }
+
+  getNumber(key: string) {
+    return this.mmkv.getNumber(key);
+  }
+
+  getBoolean(key: string) {
+    return this.mmkv.getBoolean(key);
+  }
+
+  contains(key: string) {
+    return this.mmkv.contains(key);
+  }
+
+  delete(key: string) {
+    this.mmkv.remove(key);
+  }
+
+  getAllKeys() {
+    return this.mmkv.getAllKeys();
+  }
+
+  clearAll() {
+    this.mmkv.clearAll();
+  }
+
+  trim() {
+    this.mmkv.trim();
+  }
+
   getObject<T>(key: string): T | undefined {
     const data = this.getString(key);
     if (data) {
@@ -14,11 +57,6 @@ export class Storage extends MMKV {
 
   setObject<T>(key: string, value: T) {
     this.set(key, JSON.stringify(value));
-  }
-
-  trim() {
-    // @ts-ignore this will work once we update to v3 (but it needs new architecture)ƒ
-    super.trim?.();
   }
 }
 
