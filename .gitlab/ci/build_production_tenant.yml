@@ -1,7 +1,7 @@
 # Build and submit the android play store app for a tenant
 eas_build_production_android_tenant:
   stage: build
-  image: cimg/aws:2023.12
+  image: cimg/aws:2025.01
   tags: [minds-ci]
   cache:
     key: ${CI_COMMIT_REF_SLUG}
