@@ -12120,10 +12120,10 @@ react-native-gesture-handler@~2.12.0, react-native-gesture-handler@~2.24.0:
     hoist-non-react-statics "^3.3.0"
     invariant "^2.2.4"
 
-react-native-iap@^12.15.7:
-  version "12.16.4"
-  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-12.16.4.tgz#52bf9782c0f5210760eec8ae472411ec41af9c90"
-  integrity sha512-3l3/k5ho2hzVCyfwlPRTrdn4gY1ku3dZFN9qJ7giZUBGr3wffciL5WRKxVUs7jQAXOgAtea9JexrMrgvEXSO/w==
+react-native-iap@12.15.7:
+  version "12.15.7"
+  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-12.15.7.tgz#392073222e8aebf230449fce0a914577ef85e0ae"
+  integrity sha512-+xpbu5Idxbe3SfmBFF/boQekUiqwzdzxKgr2d0txHXD/rEScncj3C10QRXiUKTct5vpa1mNPKVU095ecRm3cNA==
 
 react-native-image-colors@^1.3.1:
   version "1.5.2"
