@@ -1,0 +1,50 @@
+diff --git a/node_modules/react-native-iap/android/src/main/java/com/dooboolab/rniap/PromiseUtlis.kt b/node_modules/react-native-iap/android/src/main/java/com/dooboolab/rniap/PromiseUtlis.kt
+index ffaa969..147d249 100644
+--- a/node_modules/react-native-iap/android/src/main/java/com/dooboolab/rniap/PromiseUtlis.kt
++++ b/node_modules/react-native-iap/android/src/main/java/com/dooboolab/rniap/PromiseUtlis.kt
+@@ -1,7 +1,6 @@
+ package com.dooboolab.rniap
+ 
+ import android.util.Log
+-import com.facebook.react.bridge.ObjectAlreadyConsumedException
+ import com.facebook.react.bridge.Promise
+ 
+ /**
+@@ -14,8 +13,8 @@ const val TAG = "IapPromises"
+ fun Promise.safeResolve(value: Any?) {
+     try {
+         this.resolve(value)
+-    } catch (oce: ObjectAlreadyConsumedException) {
+-        Log.d(TAG, "Already consumed ${oce.message}")
++    } catch (e: Exception) {
++        Log.d(TAG, "Already consumed ${e.message}")
+     }
+ }
+ 
+@@ -38,7 +37,7 @@ fun Promise.safeReject(
+ ) {
+     try {
+         this.reject(code ?: "", message, throwable)
+-    } catch (oce: ObjectAlreadyConsumedException) {
+-        Log.d(TAG, "Already consumed ${oce.message}")
++    } catch (e: Exception) {
++        Log.d(TAG, "Already consumed ${e.message}")
+     }
+ }
+diff --git a/node_modules/react-native-iap/plugin/build/withIAP.js b/node_modules/react-native-iap/plugin/build/withIAP.js
+index afb7911..ad06b73 100644
+--- a/node_modules/react-native-iap/plugin/build/withIAP.js
++++ b/node_modules/react-native-iap/plugin/build/withIAP.js
+@@ -46,11 +46,7 @@ const modifyAppBuildGradle = (buildGradle, paymentProvider) => {
+ };
+ exports.modifyAppBuildGradle = modifyAppBuildGradle;
+ const modifyProjectBuildGradle = (buildGradle) => {
+-    const supportLibVersion = `supportLibVersion = "28.0.0"`;
+-    if (buildGradle.includes(supportLibVersion)) {
+-        return buildGradle;
+-    }
+-    return addToBuildGradle(supportLibVersion, 'ext', 1, buildGradle);
++    return buildGradle;
+ };
+ exports.modifyProjectBuildGradle = modifyProjectBuildGradle;
+ const withIAPAndroid = (config, { paymentProvider }) => {
