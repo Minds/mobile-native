@@ -1,0 +1,19 @@
+diff --git a/node_modules/react-native-system-setting/android/src/main/java/com/ninty/system/setting/SystemSetting.java b/node_modules/react-native-system-setting/android/src/main/java/com/ninty/system/setting/SystemSetting.java
+index dedd524..ad8ef75 100644
+--- a/node_modules/react-native-system-setting/android/src/main/java/com/ninty/system/setting/SystemSetting.java
++++ b/node_modules/react-native-system-setting/android/src/main/java/com/ninty/system/setting/SystemSetting.java
+@@ -56,12 +56,13 @@ public class SystemSetting extends ReactContextBaseJavaModule implements Activit
+     public SystemSetting(ReactApplicationContext reactContext) {
+         super(reactContext);
+         mContext = reactContext;
+-        reactContext.addLifecycleEventListener(this);
+         am = (AudioManager) mContext.getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+         wm = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+         lm = (LocationManager) mContext.getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+ 
+         volumeBR = new VolumeBroadcastReceiver();
++
++        reactContext.addLifecycleEventListener(this);
+     }
+ 
+     private void registerVolumeReceiver() {
